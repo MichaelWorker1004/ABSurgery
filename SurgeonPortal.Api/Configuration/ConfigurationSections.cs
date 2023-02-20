@@ -1,0 +1,8 @@
+﻿namespace SurgeonPortal.Api.Configuration
+{
+    public static class ConfigurationSections
+    {
+        public static string Site => "Site";
+        public static string Tokens => "Tokens";
+    }
+}

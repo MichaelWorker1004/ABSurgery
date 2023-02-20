@@ -1,0 +1,97 @@
+@import '@ag-grid-enterprise/all-modules/dist/styles/ag-grid.scss';
+@import '@ag-grid-enterprise/all-modules/dist/styles/ag-theme-balham/sass/legacy/_ag-theme-balham-v22-compat.scss';
+@import '../themes/colors.scss';
+
+ag-grid-angular {
+    width: 100%;
+    height: 100%;
+}
+
+.ag-theme-balham {
+    
+    .ag-header-cell {
+        background-color: $verizon-black;
+        color: $verizon-white;
+    }
+    .ag-header-icon {
+        color: $verizon-white;
+    }
+    .ag-details-row {
+        padding: 15px 15px;
+    }
+    .ag-menu {
+        font-size: 12px;
+    }
+    .locked-row {
+        color: #757575;
+    }
+    .unlocked-row {
+        display: none;
+    }
+    .edited-cell {
+        background-color: $verizon-secondary-yellow;
+    }
+    .disabled-cell {
+        background-color: $verizon-cool-gray-3;
+        pointer-events: none;
+    }
+    .editable-header {
+        background-color: $verizon-red;
+    }
+    .alternate-field {
+        color: darkorange;
+    }
+    .highlighted {
+        background-color: #ffff60;
+    }
+    .related-cell {
+        color: $verizon-cool-gray-6;
+    }
+    .unselected-cell {
+        font-weight: bold;
+    }
+    .matching-cell {
+        color: $verizon-secondary-green;
+    }
+    a {
+        color: $verizon-red;
+        text-decoration: none;
+        &:hover {
+            color: $verizon-red;
+            font-weight: $font-weight-bold;
+            transition: all 0.25s ease-in-out;
+            cursor: pointer;
+        }
+    }
+    .ag-grid-link {
+        &:hover {
+
+        }
+    }
+}
+
+.no-results-grid-min-height .ag-root-wrapper {
+    min-height: 150px;
+}
+
+.overflow-visible .ag-root-wrapper,
+.overflow-visible .mat-tab-body-wrapper,
+.overflow-visible .mat-tab-body-content {
+    overflow: visible !important;
+}
+.ag-row-disable {
+    pointer-events: none;
+}
+
+.warning-ag-cell {
+    background-color: #f32121;
+}
+.all-good-ag-cell {
+    background-color: #63e263;
+}
+
+.ag-row-pinned {
+    app-grid-checkbox {
+        display: none !important;
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "outputPath": "",
+    "parameters": {
+        "RootNamespace": "SurgeonPortal",
+        "Title": "SurgeonPortal",
+        "Language" : "C#"
+    },
+    "mappings": {
+    }
+}

@@ -1,0 +1,38 @@
+using AutoMapper;
+using Ytg.AspNetCore.Models;
+using Ytg.Framework.Csla;
+using Ytg.Framework.IoC;
+using static SurgeonPortal.Api.Startup;
+
+namespace SurgeonPortal.Api
+{
+    public class AutoMapperProfile<TProvider, TResolver> : Profile
+        where TProvider : IConventionProvider, new()
+        where TResolver : IConventionResolver, new()
+    {
+        public AutoMapperProfile()
+        {
+            CreateMap(typeof(IPagination), typeof(PaginationModel<>));
+
+            new ModelConventionMapperBase()
+                .Map<TProvider, TResolver>(this);
+        }
+
+        public void Map(Profile profile)
+        {
+            var provider = new TProvider();
+            var resolver = new TResolver();
+
+            foreach (var serviceType in provider.GetServiceTypes())
+            {
+                var implementationType = resolver.GetImplementationType(serviceType);
+                if (implementationType == null)
+                {
+                    continue;
+                }
+
+                profile.CreateMap(serviceType, implementationType);
+            }
+        }
+    }
+}

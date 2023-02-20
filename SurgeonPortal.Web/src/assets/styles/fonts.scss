@@ -1,0 +1,50 @@
+// Font Family Name
+$font-primary: 'Neue Haas Grotesk';
+
+// Font Weights
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$font-weight-dark: 900;
+
+// Font Sizes
+$font-size-xxsmall: 10px;
+$font-size-xsmall: 12px;
+$font-size-small: 14px;
+$font-size-normal: 16px;
+$font-size-medium: 18px;
+$font-size-large: 24px;
+
+// Font Sizes (for framework icons)
+$icon-small: 18px;
+$icon-normal: 24px;
+$icon-large: 36px;
+$icon-xlarge: 46px;
+$icon-jumbo: 125px;
+
+// Font Resources for Text
+$font-standard-text-regular-otf: '../fonts/NHaasGroteskTXStd-55Rg.otf';
+$font-standard-text-medium-otf: '../fonts/NHaasGroteskTXStd-65Md.otf';
+$font-standard-text-bold-otf: '../fonts/NHaasGroteskTXStd-75Bd.otf';
+$font-standard-text-regular-ttf: '../fonts/NHaasGroteskTXStd-55Rg.ttf';
+$font-standard-text-medium-ttf: '../fonts/NHaasGroteskTXStd-65Md.ttf';
+$font-standard-text-bold-ttf: '../fonts/NHaasGroteskTXStd-75Bd.ttf';
+
+// Font Resources for Display
+$font-standard-display-light-otf: '../fonts/NHaasGroteskDSStd-45Lt.otf';
+$font-standard-display-regular-otf: '../fonts/NHaasGroteskDSStd-55Rg.otf';
+$font-standard-display-medium-otf: '../fonts/NHaasGroteskTXStd-65Md.otf';
+$font-standard-display-bold-otf: '../fonts/NHaasGroteskTXStd-75Bd.otf';
+$font-standard-display-light-ttf: '../fonts/NHaasGroteskDSStd-45Lt.ttf';
+$font-standard-display-regular-ttf: '../fonts/NHaasGroteskDSStd-55Rg.ttf';
+$font-standard-display-medium-ttf: '../fonts/NHaasGroteskTXStd-65Md.ttf';
+$font-standard-display-bold-ttf: '../fonts/NHaasGroteskTXStd-75Bd.ttf';
+
+// Application Font
+@font-face {
+  font-family: $font-primary;
+  src: 
+    url($font-standard-text-regular-otf) format('opentype'),
+    url($font-standard-text-regular-ttf) format('truetype');
+}

@@ -1,0 +1,123 @@
+@import 'src/assets/themes/colors.scss';
+@import 'src/assets/styles/fonts.scss';
+
+/* Margins */
+.margin-top-small {margin-top: 10px;}
+.margin-bottom-small {margin-bottom: 10px;}
+.margin-left-small {margin-left: 10px;}
+.margin-right-small {margin-right: 10px;}
+.margin-top-normal {margin-top: 20px;}
+.margin-bottom-normal {margin-bottom: 20px;}
+.margin-left-normal {margin-left: 20px;}
+.margin-right-normal {margin-right: 20px;}
+.margin-top-large {margin-top: 30px;}
+.margin-bottom-large {margin-bottom: 30px;}
+.margin-left-large {margin-left: 30px;}
+.margin-right-large {margin-right: 30px;}
+
+/* Padding */
+.padding-top-normal {padding-top: 20px;}
+.padding-bottom-normal {padding-bottom: 20px;}
+.padding-left-normal {padding-left: 20px;}
+.padding-right-normal {padding-right: 20px;}
+
+/* Borders */
+.border-all-none {border: 0 none !important;}
+.border-all-white {border: 1px solid #FFF;}
+.border-all-light {border: 1px solid #EEE;}
+.border-left-light {border-left: 1px solid #EEE;}
+.border-right-light {border-right: 1px solid #EEE;}
+.border-top-light {border-top: 1px solid #EEE;}
+.border-bottom-light {border-bottom: 1px solid #EEE;}
+.border-all-medium {border: 1px solid #CCC;}
+.border-left-medium {border-left: 1px solid #CCC;}
+.border-right-medium {border-right: 1px solid #CCC;}
+.border-top-medium {border-top: 1px solid #CCC;}
+.border-bottom-medium {border-bottom: 1px solid #CCC;}
+.border-all-dark {border: 1px solid #AAA;}
+.border-left-dark {border-left: 1px solid #AAA;}
+.border-right-dark {border-right: 1px solid #AAA;}
+.border-top-dark {border-top: 1px solid #AAA;}
+.border-bottom-dark {border-bottom: 1px solid #AAA;}
+.border-box-shadow {-webkit-box-shadow: 0px 0px 21px -3px rgba(0, 0, 0, .6); box-shadow: 0px 0px 21px -3px rgba(0, 0, 0, .6);}
+
+/* Border Colors */
+.bc-white {border-color: #FFF !important;}
+.bc-black {border-color: #000 !important;}
+.bc-grey {border-color: #E9E9E9 !important;}
+.bc-red {border-color: #CC0033 !important;}
+.bc-blue {border-color: #2CB1E9 !important;}
+.bc-yellow {border-color: #FFC20A !important;}
+.bc-orange {border-color: #E8B210 !important;}
+.bc-green {border-color: #04846D !important;}
+.bc-purple {border-color: #BA3D66 !important;}
+.bc-pale-grey {border-color: #F6F6F6 !important;}
+.bc-light-grey {border-color: #EEE !important;}
+.bc-light-blue {border-color: #4775FF !important;}
+.bc-light-green {border-color: #0CD72F;}
+
+/* Border Corners */
+.rounded-corners-all-small {border-radius: 8px;}
+.rounded-corners-top-left-small {border-top-left-radius: 8px;}
+.rounded-corners-top-right-small {border-top-right-radius: 8px;}
+.rounded-corners-bottom-left-small {border-bottom-left-radius: 8px;}
+.rounded-corners-bottom-right-small {border-bottom-right-radius: 8px;}
+
+/* Text Transformations */
+.strong {font-weight: 700;}
+.italic {font-style: italic;}
+.unstyled {font-weight: 200; text-decoration: none;}
+.underline {text-decoration: underline;}
+.uppercase {text-transform: uppercase !important;}
+.lowercase {text-transform: lowercase !important;}
+.small-caps {font-variant: small-caps !important;}
+.monospace {font-family: monospace !important;}
+.condensed {letter-spacing: -1px !important;}
+.text-shadow-light {text-shadow: 0 1px 1px #FFF;}
+.text-shadow-dark {text-shadow: 0 2px 1px #747373;}
+.subscript {vertical-align: sub; font-size: 75%; line-height: 0.75;}
+.superscript {vertical-align: super; font-size: 75%; line-height: 0.75;}
+.text-rotate-right {transform: rotate(90deg); white-space: nowrap; letter-spacing: .06em;}
+.text-rotate-left {transform: rotate(-90deg); white-space: nowrap; letter-spacing: .06em;}
+
+/* Page Icons */
+.main-icon {
+    $icon-size-list: (
+        small $icon-small,
+        normal $icon-normal,
+        large $icon-large,
+        jumbo $icon-jumbo
+    );
+
+    @each $value in $icon-size-list {
+        $selector: nth($value, 1);
+        $size: #{nth($value, 2)};
+        &-#{$selector} {
+            .mat-icon {
+                font-size: $size;
+                height: $size;
+                width: $size;
+                color: $theme-main-icon;
+                background-color: $theme-main-icon-background;
+                border: 1px solid $theme-main-icon-border;
+                border-radius: 50%;
+                text-align: center;
+                padding: 0.25em;
+                margin-right: unset;
+                opacity: 0.5;
+                transition: all 0.25s ease-in-out;
+                &:hover {
+                    opacity: 1.00;
+                    transition: all 0.5s ease-in-out;
+                }
+            }
+            p {
+                font-size: $font-size-medium;
+                font-weight: 900;
+            }            
+        }
+    }
+}
+
+/* Miscellaneous */
+.hover {cursor: pointer;}
