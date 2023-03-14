@@ -360,3 +360,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/SurgeonPortal.Api/Properties/launchSettings.json
+/SurgeonPortal.Api/appsettingsDev.json
