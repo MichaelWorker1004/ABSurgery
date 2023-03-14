@@ -1,0 +1,62 @@
+<header>
+  <h1>My Account</h1>
+</header>
+<ng-container *ngIf="user$ | async as userAccount; else loading">
+  <section>
+    <div>
+      {{ userAccount.user.givenName }} {{ userAccount.user.surName }},
+      {{ userAccount.user.title }}
+    </div>
+    <div>{{ userAccount.user.email }}</div>
+    <div>{{ userAccount.user.status }}</div>
+  </section>
+  <section>
+    <header>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      </p>
+    </header>
+    <form id="myAccountForm">
+      <div>
+        <label>Email Address</label>
+        <input
+          id="email-address"
+          type="email"
+          value="{{ userAccount.user.email }}"
+        />
+      </div>
+      <div>
+        <label>Confirm Email Address</label>
+        <input id="confirm-email-address" type="email" />
+      </div>
+      <div>
+        <label>Password</label>
+        <input
+          id="password"
+          type="password"
+          value="{{ userAccount.user.password }}"
+        />
+      </div>
+      <div>
+        <label for="confirm-password">Confirm Password</label>
+        <input id="confirm-password" type="password" />
+      </div>
+      <div>
+        <input
+          id="subscribe"
+          type="checkbox"
+          [checked]="userAccount.user.mailingList"
+        />
+        <label for="subscribe">Receive ABS Emails / Newsletters?</label>
+      </div>
+      <div>
+        <button type="reset">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </section>
+</ng-container>
+
+<ng-template #loading> loading... </ng-template>

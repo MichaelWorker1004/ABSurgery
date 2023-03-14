@@ -1,0 +1,40 @@
+{
+  "refs": {},
+  "name": "Users\\UserToken",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "Token",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "ExpiresAt",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 27,
+      "scale": 7,
+      "isNullable": false,
+      "isIdentityColumn": false
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Users\\UserToken -sp=[dbo].[get_usertoken_getactive] -cn=ABSSP-Dev ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-09T19:04:02.973332Z"
+  },
+  "version": 1
+}

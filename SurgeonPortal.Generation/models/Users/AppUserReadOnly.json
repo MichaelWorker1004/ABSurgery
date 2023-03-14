@@ -1,0 +1,52 @@
+{
+  "refs": {},
+  "name": "Users\\AppUserReadOnly",
+  "description": "This is the application user model for ABS apps",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "FullName",
+      "dataType": "string",
+      "maxLength": 71,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Title",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "EmailAddress",
+      "dataType": "string",
+      "maxLength": 320,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    }
+  ],
+  "metadata": {
+    "command": "ytgim generate models fromSp Users\\AppUserReadOnly -sp [dbo].[get_userlogin] -cn ABSSP -d \u0022This is the application user model for ABS apps\u0022-f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-09T22:09:14.5572296Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,35 @@
+<abs-login *ngIf="isLogIn; else site"></abs-login>
+<ng-template #site>
+  <aside>
+    <nav>
+      <ul class="main-navigation">
+        <li>
+          <a routerLink="dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li>
+          <a routerLink="person-profile" routerLinkActive="active">
+            Personal Profile
+          </a>
+        </li>
+        <li>
+          <a routerLink="medical-training" routerLinkActive="active">
+            Medical Training
+          </a>
+        </li>
+        <li>
+          <a routerLink="gme-history" routerLinkActive="active">GME History</a>
+        </li>
+        <li>
+          <a routerLink="documents" routerLinkActive="active">Documents</a>
+        </li>
+      </ul>
+    </nav>
+    <nav>
+      <button (click)="router.navigateByUrl('my-account')">My Account</button>
+      <button>Logout</button>
+    </nav>
+  </aside>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</ng-template>

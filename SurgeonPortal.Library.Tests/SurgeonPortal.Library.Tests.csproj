@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+	<PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
+	<PackageReference Include="Ytg.Analyzers" Version="1.0.3">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="Ytg.Framework" Version="6.0.9" />
+	<PackageReference Include="Ytg.UnitTest" Version="6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SurgeonPortal.DataAccess.Contracts\SurgeonPortal.DataAccess.Contracts.csproj" />
+    <ProjectReference Include="..\SurgeonPortal.Library.Contracts\SurgeonPortal.Library.Contracts.csproj" />
+    <ProjectReference Include="..\SurgeonPortal.Library\SurgeonPortal.Library.csproj" />
+  </ItemGroup>
+
+</Project>

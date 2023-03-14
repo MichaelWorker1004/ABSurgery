@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ytg.Framework" Version="6.0.9" />
+    <PackageReference Include="Ytg.Framework.Sql" Version="6.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SurgeonPortal.DataAccess.Contracts\SurgeonPortal.DataAccess.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

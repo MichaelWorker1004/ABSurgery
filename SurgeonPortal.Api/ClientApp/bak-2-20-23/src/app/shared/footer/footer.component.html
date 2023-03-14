@@ -1,0 +1,18 @@
+<footer class="footer" fxLayout="row" fxLayoutAlign="space-between center">
+  <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="5px">
+    <a href="http://www.kultera.com" target="_blank"
+      ><img class="logo" src="assets/images/logo-white.png"
+    /></a>
+    <a class="hyperlink" href="http://www.kultera.com" target="_blank"
+      >Powered by Kultera</a
+    >
+  </div>
+  <div>
+    &#169; 2021 ODN Tracker
+    {{ environmentStatus ? ' (' + environmentStatus + ')' : '' }}
+  </div>
+  <a class="hyperlink" href="{{ supportUrl }}" target="_blank"
+    ><mat-icon class="margin-right-small">contact_phone</mat-icon> Contact
+    Support</a
+  >
+</footer>

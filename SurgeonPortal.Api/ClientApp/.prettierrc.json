@@ -1,0 +1,25 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": ["packages/**/docs/rules/*.md"],
+      "options": {
+        "embeddedLanguageFormatting": "off"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "options": {
+        "parser": "html"
+      }
+    },
+    {
+      "files": ["*.component.html"],
+      "options": {
+        "parser": "angular"
+      }
+    }
+  ]
+}

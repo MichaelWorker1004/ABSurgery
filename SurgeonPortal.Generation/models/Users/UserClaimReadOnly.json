@@ -1,0 +1,103 @@
+{
+  "refs": {},
+  "name": "Users\\UserClaimReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ClaimName",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "ApplicationId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "ApplicationName",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "UserClaimId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": true
+    },
+    {
+      "name": "ApplicationClaimId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "CreatedAtUtc",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LastUpdatedAtUtc",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Users\\UserClaimReadOnly -sp [dbo].[get_user_claims] -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-10T17:27:18.4212654Z"
+  },
+  "version": 1
+}
