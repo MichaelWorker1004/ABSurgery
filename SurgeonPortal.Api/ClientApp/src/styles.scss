@@ -1,0 +1,60 @@
+/* Please avoid using global styles unless there is no other way! */
+
+:root {
+  /* Colors from XD: */
+  --unnamed-color-e5eff1: #e5eff1;
+  --required: #8b040a;
+  --unnamed-color-f4f4f4: #f4f4f4;
+  --text-input-color: #7f7f7f;
+  --primary: #1f3758;
+  --secondary: #69e1dd;
+  --tertiary: #dbad6a;
+  --action: #1c827d;
+  --gray: #595959;
+  --black: #2a2a2a;
+  --unnamed-color-d7d7d7: #d7d7d7;
+}
+
+/*
+Fonts:
+Proxima Nova, Regular  -  14px
+Font Family: Proxima Nova
+Font Weight: Regular
+Font Size: 17px
+Color: #7F7F7F
+Character Spacing: 0<
+Line Spacing: 17
+
+Proxima Nova, Regular  -  14px
+Font Family: Proxima Nova
+Font Weight: Regular
+Font Size: 14px
+Color: #FFFFFF
+Character Spacing: 0<
+Line Spacing: 17
+
+Fonts:
+Proxima Nova, Regular  -  14px
+Font Family: Proxima Nova
+Font Weight: Bold
+Font Size: 14px
+Color: #FFFFFF
+Character Spacing: 0
+Line Spacing: 17
+
+
+ */
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+}
+body {
+  padding: 0;
+  margin: 0;
+  border: none;
+}

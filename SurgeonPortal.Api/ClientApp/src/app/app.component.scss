@@ -1,0 +1,24 @@
+:host {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'navigation main';
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  aside {
+    grid-area: navigation;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 1rem;
+  }
+  main {
+    grid-area: main;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+  }
+}

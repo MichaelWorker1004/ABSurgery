@@ -1,0 +1,15 @@
+@import 'src/assets/themes/colors.scss';
+@import 'src/assets/styles/fonts.scss';
+@import 'src/assets/styles/nav-menus.scss';
+
+.app-header {
+  padding: 30px 20px 30px 20px;
+  background-color: $theme-app-header-background;
+}
+
+.subtitle {
+  margin-top: 5px;
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+  color: $theme-app-header-text;
+}

@@ -13,19 +13,25 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
+using SurgeonPortal.Api.Configuration;
+using SurgeonPortal.Api.Extensions;
+using SurgeonPortal.Api.Identity;
+using SurgeonPortal.DataAccess;
+using SurgeonPortal.DataAccess.Contracts;
+using SurgeonPortal.DataAccess.Contracts.Identity;
+using SurgeonPortal.Library;
+using SurgeonPortal.Library.Contracts;
+using SurgeonPortal.Models;
 using System.Text;
 using System.Text.Json;
 using Ytg.AspNetCore.Configuration;
 using Ytg.AspNetCore.Filters;
 using Ytg.AspNetCore.Helpers;
 using Ytg.AspNetCore.Middleware;
+using Ytg.AspNetCore.Models;
 using Ytg.AspNetCore.Swagger;
 using Ytg.Framework.ConnectionManager;
 using Ytg.Framework.Csla;
@@ -59,7 +65,8 @@ namespace SurgeonPortal.Api
 
             services.AddCors(options =>
                 options.AddPolicy("cors", policy => policy
-                    .WithOrigins("http://localhost:4200")
+                    .WithOrigins("http://localhost:4200",
+                                 "https://localhost:5001")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
@@ -77,9 +84,18 @@ namespace SurgeonPortal.Api
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     options.JsonSerializerOptions.Converters.Add(new UtcDateTimeConverter());
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
                     options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
                     options.JsonSerializerOptions.WriteIndented = true;
+                });
+
+            services.AddApiVersioning(
+                options =>
+                {
+                    options.ReportApiVersions = true;
+                    options.UseApiBehavior = false;
+                    options.DefaultApiVersion = new ApiVersion(1, 0);
+                    options.AssumeDefaultVersionWhenUnspecified = true;
                 });
 
             ConfigureSwagger(services);
@@ -89,11 +105,14 @@ namespace SurgeonPortal.Api
             services.AddSingleton<AutoMapper.IConfigurationProvider>(GetAutoMapperConfiguration());
             services.AddTransient<IPagination, Pagination>();
             services.AddTransient<IMapper, Mapper>();
-            services.AddTransient<IIdentityProvider, ClaimsIdentityProvider>();
+            services.AddTransient<IIdentityProvider, HttpContextIdentityProvider>();
+            services.AddTransient<IAbsIdentityProvider, HttpContextIdentityProvider>();
             services.AddTransient<IAbsoluteUriProvider, AbsoluteUriProvider>();
 
             services.RegisterByConvention<LibraryConventionProvider, LibraryConventionResolver>();
             services.RegisterByConvention<DataAccessConventionProvider, DataAccessConventionResolver>();
+
+            var tokenConfig = Configuration.GetSection(ConfigurationSections.Tokens).Get<TokensConfiguration>();
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -102,7 +121,7 @@ namespace SurgeonPortal.Api
                     config.RequireHttpsMetadata = false;
                     config.SaveToken = true;
 
-                    var tokenConfig = Configuration.GetSection(ConfigurationSections.Tokens).Get<TokensConfiguration>();
+                    
                     config.TokenValidationParameters =
                         new TokenValidationParameters
                         {
@@ -144,8 +163,26 @@ namespace SurgeonPortal.Api
             app.UseSwaggerUI(c =>
             {
                 var siteConfig = Configuration.GetSection(ConfigurationSections.Site).Get<SiteConfiguration>();
+                var routePrefix = "";
+                if (!string.IsNullOrWhiteSpace(siteConfig.VirtualDirectoryPath))
+                {
+                    routePrefix = siteConfig.VirtualDirectoryPath;
+
+                    if (!routePrefix.StartsWith("/"))
+                    {
+                        routePrefix = "/" + routePrefix;
+                    }
+                    if (routePrefix.EndsWith("/"))
+                    {
+                        routePrefix = routePrefix.Substring(0, routePrefix.Length - 1);
+                    }
+                }
+
+                c.SwaggerEndpoint($"{routePrefix}/swagger/v1/swagger.json", "SurgeonPortal API v1.0");
+
+                
                 c.SwaggerEndpointWithVirtualDirectory(siteConfig?.VirtualDirectoryPath, "SurgeonPortal API v1.0");
-                 c.RoutePrefix = "swagger";
+                 c.RoutePrefix = routePrefix;
             });
 
             app.UseCslaAuthenticationWrapper();
@@ -212,6 +249,17 @@ namespace SurgeonPortal.Api
             {
                 config.AddProfile<ConventionAutoMapperProfile<LibraryConventionProvider, ModelConventionResolver>>();
             });
+        }
+
+        private class ApiExplorerGroupPerVersionConvention : IControllerModelConvention
+        {
+            public void Apply(ControllerModel controller)
+            {
+                var controllerNamespace = controller.ControllerType.Namespace; // e.g. "Controllers.v1"
+                var apiVersion = controllerNamespace?.Split('.').Last().ToLower();
+
+                controller.ApiExplorer.GroupName = apiVersion;
+            }
         }
 
         public class ModelConventionMapperBase

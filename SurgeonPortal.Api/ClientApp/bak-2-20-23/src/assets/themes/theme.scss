@@ -1,0 +1,28 @@
+@import '~@angular/material/theming';
+@import 'src/assets/themes/colors.scss';
+@import 'src/assets/themes/palettes.scss';
+@import 'src/assets/styles/fonts.scss';
+
+// Set the theme font
+$custom-typography: mat-typography-config(
+  $font-family: $font-primary,
+);
+
+// Apply the font to the theme
+@include mat-core($custom-typography);
+
+// Define the theme color scheme
+$app-theme-primary: mat-palette($palette-primary);
+$app-theme-accent: mat-palette($palette-accent, 500, 300, 700);
+$app-theme-error: mat-palette($palette-error);
+
+// Set the theme
+$app-theme: mat-light-theme(
+  $app-theme-primary,
+  $app-theme-accent,
+  $app-theme-error
+);
+// $app-theme: mat-dark-theme($app-primary, $app-accent, $app-error);
+
+// Apply the theme
+@include angular-material-theme($app-theme);

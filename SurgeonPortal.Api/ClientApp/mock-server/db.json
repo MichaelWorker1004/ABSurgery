@@ -1,0 +1,30 @@
+{
+  "userAccount": {
+    "data": {
+      "userAccount": {
+        "user": {
+          "id": "1242433H55",
+          "givenName": "Bob",
+          "surName": "Doe",
+          "title": "MD",
+          "email": "john.doe@abs.org",
+          "status": "Retired",
+          "locale": "en-US",
+          "Address": {
+            "street": "123 Someway Ct",
+            "city": "Anywhere",
+            "state": "TX",
+            "postalCode": "12345"
+          },
+          "termsAccepted": true,
+          "mailingList": true,
+          "password": "asldfkjasdlfkjasldkfj"
+        }
+      },
+      "validationErrors": {
+        "emailMatch": "Email fields must match",
+        "passwordMatch": "Passwords must match"
+      }
+    }
+  }
+}

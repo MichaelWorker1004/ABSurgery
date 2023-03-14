@@ -1,5 +1,6 @@
 {
     "outputPath": "",
+    "mergeTool": "C:\\Program Files\\WinMerge\\WinMergeU.exe",
     "parameters": {
         "RootNamespace": "SurgeonPortal",
         "Title": "SurgeonPortal",

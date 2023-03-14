@@ -1,0 +1,87 @@
+{
+  "name": "UserToken",
+  "implementationName": "Users\\UserToken-getactive",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_usertoken_getactive",
+    "IncludeControllerInGeneration": "false",
+    "FetchMethodName": "GetActive",
+    "IsChild": "False",
+    "IsRoot": "True",
+    "Model": "Users\\UserToken",
+    "ModelGroup": "UserToken",
+    "RootNamespace": "$project.RootNamespace"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_usertoken_getactive",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_usertoken_getactive]",
+        "parameters": [
+          {
+            "name": "Token",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Token"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Users\\UserToken",
+            "fields": [
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "Token",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Token"
+              },
+              {
+                "name": "ExpiresAt",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 27,
+                "scale": 7,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExpiresAt"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Token",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Users\\UserToken-getactive Users\\UserToken -t=ytg-framework\\editable-get -p:Model=Users\\UserToken -p:Adapter=sp:ABSSP-[dbo].[get_usertoken_getactive] -p:FetchMethodName=GetActive -p:IsChild=False -p:IsRoot=True -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserToken -p:Route=active -p:ControllerName=Users\\UserTokensController -p:ControllerRoute=users\\user-tokens -p:ControllerVersion=1 ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-09T19:15:04.6658225Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,172 @@
+{
+  "name": "UserClaimReadOnly",
+  "implementationName": "Users\\UserClaimReadOnly-getbyuserid",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_user_claims",
+    "FetchMethodName": "GetByIds",
+    "IncludeControllerInGeneration": "False",
+    "IsChild": "True",
+    "IsRoot": "false",
+    "Model": "Users\\UserClaimReadOnly",
+    "ModelGroup": "UserClaimReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_claims",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_claims]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ApplicationId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ApplicationId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Users\\UserClaimReadOnly",
+            "fields": [
+              {
+                "name": "ClaimName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClaimName"
+              },
+              {
+                "name": "ApplicationId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ApplicationId"
+              },
+              {
+                "name": "ApplicationName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ApplicationName"
+              },
+              {
+                "name": "UserClaimId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.UserClaimId"
+              },
+              {
+                "name": "ApplicationClaimId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ApplicationClaimId"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ApplicationId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Users\\UserClaimReadOnly-getbyuserid UserClaimReadOnly -t=ytg-framework/readonly-getlist -p:Model=Users\\UserClaimReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_claims] -p:ModelGroup=UserClaimReadOnly -p:RootNamespace=$project.RootNamespace -p:FetchMethodName=GetByIds -p:IncludeControllerInGeneration=False -p:IsChild=True -p:IsRoot=false ",
+    "inferredCommand": "ytgim generate i  Users\\UserClaimReadOnly-getbyuserid UserClaimReadOnly -t=ytg-framework/readonly-getlist -p:Model=Users\\UserClaimReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_claims] -p:ModelGroup=UserClaimReadOnly -p:RootNamespace=$project.RootNamespace -p:FetchMethodName=GetByIds -p:IncludeControllerInGeneration=False -p:IsChild=True -p:IsRoot=false -p:UsePaginatedList=false",
+    "generatedDateUtc": "2023-03-10T17:30:29.1054752Z"
+  },
+  "version": 1
+}

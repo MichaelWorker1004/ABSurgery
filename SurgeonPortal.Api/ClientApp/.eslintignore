@@ -1,0 +1,9 @@
+node_modules
+dist
+jest.config.js
+fixtures
+coverage
+__snapshots__
+projects/ytg-n/src/lib/legacy
+scripts
+

@@ -1,0 +1,97 @@
+{
+  "name": "AppUserReadOnly",
+  "implementationName": "Users\\AppUserReadOnly-getbytoken",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_user_bytoken",
+    "FetchMethodName": "GetByToken",
+    "IncludeControllerInGeneration": "False",
+    "IsChild": "False",
+    "IsRoot": "True",
+    "Model": "Users\\AppUserReadOnly",
+    "ModelGroup": "AppUserReadOnly",
+    "RootNamespace": "$project.RootNamespace"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_bytoken",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_bytoken]",
+        "parameters": [
+          {
+            "name": "Token",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Token"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Users\\AppUserReadOnly",
+            "fields": [
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "FullName",
+                "dataType": "string",
+                "maxLength": 71,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FullName"
+              },
+              {
+                "name": "Title",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Title"
+              },
+              {
+                "name": "EmailAddress",
+                "dataType": "string",
+                "maxLength": 320,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.EmailAddress"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Token",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-09T22:22:34.6513776Z"
+  },
+  "version": 1
+}
