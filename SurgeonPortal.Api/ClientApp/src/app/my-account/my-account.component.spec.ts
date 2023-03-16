@@ -2,8 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MyAccountComponent } from './my-account.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxsModule } from '@ngxs/store';
-import { AuthState } from '../state/auth/ngxs-auth.state';
+import { NgxsModule, Store } from '@ngxs/store';
+
+import { surgeonPortalState } from '../state/surgeon-portal.state';
+import { UserAccountService } from '../api/fake/user-account.service';
 
 describe('MyAccountComponent', () => {
   let component: MyAccountComponent;
@@ -13,9 +15,10 @@ describe('MyAccountComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        NgxsModule.forRoot([AuthState]),
+        NgxsModule.forRoot(surgeonPortalState),
         MyAccountComponent,
       ],
+      providers: [UserAccountService, Store],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MyAccountComponent);

@@ -105,7 +105,7 @@ namespace SurgeonPortal.Library.Users
             LoadProperty(EmailAddressProperty, dto.EmailAddress);
 
             LoadProperty(ClaimsProperty, DataPortal.FetchChild<UserClaimReadOnlyList>(dto.Claims));
-        } 
+		} 
         
     }
 }

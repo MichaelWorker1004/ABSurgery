@@ -1,5 +1,5 @@
 .user-information-card {
-  background-color: var(--primary);
+  background-color: var(--global-primary);
   color: white;
   padding: 2rem 2rem 4rem;
   border-radius: 6px;
@@ -21,13 +21,13 @@
         margin-right: 3px;
         &.active {
           &.one {
-            background-color: var(--required);
+            background-color: var(--global-danger);
           }
           &.two {
-            background-color: var(--tertiary);
+            background-color: var(--global-warning);
           }
           &.three {
-            background-color: var(--secondary);
+            background-color: var(--global-secondary);
           }
         }
       }

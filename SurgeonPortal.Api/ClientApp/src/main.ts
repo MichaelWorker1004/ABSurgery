@@ -5,8 +5,6 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 // import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 // import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin';
-import { MyAccountState } from './app/state/my-account/my-account.state';
-import { SimpleValueState } from './app/state/simple-value.state';
 import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from './app/app-routing.module';
 import {
@@ -14,18 +12,19 @@ import {
   provideHttpClient,
 } from '@angular/common/http';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { surgeonPortalState } from './app/state/surgeon-portal.state';
 
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(
       BrowserModule,
       AppRoutingModule,
-      NgxsModule.forRoot([SimpleValueState, MyAccountState], {
-        developmentMode: false,
+      NgxsModule.forRoot(surgeonPortalState, {
+        developmentMode: true,
       }),
       NgxsStoragePluginModule.forRoot({
         storage: StorageOption.SessionStorage,
-        key: 'auth.token',
+        key: 'auth.access_token',
       }),
       // NgxsLoggerPluginModule.forRoot(),
       // NgxsReduxDevtoolsPluginModule.forRoot(),

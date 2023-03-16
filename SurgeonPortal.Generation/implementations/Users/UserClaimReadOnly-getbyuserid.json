@@ -104,46 +104,6 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.UserId"
-              },
-              {
-                "name": "CreatedByUserId",
-                "dataType": "int",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.CreatedByUserId"
-              },
-              {
-                "name": "CreatedAtUtc",
-                "dataType": "datetime",
-                "maxLength": 8,
-                "precision": 23,
-                "scale": 3,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.CreatedAtUtc"
-              },
-              {
-                "name": "LastUpdatedAtUtc",
-                "dataType": "datetime",
-                "maxLength": 8,
-                "precision": 23,
-                "scale": 3,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.LastUpdatedAtUtc"
-              },
-              {
-                "name": "LastUpdatedByUserId",
-                "dataType": "int",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.LastUpdatedByUserId"
               }
             ]
           }

@@ -1,50 +1,305 @@
 /* Please avoid using global styles unless there is no other way! */
 
 :root {
-  /* Colors from XD: */
-  --unnamed-color-e5eff1: #e5eff1;
-  --required: #8b040a;
-  --unnamed-color-f4f4f4: #f4f4f4;
-  --text-input-color: #7f7f7f;
-  --primary: #1f3758;
-  --secondary: #69e1dd;
-  --tertiary: #dbad6a;
-  --action: #1c827d;
-  --gray: #595959;
-  --black: #2a2a2a;
-  --unnamed-color-d7d7d7: #d7d7d7;
+  /* Shoelace Theme Import */
+  --sl-color-black: #1f3758;
+  --sl-color-white: #ffffff;
+  --sl-color-gray-50: #bdbdbd;
+  --sl-color-gray-100: #b9b9b9;
+  --sl-color-gray-200: #b0b0b0;
+  --sl-color-gray-300: #a2a2a2;
+  --sl-color-gray-400: #7f7f7f;
+  --sl-color-gray-500: #595959;
+  --sl-color-gray-600: #424242;
+  --sl-color-gray-700: #343434;
+  --sl-color-gray-800: #212121;
+  --sl-color-gray-900: #151515;
+  --sl-color-gray-950: #101010;
+  --sl-color-primary-50: #ffffff;
+  --sl-color-primary-100: #f7eee0;
+  --sl-color-primary-200: #f1dec3;
+  --sl-color-primary-300: #dbad6a;
+  --sl-color-primary-400: #eacea6;
+  --sl-color-primary-500: #dbad6a;
+  --sl-color-primary-600: #cf9239;
+  --sl-color-primary-700: #ae782a;
+  --sl-color-primary-800: #946724;
+  --sl-color-primary-900: #81591f;
+  --sl-color-primary-950: #523814;
+  --sl-color-primary-text: var(--sl-color-black);
+  --sl-color-success-50: #71e0db;
+  --sl-color-success-100: #65ded8;
+  --sl-color-success-200: #50d9d2;
+  --sl-color-success-300: #2dd2ca;
+  --sl-color-success-400: #24a7a0;
+  --sl-color-success-500: #1c827d;
+  --sl-color-success-600: #166864;
+  --sl-color-success-700: #125451;
+  --sl-color-success-800: #0f4543;
+  --sl-color-success-900: #0c3a38;
+  --sl-color-success-950: #082725;
+  --sl-color-success-text: var(--sl-color-white);
+  --sl-color-info-50: #f9fafb;
+  --sl-color-info-100: #f3f4f6;
+  --sl-color-info-200: #e5e7eb;
+  --sl-color-info-300: #d1d5db;
+  --sl-color-info-400: #9ca3af;
+  --sl-color-info-500: #6b7280;
+  --sl-color-info-600: #4b5563;
+  --sl-color-info-700: #374151;
+  --sl-color-info-800: #1f2937;
+  --sl-color-info-900: #111827;
+  --sl-color-info-950: #0d131e;
+  --sl-color-info-text: var(--sl-color-white);
+  --sl-color-warning-50: #ffffff;
+  --sl-color-warning-100: #ffffff;
+  --sl-color-warning-200: #fcf9f4;
+  --sl-color-warning-300: #edd6b5;
+  --sl-color-warning-400: #e3be8a;
+  --sl-color-warning-500: #dbad6a;
+  --sl-color-warning-600: #d39a48;
+  --sl-color-warning-700: #c1862f;
+  --sl-color-warning-800: #a47128;
+  --sl-color-warning-900: #8a5f21;
+  --sl-color-warning-950: #593d15;
+  --sl-color-warning-text: var(--sl-color-black);
+  --sl-color-danger-50: #e10610;
+  --sl-color-danger-100: #d90610;
+  --sl-color-danger-200: #ce060f;
+  --sl-color-danger-300: #bd050e;
+  --sl-color-danger-400: #a3050c;
+  --sl-color-danger-500: #8b040a;
+  --sl-color-danger-600: #750308;
+  --sl-color-danger-700: #600307;
+  --sl-color-danger-800: #510206;
+  --sl-color-danger-900: #470205;
+  --sl-color-danger-950: #280103;
+  --sl-color-danger-text: var(--sl-color-white);
+  --sl-border-radius-small: 0.125rem;
+  --sl-border-radius-medium: 0.4rem;
+  --sl-border-radius-large: 0.5rem;
+  --sl-border-radius-x-large: 1rem;
+  --sl-border-radius-circle: 50%;
+  --sl-border-radius-pill: 9999px;
+  --sl-shadow-x-small: 0 1px 0 #0d131e0d;
+  --sl-shadow-small: 0 1px 2px #0d131e1a;
+  --sl-shadow-medium: 0 2px 4px #0d131e1a;
+  --sl-shadow-large: 0 2px 8px #0d131e1a;
+  --sl-shadow-x-large: 0 4px 16px #0d131e1a;
+  --sl-spacing-xxx-small: 0.125rem;
+  --sl-spacing-xx-small: 0.25rem;
+  --sl-spacing-x-small: 0.5rem;
+  --sl-spacing-small: 0.75rem;
+  --sl-spacing-medium: 1rem;
+  --sl-spacing-large: 1.25rem;
+  --sl-spacing-x-large: 1.75rem;
+  --sl-spacing-xx-large: 2.25rem;
+  --sl-spacing-xxx-large: 3rem;
+  --sl-spacing-xxxx-large: 4.5rem;
+  --sl-transition-x-slow: 1000ms;
+  --sl-transition-slow: 500ms;
+  --sl-transition-medium: 250ms;
+  --sl-transition-fast: 150ms;
+  --sl-transition-x-fast: 50ms;
+  --sl-font-mono: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  --sl-font-sans: proxima-nova, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  --sl-font-serif: Georgia, 'Times New Roman', serif;
+  --sl-font-size-xx-small: 0.625rem;
+  --sl-font-size-x-small: 0.75rem;
+  --sl-font-size-small: 0.875rem;
+  --sl-font-size-medium: 1rem;
+  --sl-font-size-large: 1.25rem;
+  --sl-font-size-x-large: 1.5rem;
+  --sl-font-size-xx-large: 2.25rem;
+  --sl-font-size-xxx-large: 3rem;
+  --sl-font-size-xxxx-large: 4.5rem;
+  --sl-font-weight-light: 300;
+  --sl-font-weight-normal: 400;
+  --sl-font-weight-semibold: 500;
+  --sl-font-weight-bold: 700;
+  --sl-letter-spacing-dense: -0.015em;
+  --sl-letter-spacing-normal: normal;
+  --sl-letter-spacing-loose: 0.075em;
+  --sl-line-height-dense: 1.4;
+  --sl-line-height-normal: 1.8;
+  --sl-line-height-loose: 2.2;
+  --sl-focus-ring-color-primary: #0ea5e954;
+  --sl-focus-ring-color-success: #22c55e54;
+  --sl-focus-ring-color-info: #6b728054;
+  --sl-focus-ring-color-warning: #f59e0b54;
+  --sl-focus-ring-color-danger: #ef444454;
+  --sl-focus-ring-width: 3px;
+  --sl-button-font-size-small: var(--sl-font-size-x-small);
+  --sl-button-font-size-medium: var(--sl-font-size-small);
+  --sl-button-font-size-large: var(--sl-font-size-medium);
+  --sl-input-height-small: 1.875rem;
+  --sl-input-height-medium: 2.5rem;
+  --sl-input-height-large: 3.125rem;
+  --sl-input-background-color: var(--sl-color-white);
+  --sl-input-background-color-hover: var(--sl-color-white);
+  --sl-input-background-color-focus: var(--sl-color-white);
+  --sl-input-background-color-disabled: var(--sl-color-gray-100);
+  --sl-input-border-color: var(--sl-color-gray-300);
+  --sl-input-border-color-hover: var(--sl-color-gray-400);
+  --sl-input-border-color-focus: var(--sl-color-primary-500);
+  --sl-input-border-color-disabled: var(--sl-color-gray-300);
+  --sl-input-border-width: 1px;
+  --sl-input-border-radius-small: var(--sl-border-radius-medium);
+  --sl-input-border-radius-medium: var(--sl-border-radius-medium);
+  --sl-input-border-radius-large: var(--sl-border-radius-medium);
+  --sl-input-font-family: var(--sl-font-sans);
+  --sl-input-font-weight: var(--sl-font-weight-normal);
+  --sl-input-font-size-small: var(--sl-font-size-small);
+  --sl-input-font-size-medium: var(--sl-font-size-medium);
+  --sl-input-font-size-large: var(--sl-font-size-large);
+  --sl-input-letter-spacing: var(--sl-letter-spacing-normal);
+  --sl-input-color: var(--sl-color-gray-700);
+  --sl-input-color-hover: var(--sl-color-gray-700);
+  --sl-input-color-focus: var(--sl-color-gray-700);
+  --sl-input-color-disabled: var(--sl-color-gray-900);
+  --sl-input-icon-color: var(--sl-color-gray-400);
+  --sl-input-icon-color-hover: var(--sl-color-gray-600);
+  --sl-input-icon-color-focus: var(--sl-color-gray-600);
+  --sl-input-placeholder-color: var(--sl-color-gray-400);
+  --sl-input-placeholder-color-disabled: var(--sl-color-gray-600);
+  --sl-input-spacing-small: var(--sl-spacing-small);
+  --sl-input-spacing-medium: var(--sl-spacing-medium);
+  --sl-input-spacing-large: var(--sl-spacing-large);
+  --sl-input-label-font-size-small: var(--sl-font-size-small);
+  --sl-input-label-font-size-medium: var(--sl-font-size-medium);
+  --sl-input-label-font-size-large: var(--sl-font-size-large);
+  --sl-input-label-color: inherit;
+  --sl-input-help-text-font-size-small: var(--sl-font-size-x-small);
+  --sl-input-help-text-font-size-medium: var(--sl-font-size-small);
+  --sl-input-help-text-font-size-large: var(--sl-font-size-medium);
+  --sl-input-help-text-color: var(--sl-color-gray-400);
+  --sl-toggle-size: 1rem;
+  --sl-overlay-background-color: #1f3758d0;
+  --sl-panel-background-color: var(--sl-color-white);
+  --sl-panel-border-color: var(--sl-color-gray-200);
+  --sl-tooltip-border-radius: var(--sl-border-radius-medium);
+  --sl-tooltip-background-color: var(--sl-color-gray-900);
+  --sl-tooltip-color: var(--sl-color-white);
+  --sl-tooltip-font-family: var(--sl-font-sans);
+  --sl-tooltip-font-weight: var(--sl-font-weight-normal);
+  --sl-tooltip-font-size: var(--sl-font-size-small);
+  --sl-tooltip-line-height: var(--sl-line-height-dense);
+  --sl-tooltip-padding: var(--sl-spacing-xx-small) var(--sl-spacing-x-small);
+  --sl-tooltip-arrow-size: 5px;
+  --sl-tooltip-arrow-start-end-offset: 8px;
+  --sl-z-index-drawer: 700;
+  --sl-z-index-dialog: 800;
+  --sl-z-index-dropdown: 900;
+  --sl-z-index-toast: 950;
+  --sl-z-index-tooltip: 1000;
+
+  /* Global colors from XD Mockups: */
+  /* Global Color Palette */
+  --global-black: #2a2a2a;
+  --global-gray-dark: #595959;
+  --global-gray: #7f7f7f;
+  --global-gary-light: #d7d7d7;
+
+  --global-primary-lighten-60: #8babd6;
+  --global-primary-lighten-40: #5181c2;
+  --global-primary-lighten-20: #335b92;
+  --global-primary: #1f3758;
+  --global-primary-darken-20: #192c46;
+  --global-primary-darken-40: #132135;
+  --global-primary-darken-60: #0c1623;
+
+  --global-secondary-lighten-60: #c3f3f1;
+  --global-secondary-lighten-40: #a5edeb;
+  --global-secondary-lighten-20: #87e7e4;
+  --global-secondary: #69e1dd;
+  --global-secondary-darken-20: #32d6d1;
+  --global-secondary-darken-40: #21a5a1;
+  --global-secondary-darken-60: #166e6b;
+
+  --global-warning-lighten-60: #f1dec3;
+  --global-warning-lighten-40: #e9cea6;
+  --global-warning-lighten-20: #e2bd88;
+  --global-warning: #dbad6a;
+  --global-warning-darken-20: #ce9036;
+  --global-warning-darken-40: #9d6d26;
+  --global-warning-darken-60: #694819;
+
+  --global-success-lighten-60: #8be6e2;
+  --global-success-lighten-40: #51dad3;
+  --global-success-lighten-20: #28bcb5;
+  --global-success: #1c827d;
+  --global-success-darken-20: #166864;
+  --global-success-darken-40: #114e4b;
+  --global-success-darken-60: #0b3432;
+
+  --global-danger-lighten-60: #fb7076;
+  --global-danger-lighten-40: #f92932;
+  --global-danger-lighten-20: #d2060f;
+  --global-danger: #8b040a;
+  --global-danger-darken-20: #6f0308;
+  --global-danger-darken-40: #530206;
+  --global-danger-darken-60: #380204;
+
+  /* Global Text Colors */
+  --global-text-white: #fff;
+  --global-text-black: var(--global-black);
+  --global-text-primary: var(--global-primary);
+  --global-text-danger: var(--global-danger);
+  --global-text-success: var(--global-success);
+  --global-text-warning: var(--global-warning);
+  --global-text-input: var(--global-gray);
+
+  /* Global Misc Colors */
+  --global-modal-backdrop: #728db1;
+  --glbal-card-highlight: #e5eff1;
+  --global-table-background: #f4f4f4;
 }
 
-/*
-Fonts:
-Proxima Nova, Regular  -  14px
-Font Family: Proxima Nova
-Font Weight: Regular
-Font Size: 17px
-Color: #7F7F7F
-Character Spacing: 0<
-Line Spacing: 17
+/* Global Breakpoints */
+/* We can't use these as global css variables because var() can't be used in a media query string. */
+/* These can be used in this file and used as reference for any breakpoints that need to be added at a component level */
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
 
-Proxima Nova, Regular  -  14px
-Font Family: Proxima Nova
-Font Weight: Regular
-Font Size: 14px
-Color: #FFFFFF
-Character Spacing: 0<
-Line Spacing: 17
+/* Shoelace Overrides */
+sl-button::part(caret) {
+  color: var(--sl-color-primary-500);
+  width: 1.5rem;
+}
+sl-button::part(caret):hover {
+  color: var(--sl-color-primary-400);
+}
+sl-checkbox::part(checked-icon) {
+  color: var(--sl-color-black);
+}
+sl-radio::part(checked-icon) {
+  color: var(--sl-color-black);
+}
+sl-button[variant='primary']::part(label) {
+  color: var(--sl-color-black);
+}
+sl-button[variant='warning']::part(label) {
+  color: var(--sl-color-black);
+}
+sl-button[variant='text']::part(base) {
+  color: inherit;
+}
+sl-badge[variant='primary']::part(base) {
+  color: var(--sl-color-black);
+}
+sl-badge[variant='warning']::part(base) {
+  color: var(--sl-color-black);
+}
 
-Fonts:
-Proxima Nova, Regular  -  14px
-Font Family: Proxima Nova
-Font Weight: Bold
-Font Size: 14px
-Color: #FFFFFF
-Character Spacing: 0
-Line Spacing: 17
+/* Helper Classes */
+/* primarily using helper classes from PrimeFlex */
 
-
- */
-
+/* Global Styles */
 html {
   box-sizing: border-box;
 }
@@ -57,4 +312,101 @@ body {
   padding: 0;
   margin: 0;
   border: none;
+  font-family: 'proxima-nova', sans-serif;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 2.6rem;
+  margin: 1.75rem 0;
+}
+h2 {
+  font-size: 2rem;
+  line-height: 2.1rem;
+  margin: 1.5rem 0;
+}
+h3 {
+  font-size: 1.8rem;
+  line-height: 1.9rem;
+  margin: 1.5rem 0;
+}
+h4 {
+  font-size: 1.5rem;
+  line-height: 1.6rem;
+  margin: 1.25rem 0;
+}
+h5 {
+  font-size: 1.3rem;
+  line-height: 1.4rem;
+  margin: 1rem 0;
+}
+h6 {
+  font-size: 1.1rem;
+  line-height: 1.2rem;
+  margin: 1rem 0;
+}
+p {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+.app-content {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  background: transparent
+    linear-gradient(180deg, rgba(114, 141, 177, 0.15) 0%, #ffffff 100%) 0% 0%
+    no-repeat padding-box;
+  color: var(--global-text-primary);
+}
+.login-content {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--global-primary);
+  color: var(--global-text-white);
+}
+.app-container-fluid {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* This currently recreates the basic functionality of a bootstrap container, we may need to update this to work better with the side nav component */
+.app-container {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Global Breakpoints */
+@media (max-width: $breakpoint-sm) {
+  .app-container {
+    max-width: 100%;
+  }
+}
+@media (min-width: $breakpoint-sm) and (min-width: $breakpoint-md) {
+  .app-container {
+    max-width: 540px;
+  }
+}
+@media only screen and (min-width: $breakpoint-md) and (min-width: $breakpoint-lg) {
+  .app-container {
+    max-width: 720px;
+  }
+}
+@media only screen and (min-width: $breakpoint-lg) and (min-width: $breakpoint-xl) {
+  .app-container {
+    max-width: 960px;
+  }
+}
+@media only screen and (min-width: $breakpoint-xl) and (min-width: $breakpoint-xxl) {
+  .app-container {
+    max-width: 1140px;
+  }
+}
+@media only screen and (min-width: $breakpoint-xxl) {
+  .app-container {
+    max-width: 1320px;
+  }
 }

@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { AuthState } from './ngxs-auth.state';
+import { AuthState } from '../ngxs-auth.state';
 
 interface CanActivate {
   canActivate(

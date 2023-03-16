@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserAccountService } from '../api/services/user-account.service';
+import { UserAccountService } from '../api/fake/user-account.service';
 import { IUserAccountModel } from '../api/models/user-account.model';
 import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';

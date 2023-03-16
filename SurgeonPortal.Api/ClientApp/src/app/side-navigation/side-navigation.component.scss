@@ -3,7 +3,7 @@ img {
 }
 
 h1 {
-  color: var(--primary);
+  color: var(--global-primary);
   text-transform: uppercase;
   font-size: 1.35rem;
 }
@@ -22,7 +22,7 @@ h1 {
     display: block;
     height: 5px;
     width: 3rem;
-    background-color: var(--primary);
+    background-color: var(--global-primary);
     transition: 250ms ease-in-out;
     margin-bottom: 5px;
     &:first-child {
@@ -35,7 +35,7 @@ h1 {
   }
   &:hover {
     span {
-      background-color: var(--tertiary);
+      background-color: var(--global-warning);
     }
   }
 }
@@ -85,7 +85,7 @@ nav {
         align-items: center;
         position: relative;
         font-size: 1.25rem;
-        color: var(--primary);
+        color: var(--global-primary);
         font-weight: bold;
         width: 100%;
         &::after {
@@ -107,10 +107,10 @@ nav {
         &:hover,
         &.active {
           i {
-            color: var(--tertiary);
+            color: var(--global-warning);
           }
           &::after {
-            background-color: var(--tertiary);
+            background-color: var(--global-warning);
           }
         }
       }
@@ -119,13 +119,13 @@ nav {
 }
 
 .lower-nav {
-  color: var(--primary);
+  color: var(--global-primary);
   font-weight: bold;
   button {
     background: none;
     border: none;
     font-size: 1.25rem;
-    color: var(--primary);
+    color: var(--global-primary);
     font-weight: bold;
     font-family: 'proxima-nova', sans-serif;
     cursor: pointer;
@@ -135,7 +135,7 @@ nav {
     }
     &:hover {
       i {
-        color: var(--tertiary);
+        color: var(--global-warning);
       }
     }
   }

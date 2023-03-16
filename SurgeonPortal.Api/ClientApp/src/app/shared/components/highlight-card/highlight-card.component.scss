@@ -5,9 +5,9 @@
   display: flex;
   height: 100%;
   &.alert {
-    border-right: 10px solid var(--required);
+    border-right: 10px solid var(--global-danger);
     .title {
-      color: var(--required);
+      color: var(--global-danger);
     }
   }
   .alert-title,

@@ -1,15 +1,20 @@
-<abs-login *ngIf="!isLogIn; else site"></abs-login>
+<div class="login-content" *ngIf="!isLogIn; else site">
+  <abs-login></abs-login>
+</div>
+
 <ng-template #site>
-  <aside [ngClass]="isSideNavOpen ? 'toggled' : ''">
-    <abs-side-navigation
-      [currentStatus]="currentStatus"
-      (handleSideNavToggle)="handleSideNavToggle()"
-    ></abs-side-navigation>
-  </aside>
-  <main>
-    <abs-dashboard-header
-      (handleSideNavToggle)="handleSideNavToggle()"
-    ></abs-dashboard-header>
-    <router-outlet></router-outlet>
-  </main>
+  <div class="app-content">
+    <aside [ngClass]="isSideNavOpen ? 'toggled' : ''">
+      <abs-side-navigation
+        [currentStatus]="currentStatus"
+        (handleSideNavToggle)="handleSideNavToggle()"
+      ></abs-side-navigation>
+    </aside>
+    <main>
+      <abs-dashboard-header
+        (handleSideNavToggle)="handleSideNavToggle()"
+      ></abs-dashboard-header>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </ng-template>

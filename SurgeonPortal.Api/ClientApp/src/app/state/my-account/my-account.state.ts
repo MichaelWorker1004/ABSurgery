@@ -5,7 +5,7 @@ import {
   IUserAccountModel,
 } from '../../api/models/user-account.model';
 import { GetUser, SetUser, ResetUser, SetEmail } from './my-account.actions';
-import { UserAccountService } from '../../api/services/user-account.service';
+import { UserAccountService } from '../../api/fake/user-account.service';
 import { tap } from 'rxjs';
 
 const USER_ACCOUNT_STATE_TOKEN = new StateToken<IUserAccountModel>(

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FileNotFoundComponent } from './file-not-found/file-not-found.component';
+import { AuthGuard } from './state/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       import('./dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'cme-repository',
@@ -26,6 +28,7 @@ const routes: Routes = [
       import('./cme-repository/cme-repository.component').then(
         (m) => m.CmeRepositoryComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'personal-profile',
@@ -33,6 +36,7 @@ const routes: Routes = [
       import('./personal-profile/personal-profile.component').then(
         (m) => m.PersonalProfileComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'medical-training',
@@ -40,6 +44,7 @@ const routes: Routes = [
       import('./medical-training/medical-training.component').then(
         (m) => m.MedicalTrainingComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'professional-standing',
@@ -47,6 +52,7 @@ const routes: Routes = [
       import('./professional-standing/professional-standing.component').then(
         (m) => m.ProfessionalStandingComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'exam-process',
@@ -54,6 +60,7 @@ const routes: Routes = [
       import('./exam-process/exam-process.component').then(
         (m) => m.ExamProcessComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'examination-history',
@@ -61,6 +68,7 @@ const routes: Routes = [
       import('./examination-history/examination-history.component').then(
         (m) => m.ExaminationHistoryComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'continuous-certification',
@@ -68,6 +76,7 @@ const routes: Routes = [
       import(
         './continuous-certification/continuous-certification.component'
       ).then((m) => m.ContinuousCertificationComponent),
+    canActivate: [AuthGuard],
   },
   {
     path: 'payment-history',
@@ -75,6 +84,7 @@ const routes: Routes = [
       import('./payment-history/payment-history.component').then(
         (m) => m.PaymentHistoryComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'documents',
@@ -82,6 +92,7 @@ const routes: Routes = [
       import('./documents/documents.component').then(
         (m) => m.DocumentsComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'committees',
@@ -89,6 +100,7 @@ const routes: Routes = [
       import('./committees/committees.component').then(
         (m) => m.CommitteesComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'my-account',
@@ -96,6 +108,7 @@ const routes: Routes = [
       import('./my-account/my-account.component').then(
         (m) => m.MyAccountComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'gme-history',
@@ -103,6 +116,7 @@ const routes: Routes = [
       import('./gme-history/gme-history.component').then(
         (m) => m.GmeHistoryComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: '**',

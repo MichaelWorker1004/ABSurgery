@@ -56,42 +56,6 @@
       "scale": 0,
       "isNullable": false,
       "isIdentityColumn": false
-    },
-    {
-      "name": "CreatedByUserId",
-      "dataType": "int",
-      "maxLength": 4,
-      "precision": 10,
-      "scale": 0,
-      "isNullable": false,
-      "isIdentityColumn": false
-    },
-    {
-      "name": "CreatedAtUtc",
-      "dataType": "datetime",
-      "maxLength": 8,
-      "precision": 23,
-      "scale": 3,
-      "isNullable": false,
-      "isIdentityColumn": false
-    },
-    {
-      "name": "LastUpdatedAtUtc",
-      "dataType": "datetime",
-      "maxLength": 8,
-      "precision": 23,
-      "scale": 3,
-      "isNullable": false,
-      "isIdentityColumn": false
-    },
-    {
-      "name": "LastUpdatedByUserId",
-      "dataType": "int",
-      "maxLength": 4,
-      "precision": 10,
-      "scale": 0,
-      "isNullable": false,
-      "isIdentityColumn": false
     }
   ],
   "metadata": {

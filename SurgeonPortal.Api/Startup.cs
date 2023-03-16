@@ -1,17 +1,7 @@
-﻿using SurgeonPortal.Api.Configuration;
-using SurgeonPortal.Api.Configuration;
-using SurgeonPortal.Api.Extensions;
-using SurgeonPortal.DataAccess;
-using SurgeonPortal.DataAccess.Contracts;
-using SurgeonPortal.Library;
-using SurgeonPortal.Library.Contracts;
-using SurgeonPortal.Models;
-using AutoMapper;
+﻿using AutoMapper;
 using Csla.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.IdentityModel.Tokens;
@@ -38,7 +28,6 @@ using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
 using Ytg.Framework.IoC;
 using Ytg.Framework.SqlServer;
-using Ytg.AspNetCore.Models;
 
 namespace SurgeonPortal.Api
 {
@@ -194,7 +183,6 @@ namespace SurgeonPortal.Api
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -30,7 +30,7 @@
           &:hover,
           &:focus,
           &.active {
-            color: var(--tertiary);
+            color: var(--global-warning);
           }
         }
       }
@@ -45,7 +45,7 @@
       outline: none;
       border: none;
       &:focus {
-        border-color: var(--tertiary);
+        border-color: var(--global-warning);
       }
     }
     button {
@@ -56,7 +56,7 @@
       top: 10px;
     }
     i {
-      color: var(--tertiary);
+      color: var(--global-warning);
       font-size: 1.5rem;
       cursor: pointer;
     }
@@ -77,13 +77,13 @@
     display: block;
     height: 5px;
     width: 3rem;
-    background-color: var(--primary);
+    background-color: var(--global-primary);
     transition: 250ms ease-in-out;
     margin-bottom: 5px;
   }
   &:hover {
     span {
-      background-color: var(--tertiary);
+      background-color: var(--global-warning);
     }
   }
 }

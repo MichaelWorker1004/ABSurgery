@@ -51,13 +51,13 @@ namespace SurgeonPortal.DataAccess.Users
                         {
                             Token = token,
                         });
-
+                        
                 var user = await multi.ReadFirstOrDefaultAsync<AppUserReadOnlyDto>();
 
                 if (user == null)
                 {
                     return null;
-                }
+            }
 
                 user.Claims = (await multi.ReadAsync<UserClaimReadOnlyDto>()).ToList();
 
