@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
+import { SideNavigationComponent } from './side-navigation/side-navigation.component';
+import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
 
 @Component({
   selector: 'abs-root',
@@ -14,19 +11,19 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [
-    RouterLink,
-    RouterLinkActive,
     RouterOutlet,
     LoginComponent,
     CommonModule,
+    SideNavigationComponent,
+    DashboardHeaderComponent,
   ],
 })
 export class AppComponent {
-  isLogIn = true;
+  isLogIn = false;
+  isSideNavOpen = false;
+  currentStatus = 'trainee';
 
-  constructor(private _router: Router) {}
-
-  get router(): Router {
-    return this._router;
+  handleSideNavToggle() {
+    this.isSideNavOpen = !this.isSideNavOpen ? true : false;
   }
 }

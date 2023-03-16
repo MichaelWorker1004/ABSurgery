@@ -1,0 +1,16 @@
+<div [class]="actionCardClass" [style]="borderHighlightStyle">
+  <a
+    *ngIf="!disabled && actionCard.action?.type === 'component'"
+    [routerLink]="actionCard.action?.action"
+    class="hotspot"
+  ></a>
+  <div class="card-content">
+    <div class="title">
+      <span class="icon" [style]="cardStyleColor"
+        ><i [class]="actionCard?.icon"></i></span
+      >{{ actionCard?.title }}
+    </div>
+    <div class="description">{{ actionCard?.description }}</div>
+    <div class="action-display">{{ actionCard?.actionDisplay }}</div>
+  </div>
+</div>

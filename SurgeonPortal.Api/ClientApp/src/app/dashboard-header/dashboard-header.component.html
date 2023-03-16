@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="nav-control">
+    <div class="nav-toggle">
+      <button class="hamburger" (click)="toggleSideNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+  <nav>
+    <ul>
+      <li *ngFor="let link of headerLinks">
+        <a [href]="link.action" target="_blank" rel="noreferrer">{{
+          link.display
+        }}</a>
+      </li>
+      <li>
+        <input
+          type="text"
+          id="site-search"
+          placeholder="Search"
+          (keyup)="onKey($event)"
+        />
+        <button (click)="handleSearch()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>

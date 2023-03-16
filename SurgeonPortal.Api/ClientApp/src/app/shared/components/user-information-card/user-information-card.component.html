@@ -1,0 +1,15 @@
+<div class="user-information-card">
+  <div class="status-container">
+    <div class="status-indicators">
+      <div class="status one active"></div>
+      <div class="status two active"></div>
+      <div class="status three active"></div>
+    </div>
+    <strong>Current Status</strong>: {{ this.currentStatus }}
+  </div>
+  <div class="info-container">
+    <div class="info" *ngFor="let info of userInformation">
+      <span>{{ info.title }}:</span> {{ info.data }}
+    </div>
+  </div>
+</div>

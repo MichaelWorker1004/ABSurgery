@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="nav-header">
+    <div class="flex">
+      <div class="logo">
+        <img
+          src="../../assets/img/abs-logo.svg"
+          alt="The American Board Of Surgery"
+        />
+      </div>
+      <h1>
+        The American <br />
+        Board of Surgery
+      </h1>
+    </div>
+    <div class="nav-toggle">
+      <div class="hamburger" (click)="toggleSideNav()">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <ul class="main-navigation">
+      <li class="left-padding" *ngFor="let item of navItems">
+        <a
+          [routerLink]="item.action"
+          routerLinkActive="active"
+          (click)="toggleSideNav()"
+          ><i [ngClass]="item.icon"></i>{{ item.display }}</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <nav class="lower-nav">
+    <button (click)="router.navigateByUrl('my-account')">
+      <i class="fa-solid fa-user-doctor"></i>My Account
+    </button>
+    |
+    <button>
+      Logout<i class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+  </nav>
+</div>

@@ -1,0 +1,148 @@
+img {
+  width: 100%;
+}
+
+h1 {
+  color: var(--primary);
+  text-transform: uppercase;
+  font-size: 1.35rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.hamburger {
+  border: none;
+  background: none;
+  display: block;
+  cursor: pointer;
+  span {
+    position: relative;
+    display: block;
+    height: 5px;
+    width: 3rem;
+    background-color: var(--primary);
+    transition: 250ms ease-in-out;
+    margin-bottom: 5px;
+    &:first-child {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+    &:nth-child(2) {
+      transform: rotate(45deg);
+    }
+  }
+  &:hover {
+    span {
+      background-color: var(--tertiary);
+    }
+  }
+}
+
+.container {
+  position: relative;
+  height: 100%;
+}
+
+.nav-header {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  justify-content: space-between;
+  .logo {
+    margin: 0 1rem 0 0;
+    display: flex;
+    align-items: center;
+    max-width: 5rem;
+  }
+}
+
+.left-padding,
+.lower-nav {
+  padding: 0 0 0 1.5rem;
+}
+
+.lower-nav {
+  position: absolute;
+  bottom: 1.25rem;
+}
+
+nav {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+      a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        position: relative;
+        font-size: 1.25rem;
+        color: var(--primary);
+        font-weight: bold;
+        width: 100%;
+        &::after {
+          content: '';
+          position: absolute;
+          right: 0;
+          width: 5px;
+          height: 55px;
+          background-color: none;
+          transition: 250ms ease-in-out;
+        }
+        i {
+          margin-right: 1rem;
+          margin-right: 0 auto;
+          font-size: 1.5rem;
+          width: 1.5rem;
+          transition: 250ms ease-in-out;
+        }
+        &:hover,
+        &.active {
+          i {
+            color: var(--tertiary);
+          }
+          &::after {
+            background-color: var(--tertiary);
+          }
+        }
+      }
+    }
+  }
+}
+
+.lower-nav {
+  color: var(--primary);
+  font-weight: bold;
+  button {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--primary);
+    font-weight: bold;
+    font-family: 'proxima-nova', sans-serif;
+    cursor: pointer;
+    i {
+      transition: 250ms ease-in-out;
+      margin: 0 1rem;
+    }
+    &:hover {
+      i {
+        color: var(--tertiary);
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1015px) {
+  .hamburger {
+    display: none;
+  }
+}

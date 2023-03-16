@@ -2,8 +2,8 @@ import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+// import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+// import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin';
 import { MyAccountState } from './app/state/my-account/my-account.state';
 import { SimpleValueState } from './app/state/simple-value.state';
@@ -21,14 +21,14 @@ bootstrapApplication(AppComponent, {
       BrowserModule,
       AppRoutingModule,
       NgxsModule.forRoot([SimpleValueState, MyAccountState], {
-        developmentMode: true,
+        developmentMode: false,
       }),
       NgxsStoragePluginModule.forRoot({
         storage: StorageOption.SessionStorage,
         key: 'auth.token',
       }),
-      NgxsLoggerPluginModule.forRoot(),
-      NgxsReduxDevtoolsPluginModule.forRoot(),
+      // NgxsLoggerPluginModule.forRoot(),
+      // NgxsReduxDevtoolsPluginModule.forRoot(),
       NgxsFormPluginModule.forRoot(),
       NgxsRouterPluginModule.forRoot()
     ),

@@ -1,0 +1,51 @@
+.user-information-card {
+  background-color: var(--primary);
+  color: white;
+  padding: 2rem 2rem 4rem;
+  border-radius: 6px;
+  .status-container {
+    font-size: 1.25rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid #51657e;
+    display: flex;
+    align-items: center;
+    .status-indicators {
+      display: flex;
+      margin-right: 0.5rem;
+      .status {
+        width: 12px;
+        height: 12px;
+        background: #51657e;
+        border-radius: 50%;
+        margin-right: 3px;
+        &.active {
+          &.one {
+            background-color: var(--required);
+          }
+          &.two {
+            background-color: var(--tertiary);
+          }
+          &.three {
+            background-color: var(--secondary);
+          }
+        }
+      }
+    }
+  }
+  .info-container {
+    display: flex;
+    column-gap: 5rem;
+    row-gap: 2rem;
+    flex-wrap: wrap;
+    .info {
+      display: flex;
+      line-height: 25px;
+      max-width: 18rem;
+      span {
+        margin-right: 0.5rem;
+        font-weight: bold;
+      }
+    }
+  }
+}

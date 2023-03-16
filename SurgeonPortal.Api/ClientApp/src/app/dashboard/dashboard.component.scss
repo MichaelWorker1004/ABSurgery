@@ -1,0 +1,63 @@
+.container {
+  margin: 0 auto 10rem;
+  max-width: 90rem;
+  width: 100%;
+  padding: 0 1.25rem;
+  color: var(--primary);
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.greetings {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.dash-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  .last-login {
+    margin-top: 2rem;
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.dash-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.grid-item {
+  display: block;
+  position: relative;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-50 {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.w-33 {
+  flex-grow: 1;
+  flex-basis: 31%;
+}
+
+@media screen and (min-width: 1440px) {
+  .w-50 {
+    flex-grow: 1;
+    flex-basis: 48%;
+  }
+}

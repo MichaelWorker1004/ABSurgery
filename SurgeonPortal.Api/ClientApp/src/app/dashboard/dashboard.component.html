@@ -1,1 +1,32 @@
-<p>dashboard works!</p>
+<div class="container">
+  <div class="dash-header">
+    <div class="main-greeting">
+      <h1>Dashboard</h1>
+      <div class="greetings">Hello, {{ userData.name }}!</div>
+    </div>
+    <div class="last-login">
+      <span>Last Login:</span> {{ userData.lastLogin }}
+    </div>
+  </div>
+
+  <div class="dash-container">
+    <abs-user-information-card
+      class="grid-item w-100"
+      [userInformation]="userData.userInformation"
+      [currentStatus]="userData.currentStatus"
+    ></abs-user-information-card>
+
+    <abs-highlight-card
+      class="grid-item w-50"
+      *ngFor="let alert of alertsAndNotices"
+      [alert]="alert"
+    ></abs-highlight-card>
+
+    <abs-action-card
+      [class]="actionCardClass"
+      *ngFor="let actionCard of userActionCards"
+      [actionCard]="actionCard"
+      [showBorderHighlight]="true"
+    ></abs-action-card>
+  </div>
+</div>
