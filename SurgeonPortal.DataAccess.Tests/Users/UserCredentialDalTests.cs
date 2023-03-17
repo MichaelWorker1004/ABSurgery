@@ -2,6 +2,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.DataAccess.Users;
+using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 using Ytg.UnitTest.ConnectionManager;
@@ -27,7 +28,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             sqlManager.AddRecord(Create<UserCredentialDto>());
         
             var sut = new UserCredentialDal(sqlManager);
-            await sut.GetByUserIdAsync(expectedUserId);
+            await sut.GetByUserIdAsync();
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +43,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             sqlManager.AddRecord(expectedDto);
         
             var sut = new UserCredentialDal(sqlManager);
-            var result = await sut.GetByUserIdAsync(Create<int>());
+            var result = await sut.GetByUserIdAsync();
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -67,7 +68,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var p =
                 new
                 {
-                    UserId = expectedDto.UserId,
+                    UserId = IdentityHelper.UserId,
                     EmailAddress = expectedDto.EmailAddress,
                     Password = expectedDto.Password,
                     LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,

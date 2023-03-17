@@ -28,15 +28,6 @@ namespace SurgeonPortal.Library.Users
             _userCredentialDal = userCredentialDal;
         }
 
-        [Key] 
-        [DisplayName(nameof(UserId))]
-		public int UserId
-		{
-			get { return GetProperty(UserIdProperty); }
-			set { SetProperty(UserIdProperty, value); }
-		}
-		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
-
         [DisplayName(nameof(EmailAddress))]
 		public string EmailAddress
 		{
@@ -76,7 +67,7 @@ namespace SurgeonPortal.Library.Users
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _userCredentialDal.GetByUserIdAsync(criteria.UserId);
+                var dto = await _userCredentialDal.GetByUserIdAsync();
         
                 if(dto == null)
                 {
@@ -110,7 +101,6 @@ namespace SurgeonPortal.Library.Users
 		{
             base.FetchData(dto);
             
-			this.UserId = dto.UserId;
 			this.EmailAddress = dto.EmailAddress;
 			this.Password = dto.Password;
 		}
@@ -124,7 +114,6 @@ namespace SurgeonPortal.Library.Users
 		{
             base.ToDto(dto);
             
-			dto.UserId = this.UserId;
 			dto.EmailAddress = this.EmailAddress;
 			dto.Password = this.Password;
 

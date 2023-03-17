@@ -28,14 +28,22 @@ using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
 using Ytg.Framework.IoC;
 using Ytg.Framework.SqlServer;
+using Ytg.AspNetCore.Models;
+using Ytg.AspNetCore.Identity;
+using SurgeonPortal.DataAccess.Identity;
 
 namespace SurgeonPortal.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -45,6 +53,7 @@ namespace SurgeonPortal.Api
         {
             services.AddHttpContextAccessor();
 
+            services.Configure<SiteConfiguration>(Configuration.GetSection(ConfigurationSections.Site));
             services.Configure<TokensConfiguration>(Configuration.GetSection(ConfigurationSections.Tokens));
 
             services.AddCsla();
@@ -72,7 +81,6 @@ namespace SurgeonPortal.Api
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    options.JsonSerializerOptions.Converters.Add(new UtcDateTimeConverter());
                     options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
                     options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
                     options.JsonSerializerOptions.WriteIndented = true;
@@ -94,8 +102,9 @@ namespace SurgeonPortal.Api
             services.AddSingleton<AutoMapper.IConfigurationProvider>(GetAutoMapperConfiguration());
             services.AddTransient<IPagination, Pagination>();
             services.AddTransient<IMapper, Mapper>();
-            services.AddTransient<IIdentityProvider, HttpContextIdentityProvider>();
-            services.AddTransient<IAbsIdentityProvider, HttpContextIdentityProvider>();
+            //services.AddTransient<IIdentityProvider, HttpContextIdentityProvider>();
+            services.AddTransient<IAbsIdentityProvider, AbsIdentityProvider>();
+            services.AddTransient<IIdentityProvider, AspNetCoreIdentityProvider>();
             services.AddTransient<IAbsoluteUriProvider, AbsoluteUriProvider>();
 
             services.RegisterByConvention<LibraryConventionProvider, LibraryConventionResolver>();
@@ -122,6 +131,10 @@ namespace SurgeonPortal.Api
 
             services.AddAuthorization(options =>
             {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
                 var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
                 defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
                 options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
@@ -187,8 +200,6 @@ namespace SurgeonPortal.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapDefaultControllerRoute().RequireAuthorization();
             });
 

@@ -24,7 +24,12 @@
         nec arcu bibendum blandit. Nulla a pretium metus, id suscipit lorem.
       </p>
       <div class="text-left mt-5 form-container">
-        <sl-input id="username" placeholder="Username"></sl-input>
+        <sl-input
+          id="username"
+          placeholder="Username"
+          ngDefaultControl
+          [(ngModel)]="username"
+        ></sl-input>
         <sl-button class="mb-2" variant="text" size="small"
           >I forgot my username</sl-button
         >
@@ -32,6 +37,8 @@
           type="password"
           id="password"
           placeholder="Password"
+          ngDefaultControl
+          [(ngModel)]="password"
           password-toggle
         ></sl-input>
         <sl-button class="mb-2" variant="text" size="small"
@@ -41,8 +48,8 @@
         <sl-button
           class="block mt-2"
           variant="primary"
-          [disabled]="!(password.length > 0 && username.length > 0)"
-          (click)="(login)"
+          [disabled]="!isValid"
+          (click)="login($event)"
         >
           Login
           <i class="fa-solid fa-right-to-bracket"></i>

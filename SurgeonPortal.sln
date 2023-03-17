@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurgeonPortal.DataAccess.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurgeonPortal.Library.Tests", "SurgeonPortal.Library.Tests\SurgeonPortal.Library.Tests.csproj", "{F3A86258-A3AD-4CF3-9199-CEDE409967BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurgeonPortal.Shared", "SurgeonPortal.Shared\SurgeonPortal.Shared.csproj", "{16FADD27-8541-41FF-9615-5C57035372B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{F3A86258-A3AD-4CF3-9199-CEDE409967BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A86258-A3AD-4CF3-9199-CEDE409967BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A86258-A3AD-4CF3-9199-CEDE409967BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16FADD27-8541-41FF-9615-5C57035372B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16FADD27-8541-41FF-9615-5C57035372B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16FADD27-8541-41FF-9615-5C57035372B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16FADD27-8541-41FF-9615-5C57035372B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{725A5872-2CFF-4AF5-978B-41C4C63ED3F4} = {13631FF7-889B-4DDF-9ACE-339B1E4B557F}
 		{C50EC797-8834-4889-959E-B1435463A1EA} = {13631FF7-889B-4DDF-9ACE-339B1E4B557F}
 		{F3A86258-A3AD-4CF3-9199-CEDE409967BF} = {13631FF7-889B-4DDF-9ACE-339B1E4B557F}
+		{16FADD27-8541-41FF-9615-5C57035372B5} = {ECE5E658-9A9F-47B8-A077-E66E37E601F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {981C8F4D-66AF-40D8-97BA-FD0E90662F2C}

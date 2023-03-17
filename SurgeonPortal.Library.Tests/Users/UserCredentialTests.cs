@@ -16,7 +16,6 @@ namespace SurgeonPortal.Library.Tests.Users
         {     
             var dto = Create<UserCredentialDto>();
 
-            dto.UserId = Create<int>();
             dto.EmailAddress = Create<string>();
             dto.Password = Create<string>();
     
@@ -30,10 +29,9 @@ namespace SurgeonPortal.Library.Tests.Users
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
-            var expectedUserId = Create<int>();
             
             var mockDal = new Mock<IUserCredentialDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(Create<UserCredentialDto>());
         
             UseMockServiceProvider()
@@ -43,7 +41,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new UserCredentialFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = await factory.GetByUserIdAsync();
         
             mockDal.VerifyAll();
         }
@@ -54,7 +52,7 @@ namespace SurgeonPortal.Library.Tests.Users
             var dto = CreateValidDto();
         
             var mockDal = new Mock<IUserCredentialDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
@@ -64,7 +62,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new UserCredentialFactory();
-            var sut = await factory.GetByUserIdAsync(Create<int>());
+            var sut = await factory.GetByUserIdAsync();
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -76,13 +74,12 @@ namespace SurgeonPortal.Library.Tests.Users
         [Test]
         public async Task Update_CallsDalCorrectly()
         {
-            var expectedId = Create<int>();
-        
+            
             var dto = Create<UserCredentialDto>();
             UserCredentialDto passedDto = null;
         
             var mockDal = new Mock<IUserCredentialDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedId))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                         .ReturnsAsync(dto);
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserCredentialDto>()))
                 .Callback<UserCredentialDto>((p) => passedDto = p)
@@ -95,21 +92,17 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new UserCredentialFactory();
-            var sut = await factory.GetByUserIdAsync(expectedId);
+            var sut = await factory.GetByUserIdAsync();
             
-            sut.UserId = dto.UserId;
             sut.EmailAddress = dto.EmailAddress;
             sut.Password = dto.Password;
-            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             // We now change all properties on the SUT to make it Dirty
             // or the SaveAsync() will not be called. :)
             dto = CreateValidDto();
         
-            sut.UserId = dto.UserId;
             sut.EmailAddress = dto.EmailAddress;
             sut.Password = dto.Password;
-            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
         
@@ -129,10 +122,11 @@ namespace SurgeonPortal.Library.Tests.Users
         [Test]
         public async Task Update_YieldsCorrectResult()
         {
+            
             var dto = Create<UserCredentialDto>();
         
             var mockDal = new Mock<IUserCredentialDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                         .ReturnsAsync(Create<UserCredentialDto>());
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserCredentialDto>()))
                 .ReturnsAsync(dto);
@@ -144,8 +138,8 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new UserCredentialFactory();
-            var sut = await factory.GetByUserIdAsync(Create<int>());
-            sut.UserId = Create<int>();
+            var sut = await factory.GetByUserIdAsync();
+            sut.EmailAddress = Create<string>();
         
             await sut.SaveAsync();
             

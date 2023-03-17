@@ -1,13 +1,16 @@
 using AutoMapper;
+using Csla;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
 using SurgeonPortal.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Ytg.AspNetCore.Controllers;
 using Ytg.AspNetCore.Helpers;
@@ -37,10 +40,9 @@ namespace SurgeonPortal.Api.Controllers.Users
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("by-userid")]
         public async Task<ActionResult<UserCredentialModel>> GetUserCredential_GetByUserIdAsync(
-            [FromServices] IUserCredentialFactory userCredentialFactory,
-            int userId)
+            [FromServices] IUserCredentialFactory userCredentialFactory)
         {
-            var item = await userCredentialFactory.GetByUserIdAsync(userId);
+            var item = await userCredentialFactory.GetByUserIdAsync();
         
             return Ok(_mapper.Map<UserCredentialModel>(item));
         } 
@@ -50,13 +52,12 @@ namespace SurgeonPortal.Api.Controllers.Users
         [ProducesResponseType(200)]
         [ProducesResponseType(400, Type = typeof(UserCredentialModel))]
         [ProducesResponseType(401)]
-        [HttpPut("{userId}")]
+        [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] IUserCredentialFactory userCredentialFactory,
-            [FromBody] UserCredentialModel model,
-            int userId)
+            [FromBody] UserCredentialModel model)
         {
-            var item = await userCredentialFactory.GetByUserIdAsync(userId);
+            var item = await userCredentialFactory.GetByUserIdAsync();
             AssignProperties(item, model);
             
             return await UpdateAsync<UserCredentialModel>(_mapper, item);
@@ -64,7 +65,6 @@ namespace SurgeonPortal.Api.Controllers.Users
 
         private void AssignProperties(IUserCredential entity, UserCredentialModel model)
         {
-            entity.UserId = model.UserId;
             entity.EmailAddress = model.EmailAddress;
             entity.Password = model.Password;
         }

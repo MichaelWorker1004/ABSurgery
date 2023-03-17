@@ -21,6 +21,7 @@ using System.Text;
 using Ytg.AspNetCore.Configuration;
 using Microsoft.Extensions.Options;
 using SurgeonPortal.Library.Users;
+using SurgeonPortal.Shared;
 
 namespace SurgeonPortal.Api.Controllers.Users
 {
@@ -53,19 +54,19 @@ namespace SurgeonPortal.Api.Controllers.Users
 
         [AllowAnonymous]
         [MapToApiVersion("1")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AppUserReadOnlyModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpPost("authenticate")]
         public async Task<ActionResult> GetUserToken([FromServices] IAppUserReadOnlyFactory appUserReadOnlyFactory,
-            string emailAddress,
-            string password)
+            [FromBody] UserCredentialModel model)
         {
             try
             {
                 var user = await appUserReadOnlyFactory.GetByCredentialsAsync(
-                    emailAddress,
-                    password);
+                    model.EmailAddress,
+                    model.Password);
 
                 _logger.LogInformation($"User authenticated successfully. User: {user.UserId}");
 
@@ -75,7 +76,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             }
             catch (DataPortalException ex) when (ex.BusinessException is AuthenticationFailedException)
             {
-                _logger.LogInformation($"GetUserToken(): User failed authentication. ({emailAddress})");
+                _logger.LogInformation($"GetUserToken(): User failed authentication. ({model.EmailAddress})");
                 return BadRequest();
             }
             catch (Exception ex)

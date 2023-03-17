@@ -7,9 +7,9 @@ namespace SurgeonPortal.Library.Users
 {
     public class UserCredentialFactory : IUserCredentialFactory
     {
-        public async Task<IUserCredential> GetByUserIdAsync(int userId)
+        public async Task<IUserCredential> GetByUserIdAsync()
         {
-            return await DataPortal.FetchAsync<UserCredential>(new GetByUserIdCriteria(userId));
+            return await DataPortal.FetchAsync<UserCredential>(new GetByUserIdCriteria());
         }
 
 
@@ -17,11 +17,9 @@ namespace SurgeonPortal.Library.Users
         [Serializable]
         internal class GetByUserIdCriteria
         {
-            public int UserId { get; set; }
         
-            public GetByUserIdCriteria(int userId)
+            public GetByUserIdCriteria()
             {
-                UserId = userId;
             }
         }
 

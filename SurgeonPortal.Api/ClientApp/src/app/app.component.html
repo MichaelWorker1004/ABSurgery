@@ -1,4 +1,7 @@
-<div class="login-content" *ngIf="!isLogIn; else site">
+<div
+  class="login-content"
+  *ngIf="(isAuthenticated$ | async) === false; else site"
+>
   <abs-login></abs-login>
 </div>
 

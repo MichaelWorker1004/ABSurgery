@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SurgeonPortal.DataAccess.Contracts\SurgeonPortal.DataAccess.Contracts.csproj" />
     <ProjectReference Include="..\SurgeonPortal.Library.Contracts\SurgeonPortal.Library.Contracts.csproj" />
+    <ProjectReference Include="..\SurgeonPortal.Shared\SurgeonPortal.Shared.csproj" />
   </ItemGroup>
 
 </Project>

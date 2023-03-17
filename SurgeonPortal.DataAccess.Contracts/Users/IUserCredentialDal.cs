@@ -4,7 +4,7 @@ namespace SurgeonPortal.DataAccess.Contracts.Users
 {
     public interface IUserCredentialDal
     {
-        Task<UserCredentialDto> GetByUserIdAsync(int userId);
+        Task<UserCredentialDto> GetByUserIdAsync();
         Task<UserCredentialDto> UpdateAsync(UserCredentialDto dto);
     }
 }

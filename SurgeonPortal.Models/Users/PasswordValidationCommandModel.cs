@@ -2,9 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SurgeonPortal.Models.Users
 {
-    public class UserCredentialModel
+    public class PasswordValidationCommandModel
     {
-        public string EmailAddress { get; set; }
+        public bool? PasswordsMatch { get; set; }
         public string Password { get; set; }
+        public int UserId { get; set; }
     }
 }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { Select } from '@ngxs/store';
+import { AuthState } from './state/ngxs-auth.state';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
 
@@ -19,7 +22,10 @@ import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.co
   ],
 })
 export class AppComponent implements OnInit {
-  isLogIn = false;
+  @Select(AuthState.isAuthenticated) isAuthenticated$:
+    | Observable<boolean>
+    | undefined;
+  isLogIn = true;
   isSideNavOpen = false;
   userData!: any;
 

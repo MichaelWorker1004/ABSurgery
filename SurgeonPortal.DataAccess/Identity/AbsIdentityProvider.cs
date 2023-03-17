@@ -1,5 +1,6 @@
 ﻿using SurgeonPortal.DataAccess.Contracts.Identity;
 using SurgeonPortal.DataAccess.Contracts.Users;
+using SurgeonPortal.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

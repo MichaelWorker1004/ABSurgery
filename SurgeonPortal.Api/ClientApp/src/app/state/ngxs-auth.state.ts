@@ -28,6 +28,10 @@ export class AuthState {
     return !!state.access_token;
   }
 
+  // static getAuthenticated(state: AuthState): boolean {
+  //   return;
+  // }
+
   constructor(private authService: AuthService) {}
 
   @Action(Login)
