@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
@@ -18,12 +18,39 @@ import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.co
     DashboardHeaderComponent,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isLogIn = false;
   isSideNavOpen = false;
-  currentStatus = 'trainee';
+  userData!: any;
+
+  ngOnInit(): void {
+    this.fetchUserData();
+  }
 
   handleSideNavToggle() {
     this.isSideNavOpen = !this.isSideNavOpen ? true : false;
+  }
+
+  fetchUserData() {
+    this.userData = {
+      name: 'John Doe, M.D',
+      id: '00001',
+      currentStatus: 'Certified - Clincally Active',
+      lastLogin: new Date().toLocaleString(),
+      userInformation: [
+        {
+          title: 'Program Director',
+          data: 'Lucy Generic, M.D',
+        },
+        {
+          title: 'Program',
+          data: 'University of Medicine Dept. of Surgery Philadelphia, PA',
+        },
+        {
+          title: 'Clinical Level',
+          data: 'PGY1',
+        },
+      ],
+    };
   }
 }

@@ -6,7 +6,7 @@
   <div class="app-content">
     <aside [ngClass]="isSideNavOpen ? 'toggled' : ''">
       <abs-side-navigation
-        [currentStatus]="currentStatus"
+        [currentStatus]="userData.currentStatus"
         (handleSideNavToggle)="handleSideNavToggle()"
       ></abs-side-navigation>
     </aside>

@@ -1,15 +1,24 @@
 <div class="user-information-card">
   <div class="status-container">
-    <div class="status-indicators">
-      <div class="status one active"></div>
-      <div class="status two active"></div>
-      <div class="status three active"></div>
-    </div>
-    <strong>Current Status</strong>: {{ this.currentStatus }}
+    <div class="status-indicators"></div>
+    <strong>Current Status</strong>: {{ currentStatus }}
   </div>
-  <div class="info-container">
+  <div
+    class="info-container"
+    *ngIf="currentStatus === 'Trainee'; else certified"
+  >
     <div class="info" *ngFor="let info of userInformation">
       <span>{{ info.title }}:</span> {{ info.data }}
     </div>
   </div>
+  <ng-template #certified>
+    <div class="info-container">
+      <div class="info certified" *ngFor="let info of userInformation">
+        <div class="certified-title">{{ info.title }}</div>
+        <div class="info-data" *ngFor="let d of info.data">
+          <span>{{ d.title }}:</span> {{ d.data }}
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>

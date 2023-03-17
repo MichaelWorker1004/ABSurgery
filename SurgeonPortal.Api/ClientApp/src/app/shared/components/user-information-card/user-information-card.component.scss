@@ -9,6 +9,7 @@
     margin-bottom: 3rem;
     border-bottom: 1px solid #51657e;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     .status-indicators {
       display: flex;
@@ -42,9 +43,16 @@
       display: flex;
       line-height: 25px;
       max-width: 18rem;
-      span {
+      span,
+      .certified-title {
         margin-right: 0.5rem;
         font-weight: bold;
+      }
+      &.certified {
+        display: block;
+        .certified-title {
+          margin-bottom: 0.5rem;
+        }
       }
     }
   }
