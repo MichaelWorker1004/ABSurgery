@@ -295,6 +295,10 @@ sl-badge[variant='primary']::part(base) {
 sl-badge[variant='warning']::part(base) {
   color: var(--sl-color-black);
 }
+sl-card::part(header) {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
 
 /* Helper Classes */
 /* primarily using helper classes from PrimeFlex */
@@ -367,16 +371,21 @@ p {
   color: var(--global-text-white);
 }
 .app-container-fluid {
-  height: 100%;
+  min-height: calc(100vh - 200px);
   width: 100%;
   margin: 0 auto;
+  padding: 0 1.25rem;
 }
 
 /* This currently recreates the basic functionality of a bootstrap container, we may need to update this to work better with the side nav component */
 .app-container {
-  height: 100%;
   width: 100%;
   margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.footer-text {
+  font-size: 0.8rem;
 }
 
 /* Global Breakpoints */

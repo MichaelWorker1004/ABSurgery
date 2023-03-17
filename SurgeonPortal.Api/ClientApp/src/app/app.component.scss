@@ -1,11 +1,4 @@
 :host {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 100;
-  font-family: 'proxima-nova', sans-serif;
   aside {
     position: fixed;
     left: -100%;
@@ -19,12 +12,6 @@
       left: 0;
       z-index: 1;
     }
-  }
-  main {
-    height: 100%;
-    overflow: auto;
-    padding: 0 1.25rem;
-    background-color: #edf0f5;
   }
 }
 

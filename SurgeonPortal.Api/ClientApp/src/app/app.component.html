@@ -14,7 +14,14 @@
       <abs-dashboard-header
         (handleSideNavToggle)="handleSideNavToggle()"
       ></abs-dashboard-header>
-      <router-outlet></router-outlet>
+      <div class="app-container-fluid flex flex-column">
+        <router-outlet></router-outlet>
+        <div class="text-center mt-auto">
+          <p class="footer-text mb-1">
+            @2022 All Rights Reserved. The American Board of Surgery
+          </p>
+        </div>
+      </div>
     </main>
   </div>
 </ng-template>
