@@ -85,3 +85,37 @@
     </div>
   </form>
 </sl-dialog>
+
+<sl-dialog
+  label="Attestation"
+  [open]="this.attestationModal"
+  (sl-request-close)="handleCardAction('attestationModal')"
+>
+  <form action="">
+    <div class="form-description">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+      nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas
+      sit amet tortor at, condimentum tempor erat. All fields are required.
+    </div>
+    <h6>{{ userData.name }}</h6>
+    <div class="grid">
+      <div
+        *ngFor="let formField of attestationFormFields"
+        [class]="formField.size"
+      >
+        <sl-checkbox [value]="formField.value">{{
+          formField.label
+        }}</sl-checkbox>
+      </div>
+      <div class="col-12 align-right btn-container">
+        <sl-button
+          variant="default"
+          size="large"
+          (click)="handleCardAction('attestationModal')"
+          >Cancel</sl-button
+        >
+        <sl-button class="wide" size="large" variant="warning">Save</sl-button>
+      </div>
+    </div>
+  </form>
+</sl-dialog>

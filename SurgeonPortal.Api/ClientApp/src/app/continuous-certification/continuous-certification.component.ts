@@ -18,6 +18,7 @@ export class ContinuousCertificationComponent implements OnInit {
   userData!: any;
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
+  attestationModal = false;
   outcomesandRegistriesFormFields = [
     {
       label: 'Surgeeon Specific Registry (case log)',
@@ -343,10 +344,31 @@ export class ContinuousCertificationComponent implements OnInit {
       size: 'col-12',
     },
   ];
+  attestationFormFields = [
+    {
+      label:
+        'I hereby authorize any hospital or medical staff where I now have,have had, or have applied for medical staff privileges, and anymedical organization of which I am a member or to which I have appliedfor membership, and any person who may have information (including medical records, patient records, and reports of committees) which is deemed by ABS to be material to its evaluation of this application, to provide such information to representatives of the ABS. I agree that communications of any nature made to the ABS regarding this application may be made in confidence and shall not be made available to me under any circumstances. I hereby release from liability any hospital. medical staff, medical organization or person, and ABS and its representatives, for acts performed in connection with this application.',
+      subLabel: '',
+      value: '',
+      type: 'checkbox',
+      size: 'col-12',
+    },
+    {
+      label:
+        'I understand that the certificate I will be issued upon successful completion of the biennial Continuous Certification Assessment will be contingent upon my on-going active participation in the Continuous Certification Program as a whole. I recognize that 10-year certificates are no longer offered by the ABS, and that the biennial Continuous Certification Assessment is replacing the traditional 10-vear recertification examination.',
+      subLabel: '',
+      value: '',
+      type: 'checkbox',
+      size: 'col-12',
+    },
+  ];
 
   private actionMap: ActionMap = {
     outcomeRegistriesModal: () => {
       this.outcomeRegistriesModal = !this.outcomeRegistriesModal;
+    },
+    attestationModal: () => {
+      this.attestationModal = !this.attestationModal;
     },
   };
 
@@ -393,7 +415,7 @@ export class ContinuousCertificationComponent implements OnInit {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
           type: 'component',
-          action: '/apply',
+          action: '/medical-training',
         },
         actionDisplay: 'View / Update my training',
         icon: 'fa-solid fa-language',
@@ -451,11 +473,14 @@ export class ContinuousCertificationComponent implements OnInit {
         title: 'Attestation',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {},
-        disabled: true,
-        actionDisplay: 'Not available yet',
+        action: {
+          type: 'dialog',
+          action: 'attestationModal',
+        },
+        disabled: false,
+        actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-user-check',
-        status: 'contingent',
+        status: 'in-progress',
       },
       {
         title: 'Apply for an Exam',
