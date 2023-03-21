@@ -300,6 +300,33 @@ sl-card::part(header) {
   font-weight: 700;
 }
 
+sl-dialog::part(panel) {
+  min-width: 75%;
+}
+
+sl-dialog::part(header) {
+  position: relative;
+  font-weight: bold;
+  &::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: calc(100% - 1rem);
+    background-color: #d7d7d7;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}
+
+sl-button {
+  margin-left: 5px;
+  &.wide {
+    width: 20.5rem;
+  }
+}
+
 /* Helper Classes */
 /* primarily using helper classes from PrimeFlex */
 

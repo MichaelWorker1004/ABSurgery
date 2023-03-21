@@ -1,10 +1,6 @@
-.container {
-  margin: 3rem 3rem 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .nav-control {
+.dashboard-header {
+  margin-top: 3rem;
+  .nav-toggle {
     display: block;
   }
   nav {
@@ -89,9 +85,9 @@
 }
 
 @media screen and (min-width: 1015px) {
-  .container {
+  .dashboard-header {
     justify-content: flex-end;
-    .nav-control {
+    .nav-toggle {
       display: none;
     }
   }

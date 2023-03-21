@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { AuthState } from './state/ngxs-auth.state';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
-import { DashboardHeaderComponent } from './dashboard-header/dashboard-header.component';
+import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
 
 @Component({
   selector: 'abs-root',

@@ -4,6 +4,11 @@
     [routerLink]="actionCard?.action?.action"
     class="hotspot"
   ></a>
+  <button
+    *ngIf="!actionCard?.disabled && actionCard?.action?.type === 'dialog'"
+    class="hotspot"
+    (click)="handleCardAction(actionCard?.action?.action)"
+  ></button>
   <div class="card-content" [class]="actionCard?.status">
     <h5 class="title">
       <span class="icon"><i [class]="actionCard?.icon"></i></span
@@ -19,7 +24,7 @@
           [variant]="!actionCard?.disabled ? 'primary' : 'neutral'"
           [disabled]="actionCard?.disabled"
           style="width: 100%"
-          >Apply Now</sl-button
+          >{{ actionCard?.actionDisplay }}</sl-button
         >
       </ng-template>
     </div>

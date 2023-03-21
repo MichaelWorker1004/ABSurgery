@@ -76,7 +76,7 @@ const routes: Routes = [
       import(
         './continuous-certification/continuous-certification.component'
       ).then((m) => m.ContinuousCertificationComponent),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'payment-history',

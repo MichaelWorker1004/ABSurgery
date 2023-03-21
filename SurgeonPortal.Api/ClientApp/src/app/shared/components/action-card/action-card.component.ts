@@ -1,8 +1,10 @@
 import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -17,6 +19,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class ActionCardComponent implements OnInit {
   @Input() actionCard!: any;
+  @Output() cardAction: EventEmitter<any> = new EventEmitter();
   actionCardClass!: string;
   highlightColor!: string;
 
@@ -32,6 +35,10 @@ export class ActionCardComponent implements OnInit {
     this.actionCardClass = `${baseClass} ${this.actionCard?.status} ${
       this.actionCard?.disabled ? 'disabled' : ''
     }`;
+  }
+
+  handleCardAction(action: string) {
+    this.cardAction.emit(action);
   }
 
   get router(): Router {
