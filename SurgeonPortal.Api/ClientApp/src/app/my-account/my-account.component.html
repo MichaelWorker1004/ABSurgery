@@ -3,60 +3,110 @@
 </header>
 <ng-container *ngIf="user$ | async as userAccount; else loading">
   <section>
-    <div>
-      {{ userAccount.user.givenName }} {{ userAccount.user.surName }},
-      {{ userAccount.user.title }}
+    <div class="grid">
+      <div class="col-12 flex">
+        <sl-avatar
+          [image]="profilePicture"
+          label="Profile Picture"
+          style="--size: 5rem"
+        ></sl-avatar>
+        <div class="ml-3">
+          <h2 class="font-normal mt-0 mb-0">
+            {{ userAccount.user.givenName }} {{ userAccount.user.surName }},
+            {{ userAccount.user.title }}
+          </h2>
+          <p class="font-bold mt-0 mb-1">{{ userAccount.user.email }}</p>
+          <p class="font-bold mt-0 mb-1 account-status">
+            Status: {{ userAccount.user.status }}
+          </p>
+        </div>
+      </div>
     </div>
-    <div>{{ userAccount.user.email }}</div>
-    <div>{{ userAccount.user.status }}</div>
   </section>
   <section>
-    <header>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      </p>
-    </header>
-    <form id="myAccountForm">
-      <div>
-        <label>Email Address</label>
-        <input
-          id="email-address"
-          type="email"
-          value="{{ userAccount.user.email }}"
-        />
-      </div>
-      <div>
-        <label>Confirm Email Address</label>
-        <input id="confirm-email-address" type="email" />
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          id="password"
-          type="password"
-          value="{{ userAccount.user.password }}"
-        />
-      </div>
-      <div>
-        <label for="confirm-password">Confirm Password</label>
-        <input id="confirm-password" type="password" />
-      </div>
-      <div>
-        <input
-          id="subscribe"
-          type="checkbox"
-          [checked]="userAccount.user.mailingList"
-        />
-        <label for="subscribe">Receive ABS Emails / Newsletters?</label>
-      </div>
-      <div>
-        <button type="reset">Cancel</button>
-        <button type="submit">Save</button>
-      </div>
-    </form>
+    <div class="grid">
+      <sl-card class="col-12">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat.
+        </p>
+        <div class="grid" *ngIf="!isEdit">
+          <div class="col-12 md:col-6">
+            <label>Email Address</label>
+            <div>{{ userAccount.user.email }}</div>
+          </div>
+          <div class="col-12 md:col-6">
+            <label>Password</label>
+            <div>********</div>
+          </div>
+          <div class="col-12 md:col-6">
+            <sl-checkbox [checked]="userAccount.user.mailingList"
+              >Receive ABS Emails / Newsletters?</sl-checkbox
+            >
+          </div>
+          <div class="col-12 flex justify-content-end">
+            <sl-button
+              variant="primary"
+              style="width: 200px"
+              (click)="isEdit = true"
+              >Edit</sl-button
+            >
+          </div>
+        </div>
+        <form id="myAccountForm">
+          <div class="grid" *ngIf="isEdit">
+            <sl-input
+              class="col-12 md:col-6"
+              label="Email Address"
+              [(ngModel)]="userAccount.user.email"
+              [value]="userAccount.user.email"
+            ></sl-input>
+            <sl-input
+              class="col-12 md:col-6"
+              label="Confirm Email Address"
+            ></sl-input>
+            <sl-input
+              class="col-12 md:col-6"
+              label="Password"
+              [(ngModel)]="userAccount.user.password"
+              [value]="userAccount.user.password"
+            ></sl-input>
+            <sl-input
+              class="col-12 md:col-6"
+              label="Confirm Password"
+            ></sl-input>
+            <sl-checkbox
+              class="col-12 md:col-6"
+              [(ngModel)]="userAccount.user.mailingList"
+              [checked]="userAccount.user.mailingList"
+              >Receive ABS Emails / Newsletters?</sl-checkbox
+            >
+            <div class="col-12 flex justify-content-end">
+              <sl-button type="reset" variant="text" (click)="isEdit = false"
+                >Cancel</sl-button
+              >
+              <sl-button
+                type="submit"
+                style="width: 337px"
+                variant="primary"
+                (click)="isEdit = false"
+                >Save</sl-button
+              >
+            </div>
+          </div>
+        </form>
+      </sl-card>
+    </div>
   </section>
 </ng-container>
 
-<ng-template #loading> loading... </ng-template>
+<ng-template #loading>
+  <div class="my-5 flex flex-column justify-content-center align-items-center">
+    <sl-spinner
+      class="block"
+      style="font-size: 3rem; --indicator-color: var(--global-primary)"
+    ></sl-spinner>
+    <p>loading account details...</p>
+  </div>
+</ng-template>

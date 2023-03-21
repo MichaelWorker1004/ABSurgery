@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { UserAccountService } from '../api/fake/user-account.service';
 import { IUserAccountModel } from '../api/models/user-account.model';
 import { Observable } from 'rxjs';
@@ -12,12 +12,16 @@ import { NgIf, AsyncPipe } from '@angular/common';
   selector: 'abs-my-account',
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
   imports: [NgIf, FormsModule, AsyncPipe],
 })
 export class MyAccountComponent {
   @Select(MyAccountState.user) user$: Observable<IUserAccountModel> | undefined;
   userAccount$: Observable<IUserAccountModel> | undefined;
+  isEdit = false;
+  profilePicture =
+    'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU';
   constructor(
     private userAccountService: UserAccountService,
     private store: Store

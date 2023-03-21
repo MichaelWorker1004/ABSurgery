@@ -200,7 +200,7 @@
   --global-black: #2a2a2a;
   --global-gray-dark: #595959;
   --global-gray: #7f7f7f;
-  --global-gary-light: #d7d7d7;
+  --global-gray-light: #d7d7d7;
 
   --global-primary-lighten-60: #8babd6;
   --global-primary-lighten-40: #5181c2;
@@ -274,8 +274,20 @@ sl-button::part(caret) {
 sl-button::part(caret):hover {
   color: var(--sl-color-primary-400);
 }
+sl-select::part(form-control-label) {
+  font-weight: 700;
+}
+sl-select::part(expand-icon) {
+  color: var(--sl-color-primary-500);
+}
+sl-select::part(expand-icon):hover {
+  color: var(--sl-color-primary-400);
+}
 sl-checkbox::part(checked-icon) {
   color: var(--sl-color-black);
+}
+sl-checkbox::part(label) {
+  font-weight: 700;
 }
 sl-radio::part(checked-icon) {
   color: var(--sl-color-black);
@@ -295,10 +307,43 @@ sl-badge[variant='primary']::part(base) {
 sl-badge[variant='warning']::part(base) {
   color: var(--sl-color-black);
 }
+sl-card::part(base) {
+  box-shadow: 0px 0px 6px #24365526;
+  border: none;
+}
 sl-card::part(header) {
   font-size: 1.25rem;
   font-weight: 700;
 }
+sl-avatar::part(base) {
+  border: 0.125rem solid var(--global-warning);
+}
+sl-input::part(form-control-label) {
+  font-weight: 700;
+}
+
+sl-input[data-invalid]::part(base) {
+  border-color: var(--global-danger);
+}
+sl-input[data-invalid]::part(form-control-label) {
+  color: var(--global-danger);
+}
+sl-select[data-invalid]::part(form-control-input) {
+  border-color: var(--global-danger);
+}
+sl-select[data-invalid]::part(form-control-label) {
+  color: var(--global-danger);
+}
+// sl-input::part(base) {
+//   input[type='date']::-webkit-calendar-picker-indicator {
+//     color: var(--global-warning);
+//     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.3.0 by %40fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons  Inc. --%3E%3Cpath d='M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z'/%3E%3C/svg%3E");
+//   }
+// }
+// input[type='date']::-webkit-calendar-picker-indicator {
+//   color: var(--global-warning);
+//   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.3.0 by %40fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons  Inc. --%3E%3Cpath d='M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z'/%3E%3C/svg%3E");
+// }
 
 sl-dialog::part(panel) {
   min-width: 75%;
@@ -383,6 +428,9 @@ p {
   font-size: 1rem;
   margin: 1rem 0;
 }
+label {
+  font-weight: 700;
+}
 
 .app-content {
   width: 100vw;
@@ -401,10 +449,10 @@ p {
   color: var(--global-text-white);
 }
 .app-container-fluid {
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 130px);
   width: 100%;
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 3rem;
 }
 
 /* This currently recreates the basic functionality of a bootstrap container, we may need to update this to work better with the side nav component */

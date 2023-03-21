@@ -29,12 +29,17 @@ export class AuthService {
   login(payload: IUserCredentialModel): Observable<AuthStateModel> {
     // test: test1@something.com
     // test: pass@word123
-    const url = `/v1/users/authenticate?emailAddress=${payload.emailAddress}&password=${payload.password}`;
-    return this.httpClient.post<AuthStateModel>(url, {}).pipe(
-      map((resp) => {
-        return resp;
+    const url = `/v1/users/authenticate`;
+    return this.httpClient
+      .post<AuthStateModel>(url, {
+        emailAddress: payload.emailAddress,
+        password: payload.password,
       })
-    );
+      .pipe(
+        map((resp) => {
+          return resp;
+        })
+      );
   }
 
   logout(token: string | null): Observable<string> {

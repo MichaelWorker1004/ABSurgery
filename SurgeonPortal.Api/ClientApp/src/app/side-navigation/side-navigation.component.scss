@@ -74,6 +74,25 @@ h1 {
 }
 
 nav {
+  max-height: calc(100vh - 17.5rem);
+  overflow: hidden;
+  &:hover {
+    overflow-y: auto;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0.125rem;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--global-warning-lighten-60);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--global-warning);
+    &:hover {
+      background: var(--global-warning-darken-20);
+    }
+  }
+
   ul {
     list-style: none;
     padding: 0;

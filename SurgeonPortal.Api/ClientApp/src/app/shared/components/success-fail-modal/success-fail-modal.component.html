@@ -1,0 +1,23 @@
+<sl-dialog [noHeader]="true" [open]="showDialog" (sl-request-close)="close()">
+  <!-- <div slot="label">
+        <i class="fa-solid fa-check" *ngIf="isSuccess"></i>
+        <i class="fa-solid fa-x" *ngIf="!isSuccess"></i>
+        {{ title }}
+    </div> -->
+  <div class="flex flex-column justify-content-center align-items-center">
+    <i class="fa-regular fa-circle-check success-icon" *ngIf="isSuccess"></i>
+    <i class="fa-regular fa-circle-xmark error-icon" *ngIf="!isSuccess"></i>
+    <h2 class="font-normal mt-3 mb-1">
+      {{ title }}
+    </h2>
+    <p class="font-bold mt-0 mb-1" *ngIf="message">{{ message }}</p>
+    <sl-button
+      slot="footer"
+      class="mt-5"
+      style="width: 337px"
+      variant="primary"
+      (click)="close()"
+      >{{ isSuccess ? 'Continue' : 'Okay' }}</sl-button
+    >
+  </div>
+</sl-dialog>

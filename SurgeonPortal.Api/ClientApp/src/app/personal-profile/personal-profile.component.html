@@ -1,1 +1,503 @@
-<p>personal-profile works!</p>
+<header>
+  <h1>Personal Profile</h1>
+</header>
+<ng-container>
+  <section>
+    <div class="grid">
+      <div class="col-12 flex">
+        <abs-profile-header
+          [profilePicture]="user.profilePicture"
+          [user]="user"
+        ></abs-profile-header>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="grid">
+      <sl-card class="col-12">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat.
+        </p>
+        <form id="personProfileForm">
+          <div class="form-section">
+            <h5 class="form-section__title">Name</h5>
+            <hr />
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-12 sm:col-8 md:col-4">
+                <label>First Name</label>
+                <div>{{ profile.firstName }}</div>
+              </div>
+              <div class="col-12 sm:col-4 md:col-2">
+                <label>M. I.</label>
+                <div>{{ profile.middleInitial }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Last Name</label>
+                <div>{{ profile.lastName }}</div>
+              </div>
+              <div class="col-12">
+                <label
+                  >Name as it should appear on your printed certificate</label
+                >
+                <div>{{ profile.certName }}</div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <sl-input
+                class="col-12 sm:col-8 md:col-4"
+                label="First Name"
+                name="firstName"
+                ngDefaultControl
+                [(ngModel)]="profile.firstName"
+                required
+              ></sl-input>
+              <sl-input
+                class="col-12 sm:col-4 md:col-2"
+                label="M. I."
+                name="middleInitial"
+                ngDefaultControl
+                [(ngModel)]="profile.middleInitial"
+              ></sl-input>
+              <sl-input
+                class="col-12 md:col-6"
+                label="Last Name"
+                name="lastName"
+                ngDefaultControl
+                [(ngModel)]="profile.lastName"
+              ></sl-input>
+              <sl-input
+                class="col-12"
+                label="Name as it should appear on your printed certificate"
+                name="certName"
+                ngDefaultControl
+                [(ngModel)]="profile.certName"
+              ></sl-input>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section__title">Mailing Address</h5>
+            <hr />
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-12 md:col-9">
+                <label>Street Address</label>
+                <div>{{ profile.address.street }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>Apt</label>
+                <div>{{ profile.address.line2 }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>City</label>
+                <div>{{ profile.address.city }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>State / Province</label>
+                <div>{{ profile.address.state }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>Zipcode</label>
+                <div>{{ profile.address.zip }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>Country</label>
+                <div>{{ profile.address.country }}</div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <sl-input
+                class="col-12 md:col-9"
+                label="Street Address"
+                name="street"
+                help-text="Address Line 1"
+                ngDefaultControl
+                [(ngModel)]="profile.address.street"
+              ></sl-input>
+              <sl-input
+                class="col-12 md:col-3"
+                label="&nbsp;"
+                name="line2"
+                help-text="Address Line 2"
+                ngDefaultControl
+                [(ngModel)]="profile.address.line2"
+              ></sl-input>
+              <sl-input
+                class="col-12 md:col-3"
+                label="City"
+                name="city"
+                ngDefaultControl
+                [(ngModel)]="profile.address.city"
+              ></sl-input>
+              <sl-select
+                class="col-12 md:col-3"
+                label="State / Province"
+                name="state"
+                ngDefaultControl
+                [(ngModel)]="profile.address.state"
+                required
+              >
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-input
+                class="col-12 md:col-3"
+                label="Zipcode"
+                name="zipcode"
+                ngDefaultControl
+                [(ngModel)]="profile.address.zip"
+              ></sl-input>
+              <sl-select
+                class="col-12 md:col-3"
+                label="Country"
+                name="country"
+                ngDefaultControl
+                [(ngModel)]="profile.address.country"
+              >
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section__title">Contact Information</h5>
+            <hr />
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-12 md:col-6">
+                <label>Email Address</label>
+                <div>{{ profile.email }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <!-- left empty to hold visual space for email confirmation in edit mode -->
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Daytime Phone Number</label>
+                <div>{{ profile.phone | mask : '(000) 000-0000' }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Mobile Phone Number</label>
+                <div>{{ profile.mobile | mask : '(000) 000-0000' }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Fax Number</label>
+                <div>{{ profile.fax | mask : '(000) 000-0000' }}</div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <sl-input
+                inputmode="email"
+                class="col-12 md:col-6"
+                name="email"
+                label="Email Address"
+                ngDefaultControl
+                [(ngModel)]="profile.email"
+                required
+              ></sl-input>
+              <sl-input
+                inputmode="email"
+                class="col-12 md:col-6"
+                name="confirmEmail"
+                label="Confirm Email Address"
+                ngDefaultControl
+                [(ngModel)]="profile.confirmEmail"
+              ></sl-input>
+              <sl-input
+                type="phone"
+                inputmode="tel"
+                class="col-12 md:col-6"
+                name="phone"
+                label="Daytime Phone Number"
+                ngDefaultControl
+                [(ngModel)]="profile.phone"
+                mask="(000) 000-0000"
+              ></sl-input>
+              <sl-input
+                type="phone"
+                inputmode="tel"
+                class="col-12 md:col-6"
+                name="mobile"
+                label="Mobile Phone Number"
+                ngDefaultControl
+                [(ngModel)]="profile.mobile"
+                mask="(000) 000-0000"
+              ></sl-input>
+              <sl-input
+                type="fax"
+                inputmode="tel"
+                class="col-12 md:col-6"
+                name="fax"
+                label="Fax Number"
+                ngDefaultControl
+                [(ngModel)]="profile.fax"
+                mask="(000) 000-0000"
+              ></sl-input>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section__title">Citizenship Information</h5>
+            <hr />
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-12 md:col-6">
+                <label>Town or City of Birth</label>
+                <div>{{ profile.placeOfBirth.city }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>State, Province, or Territory of Birth</label>
+                <div>{{ profile.placeOfBirth.state }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Country of Birth</label>
+                <div>{{ profile.placeOfBirth.country }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Country of Citizenship</label>
+                <div>{{ profile.countryOfCitizenship }}</div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <sl-input
+                class="col-12 md:col-6"
+                name="cityOfBirth"
+                label="Town or City of Birth"
+                ngDefaultControl
+                [(ngModel)]="profile.placeOfBirth.city"
+              ></sl-input>
+              <sl-select
+                class="col-12 md:col-6"
+                name="stateOfBirth"
+                label="State, Province, or Territory of Birth"
+                ngDefaultControl
+                [(ngModel)]="profile.placeOfBirth.state"
+              >
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-select
+                class="col-12 md:col-6"
+                name="countryOfBirth"
+                label="Country of Birth"
+                ngDefaultControl
+                [(ngModel)]="profile.placeOfBirth.country"
+              >
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-select
+                class="col-12 md:col-6"
+                name="countryOfCitizenship"
+                label="Country of Citizenship"
+                ngDefaultControl
+                [(ngModel)]="profile.countryOfCitizenship"
+              >
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section__title">Demographic Information</h5>
+            <hr />
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-12 md:col-6">
+                <label>ABS ID</label>
+                <div>{{ profile.absId }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>National Provider Identification</label>
+                <div>{{ profile.npi }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Social Security Number</label>
+                <div>{{ profile.ssn | mask : 'XXX-XX-0000' }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>Gender</label>
+                <div>{{ profile.gender }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>Date of Birth</label>
+                <div>{{ profile.dob }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>Race</label>
+                <div>{{ profile.race }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>Ethnicity</label>
+                <div>{{ profile.ethnicity }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>First Language</label>
+                <div>{{ profile.firstLanguage }}</div>
+              </div>
+              <div class="col-12 md:col-3">
+                <label>Best Language</label>
+                <div>{{ profile.bestLanguage }}</div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <sl-input
+                class="col-12 md:col-6"
+                name="absId"
+                label="ABS ID"
+                ngDefaultControl
+                [(ngModel)]="profile.absId"
+                readonly
+              ></sl-input>
+              <sl-input
+                class="col-12 md:col-6"
+                name="npi"
+                label="National Provider Identification"
+                ngDefaultControl
+                [(ngModel)]="profile.npi"
+                readonly
+              ></sl-input>
+              <sl-input
+                class="col-12 md:col-6"
+                name="ssn"
+                label="Social Security Number"
+                ngDefaultControl
+                [(ngModel)]="profile.ssn"
+                mask="XXX-XX-0000"
+              ></sl-input>
+              <sl-select
+                class="col-12 md:col-3"
+                name="gender"
+                label="Gender"
+                ngDefaultControl
+                [(ngModel)]="profile.gender"
+                [value]="profile.gender"
+              >
+                <sl-option value="male">Male</sl-option>
+                <sl-option value="female">Female</sl-option>
+                <sl-option value="other">Other</sl-option>
+              </sl-select>
+              <sl-input
+                type="date"
+                class="col-12 md:col-3"
+                name="dob"
+                label="Date of Birth"
+                ngDefaultControl
+                [(ngModel)]="profile.dob"
+              ></sl-input>
+              <sl-select
+                class="col-12 md:col-3"
+                name="race"
+                label="Race"
+                ngDefaultControl
+                [(ngModel)]="profile.race"
+              >
+                <sl-option value="white">White</sl-option>
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-select
+                class="col-12 md:col-3"
+                name="ethnicity"
+                label="Ethnicity"
+                ngDefaultControl
+                [(ngModel)]="profile.ethnicity"
+              >
+                <sl-option value="white">White</sl-option>
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-select
+                class="col-12 md:col-3"
+                name="firstLanguage"
+                label="First Language"
+                ngDefaultControl
+                [(ngModel)]="profile.firstLanguage"
+              >
+                <sl-option value="English">English</sl-option>
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-select
+                class="col-12 md:col-3"
+                name="bestLanguage"
+                label="Best Language"
+                ngDefaultControl
+                [(ngModel)]="profile.bestLanguage"
+              >
+                <sl-option value="English">English</sl-option>
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+            </div>
+          </div>
+
+          <div class="form-section" *ngIf="isEdit">
+            <div class="grid">
+              <div class="col-12 text-center">
+                <sl-checkbox
+                  class="col-12"
+                  name="formConfirmation"
+                  ngDefaultControl
+                  [(ngModel)]="formConfirmation"
+                >
+                  I confirm the above information is completed and correct to
+                  the best of my knowledge
+                </sl-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="flex justify-content-end" *ngIf="!isEdit">
+              <sl-button
+                variant="primary"
+                style="width: 200px"
+                (click)="isEdit = true"
+                >Edit</sl-button
+              >
+            </div>
+            <div class="flex justify-content-end" *ngIf="isEdit">
+              <sl-button variant="text" (click)="isEdit = false"
+                >Cancel</sl-button
+              >
+              <sl-button
+                type="submit"
+                style="width: 337px"
+                variant="primary"
+                (click)="save()"
+                >Save</sl-button
+              >
+            </div>
+          </div>
+        </form>
+      </sl-card>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <div class="my-5 flex flex-column justify-content-center align-items-center">
+    <sl-spinner
+      class="block"
+      style="font-size: 3rem; --indicator-color: var(--global-primary)"
+    ></sl-spinner>
+    <p>loading personal profile...</p>
+  </div>
+</ng-template>
+
+<abs-success-fail-modal
+  [isSuccess]="call?.isSuccess"
+  [title]="call?.title"
+  [message]="call?.message"
+  [showDialog]="call?.showDialog"
+  (closeDialog)="toggleDialog($event)"
+></abs-success-fail-modal>
