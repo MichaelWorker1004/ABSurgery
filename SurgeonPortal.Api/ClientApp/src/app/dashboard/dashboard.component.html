@@ -1,23 +1,23 @@
-<div class="container">
-  <div class="dash-header">
-    <div class="main-greeting">
+<div class="app">
+  <div class="flex justify-content-between align-items-end">
+    <div>
       <h1>Dashboard</h1>
-      <div class="greetings">Hello, {{ userData.name }}!</div>
+      <h4 class="thin">Hello, {{ userData.name }}!</h4>
     </div>
     <div class="last-login">
-      <span>Last Login:</span> {{ userData.lastLogin }}
+      <strong>Last Login:</strong> {{ userData.lastLogin }}
     </div>
   </div>
 
-  <div class="dash-container">
+  <div class="grid">
     <abs-user-information-card
-      class="grid-item w-100"
+      class="col-12"
       [userInformation]="userData.userInformation"
       [currentStatus]="userData.currentStatus"
     ></abs-user-information-card>
 
     <abs-highlight-card
-      class="grid-item w-50"
+      class="col-12 md:col-6"
       *ngFor="let alert of alertsAndNotices"
       [alert]="alert"
     ></abs-highlight-card>
@@ -26,7 +26,6 @@
       [class]="actionCardClass"
       *ngFor="let actionCard of userActionCards"
       [actionCard]="actionCard"
-      [showBorderHighlight]="true"
     ></abs-action-card>
   </div>
 </div>

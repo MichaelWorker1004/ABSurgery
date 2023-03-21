@@ -1,1 +1,28 @@
-<p>continuous-certification works!</p>
+<div class="flex justify-content-between align-items-end flex-wrap">
+  <div>
+    <h1>Continuous Certification</h1>
+    <h4 class="thin">For {{ userData.name }}.</h4>
+  </div>
+  <div class="legend flex flex-wrap">
+    <div class="l flex align-items-center completed">
+      <div class="i"></div>
+      Completed
+    </div>
+    <div class="l flex align-items-center in-progress">
+      <div class="i"></div>
+      In Progress
+    </div>
+    <div class="l flex align-items-center contingent">
+      <div class="i"></div>
+      Contingent
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <abs-action-card
+    class="col-12 md:col-6 lg:col-4"
+    *ngFor="let actionCard of continousCertificationData"
+    [actionCard]="actionCard"
+  ></abs-action-card>
+</div>

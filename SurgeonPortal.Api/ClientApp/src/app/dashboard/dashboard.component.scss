@@ -1,63 +1,15 @@
-.container {
-  margin: 0 auto 10rem;
-  max-width: 90rem;
-  width: 100%;
-  padding: 0 1.25rem;
-  color: var(--global-primary);
-}
-
 h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0;
 }
 
-.greetings {
-  font-size: 1.25rem;
-  font-weight: 400;
+h4 {
+  margin: 0;
 }
 
-.dash-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  .last-login {
-    margin-top: 2rem;
-    span {
-      font-weight: bold;
-    }
-  }
+.grid {
+  margin-top: 1.5rem;
 }
 
-.dash-container {
-  margin-top: 2rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.grid-item {
-  display: block;
-  position: relative;
-}
-
-.w-100 {
+button {
   width: 100%;
-}
-
-.w-50 {
-  flex-grow: 1;
-  width: 100%;
-}
-
-.w-33 {
-  flex-grow: 1;
-  flex-basis: 31%;
-}
-
-@media screen and (min-width: 1660px) {
-  .w-50 {
-    flex-grow: 1;
-    flex-basis: 48%;
-  }
 }

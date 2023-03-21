@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -8,49 +13,24 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './action-card.component.html',
   styleUrls: ['./action-card.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ActionCardComponent implements OnInit {
   @Input() actionCard!: any;
-  @Input() showBorderHighlight = false;
   actionCardClass!: string;
-  cardStyleColor!: string;
-  borderHighlightStyle!: string;
   highlightColor!: string;
-  disabled!: boolean;
 
   constructor(private _router: Router) {}
 
   ngOnInit(): void {
-    this.setEnabled();
-    this.setHighlightColor();
     this.setActionCardClass();
-    this.setCardStyleColor();
-    this.setBorderHighlightStyle();
-  }
-
-  setEnabled() {
-    this.disabled = this.actionCard?.action?.action ? false : true;
-  }
-
-  setHighlightColor() {
-    this.highlightColor = this.actionCard?.highlightColor ?? '#DBAD6A';
-
-    if (this.disabled) {
-      this.highlightColor = '#7F7F7F';
-    }
   }
 
   setActionCardClass() {
-    this.actionCardClass = `action-card ${this.disabled ? 'disabled' : ''}`;
-  }
+    const baseClass = 'action-card';
 
-  setCardStyleColor() {
-    this.cardStyleColor = `color: ${this.highlightColor}`;
-  }
-
-  setBorderHighlightStyle() {
-    this.borderHighlightStyle = `border-right: ${
-      this.showBorderHighlight ? `10px solid ${this.highlightColor}` : 'none'
+    this.actionCardClass = `${baseClass} ${this.actionCard?.status} ${
+      this.actionCard?.disabled ? 'disabled' : ''
     }`;
   }
 

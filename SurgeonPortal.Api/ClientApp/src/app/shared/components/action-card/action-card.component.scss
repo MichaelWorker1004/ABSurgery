@@ -2,11 +2,12 @@
   background-color: #fff;
   border-radius: 6px;
   box-shadow: 0px 0px 6px #24365526;
-  padding: 2rem;
+  padding: 1.5rem;
   height: 100%;
   min-height: 16rem;
   transition: 150ms ease-in-out;
   position: relative;
+  width: 100%;
   .hotspot {
     position: absolute;
     width: 100%;
@@ -29,18 +30,52 @@
       margin-right: 0.75rem;
     }
   }
+  .icon {
+    color: var(--global-warning);
+  }
   .description {
     margin-bottom: 3rem;
   }
   .action-display {
     position: absolute;
-    bottom: 2rem;
-    color: var(--action);
+    bottom: 1rem;
+    color: var(--global-success);
     font-weight: bold;
+    width: 100%;
+    left: 0;
+    padding: 0 2rem;
+  }
+  &.completed {
+    border-right: 10px solid var(--global-success);
+    .icon {
+      color: var(--global-success);
+    }
+  }
+  &.in-progress {
+    border-right: 10px solid var(--global-warning);
+    .icon {
+      color: var(--global-warning);
+    }
+  }
+  &.alert {
+    border-right: 10px solid var(--global-danger);
+    .icon {
+      color: var(--global-danger);
+    }
+  }
+  &.contingent {
+    border-right: 10px solid var(--global-gray);
+    .icon {
+      color: var(--global-gray);
+    }
   }
   &.disabled {
+    cursor: not-allowed;
+    .icon {
+      color: var(--global-gray);
+    }
     .action-display {
-      color: #7f7f7f;
+      color: var(--global-gray);
     }
     &:hover {
       box-shadow: 0px 0px 6px #24365526;

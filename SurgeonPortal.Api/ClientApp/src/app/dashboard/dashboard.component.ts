@@ -159,7 +159,6 @@ export class DashboardComponent implements OnInit {
         },
         actionDisplay: 'Coming Soon',
         icon: 'fa-solid fa-user-graduate',
-        highlightColor: '#1C827D',
       },
       {
         title: 'Graduate Medical Education (GME)',
@@ -185,7 +184,6 @@ export class DashboardComponent implements OnInit {
         },
         actionDisplay: 'See Requirements',
         icon: 'fa-solid fa-user-graduate',
-        highlightColor: '#1C827D',
       },
       {
         title: 'Register for an Exam or Assessment',
@@ -213,7 +211,9 @@ export class DashboardComponent implements OnInit {
 
     this.userActionCards = userCardActionsCertified;
     this.actionCardClass = `grid-item ${
-      this.userActionCards.length >= 3 ? 'w-33' : 'w-50'
+      this.userActionCards.length >= 3
+        ? 'col-12 md:col-6 lg:col-4'
+        : 'col-12 md:col-6'
     }`;
   }
 }

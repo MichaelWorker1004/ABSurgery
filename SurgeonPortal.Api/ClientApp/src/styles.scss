@@ -338,6 +338,9 @@ h4 {
   font-size: 1.5rem;
   line-height: 1.6rem;
   margin: 1.25rem 0;
+  &.thin {
+    font-weight: 500;
+  }
 }
 h5 {
   font-size: 1.3rem;
@@ -382,6 +385,14 @@ p {
   width: 100%;
   margin: 0 auto;
   padding: 0 1.25rem;
+}
+
+.container {
+  margin: 0 auto 10rem;
+  max-width: 90rem;
+  width: 100%;
+  padding: 0 1.25rem;
+  color: var(--global-primary);
 }
 
 .footer-text {

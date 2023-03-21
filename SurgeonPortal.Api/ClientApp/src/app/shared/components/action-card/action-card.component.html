@@ -1,16 +1,27 @@
-<div [class]="actionCardClass" [style]="borderHighlightStyle">
+<div [class]="actionCardClass">
   <a
-    *ngIf="!disabled && actionCard.action?.type === 'component'"
-    [routerLink]="actionCard.action?.action"
+    *ngIf="!actionCard?.disabled && actionCard?.action?.type === 'component'"
+    [routerLink]="actionCard?.action?.action"
     class="hotspot"
   ></a>
-  <div class="card-content">
-    <div class="title">
-      <span class="icon" [style]="cardStyleColor"
-        ><i [class]="actionCard?.icon"></i></span
+  <div class="card-content" [class]="actionCard?.status">
+    <h5 class="title">
+      <span class="icon"><i [class]="actionCard?.icon"></i></span
       >{{ actionCard?.title }}
-    </div>
+    </h5>
     <div class="description">{{ actionCard?.description }}</div>
-    <div class="action-display">{{ actionCard?.actionDisplay }}</div>
+    <div class="action-display">
+      <div *ngIf="actionCard?.action?.style !== 2; else fullButton">
+        {{ actionCard?.actionDisplay }}
+      </div>
+      <ng-template #fullButton>
+        <sl-button
+          [variant]="!actionCard?.disabled ? 'primary' : 'neutral'"
+          [disabled]="actionCard?.disabled"
+          style="width: 100%"
+          >Apply Now</sl-button
+        >
+      </ng-template>
+    </div>
   </div>
 </div>
