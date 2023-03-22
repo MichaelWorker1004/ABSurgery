@@ -10,6 +10,10 @@ h4 {
   margin: 1.5rem 0;
 }
 
+sl-dialog::part(panel) {
+  min-width: 75%;
+}
+
 .legend {
   margin-top: 1.5rem;
   .l {
@@ -74,4 +78,9 @@ sl-radio {
 
 .btn-container {
   margin-top: 2rem;
+}
+
+.margin-bottom-2 {
+  display: block;
+  margin-bottom: 2rem;
 }

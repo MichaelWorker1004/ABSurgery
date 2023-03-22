@@ -88,7 +88,7 @@
 
 <sl-dialog
   label="Attestation"
-  [open]="this.attestationModal"
+  [open]="attestationModal"
   (sl-request-close)="handleCardAction('attestationModal')"
 >
   <form action="">
@@ -118,4 +118,26 @@
       </div>
     </div>
   </form>
+</sl-dialog>
+
+<sl-dialog
+  label="Refrence Forms"
+  [open]="referenceFormsModal"
+  (sl-request-close)="handleCardAction('referenceFormsModal')"
+>
+  <div class="dialog-intro">
+    Please provide contact information for the Authenticating Official from the
+    hospital or surgical center where you perform most of your work. If you hold
+    this position yourself, you may request another physician of comparable rank
+    to provide the reference. The reference cannot be provided by a relative, by
+    someone with whom you have a close personal relationship, or by the same
+    person who is providing you another ABS reference.
+  </div>
+  <abs-grid
+    title="Current Reference Forms"
+    [columns]="referenceFormsCols"
+    [data]="refrenceFormsData"
+    (action)="handleGridAction($event)"
+    class="margin-bottom-2"
+  ></abs-grid>
 </sl-dialog>

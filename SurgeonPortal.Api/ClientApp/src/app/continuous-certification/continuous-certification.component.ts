@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
+import { GridComponent } from '../shared/components/grid/grid.component';
+import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -10,7 +12,7 @@ interface ActionMap {
   selector: 'abs-continuous-certification',
   templateUrl: './continuous-certification.component.html',
   styleUrls: ['./continuous-certification.component.scss'],
-  imports: [CommonModule, ActionCardComponent],
+  imports: [CommonModule, ActionCardComponent, GridComponent],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -19,6 +21,8 @@ export class ContinuousCertificationComponent implements OnInit {
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
   attestationModal = false;
+  referenceFormsModal = false;
+  referenceFormsCols = REFERENCE_FORMS_COLS;
   outcomesandRegistriesFormFields = [
     {
       label: 'Surgeeon Specific Registry (case log)',
@@ -363,12 +367,39 @@ export class ContinuousCertificationComponent implements OnInit {
     },
   ];
 
+  refrenceFormsData = [
+    {
+      referenceFormId: 'MD19143',
+      affiliatedInstitution: 'ABS',
+      authenticatingOfficial: 'John Doe, M.D.',
+      date: new Date('09/21/2019'),
+      status: 'Requested',
+    },
+    {
+      referenceFormId: 'MD08221',
+      affiliatedInstitution: 'ABS',
+      authenticatingOfficial: 'Mary Joseph',
+      date: new Date('08/12/2019'),
+      status: 'Approved',
+    },
+    {
+      referenceFormId: 'MD12345',
+      affiliatedInstitution: 'ABS',
+      authenticatingOfficial: 'John Dorian',
+      date: new Date('8/1/2019'),
+      status: 'Approved',
+    },
+  ];
+
   private actionMap: ActionMap = {
     outcomeRegistriesModal: () => {
       this.outcomeRegistriesModal = !this.outcomeRegistriesModal;
     },
     attestationModal: () => {
       this.attestationModal = !this.attestationModal;
+    },
+    referenceFormsModal: () => {
+      this.referenceFormsModal = !this.referenceFormsModal;
     },
   };
 
@@ -462,8 +493,8 @@ export class ContinuousCertificationComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/apply',
+          type: 'dialog',
+          action: 'referenceFormsModal',
         },
         actionDisplay: 'View / Update my activities',
         icon: 'fa-solid fa-rectangle-list',
@@ -501,5 +532,10 @@ export class ContinuousCertificationComponent implements OnInit {
     if (actionFunction) {
       actionFunction();
     }
+  }
+
+  handleGridAction($event: any) {
+    // do action
+    console.log($event);
   }
 }
