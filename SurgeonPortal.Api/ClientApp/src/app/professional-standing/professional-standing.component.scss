@@ -1,0 +1,29 @@
+sl-radio-group::part(form-control-label) {
+  font-weight: 700;
+}
+sl-radio-group::part(form-control-input) {
+  display: flex;
+}
+sl-radio::part(base) {
+  margin-right: 1.5rem;
+}
+
+sl-textarea::part(form-control) {
+  display: flex;
+  flex-direction: column;
+}
+
+sl-textarea::part(form-control-label) {
+  order: 1;
+  font-weight: 700;
+}
+sl-textarea::part(form-control-help-text) {
+  order: 2;
+  font-style: italic;
+  font-size: 0.8rem;
+  line-height: 0.9rem;
+  color: var(--global-primary);
+}
+sl-textarea::part(form-control-input) {
+  order: 3;
+}

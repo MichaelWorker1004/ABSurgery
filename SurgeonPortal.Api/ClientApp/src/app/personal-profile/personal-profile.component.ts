@@ -31,7 +31,7 @@ export class PersonalProfileComponent {
 
   isEdit = false;
 
-  // this is eventually getting moved to a service for universal modals
+  // TODO: [Joe] this is eventually getting moved to a service for universal modals
   call!: any;
 
   // TODO: [Joe] faked user data, replace with real data
