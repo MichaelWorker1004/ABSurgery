@@ -1,6 +1,6 @@
 export interface IMenuItem {
   display: string;
-  action: any;
+  action: string;
   icon: string;
   children?: IMenuItem;
 }

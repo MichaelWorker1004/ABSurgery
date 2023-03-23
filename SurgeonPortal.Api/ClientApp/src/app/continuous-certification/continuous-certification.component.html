@@ -28,6 +28,7 @@
   ></abs-action-card>
 </div>
 
+<!-- Outcome Registries / Quality Assessment Programs -->
 <sl-dialog
   label="Outcomes Registries / Quality Assessment Programs"
   [open]="this.outcomeRegistriesModal"
@@ -47,7 +48,9 @@
         <sl-radio-group
           *ngIf="formField.type === 'radio'"
           [label]="formField.label"
-          [value]="formField?.value"
+          [name]="formField.name"
+          ngDefaultControl
+          [(ngModel)]="formField.value"
         >
           <span>{{ formField.subLabel }}</span>
           <div class="flex flex-wrap">
@@ -59,7 +62,13 @@
           </div>
         </sl-radio-group>
 
-        <div class="col-12" *ngIf="formField.type === 'textarea'">
+        <div
+          class="col-12"
+          *ngIf="formField.type === 'textarea'"
+          [name]="formField.name"
+          ngDefaultControl
+          [(ngModel)]="formField.value"
+        >
           <label for="describe"
             >{{ formField.label }} <span>{{ formField.subLabel }}</span></label
           >
@@ -68,7 +77,7 @@
       </div>
 
       <div class="col-12 md:col-6">
-        <sl-checkbox
+        <sl-checkbox name="aknowledgement"
           >I confirm the above information is completed and correct to the best
           of my knowledge</sl-checkbox
         >
@@ -86,6 +95,7 @@
   </form>
 </sl-dialog>
 
+<!-- Attestation -->
 <sl-dialog
   label="Attestation"
   [open]="attestationModal"
@@ -103,9 +113,14 @@
         *ngFor="let formField of attestationFormFields"
         [class]="formField.size"
       >
-        <sl-checkbox [value]="formField.value">{{
-          formField.label
-        }}</sl-checkbox>
+        <sl-checkbox
+          [value]="formField.value"
+          [name]="formField.name"
+          [id]="formField.name"
+          ngDefaultControl
+          [(ngModel)]="formField.value"
+          >{{ formField.label }}</sl-checkbox
+        >
       </div>
       <div class="col-12 align-right btn-container">
         <sl-button
@@ -120,6 +135,7 @@
   </form>
 </sl-dialog>
 
+<!-- Reference Forms -->
 <sl-dialog
   label="Refrence Forms"
   [open]="referenceFormsModal"
@@ -136,8 +152,87 @@
   <abs-grid
     title="Current Reference Forms"
     [columns]="referenceFormsCols"
-    [data]="refrenceFormsData"
+    [data]="refrenceGridData"
     (action)="handleGridAction($event)"
     class="margin-bottom-2"
   ></abs-grid>
+
+  <h5>Add Reference</h5>
+
+  <form>
+    <div class="grid">
+      <div
+        *ngFor="let formField of referenceFormFields"
+        class="col-12 md:{{
+          formField.size
+        }} flex flex-column justify-content-start"
+      >
+        <sl-input
+          *ngIf="formField.type === 'text'"
+          [placeholder]="formField.placeholder"
+          [name]="formField.name"
+          [id]="formField.name"
+          [label]="formField.label"
+          [required]="formField.required"
+          ngDefaultControl
+          [(ngModel)]="formField.value"
+        ></sl-input>
+        <sl-select
+          *ngIf="formField.type === 'select'"
+          [placeholder]="formField.placeholder"
+          [name]="formField.name"
+          [id]="formField.name"
+          [label]="formField.label"
+          [required]="formField.required"
+          ngDefaultControl
+          [(ngModel)]="formField.value"
+        >
+          <sl-option
+            *ngFor="let option of formField.options"
+            [value]="option.value"
+            >{{ option.label }}</sl-option
+          >
+        </sl-select>
+        <span>{{ formField.subLabel }}</span>
+      </div>
+      <div class="col-12 margin-bottom-2">
+        I hereby authorize any hospital or medical staff where I now have, have
+        had, or have applied for medical staff privileges, and any medical
+        organization of which I am a member or to which I have applied for
+        membership, and any person who may have information (including medical
+        records, patient records, and reports of committees) which is deemed by
+        ABS to be material to its evaluation of this application, to provide
+        such information to representatives of the ABS. I agree that
+        communications of any nature made to the ABS regarding this application
+        may be made in confidence and shall not be made available to me under
+        any circumstances. I hereby release from liability any hospital, medical
+        staff, medical organization or person, and ABS and its representatives,
+        for acts performed in connection with this application. I authorize the
+        ABS to transmit a reference form request electronically to the above
+        named physician at the email address above, and affirm that it
+        ultimately remains my responsibility to ensure these forms are
+        completed.
+      </div>
+      <div class="col-12 md:col-6">
+        <sl-checkbox name="sendEmail"
+          >I would like my reference form sent to me via email</sl-checkbox
+        >
+      </div>
+      <div class="col-12 md:col-6 align-right btn-container">
+        <sl-button
+          variant="default"
+          size="large"
+          (click)="handleCardAction('referenceFormsModal')"
+          >Cancel</sl-button
+        >
+        <sl-button
+          class="wide"
+          size="large"
+          variant="warning"
+          (click)="onSubmit(referenceFormFields)"
+          >Save</sl-button
+        >
+      </div>
+    </div>
+  </form>
 </sl-dialog>
