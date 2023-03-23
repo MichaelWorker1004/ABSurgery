@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
+import { GridComponent } from '../shared/components/grid/grid.component';
+import { APPOINTMENTS_PRIVILEGES_COLS } from './appointments-privileges-cols';
 
 @Component({
   selector: 'abs-professional-standing',
@@ -15,15 +17,18 @@ import { ProfileHeaderComponent } from '../shared/components/profile-header/prof
     CommonModule,
     CollapsePanelComponent,
     ProfileHeaderComponent,
+    GridComponent,
     FormsModule,
   ],
 })
 export class ProfessionalStandingComponent implements OnInit {
+  appointmentsPrivilegesCols = APPOINTMENTS_PRIVILEGES_COLS;
+
   disableDescribe = true;
-  editSanctionsAndEthics$: Subject<boolean> = new BehaviorSubject(false);
-  editStateMedicalLiscense$: Subject<boolean> = new BehaviorSubject(false);
+  editSanctionsAndEthics$: Subject<boolean> = new BehaviorSubject(true);
+  editStateMedicalLiscense$: Subject<boolean> = new BehaviorSubject(true);
   editHospitalAppointmentsAndPrivileges$: Subject<boolean> =
-    new BehaviorSubject(false);
+    new BehaviorSubject(true);
   // TODO: [Joe] faked user data, replace with real data
   user = {
     profilePicture:
@@ -36,6 +41,41 @@ export class ProfessionalStandingComponent implements OnInit {
   };
 
   profile = {
+    appointmentsAndPrivileges: {
+      primaryPractice: '',
+      primaryPracticeOrg: '',
+      lackOfHospitalPrivilegesReason: '',
+      nonClinicalActivities: '',
+      list: [
+        {
+          practiceType: 'Practice 1',
+          appointmentType: 'Appointment 1',
+          oranizationType: 'Organization 1',
+          state: 'PA',
+          institution: 'LVHN',
+          other: '-',
+          official: 'ABE',
+        },
+        {
+          practiceType: 'Practice 2',
+          appointmentType: 'Appointment 2',
+          oranizationType: 'Organization 2',
+          state: 'PA',
+          institution: 'LVHN',
+          other: '-',
+          official: 'ABE',
+        },
+        {
+          practiceType: 'Practice 3',
+          appointmentType: 'Appointment 3',
+          oranizationType: 'Organization 3',
+          state: 'PA',
+          institution: 'LVHN',
+          other: '-',
+          official: 'ABE',
+        },
+      ],
+    },
     sanctionsEthics: {
       drugOrAlchohol: true,
       hospitalPrivilegesRevoked: false,
@@ -60,5 +100,10 @@ export class ProfessionalStandingComponent implements OnInit {
     this.disableDescribe = !Object.values(this.profile.sanctionsEthics).some(
       (value) => value === true
     );
+  }
+
+  handleGridAction($event: any) {
+    // do action
+    console.log($event);
   }
 }

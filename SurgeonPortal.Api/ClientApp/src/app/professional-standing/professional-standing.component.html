@@ -1,5 +1,5 @@
 <header>
-  <h1>Personal Profile</h1>
+  <h1>Professional Standing</h1>
 </header>
 <ng-container>
   <section>
@@ -15,185 +15,376 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <abs-collapse-panel
-          [panelId]="3"
-          [startExpanded]="true"
-          [editToggle]="editSanctionsAndEthics$"
-        >
-          <h5 class="m-0" panel-header>Sanctions and Ethics</h5>
-          <div class="grid" *ngIf="!(editSanctionsAndEthics$ | async)">
-            <div class="col-12">
-              <label>Have you had treatment for drug or alcohol abuse?</label>
-              <div>
-                {{ profile.sanctionsEthics.drugOrAlchohol ? 'Yes' : 'No' }}
-              </div>
-            </div>
-            <div class="col-12">
-              <label>Have you been denied hospital privileges</label>
-              <div>
-                {{
-                  profile.sanctionsEthics.hospitalPrivilegesRevoked
-                    ? 'Yes'
-                    : 'No'
-                }}
-              </div>
-            </div>
-            <div class="col-12">
-              <label
-                >Have you been reprimanded by any licensing authority or had
-                your license to practice medicine restricted, denied, suspended
-                or revoked, or has it been voluntarily surrendered in any
-                jurisdiction while under investigation?</label
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat.
+        </p>
+        <div class="mb-5">
+          <abs-collapse-panel
+            [panelId]="2"
+            [startExpanded]="true"
+            [editToggle]="editHospitalAppointmentsAndPrivileges$"
+          >
+            <h5 class="mt-0 mb-2" panel-header>
+              Current Hospital Appointments / Privileges
+            </h5>
+            <form id="appointmentsAndPrivileges">
+              <p class="mt-1">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
+                sed neque nec dolor lacinia interdum quis nec nisi. Pellentesque
+                dolor erat, egestas sit amet tortor at, condimentum tempor erat.
+              </p>
+              <h6 class="section__sub-header">
+                Primary Appointments/Privileges
+              </h6>
+              <div
+                class="grid"
+                *ngIf="!(editHospitalAppointmentsAndPrivileges$ | async)"
               >
-              <div>
-                {{ profile.sanctionsEthics.liscensureRevoked ? 'Yes' : 'No' }}
+                <div class="col-12 md:col-6">
+                  <label>Primary Current Practice or Training</label>
+                  <div>
+                    {{ profile.appointmentsAndPrivileges.primaryPractice }}
+                  </div>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label
+                    >Type of Organization of Primary Practice or Training</label
+                  >
+                  <div>
+                    {{ profile.appointmentsAndPrivileges.primaryPracticeOrg }}
+                  </div>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label>Lack of Hospital Privileges</label>
+                  <div class="white-space-break-spaces">
+                    {{
+                      profile.appointmentsAndPrivileges
+                        .lackOfHospitalPrivilegesReason
+                    }}
+                  </div>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label>Non-Clinical Activities</label>
+                  <div class="white-space-break-spaces">
+                    {{
+                      profile.appointmentsAndPrivileges.nonClinicalActivities
+                    }}
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col-12">
-              <label
-                >Have you had hospital staff privileges (or any portion thereof)
-                restricted, suspended, or revoked, or otherwise subject to
-                disciplinary action?</label
+              <div
+                class="grid"
+                *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
               >
-              <div>
-                {{
-                  profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
-                    ? 'Yes'
-                    : 'No'
-                }}
-              </div>
-            </div>
-            <div class="col-12">
-              <label>Have you been convicted of a felony?</label>
-              <div>{{ profile.sanctionsEthics.felony ? 'Yes' : 'No' }}</div>
-            </div>
-            <div class="col-12">
-              <label
-                >Have you been censured by the American College of Surgeons, a
-                hospital or other national or state society?</label
-              >
-              <div>{{ profile.sanctionsEthics.censured ? 'Yes' : 'No' }}</div>
-            </div>
-            <div class="col-12" *ngIf="profile.sanctionsEthics.describe">
-              <!-- TODO: [JOE] is this the correct label for this? -->
-              <label>Describe</label>
-              <div>{{ profile.sanctionsEthics.describe }}</div>
-            </div>
-
-            <div class="col-12 flex justify-content-end">
-              <sl-button
-                variant="primary"
-                style="width: 200px"
-                (click)="toggleEdit(editSanctionsAndEthics$, true)"
-                >Edit</sl-button
-              >
-            </div>
-          </div>
-          <div class="grid" *ngIf="editSanctionsAndEthics$ | async">
-            <form id="sanctionsEthics">
-              <div class="col-12 mb-3">
-                <sl-radio-group
-                  label="Have you had treatment for drug or alcohol abuse?"
-                  name="drugOrAlchohol"
-                  ngDefaultControl
-                  [(ngModel)]="profile.sanctionsEthics.drugOrAlchohol"
-                  (sl-change)="checkSantionsAndEthics()"
-                >
-                  <sl-radio [value]="true">Yes</sl-radio>
-                  <sl-radio [value]="false">No</sl-radio>
-                </sl-radio-group>
-              </div>
-              <div class="col-12 mb-3">
-                <sl-radio-group
-                  label="Have you been denied hospital privileges?"
-                  name="hospitalPrivilegesRevoked"
+                <sl-select
+                  class="col-12 md:col-6"
+                  name="primaryPractice"
+                  label="Primary Current Practice or Training"
+                  placeholder="Choose a practice or training"
                   ngDefaultControl
                   [(ngModel)]="
-                    profile.sanctionsEthics.hospitalPrivilegesRevoked
+                    profile.appointmentsAndPrivileges.primaryPractice
                   "
-                  (sl-change)="checkSantionsAndEthics()"
+                  required
                 >
-                  <sl-radio [value]="true">Yes</sl-radio>
-                  <sl-radio [value]="false">No</sl-radio>
-                </sl-radio-group>
-              </div>
-              <div class="col-12 mb-3">
-                <sl-radio-group
-                  label="Have you been reprimanded by any licensing authority or had your license to practice medicine restricted, denied, suspended or revoked, or has it been voluntarily surrendered in any jurisdiction while under investigation?"
-                  name="liscensureRevoked"
-                  ngDefaultControl
-                  [(ngModel)]="profile.sanctionsEthics.liscensureRevoked"
-                  (sl-change)="checkSantionsAndEthics()"
-                >
-                  <sl-radio [value]="true">Yes</sl-radio>
-                  <sl-radio [value]="false">No</sl-radio>
-                </sl-radio-group>
-              </div>
-              <div class="col-12 mb-3">
-                <sl-radio-group
-                  label="Have you had hospital staff privileges (or any portion thereof) restricted, suspended, or revoked, or otherwise subject to disciplinary action?"
-                  name="hospitalStaffPrivilegesRevoked"
+                  <sl-option value="option-1">Option 1</sl-option>
+                  <sl-option value="option-2">Option 2</sl-option>
+                  <sl-option value="option-3">Option 3</sl-option>
+                </sl-select>
+                <sl-input
+                  class="col-12 md:col-6"
+                  name="primaryPracticeOrg"
+                  label="Type of Organization of Primary Practice or Training"
+                  placeholder="Enter an organization type"
                   ngDefaultControl
                   [(ngModel)]="
-                    profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
+                    profile.appointmentsAndPrivileges.primaryPracticeOrg
                   "
-                  (sl-change)="checkSantionsAndEthics()"
-                >
-                  <sl-radio [value]="true">Yes</sl-radio>
-                  <sl-radio [value]="false">No</sl-radio>
-                </sl-radio-group>
-              </div>
-              <div class="col-12 mb-3">
-                <sl-radio-group
-                  label="Have you been convicted of a felony?"
-                  name="felony"
-                  ngDefaultControl
-                  [(ngModel)]="profile.sanctionsEthics.felony"
-                  (sl-change)="checkSantionsAndEthics()"
-                >
-                  <sl-radio [value]="true">Yes</sl-radio>
-                  <sl-radio [value]="false">No</sl-radio>
-                </sl-radio-group>
-              </div>
-              <div class="col-12 mb-3">
-                <sl-radio-group
-                  label="Have you been censured by the American College of Surgeons, a hospital or other national or state society?"
-                  name="censured"
-                  ngDefaultControl
-                  [(ngModel)]="profile.sanctionsEthics.censured"
-                  (sl-change)="checkSantionsAndEthics()"
-                >
-                  <sl-radio [value]="true">Yes</sl-radio>
-                  <sl-radio [value]="false">No</sl-radio>
-                </sl-radio-group>
-              </div>
-              <div class="col-12 mb-3">
+                  required
+                ></sl-input>
                 <sl-textarea
-                  label="Describe"
-                  help-text="Only if you answered YES to any of the above questions."
-                  [disabled]="disableDescribe"
-                  name="describe"
+                  class="col-12 md:col-6"
+                  label="Lack of Hospital Privileges"
+                  placeholder="Explain any lack of hospital privileges"
+                  resize="none"
+                  name="lackOfHospitalPrivilegesReason"
                   ngDefaultControl
-                  [(ngModel)]="profile.sanctionsEthics.describe"
+                  [(ngModel)]="
+                    profile.appointmentsAndPrivileges
+                      .lackOfHospitalPrivilegesReason
+                  "
+                ></sl-textarea>
+                <sl-textarea
+                  class="col-12 md:col-6"
+                  label="Non-Clinical Activities"
+                  placeholder="Explain any non-clinical activities"
+                  resize="none"
+                  name="nonClinicalActivities"
+                  ngDefaultControl
+                  [(ngModel)]="
+                    profile.appointmentsAndPrivileges.nonClinicalActivities
+                  "
                 ></sl-textarea>
               </div>
-              <div class="col-12 flex justify-content-end">
-                <sl-button
-                  variant="text"
-                  (click)="toggleEdit(editSanctionsAndEthics$, false)"
-                  >Cancel</sl-button
+
+              <h6 class="section__sub-header">
+                All Hospital Appointments/Privileges
+              </h6>
+
+              <div class="grid">
+                <div class="col-12">
+                  <sl-button variant="default" class="btn-add">
+                    <i slot="prefix" class="fa-solid fa-plus"></i>
+                    ADD RECORD
+                  </sl-button>
+                  <abs-grid
+                    [columns]="appointmentsPrivilegesCols"
+                    [data]="profile.appointmentsAndPrivileges.list"
+                    (action)="handleGridAction($event)"
+                    class="margin-bottom-2"
+                  ></abs-grid>
+                </div>
+              </div>
+
+              <div class="grid mt-3">
+                <div
+                  class="col-12 flex justify-content-end"
+                  *ngIf="!(editHospitalAppointmentsAndPrivileges$ | async)"
                 >
-                <sl-button
-                  type="submit"
-                  style="width: 337px"
-                  variant="primary"
-                  (click)="toggleEdit(editSanctionsAndEthics$, false)"
-                  >Save</sl-button
+                  <sl-button
+                    variant="primary"
+                    style="width: 200px"
+                    (click)="
+                      toggleEdit(editHospitalAppointmentsAndPrivileges$, true)
+                    "
+                    >Edit</sl-button
+                  >
+                </div>
+                <div
+                  class="col-12 flex justify-content-end"
+                  *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
                 >
+                  <sl-button
+                    variant="text"
+                    (click)="
+                      toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
+                    "
+                    >Cancel</sl-button
+                  >
+                  <sl-button
+                    type="submit"
+                    style="width: 337px"
+                    variant="primary"
+                    (click)="
+                      toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
+                    "
+                    >Save</sl-button
+                  >
+                </div>
               </div>
             </form>
-          </div>
-        </abs-collapse-panel>
+          </abs-collapse-panel>
+        </div>
+        <div>
+          <abs-collapse-panel
+            [panelId]="3"
+            [startExpanded]="true"
+            [editToggle]="editSanctionsAndEthics$"
+          >
+            <h5 class="mt-0 mb-2" panel-header>Sanctions and Ethics</h5>
+            <form id="sanctionsEthics">
+              <div class="grid" *ngIf="!(editSanctionsAndEthics$ | async)">
+                <div class="col-12">
+                  <label
+                    >Have you had treatment for drug or alcohol abuse?</label
+                  >
+                  <div>
+                    {{ profile.sanctionsEthics.drugOrAlchohol ? 'Yes' : 'No' }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label>Have you been denied hospital privileges</label>
+                  <div>
+                    {{
+                      profile.sanctionsEthics.hospitalPrivilegesRevoked
+                        ? 'Yes'
+                        : 'No'
+                    }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label
+                    >Have you been reprimanded by any licensing authority or had
+                    your license to practice medicine restricted, denied,
+                    suspended or revoked, or has it been voluntarily surrendered
+                    in any jurisdiction while under investigation?</label
+                  >
+                  <div>
+                    {{
+                      profile.sanctionsEthics.liscensureRevoked ? 'Yes' : 'No'
+                    }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label
+                    >Have you had hospital staff privileges (or any portion
+                    thereof) restricted, suspended, or revoked, or otherwise
+                    subject to disciplinary action?</label
+                  >
+                  <div>
+                    {{
+                      profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
+                        ? 'Yes'
+                        : 'No'
+                    }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label>Have you been convicted of a felony?</label>
+                  <div>{{ profile.sanctionsEthics.felony ? 'Yes' : 'No' }}</div>
+                </div>
+                <div class="col-12">
+                  <label
+                    >Have you been censured by the American College of Surgeons,
+                    a hospital or other national or state society?</label
+                  >
+                  <div>
+                    {{ profile.sanctionsEthics.censured ? 'Yes' : 'No' }}
+                  </div>
+                </div>
+                <!-- TODO: [Joe] we may need to tie this ng-if to the disable for the describe field if we are not clearing that out when disabled -->
+                <div class="col-12" *ngIf="profile.sanctionsEthics.describe">
+                  <!-- TODO: [JOE] is this the correct label for this? -->
+                  <label>Describe</label>
+                  <div class="white-space-break-spaces">
+                    {{ profile.sanctionsEthics.describe }}
+                  </div>
+                </div>
+              </div>
+              <div class="grid" *ngIf="editSanctionsAndEthics$ | async">
+                <div class="col-12 mb-3">
+                  <sl-radio-group
+                    label="Have you had treatment for drug or alcohol abuse?"
+                    name="drugOrAlchohol"
+                    ngDefaultControl
+                    [(ngModel)]="profile.sanctionsEthics.drugOrAlchohol"
+                    (sl-change)="checkSantionsAndEthics()"
+                  >
+                    <sl-radio [value]="true">Yes</sl-radio>
+                    <sl-radio [value]="false">No</sl-radio>
+                  </sl-radio-group>
+                </div>
+                <div class="col-12 mb-3">
+                  <sl-radio-group
+                    label="Have you been denied hospital privileges?"
+                    name="hospitalPrivilegesRevoked"
+                    ngDefaultControl
+                    [(ngModel)]="
+                      profile.sanctionsEthics.hospitalPrivilegesRevoked
+                    "
+                    (sl-change)="checkSantionsAndEthics()"
+                  >
+                    <sl-radio [value]="true">Yes</sl-radio>
+                    <sl-radio [value]="false">No</sl-radio>
+                  </sl-radio-group>
+                </div>
+                <div class="col-12 mb-3">
+                  <sl-radio-group
+                    label="Have you been reprimanded by any licensing authority or had your license to practice medicine restricted, denied, suspended or revoked, or has it been voluntarily surrendered in any jurisdiction while under investigation?"
+                    name="liscensureRevoked"
+                    ngDefaultControl
+                    [(ngModel)]="profile.sanctionsEthics.liscensureRevoked"
+                    (sl-change)="checkSantionsAndEthics()"
+                  >
+                    <sl-radio [value]="true">Yes</sl-radio>
+                    <sl-radio [value]="false">No</sl-radio>
+                  </sl-radio-group>
+                </div>
+                <div class="col-12 mb-3">
+                  <sl-radio-group
+                    label="Have you had hospital staff privileges (or any portion thereof) restricted, suspended, or revoked, or otherwise subject to disciplinary action?"
+                    name="hospitalStaffPrivilegesRevoked"
+                    ngDefaultControl
+                    [(ngModel)]="
+                      profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
+                    "
+                    (sl-change)="checkSantionsAndEthics()"
+                  >
+                    <sl-radio [value]="true">Yes</sl-radio>
+                    <sl-radio [value]="false">No</sl-radio>
+                  </sl-radio-group>
+                </div>
+                <div class="col-12 mb-3">
+                  <sl-radio-group
+                    label="Have you been convicted of a felony?"
+                    name="felony"
+                    ngDefaultControl
+                    [(ngModel)]="profile.sanctionsEthics.felony"
+                    (sl-change)="checkSantionsAndEthics()"
+                  >
+                    <sl-radio [value]="true">Yes</sl-radio>
+                    <sl-radio [value]="false">No</sl-radio>
+                  </sl-radio-group>
+                </div>
+                <div class="col-12 mb-3">
+                  <sl-radio-group
+                    label="Have you been censured by the American College of Surgeons, a hospital or other national or state society?"
+                    name="censured"
+                    ngDefaultControl
+                    [(ngModel)]="profile.sanctionsEthics.censured"
+                    (sl-change)="checkSantionsAndEthics()"
+                  >
+                    <sl-radio [value]="true">Yes</sl-radio>
+                    <sl-radio [value]="false">No</sl-radio>
+                  </sl-radio-group>
+                </div>
+                <div class="col-12 mb-3">
+                  <sl-textarea
+                    label="Describe"
+                    help-text="Only if you answered YES to any of the above questions."
+                    resize="none"
+                    [disabled]="disableDescribe"
+                    name="describe"
+                    ngDefaultControl
+                    [(ngModel)]="profile.sanctionsEthics.describe"
+                  ></sl-textarea>
+                </div>
+              </div>
+              <div class="grid">
+                <div
+                  class="col-12 flex justify-content-end"
+                  *ngIf="!(editSanctionsAndEthics$ | async)"
+                >
+                  <sl-button
+                    variant="primary"
+                    style="width: 200px"
+                    (click)="toggleEdit(editSanctionsAndEthics$, true)"
+                    >Edit</sl-button
+                  >
+                </div>
+                <div
+                  class="col-12 flex justify-content-end"
+                  *ngIf="editSanctionsAndEthics$ | async"
+                >
+                  <sl-button
+                    variant="text"
+                    (click)="toggleEdit(editSanctionsAndEthics$, false)"
+                    >Cancel</sl-button
+                  >
+                  <sl-button
+                    type="submit"
+                    style="width: 337px"
+                    variant="primary"
+                    (click)="toggleEdit(editSanctionsAndEthics$, false)"
+                    >Save</sl-button
+                  >
+                </div>
+              </div>
+            </form>
+          </abs-collapse-panel>
+        </div>
       </sl-card>
     </div>
   </section>

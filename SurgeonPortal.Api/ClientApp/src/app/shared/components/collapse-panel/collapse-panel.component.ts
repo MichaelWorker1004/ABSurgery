@@ -15,13 +15,15 @@ export class CollapsePanelComponent implements OnInit {
   @Input() editToggle: Subject<boolean> = new Subject();
 
   ngOnInit() {
-    this.editToggle.subscribe(() => {
-      this.resetHeight();
-    });
-    if (this.startExpanded) {
-      // setTimeout is needed to wait for the DOM to be ready
-      setTimeout(() => this.togglePanel(), 0);
-    }
+    // setTimeout is needed to wait for the DOM to be ready
+    setTimeout(() => {
+      this.editToggle.subscribe(() => {
+        this.resetHeight();
+      });
+      if (this.startExpanded) {
+        this.togglePanel();
+      }
+    }, 0);
   }
 
   togglePanel() {
@@ -42,7 +44,7 @@ export class CollapsePanelComponent implements OnInit {
     const panelBody = document.querySelector<HTMLElement>(
       '#panel-body-' + this.panelId
     );
-    if (panelBody!.style.maxHeight && panelBody!.style.maxHeight !== '0px') {
+    if (panelBody?.style.maxHeight && panelBody?.style.maxHeight !== '0px') {
       // setTimeout is needed to wait for the DOM to update with new content
       setTimeout(() => {
         panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
