@@ -368,6 +368,27 @@ sl-button {
   }
 }
 
+sl-button.btn-add::part(base) {
+  color: var(--global-primary);
+  border: 2px solid var(--global-warning);
+  padding: 0;
+  font-weight: 700;
+}
+sl-button.btn-add::part(prefix) {
+  width: 40px;
+  display: inline-flex;
+  justify-content: center;
+  background: var(--global-warning);
+  font-size: 1.5rem;
+}
+sl-button.btn-add::part(base):hover {
+  color: var(--global-primary-lighten-20);
+  border-color: var(--global-warning-lighten-20);
+  .button__prefix {
+    background: var(--global-warning-lighten-20);
+  }
+}
+
 /* Helper Classes */
 /* primarily using helper classes from PrimeFlex */
 

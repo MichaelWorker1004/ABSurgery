@@ -1,1 +1,47 @@
-<p>documents works!</p>
+<h1>Documents</h1>
+<sl-card>
+  <div slot="header">All Documents</div>
+
+  <div style="margin: 2rem 0">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
+    dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
+    amet tortor at, condimentum tempor erat.
+  </div>
+  <div class="flex upload-controls">
+    <sl-select
+      style="margin-right: 1rem"
+      placeholder="Select a document type"
+      ngDefaultControl
+      [(ngModel)]="documentType"
+    >
+      <sl-option *ngFor="let option of selectOptions" [value]="option.value">{{
+        option.label
+      }}</sl-option>
+    </sl-select>
+    <div class="input-file">
+      <label>
+        <input type="file" (change)="handleFileOnChange($event)" />
+        <span
+          >{{ fileUploadedName ?? 'Upload a File' }}
+          <i class="fa-solid fa-upload"></i
+        ></span>
+      </label>
+    </div>
+    <sl-button
+      (click)="onDocumentUpload()"
+      [disabled]="!uploadedFile && !documentType"
+      class="btn-add"
+    >
+      <i slot="prefix" class="fa-solid fa-plus"></i>
+      <span>UPLOAD DOCUMENT</span>
+    </sl-button>
+  </div>
+  <abs-grid
+    [columns]="documentsCols"
+    [data]="documentsData"
+    (action)="handleGridAction($event)"
+    [gridOptions]="gridOptions"
+    stlye="margin: 0 0 2rem 0"
+  >
+  </abs-grid>
+</sl-card>

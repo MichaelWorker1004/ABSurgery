@@ -62,6 +62,24 @@ const AbsGrid = {
     };
     return colDef;
   },
+
+  setCellCustomStyle(
+    headerName: string,
+    fieldName: string,
+    style?: object,
+    sortable?: boolean
+  ) {
+    const colDef = {
+      headerName,
+      field: fieldName,
+      cellRenderer: 'customStyle',
+      style: () => {
+        return style ?? {};
+      },
+      sortable,
+    };
+    return colDef;
+  },
 };
 
 export { AbsGrid };

@@ -1,6 +1,16 @@
 <div class="abs-grid">
-  <h4>{{ title }}</h4>
-  <table class="GeneratedTable">
+  <div class="flex justify-content-between">
+    <h4>{{ title }}</h4>
+    <div class="search-container" *ngIf="gridOptions.showFilter">
+      <sl-input
+        placeholder="Search"
+        (keyup)="onGridFilterChange($event)"
+      ></sl-input>
+      <i class="fa-solid fa-search"></i>
+    </div>
+  </div>
+
+  <table class="abs-table">
     <thead>
       <tr>
         <th *ngFor="let c of columns">
@@ -14,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let r of data">
+      <tr *ngFor="let r of filteredData">
         <td *ngFor="let c of columns">
           <div *ngIf="!c.cellRenderer">
             {{ r[c.field] }}
@@ -38,6 +48,13 @@
             *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
             [class]="c.cellClass(r[c.field]).toLowerCase()"
           >
+            {{ r[c.field] }}
+          </div>
+          <div
+            *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomStyle"
+            [style]="c.style(r[c.field])"
+          >
+            {{ c.cellStyle }}
             {{ r[c.field] }}
           </div>
         </td>

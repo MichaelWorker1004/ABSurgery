@@ -50,6 +50,24 @@ button {
   }
 }
 
+.search-container {
+  position: relative;
+  i {
+    position: absolute;
+    color: var(--global-warning);
+    font-size: 20px;
+    right: 10px;
+    top: 10px;
+  }
+}
+
+sl-input {
+  margin-bottom: 1rem;
+  &::part(input) {
+    padding-right: 40px;
+  }
+}
+
 .requested {
   color: var(--global-warning);
   font-weight: bold;

@@ -54,7 +54,7 @@ export class SideNavigationComponent implements OnInit {
         icon: 'fa-solid fa-list-check',
       },
       {
-        display: 'Examinaiton History',
+        display: 'Examination History',
         action: 'examination-history',
         icon: 'fa-sharp fa-solid fa-file-waveform',
       },
