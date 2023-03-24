@@ -20,7 +20,9 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
-        <div class="mb-5">
+      </sl-card>
+      <sl-card class="col-12">
+        <div>
           <abs-collapse-panel
             [panelId]="2"
             [startExpanded]="true"
@@ -135,7 +137,11 @@
 
               <div class="grid">
                 <div class="col-12">
-                  <sl-button variant="default" class="btn-add">
+                  <sl-button
+                    variant="default"
+                    class="btn-add"
+                    (click)="showAppointmentModal(null)"
+                  >
                     <i slot="prefix" class="fa-solid fa-plus"></i>
                     ADD RECORD
                   </sl-button>
@@ -187,6 +193,8 @@
             </form>
           </abs-collapse-panel>
         </div>
+      </sl-card>
+      <sl-card class="col-12">
         <div>
           <abs-collapse-panel
             [panelId]="3"
@@ -387,6 +395,12 @@
         </div>
       </sl-card>
     </div>
+    <abs-appointments-add-edit-modal
+      [showDialog]="showAppointmentsAddEdit"
+      [appointment]="tempAppointment$"
+      (cancelDialgo)="cancelAddEditAppointment($event)"
+      (saveDialog)="saveAppointment($event)"
+    ></abs-appointments-add-edit-modal>
   </section>
 </ng-container>
 

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
+import { AppointmentsAddEditModalComponent } from './appointments-add-edit-modal/appointments-add-edit-modal.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { APPOINTMENTS_PRIVILEGES_COLS } from './appointments-privileges-cols';
 
@@ -17,6 +18,7 @@ import { APPOINTMENTS_PRIVILEGES_COLS } from './appointments-privileges-cols';
     CommonModule,
     CollapsePanelComponent,
     ProfileHeaderComponent,
+    AppointmentsAddEditModalComponent,
     GridComponent,
     FormsModule,
   ],
@@ -40,6 +42,8 @@ export class ProfessionalStandingComponent implements OnInit {
     status: 'Trainee',
   };
 
+  showAppointmentsAddEdit = false;
+  tempAppointment$: Subject<any> = new BehaviorSubject({});
   profile = {
     appointmentsAndPrivileges: {
       primaryPractice: '',
@@ -48,27 +52,30 @@ export class ProfessionalStandingComponent implements OnInit {
       nonClinicalActivities: '',
       list: [
         {
-          practiceType: 'Practice 1',
-          appointmentType: 'Appointment 1',
-          oranizationType: 'Organization 1',
+          id: 1,
+          practiceType: 'Practice_1',
+          appointmentType: 'Appointment_1',
+          oranizationType: 'Organization_1',
           state: 'PA',
           institution: 'LVHN',
           other: '-',
           official: 'ABE',
         },
         {
-          practiceType: 'Practice 2',
-          appointmentType: 'Appointment 2',
-          oranizationType: 'Organization 2',
+          id: 2,
+          practiceType: 'Practice_2',
+          appointmentType: 'Appointment_2',
+          oranizationType: 'Organization_2',
           state: 'PA',
           institution: 'LVHN',
           other: '-',
           official: 'ABE',
         },
         {
-          practiceType: 'Practice 3',
-          appointmentType: 'Appointment 3',
-          oranizationType: 'Organization 3',
+          id: 3,
+          practiceType: 'Practice_3',
+          appointmentType: 'Appointment_3',
+          oranizationType: 'Organization_3',
           state: 'PA',
           institution: 'LVHN',
           other: '-',
@@ -102,8 +109,45 @@ export class ProfessionalStandingComponent implements OnInit {
     );
   }
 
+  showAppointmentModal(appointment: any) {
+    if (appointment) {
+      this.tempAppointment$.next(appointment);
+    } else {
+      this.tempAppointment$.next({
+        practiceType: null,
+        appointmentType: null,
+        oranizationType: null,
+        state: null,
+        institution: null,
+        other: null,
+        official: null,
+      });
+    }
+    this.showAppointmentsAddEdit = true;
+  }
+
+  saveAppointment($event: any) {
+    // TODO: [Joe] handle the save call
+    // TODO: [Joe] handle the update call
+    // TODO: [Joe] show the universal success/error message
+    this.showAppointmentsAddEdit = $event.show;
+    this.tempAppointment$.next({});
+  }
+
+  cancelAddEditAppointment($event: any) {
+    this.showAppointmentsAddEdit = $event.show;
+    this.tempAppointment$.next({});
+  }
+
   handleGridAction($event: any) {
-    // do action
-    console.log($event);
+    if ($event.fieldKey === 'edit') {
+      this.showAppointmentModal($event.data);
+    } else if ($event.fieldKey === 'delete') {
+      // TODO: [Joe] show confirmation modal
+      // TODO: [Joe] handle the delete call
+      console.log('delete', $event.data);
+    } else {
+      console.log('unhandled action', $event);
+    }
   }
 }

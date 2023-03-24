@@ -23,7 +23,6 @@ export class SuccessFailModalComponent {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
   close() {
-    console.log('modal close');
     this.closeDialog.emit({ show: false });
   }
 }

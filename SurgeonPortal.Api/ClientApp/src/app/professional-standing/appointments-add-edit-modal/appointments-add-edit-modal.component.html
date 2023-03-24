@@ -1,0 +1,111 @@
+<sl-dialog
+  [open]="showDialog"
+  (sl-request-close)="handleDefaultClose($event)"
+  style="--width: 70%"
+>
+  <div slot="label">
+    {{ localAppointment?.id ? 'Edit' : 'Add' }} Appointment/Privilege Record
+  </div>
+  <form id="appointmentAddEdit" *ngIf="localAppointment">
+    <div class="grid">
+      <div class="col-12">
+        <p class="m-0">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat.
+        </p>
+      </div>
+      <sl-select
+        class="col-12 md:col-6"
+        name="practiceType"
+        label="Practice Type"
+        ngDefaultControl
+        [(ngModel)]="localAppointment.practiceType"
+      >
+        <sl-option value="Practice_1">Practice 1</sl-option>
+        <sl-option value="option-1">Option 1</sl-option>
+        <sl-option value="option-2">Option 2</sl-option>
+        <sl-option value="option-3">Option 3</sl-option>
+      </sl-select>
+      <sl-select
+        class="col-12 md:col-6"
+        name="appointmentType"
+        label="Appointment Type"
+        ngDefaultControl
+        [(ngModel)]="localAppointment.appointmentType"
+      >
+        <sl-option value="Appointment_1">Appointment 1</sl-option>
+        <sl-option value="option-1">Option 1</sl-option>
+        <sl-option value="option-2">Option 2</sl-option>
+        <sl-option value="option-3">Option 3</sl-option>
+      </sl-select>
+      <sl-select
+        class="col-12 md:col-6"
+        name="organizationType"
+        label="Organization Type"
+        ngDefaultControl
+        [(ngModel)]="localAppointment.organizationType"
+      >
+        <sl-option value="Organization_1">Organization 1</sl-option>
+        <sl-option value="option-1">Option 1</sl-option>
+        <sl-option value="option-2">Option 2</sl-option>
+        <sl-option value="option-3">Option 3</sl-option>
+      </sl-select>
+      <sl-select
+        class="col-12 md:col-6"
+        name="state"
+        label="State"
+        ngDefaultControl
+        [(ngModel)]="localAppointment.state"
+      >
+        <sl-option value="PA">PA</sl-option>
+        <sl-option value="option-1">Option 1</sl-option>
+        <sl-option value="option-2">Option 2</sl-option>
+        <sl-option value="option-3">Option 3</sl-option>
+      </sl-select>
+      <sl-select
+        class="col-12 md:col-6"
+        name="institution"
+        label="Institution"
+        ngDefaultControl
+        [(ngModel)]="localAppointment.institution"
+      >
+        <sl-option value="LVHN">LVHN</sl-option>
+        <sl-option value="option-1">Option 1</sl-option>
+        <sl-option value="option-2">Option 2</sl-option>
+        <sl-option value="option-3">Option 3</sl-option>
+      </sl-select>
+      <sl-input
+        class="col-12 md:col-6"
+        name="other"
+        label="Other"
+        ngDefaultControl
+        [(ngModel)]="localAppointment.other"
+      ></sl-input>
+      <sl-select
+        class="col-12 md:col-6"
+        name="official"
+        label="Official"
+        ngDefaultControl
+        [(ngModel)]="localAppointment.official"
+      >
+        <sl-option value="ABE">ABE</sl-option>
+        <sl-option value="option-1">Option 1</sl-option>
+        <sl-option value="option-2">Option 2</sl-option>
+        <sl-option value="option-3">Option 3</sl-option>
+      </sl-select>
+    </div>
+  </form>
+  <div class="flex justify-content-end" slot="footer">
+    <sl-button type="button" variant="text" (click)="cancel()"
+      >Cancel</sl-button
+    >
+    <sl-button
+      type="button"
+      style="width: 337px"
+      variant="primary"
+      (click)="save()"
+      >Save
+    </sl-button>
+  </div>
+</sl-dialog>
