@@ -1,1 +1,100 @@
-<p>examination-history works!</p>
+<header>
+  <h1 class="mb-1">Professional Standing</h1>
+</header>
+<ng-container>
+  <section>
+    <div class="grid">
+      <div class="col-12 flex">
+        <p class="text-2xl mt-0">For {{ user.displayName }}</p>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="grid">
+      <sl-card class="col-12">
+        <abs-collapse-panel [panelId]="1" [startExpanded]="true">
+          <h5 class="mt-0 mb-2" panel-header>Active Examinations</h5>
+          <div class="grid">
+            <div class="col-12 active-exam__container">
+              <p *ngIf="activeExams.length > 0">
+                Click on a link below to register for an active examination
+              </p>
+              <!-- TODO: [Joe] update the 'no examinations' text to include any relevant information or action items -->
+              <p *ngIf="activeExams.length === 0">
+                There are no active examinations at this time. Please check back
+                later.
+              </p>
+              <div
+                class="grid active-exam__details"
+                *ngFor="let exam of activeExams"
+              >
+                <div class="col-7">
+                  <sl-button
+                    class="exam-link m-0"
+                    variant="text"
+                    (click)="
+                      router.navigateByUrl('exam-registration/' + exam.id)
+                    "
+                  >
+                    {{ exam.examTitle }}
+                  </sl-button>
+                  <p class="m-0">
+                    ({{ exam.startDate | date : 'shortDate' }} through
+                    {{ exam.endDate | date : 'shortDate' }})
+                  </p>
+                  <p>
+                    Status: <span class="font-bold">{{ exam.status }}</span>
+                  </p>
+                </div>
+                <div class="col-5">
+                  <div class="grid">
+                    <div class="col-8">
+                      <p class="font-bold m-0">Update</p>
+                    </div>
+                    <div class="col-4">
+                      <p class="font-bold m-0">Date</p>
+                    </div>
+                  </div>
+                  <div class="grid" *ngIf="exam.updates.length === 0">
+                    <div class="col-8">
+                      <p class="m-0">No updates at this time.</p>
+                    </div>
+                  </div>
+                  <div class="grid" *ngFor="let update of exam.updates">
+                    <div class="col-8">
+                      <p class="m-0">{{ update.updateText }}</p>
+                    </div>
+                    <div class="col-4">
+                      <p class="m-0">
+                        {{ update.updateDate | date : 'shortDate' }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="grid">
+                    <div class="col-12">
+                      <p class="text-sm">
+                        Note: Once your application has been approved, you will
+                        be mailed a letter with instructions on how to register
+                        for the exam.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </abs-collapse-panel>
+      </sl-card>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <div class="my-5 flex flex-column justify-content-center align-items-center">
+    <sl-spinner
+      class="block"
+      style="font-size: 3rem; --indicator-color: var(--global-primary)"
+    ></sl-spinner>
+    <p>loading examination history...</p>
+  </div>
+</ng-template>

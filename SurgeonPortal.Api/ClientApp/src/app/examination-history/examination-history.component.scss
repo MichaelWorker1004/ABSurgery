@@ -1,0 +1,21 @@
+.active-exam__container {
+  .active-exam__details {
+    padding-top: 1rem;
+  }
+  .active-exam__details + .active-exam__details {
+    border-top: 1px solid var(--global-gray-light);
+  }
+}
+
+sl-button.exam-link::part(base) {
+  height: 2rem;
+}
+sl-button.exam-link::part(label) {
+  padding: 0;
+  color: var(--global-success);
+  font-weight: 700;
+  font-size: 1rem;
+}
+sl-button.exam-link::part(label):hover {
+  color: var(--global-success-darken-20);
+}
