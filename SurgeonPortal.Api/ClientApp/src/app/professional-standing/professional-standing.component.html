@@ -20,6 +20,31 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
+        <abs-collapse-panel
+          [panelId]="1"
+          [startExpanded]="true"
+          [editToggle]="editStateMedicalLiscense$"
+        >
+          <h5 class="mt-0 mb-2" panel-header>State Medical License</h5>
+          <div class="grid">
+            <div class="col-12">
+              <sl-button
+                variant="default"
+                class="btn-add"
+                (click)="showLicenseModal(null)"
+              >
+                <i slot="prefix" class="fa-solid fa-plus"></i>
+                ADD RECORD
+              </sl-button>
+              <abs-grid
+                [columns]="licensesCols"
+                [data]="profile.medicalLicenses"
+                (action)="handleLicensesGridAction($event)"
+                class="margin-bottom-2"
+              ></abs-grid>
+            </div>
+          </div>
+        </abs-collapse-panel>
       </sl-card>
       <sl-card class="col-12">
         <div>
@@ -148,7 +173,7 @@
                   <abs-grid
                     [columns]="appointmentsPrivilegesCols"
                     [data]="profile.appointmentsAndPrivileges.list"
-                    (action)="handleGridAction($event)"
+                    (action)="handleAppointementsGridAction($event)"
                     class="margin-bottom-2"
                   ></abs-grid>
                 </div>
@@ -398,9 +423,15 @@
     <abs-appointments-add-edit-modal
       [showDialog]="showAppointmentsAddEdit"
       [appointment]="tempAppointment$"
-      (cancelDialgo)="cancelAddEditAppointment($event)"
+      (cancelDialog)="cancelAddEditAppointment($event)"
       (saveDialog)="saveAppointment($event)"
     ></abs-appointments-add-edit-modal>
+    <abs-license-add-edit-modal
+      [showDialog]="showLicensesAddEdit"
+      [license]="tempLicense$"
+      (cancelDialog)="cancelAddEditLicense($event)"
+      (saveDialog)="saveLicense($event)"
+    ></abs-license-add-edit-modal>
   </section>
 </ng-container>
 

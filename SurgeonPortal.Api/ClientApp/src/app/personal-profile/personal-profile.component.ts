@@ -24,7 +24,6 @@ import { SuccessFailModalComponent } from '../shared/components/success-fail-mod
   providers: [provideNgxMask()],
 })
 export class PersonalProfileComponent {
-  // TODO: [Joe] fix unit test failing due to ngModel being used in form
   // TODO: [Joe] set up input masks
   // TODO: [Joe] set up validation
   // TODO: [Joe] set up national provider identifier (NPI) report button

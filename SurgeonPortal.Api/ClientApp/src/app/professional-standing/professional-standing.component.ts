@@ -5,8 +5,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { AppointmentsAddEditModalComponent } from './appointments-add-edit-modal/appointments-add-edit-modal.component';
+import { LicenseAddEditModalComponent } from './license-add-edit-modal/license-add-edit-modal.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { APPOINTMENTS_PRIVILEGES_COLS } from './appointments-privileges-cols';
+import { LICENSES_COLS } from './licenses-cols';
 
 @Component({
   selector: 'abs-professional-standing',
@@ -19,12 +21,14 @@ import { APPOINTMENTS_PRIVILEGES_COLS } from './appointments-privileges-cols';
     CollapsePanelComponent,
     ProfileHeaderComponent,
     AppointmentsAddEditModalComponent,
+    LicenseAddEditModalComponent,
     GridComponent,
     FormsModule,
   ],
 })
 export class ProfessionalStandingComponent implements OnInit {
   appointmentsPrivilegesCols = APPOINTMENTS_PRIVILEGES_COLS;
+  licensesCols = LICENSES_COLS;
 
   disableDescribe = true;
   editSanctionsAndEthics$: Subject<boolean> = new BehaviorSubject(true);
@@ -43,8 +47,48 @@ export class ProfessionalStandingComponent implements OnInit {
   };
 
   showAppointmentsAddEdit = false;
+  showLicensesAddEdit = false;
   tempAppointment$: Subject<any> = new BehaviorSubject({});
+  tempLicense$: Subject<any> = new BehaviorSubject({});
   profile = {
+    medicalLicenses: [
+      {
+        id: 1,
+        state: 'Pennsylvania',
+        number: '123456',
+        type: 'Full',
+        issueDate: new Date('10/24/1986'),
+        expireDate: new Date('10/24/2024'),
+        reportingOrg: 'ABS',
+      },
+      {
+        id: 2,
+        state: 'California',
+        number: '098765',
+        type: 'Full',
+        issueDate: new Date('10/24/1986'),
+        expireDate: new Date('10/24/2024'),
+        reportingOrg: 'Self',
+      },
+      {
+        id: 3,
+        state: 'Maryland',
+        number: '111222',
+        type: 'Full',
+        issueDate: new Date('10/24/1986'),
+        expireDate: new Date('10/24/2024'),
+        reportingOrg: 'ABS',
+      },
+      {
+        id: 4,
+        state: 'Pennsylvania',
+        number: '333444',
+        type: 'Full',
+        issueDate: new Date('10/24/1986'),
+        expireDate: new Date('10/24/2024'),
+        reportingOrg: 'Self',
+      },
+    ],
     appointmentsAndPrivileges: {
       primaryPractice: '',
       primaryPracticeOrg: '',
@@ -109,6 +153,51 @@ export class ProfessionalStandingComponent implements OnInit {
     );
   }
 
+  handleLicensesGridAction($event: any) {
+    if ($event.fieldKey === 'edit') {
+      this.showLicenseModal($event.data);
+    } else {
+      console.log('unhandled action', $event);
+    }
+  }
+  showLicenseModal(license: any) {
+    if (license) {
+      this.tempLicense$.next(license);
+    } else {
+      this.tempLicense$.next({
+        state: null,
+        number: null,
+        type: null,
+        issueDate: null,
+        expireDate: null,
+        reportingOrg: null,
+      });
+    }
+    this.showLicensesAddEdit = true;
+  }
+  saveLicense($event: any) {
+    // TODO: [Joe] handle the save call
+    // TODO: [Joe] handle the update call
+    // TODO: [Joe] show the universal success/error message
+    this.showLicensesAddEdit = $event.show;
+    this.tempLicense$.next({});
+  }
+  cancelAddEditLicense($event: any) {
+    this.showLicensesAddEdit = $event.show;
+    this.tempLicense$.next({});
+  }
+
+  handleAppointementsGridAction($event: any) {
+    if ($event.fieldKey === 'edit') {
+      this.showAppointmentModal($event.data);
+    } else if ($event.fieldKey === 'delete') {
+      // TODO: [Joe] show confirmation modal
+      // TODO: [Joe] handle the delete call
+      console.log('delete', $event.data);
+    } else {
+      console.log('unhandled action', $event);
+    }
+  }
   showAppointmentModal(appointment: any) {
     if (appointment) {
       this.tempAppointment$.next(appointment);
@@ -125,7 +214,6 @@ export class ProfessionalStandingComponent implements OnInit {
     }
     this.showAppointmentsAddEdit = true;
   }
-
   saveAppointment($event: any) {
     // TODO: [Joe] handle the save call
     // TODO: [Joe] handle the update call
@@ -133,21 +221,8 @@ export class ProfessionalStandingComponent implements OnInit {
     this.showAppointmentsAddEdit = $event.show;
     this.tempAppointment$.next({});
   }
-
   cancelAddEditAppointment($event: any) {
     this.showAppointmentsAddEdit = $event.show;
     this.tempAppointment$.next({});
-  }
-
-  handleGridAction($event: any) {
-    if ($event.fieldKey === 'edit') {
-      this.showAppointmentModal($event.data);
-    } else if ($event.fieldKey === 'delete') {
-      // TODO: [Joe] show confirmation modal
-      // TODO: [Joe] handle the delete call
-      console.log('delete', $event.data);
-    } else {
-      console.log('unhandled action', $event);
-    }
   }
 }

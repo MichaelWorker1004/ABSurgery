@@ -172,9 +172,6 @@
                 <div>{{ profile.email }}</div>
               </div>
               <div class="col-12 md:col-6">
-                <!-- left empty to hold visual space for email confirmation in edit mode -->
-              </div>
-              <div class="col-12 md:col-6">
                 <label>Daytime Phone Number</label>
                 <div>{{ profile.phone | mask : '(000) 000-0000' }}</div>
               </div>
@@ -195,15 +192,8 @@
                 label="Email Address"
                 ngDefaultControl
                 [(ngModel)]="profile.email"
-                required
-              ></sl-input>
-              <sl-input
-                inputmode="email"
-                class="col-12 md:col-6"
-                name="confirmEmail"
-                label="Confirm Email Address"
-                ngDefaultControl
-                [(ngModel)]="profile.confirmEmail"
+                help-text="Go to your My Account page to change your email"
+                readonly
               ></sl-input>
               <sl-input
                 type="phone"
@@ -315,10 +305,6 @@
                 <label>National Provider Identification</label>
                 <div>{{ profile.npi }}</div>
               </div>
-              <div class="col-12 md:col-6">
-                <label>Social Security Number</label>
-                <div>{{ profile.ssn | mask : 'XXX-XX-0000' }}</div>
-              </div>
               <div class="col-12 md:col-3">
                 <label>Gender</label>
                 <div>{{ profile.gender }}</div>
@@ -360,14 +346,6 @@
                 ngDefaultControl
                 [(ngModel)]="profile.npi"
                 readonly
-              ></sl-input>
-              <sl-input
-                class="col-12 md:col-6"
-                name="ssn"
-                label="Social Security Number"
-                ngDefaultControl
-                [(ngModel)]="profile.ssn"
-                mask="XXX-XX-0000"
               ></sl-input>
               <sl-select
                 class="col-12 md:col-3"

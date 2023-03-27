@@ -22,7 +22,7 @@ export class AppointmentsAddEditModalComponent implements OnInit {
   @Input() showDialog = false;
   // TODO: [Joe] this should be strongly typed once models are created
   @Input() appointment: Subject<any> = new Subject();
-  @Output() cancelDialgo: EventEmitter<any> = new EventEmitter();
+  @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
 
   localAppointment: any;
@@ -38,7 +38,7 @@ export class AppointmentsAddEditModalComponent implements OnInit {
   }
 
   cancel() {
-    this.cancelDialgo.emit({ show: false });
+    this.cancelDialog.emit({ show: false });
   }
 
   save() {
