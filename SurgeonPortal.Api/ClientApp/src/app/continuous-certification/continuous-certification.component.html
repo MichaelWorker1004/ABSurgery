@@ -236,3 +236,98 @@
     </div>
   </form>
 </sl-dialog>
+
+<!-- Pay Fee -->
+<sl-dialog
+  label="Pay Fee"
+  [open]="payFeeModal"
+  (sl-request-close)="handleCardAction('payFeeModal')"
+>
+  <div class="dialog-intro col-12">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
+    dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
+    amet tortor at, condimentum tempor erat.
+  </div>
+
+  <div class="flex flex-wrap">
+    <div class="col-12 md:col-3">Total Amount of Fee:</div>
+    <div class="col-12 md:col-9">
+      <strong>{{ payFeeData.totalAmountOfFee }}</strong>
+    </div>
+    <div class="col-12 md:col-3">
+      Total Amount Paid as of
+      {{ payFeeData.totalAmountPaidDate | date : 'MM/dd/yyyy' }}:
+    </div>
+    <div class="col-12 md:col-9">
+      <strong>{{ payFeeData.totalAmountPaid }}</strong>
+    </div>
+    <div class="col-12 md:col-3">Remaining Balance:</div>
+    <div class="col-12 md:col-9 danger">
+      <strong>{{ payFeeData.remainingBalance }}</strong>
+    </div>
+  </div>
+
+  <abs-grid
+    [columns]="payFeeCols"
+    [data]="paymentGridData"
+    (action)="handleGridAction($event)"
+    class="margin-bottom-2"
+  >
+  </abs-grid>
+
+  <h5>Payment Information</h5>
+
+  <form>
+    <div class="grid">
+      <div
+        *ngFor="let formField of paymentInformationFormFields"
+        class="col-12 md:{{
+          formField.size
+        }} flex flex-column justify-content-start"
+      >
+        <sl-input
+          *ngIf="formField.type === 'text'"
+          [placeholder]="formField.placeholder"
+          [name]="formField.name"
+          [id]="formField.name"
+          [label]="formField.label"
+          [required]="formField.required"
+          ngDefaultControl
+          [(ngModel)]="formField.value"
+        ></sl-input>
+        <sl-select
+          *ngIf="formField.type === 'select'"
+          [placeholder]="formField.placeholder"
+          [name]="formField.name"
+          [id]="formField.name"
+          [label]="formField.label"
+          [required]="formField.required"
+          ngDefaultControl
+          [(ngModel)]="formField.value"
+        >
+          <sl-option
+            *ngFor="let option of formField.options"
+            [value]="option.value"
+            >{{ option.label }}</sl-option
+          >
+        </sl-select>
+        <span>{{ formField.subLabel }}</span>
+      </div>
+      <div class="col-12 md:col-12 align-right btn-container">
+        <sl-button
+          variant="default"
+          size="large"
+          (click)="handleCardAction('payFeeModal')"
+          >Cancel</sl-button
+        >
+        <sl-button
+          class="wide"
+          size="large"
+          variant="warning"
+          (click)="onSubmit(paymentInformationFormFields)"
+          >Proceed to Pay</sl-button
+        >
+      </div>
+    </div>
+  </form>
+</sl-dialog>

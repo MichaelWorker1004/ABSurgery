@@ -3,6 +3,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
+import { PAY_FEE_COLS } from './pay-fee-cols';
 import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
 
 interface ActionMap {
@@ -23,7 +24,10 @@ export class ContinuousCertificationComponent implements OnInit {
   outcomeRegistriesModal = false;
   attestationModal = false;
   referenceFormsModal = false;
+  payFeeModal = false;
   referenceFormsCols = REFERENCE_FORMS_COLS;
+  payFeeCols = PAY_FEE_COLS;
+  payFeeData!: any;
   outcomesandRegistriesFormFields = [
     {
       label: 'Surgeeon Specific Registry (case log)',
@@ -594,6 +598,105 @@ export class ContinuousCertificationComponent implements OnInit {
     },
   ];
 
+  paymentInformationFormFields = [
+    {
+      label: 'First Name',
+      value: '',
+      required: true,
+      name: 'firstName',
+      placeholder: 'Enter your first name',
+      type: 'text',
+      size: 'col-6',
+    },
+    {
+      label: 'Last Name',
+      value: '',
+      required: true,
+      name: 'lastName',
+      placeholder: 'Enter your last name',
+      type: 'text',
+      size: 'col-6',
+    },
+    {
+      label: 'Email Address',
+      value: '',
+      required: true,
+      name: 'emailAddress',
+      placeholder: 'Enter your email address',
+      type: 'text',
+      size: 'col-6',
+    },
+    {
+      label: 'Phone Number',
+      value: '',
+      required: true,
+      name: 'phoneNumber',
+      placeholder: '_ _ _ - _ _ _ - _ _ _ _',
+      type: 'text',
+      size: 'col-6',
+    },
+    {
+      label: 'Street Address Line 1',
+      subLabel: '',
+      value: '',
+      required: true,
+      name: 'streetAddressLine1',
+      placeholder: 'Enter your full address',
+      type: 'text',
+      size: 'col-6',
+    },
+    {
+      label: 'Suite/Floor/Apt',
+      subLabel: '',
+      value: '',
+      required: false,
+      name: 'streetAddressLine2',
+      placeholder: 'ex. Suite 3',
+      type: 'text',
+      size: 'col-6',
+    },
+    {
+      label: 'City',
+      subLabel: '',
+      value: '',
+      required: true,
+      name: 'city',
+      placeholder: 'Enter your city',
+      type: 'text',
+      size: 'col-4',
+    },
+    {
+      label: 'State',
+      subLabel: '',
+      value: '',
+      required: true,
+      name: 'state',
+      placeholder: 'Choose your state',
+      type: 'select',
+      size: 'col-4',
+      options: [
+        {
+          label: 'Alabama',
+          value: 'AL',
+        },
+        {
+          label: 'Alaska',
+          value: 'AK',
+        },
+      ],
+    },
+    {
+      label: 'Zipcode',
+      subLabel: '',
+      value: '',
+      required: true,
+      name: 'zipcode',
+      placeholder: 'Enter your zip code',
+      type: 'text',
+      size: 'col-4',
+    },
+  ];
+
   refrenceGridData = [
     {
       referenceFormId: 'MD19143',
@@ -618,6 +721,14 @@ export class ContinuousCertificationComponent implements OnInit {
     },
   ];
 
+  paymentGridData = [
+    {
+      paymentDate: new Date('09/18/2015'),
+      paymentAmount: '$100',
+      balanceRemaining: '$285.00',
+    },
+  ];
+
   private actionMap: ActionMap = {
     outcomeRegistriesModal: () => {
       this.outcomeRegistriesModal = !this.outcomeRegistriesModal;
@@ -628,16 +739,29 @@ export class ContinuousCertificationComponent implements OnInit {
     referenceFormsModal: () => {
       this.referenceFormsModal = !this.referenceFormsModal;
     },
+    payFeeModal: () => {
+      this.payFeeModal = !this.payFeeModal;
+    },
   };
 
   ngOnInit(): void {
     this.getUserData();
     this.getContinuousCertificationData();
+    this.getPayFeeData();
   }
 
   getUserData() {
     this.userData = {
       name: 'John Doe, M.D',
+    };
+  }
+
+  getPayFeeData() {
+    this.payFeeData = {
+      totalAmountOfFee: '$285.00',
+      totalAmountPaidDate: new Date('11/5/2022'),
+      totalAmountPaid: '$0.00',
+      remainingBalance: '$285.00',
     };
   }
 
@@ -685,7 +809,7 @@ export class ContinuousCertificationComponent implements OnInit {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
           type: 'component',
-          action: '/apply',
+          action: '/professional-standing',
         },
         actionDisplay: 'View / Update my activities',
         icon: 'fa-solid fa-certificate',
@@ -697,7 +821,7 @@ export class ContinuousCertificationComponent implements OnInit {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
           type: 'component',
-          action: '/personal-profile',
+          action: '/cme-repository',
         },
         actionDisplay: 'View CMEs',
         icon: 'fa-solid fa-id-card-clip',
@@ -708,8 +832,8 @@ export class ContinuousCertificationComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/apply',
+          type: 'dialog',
+          action: 'payFeeModal',
         },
         actionDisplay: 'View / Pay Fee',
         icon: 'fa-solid fa-language',
