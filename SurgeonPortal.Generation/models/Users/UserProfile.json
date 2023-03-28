@@ -1,0 +1,274 @@
+{
+  "refs": {},
+  "name": "Users\\UserProfile",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserProfileId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": true
+    },
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "FirstName",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "MiddleName",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LastName",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "Suffix",
+      "dataType": "string",
+      "maxLength": 5,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "DisplayName",
+      "dataType": "string",
+      "maxLength": 70,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "OfficePhoneNumber",
+      "dataType": "string",
+      "maxLength": 15,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "MobilePhoneNumber",
+      "dataType": "string",
+      "maxLength": 15,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "BirthCity",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "BirthState",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "BirthCountry",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "CountryCitizenship",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "ABSId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "CertificationStatusId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "NPI",
+      "dataType": "string",
+      "maxLength": 10,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "Gender",
+      "dataType": "string",
+      "maxLength": 20,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "BirthDate",
+      "dataType": "datetime?",
+      "maxLength": 3,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "Race",
+      "dataType": "string",
+      "maxLength": 20,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "Ethnicity",
+      "dataType": "string",
+      "maxLength": 1,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "FirstLanguage",
+      "dataType": "string",
+      "maxLength": 30,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "BestLanguage",
+      "dataType": "string",
+      "maxLength": 30,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "ReceiveComms",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "UserConfirmed",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "UserConfirmedDate",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "CreatedAtUtc",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LastUpdatedAtUtc",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Users\\UserProfile -sp [dbo].[get_user_profile_byuserid] -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-24T18:33:59.9982975Z"
+  },
+  "version": 1
+}

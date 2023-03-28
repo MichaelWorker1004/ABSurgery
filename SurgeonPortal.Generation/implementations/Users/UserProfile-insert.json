@@ -1,0 +1,729 @@
+{
+  "name": "UserProfile",
+  "implementationName": "Users\\UserProfile-insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.insert_user_profile",
+    "FetchImplementation": "Users\\UserProfile-getbyuserid",
+    "IsChild": "False",
+    "IsRoot": "True",
+    "Model": "Users\\UserProfile",
+    "ModelGroup": "UserProfile",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "",
+    "IncludeControllerInGeneration": "True",
+    "ControllerName": "Users\\UserProfilesController",
+    "ControllerRoute": "user/profiles",
+    "ControllerVersion": "1"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.insert_user_profile",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[insert_user_profile]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "FirstName",
+            "dataType": "string",
+            "maxLength": 35,
+            "precision": 35,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "FirstName"
+          },
+          {
+            "name": "MiddleName",
+            "dataType": "string",
+            "maxLength": 35,
+            "precision": 35,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "MiddleName"
+          },
+          {
+            "name": "LastName",
+            "dataType": "string",
+            "maxLength": 35,
+            "precision": 35,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LastName"
+          },
+          {
+            "name": "Suffix",
+            "dataType": "string",
+            "maxLength": 5,
+            "precision": 5,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Suffix"
+          },
+          {
+            "name": "DisplayName",
+            "dataType": "string",
+            "maxLength": 70,
+            "precision": 70,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "DisplayName"
+          },
+          {
+            "name": "OfficePhoneNumber",
+            "dataType": "string",
+            "maxLength": 15,
+            "precision": 15,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "OfficePhoneNumber"
+          },
+          {
+            "name": "MobilePhoneNumber",
+            "dataType": "string",
+            "maxLength": 15,
+            "precision": 15,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "MobilePhoneNumber"
+          },
+          {
+            "name": "BirthCity",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "BirthCity"
+          },
+          {
+            "name": "BirthState",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "BirthState"
+          },
+          {
+            "name": "BirthCountry",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "BirthCountry"
+          },
+          {
+            "name": "CountryCitizenship",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CountryCitizenship"
+          },
+          {
+            "name": "ABSId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ABSId"
+          },
+          {
+            "name": "CertificationStatusId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CertificationStatusId"
+          },
+          {
+            "name": "NPI",
+            "dataType": "string",
+            "maxLength": 10,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "NPI"
+          },
+          {
+            "name": "Gender",
+            "dataType": "string",
+            "maxLength": 20,
+            "precision": 20,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Gender"
+          },
+          {
+            "name": "BirthDate",
+            "dataType": "datetime",
+            "maxLength": 3,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "BirthDate"
+          },
+          {
+            "name": "Race",
+            "dataType": "string",
+            "maxLength": 20,
+            "precision": 20,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Race"
+          },
+          {
+            "name": "Ethnicity",
+            "dataType": "string",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Ethnicity"
+          },
+          {
+            "name": "FirstLanguage",
+            "dataType": "string",
+            "maxLength": 30,
+            "precision": 30,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "FirstLanguage"
+          },
+          {
+            "name": "BestLanguage",
+            "dataType": "string",
+            "maxLength": 30,
+            "precision": 30,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "BestLanguage"
+          },
+          {
+            "name": "ReceiveComms",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ReceiveComms"
+          },
+          {
+            "name": "UserConfirmed",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserConfirmed"
+          },
+          {
+            "name": "UserConfirmedDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "UserConfirmedDate"
+          },
+          {
+            "name": "CreatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CreatedByUserId"
+          },
+          {
+            "name": "CreatedAtUtc",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "CreatedAtUtc"
+          },
+          {
+            "name": "LastUpdatedAtUtc",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "LastUpdatedAtUtc"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LastUpdatedByUserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Users\\UserProfile",
+            "fields": [
+              {
+                "name": "UserProfileId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.UserProfileId"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "FirstName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FirstName"
+              },
+              {
+                "name": "MiddleName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MiddleName"
+              },
+              {
+                "name": "LastName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastName"
+              },
+              {
+                "name": "Suffix",
+                "dataType": "string",
+                "maxLength": 5,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Suffix"
+              },
+              {
+                "name": "DisplayName",
+                "dataType": "string",
+                "maxLength": 70,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DisplayName"
+              },
+              {
+                "name": "OfficePhoneNumber",
+                "dataType": "string",
+                "maxLength": 15,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.OfficePhoneNumber"
+              },
+              {
+                "name": "MobilePhoneNumber",
+                "dataType": "string",
+                "maxLength": 15,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MobilePhoneNumber"
+              },
+              {
+                "name": "BirthCity",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.BirthCity"
+              },
+              {
+                "name": "BirthState",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.BirthState"
+              },
+              {
+                "name": "BirthCountry",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.BirthCountry"
+              },
+              {
+                "name": "CountryCitizenship",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CountryCitizenship"
+              },
+              {
+                "name": "ABSId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ABSId"
+              },
+              {
+                "name": "CertificationStatusId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificationStatusId"
+              },
+              {
+                "name": "NPI",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.NPI"
+              },
+              {
+                "name": "Gender",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Gender"
+              },
+              {
+                "name": "BirthDate",
+                "dataType": "datetime?",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.BirthDate"
+              },
+              {
+                "name": "Race",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Race"
+              },
+              {
+                "name": "Ethnicity",
+                "dataType": "string",
+                "maxLength": 1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Ethnicity"
+              },
+              {
+                "name": "FirstLanguage",
+                "dataType": "string",
+                "maxLength": 30,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FirstLanguage"
+              },
+              {
+                "name": "BestLanguage",
+                "dataType": "string",
+                "maxLength": 30,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.BestLanguage"
+              },
+              {
+                "name": "ReceiveComms",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ReceiveComms"
+              },
+              {
+                "name": "UserConfirmed",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserConfirmed"
+              },
+              {
+                "name": "UserConfirmedDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserConfirmedDate"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "FirstName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "MiddleName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "LastName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "Suffix",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "DisplayName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "OfficePhoneNumber",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "MobilePhoneNumber",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "BirthCity",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "BirthState",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "BirthCountry",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "CountryCitizenship",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ABSId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "CertificationStatusId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "NPI",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "Gender",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "BirthDate",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "Race",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "Ethnicity",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "FirstLanguage",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "BestLanguage",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ReceiveComms",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "UserConfirmed",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "UserConfirmedDate",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "CreatedAtUtc",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "LastUpdatedAtUtc",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Users\\UserProfile-insert UserProfile -t=ytg-framework\\editable-create -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[insert_user_profile] -p:FetchImplementation=Users\\UserProfile-getbyuserid -p:IsChild=False -p:IsRoot=True ",
+    "inferredCommand": "ytgim generate i  Users\\UserProfile-insert UserProfile -t=ytg-framework\\editable-create -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[insert_user_profile] -p:FetchImplementation=Users\\UserProfile-getbyuserid -p:IsChild=False -p:IsRoot=True -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfile",
+    "generatedDateUtc": "2023-03-24T18:59:43.2189457Z"
+  },
+  "version": 1
+}

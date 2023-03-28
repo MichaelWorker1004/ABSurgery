@@ -27,7 +27,7 @@ namespace SurgeonPortal.Library.Tests.Users
             return dto;
         }
 
-        #region AuditAsyncAsync
+        #region AuditAsync
         
         [Test]
         public async Task AuditAsync_CallsDalCorrectly()

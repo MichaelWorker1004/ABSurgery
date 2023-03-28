@@ -26,7 +26,7 @@ namespace SurgeonPortal.Library.Users
             _passwordValidationCommandFactory = passwordValidationCommandFactory;
             InputProperties = new List<IPropertyInfo> { primaryProperty };
             Priority = priority;
-            IsAsync = false; 
+            IsAsync = false;
         }
 
         protected override void Execute(IRuleContext context)

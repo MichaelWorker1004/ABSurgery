@@ -23,7 +23,7 @@ namespace SurgeonPortal.Library.Tests.Users
             return dto;
         }
 
-        #region ValidateAsync
+        #region Validate
         
         [Test]
         public void Validate_CallsDalCorrectly()
