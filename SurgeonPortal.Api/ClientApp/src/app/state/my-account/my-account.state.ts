@@ -9,7 +9,7 @@ import {
 } from '@ngxs/store';
 import { SaveMyAccountChanges } from './my-account.actions';
 import { IUserCredentialModel } from '../../api/models/users/user-credential.model';
-import { UserCredentialsApiService } from '../../api/services/users/user-credentials.service';
+import { UserCredentialsService } from '../../api/services/users/user-credentials.service';
 import { of, tap } from 'rxjs';
 import { Logout } from '../auth/auth.actions';
 import { catchError } from 'rxjs/operators';
@@ -44,7 +44,7 @@ export class MyAccountState {
   }
   constructor(
     private authStore: Store,
-    private UserCredentialsApiService: UserCredentialsApiService
+    private UserCredentialsService: UserCredentialsService
   ) {}
 
   @Action(SaveMyAccountChanges)
@@ -52,7 +52,7 @@ export class MyAccountState {
     ctx: StateContext<IUserCredential>,
     { payload }: SaveMyAccountChanges
   ) {
-    return this.UserCredentialsApiService.updateUserCredential(payload).pipe(
+    return this.UserCredentialsService.updateUserCredential(payload).pipe(
       tap((result: IUserCredentialModel) => {
         // Succeeded in changing the user's credentials so logout
         ctx.setState({
