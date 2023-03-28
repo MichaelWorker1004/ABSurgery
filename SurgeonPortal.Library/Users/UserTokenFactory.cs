@@ -9,7 +9,9 @@ namespace SurgeonPortal.Library.Users
     {
         public async Task<IUserToken> GetActiveAsync(string token)
         {
-            return await DataPortal.FetchAsync<UserToken>(new GetActiveCriteria(token));
+            return await DataPortal.FetchAsync<UserToken>(
+                new GetActiveCriteria(token));
+            
         }
 
         public IUserToken Create()
@@ -19,16 +21,17 @@ namespace SurgeonPortal.Library.Users
 
 
         
-        [Serializable]
-        internal class GetActiveCriteria
-        {
-            public string Token { get; set; }
-        
-            public GetActiveCriteria(string token)
+            [Serializable]
+            internal class GetActiveCriteria
             {
-                Token = token;
+                public string Token { get; set; }
+            
+                public GetActiveCriteria(string token)
+             {
+                    Token = token;
+              }
             }
-        }
+            
 
 
     }

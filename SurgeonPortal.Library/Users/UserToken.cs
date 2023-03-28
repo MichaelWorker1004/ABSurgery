@@ -70,8 +70,9 @@ namespace SurgeonPortal.Library.Users
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
-            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
         private async Task GetActive(GetActiveCriteria criteria)
+        
         {
             using (BypassPropertyChecks)
             {

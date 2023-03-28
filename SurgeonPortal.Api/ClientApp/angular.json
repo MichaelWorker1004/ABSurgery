@@ -129,6 +129,45 @@
           }
         }
       }
+    },
+    "ytg-angular": {
+      "projectType": "library",
+      "root": "projects/ytg-angular",
+      "sourceRoot": "projects/ytg-angular/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ytg-angular/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ytg-angular/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ytg-angular/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ytg-angular/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ytg-angular/**/*.ts",
+              "projects/ytg-angular/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

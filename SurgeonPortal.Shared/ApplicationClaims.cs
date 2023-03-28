@@ -8,7 +8,6 @@ namespace SurgeonPortal.Shared
 {
     public static class ApplicationClaims
     {
-        public static readonly string Title = "Title";
         public static readonly string UserId = "UserId";
         public static readonly string FullName = "FullName";
         public static readonly string EmailAddress = "EmailAddress";

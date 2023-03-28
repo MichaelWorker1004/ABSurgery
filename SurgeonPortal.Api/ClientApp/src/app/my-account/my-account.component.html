@@ -1,7 +1,7 @@
 <header>
   <h1>My Account</h1>
 </header>
-<ng-container *ngIf="user$ | async as userAccount; else loading">
+<ng-container *ngIf="user$ | async as user; else loading">
   <section>
     <div class="grid">
       <div class="col-12 flex">
@@ -12,12 +12,11 @@
         ></sl-avatar>
         <div class="ml-3">
           <h2 class="font-normal mt-0 mb-0">
-            {{ userAccount.user.givenName }} {{ userAccount.user.surName }},
-            {{ userAccount.user.title }}
+            {{ user.fullName }}
           </h2>
-          <p class="font-bold mt-0 mb-1">{{ userAccount.user.email }}</p>
+          <p class="font-bold mt-0 mb-1">{{ user.emailAddress }}</p>
           <p class="font-bold mt-0 mb-1 account-status">
-            Status: {{ userAccount.user.status }}
+            Status: {{ user.status }}
           </p>
         </div>
       </div>
@@ -31,17 +30,24 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
+        <ng-container *ngIf="errors$ | async as error"><span *ngIf="error?.password">Error</span>
+          <sl-alert variant="danger" open>
+            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+            <strong *ngIf="error?.emailAddress">{{ error?.emailAddress[0] }}</strong>
+            <strong *ngIf="error?.password">{{ error?.password[0] }}</strong>
+          </sl-alert>
+        </ng-container>
         <div class="grid" *ngIf="!isEdit">
           <div class="col-12 md:col-6">
             <label>Email Address</label>
-            <div>{{ userAccount.user.email }}</div>
+            <div>{{ user.emailAddress }}</div>
           </div>
           <div class="col-12 md:col-6">
             <label>Password</label>
             <div>********</div>
           </div>
           <div class="col-12 md:col-6">
-            <sl-checkbox [checked]="userAccount.user.mailingList"
+            <sl-checkbox [checked]="user.mailingList"
               >Receive ABS Emails / Newsletters?</sl-checkbox
             >
           </div>
@@ -54,43 +60,62 @@
             >
           </div>
         </div>
-        <form id="myAccountForm">
+        <form
+          name="myAccountForm"
+          [formGroup]="myAccountForm"
+          (ngSubmit)="onSubmit()"
+        >
           <div class="grid" *ngIf="isEdit">
             <sl-input
+              type="email"
               class="col-12 md:col-6"
               label="Email Address"
-              [(ngModel)]="userAccount.user.email"
-              [value]="userAccount.user.email"
+              (sl-focus)="selectAll($event)"
+              ngDefaultControl
+              formControlName="emailAddress"
             ></sl-input>
             <sl-input
+              type="email"
               class="col-12 md:col-6"
               label="Confirm Email Address"
+              (sl-focus)="selectAll($event)"
+              ngDefaultControl
+              formControlName="confirmEmailAddress"
             ></sl-input>
             <sl-input
+              type="password"
               class="col-12 md:col-6"
               label="Password"
-              [(ngModel)]="userAccount.user.password"
-              [value]="userAccount.user.password"
+              (sl-focus)="selectAll($event)"
+              ngDefaultControl
+              formControlName="password"
+              password-toggle
             ></sl-input>
             <sl-input
+              type="password"
               class="col-12 md:col-6"
               label="Confirm Password"
+              (sl-focus)="selectAll($event)"
+              ngDefaultControl
+              formControlName="confirmPassword"
+              password-toggle
             ></sl-input>
             <sl-checkbox
               class="col-12 md:col-6"
-              [(ngModel)]="userAccount.user.mailingList"
-              [checked]="userAccount.user.mailingList"
+              ngDefaultControl
+              formControlName="mailingList"
+              checked
               >Receive ABS Emails / Newsletters?</sl-checkbox
             >
             <div class="col-12 flex justify-content-end">
-              <sl-button type="reset" variant="text" (click)="isEdit = false"
+              <sl-button type="reset" variant="text" (click)="resetForm($event)"
                 >Cancel</sl-button
               >
               <sl-button
                 type="submit"
                 style="width: 337px"
                 variant="primary"
-                (click)="isEdit = false"
+                [disabled]="myAccountForm.invalid"
                 >Save</sl-button
               >
             </div>

@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IMenuItem } from 'src/web-components/menuItem';
+import { NgxsModule, Store } from '@ngxs/store';
+import { Logout } from '../state/auth/auth.actions';
 
 @Component({
   selector: 'abs-side-navigation',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, NgxsModule],
   templateUrl: './side-navigation.component.html',
   styleUrls: ['./side-navigation.component.scss'],
 })
@@ -15,7 +17,7 @@ export class SideNavigationComponent implements OnInit {
   @Input() currentStatus: string | undefined;
   navItems: Array<IMenuItem> = [];
 
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private _store: Store) {}
 
   ngOnInit(): void {
     this.getNavItemsByUserRoll();
@@ -109,6 +111,10 @@ export class SideNavigationComponent implements OnInit {
         },
       ];
     }
+  }
+
+  logout() {
+    this._store.dispatch(new Logout());
   }
 
   toggleSideNav() {

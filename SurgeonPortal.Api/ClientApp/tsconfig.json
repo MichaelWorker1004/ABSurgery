@@ -21,6 +21,7 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "paths": {
+      "ytg-angular": ["dist/ytg-angular"],
       "ytg-n": ["dist/ytg-n"]
     }
   },

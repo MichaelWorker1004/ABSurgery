@@ -10,10 +10,10 @@ namespace SurgeonPortal.DataAccess.Tests.Users
 {
 	public class PasswordValidationCommandDalTests : TestBase<string>
     {
-        #region ValidateAsync
+        #region Validate
         
         [Test]
-        public async Task ValidateAsync_CallsSprocCorrectly()
+        public void Validate_CallsSprocCorrectly()
         {
             var expectedSprocName = "[dbo].[get_user_passwordvalidate]";
             var expectedUserId = Create<int>();
@@ -29,7 +29,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             sqlManager.AddRecord(Create<PasswordValidationCommandDto>());
         
             var sut = new PasswordValidationCommandDal(sqlManager);
-            await sut.ValidateAsync(
+            sut.Validate(
                 expectedUserId,
                 expectedPassword);
         

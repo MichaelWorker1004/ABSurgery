@@ -6,7 +6,6 @@ namespace SurgeonPortal.Library.Contracts.Users
     {
         int UserId { get; }
         string FullName { get; }
-        string Title { get; }
         string EmailAddress { get; }
 
         IUserClaimReadOnlyList Claims { get; }

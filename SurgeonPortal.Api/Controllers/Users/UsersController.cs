@@ -36,13 +36,15 @@ namespace SurgeonPortal.Api.Controllers.Users
         private readonly TokensConfiguration _tokensConfiguration;
         private readonly IUserTokenFactory _userTokenFactory;
         private readonly IIdentityProvider _identityProvider;
+        private readonly IUserLoginAuditCommandFactory _userLoginAuditCommandFactory;
 
         public UsersController(IWebHostEnvironment webHostEnvironment,
             IMapper mapper,
             ILoggerFactory loggerFactory,
             IOptions<TokensConfiguration> tokensConfiguration,
             IUserTokenFactory userTokenFactory,
-            IIdentityProvider identityProvider)
+            IIdentityProvider identityProvider,
+            IUserLoginAuditCommandFactory userLoginAuditCommandFactory)
             : base(webHostEnvironment)
         {
             _mapper = mapper;
@@ -50,6 +52,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             _userTokenFactory = userTokenFactory;
             _identityProvider = identityProvider;
             _tokensConfiguration = tokensConfiguration.Value;
+            _userLoginAuditCommandFactory = userLoginAuditCommandFactory;
         }
 
         [AllowAnonymous]
@@ -60,14 +63,22 @@ namespace SurgeonPortal.Api.Controllers.Users
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpPost("authenticate")]
         public async Task<ActionResult> GetUserToken([FromServices] IAppUserReadOnlyFactory appUserReadOnlyFactory,
-            [FromBody] UserCredentialModel model)
+            [FromBody] UserLoginModel model)
         {
+            var ipAddress = string.Empty;
+            var userAgent = string.Empty;
+
             try
             {
+                ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
+                userAgent = HttpContext.Request.Headers["User-Agent"];
+
                 var user = await appUserReadOnlyFactory.GetByCredentialsAsync(
                     model.EmailAddress,
                     model.Password);
-
+                    
+                //log successfuly attempt
+                await _userLoginAuditCommandFactory.AuditAsync(user.UserId, model.EmailAddress, 1, ipAddress, userAgent, true, string.Empty);
                 _logger.LogInformation($"User authenticated successfully. User: {user.UserId}");
 
                 var claims = GetClaimsFromUser(user);
@@ -76,8 +87,10 @@ namespace SurgeonPortal.Api.Controllers.Users
             }
             catch (DataPortalException ex) when (ex.BusinessException is AuthenticationFailedException)
             {
+                await _userLoginAuditCommandFactory.AuditAsync(-1, model.EmailAddress, 1, ipAddress, userAgent, false, string.Empty);
+
                 _logger.LogInformation($"GetUserToken(): User failed authentication. ({model.EmailAddress})");
-                return BadRequest();
+                return BadRequest("Login failed");
             }
             catch (Exception ex)
             {
@@ -192,7 +205,6 @@ namespace SurgeonPortal.Api.Controllers.Users
         private List<Claim> GetClaimsFromUser(IAppUserReadOnly user)
         {
             var claims = new List<Claim>();
-            AddClaimIfHasValue(claims, ApplicationClaims.Title, user.Title);
             AddClaimIfHasValue(claims, ApplicationClaims.FullName, user.FullName);
             AddClaimIfHasValue(claims, ApplicationClaims.EmailAddress, user.EmailAddress);
             AddClaimIfHasValue(claims, ApplicationClaims.UserId, user.UserId.ToString());

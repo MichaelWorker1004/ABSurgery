@@ -14,7 +14,7 @@ using SurgeonPortal.Shared;
 namespace SurgeonPortal.Library.Users
 {
 
-    public class PasswordMatchesCurrentRule : Csla.Rules.BusinessRuleAsync
+    public class PasswordMatchesCurrentRule : Csla.Rules.BusinessRule
     {
         private readonly IPasswordValidationCommandFactory _passwordValidationCommandFactory;
 
@@ -23,13 +23,13 @@ namespace SurgeonPortal.Library.Users
             int priority)
           : base(primaryProperty)
         {
-            _passwordValidationCommandFactory= passwordValidationCommandFactory;
+            _passwordValidationCommandFactory = passwordValidationCommandFactory;
             InputProperties = new List<IPropertyInfo> { primaryProperty };
             Priority = priority;
-            IsAsync = true; 
+            IsAsync = false; 
         }
 
-        protected override async Task ExecuteAsync(IRuleContext context)
+        protected override void Execute(IRuleContext context)
         {
             var propertyValue = context.InputPropertyValues[PrimaryProperty];
             var target = (IBusinessBase)context.Target;
@@ -37,13 +37,15 @@ namespace SurgeonPortal.Library.Users
             if (propertyValue != null)
             {
                 var newPassword = propertyValue.ToString();
-
-                var command = await _passwordValidationCommandFactory.ValidateAsync(IdentityHelper.UserId, newPassword);
-                if (command.PasswordsMatch.HasValue)
+                if (!string.IsNullOrWhiteSpace(newPassword))
                 {
-                    if (command.PasswordsMatch.Value == true)
+                    var command = _passwordValidationCommandFactory.Validate(IdentityHelper.UserId, newPassword);
+                    if (command.PasswordsMatch.HasValue)
                     {
-                        context.AddErrorResult(PrimaryProperty, $"The new password cannot be the same as the current password.");
+                        if (command.PasswordsMatch.Value == true)
+                        {
+                            context.AddErrorResult(PrimaryProperty, $"The new password cannot be the same as the current password.");
+                        }
                     }
                 }
             }

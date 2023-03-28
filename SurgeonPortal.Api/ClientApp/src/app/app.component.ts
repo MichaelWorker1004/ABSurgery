@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { Select } from '@ngxs/store';
-import { AuthState } from './state/ngxs-auth.state';
+import { NgxsModule, Select } from '@ngxs/store';
+import { AuthSelectors } from './state/auth/auth.selectors';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
 
@@ -17,24 +17,37 @@ import { DashboardHeaderComponent } from './shared/components/dashboard-header/d
     RouterOutlet,
     LoginComponent,
     CommonModule,
+    NgxsModule,
     SideNavigationComponent,
     DashboardHeaderComponent,
   ],
 })
 export class AppComponent implements OnInit {
-  @Select(AuthState.isAuthenticated) isAuthenticated$:
+  // TODO: MOve this logic into the auth guard
+  @Select(AuthSelectors.isAuthenticated) isAuthenticated$:
     | Observable<boolean>
     | undefined;
   isLogIn = true;
   isSideNavOpen = false;
   userData!: any;
 
+  constructor(private _router: Router) {
+    // TODO: MOve this logic into the auth guard
+    this.isAuthenticated$?.subscribe((isAuthed) => {
+      if (isAuthed) {
+        if (location.pathname === '/') {
+          this._router.navigateByUrl('/dashboard');
+        }
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.fetchUserData();
   }
 
   handleSideNavToggle() {
-    this.isSideNavOpen = !this.isSideNavOpen ? true : false;
+    this.isSideNavOpen = !this.isSideNavOpen;
   }
 
   fetchUserData() {

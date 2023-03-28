@@ -1,0 +1,77 @@
+{
+  "refs": {},
+  "name": "Users\\UserLoginAudit",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "EmailAddress",
+      "dataType": "string",
+      "maxLength": 320,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ApplicationId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LoginIpAddress",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 50,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LoginUserAgent",
+      "dataType": "string",
+      "maxLength": 500,
+      "precision": 244,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LoginSuccess",
+      "dataType": "bool",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LoginFailureReason",
+      "dataType": "string",
+      "maxLength": 500,
+      "precision": 244,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m p Users\\UserLoginAudit -sp dbo.insert_user_login_audit -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-21T17:37:41.4318328Z"
+  },
+  "version": 1
+}

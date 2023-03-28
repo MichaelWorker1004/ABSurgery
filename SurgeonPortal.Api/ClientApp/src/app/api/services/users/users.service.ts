@@ -46,7 +46,7 @@ export class UsersApiService {
      * [get_userlogin]
      */
 
-    return this.apiService.get<IAppUserReadOnlyModel>(
+    return this.apiService.post<IAppUserReadOnlyModel>(
       `${this.baseEndpoint}/authenticate`,
       {
         emailAddress,

@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxsModule, Store } from '@ngxs/store';
 
 import { surgeonPortalState } from '../state/surgeon-portal.state';
-import { UserAccountService } from '../api/fake/user-account.service';
+import { UserAccountService } from '../../../mock-server/user-account.service';
 
 describe('MyAccountComponent', () => {
   let component: MyAccountComponent;

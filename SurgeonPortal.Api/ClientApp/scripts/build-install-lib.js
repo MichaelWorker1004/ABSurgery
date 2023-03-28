@@ -4,3 +4,7 @@ import { YTGUtils } from "./utils.js";
 // TODO: Make a script to copy library from dist/ytg-n to directory root and install it via npm
 
 YTGUtils.copyFileFromTo("dist/ytg-n/ytg-n-0.0.1.tgz", "ytg-n-0.0.1.tgz");
+YTGUtils.copyFileFromTo(
+  "dist/ytg-angular/ytg-angular-0.0.1.tgz",
+  "ytg-angular-0.0.1.tgz"
+);

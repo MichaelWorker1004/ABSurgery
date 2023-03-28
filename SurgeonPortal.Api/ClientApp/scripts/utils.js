@@ -19,16 +19,16 @@ export class YTGUtils {
     try {
       await copyFile(src, dest, mode, () => {
         console.log("file is copied");
-        YTGUtils.executeCommand("npm i");
+        YTGUtils.executeCommand(`npm i ${dest}`);
       });
-      console.log("test---------\n\n\n\n");
     } catch (e) {
       console.error("Problems:", e);
     }
   }
 
   static async executeCommand(command) {
-    await exec(command, {}, (error, stdout, stderr) => {
+    console.log(` ---------> EXECUTING COMMAND: ${command}`);
+    const commandExc = await exec(command, {}, (error, stdout, stderr) => {
       console.log(error, stdout, stderr);
     });
   }

@@ -7,7 +7,7 @@ namespace SurgeonPortal.Library.Users
 {
     public class PasswordValidationCommandFactory : IPasswordValidationCommandFactory
     {
-        public async Task<IPasswordValidationCommand> ValidateAsync(
+        public IPasswordValidationCommand Validate(
             int userId,
             string password)
         {
@@ -22,7 +22,7 @@ namespace SurgeonPortal.Library.Users
                 cmd.UserId = userId;
                 cmd.Password = password;
         
-            return await DataPortal.ExecuteAsync(cmd);
+            return DataPortal.Execute(cmd);
         }
 
 

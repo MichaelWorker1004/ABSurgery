@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { AuthState } from '../ngxs-auth.state';
+import { AuthSelectors } from './auth.selectors';
 
 interface CanActivate {
   canActivate(
@@ -32,6 +32,8 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.store.selectSnapshot(AuthState.isAuthenticated);
+    // TODO: Remove log
+    // Route and state will be used once we have user roles
+    return this.store.selectSnapshot(AuthSelectors.isAuthenticated);
   }
 }

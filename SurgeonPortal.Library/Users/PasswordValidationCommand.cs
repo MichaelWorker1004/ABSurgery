@@ -50,12 +50,16 @@ namespace SurgeonPortal.Library.Users
 
 
         [Execute]
-        protected new async Task ExecuteCommand()
+        protected void ExecuteCommand()
         {
-                await _passwordValidationCommandDal.ValidateAsync(
+                var dto = _passwordValidationCommandDal.Validate(
                     UserId,
                     Password);
-            }
+
+            			this.PasswordsMatch = dto.PasswordsMatch;
+        			this.Password = dto.Password;
+        			this.UserId = dto.UserId;
+        }
 
 
         

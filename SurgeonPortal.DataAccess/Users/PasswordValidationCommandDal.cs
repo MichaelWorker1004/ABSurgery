@@ -14,13 +14,13 @@ namespace SurgeonPortal.DataAccess.Users
 
 
 
-        public async Task<PasswordValidationCommandDto> ValidateAsync(
+        public PasswordValidationCommandDto Validate(
             int userId,
             string password)
         {
             using (var connection = CreateConnection())
             {
-                return await connection.ExecFirstOrDefaultAsync<PasswordValidationCommandDto>(
+                return connection.ExecFirstOrDefault<PasswordValidationCommandDto>(
                     "[dbo].[get_user_passwordvalidate]",
                         new
                         {

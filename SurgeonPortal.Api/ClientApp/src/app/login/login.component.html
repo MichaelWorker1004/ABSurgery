@@ -24,36 +24,58 @@
         nec arcu bibendum blandit. Nulla a pretium metus, id suscipit lorem.
       </p>
       <div class="text-left mt-5 form-container">
-        <sl-input
-          id="username"
-          placeholder="Username"
-          ngDefaultControl
-          [(ngModel)]="username"
-        ></sl-input>
-        <sl-button class="mb-2" variant="text" size="small"
-          >I forgot my username</sl-button
+        <sl-alert
+          variant="danger"
+          open
+          closable
+          class="alert-closable login-alert"
+          *ngIf="errors$ | async as error"
         >
-        <sl-input
-          type="password"
-          id="password"
-          placeholder="Password"
-          ngDefaultControl
-          [(ngModel)]="password"
-          password-toggle
-        ></sl-input>
-        <sl-button class="mb-2" variant="text" size="small"
-          >I forgot my password</sl-button
-        >
+          <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+          <strong>{{ error.title }}</strong
+          ><br />
+          <div *ngIf="error.errors">
+            <p *ngFor="let errmsg of getErrors(error)">{{ errmsg }}</p>
+          </div>
+        </sl-alert>
+        <form name="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <sl-input
+            placeholder="Username"
+            ngDefaultControl
+            formControlName="emailAddress"
+          ></sl-input>
+          <div
+            *ngIf="
+              loginForm.get('emailAddress')?.hasError('required') &&
+              !loginForm.pristine
+            "
+          >
+            The Username field is required.
+          </div>
+          <sl-button class="mb-2" variant="text" size="small"
+            >I forgot my username</sl-button
+          >
+          <sl-input
+            type="password"
+            formControlName="password"
+            ngDefaultControl
+            placeholder="Password"
+            password-toggle
+          ></sl-input>
+          <sl-button class="mb-2" variant="text" size="small"
+            >I forgot my password</sl-button
+          >
 
-        <sl-button
-          class="block mt-2"
-          variant="primary"
-          [disabled]="!isValid"
-          (click)="login($event)"
-        >
-          Login
-          <i class="fa-solid fa-right-to-bracket"></i>
-        </sl-button>
+          <sl-button
+            class="block mt-2"
+            variant="primary"
+            type="submit"
+            [disabled]="loginForm.invalid"
+          >
+            Login
+            <i class="fa-solid fa-right-to-bracket"></i>
+          </sl-button>
+        </form>
       </div>
     </div>
     <div class="text-center mt-auto">

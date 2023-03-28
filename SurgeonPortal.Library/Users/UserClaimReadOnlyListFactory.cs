@@ -23,24 +23,26 @@ namespace SurgeonPortal.Library.Users
             
             return await DataPortal.FetchAsync<UserClaimReadOnlyList>(
                 new GetByIdsCriteria(
-                    userId,
-                    applicationId));
+                userId,
+                applicationId));
+            
         }
 
-        [Serializable]
-        internal class GetByIdsCriteria
-        {
-            public int UserId { get; set; }
-            public int ApplicationId { get; set; }
-        
-            public GetByIdsCriteria(
+            [Serializable]
+            internal class GetByIdsCriteria
+            {
+                public int UserId { get; set; }
+                public int ApplicationId { get; set; }
+            
+                public GetByIdsCriteria(
                 int userId,
                 int applicationId)
-            {
-                UserId = userId;
-                ApplicationId = applicationId;
+             {
+                    UserId = userId;
+                    ApplicationId = applicationId;
+              }
             }
-        }
+            
 
 
     }

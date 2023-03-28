@@ -26,7 +26,7 @@ namespace SurgeonPortal.Library.Tests.Users
         #region ValidateAsync
         
         [Test]
-        public async Task ValidateAsync_CallsDalCorrectly()
+        public void Validate_CallsDalCorrectly()
         {
             var expectedUserId = Create<int>();
             var expectedPassword = Create<string>();
@@ -34,10 +34,10 @@ namespace SurgeonPortal.Library.Tests.Users
             var dto = Create<PasswordValidationCommandDto>();
         
             var mockDal = new Mock<IPasswordValidationCommandDal>();
-            mockDal.Setup(m => m.ValidateAsync(
+            mockDal.Setup(m => m.Validate(
                 expectedUserId,
                 expectedPassword))
-                .ReturnsAsync(dto);
+                .Returns(dto);
         
             UseMockServiceProvider()
                 
@@ -46,7 +46,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new PasswordValidationCommandFactory();
-            var sut = await factory.ValidateAsync(
+            var sut = factory.Validate(
                 expectedUserId,
                 expectedPassword);
         

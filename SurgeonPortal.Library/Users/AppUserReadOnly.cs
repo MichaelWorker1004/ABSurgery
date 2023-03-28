@@ -35,11 +35,6 @@ namespace SurgeonPortal.Library.Users
 		public static readonly PropertyInfo<string> FullNameProperty = RegisterProperty<string>(c => c.FullName);
 
         [DataMember]
-		[DisplayName(nameof(Title))]
-        public string Title => ReadProperty(TitleProperty);
-		public static readonly PropertyInfo<string> TitleProperty = RegisterProperty<string>(c => c.Title);
-
-        [DataMember]
 		[DisplayName(nameof(EmailAddress))]
         public string EmailAddress => ReadProperty(EmailAddressProperty);
 		public static readonly PropertyInfo<string> EmailAddressProperty = RegisterProperty<string>(c => c.EmailAddress);
@@ -64,8 +59,9 @@ namespace SurgeonPortal.Library.Users
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
-                   Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
         private async Task GetByCredentials(GetByCredentialsCriteria criteria)
+        
         {
             var dto = await _appUserReadOnlyDal.GetByCredentialsAsync(
                 criteria.EmailAddress,
@@ -77,14 +73,11 @@ namespace SurgeonPortal.Library.Users
             }
             
             FetchData(dto);
-
-            
-            
         }
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
-                   Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
         private async Task GetByToken(GetByTokenCriteria criteria)
         {
             var dto = await _appUserReadOnlyDal.GetByTokenAsync(criteria.Token);
@@ -101,7 +94,6 @@ namespace SurgeonPortal.Library.Users
 		{
             LoadProperty(UserIdProperty, dto.UserId);
             LoadProperty(FullNameProperty, dto.FullName);
-            LoadProperty(TitleProperty, dto.Title);
             LoadProperty(EmailAddressProperty, dto.EmailAddress);
 
             LoadProperty(ClaimsProperty, DataPortal.FetchChild<UserClaimReadOnlyList>(dto.Claims));

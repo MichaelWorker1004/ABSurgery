@@ -21,9 +21,11 @@ namespace SurgeonPortal.Library.Users
                 throw new FactoryInvalidCriteriaException("password is a required field.");
             }
             
-            return await DataPortal.FetchAsync<AppUserReadOnly>(new GetByCredentialsCriteria(
+            return await DataPortal.FetchAsync<AppUserReadOnly>(
+                new GetByCredentialsCriteria(
                 emailAddress,
                 password));
+            
         }
 
         public async Task<IAppUserReadOnly> GetByTokenAsync(string token)
@@ -33,36 +35,40 @@ namespace SurgeonPortal.Library.Users
                 throw new FactoryInvalidCriteriaException("token is a required field.");
             }
             
-            return await DataPortal.FetchAsync<AppUserReadOnly>(new GetByTokenCriteria(token));
+            return await DataPortal.FetchAsync<AppUserReadOnly>(
+                new GetByTokenCriteria(token));
+            
         }
 
 
         
-        [Serializable]
-        internal class GetByCredentialsCriteria
-        {
-            public string EmailAddress { get; set; }
-            public string Password { get; set; }
-        
-            public GetByCredentialsCriteria(
+            [Serializable]
+            internal class GetByCredentialsCriteria
+            {
+                public string EmailAddress { get; set; }
+                public string Password { get; set; }
+            
+                public GetByCredentialsCriteria(
                 string emailAddress,
                 string password)
-            {
-                EmailAddress = emailAddress;
-                Password = password;
+             {
+                    EmailAddress = emailAddress;
+                    Password = password;
+              }
             }
-        }
+            
 
-        [Serializable]
-        internal class GetByTokenCriteria
-        {
-            public string Token { get; set; }
-        
-            public GetByTokenCriteria(string token)
+            [Serializable]
+            internal class GetByTokenCriteria
             {
-                Token = token;
+                public string Token { get; set; }
+            
+                public GetByTokenCriteria(string token)
+             {
+                    Token = token;
+              }
             }
-        }
+            
 
 
     }

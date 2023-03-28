@@ -1,9 +1,19 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Store } from '@ngxs/store';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Select, Store } from '@ngxs/store';
 
-import { Login } from '../state/auth/ngxs-auth.model';
-import { IUserCredentialModel } from '../api/models/users/user-credential.model';
+import { Login } from '../state/auth/auth.actions';
+import { AuthSelectors } from '../state/auth/auth.selectors';
+import { IError, IAuthCredentials } from '../api/services/auth/auth.service';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'abs-login',
@@ -11,47 +21,46 @@ import { IUserCredentialModel } from '../api/models/users/user-credential.model'
   styleUrls: ['./login.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class LoginComponent {
-  _username = '';
-  _password = '';
-  isValid = false;
+  loginForm = new FormGroup({
+    emailAddress: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+  });
 
-  get username(): string {
-    return this._username;
-  }
-  set username(_username: string) {
-    this._username = _username;
-    this.validate();
-  }
+  @Select(AuthSelectors.getErrors) errors$?: Observable<IError> | undefined;
 
-  get password(): string {
-    return this._password;
-  }
-  set password(_password: string) {
-    this._password = _password;
-    this.validate();
-  }
-
-  constructor(private store: Store) {}
-
-  validate() {
-    if (this._username.length > 6 && this._password.length > 8) {
-      this.isValid = true;
-    } else {
-      this.isValid = false;
-    }
+  constructor(private store: Store) {
+    this.errors$?.pipe(
+      tap((errors) => {
+        // console.log('In the component', errors);
+      })
+    );
   }
 
-  login($event: Event) {
-    if (this.username.length > 5 && this.password.length > 8) {
-      this.store.dispatch(
-        new Login({
-          emailAddress: this.username,
-          password: this.password,
-        } as IUserCredentialModel)
+  getErrors(error: IError) {
+    let errorArray: string[] = [];
+    const errors = error.errors as {
+      EmailAddress: string[];
+      Password: string[];
+    };
+    if (errors?.EmailAddress || errors?.Password) {
+      errorArray = errorArray.concat(
+        errors.EmailAddress ? errors.EmailAddress : [],
+        errors.Password ? errors.Password : []
       );
     }
+    return errorArray;
+  }
+
+  onSubmit() {
+    this.store.dispatch(new Login(this.loginForm.value as IAuthCredentials));
   }
 }

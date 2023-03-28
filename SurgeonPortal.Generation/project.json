@@ -7,5 +7,7 @@
         "Language" : "C#"
     },
     "mappings": {
+        "regex:^USERID$": "$UserId",
+        "regex:^UserName$": "$UserName"
     }
 }

@@ -9,19 +9,13 @@ namespace SurgeonPortal.Library.Users
     {
         public async Task<IUserCredential> GetByUserIdAsync()
         {
-            return await DataPortal.FetchAsync<UserCredential>(new GetByUserIdCriteria());
+            return await DataPortal.FetchAsync<UserCredential>();
+            
         }
 
 
         
-        [Serializable]
-        internal class GetByUserIdCriteria
-        {
-        
-            public GetByUserIdCriteria()
-            {
-            }
-        }
+            
 
 
     }

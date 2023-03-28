@@ -4,6 +4,6 @@ namespace SurgeonPortal.Library.Contracts.Users
 {
     public interface IPasswordValidationCommandFactory
     {
-        Task<IPasswordValidationCommand> ValidateAsync(int userId, string password);
+        IPasswordValidationCommand Validate(int userId, string password);
     }
 }

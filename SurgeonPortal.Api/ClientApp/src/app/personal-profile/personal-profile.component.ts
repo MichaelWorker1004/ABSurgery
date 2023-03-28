@@ -58,9 +58,9 @@ export class PersonalProfileComponent {
     },
     email: '',
     confirmEmail: '',
-    phone: '123-456-7890',
-    mobile: '123-456-7890',
-    fax: '123-456-7890',
+    phone: '1234567890',
+    mobile: '1234567890',
+    fax: '1234567890',
     placeOfBirth: {
       city: 'New York',
       state: 'NY',

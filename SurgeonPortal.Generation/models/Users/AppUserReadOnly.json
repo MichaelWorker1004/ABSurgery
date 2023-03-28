@@ -24,16 +24,6 @@
       "rules": {}
     },
     {
-      "name": "Title",
-      "dataType": "string",
-      "maxLength": 35,
-      "precision": 0,
-      "scale": 0,
-      "isNullable": true,
-      "isIdentityColumn": false,
-      "rules": {}
-    },
-    {
       "name": "EmailAddress",
       "dataType": "string",
       "maxLength": 320,

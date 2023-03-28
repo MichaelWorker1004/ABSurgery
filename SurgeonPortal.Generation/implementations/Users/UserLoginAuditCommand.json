@@ -1,0 +1,153 @@
+{
+  "name": "UserLoginAuditCommand",
+  "implementationName": "Users\\UserLoginAuditCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.insert_user_login_audit",
+    "CommandMethodName": "Audit",
+    "IncludeControllerInGeneration": "False",
+    "Model": "Users\\UserLoginAudit",
+    "ModelGroup": "UserLoginAudit",
+    "ReturnsPayload": "false",
+    "RootNamespace": "$project.RootNamespace",
+    "ExecuteAsynchronously": "true"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.insert_user_login_audit",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[insert_user_login_audit]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "EmailAddress",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "EmailAddress"
+          },
+          {
+            "name": "ApplicationId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ApplicationId"
+          },
+          {
+            "name": "LoginIpAddress",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LoginIpAddress"
+          },
+          {
+            "name": "LoginUserAgent",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LoginUserAgent"
+          },
+          {
+            "name": "LoginSuccess",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LoginSuccess"
+          },
+          {
+            "name": "LoginFailureReason",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LoginFailureReason"
+          },
+          {
+            "name": "CreatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "EmailAddress",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ApplicationId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "LoginIpAddress",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "LoginUserAgent",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "LoginSuccess",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "LoginFailureReason",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Users\\UserLoginAuditCommand UserLoginAuditCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[insert_user_login_audit] -p:Model=Users\\UserLoginAudit -p:ModelGroup=UserLoginAudit -p:RootNamespace=$project.RootNamespace -p:IncludeControllerInGeneration=False -p:CommandMethodName=Audit ",
+    "inferredCommand": "ytgim generate i  Users\\UserLoginAuditCommand UserLoginAuditCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[insert_user_login_audit] -p:Model=Users\\UserLoginAudit -p:ModelGroup=UserLoginAudit -p:RootNamespace=$project.RootNamespace -p:IncludeControllerInGeneration=False -p:CommandMethodName=Audit -p:ReturnsPayload=false",
+    "generatedDateUtc": "2023-03-21T17:42:09.5829545Z"
+  },
+  "version": 1
+}

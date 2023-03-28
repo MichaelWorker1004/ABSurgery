@@ -1,16 +1,13 @@
 using AutoMapper;
-using Csla;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
 using SurgeonPortal.Models.Users;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Ytg.AspNetCore.Controllers;
 using Ytg.AspNetCore.Helpers;
@@ -20,6 +17,7 @@ namespace SurgeonPortal.Api.Controllers.Users
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
+    [Route("users/credentials")]
 	[Route("v{version:apiVersion}/users/credentials")]
 	public class UserCredentialsController : YtgControllerBase
 	{
@@ -45,7 +43,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             var item = await userCredentialFactory.GetByUserIdAsync();
         
             return Ok(_mapper.Map<UserCredentialModel>(item));
-        } 
+        }
 
         [Authorize]
         [MapToApiVersion("1")]
