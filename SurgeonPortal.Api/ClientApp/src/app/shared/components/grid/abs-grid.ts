@@ -31,6 +31,26 @@ const AbsGrid = {
     return colDef;
   },
 
+  setExpandToggle(
+    headerName: string,
+    fieldName: string,
+    onClick?: (data: any) => void,
+    sortable?: boolean
+  ) {
+    const colDef = {
+      headerName: headerName,
+      field: fieldName,
+      cellRenderer: 'expandToggle',
+      cellRendererParams: {
+        fieldKey: fieldName,
+        onClick,
+      },
+      sortable,
+    };
+
+    return colDef;
+  },
+
   setFormattedDateCol(
     headerName: string,
     fieldName: string,

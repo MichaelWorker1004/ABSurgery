@@ -37,10 +37,9 @@ export class PersonalProfileComponent {
   user = {
     profilePicture:
       'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU',
-    givenName: 'John',
-    surName: 'Doe',
+    fullName: 'John Doe',
     title: 'M.D',
-    email: 'email@test.io',
+    emailAddress: 'email@test.io',
     status: 'Trainee',
   };
   profile = {

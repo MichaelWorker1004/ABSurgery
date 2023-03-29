@@ -34,6 +34,7 @@ export class GridComponent implements OnInit {
     showFilter: false,
     filterOn: '',
   };
+  @Input() expandTemplate!: any;
   @Output() action: EventEmitter<any> = new EventEmitter();
   AbsGridCellRendererType = AbsGridCellRendererType;
 
@@ -45,6 +46,12 @@ export class GridComponent implements OnInit {
   }
 
   handleAction(action: GridAction, data: unknown) {
+    action['data'] = data;
+    this.action.emit(action);
+  }
+
+  handleExpand(action: GridAction, data: any) {
+    data.expanded = !data.expanded;
     action['data'] = data;
     this.action.emit(action);
   }

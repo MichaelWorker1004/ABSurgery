@@ -12,12 +12,12 @@ import { Subject } from 'rxjs';
 export class CollapsePanelComponent implements OnInit {
   @Input() panelId!: number;
   @Input() startExpanded = false;
-  @Input() editToggle: Subject<boolean> = new Subject();
+  @Input() heightToggle: Subject<boolean> = new Subject();
 
   ngOnInit() {
     // setTimeout is needed to wait for the DOM to be ready
     setTimeout(() => {
-      this.editToggle.subscribe(() => {
+      this.heightToggle.subscribe(() => {
         this.resetHeight();
       });
       if (this.startExpanded) {

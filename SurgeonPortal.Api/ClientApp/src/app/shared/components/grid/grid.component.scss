@@ -25,12 +25,17 @@ table {
     padding: 15px;
   }
   tr {
-    &:nth-child(even) {
+    //figure out how to use nth-of-type(even) to skip expanded rows
+    &.alternate-row {
       background-color: #fff;
     }
+    // &:nth-child(even) {
+    //   background-color: #fff;
+    // }
   }
   td {
-    .action {
+    .action,
+    .expand-toggle {
       text-align: right;
     }
   }
@@ -73,6 +78,15 @@ sl-input {
   font-weight: bold;
 }
 .approved {
+  color: var(--global-success);
+  font-weight: bold;
+}
+
+.failed {
+  color: var(--global-danger);
+  font-weight: bold;
+}
+.passed {
   color: var(--global-success);
   font-weight: bold;
 }

@@ -3,4 +3,5 @@ export enum AbsGridCellRendererType {
   DateFormatter = 'dateFormatter',
   CustomClass = 'customClass',
   CustomStyle = 'customStyle',
+  ExpandToggle = 'expandToggle',
 }

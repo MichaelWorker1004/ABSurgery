@@ -14,7 +14,12 @@
     <thead>
       <tr>
         <th *ngFor="let c of columns">
-          <div *ngIf="c.cellRenderer !== AbsGridCellRendererType.Button">
+          <div
+            *ngIf="
+              c.cellRenderer !== AbsGridCellRendererType.Button &&
+              c.cellRenderer !== AbsGridCellRendererType.ExpandToggle
+            "
+          >
             {{ c.headerName }}
             <button (click)="sortColumn(c)" *ngIf="c.sortable">
               <i class="fa-solid fa-sort"></i>
@@ -24,41 +29,70 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let r of filteredData">
-        <td *ngFor="let c of columns">
-          <div *ngIf="!c.cellRenderer">
-            {{ r[c.field] }}
-          </div>
-          <div
-            *ngIf="c.cellRenderer === AbsGridCellRendererType.Button"
-            class="action"
-          >
-            <button (click)="handleAction(c.cellRendererParams, r)">
-              <i [class]="c.icon" *ngIf="c.icon"></i>
-              {{ c.headerName }}
-            </button>
-          </div>
-          <div
-            *ngIf="c.cellRenderer === AbsGridCellRendererType.DateFormatter"
-            [class]="c.cellClass"
-          >
-            {{ r[c.field] | date : 'MM/dd/yyyy' }}
-          </div>
-          <div
-            *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
-            [class]="c.cellClass(r[c.field]).toLowerCase()"
-          >
-            {{ r[c.field] }}
-          </div>
-          <div
-            *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomStyle"
-            [style]="c.style(r[c.field])"
-          >
-            {{ c.cellStyle }}
-            {{ r[c.field] }}
-          </div>
-        </td>
-      </tr>
+      <ng-container *ngFor="let r of filteredData; let i = index">
+        <tr [ngClass]="{ 'alternate-row': i % 2 === 1 }">
+          <td *ngFor="let c of columns">
+            <div *ngIf="!c.cellRenderer">
+              {{ r[c.field] }}
+            </div>
+            <div
+              *ngIf="c.cellRenderer === AbsGridCellRendererType.Button"
+              class="action"
+            >
+              <button (click)="handleAction(c.cellRendererParams, r)">
+                <i [class]="c.icon" *ngIf="c.icon"></i>
+                {{ c.headerName }}
+              </button>
+            </div>
+            <div
+              *ngIf="c.cellRenderer === AbsGridCellRendererType.DateFormatter"
+              [class]="c.cellClass"
+            >
+              {{ r[c.field] | date : 'MM/dd/yyyy' }}
+            </div>
+            <div
+              *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
+              [class]="c.cellClass(r[c.field]).toLowerCase()"
+            >
+              {{ r[c.field] }}
+            </div>
+            <div
+              *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomStyle"
+              [style]="c.style(r[c.field])"
+            >
+              {{ c.cellStyle }}
+              {{ r[c.field] }}
+            </div>
+            <div
+              *ngIf="c.cellRenderer === AbsGridCellRendererType.ExpandToggle"
+              class="expand-toggle"
+            >
+              <button
+                (click)="handleExpand(c.cellRendererParams, r)"
+                style="min-width: 95px"
+              >
+                <!-- <i [class]="c.icon" *ngIf="c.icon"></i> -->
+                <i class="fa-solid fa-circle-minus" *ngIf="r.expanded"></i>
+                <i class="fa-solid fa-circle-plus" *ngIf="!r.expanded"></i>
+                {{ r.expanded ? 'Collapse' : 'Expand' }}
+              </button>
+              <!-- include the expand/collapse buttons here -->
+              <!-- we will need to emit the action to the parent component so that the height of the collapse panel can be reset -->
+            </div>
+          </td>
+        </tr>
+        <tr
+          [ngClass]="{ 'expanded-row': true, 'alternate-row': i % 2 === 1 }"
+          *ngIf="expandTemplate && r.expanded"
+        >
+          <!-- <ng-container *ngTemplateOutlet="expandTemplate; context: { $implicit: r }"></ng-container> -->
+          <td [attr.colspan]="columns.length">
+            <ng-container
+              *ngTemplateOutlet="expandTemplate; context: { $implicit: r }"
+            ></ng-container>
+          </td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
 </div>

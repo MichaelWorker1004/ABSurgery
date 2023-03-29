@@ -17,6 +17,7 @@ import {
   IUserCredential,
   MyAccountState,
 } from '../state/my-account/my-account.state';
+import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 
 @Component({
   selector: 'abs-my-account',
@@ -24,7 +25,12 @@ import {
   styleUrls: ['./my-account.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ProfileHeaderComponent,
+  ],
 })
 export class MyAccountComponent implements OnDestroy {
   @Select(AuthSelectors.getUser) user$: Observable<IUser | null> | undefined;
