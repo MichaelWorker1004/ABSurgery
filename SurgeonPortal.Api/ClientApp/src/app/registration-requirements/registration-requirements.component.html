@@ -1,0 +1,44 @@
+<div class="flex align-items-end flex-wrap col-12 margin-bottom-2">
+  <div>
+    <h1>General Surgery Qualifying Examination</h1>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eros arcu,
+    mattis ut urna id, convallis eleifend purus. Phasellus sodales condimentum
+    orci, id malesuada ante faucibus eu.
+  </div>
+  <div class="legend flex justify-content-end flex-wrap">
+    <div class="l flex align-items-center completed">
+      <div class="i"></div>
+      Completed
+    </div>
+    <div class="l flex align-items-center in-progress">
+      <div class="i"></div>
+      In Progress
+    </div>
+    <div class="l flex align-items-center alert">
+      <div class="i"></div>
+      Alert
+    </div>
+    <div class="l flex align-items-center contingent">
+      <div class="i"></div>
+      Contingent
+    </div>
+  </div>
+</div>
+
+<div class="grid margin-bottom-2">
+  <abs-action-card
+    class="col-12 md:col-6 lg:col-6"
+    *ngFor="let actionCard of registrationRequirementsData"
+    [actionCard]="actionCard"
+    (cardAction)="handleCardAction(actionCard.action.action)"
+    [status]="actionCard.status"
+    [recievedOn]="actionCard.recievedOn"
+  ></abs-action-card>
+  <abs-action-card
+    class="col-12"
+    [actionCard]="applyForAnExamActionCardData"
+    (cardAction)="handleCardAction(applyForAnExamActionCardData.action.action)"
+    [status]="applyForAnExamActionCardData.status"
+  >
+  </abs-action-card>
+</div>

@@ -20,7 +20,7 @@ const routes: Routes = [
       import('./dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'cme-repository',
@@ -60,6 +60,14 @@ const routes: Routes = [
       import('./exam-process/exam-process.component').then(
         (m) => m.ExamProcessComponent
       ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'exam-process/registration-requirements',
+    loadComponent: () =>
+      import(
+        './registration-requirements/registration-requirements.component'
+      ).then((m) => m.RegistrationRequirementsComponent),
     canActivate: [AuthGuard],
   },
   {

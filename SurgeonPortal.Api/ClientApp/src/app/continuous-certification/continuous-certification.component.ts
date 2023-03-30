@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
+import { Status } from '../shared/components/action-card/status.enum';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { PAY_FEE_COLS } from './pay-fee-cols';
 import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
@@ -777,7 +778,7 @@ export class ContinuousCertificationComponent implements OnInit {
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-address-card',
-        status: 'completed',
+        status: Status.Completed,
       },
       {
         title: 'Outcomes Registries / Quality Assessment Programs',
@@ -789,7 +790,7 @@ export class ContinuousCertificationComponent implements OnInit {
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-stethoscope',
-        status: 'completed',
+        status: Status.Completed,
       },
       {
         title: 'Medical Training',
@@ -801,7 +802,7 @@ export class ContinuousCertificationComponent implements OnInit {
         },
         actionDisplay: 'View / Update my training',
         icon: 'fa-solid fa-language',
-        status: 'completed',
+        status: Status.Completed,
       },
       {
         title: 'Professional Standing',
@@ -813,7 +814,7 @@ export class ContinuousCertificationComponent implements OnInit {
         },
         actionDisplay: 'View / Update my activities',
         icon: 'fa-solid fa-certificate',
-        status: 'in-progress',
+        status: Status.InProgress,
       },
       {
         title: 'CME Repository',
@@ -825,7 +826,7 @@ export class ContinuousCertificationComponent implements OnInit {
         },
         actionDisplay: 'View CMEs',
         icon: 'fa-solid fa-id-card-clip',
-        status: 'in-progress',
+        status: Status.InProgress,
       },
       {
         title: 'Pay Fee',
@@ -837,7 +838,7 @@ export class ContinuousCertificationComponent implements OnInit {
         },
         actionDisplay: 'View / Pay Fee',
         icon: 'fa-solid fa-language',
-        status: 'in-progress',
+        status: Status.InProgress,
       },
       {
         title: 'Reference Forms',
@@ -849,7 +850,7 @@ export class ContinuousCertificationComponent implements OnInit {
         },
         actionDisplay: 'View / Update my activities',
         icon: 'fa-solid fa-rectangle-list',
-        status: 'in-progress',
+        status: Status.InProgress,
       },
       {
         title: 'Attestation',
@@ -862,7 +863,7 @@ export class ContinuousCertificationComponent implements OnInit {
         disabled: false,
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-user-check',
-        status: 'in-progress',
+        status: Status.InProgress,
       },
       {
         title: 'Apply for an Exam',

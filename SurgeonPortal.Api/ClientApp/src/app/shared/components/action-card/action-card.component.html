@@ -1,4 +1,8 @@
-<div [class]="actionCardClass">
+<div
+  class="action-card {{ actionCard?.status }} {{
+    actionCard?.disabled ? 'disabled' : ''
+  }} {{ status ? 'status-card' : '' }}"
+>
   <a
     *ngIf="!actionCard?.disabled && actionCard?.action?.type === 'component'"
     [routerLink]="actionCard?.action?.action"
@@ -9,24 +13,33 @@
     class="hotspot"
     (click)="handleCardAction(actionCard?.action?.action)"
   ></button>
-  <div class="card-content" [class]="actionCard?.status">
-    <h5 class="title">
-      <span class="icon"><i [class]="actionCard?.icon"></i></span
-      >{{ actionCard?.title }}
-    </h5>
-    <div class="description">{{ actionCard?.description }}</div>
-    <div class="action-display">
-      <div *ngIf="actionCard?.action?.style !== 2; else fullButton">
-        {{ actionCard?.actionDisplay }}
+  <div class="card-content flex flex-wrap" [class]="actionCard?.status">
+    <div class="col-12 {{ status ? 'md:col-8' : '' }}">
+      <h5 class="title">
+        <span class="icon"><i [class]="actionCard?.icon"></i></span
+        >{{ actionCard?.title }}
+      </h5>
+      <div class="description">{{ actionCard?.description }}</div>
+      <div class="action-display">
+        <div *ngIf="actionCard?.action?.style !== 2; else fullButton">
+          {{ actionCard?.actionDisplay }}
+        </div>
+        <ng-template #fullButton>
+          <sl-button
+            [variant]="!actionCard?.disabled ? 'primary' : 'neutral'"
+            [disabled]="actionCard?.disabled"
+            style="width: 100%"
+            >{{ actionCard?.actionDisplay }}</sl-button
+          >
+        </ng-template>
       </div>
-      <ng-template #fullButton>
-        <sl-button
-          [variant]="!actionCard?.disabled ? 'primary' : 'neutral'"
-          [disabled]="actionCard?.disabled"
-          style="width: 100%"
-          >{{ actionCard?.actionDisplay }}</sl-button
-        >
-      </ng-template>
+    </div>
+    <div class="status col-12 md:col-4" *ngIf="status">
+      Status:
+      <span [class]="status"> {{ status.replace('-', ' ') }}</span>
+      <div class="date" *ngIf="recievedOn">
+        Received on {{ recievedOn | date : 'MM/dd/yyyy' }}
+      </div>
     </div>
   </div>
 </div>

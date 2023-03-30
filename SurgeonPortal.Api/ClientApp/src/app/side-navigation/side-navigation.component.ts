@@ -54,6 +54,16 @@ export class SideNavigationComponent implements OnInit {
         display: 'Exam Process',
         action: 'exam-process',
         icon: 'fa-solid fa-list-check',
+        children: [
+          {
+            display: 'Registration Requirements',
+            action: 'registration-requirements',
+          },
+          {
+            display: 'Exam Registration',
+            action: 'exam-registration',
+          },
+        ],
       },
       {
         display: 'Examination History',
@@ -119,6 +129,10 @@ export class SideNavigationComponent implements OnInit {
 
   toggleSideNav() {
     this.handleSideNavToggle.emit();
+  }
+
+  toggleSubNav(item: IMenuItem) {
+    console.log(item);
   }
 
   get router(): Router {

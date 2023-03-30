@@ -3,7 +3,6 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,25 +16,13 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   styleUrls: ['./action-card.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ActionCardComponent implements OnInit {
+export class ActionCardComponent {
   @Input() actionCard!: any;
+  @Input() status!: string;
+  @Input() recievedOn!: Date;
   @Output() cardAction: EventEmitter<any> = new EventEmitter();
-  actionCardClass!: string;
-  highlightColor!: string;
 
   constructor(private _router: Router) {}
-
-  ngOnInit(): void {
-    this.setActionCardClass();
-  }
-
-  setActionCardClass() {
-    const baseClass = 'action-card';
-
-    this.actionCardClass = `${baseClass} ${this.actionCard?.status} ${
-      this.actionCard?.disabled ? 'disabled' : ''
-    }`;
-  }
 
   handleCardAction(action: string) {
     this.cardAction.emit(action);

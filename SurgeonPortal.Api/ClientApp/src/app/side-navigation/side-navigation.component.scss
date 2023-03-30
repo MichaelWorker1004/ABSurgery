@@ -99,8 +99,6 @@ nav {
     margin: 0;
     li {
       margin-bottom: 2.5rem;
-      display: flex;
-      align-items: center;
       position: relative;
       a {
         text-decoration: none;
@@ -136,6 +134,41 @@ nav {
             background-color: var(--global-warning);
           }
         }
+      }
+    }
+  }
+
+  .sub-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: 550ms ease-in-out;
+    ul {
+      li {
+        margin-top: 1.5rem;
+        margin-bottom: 0rem;
+        a {
+          font-size: 1rem;
+          transition: 250ms ease-in-out;
+          &:hover,
+          &.active {
+            color: var(--global-success);
+            &::after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    &:hover {
+      max-height: 500px;
+    }
+  }
+
+  .has-sub-menu {
+    &:hover,
+    &.active {
+      + .sub-menu {
+        max-height: 500px;
       }
     }
   }
