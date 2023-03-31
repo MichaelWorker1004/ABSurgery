@@ -321,6 +321,9 @@ sl-avatar::part(base) {
 sl-input::part(form-control-label) {
   font-weight: 700;
 }
+sl-textarea::part(form-control-label) {
+  font-weight: 700;
+}
 
 sl-input[data-invalid]::part(base) {
   border-color: var(--global-danger);

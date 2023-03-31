@@ -1,1 +1,313 @@
-<p>medical-training works!</p>
+<header>
+  <h1>Medical Training</h1>
+</header>
+<ng-container>
+  <section>
+    <div class="grid">
+      <div class="col-12 flex">
+        <abs-profile-header
+          [profilePicture]="user.profilePicture"
+          [user]="user"
+        ></abs-profile-header>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="grid">
+      <sl-card class="col-12">
+        <form id="medicalTrainingForm">
+          <div class="form-section">
+            <h5 class="form-section__title">Medical School</h5>
+            <hr />
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+              neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+              erat, egestas sit amet tortor at, condimentum tempor erat.
+            </p>
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-12">
+                <label
+                  >Select the statement that best describes you (Country of
+                  medical school)</label
+                >
+                <div>{{ medicalTraining.statement }}</div>
+              </div>
+              <div class="col-12">
+                <label>Medical School</label>
+                <div>{{ medicalTraining.medicalSchool.name }}</div>
+              </div>
+              <div class="col-12 md:col-4">
+                <label>City or Town</label>
+                <div>{{ medicalTraining.medicalSchool.city }}</div>
+              </div>
+              <div class="col-12 md:col-4">
+                <label>State / Province / Territory</label>
+                <div>{{ medicalTraining.medicalSchool.state }}</div>
+              </div>
+              <div class="col-12 md:col-4">
+                <label>Country</label>
+                <div>{{ medicalTraining.medicalSchool.country }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Degree</label>
+                <div>{{ medicalTraining.medicalSchool.degree }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Year of Completion</label>
+                <div>{{ medicalTraining.medicalSchool.yearGraduated }}</div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <sl-select
+                class="col-12"
+                name="statement"
+                label="Select the statement that best describes you (Country of medical school)"
+                placeholder="Select a Country"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.statement"
+              >
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-input
+                class="col-12"
+                label="Medical School"
+                placeholder="Enter school name"
+                name="medicalSchool"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.medicalSchool.name"
+                required
+              ></sl-input>
+              <sl-input
+                class="col-12 md:col-4"
+                label="City or Town"
+                placeholder="Enter city name"
+                name="city"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.medicalSchool.city"
+                required
+              ></sl-input>
+              <sl-select
+                class="col-12 md:col-4"
+                name="state"
+                label="State / Province / Territory"
+                placeholder="Choose state"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.medicalSchool.state"
+              >
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-select
+                class="col-12 md:col-4"
+                name="country"
+                label="Country"
+                placeholder="Choose country"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.medicalSchool.country"
+              >
+                <sl-option value="option-1">Option 1</sl-option>
+                <sl-option value="option-2">Option 2</sl-option>
+                <sl-option value="option-3">Option 3</sl-option>
+              </sl-select>
+              <sl-input
+                class="col-12 md:col-6"
+                label="Degree"
+                placeholder="Enter degree name"
+                name="degree"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.medicalSchool.degree"
+                required
+              ></sl-input>
+              <sl-input
+                inputmode="numeric"
+                class="col-12 md:col-6"
+                label="Year of Completion"
+                placeholder="YYYY"
+                name="yearSchool"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.medicalSchool.yearGraduated"
+                required
+              ></sl-input>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section__title">Residency</h5>
+            <hr />
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+              neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+              erat, egestas sit amet tortor at, condimentum tempor erat.
+            </p>
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-6">
+                <div class="grid">
+                  <div class="col-12">
+                    <label>Program Name</label>
+                    <div>{{ medicalTraining.residency.programName }}</div>
+                  </div>
+                  <div class="col-12">
+                    <label>Year of Completion</label>
+                    <div>{{ medicalTraining.residency.yearOfCompletion }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="grid">
+                  <div class="col-12">
+                    <label>My program is not listed</label>
+                    <div>{{ medicalTraining.residency.programNotListed }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <div class="col-6">
+                <div class="grid">
+                  <sl-input
+                    class="col-12"
+                    label="Program Name"
+                    placeholder="Enter program name"
+                    name="residencyName"
+                    ngDefaultControl
+                    [(ngModel)]="medicalTraining.residency.programName"
+                    required
+                  ></sl-input>
+                  <sl-input
+                    inputmode="numeric"
+                    class="col-12"
+                    label="Year of Completion"
+                    placeholder="YYYY"
+                    name="residencyYear"
+                    ngDefaultControl
+                    [(ngModel)]="medicalTraining.residency.yearOfCompletion"
+                    required
+                  ></sl-input>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="grid">
+                  <sl-textarea
+                    class="col-12"
+                    label="My program is not listed"
+                    placeholder="Explain..."
+                    name="residencyNotListed"
+                    rows="5"
+                    ngDefaultControl
+                    [(ngModel)]="medicalTraining.residency.programNotListed"
+                  ></sl-textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section__title">Fellowship</h5>
+            <hr />
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+              neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+              erat, egestas sit amet tortor at, condimentum tempor erat.
+            </p>
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-6">
+                <div class="grid">
+                  <div class="col-12">
+                    <label>Program Name</label>
+                    <div>{{ medicalTraining.fellowship.programName }}</div>
+                  </div>
+                  <div class="col-12">
+                    <label>Year of Completion</label>
+                    <div>{{ medicalTraining.fellowship.yearOfCompletion }}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="grid">
+                  <div class="col-12">
+                    <label>My program is not listed</label>
+                    <div>{{ medicalTraining.fellowship.programNotListed }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <div class="col-6">
+                <div class="grid">
+                  <sl-input
+                    class="col-12"
+                    label="Program Name"
+                    placeholder="Enter program name"
+                    name="fellowshipName"
+                    ngDefaultControl
+                    [(ngModel)]="medicalTraining.fellowship.programName"
+                    required
+                  ></sl-input>
+                  <sl-input
+                    inputmode="numeric"
+                    class="col-12"
+                    label="Year of Completion"
+                    placeholder="YYYY"
+                    name="fellowshipYear"
+                    ngDefaultControl
+                    [(ngModel)]="medicalTraining.fellowship.yearOfCompletion"
+                    required
+                  ></sl-input>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="grid">
+                  <sl-textarea
+                    class="col-12"
+                    label="My program is not listed"
+                    placeholder="Explain..."
+                    name="fellowshipNotListed"
+                    rows="5"
+                    ngDefaultControl
+                    [(ngModel)]="medicalTraining.fellowship.programNotListed"
+                  ></sl-textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="flex justify-content-end" *ngIf="!isEdit">
+              <sl-button
+                variant="primary"
+                style="width: 200px"
+                (click)="isEdit = true"
+                >Edit</sl-button
+              >
+            </div>
+            <div class="flex justify-content-end" *ngIf="isEdit">
+              <sl-button variant="text" (click)="isEdit = false"
+                >Cancel</sl-button
+              >
+              <sl-button
+                type="submit"
+                style="width: 337px"
+                variant="primary"
+                (click)="isEdit = false"
+                >Save</sl-button
+              >
+            </div>
+          </div>
+        </form>
+      </sl-card>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <div class="my-5 flex flex-column justify-content-center align-items-center">
+    <sl-spinner
+      class="block"
+      style="font-size: 3rem; --indicator-color: var(--global-primary)"
+    ></sl-spinner>
+    <p>loading medical training...</p>
+  </div>
+</ng-template>
