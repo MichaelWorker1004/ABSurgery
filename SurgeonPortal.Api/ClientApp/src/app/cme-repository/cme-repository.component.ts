@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
+import { ITEMIZED_CME_COLS } from './itemized-cme-cols';
 import { REQIUREMENTS_AND_ADJUSTMENTS_COLS } from './requirments-and-adjustments-cols';
 
 @Component({
@@ -16,8 +17,12 @@ export class CmeRepositoryComponent implements OnInit {
   requirementsAndAdjustmentsCols = REQIUREMENTS_AND_ADJUSTMENTS_COLS;
   requirementsAndAdjustmentsData!: Array<any>;
 
+  itemizedCmeCols = ITEMIZED_CME_COLS;
+  itemizedCmeData!: Array<any>;
+
   ngOnInit(): void {
     this.getRequirementsAndAdjustmentsData();
+    this.getItemizedCmeData();
   }
 
   getRequirementsAndAdjustmentsData() {
@@ -35,6 +40,35 @@ export class CmeRepositoryComponent implements OnInit {
         category1: '10',
         saCredits: '10',
         issuedBy: 'ABS',
+      },
+    ];
+  }
+
+  getItemizedCmeData() {
+    this.itemizedCmeData = [
+      {
+        date: new Date('10/27/2022'),
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        credits: '24',
+        cmeDirect: 'XXXXX',
+      },
+      {
+        date: new Date('10/25/2022'),
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        credits: '36',
+        cmeDirect: 'XXXXX',
+      },
+      {
+        date: new Date('9/10/2022'),
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        credits: '12',
+        cmeDirect: 'XXXXX',
+      },
+      {
+        date: new Date('8/17/2022'),
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        credits: '78',
+        cmeDirect: 'XXXXX',
       },
     ];
   }

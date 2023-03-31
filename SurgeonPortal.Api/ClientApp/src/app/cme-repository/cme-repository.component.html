@@ -6,6 +6,14 @@
   <div class="grid">
     <sl-card class="col-12">
       <abs-collapse-panel [panelId]="1" [startExpanded]="true">
+        <h5 class="mt-0 mb-2" panel-header>Itemized CME</h5>
+        <abs-grid [columns]="itemizedCmeCols" [data]="itemizedCmeData">
+        </abs-grid>
+      </abs-collapse-panel>
+    </sl-card>
+
+    <sl-card class="col-12">
+      <abs-collapse-panel [panelId]="2" [startExpanded]="true">
         <h5 class="mt-0 mb-2" panel-header>Requirements and Adjustments</h5>
         <p class="text-xl mt-0">
           For Completing certain tasks will result in a lower amount of required
