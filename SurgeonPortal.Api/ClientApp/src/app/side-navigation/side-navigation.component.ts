@@ -46,7 +46,7 @@ export class SideNavigationComponent implements OnInit {
         icon: 'fa-solid fa-stethoscope',
       },
       {
-        display: 'CME History',
+        display: 'CME Repository',
         action: 'cme-repository',
         icon: 'fa-regular fa-folder-open',
       },
