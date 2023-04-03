@@ -1,0 +1,26 @@
+.alert {
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 6px;
+  &.danger {
+    color: white;
+    background-color: var(--global-danger);
+  }
+  &.warning {
+    color: white;
+    background-color: var(--global-warning);
+  }
+  &.success {
+    color: white;
+    background-color: var(--global-success);
+  }
+  &.info {
+    color: white;
+    background-color: #27bafd;
+  }
+  .icon {
+    margin-right: 10px;
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,22 @@
+<div class="flex numbers align-items-center">
+  <div class="ratio flex align-items-center flex-wrap">
+    {{ currentNumber || 0 }}/{{ totalNumber || 0 }}
+    <div class="tooltip" *ngIf="toolTipText">
+      <sl-tooltip [content]="toolTipText">
+        <div class="trigger">?</div>
+      </sl-tooltip>
+    </div>
+  </div>
+  <div class="remaining">{{ remainingNumber || 0 }} Remaining</div>
+</div>
+<h5>{{ statusLabel }}</h5>
+<div class="progress-bar flex">
+  <div class="bar">
+    <div
+      class="fill"
+      [style.width.%]="progressBarWidth"
+      [style.background]="barColor"
+    ></div>
+  </div>
+  <div class="progress">%{{ progressBarWidth }}</div>
+</div>

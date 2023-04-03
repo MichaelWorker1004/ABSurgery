@@ -1,0 +1,15 @@
+<div class="alert flex align-items-center" [class]="alertType">
+  <div class="icon">
+    <i
+      class="fa-solid fa-circle-exclamation"
+      *ngIf="alertType === 'danger'"
+    ></i>
+    <i
+      class="fa-solid fa-triangle-exclamation"
+      *ngIf="alertType === 'warning'"
+    ></i>
+    <i class="fa-solid fa-circle-info" *ngIf="alertType === 'info'"></i>
+    <i class="fa-solid fa-circle-check" *ngIf="alertType === 'success'"></i>
+  </div>
+  <ng-content></ng-content>
+</div>

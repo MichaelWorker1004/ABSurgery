@@ -5,7 +5,46 @@
 <section>
   <div class="grid">
     <sl-card class="col-12">
-      <abs-collapse-panel [panelId]="1" [startExpanded]="true">
+      <div class="grid flex flex-wrap">
+        <div class="col-12">
+          <h5 class="mt-0 mb-2" panel-header>My CME Credits</h5>
+          <hr />
+        </div>
+        <div class="col-12 md:col-6">
+          <abs-progress-bar
+            [currentNumber]="124"
+            [totalNumber]="150"
+            [barColor]="'#DBAD6A'"
+            [statusLabel]="'Category 1 Credits'"
+            [toolTipText]="'this is a tooltip that is longer'"
+          ></abs-progress-bar>
+        </div>
+        <div class="col-12 md:col-6">
+          <abs-progress-bar
+            [currentNumber]="23"
+            [totalNumber]="50"
+            [barColor]="'#1C827D'"
+            [statusLabel]="'Self Assessment Credits'"
+          ></abs-progress-bar>
+        </div>
+        <div class="grid-container col-12">
+          <p-chart
+            type="bar"
+            [data]="cmeCreditsChartData"
+            [options]="cmeCreditsChartOptions"
+          ></p-chart>
+        </div>
+        <div class="col-12">
+          <abs-alert alertType="danger"
+            >You have a total of 28 credits expiring on 2023-01-01, 20 of which
+            are self assessment credits</abs-alert
+          >
+        </div>
+      </div>
+    </sl-card>
+
+    <sl-card class="col-12">
+      <abs-collapse-panel [panelId]="2" [startExpanded]="true">
         <h5 class="mt-0 mb-2" panel-header>Itemized CME</h5>
         <abs-grid [columns]="itemizedCmeCols" [data]="itemizedCmeData">
         </abs-grid>
@@ -13,7 +52,7 @@
     </sl-card>
 
     <sl-card class="col-12">
-      <abs-collapse-panel [panelId]="2" [startExpanded]="true">
+      <abs-collapse-panel [panelId]="3" [startExpanded]="true">
         <h5 class="mt-0 mb-2" panel-header>Requirements and Adjustments</h5>
         <p class="text-xl mt-0">
           For Completing certain tasks will result in a lower amount of required

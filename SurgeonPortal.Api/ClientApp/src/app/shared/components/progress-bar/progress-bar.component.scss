@@ -1,0 +1,66 @@
+.numbers {
+  font-size: 28px;
+  font-weight: bold;
+  .ratio {
+    margin-right: 0.75rem;
+    position: relative;
+  }
+  .remaining {
+    color: var(--global-gray);
+    font-size: 15px;
+  }
+}
+
+h5 {
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.progress-bar {
+  position: relative;
+  .bar {
+    width: calc(100% - 55px);
+    height: 60px;
+    background-color: #d7d7d7;
+    border-radius: 8px;
+    border-right: 5px solid white;
+    z-index: 2;
+    position: relative;
+    .fill {
+      height: 100%;
+      position: relative;
+      border-radius: 8px;
+    }
+  }
+  .progress {
+    position: absolute;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 100%;
+    background-color: var(--global-primary);
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+    border-radius: 0px 8px 8px 0px;
+    z-index: 1;
+  }
+}
+
+.tooltip {
+  margin-left: 5px;
+  .trigger {
+    width: 15px;
+    height: 15px;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    background-color: var(--global-danger);
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}
