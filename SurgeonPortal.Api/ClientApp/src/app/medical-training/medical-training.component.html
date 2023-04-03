@@ -274,24 +274,205 @@
             </div>
           </div>
 
+          <div class="form-section">
+            <h5 class="form-section__title">
+              Certificates or Other Certifications
+            </h5>
+            <hr />
+            <div class="grid" *ngIf="!isEdit">
+              <div class="col-12">
+                <label>FLS Certification</label>
+                <!-- TODO: [Joe] handle viewing of uploaded document -->
+                <div>{{ medicalTraining.certifications.flsCert.fileName }}</div>
+              </div>
+              <div class="col-12">
+                <label>FES Certification</label>
+                <!-- TODO: [Joe] handle viewing of uploaded document -->
+                <div>{{ medicalTraining.certifications.fesCert.fileName }}</div>
+              </div>
+              <div class="col-12 sm:col-7 md:col-8">
+                <label>Registered Physician in Vascular Interpretation</label>
+                <div>
+                  {{ medicalTraining.certifications.registeredPhysician }}
+                </div>
+              </div>
+              <div class="col-12 sm:col-5 md:col-4">
+                <label>Issue Date</label>
+                <div>
+                  {{
+                    medicalTraining.certifications.issueDate
+                      | date : 'shortDate'
+                  }}
+                </div>
+              </div>
+            </div>
+            <div class="grid" *ngIf="isEdit">
+              <div class="col-12 flex align-items-center">
+                <div style="width: 100%">
+                  <label class="block" for="flsCert">FLS Certification</label>
+                  <div class="file-upload">
+                    <label for="flsCert" class="file-upload__label">
+                      <i class="fa-solid fa-file-lines"></i>
+                      {{
+                        medicalTraining.certifications.flsCert.newFileName ||
+                          medicalTraining.certifications.flsCert.fileName ||
+                          'empty'
+                      }}
+                    </label>
+                    <input
+                      type="file"
+                      name="flsCert"
+                      id="flsCert"
+                      class="file-upload__input"
+                      (change)="
+                        onFileAdded(
+                          $event,
+                          medicalTraining.certifications.flsCert
+                        )
+                      "
+                    />
+                  </div>
+                </div>
+                <sl-button
+                  variant="text"
+                  class="btn-upload"
+                  (click)="uploadFile(medicalTraining.certifications.flsCert)"
+                  [disabled]="!medicalTraining.certifications.flsCert.newFile"
+                  *ngIf="
+                    medicalTraining.certifications.flsCert.newFile ||
+                    !medicalTraining.certifications.flsCert.file
+                  "
+                >
+                  <i class="fa-solid fa-cloud-arrow-up mr-1"></i>
+                  Upload
+                </sl-button>
+                <sl-button
+                  variant="text"
+                  class="btn-remove"
+                  (click)="removeFile(medicalTraining.certifications.flsCert)"
+                  *ngIf="
+                    !medicalTraining.certifications.flsCert.newFile &&
+                    medicalTraining.certifications.flsCert.file
+                  "
+                >
+                  <i class="fa-solid fa-x mr-1"></i>
+                  Remove
+                </sl-button>
+              </div>
+              <div class="col-12 flex align-items-center">
+                <div style="width: 100%">
+                  <label class="block" for="fesCert">FES Certification</label>
+                  <div class="file-upload">
+                    <label for="fesCert" class="file-upload__label">
+                      <i class="fa-solid fa-file-lines"></i>
+                      {{
+                        medicalTraining.certifications.fesCert.newFileName ||
+                          medicalTraining.certifications.fesCert.fileName ||
+                          'empty'
+                      }}
+                    </label>
+                    <input
+                      type="file"
+                      name="fesCert"
+                      id="fesCert"
+                      class="file-upload__input"
+                      (change)="
+                        onFileAdded(
+                          $event,
+                          medicalTraining.certifications.fesCert
+                        )
+                      "
+                    />
+                  </div>
+                </div>
+                <sl-button
+                  variant="text"
+                  class="btn-upload"
+                  (click)="uploadFile(medicalTraining.certifications.fesCert)"
+                  [disabled]="!medicalTraining.certifications.fesCert.newFile"
+                  *ngIf="
+                    medicalTraining.certifications.fesCert.newFile ||
+                    !medicalTraining.certifications.fesCert.file
+                  "
+                >
+                  <i class="fa-solid fa-cloud-arrow-up mr-1"></i>
+                  Upload
+                </sl-button>
+                <sl-button
+                  variant="text"
+                  class="btn-remove"
+                  (click)="removeFile(medicalTraining.certifications.fesCert)"
+                  *ngIf="
+                    !medicalTraining.certifications.fesCert.newFile &&
+                    medicalTraining.certifications.fesCert.file
+                  "
+                >
+                  <i class="fa-solid fa-x mr-1"></i>
+                  Remove
+                </sl-button>
+              </div>
+              <sl-input
+                class="col-12 sm:col-7 md:col-9"
+                label="Registered Physician in Vascular Interpretation"
+                name="registeredPhysician"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.certifications.registeredPhysician"
+              ></sl-input>
+              <sl-input
+                type="date"
+                class="col-12 sm:col-5 md:col-3"
+                name="issueDate"
+                label="Issue Date"
+                valueAsDate
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.certifications.issueDate"
+              ></sl-input>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section__title">
+              Additional / Advanced Medical Training
+            </h5>
+            <hr />
+            <div class="grid">
+              <div class="col-12">
+                <sl-button
+                  variant="default"
+                  class="btn-add mt-4 mb-5"
+                  (click)="showTrainingModal(null)"
+                >
+                  <i slot="prefix" class="fa-solid fa-plus"></i>
+                  ADD RECORD
+                </sl-button>
+                <abs-grid
+                  [columns]="trainingCols"
+                  [data]="medicalTraining.additionalTraining"
+                  (action)="handleGridAction($event)"
+                  class="margin-bottom-2"
+                ></abs-grid>
+              </div>
+            </div>
+          </div>
+
           <div class="col-12">
             <div class="flex justify-content-end" *ngIf="!isEdit">
               <sl-button
                 variant="primary"
                 style="width: 200px"
-                (click)="isEdit = true"
+                (click)="toggleFormEdit(true)"
                 >Edit</sl-button
               >
             </div>
             <div class="flex justify-content-end" *ngIf="isEdit">
-              <sl-button variant="text" (click)="isEdit = false"
+              <sl-button variant="text" (click)="toggleFormEdit(false)"
                 >Cancel</sl-button
               >
               <sl-button
                 type="submit"
                 style="width: 337px"
                 variant="primary"
-                (click)="isEdit = false"
+                (click)="save()"
                 >Save</sl-button
               >
             </div>
@@ -299,6 +480,12 @@
         </form>
       </sl-card>
     </div>
+    <abs-training-add-edit-modal
+      [showDialog]="showTrainingAddEdit"
+      [training]="tempTraining$"
+      (cancelDialog)="cancelAddEditTraining($event)"
+      (saveDialog)="saveTraining($event)"
+    ></abs-training-add-edit-modal>
   </section>
 </ng-container>
 
