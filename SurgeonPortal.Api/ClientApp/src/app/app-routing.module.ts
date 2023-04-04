@@ -71,6 +71,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'exam-process/exam-registration',
+    loadComponent: () =>
+      import('./exam-registration/exam-registration.component').then(
+        (m) => m.ExamRegistrationComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'examination-history',
     loadComponent: () =>
       import('./examination-history/examination-history.component').then(

@@ -1,4 +1,4 @@
-import { AbsGrid } from '../shared/components/grid/abs-grid';
+import { AbsGrid } from '../grid/abs-grid';
 
 export const PAY_FEE_COLS = [
   AbsGrid.setFormattedDateCol('Payment Date', 'paymentDate'),

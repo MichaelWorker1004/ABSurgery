@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { Status } from '../shared/components/action-card/status.enum';
 import { GridComponent } from '../shared/components/grid/grid.component';
-import { PAY_FEE_COLS } from './pay-fee-cols';
+import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
 import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
+import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -15,7 +16,13 @@ interface ActionMap {
   selector: 'abs-continuous-certification',
   templateUrl: './continuous-certification.component.html',
   styleUrls: ['./continuous-certification.component.scss'],
-  imports: [CommonModule, ActionCardComponent, GridComponent, FormsModule],
+  imports: [
+    CommonModule,
+    ActionCardComponent,
+    GridComponent,
+    FormsModule,
+    PayFeeComponent,
+  ],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -29,6 +36,7 @@ export class ContinuousCertificationComponent implements OnInit {
   referenceFormsCols = REFERENCE_FORMS_COLS;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
+  payFeeModalDescription = '';
   outcomesandRegistriesFormFields = [
     {
       label: 'Surgeeon Specific Registry (case log)',
@@ -596,105 +604,6 @@ export class ContinuousCertificationComponent implements OnInit {
       placeholder: 'Enter your full name',
       type: 'text',
       size: 'col-12',
-    },
-  ];
-
-  paymentInformationFormFields = [
-    {
-      label: 'First Name',
-      value: '',
-      required: true,
-      name: 'firstName',
-      placeholder: 'Enter your first name',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Last Name',
-      value: '',
-      required: true,
-      name: 'lastName',
-      placeholder: 'Enter your last name',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Email Address',
-      value: '',
-      required: true,
-      name: 'emailAddress',
-      placeholder: 'Enter your email address',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Phone Number',
-      value: '',
-      required: true,
-      name: 'phoneNumber',
-      placeholder: '_ _ _ - _ _ _ - _ _ _ _',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Street Address Line 1',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'streetAddressLine1',
-      placeholder: 'Enter your full address',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Suite/Floor/Apt',
-      subLabel: '',
-      value: '',
-      required: false,
-      name: 'streetAddressLine2',
-      placeholder: 'ex. Suite 3',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'City',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'city',
-      placeholder: 'Enter your city',
-      type: 'text',
-      size: 'col-4',
-    },
-    {
-      label: 'State',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'state',
-      placeholder: 'Choose your state',
-      type: 'select',
-      size: 'col-4',
-      options: [
-        {
-          label: 'Alabama',
-          value: 'AL',
-        },
-        {
-          label: 'Alaska',
-          value: 'AK',
-        },
-      ],
-    },
-    {
-      label: 'Zipcode',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'zipcode',
-      placeholder: 'Enter your zip code',
-      type: 'text',
-      size: 'col-4',
     },
   ];
 

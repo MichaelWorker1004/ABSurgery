@@ -1,0 +1,204 @@
+<div class="flex align-items-end flex-wrap col-12 margin-bottom-2">
+  <div>
+    <h1>General Surgery Exam Registration</h1>
+    <p>
+      This year, the exam will be completely virtual via Zoom. The registration
+      deadline is September 1st. Dates are filed on a first-come, first-served
+      basis.
+    </p>
+    <p>
+      <strong>
+        Failure to select a CE date for the academic year is considered a lost
+        exam opportunity.</strong
+      >
+      A final assignment means you have a guaranteed spot, but it is irrevocable
+      and unchangeable one given. Once you have received a final assignment,
+      exam fees will not be refunded if you subsequently change your mind or
+      fail to show up.
+    </p>
+    <p>
+      Please allow 5-10 business days for your registration to be processed.
+      Once processed, your exam date will be posted on your Exam Records and
+      Results page under Active Examinations.
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="grid">
+    <!-- Site Selection -->
+    <sl-card class="col-12">
+      <abs-collapse-panel [panelId]="1" [startExpanded]="true">
+        <div class="flex" panel-header>
+          <h5 class="mt-0 mb-2">Site Selection</h5>
+          <div class="status completed">
+            Nov 16 - Nov 18, 2022, General Surgery Certifying Exam (Virtual)
+            Assigned
+          </div>
+        </div>
+        <div class="flex align-items-end flex-wrap col-12 margin-bottom-2">
+          <form action="">
+            <div class="form-description">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+              neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+              erat, egestas sit amet tortor at, condimentum tempor erat. All
+              fields are required.
+            </div>
+            <div class="grid">
+              <div
+                *ngFor="let formField of siteSelectionFormData"
+                class="col-12 md:{{ formField.size }}"
+              >
+                <sl-radio-group
+                  *ngIf="formField.type === 'radio'"
+                  [label]="formField.label"
+                  [name]="formField.name"
+                  ngDefaultControl
+                  (sl-change)="onSiteSelectionChange($event)"
+                >
+                  <sl-radio
+                    *ngFor="let option of formField.options"
+                    [value]="option.value"
+                    class="bold"
+                    >{{ option.label }}</sl-radio
+                  >
+                </sl-radio-group>
+              </div>
+              <div class="col-12 align-right">
+                <sl-button variant="default" size="large">Cancel</sl-button>
+                <sl-button
+                  class="wide"
+                  size="large"
+                  variant="warning"
+                  (click)="handleSiteSelectionSubmit()"
+                  >Save</sl-button
+                >
+              </div>
+            </div>
+          </form>
+        </div>
+      </abs-collapse-panel>
+    </sl-card>
+
+    <!-- Exam Registration Form -->
+    <sl-card class="col-12">
+      <abs-collapse-panel [panelId]="2" [startExpanded]="true">
+        <div class="flex" panel-header>
+          <h5 class="mt-0 mb-2">Site Selection</h5>
+          <div class="status completed">Received 07/28/2022</div>
+        </div>
+
+        <div class="form-description mb-5">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat. All fields
+          are required.
+        </div>
+        <sl-button (click)="handleDownloadForm()" class="btn-add">
+          <i slot="prefix" class="fa-solid fa-download"></i>
+          <span>Download Form</span>
+        </sl-button>
+      </abs-collapse-panel>
+    </sl-card>
+
+    <!-- Exam Registration Fee -->
+    <sl-card class="col-12">
+      <abs-collapse-panel [panelId]="3" [startExpanded]="true">
+        <div class="flex" panel-header>
+          <h5 class="mt-0 mb-2">Exam Registration Fee</h5>
+          <div class="status alert">Amount Owed: $1500.00</div>
+        </div>
+
+        <abs-pay-fee
+          [payFeeData]="payFeeData"
+          [paymentGridData]="paymentGridData"
+        >
+          <strong
+            >To avoid additional fees, all items must be received by deadline.
+            See also <a href="#">Dates & Fees</a>.</strong
+          >
+        </abs-pay-fee>
+      </abs-collapse-panel>
+    </sl-card>
+
+    <!-- Digital Signature-->
+    <sl-card class="col-12">
+      <abs-collapse-panel [panelId]="4" [startExpanded]="true">
+        <div class="flex" panel-header>
+          <h5 class="mt-0 mb-2">Digital Signature</h5>
+          <div class="status completed">Completed</div>
+        </div>
+
+        <ul>
+          <li>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+            sodales condimentum orci, id malesuada ante faucibus eu. Sed ut
+            perspiciatis unde omnis iste natus error sit voluptatem accusantium
+            doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
+            inventore veritatis et quasi architecto beatae vitae dicta sunt
+            explicabo.
+          </li>
+          <li>
+            Maecenas eros arcu, mattis ut urna id, convallis eleifend purus.
+            Phasellus sodales condimentum orci, id malesuada ante faucibus eu.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+            eros arcu, mattis ut urna id, convallis eleifend purus.
+          </li>
+          <li>
+            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
+            fugit, sed quia consequuntur magni dolores eos qui ratione
+            voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem
+            ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non
+            numquam eius modi tempora incidunt ut labore et dolore magnam
+            aliquam quaerat voluptatem.
+          </li>
+          <li>
+            Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
+            suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+          </li>
+          <li>
+            Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
+            quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat
+            quo voluptas nulla pariatur?
+          </li>
+        </ul>
+        <div class="col-12">
+          <sl-checkbox
+            class="mb-5"
+            (sl-change)="handleDigitalSignatureChange($event)"
+            >I agree to the following statements above to the fullest of my
+            knowledge.</sl-checkbox
+          >
+        </div>
+
+        <sl-button (click)="handleDownloadForm()" class="btn-add">
+          <i slot="prefix" class="fa-solid fa-download"></i>
+          <span>Download Form</span>
+        </sl-button>
+      </abs-collapse-panel>
+    </sl-card>
+
+    <!-- Exam Admission Card / Authorization Letter Status -->
+    <sl-card class="col-12">
+      <abs-collapse-panel [panelId]="6" [startExpanded]="true">
+        <div class="flex" panel-header>
+          <h5 class="mt-0 mb-2">
+            Exam Admission Card / Authorization Letter Status
+          </h5>
+          <div class="status completed">Posted 10/20/2022</div>
+        </div>
+
+        <div class="form-description mb-5">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat. All fields
+          are required.
+        </div>
+        <sl-button (click)="handleDownloadForm()" class="btn-add">
+          <i slot="prefix" class="fa-solid fa-download"></i>
+          <span>Download Exam Admission Card</span>
+        </sl-button>
+      </abs-collapse-panel>
+    </sl-card>
+  </div>
+</section>
