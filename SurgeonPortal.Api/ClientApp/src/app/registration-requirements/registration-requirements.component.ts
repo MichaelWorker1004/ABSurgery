@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { Status } from '../shared/components/action-card/status.enum';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
+import { MedicalLicenseModalComponent } from './medical-license-modal/medical-license-modal.component';
+import { ModalComponent } from '../shared/components/modal/modal.component';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -11,20 +13,30 @@ interface ActionMap {
 @Component({
   selector: 'abs-registration-requirements',
   standalone: true,
-  imports: [CommonModule, ActionCardComponent, SurgeonProfileModalComponent],
+  imports: [
+    CommonModule,
+    ActionCardComponent,
+    SurgeonProfileModalComponent,
+    MedicalLicenseModalComponent,
+    ModalComponent,
+  ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RegistrationRequirementsComponent implements OnInit {
   userData!: any;
   registrationRequirementsData!: Array<any>;
   applyForAnExamActionCardData!: any;
   showSurgeonProfile = false;
+  showMedicalLicense = false;
 
   private actionMap: ActionMap = {
     surgeonProfileModal: () => {
       this.showSurgeonProfile = !this.showSurgeonProfile;
-      console.log('surgeonProfileModal:', this.showSurgeonProfile);
+    },
+    medicalLicenseModal: () => {
+      this.showMedicalLicense = !this.showMedicalLicense;
     },
   };
 
@@ -40,6 +52,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   }
 
   closeModal(event: any) {
+    console.log('event', event);
     const actionFunction = this.actionMap[event.action];
     if (actionFunction) {
       actionFunction();
@@ -53,8 +66,6 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          // type: 'component',
-          // action: '/personal-profile',
           type: 'dialog',
           action: 'surgeonProfileModal',
         },
@@ -92,8 +103,8 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/medical-licence',
+          type: 'dialog',
+          action: 'medicalLicenseModal',
         },
         actionDisplay: 'View / Update my license',
         icon: 'fa-certificate fa-solid',

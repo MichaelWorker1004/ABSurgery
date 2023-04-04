@@ -1,0 +1,22 @@
+<div class="mb-5">
+  <p><strong>Please update the information below as needed. </strong></p>
+  <p>
+    A full and unrestricted medical license is not required for the Qualifying
+    Examination. A full and unrestricted medical license will be waived to
+    register for the Certifying Examination (CE). A full and unrestricted
+    medical license will be required before you will be considered certified by
+    the ABS
+  </p>
+</div>
+<sl-button class="btn-add">
+  <i slot="prefix" class="fa-solid fa-plus"></i>
+  <span>Add Medical License</span>
+</sl-button>
+<abs-grid [columns]="medicalLicenseCols" [data]="medicalLicenseData">
+</abs-grid>
+<div class="flex justify-content-end mt-5" slot="footer">
+  <sl-button type="button" variant="text" (click)="close()">Cancel</sl-button>
+  <sl-button type="button" style="width: 337px" variant="primary"
+    >Save
+  </sl-button>
+</div>

@@ -42,6 +42,17 @@
   >
   </abs-action-card>
 
+  <abs-modal
+    [open]="showMedicalLicense"
+    title="Medical License"
+    status="in-progress"
+    [hideClose]="true"
+  >
+    <abs-medical-license-modal
+      (closeDialog)="handleCardAction('medicalLicenseModal')"
+    ></abs-medical-license-modal>
+  </abs-modal>
+
   <abs-surgeon-profile-modal
     [showDialog]="showSurgeonProfile"
     modalName="surgeonProfileModal"
