@@ -41,4 +41,10 @@
     [status]="applyForAnExamActionCardData.status"
   >
   </abs-action-card>
+
+  <abs-surgeon-profile-modal
+    [showDialog]="showSurgeonProfile"
+    modalName="surgeonProfileModal"
+    (closeDialog)="closeModal($event)"
+  ></abs-surgeon-profile-modal>
 </div>

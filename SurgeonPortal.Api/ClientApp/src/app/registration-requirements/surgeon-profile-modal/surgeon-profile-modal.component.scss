@@ -1,0 +1,42 @@
+sl-dialog::part(header-actions) {
+  padding: 0;
+}
+sl-dialog::part(close-button) {
+  display: none;
+}
+sl-dialog::part(header)::after {
+  height: 1px;
+  color: var(--global-gray-lightest);
+}
+
+sl-tab-group::part(body) {
+  overflow-x: hidden;
+}
+sl-tab-group::part(active-tab-indicator) {
+  border-color: var(--global-success);
+}
+sl-tab {
+  width: 100%;
+  text-align: center;
+}
+sl-tab::part(base) {
+  color: var(--global-text-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+sl-tab.tab__complete::part(base) {
+  color: var(--global-success);
+}
+sl-tab::part(base):hover {
+  color: var(--global-success-darken-20);
+}
+
+.text-success {
+  color: var(--global-success);
+}
+.text-warning {
+  color: var(--global-warning);
+}
+.text-danger {
+  color: var(--global-danger);
+}

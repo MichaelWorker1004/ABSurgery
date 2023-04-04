@@ -2,11 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { Status } from '../shared/components/action-card/status.enum';
+import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
+
+interface ActionMap {
+  [key: string]: () => void;
+}
 
 @Component({
   selector: 'abs-registration-requirements',
   standalone: true,
-  imports: [CommonModule, ActionCardComponent],
+  imports: [CommonModule, ActionCardComponent, SurgeonProfileModalComponent],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
 })
@@ -14,6 +19,14 @@ export class RegistrationRequirementsComponent implements OnInit {
   userData!: any;
   registrationRequirementsData!: Array<any>;
   applyForAnExamActionCardData!: any;
+  showSurgeonProfile = false;
+
+  private actionMap: ActionMap = {
+    surgeonProfileModal: () => {
+      this.showSurgeonProfile = !this.showSurgeonProfile;
+      console.log('surgeonProfileModal:', this.showSurgeonProfile);
+    },
+  };
 
   ngOnInit(): void {
     this.getUserData();
@@ -26,6 +39,13 @@ export class RegistrationRequirementsComponent implements OnInit {
     };
   }
 
+  closeModal(event: any) {
+    const actionFunction = this.actionMap[event.action];
+    if (actionFunction) {
+      actionFunction();
+    }
+  }
+
   getRegistrationRequirementsData() {
     this.registrationRequirementsData = [
       {
@@ -33,8 +53,10 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/personal-profile',
+          // type: 'component',
+          // action: '/personal-profile',
+          type: 'dialog',
+          action: 'surgeonProfileModal',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-address-card',
@@ -165,5 +187,9 @@ export class RegistrationRequirementsComponent implements OnInit {
 
   handleCardAction(action: string) {
     console.log('action', action);
+    const actionFunction = this.actionMap[action];
+    if (actionFunction) {
+      actionFunction();
+    }
   }
 }
