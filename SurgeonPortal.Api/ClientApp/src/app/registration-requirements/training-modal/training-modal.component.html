@@ -1,0 +1,304 @@
+<div>
+  <div>
+    <p class="m-0">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+      nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas
+      sit amet tortor at, condimentum tempor erat.
+    </p>
+    <sl-tab-group
+      [noScrollControls]="true"
+      id="trainingTabs"
+      (sl-tab-show)="handleDefaultShowTab($event)"
+    >
+      <!-- TODO: [Joe] tab__complete should be applied to tab based on form state (hopefully derived from reactive form in the ngx-store) -->
+      <sl-tab slot="nav" panel="medicalSchool" class="tab__complete">
+        <!-- TODO: [Joe] text-success, text-warning, text-danger should be applied to icons based on form state (hopefully derived from reactive form in the ngx-store) -->
+        <i class="fa-solid fa-circle-check text-success mr-2"></i>
+        Medical School
+      </sl-tab>
+      <sl-tab slot="nav" panel="residency">
+        <!-- TODO: [Joe] text-success, text-warning, text-danger should be applied to icons based on form state (hopefully derived from reactive form in the ngx-store) -->
+        <i class="fa-solid fa-circle-check text-warning mr-2"></i>
+        Residency
+      </sl-tab>
+      <sl-tab slot="nav" panel="additionalTraining">
+        <!-- TODO: [Joe] text-success, text-warning, text-danger should be applied to icons based on form state (hopefully derived from reactive form in the ngx-store) -->
+        <i class="fa-solid fa-circle-check text-warning mr-2"></i>
+        Additional Training
+      </sl-tab>
+      <sl-tab slot="nav" panel="additionalDocuments">
+        <!-- TODO: [Joe] text-success, text-warning, text-danger should be applied to icons based on form state (hopefully derived from reactive form in the ngx-store) -->
+        <i class="fa-solid fa-circle-check text-warning mr-2"></i>
+        Additional Documents
+      </sl-tab>
+
+      <sl-tab-panel name="medicalSchool">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat.
+        </p>
+        <div class="grid">
+          <sl-select
+            class="col-12"
+            name="statement"
+            label="Select the statement that best describes you (Country of medical school)"
+            placeholder="Select a Country"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.statement"
+          >
+            <sl-option value="option-1">Option 1</sl-option>
+            <sl-option value="option-2">Option 2</sl-option>
+            <sl-option value="option-3">Option 3</sl-option>
+          </sl-select>
+          <sl-input
+            class="col-12"
+            label="Medical School"
+            placeholder="Enter school name"
+            name="medicalSchool"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.medicalSchool.name"
+            required
+          ></sl-input>
+          <sl-input
+            class="col-12 md:col-4"
+            label="City or Town"
+            placeholder="Enter city name"
+            name="city"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.medicalSchool.city"
+            required
+          ></sl-input>
+          <sl-select
+            class="col-12 md:col-4"
+            name="state"
+            label="State / Province / Territory"
+            placeholder="Choose state"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.medicalSchool.state"
+          >
+            <sl-option value="option-1">Option 1</sl-option>
+            <sl-option value="option-2">Option 2</sl-option>
+            <sl-option value="option-3">Option 3</sl-option>
+          </sl-select>
+          <sl-select
+            class="col-12 md:col-4"
+            name="country"
+            label="Country"
+            placeholder="Choose country"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.medicalSchool.country"
+          >
+            <sl-option value="USA">United States</sl-option>
+            <sl-option value="option-1">Option 1</sl-option>
+            <sl-option value="option-2">Option 2</sl-option>
+            <sl-option value="option-3">Option 3</sl-option>
+          </sl-select>
+          <sl-input
+            class="col-12 md:col-6"
+            label="Degree"
+            placeholder="Enter degree name"
+            name="degree"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.medicalSchool.degree"
+            required
+          ></sl-input>
+          <sl-input
+            inputmode="numeric"
+            class="col-12 md:col-6"
+            label="Year of Completion"
+            placeholder="YYYY"
+            name="yearSchool"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.medicalSchool.yearGraduated"
+            required
+          ></sl-input>
+        </div>
+      </sl-tab-panel>
+      <sl-tab-panel name="residency">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat.
+        </p>
+        <div class="grid">
+          <h5 class="col-12 mb-1">Residency</h5>
+          <div class="col-6">
+            <div class="grid">
+              <sl-input
+                class="col-12"
+                label="Program Name"
+                placeholder="Enter program name"
+                name="residencyName"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.residency.programName"
+                required
+              ></sl-input>
+              <sl-input
+                inputmode="numeric"
+                class="col-12"
+                label="Year of Completion"
+                placeholder="YYYY"
+                name="residencyYear"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.residency.yearOfCompletion"
+                required
+              ></sl-input>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="grid">
+              <sl-textarea
+                class="col-12"
+                label="My program is not listed"
+                placeholder="Explain..."
+                name="residencyNotListed"
+                rows="5"
+                ngDefaultControl
+                [(ngModel)]="medicalTraining.residency.programNotListed"
+              ></sl-textarea>
+            </div>
+          </div>
+          <sl-checkbox
+            class="col-12"
+            name="completedInCanada"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.residency.completedInCanada"
+          >
+            Did you complete your training in canada?
+          </sl-checkbox>
+        </div>
+        <div class="grid align-items-baseline">
+          <h5 class="col-12 mb-1 mt-3">Post Residency and Fellowship Plans</h5>
+          <sl-select
+            class="col-12 md:col-6"
+            name="postResidencyPlans"
+            label="Upon completing my General Surgery residency I will:"
+            placeholder="Make a selection"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.residency.postResidencyPlans"
+            required
+          >
+            <sl-option value="option-1">Option 1</sl-option>
+            <sl-option value="option-2">Option 2</sl-option>
+            <sl-option value="option-3">Option 3</sl-option>
+          </sl-select>
+          <sl-select
+            class="col-12 md:col-6"
+            name="postFellowshipPlans"
+            label="Upon completing my fellowship, I anticipate that my clinical practice will include:"
+            placeholder="Make a selection"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.residency.postFellowshipPlans"
+            required
+          >
+            <sl-option value="option-1">Option 1</sl-option>
+            <sl-option value="option-2">Option 2</sl-option>
+            <sl-option value="option-3">Option 3</sl-option>
+          </sl-select>
+        </div>
+        <div class="grid align-items-baseline">
+          <h5 class="col-12 mb-1 mt-3">Vascular Surgery Training</h5>
+          <sl-radio-group
+            class="col-12 md:col-6 horizontal"
+            label="Will you be pursuing vascular surgery training? *"
+            name="vascularTraining"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.residency.vascularTraining"
+          >
+            <sl-radio [value]="true">Yes</sl-radio>
+            <sl-radio [value]="false">No</sl-radio>
+          </sl-radio-group>
+          <sl-select
+            class="col-12 md:col-6"
+            name="vascularFellowship"
+            label="In which program will you complete a vascular surgery fellowship?"
+            placeholder="Make a selection"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.residency.vascularFellowship"
+            required
+          >
+            <sl-option value="option-1">Option 1</sl-option>
+            <sl-option value="option-2">Option 2</sl-option>
+            <sl-option value="option-3">Option 3</sl-option>
+          </sl-select>
+        </div>
+        <div class="grid align-items-baseline">
+          <h5 class="col-12 mb-1 mt-3">Thoracic Surgery Training</h5>
+          <sl-radio-group
+            class="col-12 md:col-6 horizontal"
+            label="Will you be pursuing thoracic surgery training? *"
+            name="thoracicTraining"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.residency.thoracicTraining"
+          >
+            <sl-radio [value]="true">Yes</sl-radio>
+            <sl-radio [value]="false">No</sl-radio>
+          </sl-radio-group>
+          <sl-select
+            class="col-12 md:col-6"
+            name="thoracicFellowship"
+            label="In which program will you complete a thoracic surgery fellowship?"
+            placeholder="Make a selection"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.residency.thoracicFellowship"
+            required
+          >
+            <sl-option value="option-1">Option 1</sl-option>
+            <sl-option value="option-2">Option 2</sl-option>
+            <sl-option value="option-3">Option 3</sl-option>
+          </sl-select>
+        </div>
+      </sl-tab-panel>
+      <sl-tab-panel name="additionalTraining">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat.
+        </p>
+        <div class="grid">
+          <div class="col-12">
+            <sl-button
+              variant="default"
+              class="btn-add mt-2 mb-2"
+              (click)="showTrainingModal(null)"
+            >
+              <i slot="prefix" class="fa-solid fa-plus"></i>
+              ADD RECORD
+            </sl-button>
+            <abs-grid
+              [columns]="trainingCols"
+              [data]="medicalTraining.additionalTraining"
+              (action)="handleGridAction($event)"
+              class="margin-bottom-2"
+            ></abs-grid>
+          </div>
+        </div>
+      </sl-tab-panel>
+      <sl-tab-panel name="additionalDocuments">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+          erat, egestas sit amet tortor at, condimentum tempor erat.
+        </p>
+      </sl-tab-panel>
+    </sl-tab-group>
+  </div>
+  <div class="flex justify-content-end" slot="footer">
+    <sl-button type="button" variant="text" (click)="close()">Cancel</sl-button>
+    <sl-button
+      type="button"
+      style="width: 337px"
+      variant="primary"
+      (click)="save()"
+      >Save
+    </sl-button>
+  </div>
+
+  <abs-training-add-edit-modal
+    [showDialog]="showTrainingAddEdit"
+    [training]="tempTraining$"
+    (cancelDialog)="cancelAddEditTraining($event)"
+    (saveDialog)="saveTraining($event)"
+  ></abs-training-add-edit-modal>
+</div>

@@ -68,9 +68,27 @@
     ></abs-acgme-experience-modal>
   </abs-modal>
 
-  <abs-surgeon-profile-modal
-    [showDialog]="showSurgeonProfile"
-    modalName="surgeonProfileModal"
-    (closeDialog)="closeModal($event)"
-  ></abs-surgeon-profile-modal>
+  <abs-modal
+    [open]="showSurgeonProfile"
+    title="Surgeon Profile"
+    status="in-progress"
+    [hideClose]="true"
+    [preventOverlayClose]="true"
+  >
+    <abs-surgeon-profile-modal
+      (closeDialog)="handleCardAction('surgeonProfileModal')"
+    ></abs-surgeon-profile-modal>
+  </abs-modal>
+
+  <abs-modal
+    [open]="showTraining"
+    title="Training"
+    status="in-progress"
+    [hideClose]="true"
+    [preventOverlayClose]="true"
+  >
+    <abs-training-modal
+      (closeDialog)="handleCardAction('trainingModal')"
+    ></abs-training-modal>
+  </abs-modal>
 </div>

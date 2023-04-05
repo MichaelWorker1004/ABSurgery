@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
-import { TrainingAddEditModalComponent } from './training-add-edit-modal/training-add-edit-modal.component';
-import { MEDICAL_TRAINING_COLS } from './training-cols';
+import { TrainingAddEditModalComponent } from '../shared/components/training-add-edit-modal/training-add-edit-modal.component';
+import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-training-cols';
 
 @Component({
   selector: 'abs-medical-training',

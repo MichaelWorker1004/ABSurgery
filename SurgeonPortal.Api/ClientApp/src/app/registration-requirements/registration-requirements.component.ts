@@ -4,6 +4,7 @@ import { ActionCardComponent } from '../shared/components/action-card/action-car
 import { Status } from '../shared/components/action-card/status.enum';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { MedicalLicenseModalComponent } from './medical-license-modal/medical-license-modal.component';
+import { TrainingModalComponent } from './training-modal/training-modal.component';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-experience-modal.component';
 
@@ -19,6 +20,7 @@ interface ActionMap {
     ActionCardComponent,
     SurgeonProfileModalComponent,
     MedicalLicenseModalComponent,
+    TrainingModalComponent,
     ModalComponent,
     AcgmeExperienceModalComponent,
   ],
@@ -33,6 +35,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   showSurgeonProfile = false;
   showMedicalLicense = false;
   showACGMEexprience = false;
+  showTraining = false;
 
   private actionMap: ActionMap = {
     surgeonProfileModal: () => {
@@ -43,6 +46,9 @@ export class RegistrationRequirementsComponent implements OnInit {
     },
     ACGMEExperienceModal: () => {
       this.showACGMEexprience = !this.showACGMEexprience;
+    },
+    trainingModal: () => {
+      this.showTraining = !this.showTraining;
     },
   };
 
@@ -84,8 +90,8 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/training',
+          type: 'dialog',
+          action: 'trainingModal',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-language fa-solid',

@@ -281,6 +281,9 @@ sl-button::part(caret):hover {
 sl-select::part(form-control-label) {
   font-weight: 700;
 }
+sl-select.font-normal::part(form-control-label) {
+  font-weight: 500;
+}
 sl-select::part(expand-icon) {
   color: var(--sl-color-primary-500);
 }
@@ -292,6 +295,17 @@ sl-checkbox::part(checked-icon) {
 }
 sl-checkbox::part(label) {
   font-weight: 700;
+}
+sl-checkbox.font-normal::part(label) {
+  font-weight: 500;
+}
+sl-radio-group.horizontal::part(form-control-input) {
+  display: flex;
+}
+sl-radio-group.horizontal {
+  sl-radio::part(base) {
+    margin-right: 1.5rem;
+  }
 }
 sl-radio::part(checked-icon) {
   color: var(--sl-color-black);
@@ -325,8 +339,20 @@ sl-avatar::part(base) {
 sl-input::part(form-control-label) {
   font-weight: 700;
 }
+sl-input.font-normal::part(label) {
+  font-weight: 500;
+}
 sl-textarea::part(form-control-label) {
   font-weight: 700;
+}
+sl-textarea.font-normal::part(form-control-label) {
+  font-weight: 500;
+}
+sl-radio-group::part(form-control-label) {
+  font-weight: 700;
+}
+sl-radio-group.font-normal::part(form-control-label) {
+  font-weight: 500;
 }
 
 sl-input[data-invalid]::part(base) {
@@ -395,9 +421,31 @@ sl-button.btn-add::part(base):hover {
     background: var(--global-warning-lighten-20);
   }
 }
+sl-button.btn-add::part(base) {
+  background: linear-gradient(
+    to left,
+    #fff 50%,
+    var(--global-warning-lighten-20) 50%
+  );
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: background-position 0.5s ease;
+}
+sl-button.btn-add::part(base):hover {
+  background-position: left bottom;
+}
 
 /* Helper Classes */
 /* primarily using helper classes from PrimeFlex */
+.text-success {
+  color: var(--global-success);
+}
+.text-warning {
+  color: var(--global-warning);
+}
+.text-danger {
+  color: var(--global-danger);
+}
 
 /* Global Styles */
 html {

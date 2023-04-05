@@ -2,7 +2,6 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
-  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -21,12 +20,8 @@ import { provideNgxMask } from 'ngx-mask';
   providers: [provideNgxMask()],
 })
 export class SurgeonProfileModalComponent implements OnInit {
-  @Input() showDialog = false;
-  // TODO: [Joe] this is being defaulted to the correct action name, but if we make these modals generic then it can be passed in
-  @Input() modalName = 'surgeonProfileModal';
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
-  tabGroup = document.querySelector('#surgeonProfileTabs');
   panels = ['personalInformation', 'contactInformation'];
   activePanel = 0;
 
@@ -67,10 +62,6 @@ export class SurgeonProfileModalComponent implements OnInit {
     };
   }
 
-  handleDefaultCloseModal(event: any) {
-    event.preventDefault();
-  }
-
   handleDefaultShowTab(event: any) {
     this.activePanel = this.panels.indexOf(event.detail.name);
   }
@@ -89,7 +80,7 @@ export class SurgeonProfileModalComponent implements OnInit {
   }
 
   close() {
-    this.closeDialog.emit({ action: this.modalName });
+    this.closeDialog.emit();
     // timeout is needed to allow the modal to close before the tab panel is reset
     setTimeout(() => {
       this.showTabPanel(this.panels[0]);

@@ -1,4 +1,4 @@
-import { AbsGrid } from '../shared/components/grid/abs-grid';
+import { AbsGrid } from '../components/grid/abs-grid';
 
 export const MEDICAL_TRAINING_COLS = [
   AbsGrid.setTextDisplayCol('Type of Training', 'type'),

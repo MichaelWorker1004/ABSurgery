@@ -21,9 +21,14 @@ export class ModalComponent {
   @Input() title!: string | undefined;
   @Input() status!: string | undefined;
   @Input() modalName!: any;
+  @Input() preventOverlayClose = false;
   @Input() hideClose = false;
 
-  close() {
-    this.closeDialog.emit({ action: this.modalName });
+  close(event: any) {
+    if (this.preventOverlayClose && event.detail.source === 'overlay') {
+      event.preventDefault();
+    } else {
+      this.closeDialog.emit({ action: this.modalName });
+    }
   }
 }
