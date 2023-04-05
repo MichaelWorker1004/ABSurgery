@@ -5,6 +5,7 @@ import { Status } from '../shared/components/action-card/status.enum';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { MedicalLicenseModalComponent } from './medical-license-modal/medical-license-modal.component';
 import { ModalComponent } from '../shared/components/modal/modal.component';
+import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-experience-modal.component';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -19,6 +20,7 @@ interface ActionMap {
     SurgeonProfileModalComponent,
     MedicalLicenseModalComponent,
     ModalComponent,
+    AcgmeExperienceModalComponent,
   ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
@@ -30,6 +32,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   applyForAnExamActionCardData!: any;
   showSurgeonProfile = false;
   showMedicalLicense = false;
+  showACGMEexprience = false;
 
   private actionMap: ActionMap = {
     surgeonProfileModal: () => {
@@ -37,6 +40,9 @@ export class RegistrationRequirementsComponent implements OnInit {
     },
     medicalLicenseModal: () => {
       this.showMedicalLicense = !this.showMedicalLicense;
+    },
+    ACGMEExperienceModal: () => {
+      this.showACGMEexprience = !this.showACGMEexprience;
     },
   };
 
@@ -115,8 +121,8 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/acgme-experience-report-by-role',
+          type: 'dialog',
+          action: 'ACGMEExperienceModal',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-stethoscope',

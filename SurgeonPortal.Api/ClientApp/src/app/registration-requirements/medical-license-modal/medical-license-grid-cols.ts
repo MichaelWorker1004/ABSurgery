@@ -7,4 +7,5 @@ export const MEDICAL_LICENSE_GRID_COLS = [
   AbsGrid.setFormattedDateCol('Issue Date', 'issueDate'),
   AbsGrid.setFormattedDateCol('Expiration Date', 'expirationDate'),
   AbsGrid.setTextDisplayCol('Verifying Organization', 'varifyingOrganization'),
+  AbsGrid.setCustomButtonCol('View', 'view', 'fa fa-eye'),
 ];

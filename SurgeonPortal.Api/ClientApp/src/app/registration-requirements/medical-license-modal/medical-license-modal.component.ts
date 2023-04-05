@@ -43,6 +43,10 @@ export class MedicalLicenseModalComponent implements OnInit {
     ];
   }
 
+  gridAction($event: any) {
+    console.log($event);
+  }
+
   handleDefaultCloseModal(event: any) {
     event.preventDefault();
   }

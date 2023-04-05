@@ -44,6 +44,8 @@
 
   <abs-modal
     [open]="showMedicalLicense"
+    (closeDialog)="handleCardAction('medicalLicenseModal')"
+    modalName="medicalLicenseModal"
     title="Medical License"
     status="in-progress"
     [hideClose]="true"
@@ -51,6 +53,19 @@
     <abs-medical-license-modal
       (closeDialog)="handleCardAction('medicalLicenseModal')"
     ></abs-medical-license-modal>
+  </abs-modal>
+
+  <abs-modal
+    [open]="showACGMEexprience"
+    (closeDialog)="handleCardAction('ACGMEExperienceModal')"
+    title="ACGME Experience Report by Role"
+    modalName="ACGMEExperienceModal"
+    status="in-progress"
+    [hideClose]="true"
+  >
+    <abs-acgme-experience-modal
+      (closeDialog)="handleCardAction('ACGMEExperienceModal')"
+    ></abs-acgme-experience-modal>
   </abs-modal>
 
   <abs-surgeon-profile-modal

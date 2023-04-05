@@ -10,12 +10,12 @@
 </div>
 <sl-button class="btn-add">
   <i slot="prefix" class="fa-solid fa-plus"></i>
-  <span>Add Medical License</span>
+  <span>Add ACGME Report</span>
 </sl-button>
 <abs-grid
-  [columns]="medicalLicenseCols"
-  [data]="medicalLicenseData"
-  (action)="gridAction($event)"
+  [columns]="AcgmeGridCols"
+  [data]="AcgmeGridData"
+  (action)="girdAction($event)"
 >
 </abs-grid>
 <div class="flex justify-content-end mt-5" slot="footer">

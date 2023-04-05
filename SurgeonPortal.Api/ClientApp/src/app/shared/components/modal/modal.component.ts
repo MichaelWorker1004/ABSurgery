@@ -1,4 +1,10 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, Input } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,8 +16,14 @@ import { CommonModule } from '@angular/common';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ModalComponent {
+  @Output() closeDialog: EventEmitter<any> = new EventEmitter();
   @Input() open = false;
   @Input() title!: string | undefined;
   @Input() status!: string | undefined;
+  @Input() modalName!: any;
   @Input() hideClose = false;
+
+  close() {
+    this.closeDialog.emit({ action: this.modalName });
+  }
 }
