@@ -7,6 +7,8 @@ import { MedicalLicenseModalComponent } from './medical-license-modal/medical-li
 import { TrainingModalComponent } from './training-modal/training-modal.component';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-experience-modal.component';
+import { GraduateMedicalEducationModalComponent } from './graduate-medical-education-modal/graduate-medical-education-modal.component';
+import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -23,6 +25,8 @@ interface ActionMap {
     TrainingModalComponent,
     ModalComponent,
     AcgmeExperienceModalComponent,
+    GraduateMedicalEducationModalComponent,
+    SpecialAccommodationsModalComponent,
   ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
@@ -36,6 +40,8 @@ export class RegistrationRequirementsComponent implements OnInit {
   showMedicalLicense = false;
   showACGMEexprience = false;
   showTraining = false;
+  showGraduateMedicalEducation = false;
+  showSpecialAccommodations = false;
 
   private actionMap: ActionMap = {
     surgeonProfileModal: () => {
@@ -49,6 +55,12 @@ export class RegistrationRequirementsComponent implements OnInit {
     },
     trainingModal: () => {
       this.showTraining = !this.showTraining;
+    },
+    graduateMedicalEducationModal: () => {
+      this.showGraduateMedicalEducation = !this.showGraduateMedicalEducation;
+    },
+    specialAccommodationsModal: () => {
+      this.showSpecialAccommodations = !this.showSpecialAccommodations;
     },
   };
 
@@ -139,8 +151,8 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/gme',
+          type: 'dialog',
+          action: 'graduateMedicalEducationModal',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-stethoscope',
@@ -187,8 +199,8 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/special-accommodations',
+          type: 'dialog',
+          action: 'specialAccommodationsModal',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-star',

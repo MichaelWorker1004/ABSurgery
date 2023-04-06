@@ -1,0 +1,51 @@
+<div class="mb-5">
+  <p>
+    Please complete and upload below
+    <a href="#">Accommodation Request Other Medical Conditions</a>
+  </p>
+</div>
+<div class="flex">
+  <sl-select
+    placeholder="Select one"
+    (sl-change)="handleSelectChange($event)"
+    class="mr-3"
+  >
+    <sl-option
+      *ngFor="let option of specialAccommodationsTypeOptions"
+      [value]="option.value"
+      >{{ option.label }}</sl-option
+    >
+  </sl-select>
+  <div class="flex">
+    <div class="input-file">
+      <label>
+        <input type="file" (change)="handleFileOnChange($event)" />
+        <span
+          >{{ fileUploadedName ?? 'Upload a File' }}
+          <i class="fa-solid fa-upload"></i
+        ></span>
+      </label>
+    </div>
+    <sl-button
+      (click)="onDocumentUpload()"
+      [disabled]="documentType === '' || !uploadedFile"
+      class="btn-add"
+    >
+      <i slot="prefix" class="fa-solid fa-plus"></i>
+      <span>UPLOAD DOCUMENT</span>
+    </sl-button>
+  </div>
+</div>
+
+<abs-grid
+  [columns]="specialAccommodationsCols"
+  [data]="specialAccommodationsData"
+  (action)="gridAction($event)"
+>
+</abs-grid>
+<div class="flex justify-content-end mt-5" slot="footer">
+  <sl-button type="button" variant="text" (click)="close()">Cancel</sl-button>
+  <sl-button type="button" style="width: 337px" variant="primary"
+    >Save
+  </sl-button>
+</div>

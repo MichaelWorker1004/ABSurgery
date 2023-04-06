@@ -1,0 +1,39 @@
+.mr-5 {
+  margin-right: 5px;
+}
+
+input[type='file'] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.input-file {
+  margin-right: 5px;
+  label {
+    position: relative;
+    top: 8px;
+    padding: 6px 40px;
+    border: 1px solid #595959;
+    border-radius: 6px;
+    opacity: 1;
+    color: #595959;
+    font-weight: 500;
+    transition: 250ms ease-in-out;
+    cursor: pointer;
+    i {
+      color: var(--global-warning);
+      margin-left: 20px;
+    }
+    &:hover &:focus-visible {
+      border: 1px solid var(--global-warning);
+    }
+  }
+}
+
+.upload-controls {
+  position: absolute;
+}

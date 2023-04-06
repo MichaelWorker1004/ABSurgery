@@ -91,4 +91,30 @@
       (closeDialog)="handleCardAction('trainingModal')"
     ></abs-training-modal>
   </abs-modal>
+
+  <abs-modal
+    [open]="showGraduateMedicalEducation"
+    (closeDialog)="handleCardAction('graduateMedicalEducationModal')"
+    title="Graduate Medical Education"
+    modalName="graduateMedicalEducationModal"
+    status="alert"
+    [hideClose]="true"
+  >
+    <abs-graduate-medical-education-modal
+      (closeDialog)="handleCardAction('graduateMedicalEducationModal')"
+    ></abs-graduate-medical-education-modal>
+  </abs-modal>
+
+  <abs-modal
+    [open]="showSpecialAccommodations"
+    (closeDialog)="handleCardAction('specialAccommodationsModal')"
+    title="Special Accommodations"
+    modalName="specialAccommodationsModal"
+    status="in-progress"
+    [hideClose]="true"
+  >
+    <abs-special-accommodations-modal
+      (closeDialog)="handleCardAction('specialAccommodationsModal')"
+    ></abs-special-accommodations-modal>
+  </abs-modal>
 </div>
