@@ -310,6 +310,10 @@ sl-radio-group.horizontal {
 sl-radio::part(checked-icon) {
   color: var(--sl-color-black);
 }
+sl-button::part(label) {
+  text-transform: uppercase;
+  font-weight: 700;
+}
 sl-button[variant='primary']::part(label) {
   color: var(--sl-color-black);
 }

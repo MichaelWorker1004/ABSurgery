@@ -113,6 +113,7 @@
   text-align: right;
   span {
     text-transform: capitalize;
+    white-space: nowrap;
     &.completed {
       color: var(--global-success);
     }

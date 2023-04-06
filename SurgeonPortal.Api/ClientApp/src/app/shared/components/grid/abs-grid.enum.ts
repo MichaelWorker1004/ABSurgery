@@ -4,4 +4,5 @@ export enum AbsGridCellRendererType {
   CustomClass = 'customClass',
   CustomStyle = 'customStyle',
   ExpandToggle = 'expandToggle',
+  FileLink = 'fileLink',
 }

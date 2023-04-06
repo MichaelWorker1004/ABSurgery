@@ -14,7 +14,8 @@ const AbsGrid = {
     fieldName: string,
     icon?: string,
     onClick?: (data: any) => void,
-    sortable?: boolean
+    sortable?: boolean,
+    width?: number
   ) {
     const colDef = {
       headerName: headerName,
@@ -26,6 +27,31 @@ const AbsGrid = {
         onClick,
       },
       sortable,
+      width,
+    };
+
+    return colDef;
+  },
+
+  setFileLinkCol(
+    headerName: string,
+    fieldName: string,
+    fileType?: string,
+    onClick?: (data: any) => void,
+    sortable?: boolean,
+    width?: number
+  ) {
+    const colDef = {
+      headerName: headerName,
+      field: fieldName,
+      fileType: fileType,
+      cellRenderer: 'fileLink',
+      cellRendererParams: {
+        fieldKey: fieldName,
+        onClick,
+      },
+      sortable,
+      width,
     };
 
     return colDef;

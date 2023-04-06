@@ -8,7 +8,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GridComponent } from '../../shared/components/grid/grid.component';
 import { TrainingAddEditModalComponent } from '../../shared/components/training-add-edit-modal/training-add-edit-modal.component';
+import { FileUploadButtonComponent } from 'src/app/shared/components/file-upload-button/file-upload-button.component';
 import { MEDICAL_TRAINING_COLS } from '../../shared/gridDefinitions/medical-training-cols';
+import { BASIC_DOCUMENT_COLS } from '../../shared/gridDefinitions/basic-document-cols';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -19,6 +21,7 @@ import { BehaviorSubject } from 'rxjs';
     FormsModule,
     GridComponent,
     TrainingAddEditModalComponent,
+    FileUploadButtonComponent,
   ],
   templateUrl: './training-modal.component.html',
   styleUrls: ['./training-modal.component.scss'],
@@ -28,6 +31,7 @@ export class TrainingModalComponent {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
   trainingCols = MEDICAL_TRAINING_COLS;
+  documentCols = BASIC_DOCUMENT_COLS;
   showTrainingAddEdit = false;
   tempTraining$: BehaviorSubject<any> = new BehaviorSubject({});
   panels = [
@@ -103,17 +107,19 @@ export class TrainingModalComponent {
         multiplePrograms: null,
         completionDocuments: [
           {
-            file: null,
-            fileName: null,
-            uploadDate: null,
+            file: new Blob(['Hello, world!'], { type: 'text/plain' }),
+            fileName: 'this_is_a_file_name.txt',
+            fileType: 'lines',
+            uploadDate: new Date('7/01/2022'),
           },
         ],
         recievedABSApprovalLetter: null,
         approvalLetters: [
           {
-            file: null,
-            fileName: null,
-            uploadDate: null,
+            file: new Blob(['Hello, world!'], { type: 'text/plain' }),
+            fileName: 'this_is_a_file_name.txt',
+            fileType: 'lines',
+            uploadDate: new Date('7/01/2022'),
           },
         ],
       },
@@ -145,9 +151,14 @@ export class TrainingModalComponent {
     }, 500);
   }
 
+  uploadFile(event: any, fileList: any[]) {
+    if (event.file) {
+      fileList.push(event.file);
+    }
+  }
+
   showTrainingModal(training: any) {
     if (training) {
-      console.log(training);
       this.tempTraining$.next(training);
     } else {
       this.tempTraining$.next({
@@ -174,9 +185,27 @@ export class TrainingModalComponent {
     this.tempTraining$.next({});
   }
 
-  handleGridAction($event: any) {
+  handleGridAction($event: any, fileList?: any[] | undefined) {
     if ($event.fieldKey === 'edit') {
       this.showTrainingModal($event.data);
+    } else if ($event.fieldKey === 'delete') {
+      // TODO: [Joe] once we have the ngx-store implemented see if this can be done cleaner without passing in the fileList
+      if (fileList) {
+        const index = fileList.indexOf($event.data);
+        if (index > -1) {
+          fileList.splice(index, 1);
+        }
+      } else {
+        console.log('handle delete', $event);
+      }
+    } else if ($event.fieldKey === 'download') {
+      const link = document.createElement('a');
+      link.setAttribute('href', URL.createObjectURL($event.data.file));
+      link.setAttribute('download', $event.data.fileName);
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } else {
       console.log('unhandled action', $event);
     }

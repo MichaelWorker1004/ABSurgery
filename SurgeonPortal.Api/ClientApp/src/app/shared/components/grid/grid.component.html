@@ -34,7 +34,7 @@
     <tbody>
       <ng-container *ngFor="let r of filteredData; let i = index">
         <tr [ngClass]="{ 'alternate-row': i % 2 === 1 }">
-          <td *ngFor="let c of columns">
+          <td *ngFor="let c of columns" [style.width]="c.width + 'px'">
             <div *ngIf="!c.cellRenderer">
               {{ r[c.field] }}
             </div>
@@ -45,6 +45,20 @@
               <button (click)="handleAction(c.cellRendererParams, r)">
                 <i [class]="c.icon" *ngIf="c.icon"></i>
                 {{ c.headerName }}
+              </button>
+            </div>
+            <div *ngIf="c.cellRenderer === AbsGridCellRendererType.FileLink">
+              <button
+                class="file-link"
+                (click)="handleAction(c.cellRendererParams, r)"
+              >
+                <!-- TODO: [Joe] need to check what file types we are supporting and ensure that there are font awesome icons for all of them -->
+                <i
+                  [class]="'fa-solid fa-file-' + r[c.fileType]"
+                  *ngIf="c.fileType"
+                ></i>
+                <i class="fa-solid fa-file" *ngIf="!c.fileType"></i>
+                {{ r[c.field] }}
               </button>
             </div>
             <div
@@ -74,13 +88,10 @@
                 (click)="handleExpand(c.cellRendererParams, r)"
                 style="min-width: 95px"
               >
-                <!-- <i [class]="c.icon" *ngIf="c.icon"></i> -->
                 <i class="fa-solid fa-circle-minus" *ngIf="r.expanded"></i>
                 <i class="fa-solid fa-circle-plus" *ngIf="!r.expanded"></i>
                 {{ r.expanded ? 'Collapse' : 'Expand' }}
               </button>
-              <!-- include the expand/collapse buttons here -->
-              <!-- we will need to emit the action to the parent component so that the height of the collapse panel can be reset -->
             </div>
           </td>
         </tr>

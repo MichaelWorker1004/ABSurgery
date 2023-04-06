@@ -201,7 +201,7 @@
           <h5 class="col-12 mb-1 mt-3">Vascular Surgery Training</h5>
           <sl-radio-group
             class="col-12 md:col-6 horizontal"
-            label="Will you be pursuing vascular surgery training? *"
+            label="Will you be pursuing vascular surgery training?"
             name="vascularTraining"
             ngDefaultControl
             [(ngModel)]="medicalTraining.residency.vascularTraining"
@@ -227,7 +227,7 @@
           <h5 class="col-12 mb-1 mt-3">Thoracic Surgery Training</h5>
           <sl-radio-group
             class="col-12 md:col-6 horizontal"
-            label="Will you be pursuing thoracic surgery training? *"
+            label="Will you be pursuing thoracic surgery training?"
             name="thoracicTraining"
             ngDefaultControl
             [(ngModel)]="medicalTraining.residency.thoracicTraining"
@@ -281,6 +281,84 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
+        <div class="grid align-items-baseline">
+          <h5 class="col-12 mb-1 mt-3">Trained in Multiple Programs</h5>
+          <sl-radio-group
+            class="col-12 horizontal"
+            label="Did you complete training in more than one program in the speciality for which you are applying?"
+            name="multiplePrograms"
+            ngDefaultControl
+            [(ngModel)]="medicalTraining.additionalDocuments.multiplePrograms"
+            required
+          >
+            <sl-radio [value]="true">Yes</sl-radio>
+            <sl-radio [value]="false">No</sl-radio>
+          </sl-radio-group>
+          <div class="col-12">
+            <abs-file-upload-button
+              inputId="completionDocument"
+              inputName="completionDocument"
+              buttonText="Add Documentation of Trained in Multiple Programs"
+              (fileUploaded)="
+                uploadFile(
+                  $event,
+                  medicalTraining.additionalDocuments.completionDocuments
+                )
+              "
+            ></abs-file-upload-button>
+            <abs-grid
+              [columns]="documentCols"
+              [data]="medicalTraining.additionalDocuments.completionDocuments"
+              (action)="
+                handleGridAction(
+                  $event,
+                  medicalTraining.additionalDocuments.completionDocuments
+                )
+              "
+              class="margin-bottom-2"
+            ></abs-grid>
+          </div>
+        </div>
+        <div class="grid align-items-baseline">
+          <h5 class="col-12 mb-1 mt-3">ABS Approval Letter</h5>
+          <sl-radio-group
+            class="col-12 horizontal"
+            label="Did you have international rotations, flexible rotations and/or did you receive credit for foreign medical education or ABS approval letter for other reasons?"
+            name="recievedABSApprovalLetter"
+            ngDefaultControl
+            [(ngModel)]="
+              medicalTraining.additionalDocuments.recievedABSApprovalLetter
+            "
+            required
+          >
+            <sl-radio [value]="true">Yes</sl-radio>
+            <sl-radio [value]="false">No</sl-radio>
+          </sl-radio-group>
+          <div class="col-12">
+            <abs-file-upload-button
+              inputId="approvalLetter"
+              inputName="approvalLetter"
+              buttonText="Add abs approval letter"
+              (fileUploaded)="
+                uploadFile(
+                  $event,
+                  medicalTraining.additionalDocuments.approvalLetters
+                )
+              "
+            ></abs-file-upload-button>
+            <abs-grid
+              [columns]="documentCols"
+              [data]="medicalTraining.additionalDocuments.approvalLetters"
+              (action)="
+                handleGridAction(
+                  $event,
+                  medicalTraining.additionalDocuments.approvalLetters
+                )
+              "
+              class="margin-bottom-2"
+            ></abs-grid>
+          </div>
+        </div>
       </sl-tab-panel>
     </sl-tab-group>
   </div>

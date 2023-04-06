@@ -54,6 +54,9 @@ button {
   &:hover {
     color: var(--global-warning);
   }
+  &.file-link {
+    text-transform: none;
+  }
 }
 
 .search-container {
