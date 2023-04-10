@@ -1,0 +1,56 @@
+<form action="">
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
+    dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
+    amet tortor at, condimentum tempor erat. All fields are required.
+  </p>
+  <div class="grid">
+    <div
+      *ngFor="let formField of outcomesandRegistriesFormFields"
+      class="col-12 md:{{ formField.size }}"
+    >
+      <sl-radio-group
+        *ngIf="formField.type === 'radio'"
+        [label]="formField.label"
+        [name]="formField.name"
+        ngDefaultControl
+        [(ngModel)]="formField.value"
+      >
+        <span>{{ formField.subLabel }}</span>
+        <div class="flex flex-wrap">
+          <sl-radio
+            *ngFor="let option of formField.options"
+            [value]="option.value"
+            >{{ option.label }}</sl-radio
+          >
+        </div>
+      </sl-radio-group>
+
+      <div
+        class="col-12"
+        *ngIf="formField.type === 'textarea'"
+        [name]="formField.name"
+        ngDefaultControl
+        [(ngModel)]="formField.value"
+      >
+        <label for="describe"
+          >{{ formField.label }} <span>{{ formField.subLabel }}</span></label
+        >
+        <sl-textarea></sl-textarea>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <sl-checkbox name="aknowledgement"
+        >I confirm the above information is completed and correct to the best of
+        my knowledge</sl-checkbox
+      >
+    </div>
+    <div class="col-12 md:col-6 align-right">
+      <sl-button variant="default" size="large" (click)="close()"
+        >Cancel</sl-button
+      >
+      <sl-button class="wide" size="large" variant="warning">Save</sl-button>
+    </div>
+  </div>
+</form>

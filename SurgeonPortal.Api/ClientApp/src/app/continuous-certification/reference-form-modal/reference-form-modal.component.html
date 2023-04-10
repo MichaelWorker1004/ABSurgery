@@ -1,0 +1,91 @@
+<div class="dialog-intro">
+  Please provide contact information for the Authenticating Official from the
+  hospital or surgical center where you perform most of your work. If you hold
+  this position yourself, you may request another physician of comparable rank
+  to provide the reference. The reference cannot be provided by a relative, by
+  someone with whom you have a close personal relationship, or by the same
+  person who is providing you another ABS reference.
+</div>
+<abs-grid
+  title="Current Reference Forms"
+  [columns]="referenceFormsCols"
+  [data]="refrenceGridData"
+  (action)="handleGridAction($event)"
+  class="mb-2"
+></abs-grid>
+
+<h5>Add Reference</h5>
+
+<form>
+  <div class="grid">
+    <div
+      *ngFor="let formField of referenceFormFields"
+      class="col-12 md:{{
+        formField.size
+      }} flex flex-column justify-content-start"
+    >
+      <sl-input
+        *ngIf="formField.type === 'text'"
+        [placeholder]="formField.placeholder"
+        [name]="formField.name"
+        [id]="formField.name"
+        [label]="formField.label"
+        [required]="formField.required"
+        [attr.readonly]="formField.readonly"
+        ngDefaultControl
+        [(ngModel)]="formField.value"
+      ></sl-input>
+      <sl-select
+        *ngIf="formField.type === 'select'"
+        [placeholder]="formField.placeholder"
+        [name]="formField.name"
+        [id]="formField.name"
+        [label]="formField.label"
+        [required]="formField.required"
+        ngDefaultControl
+        [(ngModel)]="formField.value"
+      >
+        <sl-option
+          *ngFor="let option of formField.options"
+          [value]="option.value"
+          >{{ option.label }}</sl-option
+        >
+      </sl-select>
+      <span>{{ formField.subLabel }}</span>
+    </div>
+    <div class="col-12 mb-3">
+      I hereby authorize any hospital or medical staff where I now have, have
+      had, or have applied for medical staff privileges, and any medical
+      organization of which I am a member or to which I have applied for
+      membership, and any person who may have information (including medical
+      records, patient records, and reports of committees) which is deemed by
+      ABS to be material to its evaluation of this application, to provide such
+      information to representatives of the ABS. I agree that communications of
+      any nature made to the ABS regarding this application may be made in
+      confidence and shall not be made available to me under any circumstances.
+      I hereby release from liability any hospital, medical staff, medical
+      organization or person, and ABS and its representatives, for acts
+      performed in connection with this application. I authorize the ABS to
+      transmit a reference form request electronically to the above named
+      physician at the email address above, and affirm that it ultimately
+      remains my responsibility to ensure these forms are completed.
+    </div>
+    <div class="col-12 md:col-6">
+      <sl-checkbox name="sendEmail"
+        >I would like my reference form sent to me via email</sl-checkbox
+      >
+    </div>
+    <div class="col-12 md:col-6 mt-5 flex justify-content-end btn-container">
+      <sl-button variant="default" size="large" (click)="close()">
+        Cancel
+      </sl-button>
+      <sl-button
+        class="wide"
+        size="large"
+        variant="warning"
+        (click)="onSubmit(referenceFormFields)"
+        >Save</sl-button
+      >
+    </div>
+  </div>
+</form>

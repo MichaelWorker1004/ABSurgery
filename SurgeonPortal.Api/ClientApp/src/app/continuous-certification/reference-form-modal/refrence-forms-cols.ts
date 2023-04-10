@@ -1,4 +1,4 @@
-import { AbsGrid } from '../shared/components/grid/abs-grid';
+import { AbsGrid } from '../../shared/components/grid/abs-grid';
 
 export const REFERENCE_FORMS_COLS = [
   AbsGrid.setTextDisplayCol('Reference Form', 'referenceFormId'),

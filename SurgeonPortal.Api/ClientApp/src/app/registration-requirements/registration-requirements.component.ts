@@ -9,6 +9,8 @@ import { ModalComponent } from '../shared/components/modal/modal.component';
 import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-experience-modal.component';
 import { GraduateMedicalEducationModalComponent } from './graduate-medical-education-modal/graduate-medical-education-modal.component';
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
+import { Action } from '../shared/components/action-card/action.enum';
+import { ProfessionalActivitiesAndPrivilegesModalComponent } from './professional-activities-and-privileges-modal/professional-activities-and-privileges-modal.component';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -27,6 +29,7 @@ interface ActionMap {
     AcgmeExperienceModalComponent,
     GraduateMedicalEducationModalComponent,
     SpecialAccommodationsModalComponent,
+    ProfessionalActivitiesAndPrivilegesModalComponent,
   ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
@@ -42,6 +45,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   showTraining = false;
   showGraduateMedicalEducation = false;
   showSpecialAccommodations = false;
+  showProfessionalActivitiesAndPrivileges = false;
 
   private actionMap: ActionMap = {
     surgeonProfileModal: () => {
@@ -61,6 +65,10 @@ export class RegistrationRequirementsComponent implements OnInit {
     },
     specialAccommodationsModal: () => {
       this.showSpecialAccommodations = !this.showSpecialAccommodations;
+    },
+    professionalActivitiesAndPrivilegesModal: () => {
+      this.showProfessionalActivitiesAndPrivileges =
+        !this.showProfessionalActivitiesAndPrivileges;
     },
   };
 
@@ -90,7 +98,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'dialog',
+          type: Action.dialog,
           action: 'surgeonProfileModal',
         },
         actionDisplay: 'View / Update my information',
@@ -102,7 +110,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'dialog',
+          type: Action.dialog,
           action: 'trainingModal',
         },
         actionDisplay: 'View / Update my information',
@@ -115,8 +123,8 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
-          action: '/professional-activities-and-privileges',
+          type: Action.dialog,
+          action: 'professionalActivitiesAndPrivilegesModal',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-user-doctor',
@@ -127,7 +135,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'dialog',
+          type: Action.dialog,
           action: 'medicalLicenseModal',
         },
         actionDisplay: 'View / Update my license',
@@ -139,7 +147,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'dialog',
+          type: Action.dialog,
           action: 'ACGMEExperienceModal',
         },
         actionDisplay: 'View / Update my information',
@@ -151,7 +159,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'dialog',
+          type: Action.dialog,
           action: 'graduateMedicalEducationModal',
         },
         actionDisplay: 'View / Update my information',
@@ -163,7 +171,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
+          type: Action.component,
           action: '/program-director-attestation',
         },
         actionDisplay: 'View / Update my information',
@@ -175,7 +183,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
+          type: Action.component,
           action: '/certifications-upload',
         },
         actionDisplay: 'View / Update my information',
@@ -187,7 +195,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'component',
+          type: Action.component,
           action: '/application-fee',
         },
         actionDisplay: 'View / Update my information',
@@ -199,7 +207,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: 'dialog',
+          type: Action.dialog,
           action: 'specialAccommodationsModal',
         },
         actionDisplay: 'View / Update my information',

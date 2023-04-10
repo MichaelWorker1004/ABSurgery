@@ -1,0 +1,91 @@
+<div>
+  <p class="m-0">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
+    dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
+    amet tortor at, condimentum tempor erat.
+  </p>
+  <sl-tab-group
+    [noScrollControls]="true"
+    id="surgeonProfileTabs"
+    (sl-tab-show)="handleDefaultShowTab($event)"
+  >
+    <sl-tab slot="nav" panel="hospitalAppointments" class="tab__complete">
+      <i class="fa-solid fa-circle-check text-success mr-2"></i>
+      Hospital Appointments
+    </sl-tab>
+    <sl-tab slot="nav" panel="explanationOfLackOfPrivileges">
+      <i class="fa-solid fa-circle-check text-warning mr-2"></i>
+      Explanation of Lack of Privileges
+    </sl-tab>
+    <sl-tab slot="nav" panel="nonClinicalActivities">
+      <i class="fa-solid fa-circle-check text-warning mr-2"></i>
+      Non Clinical Activities
+    </sl-tab>
+
+    <!-- Hospital Appointments -->
+    <sl-tab-panel name="hospitalAppointments">
+      <p>
+        Please update as needed the hospitals or surgical centers where you
+        expect to hold any privileges after completion of your residency
+        training by clicking on <strong>Add New Record</strong>. If you are
+        unable to find your institution in the list, type the name in the field
+        labeled “Other.” A hospital would be considered a multidisciplinary
+        clinic (over 10).
+      </p>
+
+      <p>
+        If you will not hold privileges following residency, please skip this
+        section
+      </p>
+
+      <sl-button class="btn-add">
+        <i slot="prefix" class="fa-solid fa-plus"></i>
+        <span>Add a Record</span>
+      </sl-button>
+      <abs-grid
+        [columns]="hospitalAppointmentsCols"
+        [data]="hospitalAppointmentsData"
+        (action)="handleGridAction($event)"
+      >
+      </abs-grid>
+    </sl-tab-panel>
+
+    <sl-tab-panel name="explanationOfLackOfPrivileges">
+      <p>
+        <strong>
+          If you do not hold full surgical privileges, please explain in the
+          space provided.
+        </strong>
+      </p>
+      <sl-textarea
+        label="Describe"
+        [value]="explanationOfLackOfPrivilegesForm"
+        rows="10"
+      ></sl-textarea>
+    </sl-tab-panel>
+
+    <sl-tab-panel name="nonClinicalActivities">
+      <p>
+        <strong>
+          Diplomats not in the active practice of surgery should describe below
+          their current non-clinical activities.
+        </strong>
+      </p>
+      <sl-textarea
+        label="Describe"
+        [value]="nonClincalActivitiesForm"
+        rows="10"
+      ></sl-textarea>
+    </sl-tab-panel>
+  </sl-tab-group>
+</div>
+<div class="flex justify-content-end" slot="footer">
+  <sl-button type="button" variant="text" (click)="close()">Cancel</sl-button>
+  <sl-button
+    type="button"
+    style="width: 337px"
+    variant="primary"
+    (click)="save()"
+    >Save
+  </sl-button>
+</div>

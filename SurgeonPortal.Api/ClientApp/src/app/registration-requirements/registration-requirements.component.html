@@ -117,4 +117,20 @@
       (closeDialog)="handleCardAction('specialAccommodationsModal')"
     ></abs-special-accommodations-modal>
   </abs-modal>
+
+  <abs-modal
+    [open]="showProfessionalActivitiesAndPrivileges"
+    (closeDialog)="handleCardAction('professionalActivitiesAndPrivilegesModal')"
+    title="Professional Activities and Privileges"
+    modalName="professionalActivitiesAndPrivilegesModal"
+    status="in-progress"
+    [hideClose]="true"
+  >
+    <abs-professional-activities-and-privileges-modal
+      (closeDialog)="
+        handleCardAction('professionalActivitiesAndPrivilegesModal')
+      "
+    >
+    </abs-professional-activities-and-privileges-modal>
+  </abs-modal>
 </div>

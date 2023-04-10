@@ -1,0 +1,25 @@
+sl-radio-group,
+sl-textarea {
+  margin-bottom: 2rem;
+}
+
+sl-radio-group::part(form-control-label) {
+  font-weight: medium;
+}
+
+span {
+  display: block;
+  font-size: 0.875rem;
+  font-style: italic;
+  margin: 0 0 0.875rem 0;
+  position: relative;
+  // min-height: 21px;
+}
+
+sl-radio {
+  margin-right: 1.25rem;
+}
+
+.align-right {
+  text-align: right;
+}
