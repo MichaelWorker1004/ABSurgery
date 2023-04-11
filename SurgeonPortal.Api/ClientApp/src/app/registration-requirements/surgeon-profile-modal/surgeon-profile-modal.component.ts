@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { provideNgxMask } from 'ngx-mask';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 @Component({
   selector: 'abs-surgeon-profile-modal',
@@ -26,6 +27,8 @@ export class SurgeonProfileModalComponent implements OnInit {
   activePanel = 0;
 
   surgeonProfile: any;
+
+  constructor(private _globalDialogService: GlobalDialogService) {}
 
   ngOnInit() {
     this.getSurgeonProfile();
@@ -80,10 +83,11 @@ export class SurgeonProfileModalComponent implements OnInit {
   }
 
   close() {
-    this.closeDialog.emit();
+    // this.closeDialog.emit();
+    this._globalDialogService.closeOpenDialog();
     // timeout is needed to allow the modal to close before the tab panel is reset
-    setTimeout(() => {
-      this.showTabPanel(this.panels[0]);
-    }, 500);
+    // setTimeout(() => {
+    //   this.showTabPanel(this.panels[0]);
+    // }, 500);
   }
 }

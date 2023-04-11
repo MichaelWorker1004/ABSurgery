@@ -7,6 +7,8 @@ import { GridComponent } from '../shared/components/grid/grid.component';
 import { TrainingAddEditModalComponent } from '../shared/components/training-add-edit-modal/training-add-edit-modal.component';
 import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-training-cols';
 
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
+
 @Component({
   selector: 'abs-medical-training',
   templateUrl: './medical-training.component.html',
@@ -107,6 +109,8 @@ export class MedicalTrainingComponent {
     ],
   };
 
+  constructor(private globalDialogService: GlobalDialogService) {}
+
   handleGridAction($event: any) {
     if ($event.fieldKey === 'edit') {
       this.showTrainingModal($event.data);
@@ -152,6 +156,29 @@ export class MedicalTrainingComponent {
   }
 
   save() {
+    this.globalDialogService
+      .showConfirmation('Confirmation', 'Are you sure?')
+      .then((result) => {
+        if (result) {
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Medical Training Saved',
+            true
+          );
+        } else {
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Medical Training not Saved',
+            false
+          );
+        }
+      });
+
+    // this.globalDialogService.showSuccessError(
+    //   'Success',
+    //   'Medical Training Saved',
+    //   true
+    // );
     console.log('save', this.medicalTraining);
     this.toggleFormEdit(false);
   }

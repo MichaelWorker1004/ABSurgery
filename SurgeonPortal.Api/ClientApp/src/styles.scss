@@ -314,7 +314,15 @@ sl-button::part(label) {
   text-transform: uppercase;
   font-weight: 700;
 }
-sl-button[variant='primary']::part(label) {
+sl-button[variant='primary']::part(label),
+sl-button[variant='primary']::part(prefix) {
+  color: var(--sl-color-black);
+}
+sl-button[variant='default']::part(base):hover {
+  background-color: var(--global-warning-lighten-20);
+}
+sl-button[variant='default']::part(label),
+sl-button[variant='default']::part(prefix) {
   color: var(--sl-color-black);
 }
 sl-button[variant='warning']::part(label) {
@@ -395,6 +403,32 @@ sl-dialog::part(header) {
     left: 0;
     right: 0;
     margin: 0 auto;
+  }
+}
+
+sl-dialog.status-header-dialog::part(header-actions) {
+  padding: 0;
+}
+sl-dialog.hide-close::part(close-button) {
+  display: none;
+}
+sl-dialog.status-header-dialog::part(header)::after {
+  height: 1px;
+  color: var(--global-gray-lightest);
+}
+
+.status-header-dialog {
+  .status {
+    text-transform: capitalize;
+  }
+  .completed {
+    color: var(--global-success);
+  }
+  .in-progress {
+    color: var(--global-warning);
+  }
+  .alert {
+    color: var(--global-danger);
   }
 }
 
@@ -515,6 +549,7 @@ label {
     linear-gradient(180deg, rgba(114, 141, 177, 0.15) 0%, #ffffff 100%) 0% 0%
     no-repeat padding-box;
   color: var(--global-text-primary);
+  overflow-x: hidden;
 }
 .login-content {
   width: 100vw;
@@ -547,6 +582,21 @@ label {
 
 .footer-text {
   font-size: 0.8rem;
+}
+
+.global-dialog {
+  .success-icon {
+    font-size: 5rem;
+    color: var(--global-success);
+  }
+  .error-icon {
+    font-size: 5rem;
+    color: var(--global-danger);
+  }
+  .confirmation-icon {
+    font-size: 5rem;
+    color: var(--global-warning);
+  }
 }
 
 /* Global Breakpoints */
