@@ -39,6 +39,11 @@ namespace SurgeonPortal.Library.Users
         public string EmailAddress => ReadProperty(EmailAddressProperty);
 		public static readonly PropertyInfo<string> EmailAddressProperty = RegisterProperty<string>(c => c.EmailAddress);
 
+        [DataMember]
+		[DisplayName(nameof(LastLoginDateUtc))]
+        public DateTime? LastLoginDateUtc => ReadProperty(LastLoginDateUtcProperty);
+		public static readonly PropertyInfo<DateTime?> LastLoginDateUtcProperty = RegisterProperty<DateTime?>(c => c.LastLoginDateUtc);
+
         public static readonly PropertyInfo<UserClaimReadOnlyList> ClaimsProperty =
             RegisterProperty<UserClaimReadOnlyList>(c => c.Claims);
         public IUserClaimReadOnlyList Claims
@@ -79,6 +84,7 @@ namespace SurgeonPortal.Library.Users
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
         private async Task GetByToken(GetByTokenCriteria criteria)
+        
         {
             var dto = await _appUserReadOnlyDal.GetByTokenAsync(criteria.Token);
             
@@ -95,6 +101,7 @@ namespace SurgeonPortal.Library.Users
             LoadProperty(UserIdProperty, dto.UserId);
             LoadProperty(FullNameProperty, dto.FullName);
             LoadProperty(EmailAddressProperty, dto.EmailAddress);
+            LoadProperty(LastLoginDateUtcProperty, dto.LastLoginDateUtc);
 
             LoadProperty(ClaimsProperty, DataPortal.FetchChild<UserClaimReadOnlyList>(dto.Claims));
 		} 

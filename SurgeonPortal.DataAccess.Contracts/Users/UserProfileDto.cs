@@ -18,17 +18,23 @@ namespace SurgeonPortal.DataAccess.Contracts.Users
         public string BirthState { get; set; }
         public string BirthCountry { get; set; }
         public string CountryCitizenship { get; set; }
-        public int? ABSId { get; set; }
-        public int? CertificationStatusId { get; set; }
+        public string ABSId { get; set; }
+        public string CertificationStatus { get; set; }
         public string NPI { get; set; }
-        public string Gender { get; set; }
+        public int? GenderId { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Race { get; set; }
         public string Ethnicity { get; set; }
-        public string FirstLanguage { get; set; }
-        public string BestLanguage { get; set; }
+        public int? FirstLanguageId { get; set; }
+        public int? BestLanguageId { get; set; }
         public bool? ReceiveComms { get; set; }
         public bool? UserConfirmed { get; set; }
         public DateTime? UserConfirmedDate { get; set; }
+        public string Street1 { get; set; }
+        public string Street2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+        public string Country { get; set; }
     }
 }

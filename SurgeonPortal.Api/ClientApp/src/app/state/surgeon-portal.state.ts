@@ -1,4 +1,5 @@
-import { AuthState } from './auth/auth.state';
-import { MyAccountState } from './my-account/my-account.state';
+import { AuthState } from './auth';
+import { MyAccountState } from './my-account';
+import { UserProfileState } from './user-profile';
 
-export const surgeonPortalState = [AuthState, MyAccountState];
+export const surgeonPortalState = [AuthState, MyAccountState, UserProfileState];

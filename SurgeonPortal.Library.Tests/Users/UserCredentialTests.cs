@@ -22,7 +22,8 @@ namespace SurgeonPortal.Library.Tests.Users
             return dto;
         }
 
-            
+            #region UserCredential Business Rules
+            #endregion
 
         #region GetByUserIdAsync UserCredential
         

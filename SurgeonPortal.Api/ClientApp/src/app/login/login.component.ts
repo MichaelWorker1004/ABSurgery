@@ -9,8 +9,7 @@ import {
 } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 
-import { Login } from '../state/auth/auth.actions';
-import { AuthSelectors } from '../state/auth/auth.selectors';
+import { AuthSelectors, Login } from '../state';
 import { IError, IAuthCredentials } from '../api/services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';

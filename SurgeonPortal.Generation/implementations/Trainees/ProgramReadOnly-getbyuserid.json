@@ -1,0 +1,111 @@
+{
+  "name": "ProgramReadOnly",
+  "implementationName": "Trainees\\ProgramReadOnly-getbyuserid",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_user_programs",
+    "ControllerName": "Trainees\\ProgramsController",
+    "ControllerRoute": "trainees/programs",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Trainees\\ProgramReadOnly",
+    "ModelGroup": "ProgramReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_programs",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_programs]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Trainees\\ProgramReadOnly",
+            "fields": [
+              {
+                "name": "ProgramName",
+                "dataType": "string",
+                "maxLength": 25,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramName"
+              },
+              {
+                "name": "ProgramDirector",
+                "dataType": "string",
+                "maxLength": 42,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramDirector"
+              },
+              {
+                "name": "ProgramNumber",
+                "dataType": "string",
+                "maxLength": 4,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramNumber"
+              },
+              {
+                "name": "Exam",
+                "dataType": "string",
+                "maxLength": 1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Exam"
+              },
+              {
+                "name": "ClinicalLevel",
+                "dataType": "string",
+                "maxLength": 23,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicalLevel"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim generate i s Trainees\\ProgamReadOnly-getbyuserid ProgramReadOnly -t=ytg-framework\\editable-get -p:Model=Trainees\\ProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_programs] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ProgramReadOnly -p:ControllerName=Trainees\\ProgramsController -p:ControllerRoute=trainee/programs -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "inferredCommand": "ytgim generate i  Trainees\\ProgamReadOnly-getbyuserid ProgramReadOnly -t=ytg-framework\\editable-get -p:Model=Trainees\\ProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_programs] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ProgramReadOnly -p:ControllerName=Trainees\\ProgramsController -p:ControllerRoute=trainees/progam-read-onlies -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=",
+    "generatedDateUtc": "2023-04-06T20:51:00.4136606Z"
+  },
+  "version": 1
+}

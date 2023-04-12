@@ -1,0 +1,31 @@
+{
+  "refs": {},
+  "name": "Picklists\\LanguageReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ItemValue",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": true
+    },
+    {
+      "name": "ItemDescription",
+      "dataType": "string",
+      "maxLength": 10,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\LanguageReadOnly -sp [dbo].[get_picklist_languages_all] -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T21:57:33.92602Z"
+  },
+  "version": 1
+}

@@ -1,11 +1,24 @@
-import { NgIf } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { CommonModule, NgIf } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Select, Store } from '@ngxs/store';
+
+import { Observable, Subscription } from 'rxjs';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NgxMaskPipe } from 'ngx-mask';
 import { provideNgxMask } from 'ngx-mask';
+
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { SuccessFailModalComponent } from '../shared/components/success-fail-modal/success-fail-modal.component';
+import { UpdateUserProfile, UserProfileSelectors } from '../state';
+import { IUserProfile } from '../state';
 
 @Component({
   selector: 'abs-personal-profile',
@@ -14,7 +27,8 @@ import { SuccessFailModalComponent } from '../shared/components/success-fail-mod
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
   imports: [
-    NgIf,
+    CommonModule,
+    ReactiveFormsModule,
     FormsModule,
     ProfileHeaderComponent,
     SuccessFailModalComponent,
@@ -23,60 +37,67 @@ import { SuccessFailModalComponent } from '../shared/components/success-fail-mod
   ],
   providers: [provideNgxMask()],
 })
-export class PersonalProfileComponent {
+export class PersonalProfileComponent implements OnDestroy {
   // TODO: [Joe] set up input masks
   // TODO: [Joe] set up validation
   // TODO: [Joe] set up national provider identifier (NPI) report button
 
-  isEdit = false;
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+
+  stateValue = '';
+  userSubscription: Subscription | undefined;
+  isEdit = true;
 
   // TODO: [Joe] this is eventually getting moved to a service for universal modals
   call!: any;
 
-  // TODO: [Joe] faked user data, replace with real data
-  user = {
-    profilePicture:
-      'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU',
-    fullName: 'John Doe',
-    title: 'M.D',
-    emailAddress: 'email@test.io',
-    status: 'Trainee',
-  };
-  profile = {
-    firstName: 'John',
-    middleInitial: 'J',
-    lastName: 'Doe',
-    certName: 'John James Doe VII',
-    address: {
-      street: '123 Main St',
-      line2: 'Apt 1',
-      city: 'New York',
-      state: 'NY',
-      zip: '12345',
-      country: 'USA',
-    },
-    email: '',
-    confirmEmail: '',
-    phone: '1234567890',
-    mobile: '1234567890',
-    fax: '1234567890',
-    placeOfBirth: {
-      city: 'New York',
-      state: 'NY',
-      country: 'USA',
-    },
-    countryOfCitizenship: 'USA',
-    absId: '123456',
-    npi: '1234567890',
-    ssn: '123456789',
-    gender: 'male',
-    dob: '01/01/1970',
-    race: 'white',
-    ethnicity: 'white',
-    firstLanguage: 'English',
-    bestLanguage: 'English',
-  };
-  formConfirmation = true;
+  // userProfileForm: IUserProfileForm;
+  userProfileForm: FormGroup = new FormGroup({
+    aBSId: new FormControl(0, []),
+    bestLanguageId: new FormControl(0, []),
+    birthCity: new FormControl('', []),
+    birthCountry: new FormControl('', []),
+    birthDate: new FormControl('', []),
+    birthState: new FormControl('', []),
+    city: new FormControl('', []),
+    country: new FormControl('', []),
+    countryCitizenship: new FormControl('', []),
+    displayName: new FormControl('', [Validators.required]),
+    emailAddress: new FormControl('', []),
+    ethnicity: new FormControl('', []),
+    firstLanguageId: new FormControl(0, []),
+    firstName: new FormControl('', [Validators.required]),
+    genderId: new FormControl(0, []),
+    lastName: new FormControl('', [Validators.required]),
+    middleName: new FormControl('', [
+      Validators.minLength(1),
+      Validators.maxLength(1),
+    ]),
+    mobilePhoneNumber: new FormControl('', []),
+    nPI: new FormControl('', []),
+    officePhoneNumber: new FormControl('', []),
+    profilePicture: new FormControl('', []),
+    race: new FormControl('', []),
+    receiveComms: new FormControl(false, []),
+    state: new FormControl('', []),
+    street1: new FormControl('', []),
+    street2: new FormControl('', []),
+    suffix: new FormControl('', []),
+    userConfirmed: new FormControl(false, [Validators.requiredTrue]),
+    zipCode: new FormControl('', []),
+  });
+
+  constructor(private store: Store, private formBuilder: FormBuilder) {
+    this.userSubscription = this.user$?.subscribe((user) => {
+      this.userProfileForm.patchValue({ ...user });
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription?.unsubscribe();
+  }
 
   save() {
     this.call = {
@@ -85,13 +106,38 @@ export class PersonalProfileComponent {
       isSuccess: true,
       showDialog: true,
     };
-    //this.toggleDialog(true);
+    this.toggleDialog(true);
 
     this.isEdit = false;
+  }
+
+  // TODO: <Alan>Using this to record the checkbox state
+  //  We will want to make this global if this hack has to be used
+  //  There seems to currently be no elegant way to do this
+  handleCheckbox($event: any) {
+    const checkbox = $event.target;
+    const formControl = $event.target.getAttribute('data-controlname');
+    const patchObj: any = {};
+    patchObj[formControl] = checkbox.checked;
+    this.userProfileForm.patchValue(patchObj);
+  }
+
+  handleSelects($event: any) {
+    const select = $event.target;
+    const formControl = $event.target.getAttribute('data-controlname');
+    const patchObj: any = {};
+    patchObj[formControl] = select.value;
+    console.log('handleSelects', patchObj);
+    this.userProfileForm.patchValue(patchObj);
   }
 
   toggleDialog($event: any) {
     console.log('toggleDialog', $event.show);
     this.call.showDialog = $event.show;
+  }
+
+  onSubmit() {
+    console.log('onSubmit');
+    this.store.dispatch(new UpdateUserProfile(this.userProfileForm.value));
   }
 }

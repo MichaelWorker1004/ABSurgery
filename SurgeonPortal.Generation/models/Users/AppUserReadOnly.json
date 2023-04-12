@@ -1,7 +1,7 @@
 {
   "refs": {},
   "name": "Users\\AppUserReadOnly",
-  "description": "This is the application user model for ABS apps",
+  "description": "",
   "properties": [
     {
       "name": "UserId",
@@ -10,18 +10,16 @@
       "precision": 10,
       "scale": 0,
       "isNullable": false,
-      "isIdentityColumn": true,
-      "rules": {}
+      "isIdentityColumn": true
     },
     {
       "name": "FullName",
       "dataType": "string",
-      "maxLength": 71,
+      "maxLength": 70,
       "precision": 0,
       "scale": 0,
-      "isNullable": false,
-      "isIdentityColumn": false,
-      "rules": {}
+      "isNullable": true,
+      "isIdentityColumn": false
     },
     {
       "name": "EmailAddress",
@@ -29,14 +27,23 @@
       "maxLength": 320,
       "precision": 0,
       "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "LastLoginDateUtc",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
       "isNullable": true,
       "isIdentityColumn": false
     }
   ],
   "metadata": {
-    "command": "ytgim generate models fromSp Users\\AppUserReadOnly -sp [dbo].[get_userlogin] -cn ABSSP -d \u0022This is the application user model for ABS apps\u0022-f ",
+    "command": "ytgim g m s Users\\AppUserReadOnly -sp [dbo].[get_userlogin] -cn ABSSP -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-03-09T22:09:14.5572296Z"
+    "generatedDateUtc": "2023-03-29T12:05:06.2069644Z"
   },
   "version": 1
 }

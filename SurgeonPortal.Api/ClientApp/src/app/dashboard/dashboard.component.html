@@ -1,8 +1,8 @@
-<div class="app">
+<div class="app" *ngIf="user$ | async as user">
   <div class="flex justify-content-between align-items-end">
     <div>
       <h1>Dashboard</h1>
-      <h4 class="thin">Hello, {{ userData.name }}!</h4>
+      <h4 class="thin">Hello, {{ displayName$ | async }}!</h4>
     </div>
     <div class="last-login">
       <strong>Last Login:</strong> {{ userData.lastLogin }}

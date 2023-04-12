@@ -1,7 +1,10 @@
+// TODO - Convert this to use the setup for YTGIM, currently this is hand codede
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { IAppUserReadOnlyModel } from "../../models/users/app-user-read-only.model";
+import { IAuthState } from "../../../state";
 
 export interface IAuthCredentials {
   emailAddress: string;
@@ -16,15 +19,6 @@ export interface IError {
   errors: object | null;
 }
 
-export interface IUser {
-  userId: number | null;
-  fullName: string | null;
-  title: string | null;
-  emailAddress: string | null;
-  mailingList?: boolean | null;
-  status?: string | null;
-}
-
 export interface AuthStateModel {
   access_token: string | null;
   refresh_token: string | null;
@@ -32,35 +26,26 @@ export interface AuthStateModel {
   user_name: string | null;
   expiration: string | null;
   expires_in_minutes: number | null;
-  user: IUser | null;
-  userCredentials?: IAuthCredentials | null;
-  errors?: object | null;
+  user: IAppUserReadOnlyModel | null;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
+  token: string | undefined;
   constructor(private httpClient: HttpClient) {}
 
-  getAuthorizationToken(): string | undefined {
-    const authString = sessionStorage.getItem('auth');
-    const auth: AuthStateModel = authString ? JSON.parse(authString) : null;
-    if (auth) {
-      return `Bearer ${auth?.access_token}`;
-    }
-    sessionStorage.clear();
-    return;
-  }
-
-  login(payload: IAuthCredentials): Observable<AuthStateModel | IError> {
+  login(payload: IAuthCredentials): Observable<IAuthState | IError> {
     return this.httpClient
-      .post<AuthStateModel>(`/v1/users/authenticate`, {
+      .post<IAuthState>(`/v1/users/authenticate`, {
         emailAddress: payload.emailAddress,
         password: payload.password,
       })
       .pipe(
         map((resp) => {
+          sessionStorage.setItem('access_token', <string>resp.access_token);
           return resp;
         }),
         catchError((err: HttpErrorResponse) => {

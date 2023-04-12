@@ -1,7 +1,7 @@
 <header>
   <h1>Personal Profile</h1>
 </header>
-<ng-container>
+<ng-container *ngIf="user$ | async as user">
   <section>
     <div class="grid">
       <div class="col-12 flex">
@@ -20,59 +20,70 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
-        <form id="personProfileForm">
+
+        <form
+          name="personProfileForm"
+          [formGroup]="userProfileForm"
+          (ngSubmit)="onSubmit()"
+        >
           <div class="form-section">
             <h5 class="form-section__title">Name</h5>
             <hr />
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 sm:col-8 md:col-4">
                 <label>First Name</label>
-                <div>{{ profile.firstName }}</div>
+                <div>{{ user.firstName }}</div>
               </div>
               <div class="col-12 sm:col-4 md:col-2">
                 <label>M. I.</label>
-                <div>{{ profile.middleInitial }}</div>
+                <div>{{ user.middleName }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Last Name</label>
-                <div>{{ profile.lastName }}</div>
+                <div>{{ user.lastName }}</div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Last Name</label>
+                <div>{{ user.suffix }}</div>
               </div>
               <div class="col-12">
                 <label
                   >Name as it should appear on your printed certificate</label
                 >
-                <div>{{ profile.certName }}</div>
+                <div>{{ user.displayName }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <sl-input
-                class="col-12 sm:col-8 md:col-4"
+                class="col-12 sm:col-8 md:col-3"
                 label="First Name"
-                name="firstName"
+                formControlName="firstName"
                 ngDefaultControl
-                [(ngModel)]="profile.firstName"
-                required
               ></sl-input>
               <sl-input
-                class="col-12 sm:col-4 md:col-2"
+                class="col-12 sm:col-4 md:col-3"
                 label="M. I."
-                name="middleInitial"
+                formControlName="middleName"
+                maxlength="1"
                 ngDefaultControl
-                [(ngModel)]="profile.middleInitial"
               ></sl-input>
               <sl-input
-                class="col-12 md:col-6"
+                class="col-12 md:col-3"
                 label="Last Name"
-                name="lastName"
+                formControlName="lastName"
                 ngDefaultControl
-                [(ngModel)]="profile.lastName"
+              ></sl-input>
+              <sl-input
+                class="col-12 md:col-3"
+                label="Suffix"
+                formControlName="suffix"
+                ngDefaultControl
               ></sl-input>
               <sl-input
                 class="col-12"
                 label="Name as it should appear on your printed certificate"
-                name="certName"
+                formControlName="displayName"
                 ngDefaultControl
-                [(ngModel)]="profile.certName"
               ></sl-input>
             </div>
           </div>
@@ -83,60 +94,55 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-9">
                 <label>Street Address</label>
-                <div>{{ profile.address.street }}</div>
+                <div>{{ user.street1 }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Apt</label>
-                <div>{{ profile.address.line2 }}</div>
+                <div>{{ user.street2 }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>City</label>
-                <div>{{ profile.address.city }}</div>
+                <div>{{ user.city }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>State / Province</label>
-                <div>{{ profile.address.state }}</div>
+                <div>{{ user.state }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Zipcode</label>
-                <div>{{ profile.address.zip }}</div>
+                <div>{{ user.zipCode }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Country</label>
-                <div>{{ profile.address.country }}</div>
+                <div>{{ user.country }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <sl-input
                 class="col-12 md:col-9"
                 label="Street Address"
-                name="street"
+                formControlName="street1"
                 help-text="Address Line 1"
                 ngDefaultControl
-                [(ngModel)]="profile.address.street"
               ></sl-input>
               <sl-input
                 class="col-12 md:col-3"
                 label="&nbsp;"
-                name="line2"
+                formControlName="street2"
                 help-text="Address Line 2"
                 ngDefaultControl
-                [(ngModel)]="profile.address.line2"
               ></sl-input>
               <sl-input
                 class="col-12 md:col-3"
                 label="City"
-                name="city"
+                formControlName="city"
                 ngDefaultControl
-                [(ngModel)]="profile.address.city"
               ></sl-input>
               <sl-select
                 class="col-12 md:col-3"
                 label="State / Province"
-                name="state"
-                ngDefaultControl
-                [(ngModel)]="profile.address.state"
-                required
+                data-controlname="state"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="option-1">Option 1</sl-option>
                 <sl-option value="option-2">Option 2</sl-option>
@@ -145,16 +151,14 @@
               <sl-input
                 class="col-12 md:col-3"
                 label="Zipcode"
-                name="zipcode"
+                formControlName="zipCode"
                 ngDefaultControl
-                [(ngModel)]="profile.address.zip"
               ></sl-input>
               <sl-select
                 class="col-12 md:col-3"
                 label="Country"
-                name="country"
-                ngDefaultControl
-                [(ngModel)]="profile.address.country"
+                data-controlname="country"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="option-1">Option 1</sl-option>
                 <sl-option value="option-2">Option 2</sl-option>
@@ -169,29 +173,32 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-6">
                 <label>Email Address</label>
-                <div>{{ profile.email }}</div>
+                <div>{{ user.emailAddress }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Daytime Phone Number</label>
-                <div>{{ profile.phone | mask : '(000) 000-0000' }}</div>
+                <div>
+                  {{ user.officePhoneNumber | mask : '(000) 000-0000' }}
+                </div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Mobile Phone Number</label>
-                <div>{{ profile.mobile | mask : '(000) 000-0000' }}</div>
-              </div>
-              <div class="col-12 md:col-6">
-                <label>Fax Number</label>
-                <div>{{ profile.fax | mask : '(000) 000-0000' }}</div>
+                <div>
+                  {{
+                    user?.mobilePhoneNumber
+                      ? user?.mobilePhoneNumber
+                      : ('' | mask : '(000) 000-0000')
+                  }}
+                </div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <sl-input
                 inputmode="email"
                 class="col-12 md:col-6"
-                name="email"
+                formControlName="emailAddress"
                 label="Email Address"
                 ngDefaultControl
-                [(ngModel)]="profile.email"
                 help-text="Go to your My Account page to change your email"
                 readonly
               ></sl-input>
@@ -199,32 +206,30 @@
                 type="phone"
                 inputmode="tel"
                 class="col-12 md:col-6"
-                name="phone"
+                formControlName="officePhoneNumber"
                 label="Daytime Phone Number"
                 mask="(000) 000-0000"
                 ngDefaultControl
-                [(ngModel)]="profile.phone"
               ></sl-input>
               <sl-input
                 type="phone"
                 inputmode="tel"
                 class="col-12 md:col-6"
-                name="mobile"
+                formControlName="mobilePhoneNumber"
                 label="Mobile Phone Number"
                 ngDefaultControl
-                [(ngModel)]="profile.mobile"
                 mask="(000) 000-0000"
               ></sl-input>
-              <sl-input
-                type="fax"
-                inputmode="tel"
-                class="col-12 md:col-6"
-                name="fax"
-                label="Fax Number"
-                ngDefaultControl
-                [(ngModel)]="profile.fax"
-                mask="(000) 000-0000"
-              ></sl-input>
+              <!--              <sl-input-->
+              <!--                type="fax"-->
+              <!--                inputmode="tel"-->
+              <!--                class="col-12 md:col-6"-->
+              <!--                name="fax"-->
+              <!--                label="Fax Number"-->
+              <!--                ngDefaultControl-->
+              <!--                [(ngModel)]="profile.fax"-->
+              <!--                mask="(000) 000-0000"-->
+              <!--              ></sl-input>-->
             </div>
           </div>
 
@@ -234,35 +239,33 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-6">
                 <label>Town or City of Birth</label>
-                <div>{{ profile.placeOfBirth.city }}</div>
+                <div>{{ user.birthCity }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>State, Province, or Territory of Birth</label>
-                <div>{{ profile.placeOfBirth.state }}</div>
+                <div>{{ user.birthState }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Country of Birth</label>
-                <div>{{ profile.placeOfBirth.country }}</div>
+                <div>{{ user.birthCountry }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Country of Citizenship</label>
-                <div>{{ profile.countryOfCitizenship }}</div>
+                <div>{{ user.countryCitizenship }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <sl-input
                 class="col-12 md:col-6"
-                name="cityOfBirth"
+                formControlName="birthCity"
                 label="Town or City of Birth"
                 ngDefaultControl
-                [(ngModel)]="profile.placeOfBirth.city"
               ></sl-input>
               <sl-select
                 class="col-12 md:col-6"
-                name="stateOfBirth"
+                data-controlname="birthState"
                 label="State, Province, or Territory of Birth"
-                ngDefaultControl
-                [(ngModel)]="profile.placeOfBirth.state"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="option-1">Option 1</sl-option>
                 <sl-option value="option-2">Option 2</sl-option>
@@ -270,10 +273,9 @@
               </sl-select>
               <sl-select
                 class="col-12 md:col-6"
-                name="countryOfBirth"
+                data-controlname="birthCountry"
                 label="Country of Birth"
-                ngDefaultControl
-                [(ngModel)]="profile.placeOfBirth.country"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="option-1">Option 1</sl-option>
                 <sl-option value="option-2">Option 2</sl-option>
@@ -281,10 +283,9 @@
               </sl-select>
               <sl-select
                 class="col-12 md:col-6"
-                name="countryOfCitizenship"
+                data-controlname="countryCitizenship"
                 label="Country of Citizenship"
-                ngDefaultControl
-                [(ngModel)]="profile.countryOfCitizenship"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="option-1">Option 1</sl-option>
                 <sl-option value="option-2">Option 2</sl-option>
@@ -299,61 +300,57 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-6">
                 <label>ABS ID</label>
-                <div>{{ profile.absId }}</div>
+                <div>{{ user.aBSId }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>National Provider Identification</label>
-                <div>{{ profile.npi }}</div>
+                <div>{{ user.nPI }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Gender</label>
-                <div>{{ profile.gender }}</div>
+                <div>{{ user.genderId }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Date of Birth</label>
-                <div>{{ profile.dob }}</div>
+                <div>{{ user.birthDate }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Race</label>
-                <div>{{ profile.race }}</div>
+                <div>{{ user.race }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Ethnicity</label>
-                <div>{{ profile.ethnicity }}</div>
+                <div>{{ user.ethnicity }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>First Language</label>
-                <div>{{ profile.firstLanguage }}</div>
+                <div>{{ user.firstLanguageId }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Best Language</label>
-                <div>{{ profile.bestLanguage }}</div>
+                <div>{{ user.bestLanguageId }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <sl-input
                 class="col-12 md:col-6"
-                name="absId"
+                formControlName="aBSId"
                 label="ABS ID"
                 ngDefaultControl
-                [(ngModel)]="profile.absId"
                 readonly
               ></sl-input>
               <sl-input
                 class="col-12 md:col-6"
-                name="npi"
+                formControlName="nPI"
                 label="National Provider Identification"
                 ngDefaultControl
-                [(ngModel)]="profile.npi"
                 readonly
               ></sl-input>
               <sl-select
                 class="col-12 md:col-3"
-                name="gender"
+                data-controlname="genderId"
                 label="Gender"
-                ngDefaultControl
-                [(ngModel)]="profile.gender"
-                [value]="profile.gender"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="male">Male</sl-option>
                 <sl-option value="female">Female</sl-option>
@@ -362,17 +359,15 @@
               <sl-input
                 type="date"
                 class="col-12 md:col-3"
-                name="dob"
+                formControlName="birthDate"
                 label="Date of Birth"
                 ngDefaultControl
-                [(ngModel)]="profile.dob"
               ></sl-input>
               <sl-select
                 class="col-12 md:col-3"
-                name="race"
+                data-controlname="race"
                 label="Race"
-                ngDefaultControl
-                [(ngModel)]="profile.race"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="white">White</sl-option>
                 <sl-option value="option-1">Option 1</sl-option>
@@ -381,10 +376,9 @@
               </sl-select>
               <sl-select
                 class="col-12 md:col-3"
-                name="ethnicity"
+                data-controlname="ethnicity"
                 label="Ethnicity"
-                ngDefaultControl
-                [(ngModel)]="profile.ethnicity"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="white">White</sl-option>
                 <sl-option value="option-1">Option 1</sl-option>
@@ -393,10 +387,9 @@
               </sl-select>
               <sl-select
                 class="col-12 md:col-3"
-                name="firstLanguage"
+                data-controlname="firstLanguageId"
                 label="First Language"
-                ngDefaultControl
-                [(ngModel)]="profile.firstLanguage"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="English">English</sl-option>
                 <sl-option value="option-1">Option 1</sl-option>
@@ -405,10 +398,9 @@
               </sl-select>
               <sl-select
                 class="col-12 md:col-3"
-                name="bestLanguage"
+                data-controlname="bestLanguageId"
                 label="Best Language"
-                ngDefaultControl
-                [(ngModel)]="profile.bestLanguage"
+                (sl-change)="handleSelects($event)"
               >
                 <sl-option value="English">English</sl-option>
                 <sl-option value="option-1">Option 1</sl-option>
@@ -423,9 +415,9 @@
               <div class="col-12 text-center">
                 <sl-checkbox
                   class="col-12"
-                  name="formConfirmation"
-                  ngDefaultControl
-                  [(ngModel)]="formConfirmation"
+                  data-controlname="userConfirmed"
+                  form="userProfileForm"
+                  (sl-change)="handleCheckbox($event)"
                 >
                   I confirm the above information is completed and correct to
                   the best of my knowledge
@@ -451,7 +443,7 @@
                 type="submit"
                 style="width: 337px"
                 variant="primary"
-                (click)="save()"
+                [disabled]="userProfileForm.invalid"
                 >Save</sl-button
               >
             </div>

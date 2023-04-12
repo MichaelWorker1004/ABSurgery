@@ -25,7 +25,7 @@
             "name": "Token",
             "dataType": "string",
             "maxLength": 50,
-            "precision": 0,
+            "precision": 50,
             "scale": 0,
             "required": true,
             "mapsTo": "Token"
@@ -48,10 +48,10 @@
               {
                 "name": "FullName",
                 "dataType": "string",
-                "maxLength": 71,
+                "maxLength": 70,
                 "precision": 0,
                 "scale": 0,
-                "isNullable": false,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.FullName"
               },
@@ -61,9 +61,19 @@
                 "maxLength": 320,
                 "precision": 0,
                 "scale": 0,
-                "isNullable": true,
+                "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.EmailAddress"
+              },
+              {
+                "name": "LastLoginDateUtc",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastLoginDateUtc"
               }
             ]
           }
@@ -79,9 +89,9 @@
     }
   ],
   "metadata": {
-    "command": "",
+    "command": "ytgim g i s Users\\AppUserReadOnly-getbytoken AppUserReadOnly -t=ytg-framework/readonly-get -p:Model=Users\\AppUserReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_bytoken] -p:ModelGroup=AppUserReadOnly -p:RootNamespace=$project.RootNamespace -p:FetchMethodName=GetByToken -p:IncludeControllerInGeneration=False -p:IsChild=False -p:IsRoot=True -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-03-09T22:22:34.6513776Z"
+    "generatedDateUtc": "2023-03-31T16:38:18.2717516Z"
   },
   "version": 1
 }

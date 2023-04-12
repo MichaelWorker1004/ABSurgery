@@ -1,0 +1,66 @@
+{
+  "name": "EthnicityReadOnly",
+  "implementationName": "Picklists\\EthnicityReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_picklists_ethnicities_all",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "picklists",
+    "ControllerVersion": "1",
+    "IncludeControllerInGeneration": "True",
+    "FetchMethodName": "GetAll",
+    "Model": "Picklists\\EthnicityReadOnly",
+    "ModelGroup": "EthnicityReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "ethnicities",
+    "UsePaginatedList": "false",
+    "IsRoot": "true",
+    "IsChild": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_picklists_ethnicities_all",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_picklists_ethnicities_all]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\EthnicityReadOnly",
+            "fields": [
+              {
+                "name": "ItemValue",
+                "dataType": "string",
+                "maxLength": 25,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemValue"
+              },
+              {
+                "name": "ItemDescription",
+                "dataType": "string",
+                "maxLength": 1000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemDescription"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\EthnicityReadOnly.GetAll EthnicityReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\EthnicityReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_picklists_ethnicities_all] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=EthnicityReadOnly -p:Route=ethnicities -p:ControllerName=PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T22:37:44.2288371Z"
+  },
+  "version": 1
+}

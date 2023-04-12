@@ -9,14 +9,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthSelectors } from '../state/auth/auth.selectors';
-import { IUser } from '../api/services/auth/auth.service';
+
 import { matchFields, validatePassword } from '../shared/validators/validators';
-import { SaveMyAccountChanges } from '../state/my-account/my-account.actions';
 import {
   IUserCredential,
-  MyAccountState,
-} from '../state/my-account/my-account.state';
+  MyAccountSelectors,
+  SaveMyAccountChanges,
+  UserProfileSelectors,
+  IUserProfile,
+} from '../state';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 
 @Component({
@@ -33,11 +34,13 @@ import { ProfileHeaderComponent } from '../shared/components/profile-header/prof
   ],
 })
 export class MyAccountComponent implements OnDestroy {
-  @Select(AuthSelectors.getUser) user$: Observable<IUser | null> | undefined;
-  @Select(MyAccountState.errors) errors$: Observable<any> | undefined;
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile | null>
+    | undefined;
+  @Select(MyAccountSelectors.errors) errors$: Observable<any> | undefined;
 
   userSub: Subscription | undefined;
-  user: IUser | null = null;
+  user: IUserProfile | null = null;
 
   isEdit = false;
   profilePicture =

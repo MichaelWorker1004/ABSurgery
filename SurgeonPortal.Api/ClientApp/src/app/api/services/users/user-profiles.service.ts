@@ -18,94 +18,216 @@ developer when the API is created. Please do not make changes to this file
   providedIn: 'root',
 })
 export class UserProfilesService {
-  private readonly baseEndpoint = 'user/profiles';
+    private readonly baseEndpoint = 'users/profiles';
 
     constructor(private httpClient: HttpClient) {}
 
  
-        public retrieveUserProfile_GetByUserId(userId: number): Observable<IUserProfileModel> {
-    /**
-     * Claims
-     */
-
-    /**
-     * Business Rules
-     * No business rules exist for this model
-     */
-
-    /**
-     * Required Parameters
-     * userId:Number
-     * apiVersion
-     */
-
-    /**
-     * Calls Sp(s)
-     * [get_user_profile_byuserid]
-     */
-
+        public retrieveUserProfile_GetByUserId(userId: number,
+        apiVersion = '1.0'): Observable<IUserProfileModel> {
+            /**
+            * Claims
+            */
             
-            return this.httpClient.get<IUserProfileModel>(`${this.baseEndpoint}/by-userId?api-version=${apiVersion}`, {
-                userId
-            });
-  }
-
+            /**
+            * Business Rules
+            * Business rules for property: FirstName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: LastName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: DisplayName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: OfficePhoneNumber
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BirthCity
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BirthState
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BirthCountry
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: CountryCitizenship
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: GenderId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BirthDate
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Race
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Ethnicity
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: FirstLanguageId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BestLanguageId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ReceiveComms
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Street1
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: City
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: State
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ZipCode
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Country
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            */
+            
+            /**
+            * Required Parameters
+            * userId:Number
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_user_profile_byuserid]
+            */
+            
+            
+            return this.httpClient.get<IUserProfileModel>(`${this.baseEndpoint}/by-userId?api-version=${apiVersion}&userId=${userId}`);
+        }
+ 
         public updateUserProfile(userId: number,
-    model: IUserProfileModel,
+        model: IUserProfileModel,
         apiVersion = '1.0') : Observable<IUserProfileModel> {
-    /**
-     * Claims
-     */
-
-    /**
-     * Business Rules
-     * No business rules exist for this model
-     */
-
-    /**
-     * Required Parameters
-     * userProfileId:Number
-     * userId:Number
-     * firstName:String
-     * middleName:String
-     * lastName:String
-     * suffix:String
-     * displayName:String
-     * officePhoneNumber:String
-     * mobilePhoneNumber:String
-     * birthCity:String
-     * birthState:String
-     * birthCountry:String
-     * countryCitizenship:String
-     * aBSId:Number
-     * certificationStatusId:Number
-     * nPI:String
-     * gender:String
-     * birthDate:String
-     * race:String
-     * ethnicity:String
-     * firstLanguage:String
-     * bestLanguage:String
-     * receiveComms:Boolean
-     * userConfirmed:Boolean
-     * userConfirmedDate:String
-     * createdByUserId:Number
-     * createdAtUtc:String
-     * lastUpdatedAtUtc:String
-     * lastUpdatedByUserId:Number
-     * apiVersion
-     */
-
-    /**
-     * Calls Sp(s)
-     * [update_user_profile]
-     */
-
+            /**
+            * Claims
+            */
             
-    //TODO - Fix this PUT implementation when we fix the PUT calls in the YTG-ANGULAR package
-            return this.httpClient.put<IUserProfileModel>(`${this.baseEndpoint}/${UserId}?api-version=${apiVersion}`,
+            /**
+            * Business Rules
+            * Business rules for property: FirstName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: LastName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: DisplayName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: OfficePhoneNumber
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BirthCity
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BirthState
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BirthCountry
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: CountryCitizenship
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: GenderId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BirthDate
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Race
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Ethnicity
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: FirstLanguageId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: BestLanguageId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ReceiveComms
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Street1
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: City
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: State
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ZipCode
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Country
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            */
+            
+            /**
+            * Required Parameters
+            * userProfileId:Number
+            * userId:Number
+            * firstName:String
+            * middleName:String
+            * lastName:String
+            * suffix:String
+            * displayName:String
+            * officePhoneNumber:String
+            * mobilePhoneNumber:String
+            * birthCity:String
+            * birthState:String
+            * birthCountry:String
+            * countryCitizenship:String
+            * aBSId:String
+            * nPI:String
+            * genderId:Number
+            * birthDate:String
+            * race:String
+            * ethnicity:String
+            * firstLanguageId:Number
+            * bestLanguageId:Number
+            * receiveComms:Boolean
+            * userConfirmed:Boolean
+            * userConfirmedDate:String
+            * street1:String
+            * street2:String
+            * city:String
+            * state:String
+            * zipCode:String
+            * country:String
+            * createdByUserId:Number
+            * createdAtUtc:String
+            * lastUpdatedAtUtc:String
+            * lastUpdatedByUserId:Number
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [update_user_profile]
+            */
+            
+            
+            //TODO - Fix this PUT implementation when we fix the PUT calls in the YTG-ANGULAR package
+            return this.httpClient.put<IUserProfileModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
             model);
-  }
+        }
 
 
 }

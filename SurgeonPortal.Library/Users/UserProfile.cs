@@ -1,4 +1,5 @@
 using Csla;
+using Csla.Rules.CommonRules;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
 using System;
@@ -134,36 +135,36 @@ namespace SurgeonPortal.Library.Users
 		public static readonly PropertyInfo<string> CountryCitizenshipProperty = RegisterProperty<string>(c => c.CountryCitizenship);
 
         [DisplayName(nameof(ABSId))]
-		public int? ABSId
+		public string ABSId
 		{
 			get { return GetProperty(ABSIdProperty); }
-			set { SetProperty(ABSIdProperty, value); }
+			 private set { SetProperty(ABSIdProperty, value); }
 		}
-		public static readonly PropertyInfo<int?> ABSIdProperty = RegisterProperty<int?>(c => c.ABSId);
+		public static readonly PropertyInfo<string> ABSIdProperty = RegisterProperty<string>(c => c.ABSId);
 
-        [DisplayName(nameof(CertificationStatusId))]
-		public int? CertificationStatusId
+        [DisplayName(nameof(CertificationStatus))]
+		public string CertificationStatus
 		{
-			get { return GetProperty(CertificationStatusIdProperty); }
-			set { SetProperty(CertificationStatusIdProperty, value); }
+			get { return GetProperty(CertificationStatusProperty); }
+			 private set { SetProperty(CertificationStatusProperty, value); }
 		}
-		public static readonly PropertyInfo<int?> CertificationStatusIdProperty = RegisterProperty<int?>(c => c.CertificationStatusId);
+		public static readonly PropertyInfo<string> CertificationStatusProperty = RegisterProperty<string>(c => c.CertificationStatus);
 
         [DisplayName(nameof(NPI))]
 		public string NPI
 		{
 			get { return GetProperty(NPIProperty); }
-			set { SetProperty(NPIProperty, value); }
+			 private set { SetProperty(NPIProperty, value); }
 		}
 		public static readonly PropertyInfo<string> NPIProperty = RegisterProperty<string>(c => c.NPI);
 
-        [DisplayName(nameof(Gender))]
-		public string Gender
+        [DisplayName(nameof(GenderId))]
+		public int? GenderId
 		{
-			get { return GetProperty(GenderProperty); }
-			set { SetProperty(GenderProperty, value); }
+			get { return GetProperty(GenderIdProperty); }
+			set { SetProperty(GenderIdProperty, value); }
 		}
-		public static readonly PropertyInfo<string> GenderProperty = RegisterProperty<string>(c => c.Gender);
+		public static readonly PropertyInfo<int?> GenderIdProperty = RegisterProperty<int?>(c => c.GenderId);
 
         [DisplayName(nameof(BirthDate))]
 		public DateTime? BirthDate
@@ -189,21 +190,21 @@ namespace SurgeonPortal.Library.Users
 		}
 		public static readonly PropertyInfo<string> EthnicityProperty = RegisterProperty<string>(c => c.Ethnicity);
 
-        [DisplayName(nameof(FirstLanguage))]
-		public string FirstLanguage
+        [DisplayName(nameof(FirstLanguageId))]
+		public int? FirstLanguageId
 		{
-			get { return GetProperty(FirstLanguageProperty); }
-			set { SetProperty(FirstLanguageProperty, value); }
+			get { return GetProperty(FirstLanguageIdProperty); }
+			set { SetProperty(FirstLanguageIdProperty, value); }
 		}
-		public static readonly PropertyInfo<string> FirstLanguageProperty = RegisterProperty<string>(c => c.FirstLanguage);
+		public static readonly PropertyInfo<int?> FirstLanguageIdProperty = RegisterProperty<int?>(c => c.FirstLanguageId);
 
-        [DisplayName(nameof(BestLanguage))]
-		public string BestLanguage
+        [DisplayName(nameof(BestLanguageId))]
+		public int? BestLanguageId
 		{
-			get { return GetProperty(BestLanguageProperty); }
-			set { SetProperty(BestLanguageProperty, value); }
+			get { return GetProperty(BestLanguageIdProperty); }
+			set { SetProperty(BestLanguageIdProperty, value); }
 		}
-		public static readonly PropertyInfo<string> BestLanguageProperty = RegisterProperty<string>(c => c.BestLanguage);
+		public static readonly PropertyInfo<int?> BestLanguageIdProperty = RegisterProperty<int?>(c => c.BestLanguageId);
 
         [DisplayName(nameof(ReceiveComms))]
 		public bool? ReceiveComms
@@ -229,6 +230,54 @@ namespace SurgeonPortal.Library.Users
 		}
 		public static readonly PropertyInfo<DateTime?> UserConfirmedDateProperty = RegisterProperty<DateTime?>(c => c.UserConfirmedDate);
 
+        [DisplayName(nameof(Street1))]
+		public string Street1
+		{
+			get { return GetProperty(Street1Property); }
+			set { SetProperty(Street1Property, value); }
+		}
+		public static readonly PropertyInfo<string> Street1Property = RegisterProperty<string>(c => c.Street1);
+
+        [DisplayName(nameof(Street2))]
+		public string Street2
+		{
+			get { return GetProperty(Street2Property); }
+			set { SetProperty(Street2Property, value); }
+		}
+		public static readonly PropertyInfo<string> Street2Property = RegisterProperty<string>(c => c.Street2);
+
+        [DisplayName(nameof(City))]
+		public string City
+		{
+			get { return GetProperty(CityProperty); }
+			set { SetProperty(CityProperty, value); }
+		}
+		public static readonly PropertyInfo<string> CityProperty = RegisterProperty<string>(c => c.City);
+
+        [DisplayName(nameof(State))]
+		public string State
+		{
+			get { return GetProperty(StateProperty); }
+			set { SetProperty(StateProperty, value); }
+		}
+		public static readonly PropertyInfo<string> StateProperty = RegisterProperty<string>(c => c.State);
+
+        [DisplayName(nameof(ZipCode))]
+		public string ZipCode
+		{
+			get { return GetProperty(ZipCodeProperty); }
+			set { SetProperty(ZipCodeProperty, value); }
+		}
+		public static readonly PropertyInfo<string> ZipCodeProperty = RegisterProperty<string>(c => c.ZipCode);
+
+        [DisplayName(nameof(Country))]
+		public string Country
+		{
+			get { return GetProperty(CountryProperty); }
+			set { SetProperty(CountryProperty, value); }
+		}
+		public static readonly PropertyInfo<string> CountryProperty = RegisterProperty<string>(c => c.Country);
+
 
 
         /// <summary>
@@ -242,6 +291,37 @@ namespace SurgeonPortal.Library.Users
         }
 
 
+
+        /// <summary>
+        /// This method is used to add business rules to the Csla 
+        /// business rule engine
+        /// </summary>
+        protected override void AddBusinessRules()
+        {
+            // Only process priority 5 and higher if all 4 and lower completed first
+            BusinessRules.ProcessThroughPriority = 4;
+
+            BusinessRules.AddRule(new Required(FirstNameProperty, "FirstName is required"));
+            BusinessRules.AddRule(new Required(LastNameProperty, "LastName is required"));
+            BusinessRules.AddRule(new Required(DisplayNameProperty, "DisplayName is required"));
+            BusinessRules.AddRule(new Required(OfficePhoneNumberProperty, "OfficePhoneNumber is required"));
+            BusinessRules.AddRule(new Required(BirthCityProperty, "BirthCity is required"));
+            BusinessRules.AddRule(new Required(BirthStateProperty, "BirthState is required"));
+            BusinessRules.AddRule(new Required(BirthCountryProperty, "BirthCountry is required"));
+            BusinessRules.AddRule(new Required(CountryCitizenshipProperty, "CountryCitizenship is required"));
+            BusinessRules.AddRule(new Required(GenderIdProperty, "GenderId is required"));
+            BusinessRules.AddRule(new Required(BirthDateProperty, "BirthDate is required"));
+            BusinessRules.AddRule(new Required(RaceProperty, "Race is required"));
+            BusinessRules.AddRule(new Required(EthnicityProperty, "Ethnicity is required"));
+            BusinessRules.AddRule(new Required(FirstLanguageIdProperty, "FirstLanguageId is required"));
+            BusinessRules.AddRule(new Required(BestLanguageIdProperty, "BestLanguageId is required"));
+            BusinessRules.AddRule(new Required(ReceiveCommsProperty, "ReceiveComms is required"));
+            BusinessRules.AddRule(new Required(Street1Property, "Street1 is required"));
+            BusinessRules.AddRule(new Required(CityProperty, "City is required"));
+            BusinessRules.AddRule(new Required(StateProperty, "State is required"));
+            BusinessRules.AddRule(new Required(ZipCodeProperty, "ZipCode is required"));
+            BusinessRules.AddRule(new Required(CountryProperty, "Country is required"));
+        }
 
 
         [Fetch]
@@ -319,17 +399,23 @@ namespace SurgeonPortal.Library.Users
 			this.BirthCountry = dto.BirthCountry;
 			this.CountryCitizenship = dto.CountryCitizenship;
 			this.ABSId = dto.ABSId;
-			this.CertificationStatusId = dto.CertificationStatusId;
+			this.CertificationStatus = dto.CertificationStatus;
 			this.NPI = dto.NPI;
-			this.Gender = dto.Gender;
+			this.GenderId = dto.GenderId;
 			this.BirthDate = dto.BirthDate;
 			this.Race = dto.Race;
 			this.Ethnicity = dto.Ethnicity;
-			this.FirstLanguage = dto.FirstLanguage;
-			this.BestLanguage = dto.BestLanguage;
+			this.FirstLanguageId = dto.FirstLanguageId;
+			this.BestLanguageId = dto.BestLanguageId;
 			this.ReceiveComms = dto.ReceiveComms;
 			this.UserConfirmed = dto.UserConfirmed;
 			this.UserConfirmedDate = dto.UserConfirmedDate;
+			this.Street1 = dto.Street1;
+			this.Street2 = dto.Street2;
+			this.City = dto.City;
+			this.State = dto.State;
+			this.ZipCode = dto.ZipCode;
+			this.Country = dto.Country;
 		}
 
 		internal UserProfileDto ToDto()
@@ -355,17 +441,23 @@ namespace SurgeonPortal.Library.Users
 			dto.BirthCountry = this.BirthCountry;
 			dto.CountryCitizenship = this.CountryCitizenship;
 			dto.ABSId = this.ABSId;
-			dto.CertificationStatusId = this.CertificationStatusId;
+			dto.CertificationStatus = this.CertificationStatus;
 			dto.NPI = this.NPI;
-			dto.Gender = this.Gender;
+			dto.GenderId = this.GenderId;
 			dto.BirthDate = this.BirthDate;
 			dto.Race = this.Race;
 			dto.Ethnicity = this.Ethnicity;
-			dto.FirstLanguage = this.FirstLanguage;
-			dto.BestLanguage = this.BestLanguage;
+			dto.FirstLanguageId = this.FirstLanguageId;
+			dto.BestLanguageId = this.BestLanguageId;
 			dto.ReceiveComms = this.ReceiveComms;
 			dto.UserConfirmed = this.UserConfirmed;
 			dto.UserConfirmedDate = this.UserConfirmedDate;
+			dto.Street1 = this.Street1;
+			dto.Street2 = this.Street2;
+			dto.City = this.City;
+			dto.State = this.State;
+			dto.ZipCode = this.ZipCode;
+			dto.Country = this.Country;
 
 			return dto;
 		}

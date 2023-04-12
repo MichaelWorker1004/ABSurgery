@@ -1,3 +1,4 @@
+using System;
 using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Users
@@ -7,7 +8,7 @@ namespace SurgeonPortal.Library.Contracts.Users
         int UserId { get; }
         string FullName { get; }
         string EmailAddress { get; }
-
+        DateTime? LastLoginDateUtc { get; }
         IUserClaimReadOnlyList Claims { get; }
     }
 }

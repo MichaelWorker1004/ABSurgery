@@ -9,8 +9,10 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": true
+      "isIdentityColumn": true,
+      "rules": {}
     },
     {
       "name": "UserId",
@@ -18,8 +20,10 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "FirstName",
@@ -27,8 +31,15 @@
       "maxLength": 35,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "FirstName is required"
+        }
+      }
     },
     {
       "name": "MiddleName",
@@ -36,8 +47,10 @@
       "maxLength": 35,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "LastName",
@@ -45,8 +58,15 @@
       "maxLength": 35,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "LastName is required"
+        }
+      }
     },
     {
       "name": "Suffix",
@@ -54,8 +74,10 @@
       "maxLength": 5,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "DisplayName",
@@ -63,8 +85,15 @@
       "maxLength": 70,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "DisplayName is required"
+        }
+      }
     },
     {
       "name": "OfficePhoneNumber",
@@ -72,8 +101,15 @@
       "maxLength": 15,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "OfficePhoneNumber is required"
+        }
+      }
     },
     {
       "name": "MobilePhoneNumber",
@@ -81,8 +117,10 @@
       "maxLength": 15,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "BirthCity",
@@ -90,8 +128,15 @@
       "maxLength": 50,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "BirthCity is required"
+        }
+      }
     },
     {
       "name": "BirthState",
@@ -99,8 +144,15 @@
       "maxLength": 50,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "BirthState is required"
+        }
+      }
     },
     {
       "name": "BirthCountry",
@@ -108,8 +160,15 @@
       "maxLength": 50,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "BirthCountry is required"
+        }
+      }
     },
     {
       "name": "CountryCitizenship",
@@ -117,26 +176,37 @@
       "maxLength": 50,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "CountryCitizenship is required"
+        }
+      }
     },
     {
       "name": "ABSId",
-      "dataType": "int?",
-      "maxLength": 4,
-      "precision": 10,
+      "dataType": "string",
+      "maxLength": 20,
+      "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": true,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
-      "name": "CertificationStatusId",
-      "dataType": "int?",
-      "maxLength": 4,
-      "precision": 10,
+      "name": "CertificationStatus",
+      "dataType": "string",
+      "maxLength": 100,
+      "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": true,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "NPI",
@@ -144,17 +214,26 @@
       "maxLength": 10,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": true,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
-      "name": "Gender",
-      "dataType": "string",
-      "maxLength": 20,
-      "precision": 0,
+      "name": "GenderId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "GenderId is required"
+        }
+      }
     },
     {
       "name": "BirthDate",
@@ -162,8 +241,15 @@
       "maxLength": 3,
       "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "BirthDate is required"
+        }
+      }
     },
     {
       "name": "Race",
@@ -171,8 +257,15 @@
       "maxLength": 20,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "Race is required"
+        }
+      }
     },
     {
       "name": "Ethnicity",
@@ -180,26 +273,47 @@
       "maxLength": 1,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "Ethnicity is required"
+        }
+      }
     },
     {
-      "name": "FirstLanguage",
-      "dataType": "string",
-      "maxLength": 30,
-      "precision": 0,
+      "name": "FirstLanguageId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "FirstLanguageId is required"
+        }
+      }
     },
     {
-      "name": "BestLanguage",
-      "dataType": "string",
-      "maxLength": 30,
-      "precision": 0,
+      "name": "BestLanguageId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "BestLanguageId is required"
+        }
+      }
     },
     {
       "name": "ReceiveComms",
@@ -207,8 +321,15 @@
       "maxLength": 1,
       "precision": 1,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "ReceiveComms is required"
+        }
+      }
     },
     {
       "name": "UserConfirmed",
@@ -216,8 +337,10 @@
       "maxLength": 1,
       "precision": 1,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "UserConfirmedDate",
@@ -225,8 +348,10 @@
       "maxLength": 8,
       "precision": 23,
       "scale": 3,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "CreatedByUserId",
@@ -234,8 +359,10 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "CreatedAtUtc",
@@ -243,8 +370,10 @@
       "maxLength": 8,
       "precision": 23,
       "scale": 3,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "LastUpdatedAtUtc",
@@ -252,8 +381,10 @@
       "maxLength": 8,
       "precision": 23,
       "scale": 3,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "LastUpdatedByUserId",
@@ -261,14 +392,107 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Street1",
+      "dataType": "string",
+      "maxLength": 100,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "Street1 is required"
+        }
+      }
+    },
+    {
+      "name": "Street2",
+      "dataType": "string",
+      "maxLength": 100,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "City",
+      "dataType": "string",
+      "maxLength": 30,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "City is required"
+        }
+      }
+    },
+    {
+      "name": "State",
+      "dataType": "string",
+      "maxLength": 2,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "State is required"
+        }
+      }
+    },
+    {
+      "name": "ZipCode",
+      "dataType": "string",
+      "maxLength": 10,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "ZipCode is required"
+        }
+      }
+    },
+    {
+      "name": "Country",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "Country is required"
+        }
+      }
     }
   ],
   "metadata": {
-    "command": "ytgim g m s Users\\UserProfile -sp [dbo].[get_user_profile_byuserid] -cn ABSSP ",
+    "command": "ytgim g m s Users\\UserProfile -sp [dbo].[get_user_profile_byuserid] -cn ABSSP -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-03-24T18:33:59.9982975Z"
+    "generatedDateUtc": "2023-04-06T14:52:58.131411Z"
   },
   "version": 1
 }

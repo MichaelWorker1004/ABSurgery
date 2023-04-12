@@ -18,17 +18,23 @@ namespace SurgeonPortal.Library.Contracts.Users
         string BirthState { get; set; }
         string BirthCountry { get; set; }
         string CountryCitizenship { get; set; }
-        int? ABSId { get; set; }
-        int? CertificationStatusId { get; set; }
-        string NPI { get; set; }
-        string Gender { get; set; }
+        string ABSId { get;  }
+        string CertificationStatus { get;  }
+        string NPI { get;  }
+        int? GenderId { get; set; }
         DateTime? BirthDate { get; set; }
         string Race { get; set; }
         string Ethnicity { get; set; }
-        string FirstLanguage { get; set; }
-        string BestLanguage { get; set; }
+        int? FirstLanguageId { get; set; }
+        int? BestLanguageId { get; set; }
         bool? ReceiveComms { get; set; }
         bool? UserConfirmed { get; set; }
         DateTime? UserConfirmedDate { get; set; }
+        string Street1 { get; set; }
+        string Street2 { get; set; }
+        string City { get; set; }
+        string State { get; set; }
+        string ZipCode { get; set; }
+        string Country { get; set; }
     }
 }

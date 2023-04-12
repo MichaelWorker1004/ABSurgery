@@ -12,5 +12,7 @@ namespace SurgeonPortal.Shared
         public static readonly string FullName = "FullName";
         public static readonly string EmailAddress = "EmailAddress";
         public static readonly string User = "User";
+        public static readonly string Surgeon = "Surgeon";
+        public static readonly string Trainee = "Trainee";
     }
 }

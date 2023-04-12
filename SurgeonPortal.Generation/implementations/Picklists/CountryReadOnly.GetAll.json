@@ -1,0 +1,66 @@
+{
+  "name": "CountryReadOnly",
+  "implementationName": "Picklists\\CountryReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_picklist_country_all",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "picklists",
+    "ControllerVersion": "1",
+    "IncludeControllerInGeneration": "True",
+    "FetchMethodName": "GetAll",
+    "Model": "Picklists\\CountryReadOnly",
+    "ModelGroup": "CountryReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "countries",
+    "UsePaginatedList": "false",
+    "IsRoot": "true",
+    "IsChild": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_picklist_country_all",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_picklist_country_all]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\CountryReadOnly",
+            "fields": [
+              {
+                "name": "ItemValue",
+                "dataType": "string",
+                "maxLength": 3,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemValue"
+              },
+              {
+                "name": "ItemDescription",
+                "dataType": "string",
+                "maxLength": 60,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemDescription"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\CountryReadOnly.GetAll CountryReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\CountryReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_picklist_country_all] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CountryReadOnly -p:Route=countries -p:ControllerName=PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T22:36:19.8854054Z"
+  },
+  "version": 1
+}

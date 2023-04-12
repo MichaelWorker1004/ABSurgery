@@ -1,0 +1,66 @@
+{
+  "name": "RaceReadOnly",
+  "implementationName": "Picklists\\RaceReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_picklist_races_all",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "picklists",
+    "ControllerVersion": "1",
+    "IncludeControllerInGeneration": "True",
+    "FetchMethodName": "GetAll",
+    "Model": "Picklists\\RaceReadOnly",
+    "ModelGroup": "RaceReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "races",
+    "UsePaginatedList": "false",
+    "IsRoot": "true",
+    "IsChild": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_picklist_races_all",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_picklist_races_all]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\RaceReadOnly",
+            "fields": [
+              {
+                "name": "ItemValue",
+                "dataType": "string",
+                "maxLength": 25,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemValue"
+              },
+              {
+                "name": "ItemDescription",
+                "dataType": "string",
+                "maxLength": 1000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemDescription"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\RaceReadOnly.GetAll RaceReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\RaceReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_picklist_races_all] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RaceReadOnly -p:Route=races -p:ControllerName=PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T22:40:37.443692Z"
+  },
+  "version": 1
+}

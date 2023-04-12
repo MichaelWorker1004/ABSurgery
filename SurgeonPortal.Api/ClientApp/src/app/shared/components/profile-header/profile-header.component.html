@@ -6,8 +6,7 @@
   ></sl-avatar>
   <div class="ml-3">
     <h2 class="font-normal mt-0 mb-0">
-      <span *ngIf="user?.fullName">{{ user?.fullName }}</span>
-      <span *ngIf="user?.title">, {{ user?.title }}</span>
+      <span *ngIf="user?.displayName">{{ user?.displayName }}</span>
     </h2>
     <p class="font-bold mt-0 mb-1" *ngIf="user?.emailAddress">
       {{ user?.emailAddress }}

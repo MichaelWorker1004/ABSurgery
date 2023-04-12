@@ -1,5 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsModule } from '@ngxs/store';
+import { surgeonPortalState } from '../state/surgeon-portal.state';
 
 import { DashboardComponent } from './dashboard.component';
 
@@ -9,7 +12,12 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, DashboardComponent],
+      imports: [
+        RouterTestingModule,
+        DashboardComponent,
+        NgxsModule.forRoot(surgeonPortalState),
+        HttpClientTestingModule,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);

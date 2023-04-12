@@ -1,0 +1,57 @@
+{
+  "refs": {},
+  "name": "Surgeons\\CertificationReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Speciality",
+      "dataType": "string",
+      "maxLength": 1000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CertificateId",
+      "dataType": "string",
+      "maxLength": 6,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "InitialCertificationDate",
+      "dataType": "string",
+      "maxLength": 8000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "EndDateDisplay",
+      "dataType": "string",
+      "maxLength": 8000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Surgeons\\CertificationReadOnly -sp [dbo].[get_user_certifications] -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-04-06T20:45:00.910211Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,31 @@
+{
+  "refs": {},
+  "name": "Picklists\\EthnicityReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ItemValue",
+      "dataType": "string",
+      "maxLength": 25,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "ItemDescription",
+      "dataType": "string",
+      "maxLength": 1000,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\EthnicityReadOnly -sp [dbo].[get_picklists_ethnicities_all] -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T22:00:50.0422079Z"
+  },
+  "version": 1
+}

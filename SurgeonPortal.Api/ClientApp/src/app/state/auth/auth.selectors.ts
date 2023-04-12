@@ -1,49 +1,49 @@
 import { Selector } from '@ngxs/store';
-import {
-  AuthStateModel,
-  IError,
-  IUser,
-} from '../../api/services/auth/auth.service';
-import { AuthState } from './auth.state';
+import { IAppUserReadOnlyModel, IError } from '../../api';
+import { AuthState, IAuthState } from './auth.state';
 
 export class AuthSelectors {
   @Selector([AuthState])
-  static token(state: AuthStateModel): string | null {
-    return state.access_token;
+  static accessToken(state: IAuthState): string | undefined {
+    if (state?.access_token && state?.access_token?.length > 0) {
+      return state.access_token;
+    }
+    return undefined;
   }
 
   @Selector([AuthState])
-  static getErrors(state: AuthStateModel): IError | null {
+  static refreshToken(state: IAuthState): string | undefined {
+    if (state?.refresh_token && state?.refresh_token?.length > 0) {
+      return state.refresh_token;
+    }
+    return undefined;
+  }
+
+  @Selector([AuthState])
+  static claims(state: IAuthState): string[] | undefined {
+    if (state?.claims && state?.claims?.length > 0) {
+      return state.claims;
+    }
+    return undefined;
+  }
+
+  @Selector([AuthState])
+  static loginUser(state: IAuthState): IAppUserReadOnlyModel | undefined {
+    return state.user as IAppUserReadOnlyModel;
+  }
+
+  @Selector([AuthState])
+  static getErrors(state: IAuthState): IError | null {
     return state.errors as IError;
   }
 
   @Selector([AuthState])
-  static isAuthenticated(state: AuthStateModel): boolean {
+  static isAuthenticated(state: IAuthState): boolean {
     return !!state.access_token;
   }
 
   @Selector([AuthState])
-  static getUser(state: AuthStateModel): IUser | null {
-    if (state.user) {
-      return state.user;
-    } else {
-      return null;
-    }
-  }
-
-  static parseJwt(token: string): object {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-      window
-        .atob(base64)
-        .split('')
-        .map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join('')
-    );
-
-    return JSON.parse(jsonPayload);
+  static getUserId(state: IAuthState): number | undefined {
+    return state.user?.userId;
   }
 }

@@ -151,10 +151,6 @@ namespace SurgeonPortal.Api.Controllers.Users
                     new Claim(ClaimTypes.GivenName, user.FullName),
                 };
 
-            if (user != null)
-            {
-                allClaims.Add(new Claim(YtgClaimType.UserId, user.UserId.ToString()));
-            }
             allClaims.AddRange(claims);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokensConfiguration.Key));

@@ -1,0 +1,66 @@
+{
+  "name": "GenderReadOnly",
+  "implementationName": "Picklists\\GenderReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_picklist_genders_all",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "picklists",
+    "ControllerVersion": "1",
+    "IncludeControllerInGeneration": "True",
+    "FetchMethodName": "GetAll",
+    "Model": "Picklists\\GenderReadOnly",
+    "ModelGroup": "GenderReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "genders",
+    "UsePaginatedList": "false",
+    "IsRoot": "true",
+    "IsChild": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_picklist_genders_all",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_picklist_genders_all]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\GenderReadOnly",
+            "fields": [
+              {
+                "name": "ItemValue",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ItemValue"
+              },
+              {
+                "name": "ItemDescription",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemDescription"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\GenderReadOnly.GetAll GenderReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\GenderReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_picklist_genders_all] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=GenderReadOnly -p:Route=genders -p:ControllerName=PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T22:38:42.2944516Z"
+  },
+  "version": 1
+}

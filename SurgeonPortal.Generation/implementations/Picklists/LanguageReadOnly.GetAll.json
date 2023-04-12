@@ -1,0 +1,66 @@
+{
+  "name": "LanguageReadOnly",
+  "implementationName": "Picklists\\LanguageReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_picklist_languages_all",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "picklists",
+    "ControllerVersion": "1",
+    "IncludeControllerInGeneration": "True",
+    "FetchMethodName": "GetAll",
+    "Model": "Picklists\\LanguageReadOnly",
+    "ModelGroup": "LanguageReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "languages",
+    "UsePaginatedList": "false",
+    "IsRoot": "true",
+    "IsChild": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_picklist_languages_all",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_picklist_languages_all]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\LanguageReadOnly",
+            "fields": [
+              {
+                "name": "ItemValue",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ItemValue"
+              },
+              {
+                "name": "ItemDescription",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemDescription"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\LanguageReadOnly.GetAll LanguageReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\LanguageReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_picklist_languages_all] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=LanguageReadOnly -p:Route=languages -p:ControllerName=PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T22:39:41.6592271Z"
+  },
+  "version": 1
+}

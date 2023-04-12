@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { NgxsModule, Select } from '@ngxs/store';
-import { AuthSelectors } from './state/auth/auth.selectors';
+import { Observable, Subscription } from 'rxjs';
+import { NgxsModule, Select, Store } from '@ngxs/store';
+
+import {
+  AuthSelectors,
+  GetUserProfile,
+  IUserProfile,
+  UserProfileSelectors,
+} from './state';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
 
@@ -22,28 +28,37 @@ import { DashboardHeaderComponent } from './shared/components/dashboard-header/d
     DashboardHeaderComponent,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   // TODO: MOve this logic into the auth guard
   @Select(AuthSelectors.isAuthenticated) isAuthenticated$:
     | Observable<boolean>
     | undefined;
-  isLogIn = true;
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+  authSub: Subscription | undefined;
+  userSub: Subscription | undefined;
+
   isSideNavOpen = false;
   userData!: any;
 
-  constructor(private _router: Router) {
-    // TODO: MOve this logic into the auth guard
-    this.isAuthenticated$?.subscribe((isAuthed) => {
-      if (isAuthed) {
-        if (location.pathname === '/') {
-          this._router.navigateByUrl('/dashboard');
-        }
+  constructor(private _router: Router, private _store: Store) {
+    this.authSub = this.isAuthenticated$?.subscribe((isAuthed) => {
+      const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);
+      const claims = this._store.selectSnapshot(AuthSelectors.claims);
+      if (isAuthed && loginUser && claims) {
+        this._store.dispatch(new GetUserProfile(loginUser, claims));
       }
     });
   }
 
   ngOnInit(): void {
     this.fetchUserData();
+  }
+
+  ngOnDestroy(): void {
+    this.authSub?.unsubscribe();
+    this.userSub?.unsubscribe();
   }
 
   handleSideNavToggle() {

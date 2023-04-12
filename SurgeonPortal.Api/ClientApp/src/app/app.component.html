@@ -6,7 +6,7 @@
 </div>
 
 <ng-template #site>
-  <div class="app-content">
+  <div class="app-content" *ngIf="user$ | async as user">
     <aside [ngClass]="isSideNavOpen ? 'toggled' : ''">
       <abs-side-navigation
         [currentStatus]="userData.currentStatus"

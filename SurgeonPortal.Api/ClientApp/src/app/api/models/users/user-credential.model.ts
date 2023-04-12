@@ -8,6 +8,6 @@ developer when the API is created. Please do not make changes to this file
 ############################################################################
 **/
 export interface IUserCredentialModel {
-  emailAddress: string | null;
-  password: string | null;
+    emailAddress: string | null;
+    password: string | null;
 }

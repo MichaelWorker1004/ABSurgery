@@ -4,17 +4,17 @@
   "template": "ytg-framework/editable-create",
   "parameters": {
     "Adapter": "dbo.insert_user_profile",
+    "ControllerName": "Users\\UserProfilesController",
+    "ControllerRoute": "users/profiles",
+    "ControllerVersion": "1",
     "FetchImplementation": "Users\\UserProfile-getbyuserid",
+    "IncludeControllerInGeneration": "true",
     "IsChild": "False",
     "IsRoot": "True",
     "Model": "Users\\UserProfile",
     "ModelGroup": "UserProfile",
     "RootNamespace": "$project.RootNamespace",
-    "Route": "",
-    "IncludeControllerInGeneration": "True",
-    "ControllerName": "Users\\UserProfilesController",
-    "ControllerRoute": "user/profiles",
-    "ControllerVersion": "1"
+    "Route": ""
   },
   "projectClaims": {},
   "adapters": [
@@ -135,21 +135,12 @@
           },
           {
             "name": "ABSId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
+            "dataType": "string",
+            "maxLength": 20,
+            "precision": 20,
             "scale": 0,
             "required": true,
             "mapsTo": "ABSId"
-          },
-          {
-            "name": "CertificationStatusId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "CertificationStatusId"
           },
           {
             "name": "NPI",
@@ -161,13 +152,13 @@
             "mapsTo": "NPI"
           },
           {
-            "name": "Gender",
-            "dataType": "string",
-            "maxLength": 20,
-            "precision": 20,
+            "name": "GenderId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "Gender"
+            "mapsTo": "GenderId"
           },
           {
             "name": "BirthDate",
@@ -197,22 +188,22 @@
             "mapsTo": "Ethnicity"
           },
           {
-            "name": "FirstLanguage",
-            "dataType": "string",
-            "maxLength": 30,
-            "precision": 30,
+            "name": "FirstLanguageId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "FirstLanguage"
+            "mapsTo": "FirstLanguageId"
           },
           {
-            "name": "BestLanguage",
-            "dataType": "string",
-            "maxLength": 30,
-            "precision": 30,
+            "name": "BestLanguageId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "BestLanguage"
+            "mapsTo": "BestLanguageId"
           },
           {
             "name": "ReceiveComms",
@@ -240,6 +231,60 @@
             "scale": 3,
             "required": true,
             "mapsTo": "UserConfirmedDate"
+          },
+          {
+            "name": "Street1",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Street1"
+          },
+          {
+            "name": "Street2",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Street2"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "maxLength": 30,
+            "precision": 30,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "City"
+          },
+          {
+            "name": "State",
+            "dataType": "string",
+            "maxLength": 2,
+            "precision": 2,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "State"
+          },
+          {
+            "name": "ZipCode",
+            "dataType": "string",
+            "maxLength": 10,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ZipCode"
+          },
+          {
+            "name": "Country",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Country"
           },
           {
             "name": "CreatedByUserId",
@@ -414,23 +459,23 @@
               },
               {
                 "name": "ABSId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.ABSId"
               },
               {
-                "name": "CertificationStatusId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
+                "name": "CertificationStatus",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.CertificationStatusId"
+                "mapsTo": "model.CertificationStatus"
               },
               {
                 "name": "NPI",
@@ -443,14 +488,14 @@
                 "mapsTo": "model.NPI"
               },
               {
-                "name": "Gender",
-                "dataType": "string",
-                "maxLength": 20,
-                "precision": 0,
+                "name": "GenderId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.Gender"
+                "mapsTo": "model.GenderId"
               },
               {
                 "name": "BirthDate",
@@ -483,24 +528,24 @@
                 "mapsTo": "model.Ethnicity"
               },
               {
-                "name": "FirstLanguage",
-                "dataType": "string",
-                "maxLength": 30,
-                "precision": 0,
+                "name": "FirstLanguageId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.FirstLanguage"
+                "mapsTo": "model.FirstLanguageId"
               },
               {
-                "name": "BestLanguage",
-                "dataType": "string",
-                "maxLength": 30,
-                "precision": 0,
+                "name": "BestLanguageId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.BestLanguage"
+                "mapsTo": "model.BestLanguageId"
               },
               {
                 "name": "ReceiveComms",
@@ -571,6 +616,66 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.LastUpdatedByUserId"
+              },
+              {
+                "name": "Street1",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Street1"
+              },
+              {
+                "name": "Street2",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Street2"
+              },
+              {
+                "name": "City",
+                "dataType": "string",
+                "maxLength": 30,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.City"
+              },
+              {
+                "name": "State",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.State"
+              },
+              {
+                "name": "ZipCode",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ZipCode"
+              },
+              {
+                "name": "Country",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Country"
               }
             ]
           }
@@ -641,12 +746,7 @@
     },
     {
       "name": "ABSId",
-      "dataType": "int",
-      "required": true
-    },
-    {
-      "name": "CertificationStatusId",
-      "dataType": "int",
+      "dataType": "string",
       "required": true
     },
     {
@@ -655,8 +755,8 @@
       "required": true
     },
     {
-      "name": "Gender",
-      "dataType": "string",
+      "name": "GenderId",
+      "dataType": "int",
       "required": true
     },
     {
@@ -675,13 +775,13 @@
       "required": true
     },
     {
-      "name": "FirstLanguage",
-      "dataType": "string",
+      "name": "FirstLanguageId",
+      "dataType": "int",
       "required": true
     },
     {
-      "name": "BestLanguage",
-      "dataType": "string",
+      "name": "BestLanguageId",
+      "dataType": "int",
       "required": true
     },
     {
@@ -697,6 +797,36 @@
     {
       "name": "UserConfirmedDate",
       "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "Street1",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "Street2",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "City",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "State",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ZipCode",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "Country",
+      "dataType": "string",
       "required": true
     },
     {
@@ -721,9 +851,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Users\\UserProfile-insert UserProfile -t=ytg-framework\\editable-create -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[insert_user_profile] -p:FetchImplementation=Users\\UserProfile-getbyuserid -p:IsChild=False -p:IsRoot=True ",
-    "inferredCommand": "ytgim generate i  Users\\UserProfile-insert UserProfile -t=ytg-framework\\editable-create -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[insert_user_profile] -p:FetchImplementation=Users\\UserProfile-getbyuserid -p:IsChild=False -p:IsRoot=True -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfile",
-    "generatedDateUtc": "2023-03-24T18:59:43.2189457Z"
+    "command": "ytgim g i s Users\\UserProfile-insert UserProfile -t=ytg-framework\\editable-create -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[insert_user_profile] -p:FetchImplementation=Users\\UserProfile-getbyuserid -p:IsChild=False -p:IsRoot=True -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfile -p:IncludeControllerInGeneration=true -f ",
+    "inferredCommand": "ytgim generate i  Users\\UserProfile-insert UserProfile -t=ytg-framework\\editable-create -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[insert_user_profile] -p:FetchImplementation=Users\\UserProfile-getbyuserid -p:IsChild=False -p:IsRoot=True -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfile -p:IncludeControllerInGeneration=true -p:ControllerName=Users\\UserProfilesController -p:ControllerRoute=users/user-profiles -p:ControllerVersion=1 -p:Route=all",
+    "generatedDateUtc": "2023-04-06T15:14:41.5732742Z"
   },
   "version": 1
 }

@@ -1,5 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IUserProfile } from '../../../state';
 
 @Component({
   selector: 'abs-profile-header',
@@ -10,9 +11,7 @@ import { CommonModule } from '@angular/common';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProfileHeaderComponent {
-  // TODO: [Joe] we should default this to a real generic profile picture, not my placeholder from picsum
-  @Input() profilePicture =
-    'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU';
+  @Input() profilePicture: string | undefined;
   // TODO: [Joe] this will need to be more strongly typed once the model is defined
-  @Input() user!: any;
+  @Input() user: any | undefined;
 }

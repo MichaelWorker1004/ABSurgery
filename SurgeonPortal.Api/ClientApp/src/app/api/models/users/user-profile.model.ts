@@ -7,35 +7,40 @@ developer when the API is created. Please do not make changes to this file
 
 ############################################################################
 **/
-export interface IUserProfileModel
-{
-  userProfileId: number;
-  userId: number;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  suffix: string;
-  displayName: string;
-  officePhoneNumber: string;
-  mobilePhoneNumber: string;
-  birthCity: string;
-  birthState: string;
-  birthCountry: string;
-  countryCitizenship: string;
-  aBSId: number;
-  certificationStatusId: number;
-  nPI: string;
-  gender: string;
-  birthDate: string;
-  race: string;
-  ethnicity: string;
-  firstLanguage: string;
-  bestLanguage: string;
-  receiveComms: boolean;
-  userConfirmed: boolean;
-  userConfirmedDate: string;
-  createdByUserId: number;
-  createdAtUtc: string;
-  lastUpdatedAtUtc: string;
-  lastUpdatedByUserId: number;
+export interface IUserProfileModel {
+    userProfileId: number;
+    userId: number;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    suffix: string;
+    displayName: string;
+    officePhoneNumber: string;
+    mobilePhoneNumber: string;
+    birthCity: string;
+    birthState: string;
+    birthCountry: string;
+    countryCitizenship: string;
+    aBSId: string;
+    certificationStatus: string;
+    nPI: string;
+    genderId: number;
+    birthDate: string;
+    race: string;
+    ethnicity: string;
+    firstLanguageId: number;
+    bestLanguageId: number;
+    receiveComms: boolean;
+    userConfirmed: boolean;
+    userConfirmedDate: string;
+    createdByUserId: number;
+    createdAtUtc: string;
+    lastUpdatedAtUtc: string;
+    lastUpdatedByUserId: number;
+    street1: string;
+    street2: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
 }

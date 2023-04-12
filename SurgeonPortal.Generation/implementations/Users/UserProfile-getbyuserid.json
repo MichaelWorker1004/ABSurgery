@@ -4,17 +4,17 @@
   "template": "ytg-framework/editable-get",
   "parameters": {
     "Adapter": "dbo.get_user_profile_byuserid",
+    "ControllerName": "Users\\UserProfilesController",
+    "ControllerRoute": "users/profiles",
+    "ControllerVersion": "1",
     "FetchMethodName": "GetByUserId",
-    "IsChild": "False",
-    "IsRoot": "True",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
     "Model": "Users\\UserProfile",
     "ModelGroup": "UserProfile",
     "RootNamespace": "$project.RootNamespace",
-    "Route": "",
-    "IncludeControllerInGeneration": "True",
-    "ControllerName": "Users\\UserProfilesController",
-    "ControllerRoute": "user/profiles",
-    "ControllerVersion": "1"
+    "Route": "by-userId"
   },
   "projectClaims": {},
   "adapters": [
@@ -171,23 +171,23 @@
               },
               {
                 "name": "ABSId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.ABSId"
               },
               {
-                "name": "CertificationStatusId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
+                "name": "CertificationStatus",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.CertificationStatusId"
+                "mapsTo": "model.CertificationStatus"
               },
               {
                 "name": "NPI",
@@ -200,14 +200,14 @@
                 "mapsTo": "model.NPI"
               },
               {
-                "name": "Gender",
-                "dataType": "string",
-                "maxLength": 20,
-                "precision": 0,
+                "name": "GenderId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.Gender"
+                "mapsTo": "model.GenderId"
               },
               {
                 "name": "BirthDate",
@@ -240,24 +240,24 @@
                 "mapsTo": "model.Ethnicity"
               },
               {
-                "name": "FirstLanguage",
-                "dataType": "string",
-                "maxLength": 30,
-                "precision": 0,
+                "name": "FirstLanguageId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.FirstLanguage"
+                "mapsTo": "model.FirstLanguageId"
               },
               {
-                "name": "BestLanguage",
-                "dataType": "string",
-                "maxLength": 30,
-                "precision": 0,
+                "name": "BestLanguageId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.BestLanguage"
+                "mapsTo": "model.BestLanguageId"
               },
               {
                 "name": "ReceiveComms",
@@ -328,6 +328,66 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.LastUpdatedByUserId"
+              },
+              {
+                "name": "Street1",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Street1"
+              },
+              {
+                "name": "Street2",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Street2"
+              },
+              {
+                "name": "City",
+                "dataType": "string",
+                "maxLength": 30,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.City"
+              },
+              {
+                "name": "State",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.State"
+              },
+              {
+                "name": "ZipCode",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ZipCode"
+              },
+              {
+                "name": "Country",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Country"
               }
             ]
           }
@@ -343,9 +403,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Users\\UserProfile-getbyuserid UserProfile -t=ytg-framework\\editable-get -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[get_user_profile_byuserid] -p:FetchMethodName=GetByUserId -p:IsChild=False -p:IsRoot=True -f ",
-    "inferredCommand": "ytgim generate i  Users\\UserProfile-getbyuserid UserProfile -t=ytg-framework\\editable-get -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[get_user_profile_byuserid] -p:FetchMethodName=GetByUserId -p:IsChild=False -p:IsRoot=True -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfile",
-    "generatedDateUtc": "2023-03-24T18:52:34.1263205Z"
+    "command": "ytgim generate i s Users\\UserProfile-getbyuserid UserProfile -t=ytg-framework\\editable-get -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[get_user_profile_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfile -p:ControllerName=Users\\UserProfilesController -p:ControllerRoute=user/profiles -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -f ",
+    "inferredCommand": "ytgim generate i  Users\\UserProfile-getbyuserid UserProfile -t=ytg-framework\\editable-get -p:Model=Users\\UserProfile -p:Adapter=sp:ABSSP-[dbo].[get_user_profile_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfile -p:ControllerName=Users\\UserProfilesController -p:ControllerRoute=users/user-profiles -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=all",
+    "generatedDateUtc": "2023-04-06T14:54:21.6273061Z"
   },
   "version": 1
 }

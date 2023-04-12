@@ -1,0 +1,40 @@
+{
+  "refs": {},
+  "name": "Picklists\\StateReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Country",
+      "dataType": "string",
+      "maxLength": 3,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "ItemValue",
+      "dataType": "string",
+      "maxLength": 2,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": false,
+      "isIdentityColumn": false
+    },
+    {
+      "name": "ItemDescription",
+      "dataType": "string",
+      "maxLength": 40,
+      "precision": 0,
+      "scale": 0,
+      "isNullable": true,
+      "isIdentityColumn": false
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\StateReadOnly -sp [dbo].[get_picklist_states_bycountry] -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T21:59:51.3431886Z"
+  },
+  "version": 1
+}

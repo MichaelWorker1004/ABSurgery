@@ -1,0 +1,92 @@
+{
+  "name": "StateReadOnly",
+  "implementationName": "Picklists\\StateReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_picklist_states_bycountry",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "picklists",
+    "ControllerVersion": "1",
+    "IncludeControllerInGeneration": "True",
+    "FetchMethodName": "GetByCountry",
+    "Model": "Picklists\\StateReadOnly",
+    "ModelGroup": "StateReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "states",
+    "UsePaginatedList": "false",
+    "IsRoot": "true",
+    "IsChild": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_picklist_states_bycountry",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_picklist_states_bycountry]",
+        "parameters": [
+          {
+            "name": "CountryCode",
+            "dataType": "string",
+            "maxLength": 3,
+            "precision": 3,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CountryCode"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Picklists\\StateReadOnly",
+            "fields": [
+              {
+                "name": "country",
+                "dataType": "string",
+                "maxLength": 3,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": ""
+              },
+              {
+                "name": "ItemValue",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemValue"
+              },
+              {
+                "name": "ItemDescription",
+                "dataType": "string",
+                "maxLength": 40,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemDescription"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "CountryCode",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\StateReadOnly.GetAll StateReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\StateReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_picklist_states_bycountry] -p:FetchMethodName=GetByCountry -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=StateReadOnly -p:Route=states -p:ControllerName=PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-03-28T22:41:34.2804287Z"
+  },
+  "version": 1
+}

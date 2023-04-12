@@ -17,8 +17,8 @@ namespace SurgeonPortal.Api.Controllers.Users
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-    [Route("user/profiles")]
-	[Route("v{version:apiVersion}/user/profiles")]
+    [Route("users/profiles")]
+	[Route("v{version:apiVersion}/users/profiles")]
 	public class UserProfilesController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -36,7 +36,7 @@ namespace SurgeonPortal.Api.Controllers.Users
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserProfileModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [HttpGet("")]
+        [HttpGet("by-userId")]
         public async Task<ActionResult<UserProfileModel>> GetUserProfile_GetByUserIdAsync(
             [FromServices] IUserProfileFactory userProfileFactory,
             int userId)
@@ -63,7 +63,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             return await CreateAsync<UserProfileModel>(
                 _mapper,
                 item,
-                absoluteUriProvider.GetAbsoluteUri($"/v1/user/profiles/{item.UserProfileId}"));
+                absoluteUriProvider.GetAbsoluteUri($"/v1/users/profiles/{item.UserProfileId}"));
         } 
 
         [Authorize]
@@ -71,7 +71,7 @@ namespace SurgeonPortal.Api.Controllers.Users
         [ProducesResponseType(200)]
         [ProducesResponseType(400, Type = typeof(UserProfileModel))]
         [ProducesResponseType(401)]
-        [HttpPut("{UserId}")]
+        [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] IUserProfileFactory userProfileFactory,
             [FromBody] UserProfileModel model,
@@ -97,18 +97,21 @@ namespace SurgeonPortal.Api.Controllers.Users
             entity.BirthState = model.BirthState;
             entity.BirthCountry = model.BirthCountry;
             entity.CountryCitizenship = model.CountryCitizenship;
-            entity.ABSId = model.ABSId;
-            entity.CertificationStatusId = model.CertificationStatusId;
-            entity.NPI = model.NPI;
-            entity.Gender = model.Gender;
+            entity.GenderId = model.GenderId;
             entity.BirthDate = model.BirthDate;
             entity.Race = model.Race;
             entity.Ethnicity = model.Ethnicity;
-            entity.FirstLanguage = model.FirstLanguage;
-            entity.BestLanguage = model.BestLanguage;
+            entity.FirstLanguageId = model.FirstLanguageId;
+            entity.BestLanguageId = model.BestLanguageId;
             entity.ReceiveComms = model.ReceiveComms;
             entity.UserConfirmed = model.UserConfirmed;
             entity.UserConfirmedDate = model.UserConfirmedDate;
+            entity.Street1 = model.Street1;
+            entity.Street2 = model.Street2;
+            entity.City = model.City;
+            entity.State = model.State;
+            entity.ZipCode = model.ZipCode;
+            entity.Country = model.Country;
         }
     }
 }

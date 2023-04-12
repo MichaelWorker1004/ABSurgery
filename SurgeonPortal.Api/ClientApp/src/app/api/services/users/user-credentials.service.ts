@@ -23,14 +23,19 @@ export class UserCredentialsService {
     constructor(private httpClient: HttpClient) {}
 
  
-        public retrieveUserCredential_GetByUserId(): Observable<IUserCredentialModel> {
+        public retrieveUserCredential_GetByUserId(apiVersion = '1.0'): Observable<IUserCredentialModel> {
             /**
             * Claims
             */
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: EmailAddress
+            *   Rule Name: RegEx
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Password
+            *   Rule Name: RegEx
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**
@@ -43,9 +48,8 @@ export class UserCredentialsService {
             * [get_user_account]
             */
             
-    return this.httpClient.get<IUserCredentialModel>(
-      `${this.baseEndpoint}/by-userid`
-    );
+            
+            return this.httpClient.get<IUserCredentialModel>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
         }
  
         public updateUserCredential(model: IUserCredentialModel,
@@ -56,7 +60,12 @@ export class UserCredentialsService {
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: EmailAddress
+            *   Rule Name: RegEx
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: Password
+            *   Rule Name: RegEx
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**

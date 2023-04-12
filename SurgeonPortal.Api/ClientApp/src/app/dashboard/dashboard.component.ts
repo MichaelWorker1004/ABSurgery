@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';
 import { UserInformationCardComponent } from '../shared/components/user-information-card/user-information-card.component';
+import { IUserProfile, UserProfileSelectors } from '../state';
 
 @Component({
   selector: 'abs-dashboard',
@@ -17,6 +20,14 @@ import { UserInformationCardComponent } from '../shared/components/user-informat
   ],
 })
 export class DashboardComponent implements OnInit {
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+
+  @Select(UserProfileSelectors.userDisplayName) displayName$:
+    | Observable<string>
+    | undefined;
+
   @Input() userData: any | undefined;
   alertsAndNotices: any | undefined;
   userActionCards: any | undefined;

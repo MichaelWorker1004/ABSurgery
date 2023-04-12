@@ -1,0 +1,101 @@
+{
+  "name": "CertificationReadOnly",
+  "implementationName": "Surgeons\\CertificationReadOnly-getbyabsid",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_user_certifications",
+    "ControllerName": "Surgeons\\CertificationsController",
+    "ControllerRoute": "surgeons/certifications",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByAbsId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Surgeons\\CertificationReadOnly",
+    "ModelGroup": "CertificationReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_certifications",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_certifications]",
+        "parameters": [
+          {
+            "name": "AbsId",
+            "dataType": "string",
+            "maxLength": 20,
+            "precision": 20,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "AbsId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Surgeons\\CertificationReadOnly",
+            "fields": [
+              {
+                "name": "Speciality",
+                "dataType": "string",
+                "maxLength": 1000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Speciality"
+              },
+              {
+                "name": "CertificateId",
+                "dataType": "string",
+                "maxLength": 6,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificateId"
+              },
+              {
+                "name": "InitialCertificationDate",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InitialCertificationDate"
+              },
+              {
+                "name": "EndDateDisplay",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.EndDateDisplay"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "AbsId",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim generate i s Surgeons\\CertificationReadOnly-getbyabsid CertificationReadOnly -t=ytg-framework\\editable-get -p:Model=Surgeons\\CertificationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certifications] -p:FetchMethodName=GetByAbsId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CertificationReadOnly -p:ControllerName=Surgeons\\CertificationsController -p:ControllerRoute=surgeon/certifications -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "inferredCommand": "ytgim generate i  Surgeons\\CertificationReadOnly-getbyabsid CertificationReadOnly -t=ytg-framework\\editable-get -p:Model=Surgeons\\CertificationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certifications] -p:FetchMethodName=GetByAbsId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CertificationReadOnly -p:ControllerName=Surgeons\\CertificationsController -p:ControllerRoute=surgeons/certification-read-onlies -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=",
+    "generatedDateUtc": "2023-04-06T20:47:57.7727857Z"
+  },
+  "version": 1
+}
