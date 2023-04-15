@@ -1,0 +1,13 @@
+.error-message {
+  color: var(--global-danger-darken-60);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  margin: 0;
+  &:hover {
+    color: var(--global-danger-darken-20);
+  }
+
+  + .error-message {
+    margin-top: 0.15rem;
+  }
+}

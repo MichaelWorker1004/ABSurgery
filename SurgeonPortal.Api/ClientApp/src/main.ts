@@ -14,6 +14,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { IConfig, provideEnvironmentNgxMask } from 'ngx-mask';
 
 import { AuthInterceptor } from './app/shared/common';
+import { ErrorInterceptor } from './app/shared/common';
 import { surgeonPortalState } from './app/state/surgeon-portal.state';
 
 import { AppRoutingModule } from './app/app-routing.module';
@@ -28,6 +29,7 @@ const maskConfig: Partial<IConfig> = {
 };
 bootstrapApplication(AppComponent, {
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideEnvironmentNgxMask(maskConfig),
     importProvidersFrom(

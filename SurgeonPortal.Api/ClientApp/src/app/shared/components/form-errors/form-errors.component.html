@@ -1,0 +1,13 @@
+<div>
+  <sl-alert variant="danger" open>
+    <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+    <p
+      class="font-bold error-message"
+      *ngFor="let error of errors | keyvalue"
+      (click)="focusElement(error.key)"
+      title="focus related field"
+    >
+      {{ error.value.join(', ') }}
+    </p>
+  </sl-alert>
+</div>

@@ -3,7 +3,7 @@ import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
 import { of, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SaveMyAccountChanges } from './my-account.actions';
+import { SaveMyAccountChanges, ClearErrors } from './my-account.actions';
 import { IFormErrors } from '../../shared/common';
 import { IUserCredentialModel } from '../../api/models/users/user-credential.model';
 import { UserCredentialsService } from '../../api/services/users/user-credentials.service';
@@ -50,5 +50,10 @@ export class MyAccountState {
         return of(errors);
       })
     );
+  }
+
+  @Action(ClearErrors)
+  clearErrors(ctx: StateContext<IUserCredential>) {
+    ctx.patchState({ errors: null });
   }
 }

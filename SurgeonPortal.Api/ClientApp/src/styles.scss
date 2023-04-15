@@ -257,7 +257,7 @@
 
   /* Global Misc Colors */
   --global-modal-backdrop: #728db1;
-  --glbal-card-highlight: #e5eff1;
+  --global-card-highlight: #e5eff1;
   --global-table-background: #f4f4f4;
 }
 
@@ -596,6 +596,40 @@ label {
   .confirmation-icon {
     font-size: 5rem;
     color: var(--global-warning);
+  }
+}
+
+.toast-bottom-right {
+  position: absolute;
+  display: flex;
+  flex-direction: column-reverse;
+  bottom: 10px;
+  right: 10px;
+  width: 35rem;
+  z-index: 9999;
+  pointer-events: none;
+  sl-alert {
+    pointer-events: all;
+    margin-bottom: 0.5rem;
+    .toast__title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0;
+      text-transform: capitalize;
+    }
+    .toast__message {
+      font-size: 0.875rem;
+      margin: 0;
+    }
+  }
+
+  sl-alert[variant='primary'] {
+    sl-icon {
+      color: var(--global-secondary-darken-40);
+    }
+  }
+  sl-alert[variant='primary']::part(base) {
+    border-top-color: var(--global-secondary-darken-40);
   }
 }
 

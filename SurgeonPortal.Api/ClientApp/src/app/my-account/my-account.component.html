@@ -20,15 +20,12 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
-        <ng-container *ngIf="errors$ | async as error"
-          ><span *ngIf="error?.password">Error</span>
-          <sl-alert variant="danger" open>
-            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-            <strong *ngIf="error?.emailAddress">{{
-              error?.emailAddress[0]
-            }}</strong>
-            <strong *ngIf="error?.password">{{ error?.password[0] }}</strong>
-          </sl-alert>
+        <ng-container *ngIf="isEdit">
+          <abs-form-errors
+            *ngIf="errors$ | async as error"
+            [errors]="error"
+            [clearErrors]="clearErrors"
+          ></abs-form-errors>
         </ng-container>
         <div class="grid" *ngIf="!isEdit">
           <div class="col-12 md:col-6">

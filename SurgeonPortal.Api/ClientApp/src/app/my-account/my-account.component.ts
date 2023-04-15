@@ -18,7 +18,9 @@ import {
   UserProfileSelectors,
   IUserProfile,
 } from '../state';
+import { ClearErrors } from '../state/my-account/my-account.actions';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
+import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
 
 @Component({
   selector: 'abs-my-account',
@@ -31,6 +33,7 @@ import { ProfileHeaderComponent } from '../shared/components/profile-header/prof
     FormsModule,
     ReactiveFormsModule,
     ProfileHeaderComponent,
+    FormErrorsComponent,
   ],
 })
 export class MyAccountComponent implements OnDestroy {
@@ -38,6 +41,8 @@ export class MyAccountComponent implements OnDestroy {
     | Observable<IUserProfile | null>
     | undefined;
   @Select(MyAccountSelectors.errors) errors$: Observable<any> | undefined;
+
+  clearErrors = new ClearErrors();
 
   userSub: Subscription | undefined;
   user: IUserProfile | null = null;
@@ -88,6 +93,7 @@ export class MyAccountComponent implements OnDestroy {
       emailAddress: this.user?.emailAddress,
       confirmEmailAddress: this.user?.emailAddress,
     });
+    this.isEdit = false;
   }
 
   selectAll($event: Event) {
