@@ -67,7 +67,9 @@
               </h6>
               <div
                 class="grid"
-                *ngIf="!(editHospitalAppointmentsAndPrivileges$ | async)"
+                *ngIf="
+                  (editHospitalAppointmentsAndPrivileges$ | async) === false
+                "
               >
                 <div class="col-12 md:col-6">
                   <label>Primary Current Practice or Training</label>
@@ -182,7 +184,9 @@
               <div class="grid mt-3">
                 <div
                   class="col-12 flex justify-content-end"
-                  *ngIf="!(editHospitalAppointmentsAndPrivileges$ | async)"
+                  *ngIf="
+                    (editHospitalAppointmentsAndPrivileges$ | async) === false
+                  "
                 >
                   <sl-button
                     variant="primary"
@@ -228,7 +232,10 @@
           >
             <h5 class="mt-0 mb-2" panel-header>Sanctions and Ethics</h5>
             <form id="sanctionsEthics">
-              <div class="grid" *ngIf="!(editSanctionsAndEthics$ | async)">
+              <div
+                class="grid"
+                *ngIf="(editSanctionsAndEthics$ | async) === false"
+              >
                 <div class="col-12">
                   <label
                     >Have you had treatment for drug or alcohol abuse?</label
@@ -388,7 +395,7 @@
               <div class="grid">
                 <div
                   class="col-12 flex justify-content-end"
-                  *ngIf="!(editSanctionsAndEthics$ | async)"
+                  *ngIf="(editSanctionsAndEthics$ | async) === false"
                 >
                   <sl-button
                     variant="primary"
@@ -420,18 +427,31 @@
         </div>
       </sl-card>
     </div>
-    <abs-appointments-add-edit-modal
-      [showDialog]="showAppointmentsAddEdit"
-      [appointment]="tempAppointment$"
-      (cancelDialog)="cancelAddEditAppointment($event)"
-      (saveDialog)="saveAppointment($event)"
-    ></abs-appointments-add-edit-modal>
-    <abs-license-add-edit-modal
-      [showDialog]="showLicensesAddEdit"
-      [license]="tempLicense$"
-      (cancelDialog)="cancelAddEditLicense($event)"
-      (saveDialog)="saveLicense($event)"
-    ></abs-license-add-edit-modal>
+    <abs-modal
+      [open]="showAppointmentsAddEdit"
+      (closeDialog)="cancelAddEditAppointment($event)"
+      [title]="appointmentsTitle"
+      modalName="appointmentAddEditModal"
+    >
+      <abs-appointments-add-edit-modal
+        [appointment]="tempAppointment$"
+        (cancelDialog)="cancelAddEditAppointment($event)"
+        (saveDialog)="saveAppointment($event)"
+      ></abs-appointments-add-edit-modal>
+    </abs-modal>
+
+    <abs-modal
+      [open]="showLicensesAddEdit"
+      (closeDialog)="cancelAddEditLicense($event)"
+      [title]="stateMedicalLicenseTitle"
+      modalName="licenseAddEditModal"
+    >
+      <abs-license-add-edit-modal
+        [license]="tempLicense$"
+        (cancelDialog)="cancelAddEditLicense($event)"
+        (saveDialog)="saveLicense($event)"
+      ></abs-license-add-edit-modal>
+    </abs-modal>
   </section>
 </ng-container>
 

@@ -19,7 +19,6 @@ import { Subject } from 'rxjs';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppointmentsAddEditModalComponent implements OnInit {
-  @Input() showDialog = false;
   // TODO: [Joe] this should be strongly typed once models are created
   @Input() appointment: Subject<any> = new Subject();
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();

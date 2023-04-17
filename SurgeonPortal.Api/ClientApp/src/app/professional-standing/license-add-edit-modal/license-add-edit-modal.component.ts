@@ -19,7 +19,6 @@ import { Subject } from 'rxjs';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LicenseAddEditModalComponent implements OnInit {
-  @Input() showDialog = false;
   @Input() license: Subject<any> = new Subject();
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();

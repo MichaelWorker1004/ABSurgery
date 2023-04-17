@@ -1,6 +1,8 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IUserProfile } from '../../../state';
+import { IUserProfile, UserProfileSelectors } from '../../../state';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'abs-profile-header',
@@ -13,5 +15,7 @@ import { IUserProfile } from '../../../state';
 export class ProfileHeaderComponent {
   @Input() profilePicture: string | undefined;
   // TODO: [Joe] this will need to be more strongly typed once the model is defined
-  @Input() user: any | undefined;
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
 }

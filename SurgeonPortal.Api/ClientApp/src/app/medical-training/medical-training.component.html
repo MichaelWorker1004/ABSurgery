@@ -480,12 +480,17 @@
         </form>
       </sl-card>
     </div>
-    <abs-training-add-edit-modal
-      [showDialog]="showTrainingAddEdit"
-      [training]="tempTraining$"
-      (cancelDialog)="cancelAddEditTraining($event)"
-      (saveDialog)="saveTraining($event)"
-    ></abs-training-add-edit-modal>
+    <abs-modal
+      [open]="showTrainingAddEdit"
+      (closeDialog)="cancelAddEditTraining($event)"
+      [title]="trainingAddEditTitle"
+    >
+      <abs-training-add-edit-modal
+        [training]="tempTraining$"
+        (cancelDialog)="cancelAddEditTraining($event)"
+        (saveDialog)="saveTraining($event)"
+      ></abs-training-add-edit-modal>
+    </abs-modal>
   </section>
 </ng-container>
 

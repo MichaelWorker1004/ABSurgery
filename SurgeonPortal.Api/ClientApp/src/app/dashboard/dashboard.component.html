@@ -5,7 +5,8 @@
       <h4 class="thin">Hello, {{ displayName$ | async }}!</h4>
     </div>
     <div class="last-login">
-      <strong>Last Login:</strong> {{ userData.lastLogin }}
+      <strong>Last Login:</strong>
+      {{ user.lastLoginDateUtc | date }}
     </div>
   </div>
 

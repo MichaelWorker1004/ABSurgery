@@ -1,90 +1,82 @@
-<sl-dialog
-  [open]="showDialog"
-  (sl-request-close)="handleDefaultClose($event)"
-  style="--width: 70%"
->
-  <div slot="label">{{ localLicense?.id ? 'Edit' : 'Add' }} License Record</div>
-  <form id="appointmentAddEdit" *ngIf="localLicense">
-    <div class="grid">
-      <div class="col-12">
-        <p class="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-          erat, egestas sit amet tortor at, condimentum tempor erat.
-        </p>
-      </div>
-      <sl-select
-        class="col-12 md:col-6"
-        name="state"
-        label="License State"
-        ngDefaultControl
-        [(ngModel)]="localLicense.state"
-      >
-        <sl-option value="Pennsylvania">Pennsylvania</sl-option>
-        <sl-option value="option-1">Option 1</sl-option>
-        <sl-option value="option-2">Option 2</sl-option>
-        <sl-option value="option-3">Option 3</sl-option>
-      </sl-select>
-      <sl-input
-        class="col-12 md:col-6"
-        name="number"
-        label="License Number"
-        ngDefaultControl
-        [(ngModel)]="localLicense.number"
-      >
-      </sl-input>
-      <sl-select
-        class="col-12 md:col-6"
-        name="type"
-        label="License Type"
-        ngDefaultControl
-        [(ngModel)]="localLicense.type"
-      >
-        <sl-option value="Full">Full</sl-option>
-        <sl-option value="option-1">Option 1</sl-option>
-        <sl-option value="option-2">Option 2</sl-option>
-        <sl-option value="option-3">Option 3</sl-option>
-      </sl-select>
-      <sl-input
-        type="date"
-        valueAsDate
-        class="col-12 md:col-6"
-        name="issueDate"
-        label="Issue Date"
-        ngDefaultControl
-        [(ngModel)]="localLicense.issueDate"
-      >
-      </sl-input>
-      <sl-input
-        type="date"
-        valueAsDate
-        class="col-12 md:col-6"
-        name="expireDate"
-        label="Expire Date"
-        ngDefaultControl
-        [(ngModel)]="localLicense.expireDate"
-      >
-      </sl-input>
-      <sl-input
-        class="col-12 md:col-6"
-        name="reportingOrd"
-        label="Verification Organization"
-        ngDefaultControl
-        [(ngModel)]="localLicense.reportingOrg"
-      >
-      </sl-input>
+<div slot="label">{{ localLicense?.id ? 'Edit' : 'Add' }} License Record</div>
+<form id="appointmentAddEdit" *ngIf="localLicense">
+  <div class="grid">
+    <div class="col-12">
+      <p class="m-0">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+        nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat,
+        egestas sit amet tortor at, condimentum tempor erat.
+      </p>
     </div>
-  </form>
-  <div class="flex justify-content-end" slot="footer">
-    <sl-button type="button" variant="text" (click)="cancel()"
-      >Cancel</sl-button
+    <sl-select
+      class="col-12 md:col-6"
+      name="state"
+      label="License State"
+      ngDefaultControl
+      [(ngModel)]="localLicense.state"
     >
-    <sl-button
-      type="button"
-      style="width: 337px"
-      variant="primary"
-      (click)="save()"
-      >Save
-    </sl-button>
+      <sl-option value="Pennsylvania">Pennsylvania</sl-option>
+      <sl-option value="option-1">Option 1</sl-option>
+      <sl-option value="option-2">Option 2</sl-option>
+      <sl-option value="option-3">Option 3</sl-option>
+    </sl-select>
+    <sl-input
+      class="col-12 md:col-6"
+      name="number"
+      label="License Number"
+      ngDefaultControl
+      [(ngModel)]="localLicense.number"
+    >
+    </sl-input>
+    <sl-select
+      class="col-12 md:col-6"
+      name="type"
+      label="License Type"
+      ngDefaultControl
+      [(ngModel)]="localLicense.type"
+    >
+      <sl-option value="Full">Full</sl-option>
+      <sl-option value="option-1">Option 1</sl-option>
+      <sl-option value="option-2">Option 2</sl-option>
+      <sl-option value="option-3">Option 3</sl-option>
+    </sl-select>
+    <sl-input
+      type="date"
+      valueAsDate
+      class="col-12 md:col-6"
+      name="issueDate"
+      label="Issue Date"
+      ngDefaultControl
+      [(ngModel)]="localLicense.issueDate"
+    >
+    </sl-input>
+    <sl-input
+      type="date"
+      valueAsDate
+      class="col-12 md:col-6"
+      name="expireDate"
+      label="Expire Date"
+      ngDefaultControl
+      [(ngModel)]="localLicense.expireDate"
+    >
+    </sl-input>
+    <sl-input
+      class="col-12 md:col-6"
+      name="reportingOrd"
+      label="Verification Organization"
+      ngDefaultControl
+      [(ngModel)]="localLicense.reportingOrg"
+    >
+    </sl-input>
   </div>
-</sl-dialog>
+</form>
+<div class="flex justify-content-end" slot="footer">
+  <sl-button type="button" variant="text" (click)="cancel()">Cancel</sl-button>
+  <sl-button
+    type="button"
+    style="width: 337px"
+    variant="primary"
+    (click)="save()"
+    >Save
+  </sl-button>
+</div>

@@ -8,6 +8,7 @@ import { TrainingAddEditModalComponent } from '../shared/components/training-add
 import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-training-cols';
 
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { ModalComponent } from '../shared/components/modal/modal.component';
 
 @Component({
   selector: 'abs-medical-training',
@@ -21,12 +22,15 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
     ProfileHeaderComponent,
     GridComponent,
     TrainingAddEditModalComponent,
+    GridComponent,
+    ModalComponent,
   ],
 })
 export class MedicalTrainingComponent {
   isEdit = true;
   trainingCols = MEDICAL_TRAINING_COLS;
   showTrainingAddEdit = false;
+  trainingAddEditTitle: string | undefined;
   tempTraining$: BehaviorSubject<any> = new BehaviorSubject({});
   // TODO: [Joe] faked user data, replace with real data
   user = {
@@ -120,8 +124,8 @@ export class MedicalTrainingComponent {
   }
   showTrainingModal(training: any) {
     if (training) {
-      console.log(training);
       this.tempTraining$.next(training);
+      this.trainingAddEditTitle = 'Edit Additional / Advanced Training';
     } else {
       this.tempTraining$.next({
         type: null,
@@ -132,6 +136,7 @@ export class MedicalTrainingComponent {
         from: null,
         to: null,
       });
+      this.trainingAddEditTitle = 'Add Additional / Advanced Training';
     }
     this.showTrainingAddEdit = true;
   }

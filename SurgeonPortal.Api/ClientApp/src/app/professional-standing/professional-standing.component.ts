@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, Subject } from 'rxjs';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { AppointmentsAddEditModalComponent } from './appointments-add-edit-modal/appointments-add-edit-modal.component';
@@ -9,6 +9,7 @@ import { LicenseAddEditModalComponent } from './license-add-edit-modal/license-a
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { APPOINTMENTS_PRIVILEGES_COLS } from './appointments-privileges-cols';
 import { LICENSES_COLS } from './licenses-cols';
+import { ModalComponent } from '../shared/components/modal/modal.component';
 
 @Component({
   selector: 'abs-professional-standing',
@@ -24,6 +25,7 @@ import { LICENSES_COLS } from './licenses-cols';
     LicenseAddEditModalComponent,
     GridComponent,
     FormsModule,
+    ModalComponent,
   ],
 })
 export class ProfessionalStandingComponent implements OnInit {
@@ -35,6 +37,8 @@ export class ProfessionalStandingComponent implements OnInit {
   editStateMedicalLiscense$: Subject<boolean> = new BehaviorSubject(true);
   editHospitalAppointmentsAndPrivileges$: Subject<boolean> =
     new BehaviorSubject(true);
+  stateMedicalLicenseTitle: string | undefined;
+  appointmentsTitle: string | undefined;
   // TODO: [Joe] faked user data, replace with real data
   user = {
     profilePicture:
@@ -161,9 +165,11 @@ export class ProfessionalStandingComponent implements OnInit {
       console.log('unhandled action', $event);
     }
   }
+
   showLicenseModal(license: any) {
     if (license) {
       this.tempLicense$.next(license);
+      this.stateMedicalLicenseTitle = 'Edit License';
     } else {
       this.tempLicense$.next({
         state: null,
@@ -173,6 +179,7 @@ export class ProfessionalStandingComponent implements OnInit {
         expireDate: null,
         reportingOrg: null,
       });
+      this.stateMedicalLicenseTitle = 'Add License';
     }
     this.showLicensesAddEdit = true;
   }
@@ -202,6 +209,7 @@ export class ProfessionalStandingComponent implements OnInit {
   showAppointmentModal(appointment: any) {
     if (appointment) {
       this.tempAppointment$.next(appointment);
+      this.appointmentsTitle = 'Edit Appointment';
     } else {
       this.tempAppointment$.next({
         practiceType: null,
@@ -212,6 +220,7 @@ export class ProfessionalStandingComponent implements OnInit {
         other: null,
         official: null,
       });
+      this.appointmentsTitle = 'Add Appointment';
     }
     this.showAppointmentsAddEdit = true;
   }

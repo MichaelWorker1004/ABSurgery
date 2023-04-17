@@ -1,108 +1,97 @@
-<sl-dialog
-  [open]="showDialog"
-  (sl-request-close)="handleDefaultClose($event)"
-  style="--width: 70%"
->
-  <div slot="label">
-    {{ localTraining?.id ? 'Edit' : 'Add' }} Additional / Advanced Training
-  </div>
-  <form id="appointmentAddEdit" *ngIf="localTraining">
-    <div class="grid">
-      <div class="col-12">
-        <p class="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-          erat, egestas sit amet tortor at, condimentum tempor erat.
-        </p>
-      </div>
-      <sl-input
-        class="col-12"
-        name="type"
-        label="Type of Training"
-        placeholder="Type your answer..."
-        ngDefaultControl
-        [(ngModel)]="localTraining.type"
-        required
-      >
-      </sl-input>
-      <sl-input
-        class="col-12 md:col-4"
-        name="city"
-        label="City"
-        placeholder="Type your answer..."
-        ngDefaultControl
-        [(ngModel)]="localTraining.city"
-      >
-      </sl-input>
-      <sl-select
-        class="col-12 md:col-6"
-        name="state"
-        label="State"
-        placeholder="Choose a state"
-        ngDefaultControl
-        [(ngModel)]="localTraining.state"
-      >
-        <sl-option value="PA">PA</sl-option>
-        <sl-option value="option-1">Option 1</sl-option>
-        <sl-option value="option-2">Option 2</sl-option>
-        <sl-option value="option-3">Option 3</sl-option>
-      </sl-select>
-      <sl-select
-        class="col-12"
-        name="institution"
-        label="Institution"
-        placeholder="Choose an institution"
-        ngDefaultControl
-        [(ngModel)]="localTraining.institution"
-      >
-        <sl-option value="PA">PA</sl-option>
-        <sl-option value="option-1">Option 1</sl-option>
-        <sl-option value="option-2">Option 2</sl-option>
-        <sl-option value="option-3">Option 3</sl-option>
-      </sl-select>
-      <sl-input
-        class="col-12"
-        name="other"
-        label="Other"
-        placeholder="Type your answer..."
-        ngDefaultControl
-        [(ngModel)]="localTraining.other"
-      >
-      </sl-input>
-      <sl-input
-        type="date"
-        valueAsDate
-        class="col-12 md:col-6"
-        name="from"
-        label="Date Started"
-        ngDefaultControl
-        [(ngModel)]="localTraining.from"
-        required
-      >
-      </sl-input>
-      <sl-input
-        type="date"
-        valueAsDate
-        class="col-12 md:col-6"
-        name="to"
-        label="Date Ended"
-        ngDefaultControl
-        [(ngModel)]="localTraining.to"
-        required
-      >
-      </sl-input>
+<form id="appointmentAddEdit" *ngIf="localTraining">
+  <div class="grid">
+    <div class="col-12">
+      <p class="m-0">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+        nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat,
+        egestas sit amet tortor at, condimentum tempor erat.
+      </p>
     </div>
-  </form>
-  <div class="flex justify-content-end" slot="footer">
-    <sl-button type="button" variant="text" (click)="cancel()"
-      >Cancel</sl-button
+    <sl-input
+      class="col-12"
+      name="type"
+      label="Type of Training"
+      placeholder="Type your answer..."
+      ngDefaultControl
+      [(ngModel)]="localTraining.type"
+      required
     >
-    <sl-button
-      type="button"
-      style="width: 337px"
-      variant="primary"
-      (click)="save()"
-      >Save
-    </sl-button>
+    </sl-input>
+    <sl-input
+      class="col-12 md:col-4"
+      name="city"
+      label="City"
+      placeholder="Type your answer..."
+      ngDefaultControl
+      [(ngModel)]="localTraining.city"
+    >
+    </sl-input>
+    <sl-select
+      class="col-12 md:col-6"
+      name="state"
+      label="State"
+      placeholder="Choose a state"
+      ngDefaultControl
+      [(ngModel)]="localTraining.state"
+    >
+      <sl-option value="PA">PA</sl-option>
+      <sl-option value="option-1">Option 1</sl-option>
+      <sl-option value="option-2">Option 2</sl-option>
+      <sl-option value="option-3">Option 3</sl-option>
+    </sl-select>
+    <sl-select
+      class="col-12"
+      name="institution"
+      label="Institution"
+      placeholder="Choose an institution"
+      ngDefaultControl
+      [(ngModel)]="localTraining.institution"
+    >
+      <sl-option value="PA">PA</sl-option>
+      <sl-option value="option-1">Option 1</sl-option>
+      <sl-option value="option-2">Option 2</sl-option>
+      <sl-option value="option-3">Option 3</sl-option>
+    </sl-select>
+    <sl-input
+      class="col-12"
+      name="other"
+      label="Other"
+      placeholder="Type your answer..."
+      ngDefaultControl
+      [(ngModel)]="localTraining.other"
+    >
+    </sl-input>
+    <sl-input
+      type="date"
+      valueAsDate
+      class="col-12 md:col-6"
+      name="from"
+      label="Date Started"
+      ngDefaultControl
+      [(ngModel)]="localTraining.from"
+      required
+    >
+    </sl-input>
+    <sl-input
+      type="date"
+      valueAsDate
+      class="col-12 md:col-6"
+      name="to"
+      label="Date Ended"
+      ngDefaultControl
+      [(ngModel)]="localTraining.to"
+      required
+    >
+    </sl-input>
   </div>
-</sl-dialog>
+</form>
+<div class="flex justify-content-end mt-4" slot="footer">
+  <sl-button type="button" variant="text" (click)="cancel()">Cancel</sl-button>
+  <sl-button
+    type="button"
+    style="width: 337px"
+    variant="primary"
+    (click)="save()"
+    >Save
+  </sl-button>
+</div>
