@@ -9,6 +9,7 @@
     "ControllerVersion": "1",
     "FetchMethodName": "GetByUserId",
     "IncludeControllerInGeneration": "true",
+    "ApiRoot": "$project.ApiRoot",
     "IsChild": "false",
     "IsRoot": "true",
     "Model": "Trainees\\ProgramReadOnly",

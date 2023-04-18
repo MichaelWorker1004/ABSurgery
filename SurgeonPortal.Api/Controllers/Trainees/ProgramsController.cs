@@ -16,8 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Trainees
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-    [Route("trainees/programs")]
-	[Route("v{version:apiVersion}/trainees/programs")]
+	[Route("api/trainees/programs")]
 	public class ProgramsController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -30,6 +29,9 @@ namespace SurgeonPortal.Api.Controllers.Trainees
             _mapper = mapper;
         }
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [Authorize]
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProgramReadOnlyModel))]

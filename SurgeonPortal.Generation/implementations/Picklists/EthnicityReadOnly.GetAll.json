@@ -8,6 +8,7 @@
     "ControllerRoute": "picklists",
     "ControllerVersion": "1",
     "IncludeControllerInGeneration": "True",
+    "ApiRoot": "$project.ApiRoot",
     "FetchMethodName": "GetAll",
     "Model": "Picklists\\EthnicityReadOnly",
     "ModelGroup": "EthnicityReadOnly",

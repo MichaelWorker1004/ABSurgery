@@ -18,7 +18,7 @@ developer when the API is created. Please do not make changes to this file
   providedIn: 'root',
 })
 export class CertificationsService {
-    private readonly baseEndpoint = 'surgeons/certifications';
+    private readonly baseEndpoint = 'api/surgeons/certifications';
 
     constructor(private httpClient: HttpClient) {}
 

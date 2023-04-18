@@ -17,8 +17,7 @@ namespace SurgeonPortal.Api.Controllers.Users
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-    [Route("users/credentials")]
-	[Route("v{version:apiVersion}/users/credentials")]
+	[Route("api/users/credentials")]
 	public class UserCredentialsController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -31,6 +30,9 @@ namespace SurgeonPortal.Api.Controllers.Users
             _mapper = mapper;
         }
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [Authorize]
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserCredentialModel))]
@@ -43,8 +45,11 @@ namespace SurgeonPortal.Api.Controllers.Users
             var item = await userCredentialFactory.GetByUserIdAsync();
         
             return Ok(_mapper.Map<UserCredentialModel>(item));
-        }
+        } 
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [Authorize]
         [MapToApiVersion("1")]
         [ProducesResponseType(200)]
@@ -56,12 +61,12 @@ namespace SurgeonPortal.Api.Controllers.Users
             [FromBody] UserCredentialModel model)
         {
             var item = await userCredentialFactory.GetByUserIdAsync();
-            AssignProperties(item, model);
+            AssignEditProperties(item, model);
             
             return await UpdateAsync<UserCredentialModel>(_mapper, item);
         } 
 
-        private void AssignProperties(IUserCredential entity, UserCredentialModel model)
+        private void AssignEditProperties(IUserCredential entity, UserCredentialModel model)
         {
             entity.EmailAddress = model.EmailAddress;
             entity.Password = model.Password;

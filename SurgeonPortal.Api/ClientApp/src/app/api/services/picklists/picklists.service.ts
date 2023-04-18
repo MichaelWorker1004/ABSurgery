@@ -23,7 +23,7 @@ developer when the API is created. Please do not make changes to this file
   providedIn: 'root',
 })
 export class PicklistsService {
-    private readonly baseEndpoint = 'picklists';
+    private readonly baseEndpoint = 'api/picklists';
 
     constructor(private httpClient: HttpClient) {}
 

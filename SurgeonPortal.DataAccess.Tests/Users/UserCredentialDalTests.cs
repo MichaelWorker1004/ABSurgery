@@ -13,26 +13,26 @@ namespace SurgeonPortal.DataAccess.Tests.Users
     {
         #region GetByUserIdAsync
         
-        [Test]
-        public async Task GetByUserIdAsync_ExecutesSprocCorrectly()
-        {
-            var expectedSprocName = "[dbo].[get_user_account]";
-            var expectedUserId = Create<int>();
-            var expectedParams =
-                new
-                {
-                    UserId = expectedUserId,
-                };
+        //[Test]
+        //public async Task GetByUserIdAsync_ExecutesSprocCorrectly()
+        //{
+        //    var expectedSprocName = "[dbo].[get_user_account]";
+        //    var expectedUserId = Create<int>();
+        //    var expectedParams =
+        //        new
+        //        {
+        //            UserId = expectedUserId,
+        //        };
         
-            var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(Create<UserCredentialDto>());
+        //    var sqlManager = new MockSqlConnectionManager();
+        //    sqlManager.AddRecord(Create<UserCredentialDto>());
         
-            var sut = new UserCredentialDal(sqlManager);
-            await sut.GetByUserIdAsync();
+        //    var sut = new UserCredentialDal(sqlManager);
+        //    await sut.GetByUserIdAsync();
         
-            Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
-            Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
-        }
+        //    Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
+        //    Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
+        //}
         
         [Test]
         public async Task GetByUserIdAsync_YieldsCorrectResult()

@@ -16,8 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-    [Route("picklists")]
-	[Route("v{version:apiVersion}/picklists")]
+	[Route("api/picklists")]
 	public class PicklistsController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -30,6 +29,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             _mapper = mapper;
         }
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CountryReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -43,6 +45,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             return Ok(_mapper.Map<IEnumerable<CountryReadOnlyModel>>(items));
         } 
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EthnicityReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,6 +61,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             return Ok(_mapper.Map<IEnumerable<EthnicityReadOnlyModel>>(items));
         } 
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GenderReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -69,6 +77,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             return Ok(_mapper.Map<IEnumerable<GenderReadOnlyModel>>(items));
         } 
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LanguageReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -82,6 +93,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             return Ok(_mapper.Map<IEnumerable<LanguageReadOnlyModel>>(items));
         } 
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RaceReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -95,6 +109,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             return Ok(_mapper.Map<IEnumerable<RaceReadOnlyModel>>(items));
         } 
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StateReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

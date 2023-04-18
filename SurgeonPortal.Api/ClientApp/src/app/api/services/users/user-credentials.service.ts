@@ -18,7 +18,7 @@ developer when the API is created. Please do not make changes to this file
   providedIn: 'root',
 })
 export class UserCredentialsService {
-    private readonly baseEndpoint = 'users/credentials';
+    private readonly baseEndpoint = 'api/users/credentials';
 
     constructor(private httpClient: HttpClient) {}
 
@@ -81,7 +81,7 @@ export class UserCredentialsService {
             */
             
             
-            //TODO - Fix this PUT implementation when we fix the PUT calls in the YTG-ANGULAR package
+            
             return this.httpClient.put<IUserCredentialModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
             model);
         }

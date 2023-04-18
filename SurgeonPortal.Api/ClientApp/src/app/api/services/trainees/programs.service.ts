@@ -18,7 +18,7 @@ developer when the API is created. Please do not make changes to this file
   providedIn: 'root',
 })
 export class ProgramsService {
-    private readonly baseEndpoint = 'trainees/programs';
+    private readonly baseEndpoint = 'api/trainees/programs';
 
     constructor(private httpClient: HttpClient) {}
 

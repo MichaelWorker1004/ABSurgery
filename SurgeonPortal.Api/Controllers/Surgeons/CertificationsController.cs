@@ -16,8 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Surgeons
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-    [Route("surgeons/certifications")]
-	[Route("v{version:apiVersion}/surgeons/certifications")]
+	[Route("api/surgeons/certifications")]
 	public class CertificationsController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -30,6 +29,9 @@ namespace SurgeonPortal.Api.Controllers.Surgeons
             _mapper = mapper;
         }
 
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
         [Authorize]
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CertificationReadOnlyModel))]

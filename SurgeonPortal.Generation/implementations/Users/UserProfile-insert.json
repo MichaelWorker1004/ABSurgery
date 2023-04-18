@@ -9,6 +9,7 @@
     "ControllerVersion": "1",
     "FetchImplementation": "Users\\UserProfile-getbyuserid",
     "IncludeControllerInGeneration": "true",
+    "ApiRoot": "$project.ApiRoot",
     "IsChild": "False",
     "IsRoot": "True",
     "Model": "Users\\UserProfile",
