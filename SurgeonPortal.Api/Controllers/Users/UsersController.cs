@@ -28,7 +28,7 @@ namespace SurgeonPortal.Api.Controllers.Users
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-	[Route("v{version:apiVersion}/users")]
+	[Route("api/users")]
 	public class UsersController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
