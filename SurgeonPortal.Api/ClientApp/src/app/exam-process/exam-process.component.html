@@ -1,1 +1,131 @@
-<p>exam-process works!</p>
+<header>
+  <h1>Exam Applications</h1>
+</header>
+<ng-container>
+  <section>
+    <div class="grid">
+      <sl-card class="col-12">
+        <h5 class="mt-0 mb-2" panel-header>Applications for 2021-2023</h5>
+        <hr />
+        <p>
+          Applications for ABS examinations are restricted to eligible
+          candidates only. Below is a list of exams for which the ABS currently
+          recognizes you as eligible to apply. Click the link to apply where
+          appropriate.
+        </p>
+        <div class="mt-2 grid">
+          <div
+            [ngClass]="{
+              'col-12': true,
+              'application-container': true,
+              'available-applications': availableApplications.length > 0
+            }"
+          >
+            <p class="text-lg font-bold m-0">
+              {{
+                availableApplications.length > 0
+                  ? 'Available Applications'
+                  : 'No applications are currently available, check back later.'
+              }}
+            </p>
+            <div class="mt-2 grid" *ngIf="availableApplications.length > 0">
+              <sl-card
+                class="col-12 md:col-6 application-card"
+                *ngFor="let application of availableApplications"
+              >
+                <p
+                  class="font-bold mt-0 flex justify-content-between align-items-center"
+                >
+                  {{ application.name }}
+                  <span
+                    [class]="'application-progress ' + application.status"
+                    >{{ application.progress }}</span
+                  >
+                </p>
+                <div class="mt-2 mb-3">
+                  <p class="font-bold m-0">
+                    Application Status:
+                    <span [class]="'application-status ' + application.status">
+                      {{
+                        application.continuousCertNeeded
+                          ? 'Continuous Certification needed'
+                          : application.status.replace('-', ' ')
+                      }}
+                    </span>
+                  </p>
+                  <p class="font-bold m-0">
+                    2022 Deadline:
+                    <span class="font-normal">{{
+                      application.deadline | date : 'longDate'
+                    }}</span>
+                  </p>
+                </div>
+                <a
+                  class="btn-link"
+                  [routerLink]="'/continuous-certification'"
+                  *ngIf="application.continuousCertNeeded"
+                >
+                  Go to your Continuous Certification
+                  <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+              </sl-card>
+            </div>
+          </div>
+          <div class="col-12" *ngIf="availableApplications.length > 0">
+            <p class="font-italic">
+              If you do not see the examination listed for which you would like
+              to apply,
+              <a class="underline">please contact the exam coordinator.</a>
+            </p>
+            <hr />
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col-12">
+            <p class="font-bold">
+              Reasons you may not see an exam listed include:
+            </p>
+            <ul>
+              <li>
+                The application may not vet be posted for the current year.
+              </li>
+              <li>The application period for the current year has expired.</li>
+              <li>
+                The application may already be approved.
+                <a class="underline">Check Exam Records and Results</a> for more
+                information.
+              </li>
+              <li>
+                You may not have been registered by an accredited program as
+                having completed a residency or fellowship.
+              </li>
+              <li>
+                You are a graduate of an accredited Canadian program, in which
+                case you must <a class="underline">send an email</a> to the exam
+                coordinator to gain access.
+              </li>
+              <li>
+                You must be certified in general surgery before applying for
+                certain surgical specialties.
+              </li>
+              <li>
+                There is no examination in the academic year for your specialty
+                and thus no application.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </sl-card>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <div class="my-5 flex flex-column justify-content-center align-items-center">
+    <sl-spinner
+      class="block"
+      style="font-size: 3rem; --indicator-color: var(--global-primary)"
+    ></sl-spinner>
+    <p>loading exam applications...</p>
+  </div>
+</ng-template>

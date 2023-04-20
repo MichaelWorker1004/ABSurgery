@@ -1,0 +1,52 @@
+hr {
+  background-color: var(--global-gray-light);
+  border: none;
+  height: 1px;
+}
+a {
+  font-weight: 700;
+  color: var(--global-success);
+  cursor: pointer;
+}
+a:hover {
+  color: var(--global-success-darken-20);
+}
+ul {
+  li::marker {
+    color: var(--global-warning);
+  }
+}
+
+sl-card::part(base) {
+  height: 100%;
+}
+
+.application-container {
+  background-color: var(--global-table-background);
+  padding: 1rem 1.5rem;
+  &.available-applications {
+    background-color: var(--global-card-highlight);
+  }
+}
+
+.application-progress {
+  font-size: 0.875rem;
+}
+.application-progress,
+.application-status {
+  text-transform: capitalize;
+  &.not-started {
+    color: var(--global-danger);
+  }
+  &.in-progress {
+    color: var(--global-warning);
+  }
+  &.completed {
+    color: var(--global-success);
+  }
+}
+
+.btn-link {
+  margin-top: 1rem;
+  text-decoration: none;
+}
