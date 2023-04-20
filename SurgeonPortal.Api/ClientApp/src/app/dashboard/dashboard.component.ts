@@ -1,11 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Component, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';
 import { UserInformationCardComponent } from '../shared/components/user-information-card/user-information-card.component';
-import { IUserProfile, UserProfileSelectors } from '../state';
+import {
+  IUserProfile,
+  UserProfileSelectors,
+  DashboardSelectors,
+  GetDashboardCertificationInformation,
+  GetDashboardProgramInformation,
+  IDashboardState,
+} from '../state';
+import { UserClaims } from '../side-navigation/user-status.enum';
+import { IActionCardReadOnlyModel } from '../shared/components/action-card/action-card-read-only.model';
+import {
+  CERTIFIED_ACTION_CARDS,
+  TRAINEE_ACTION_CARDS,
+} from './user-action-cards';
+import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.model';
+import { ICertificationReadOnlyModel } from '../api/models/surgeons/certification-read-only.model';
 
 @Component({
   selector: 'abs-dashboard',
@@ -24,96 +39,67 @@ export class DashboardComponent implements OnInit {
     | Observable<IUserProfile>
     | undefined;
 
-  @Select(UserProfileSelectors.userDisplayName) displayName$:
-    | Observable<string>
+  @Select(UserProfileSelectors.userClaims) userClaims$:
+    | Observable<string[]>
     | undefined;
 
-  @Input() userData: any | undefined;
+  @Select(DashboardSelectors.dashboardProgramInformation) programInformation$:
+    | Observable<IDashboardState>
+    | undefined;
+
+  @Select(DashboardSelectors.dashboardCertificateInformation)
+  certificateInformation$: Observable<IDashboardState> | undefined;
+  userData: IUserProfile | undefined;
+  userActionCards: IActionCardReadOnlyModel[] | undefined;
+  isSurgeon: boolean | undefined;
+  userInformation!: IProgramReadOnlyModel | ICertificationReadOnlyModel[];
+
   alertsAndNotices: any | undefined;
-  userActionCards: any | undefined;
-  actionCardClass: string | undefined;
+
+  constructor(private _store: Store) {
+    this.initDashboardData();
+  }
 
   ngOnInit(): void {
     this.fetchUserData();
-    this.initDashboard();
-  }
-
-  initDashboard() {
-    this.fetchActionCardsByUserId();
+    this.setActionCardsByUserClaims();
     this.fetchAlertsAndNoticesByUserId();
   }
 
+  initDashboardData() {
+    this.userClaims$?.subscribe((userClaims) => {
+      this.isSurgeon = userClaims?.includes(UserClaims.surgeon);
+    });
+
+    this.user$?.subscribe((user) => {
+      if (this.isSurgeon) {
+        if (user?.absId) {
+          this._store.dispatch(
+            new GetDashboardCertificationInformation(user.absId.toString())
+          );
+        }
+      } else {
+        if (user?.userId) {
+          this._store.dispatch(new GetDashboardProgramInformation(user.userId));
+        }
+      }
+    });
+  }
+
   fetchUserData() {
-    const userTrainee = {
-      name: 'John Doe',
-      id: '00001',
-      currentStatus: 'Trainee',
-      lastLogin: new Date().toLocaleString(),
-      userInformation: [
-        {
-          title: 'Program Director',
-          data: 'Lucy Generic, M.D',
-        },
-        {
-          title: 'Program',
-          data: 'University of Medicine Dept. of Surgery Philadelphia, PA',
-        },
-        {
-          title: 'Clinical Level',
-          data: 'PGY1',
-        },
-      ],
-    };
-
-    const userCertified = {
-      name: 'John Doe, M.D',
-      id: '00002',
-      currentStatus: 'Certified - Clincally Active',
-      lastLogin: new Date().toLocaleString(),
-      userInformation: [
-        {
-          title: 'Surgical Critical Care',
-          data: [
-            {
-              title: 'Certificate Number',
-              data: 'XXXXXXXXX',
-            },
-            {
-              title: 'Expiration Date',
-              data: '12/2/2012',
-            },
-          ],
-        },
-        {
-          title: 'Surgery of the Hand',
-          data: [
-            {
-              title: 'Certificate Number',
-              data: 'XXXXXXXXX',
-            },
-            {
-              title: 'Next Assessment Due',
-              data: '12/2/2012',
-            },
-          ],
-        },
-        {
-          title: 'Surgery',
-          data: [
-            {
-              title: 'Certificate Number',
-              data: 'XXXXXXXXX',
-            },
-            {
-              title: 'Expiration Date',
-              data: '12/2/2012',
-            },
-          ],
-        },
-      ],
-    };
-
-    this.userData = userCertified;
+    if (this.isSurgeon) {
+      this.certificateInformation$?.subscribe((userInformation) => {
+        if (userInformation.certificates.length > 0) {
+          this.userInformation = userInformation.certificates;
+        }
+      });
+    } else {
+      this.programInformation$?.subscribe((userInformation) => {
+        if (userInformation.programs.programName.length > 0) {
+          this.userInformation = userInformation.programs;
+        }
+      });
+    }
   }
 
   fetchAlertsAndNoticesByUserId() {
@@ -130,6 +116,7 @@ export class DashboardComponent implements OnInit {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+        action: 'documents',
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
@@ -149,82 +136,21 @@ export class DashboardComponent implements OnInit {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+        action: '/documents',
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
       },
     ];
 
-    this.alertsAndNotices = alertsAndNoticesCertfiied;
+    this.alertsAndNotices = this.isSurgeon
+      ? alertsAndNoticesCertfiied
+      : alertsAndNoticesTrainee;
   }
 
-  fetchActionCardsByUserId() {
-    const userCardActionsTrainee = [
-      {
-        title: 'Apply for a Qualified Exam',
-        description:
-          'QE applications are not yet available. Check back on April 15th.',
-        action: {
-          type: 'component',
-          action: '/apply',
-        },
-        actionDisplay: 'Coming Soon',
-        icon: 'fa-solid fa-user-graduate',
-      },
-      {
-        title: 'Graduate Medical Education (GME)',
-        description:
-          'Add rotations to your GME history. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        action: {
-          type: 'component',
-          action: '/gme-history',
-        },
-        actionDisplay: 'View Your GME',
-        icon: 'fa-sharp fa-solid fa-file-waveform',
-      },
-    ];
-
-    const userCardActionsCertified = [
-      {
-        title: 'Continuous Certification Requirements',
-        description:
-          'This is the mailing address that we currently have on record for you. You receive any paper communications from us this way.',
-        action: {
-          type: 'component',
-          action: '/continuous-certification',
-        },
-        actionDisplay: 'See Requirements',
-        icon: 'fa-solid fa-user-graduate',
-      },
-      {
-        title: 'Register for an Exam or Assessment',
-        description:
-          'This is basic information like your first and last name, title, etc.',
-        action: {
-          type: 'component',
-          action: '/exam-proccess',
-        },
-        actionDisplay: 'Register For an Exam Now',
-        icon: 'fa-sharp fa-solid fa-file-waveform',
-      },
-      {
-        title: 'Apply for an Exam',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: 'component',
-          action: '/apply',
-        },
-        actionDisplay: 'Apply Now',
-        icon: 'fa-solid fa-list-check',
-      },
-    ];
-
-    this.userActionCards = userCardActionsCertified;
-    this.actionCardClass = `grid-item ${
-      this.userActionCards.length >= 3
-        ? 'col-12 md:col-6 lg:col-4'
-        : 'col-12 md:col-6'
-    }`;
+  setActionCardsByUserClaims() {
+    this.userActionCards = this.isSurgeon
+      ? CERTIFIED_ACTION_CARDS
+      : TRAINEE_ACTION_CARDS;
   }
 }

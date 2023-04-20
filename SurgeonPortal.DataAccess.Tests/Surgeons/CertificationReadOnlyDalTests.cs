@@ -24,7 +24,7 @@ namespace SurgeonPortal.DataAccess.Tests.Surgeons
                 };
         
             var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(Create<CertificationReadOnlyDto>());
+            sqlManager.AddRecords(CreateMany<CertificationReadOnlyDto>());
         
             var sut = new CertificationReadOnlyDal(sqlManager);
             await sut.GetByAbsIdAsync(expectedAbsId);
@@ -36,16 +36,17 @@ namespace SurgeonPortal.DataAccess.Tests.Surgeons
         [Test]
         public async Task GetByAbsIdAsync_YieldsCorrectResult()
         {
-            var expectedDto = Create<CertificationReadOnlyDto>();
+            var expectedDtos = CreateMany<CertificationReadOnlyDto>();
         
             var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(expectedDto);
+            sqlManager.AddRecords(expectedDtos);
         
             var sut = new CertificationReadOnlyDal(sqlManager);
             var result = await sut.GetByAbsIdAsync(Create<string>());
         
-            expectedDto.Should().BeEquivalentTo(result,
-                options => options.ExcludingMissingMembers());
+            expectedDtos.Should().BeEquivalentTo(
+                result,
+                nameof(result));
         }
         
         #endregion

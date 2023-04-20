@@ -1,4 +1,5 @@
 <div [class]="alertClass">
+  <a class="hotspot" [routerLink]="alert?.action" *ngIf="alert?.action"></a>
   <div class="img-container" [style]="imageStyleUrl"></div>
   <div class="highlight-content">
     <div class="alert-title" *ngIf="alert?.alert">Alerts and Notices</div>

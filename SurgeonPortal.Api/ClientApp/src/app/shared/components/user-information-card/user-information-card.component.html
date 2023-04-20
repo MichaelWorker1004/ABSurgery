@@ -5,22 +5,58 @@
       <div class="status two active"></div>
       <div class="status three active"></div>
     </div>
-    <strong>Current Status</strong>: {{ currentStatus }}
+    <strong>Current Status</strong>:
+    {{ currentStatus ? currentStatus : 'Trainee' }}
   </div>
-  <div
-    class="info-container"
-    *ngIf="currentStatus === 'Trainee'; else certified"
-  >
-    <div class="info" *ngFor="let info of userInformation">
-      <span>{{ info.title }}:</span> {{ info.data }}
+
+  <div class="info-container" *ngIf="!isSurgeon; else certified">
+    <div class="info">
+      <span>Program Director</span>
+      {{
+        userInformation?.programDirector?.length > 0
+          ? userInformation?.programDirector
+          : 'N/A'
+      }}
+    </div>
+    <div class="info">
+      <span>Program</span>
+      {{
+        userInformation?.programName?.length > 0
+          ? userInformation?.program
+          : 'N/A'
+      }}
+    </div>
+    <div class="info">
+      <span>Clinical Level</span>
+      {{
+        userInformation?.clinicalLevel?.length > 0
+          ? userInformation?.clinicalLevel
+          : 'N/A'
+      }}
     </div>
   </div>
+
   <ng-template #certified>
     <div class="info-container">
       <div class="info certified" *ngFor="let info of userInformation">
-        <div class="certified-title">{{ info.title }}</div>
-        <div class="info-data" *ngFor="let d of info.data">
-          <span>{{ d.title }}:</span> {{ d.data }}
+        <div class="certified-title">
+          {{ info?.speciality }}
+        </div>
+        <div class="info-data">
+          <span>Certificate Number:</span>
+          {{
+            userInformation?.certificateId?.length > 0
+              ? info?.certificateId
+              : 'N/A'
+          }}
+        </div>
+        <div class="info-data">
+          <span>Expiration Date:</span>
+          {{
+            userInformation?.certificateId?.length > 0
+              ? info?.endDateDisplay
+              : 'N/A'
+          }}
         </div>
       </div>
     </div>

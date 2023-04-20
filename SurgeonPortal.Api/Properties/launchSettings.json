@@ -3,10 +3,10 @@
     "SurgeonPortal.Api": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "https://localhost:52785;http://localhost:52786",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:52785;http://localhost:52786"
+      }
     }
   }
 }

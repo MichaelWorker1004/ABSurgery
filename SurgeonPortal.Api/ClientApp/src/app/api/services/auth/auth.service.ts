@@ -39,7 +39,7 @@ export class AuthService {
 
   login(payload: IAuthCredentials): Observable<IAuthState | IError> {
     return this.httpClient
-      .post<IAuthState>(`/v1/users/authenticate`, {
+      .post<IAuthState>(`/api/users/authenticate`, {
         emailAddress: payload.emailAddress,
         password: payload.password,
       })

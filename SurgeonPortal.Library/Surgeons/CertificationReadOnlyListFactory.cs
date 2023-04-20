@@ -2,20 +2,24 @@ using Csla;
 using SurgeonPortal.Library.Contracts.Surgeons;
 using System;
 using System.Threading.Tasks;
+using Ytg.Framework.Exceptions;
 
 namespace SurgeonPortal.Library.Surgeons
 {
-    public class CertificationReadOnlyFactory : ICertificationReadOnlyFactory
+    public class CertificationReadOnlyListFactory : ICertificationReadOnlyListFactory
     {
-        public async Task<ICertificationReadOnly> GetByAbsIdAsync(string absId)
+        public async Task<ICertificationReadOnlyList> GetByAbsIdAsync(string absId)
         {
-            return await DataPortal.FetchAsync<CertificationReadOnly>(
+            if (string.IsNullOrEmpty(absId) == true)
+            {
+                throw new FactoryInvalidCriteriaException("absId is a required field.");
+            }
+            
+            return await DataPortal.FetchAsync<CertificationReadOnlyList>(
                 new GetByAbsIdCriteria(absId));
             
         }
 
-
-        
             [Serializable]
             internal class GetByAbsIdCriteria
             {

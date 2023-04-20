@@ -13,6 +13,7 @@ import {
 } from './state';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
+import { UserClaims } from './side-navigation/user-status.enum';
 
 @Component({
   selector: 'abs-root',
@@ -36,8 +37,11 @@ export class AppComponent implements OnInit, OnDestroy {
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
+
   authSub: Subscription | undefined;
   userSub: Subscription | undefined;
+
+  isSurgeon = false;
 
   isSideNavOpen = false;
   userData!: any;
@@ -47,6 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
       const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);
       const claims = this._store.selectSnapshot(AuthSelectors.claims);
       if (isAuthed && loginUser && claims) {
+        if (claims.includes(UserClaims.surgeon)) {
+          this.isSurgeon = true;
+        }
         this._store.dispatch(new GetUserProfile(loginUser, claims));
       }
     });

@@ -1,7 +1,7 @@
 {
   "name": "CertificationReadOnly",
   "implementationName": "Surgeons\\CertificationReadOnly-getbyabsid",
-  "template": "ytg-framework/editable-get",
+  "template": "ytg-framework/readonly-getlist",
   "parameters": {
     "Adapter": "dbo.get_user_certifications",
     "ControllerName": "Surgeons\\CertificationsController",
@@ -94,8 +94,8 @@
     }
   ],
   "metadata": {
-    "command": "ytgim generate i s Surgeons\\CertificationReadOnly-getbyabsid CertificationReadOnly -t=ytg-framework\\editable-get -p:Model=Surgeons\\CertificationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certifications] -p:FetchMethodName=GetByAbsId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CertificationReadOnly -p:ControllerName=Surgeons\\CertificationsController -p:ControllerRoute=surgeon/certifications -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
-    "inferredCommand": "ytgim generate i  Surgeons\\CertificationReadOnly-getbyabsid CertificationReadOnly -t=ytg-framework\\editable-get -p:Model=Surgeons\\CertificationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certifications] -p:FetchMethodName=GetByAbsId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CertificationReadOnly -p:ControllerName=Surgeons\\CertificationsController -p:ControllerRoute=surgeons/certification-read-onlies -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=",
+    "command": "ytgim generate i s Surgeons\\CertificationReadOnly-getbyabsid CertificationReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Surgeons\\CertificationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certifications] -p:FetchMethodName=GetByAbsId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CertificationReadOnly -p:ControllerName=Surgeons\\CertificationsController -p:ControllerRoute=surgeon/certifications -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "inferredCommand": "ytgim generate i  Surgeons\\CertificationReadOnly-getbyabsid CertificationReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Surgeons\\CertificationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certifications] -p:FetchMethodName=GetByAbsId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CertificationReadOnly -p:ControllerName=Surgeons\\CertificationsController -p:ControllerRoute=surgeons/certification-read-onlies -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=",
     "generatedDateUtc": "2023-04-06T20:47:57.7727857Z"
   },
   "version": 1

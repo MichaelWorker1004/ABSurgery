@@ -4,11 +4,23 @@
   position: relative;
   display: flex;
   height: 100%;
+  position: relative;
   &.alert {
     border-right: 10px solid var(--global-danger);
     .title {
       color: var(--global-danger);
     }
+  }
+  .hotspot {
+    position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
   }
   .alert-title,
   .title {

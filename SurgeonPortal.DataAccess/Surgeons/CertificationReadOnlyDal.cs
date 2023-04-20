@@ -1,4 +1,5 @@
 using SurgeonPortal.DataAccess.Contracts.Surgeons;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
 using Ytg.Framework.SqlServer;
@@ -14,11 +15,11 @@ namespace SurgeonPortal.DataAccess.Surgeons
 
 
 
-        public async Task<CertificationReadOnlyDto> GetByAbsIdAsync(string absId)
+        public async Task<IEnumerable<CertificationReadOnlyDto>> GetByAbsIdAsync(string absId)
         {
             using (var connection = CreateConnection())
             {
-                return await connection.ExecFirstOrDefaultAsync<CertificationReadOnlyDto>(
+                return await connection.ExecAsync<CertificationReadOnlyDto>(
                     "[dbo].[get_user_certifications]",
                         new
                         {

@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace SurgeonPortal.Models.Surgeons
 {
     public class CertificationReadOnlyModel

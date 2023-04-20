@@ -78,7 +78,7 @@ export const USER_PROFILE_STATE_TOKEN = new StateToken<IUserProfile>(
     birthState: '',
     birthCountry: '',
     countryCitizenship: '',
-    aBSId: '',
+    absId: '',
     certificationStatus: '',
     nPI: '',
     genderId: 0,

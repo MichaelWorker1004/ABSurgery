@@ -24,6 +24,14 @@ export class UserProfileSelectors {
   }
 
   @Selector([UserProfileState])
+  static userClaims(state: IUserProfile): string[] | undefined {
+    if (state?.claims.length > 0) {
+      return state.claims;
+    }
+    return;
+  }
+
+  @Selector([UserProfileState])
   static profilePicture(state: IUserProfile): string | undefined {
     console.log('profilePicture', state?.profilePicture);
     if (state?.profilePicture.length > 0) {

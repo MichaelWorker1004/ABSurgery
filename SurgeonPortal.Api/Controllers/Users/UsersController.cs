@@ -25,200 +25,198 @@ using SurgeonPortal.Shared;
 
 namespace SurgeonPortal.Api.Controllers.Users
 {
-    [ApiVersion("1")]
-    [ApiController]
-    [Produces("application/json")]
-	[Route("api/users")]
-	public class UsersController : YtgControllerBase
-	{
-        private readonly IMapper _mapper;
-        private readonly ILogger _logger;
-        private readonly TokensConfiguration _tokensConfiguration;
-        private readonly IUserTokenFactory _userTokenFactory;
-        private readonly IIdentityProvider _identityProvider;
-        private readonly IUserLoginAuditCommandFactory _userLoginAuditCommandFactory;
+  [ApiVersion("1")]
+  [ApiController]
+  [Produces("application/json")]
+  [Route("api/users")]
+  public class UsersController : YtgControllerBase
+  {
+    private readonly IMapper _mapper;
+    private readonly ILogger _logger;
+    private readonly TokensConfiguration _tokensConfiguration;
+    private readonly IUserTokenFactory _userTokenFactory;
+    private readonly IIdentityProvider _identityProvider;
+    private readonly IUserLoginAuditCommandFactory _userLoginAuditCommandFactory;
 
-        public UsersController(IWebHostEnvironment webHostEnvironment,
-            IMapper mapper,
-            ILoggerFactory loggerFactory,
-            IOptions<TokensConfiguration> tokensConfiguration,
-            IUserTokenFactory userTokenFactory,
-            IIdentityProvider identityProvider,
-            IUserLoginAuditCommandFactory userLoginAuditCommandFactory)
-            : base(webHostEnvironment)
-        {
-            _mapper = mapper;
-            _logger = loggerFactory.CreateLogger<UsersController>();
-            _userTokenFactory = userTokenFactory;
-            _identityProvider = identityProvider;
-            _tokensConfiguration = tokensConfiguration.Value;
-            _userLoginAuditCommandFactory = userLoginAuditCommandFactory;
-        }
+    public UsersController(IWebHostEnvironment webHostEnvironment,
+        IMapper mapper,
+        ILoggerFactory loggerFactory,
+        IOptions<TokensConfiguration> tokensConfiguration,
+        IUserTokenFactory userTokenFactory,
+        IIdentityProvider identityProvider,
+        IUserLoginAuditCommandFactory userLoginAuditCommandFactory)
+        : base(webHostEnvironment)
+    {
+      _mapper = mapper;
+      _logger = loggerFactory.CreateLogger<UsersController>();
+      _userTokenFactory = userTokenFactory;
+      _identityProvider = identityProvider;
+      _tokensConfiguration = tokensConfiguration.Value;
+      _userLoginAuditCommandFactory = userLoginAuditCommandFactory;
+    }
 
-        [AllowAnonymous]
-        [MapToApiVersion("1")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AppUserReadOnlyModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [HttpPost("authenticate")]
-        public async Task<ActionResult> GetUserToken([FromServices] IAppUserReadOnlyFactory appUserReadOnlyFactory,
-            [FromBody] UserLoginModel model)
-        {
-            var ipAddress = string.Empty;
-            var userAgent = string.Empty;
+    [AllowAnonymous]
+    [MapToApiVersion("1")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AppUserReadOnlyModel))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [HttpPost("authenticate")]
+    public async Task<ActionResult> GetUserToken([FromServices] IAppUserReadOnlyFactory appUserReadOnlyFactory,
+        [FromBody] UserLoginModel model)
+    {
+      var ipAddress = string.Empty;
+      var userAgent = string.Empty;
 
-            try
-            {
-                ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
-                userAgent = HttpContext.Request.Headers["User-Agent"];
+      try
+      {
+        ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
+        userAgent = HttpContext.Request.Headers["User-Agent"];
 
-                var user = await appUserReadOnlyFactory.GetByCredentialsAsync(
-                    model.EmailAddress,
-                    model.Password);
-                    
-                //log successfuly attempt
-                await _userLoginAuditCommandFactory.AuditAsync(user.UserId, model.EmailAddress, 1, ipAddress, userAgent, true, string.Empty);
-                _logger.LogInformation($"User authenticated successfully. User: {user.UserId}");
+        var user = await appUserReadOnlyFactory.GetByCredentialsAsync(
+            model.EmailAddress,
+            model.Password);
 
-                var claims = GetClaimsFromUser(user);
+        //log successfuly attempt
+        await _userLoginAuditCommandFactory.AuditAsync(user.UserId, model.EmailAddress, 1, ipAddress, userAgent, true, string.Empty);
+        _logger.LogInformation($"User authenticated successfully. User: {user.UserId}");
 
-                return await GenerateTokenAsync(user, claims);
-            }
-            catch (DataPortalException ex) when (ex.BusinessException is AuthenticationFailedException)
-            {
-                await _userLoginAuditCommandFactory.AuditAsync(-1, model.EmailAddress, 1, ipAddress, userAgent, false, string.Empty);
+        var claims = GetClaimsFromUser(user);
 
-                _logger.LogInformation($"GetUserToken(): User failed authentication. ({model.EmailAddress})");
-                return BadRequest("Login failed");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Exception in GetUserToken(): {ex}");
-                return BadRequest();
-            }
-        }
+        return await GenerateTokenAsync(user, claims);
+      }
+      catch (DataPortalException ex) when (ex.BusinessException is AuthenticationFailedException)
+      {
+        await _userLoginAuditCommandFactory.AuditAsync(-1, model.EmailAddress, 1, ipAddress, userAgent, false, string.Empty);
 
-        [Authorize]
-        [HttpGet("test-auth")]
-        public IActionResult TestAuth()
-        {
-            if(User.Identity != null)
-            {
-                return Ok($"Authorized as {User.Identity.Name}.");
-            }
+        _logger.LogInformation($"GetUserToken(): User failed authentication. ({model.EmailAddress})");
+        return BadRequest("Login failed");
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError($"Exception in GetUserToken(): {ex}");
+        return BadRequest();
+      }
+    }
 
-            return BadRequest();
-        }
+    [Authorize]
+    [HttpGet("test-auth")]
+    public IActionResult TestAuth()
+    {
+      if (User.Identity != null)
+      {
+        return Ok($"Authorized as {User.Identity.Name}.");
+      }
 
-        [AllowAnonymous]
-        [MapToApiVersion("1")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        [HttpPost("refresh")]
-        public async Task<IActionResult> GetTokenViaRefresh([FromServices] IAppUserReadOnlyFactory appUserReadOnlyFactory,
-            [FromBody] RefreshTokenModel model)
-        {
-            try
-            {
-                var user = await appUserReadOnlyFactory.GetByTokenAsync(model.RefreshToken);
+      return BadRequest();
+    }
 
-                _logger.LogInformation($"User successfully authenticated. (refreshToken[{model.RefreshToken}])");
+    [AllowAnonymous]
+    [MapToApiVersion("1")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpPost("refresh")]
+    public async Task<IActionResult> GetTokenViaRefresh([FromServices] IAppUserReadOnlyFactory appUserReadOnlyFactory,
+        [FromBody] RefreshTokenModel model)
+    {
+      try
+      {
+        var user = await appUserReadOnlyFactory.GetByTokenAsync(model.RefreshToken);
 
-                var claims = GetClaimsFromUser(user);
+        _logger.LogInformation($"User successfully authenticated. (refreshToken[{model.RefreshToken}])");
 
-                return await GenerateTokenAsync(user, claims);
-            }
-            catch (DataPortalException ex) when (ex.BusinessException is AuthenticationFailedException)
-            {
-                _logger.LogInformation($"GetTokenViaRefresh(): Refresh token not found or is expired. (refreshToken[{model.RefreshToken}])");
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Exception in GetTokenViaRefresh(): {ex}");
-                return BadRequest();
-            }
-        }
+        var claims = GetClaimsFromUser(user);
 
-        private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
-        {
-            var allClaims =
-                new List<Claim>
-                {
+        return await GenerateTokenAsync(user, claims);
+      }
+      catch (DataPortalException ex) when (ex.BusinessException is AuthenticationFailedException)
+      {
+        _logger.LogInformation($"GetTokenViaRefresh(): Refresh token not found or is expired. (refreshToken[{model.RefreshToken}])");
+        return BadRequest();
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError($"Exception in GetTokenViaRefresh(): {ex}");
+        return BadRequest();
+      }
+    }
+
+    private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
+    {
+      var allClaims =
+          new List<Claim>
+          {
                     new Claim(JwtRegisteredClaimNames.Sub, user.EmailAddress),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(ClaimTypes.Name, user.FullName),
                     new Claim(ClaimTypes.GivenName, user.FullName),
-                };
+          };
 
-            allClaims.AddRange(claims);
+      allClaims.AddRange(claims);
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokensConfiguration.Key));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var refreshToken = Guid.NewGuid().ToString();
-            var refreshExpiration = DateTime.Now.AddDays(7);
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokensConfiguration.Key));
+      var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+      var refreshToken = Guid.NewGuid().ToString();
+      var refreshExpiration = DateTime.Now.AddDays(7);
 
-            var expiresAt = DateTime.Now.AddMinutes(_tokensConfiguration.ExpirationInMinutes + 1);
+      var expiresAt = DateTime.Now.AddMinutes(_tokensConfiguration.ExpirationInMinutes + 1);
 
-            if (user != null)
-            {
-                var userToken = _userTokenFactory.Create();
-                userToken.UserId = user.UserId;
-                userToken.Token = refreshToken;
-                userToken.ExpiresAt = refreshExpiration;
+      if (user != null)
+      {
+        var userToken = _userTokenFactory.Create();
+        userToken.UserId = user.UserId;
+        userToken.Token = refreshToken;
+        userToken.ExpiresAt = refreshExpiration;
 
-                await userToken.SaveAsync();
-            }
-            else
-            {
-                refreshToken = null;
-            }
+        await userToken.SaveAsync();
+      }
+      else
+      {
+        refreshToken = null;
+      }
 
-            var token = new JwtSecurityToken(
-                _tokensConfiguration.Issuer,
-                _tokensConfiguration.Issuer,
-                allClaims,
-                expires: expiresAt,
-                signingCredentials: creds);
+      var token = new JwtSecurityToken(
+          _tokensConfiguration.Issuer,
+          _tokensConfiguration.Issuer,
+          allClaims,
+          expires: expiresAt,
+          signingCredentials: creds);
 
-            var userModel = (user != null)
-                ? _mapper.Map<AppUserReadOnlyModel>(user)
-                : null;
+      var userModel = (user != null)
+          ? _mapper.Map<AppUserReadOnlyModel>(user)
+          : null;
 
-            return Ok(
-                new TokenResponseModel
-                {
-                    access_token = new JwtSecurityTokenHandler().WriteToken(token),
-                    refresh_token = refreshToken,
-                    token_type = "Bearer",
-                    user_name = user.EmailAddress,
-                    expiration = expiresAt,
-                    expires_in_minutes = _tokensConfiguration.ExpirationInMinutes,
-                    user = userModel,
-                });
-        }
-
-        private List<Claim> GetClaimsFromUser(IAppUserReadOnly user)
-        {
-            var claims = new List<Claim>();
-            AddClaimIfHasValue(claims, ApplicationClaims.FullName, user.FullName);
-            AddClaimIfHasValue(claims, ApplicationClaims.EmailAddress, user.EmailAddress);
-            AddClaimIfHasValue(claims, ApplicationClaims.UserId, user.UserId.ToString());
-
-            claims.Add(new Claim(ClaimTypes.Role, ApplicationClaims.User));
-
-            claims.AddRange(user.Claims.Select(r => new Claim(ClaimTypes.Role, r.ClaimName)));
-
-            return claims;
-        }
-
-        private void AddClaimIfHasValue(List<Claim> claims, string type, string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return;
-
-            claims.Add(new Claim(type, value));
-        }
+      return Ok(
+          new TokenResponseModel
+          {
+            access_token = new JwtSecurityTokenHandler().WriteToken(token),
+            refresh_token = refreshToken,
+            token_type = "Bearer",
+            user_name = user.EmailAddress,
+            expiration = expiresAt,
+            expires_in_minutes = _tokensConfiguration.ExpirationInMinutes,
+            user = userModel,
+          });
     }
+
+    private List<Claim> GetClaimsFromUser(IAppUserReadOnly user)
+    {
+      var claims = new List<Claim>();
+      AddClaimIfHasValue(claims, ApplicationClaims.FullName, user.FullName);
+      AddClaimIfHasValue(claims, ApplicationClaims.EmailAddress, user.EmailAddress);
+      AddClaimIfHasValue(claims, ApplicationClaims.UserId, user.UserId.ToString());
+
+      claims.AddRange(user.Claims.Select(r => new Claim(ClaimTypes.Role, r.ClaimName)));
+
+      return claims;
+    }
+
+    private void AddClaimIfHasValue(List<Claim> claims, string type, string value)
+    {
+      if (string.IsNullOrWhiteSpace(value))
+        return;
+
+      claims.Add(new Claim(type, value));
+    }
+  }
 }
 

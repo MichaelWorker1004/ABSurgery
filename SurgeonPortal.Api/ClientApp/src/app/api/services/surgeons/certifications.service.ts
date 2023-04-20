@@ -24,7 +24,7 @@ export class CertificationsService {
 
  
         public retrieveCertificationReadOnly_GetByAbsId(absId: string,
-        apiVersion = '1.0'): Observable<ICertificationReadOnlyModel> {
+        apiVersion = '1.0'): Observable<ICertificationReadOnlyModel[]> {
             /**
             * Claims
             */
@@ -46,7 +46,7 @@ export class CertificationsService {
             */
             
             
-            return this.httpClient.get<ICertificationReadOnlyModel>(`${this.baseEndpoint}/?api-version=${apiVersion}&absId=${absId}`);
+            return this.httpClient.get<ICertificationReadOnlyModel[]>(`${this.baseEndpoint}/?api-version=${apiVersion}&absId=${absId}`);
         }
 
 

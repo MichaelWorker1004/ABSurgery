@@ -10,24 +10,9 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Surgeons
 {
     [TestFixture] 
-	public class CertificationReadOnlyTests : TestBase<string>
+	public class CertificationReadOnlyListTests : TestBase<string>
     {
-        private CertificationReadOnlyDto CreateValidDto()
-        {     
-            var dto = Create<CertificationReadOnlyDto>();
 
-            dto.Speciality = Create<string>();
-            dto.CertificateId = Create<string>();
-            dto.InitialCertificationDate = Create<string>();
-            dto.EndDateDisplay = Create<string>();
-    
-            return dto;
-        }
-
-            
-
-        #region GetByAbsIdAsync CertificationReadOnly
-        
         [Test]
         public async Task GetByAbsIdAsync_CallsDalCorrectly()
         {
@@ -35,41 +20,46 @@ namespace SurgeonPortal.Library.Tests.Surgeons
             
             var mockDal = new Mock<ICertificationReadOnlyDal>();
             mockDal.Setup(m => m.GetByAbsIdAsync(expectedAbsId))
-                .ReturnsAsync(Create<CertificationReadOnlyDto>());
+                .ReturnsAsync(CreateMany<CertificationReadOnlyDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                
                 .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<ICertificationReadOnlyList, CertificationReadOnlyList>()
                 .WithBusinessObject<ICertificationReadOnly, CertificationReadOnly>()
                 .Build();
         
-            var factory = new CertificationReadOnlyFactory();
+            var factory = new CertificationReadOnlyListFactory();
             var sut = await factory.GetByAbsIdAsync(expectedAbsId);
         
             mockDal.VerifyAll();
         }
         
         [Test]
-        public async Task GetByAbsId_YieldsCorrectResult()
+        public async Task GetByAbsIdAsync_LoadsChildrenCorrectly()
         {
-            var dto = CreateValidDto();
+            var expectedDtos = CreateMany<CertificationReadOnlyDto>();
         
             var mockDal = new Mock<ICertificationReadOnlyDal>();
             mockDal.Setup(m => m.GetByAbsIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(dto);
+                .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                
                 .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<ICertificationReadOnlyList, CertificationReadOnlyList>()
                 .WithBusinessObject<ICertificationReadOnly, CertificationReadOnly>()
                 .Build();
         
-            var factory = new CertificationReadOnlyFactory();
+            var factory = new CertificationReadOnlyListFactory();
             var sut = await factory.GetByAbsIdAsync(Create<string>());
         
-            dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
+            Assert.That(sut, Has.Count.EqualTo(3));
+            expectedDtos.Should().BeEquivalentTo(sut, options => 
+            {
+                options.ExcludingMissingMembers();
+                return options;
+            });
         }
-        
-        #endregion
 	}
 }

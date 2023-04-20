@@ -21,7 +21,7 @@ export interface IUserProfileModel {
     birthState: string;
     birthCountry: string;
     countryCitizenship: string;
-    aBSId: string;
+    absId: string;
     certificationStatus: string;
     nPI: string;
     genderId: number;

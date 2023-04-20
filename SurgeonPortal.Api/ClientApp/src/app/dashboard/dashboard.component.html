@@ -2,7 +2,7 @@
   <div class="flex justify-content-between align-items-end">
     <div>
       <h1>Dashboard</h1>
-      <h4 class="thin">Hello, {{ displayName$ | async }}!</h4>
+      <h4 class="thin">Hello, {{ user.displayName }}!</h4>
     </div>
     <div class="last-login">
       <strong>Last Login:</strong>
@@ -13,8 +13,9 @@
   <div class="grid">
     <abs-user-information-card
       class="col-12"
-      [userInformation]="userData.userInformation"
-      [currentStatus]="userData.currentStatus"
+      [userInformation]="userInformation"
+      [currentStatus]="user.certificationStatus"
+      [isSurgeon]="isSurgeon"
     ></abs-user-information-card>
 
     <abs-highlight-card
@@ -24,7 +25,9 @@
     ></abs-highlight-card>
 
     <abs-action-card
-      [class]="actionCardClass"
+      class="grid-item col-12  {{
+        isSurgeon ? 'md:col-6 lg:col-4' : 'md:col-6'
+      }} "
       *ngFor="let actionCard of userActionCards"
       [actionCard]="actionCard"
     ></abs-action-card>

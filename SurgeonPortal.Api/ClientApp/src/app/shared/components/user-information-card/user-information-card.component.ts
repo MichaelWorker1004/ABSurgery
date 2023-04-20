@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,5 +10,6 @@ import { CommonModule } from '@angular/common';
 })
 export class UserInformationCardComponent {
   @Input() userInformation: any;
-  @Input() currentStatus: any;
+  @Input() currentStatus!: string;
+  @Input() isSurgeon: boolean | undefined;
 }
