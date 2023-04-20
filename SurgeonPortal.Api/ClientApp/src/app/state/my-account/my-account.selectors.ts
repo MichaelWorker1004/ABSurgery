@@ -1,6 +1,6 @@
-import { IUserCredential, MyAccountState } from './my-account.state';
-import { IFormErrors } from '../../shared/common';
 import { Selector } from '@ngxs/store';
+import { IFormErrors } from '../../shared/common';
+import { IUserCredential, MyAccountState } from './my-account.state';
 
 export class MyAccountSelectors {
   @Selector([MyAccountState])

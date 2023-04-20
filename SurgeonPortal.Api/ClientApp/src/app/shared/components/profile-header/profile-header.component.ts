@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IUserProfile, UserProfileSelectors } from '../../../state';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -15,7 +15,10 @@ import { Observable } from 'rxjs';
 export class ProfileHeaderComponent {
   @Input() profilePicture: string | undefined;
   // TODO: [Joe] this will need to be more strongly typed once the model is defined
-  @Select(UserProfileSelectors.user) user$:
-    | Observable<IUserProfile>
-    | undefined;
+
+  user: IUserProfile | undefined;
+
+  constructor(private _store: Store) {
+    this.user = this._store.selectSnapshot(UserProfileSelectors.user);
+  }
 }

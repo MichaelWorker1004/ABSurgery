@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,7 @@ import { UserClaims } from './side-navigation/user-status.enum';
     DashboardHeaderComponent,
   ],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnDestroy {
   // TODO: MOve this logic into the auth guard
   @Select(AuthSelectors.isAuthenticated) isAuthenticated$:
     | Observable<boolean>
@@ -44,7 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
   isSurgeon = false;
 
   isSideNavOpen = false;
-  userData!: any;
 
   constructor(private _router: Router, private _store: Store) {
     this.authSub = this.isAuthenticated$?.subscribe((isAuthed) => {
@@ -59,10 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-    this.fetchUserData();
-  }
-
   ngOnDestroy(): void {
     this.authSub?.unsubscribe();
     this.userSub?.unsubscribe();
@@ -70,28 +65,5 @@ export class AppComponent implements OnInit, OnDestroy {
 
   handleSideNavToggle() {
     this.isSideNavOpen = !this.isSideNavOpen;
-  }
-
-  fetchUserData() {
-    this.userData = {
-      name: 'John Doe, M.D',
-      id: '00001',
-      currentStatus: 'Certified - Clincally Active',
-      lastLogin: new Date().toLocaleString(),
-      userInformation: [
-        {
-          title: 'Program Director',
-          data: 'Lucy Generic, M.D',
-        },
-        {
-          title: 'Program',
-          data: 'University of Medicine Dept. of Surgery Philadelphia, PA',
-        },
-        {
-          title: 'Clinical Level',
-          data: 'PGY1',
-        },
-      ],
-    };
   }
 }

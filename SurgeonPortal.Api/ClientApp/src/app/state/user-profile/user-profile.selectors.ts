@@ -1,7 +1,9 @@
-import { Selector } from '@ngxs/store';
+import { Selector, createPropertySelectors } from '@ngxs/store';
 import { IUserProfile, UserProfileState } from './user-profile.state';
 
 export class UserProfileSelectors {
+  static slices = createPropertySelectors<IUserProfile>(UserProfileState);
+
   @Selector([UserProfileState])
   static user(state: IUserProfile): IUserProfile | undefined {
     if (state?.userId > -1) {

@@ -1,4 +1,16 @@
 {
+  "/v1/": {
+    "target": "https://localhost:52785",
+    "secure": false
+  },
+  "/users/": {
+    "target": "https://localhost:52785",
+    "secure": false
+  },
+  "/picklists/": {
+    "target": "https://localhost:52785",
+    "secure": false
+  },
   "/api/": {
     "target": "https://localhost:52785",
     "secure": false

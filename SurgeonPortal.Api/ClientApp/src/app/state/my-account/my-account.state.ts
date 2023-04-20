@@ -5,8 +5,8 @@ import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SaveMyAccountChanges, ClearErrors } from './my-account.actions';
 import { IFormErrors } from '../../shared/common';
-import { IUserCredentialModel } from '../../api/models/users/user-credential.model';
-import { UserCredentialsService } from '../../api/services/users/user-credentials.service';
+import { IUserCredentialModel } from '../../api';
+import { UserCredentialsService } from '../../api';
 import { Logout } from '../auth';
 
 export interface IUserCredential extends IUserCredentialModel {

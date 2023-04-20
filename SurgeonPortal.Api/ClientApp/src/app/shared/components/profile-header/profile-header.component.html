@@ -4,12 +4,12 @@
     label="Profile Picture"
     style="--size: 5rem"
   ></sl-avatar>
-  <div class="ml-3" *ngIf="user$ | async as user">
+  <div class="ml-3" *ngIf="user">
     <h2 class="font-normal mt-0 mb-0">
       <span>{{ user.displayName }}</span>
     </h2>
-    <p class="font-bold mt-0 mb-1" *ngIf="user?.emailAddress">
-      {{ user?.emailAddress }}
+    <p class="font-bold mt-0 mb-1" *ngIf="user.emailAddress">
+      {{ user.emailAddress }}
     </p>
     <p class="font-bold mt-0 mb-1 account-status">Status: Trainee</p>
   </div>

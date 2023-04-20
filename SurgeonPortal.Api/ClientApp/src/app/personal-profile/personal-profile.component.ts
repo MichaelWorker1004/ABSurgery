@@ -1,5 +1,8 @@
-import { CommonModule, NgIf } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { debounceTime, Observable, of } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+
 import {
   FormBuilder,
   FormControl,
@@ -10,7 +13,6 @@ import {
 } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 
-import { Observable, Subscription } from 'rxjs';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NgxMaskPipe } from 'ngx-mask';
 import { provideNgxMask } from 'ngx-mask';
@@ -19,7 +21,18 @@ import { ProfileHeaderComponent } from '../shared/components/profile-header/prof
 import { SuccessFailModalComponent } from '../shared/components/success-fail-modal/success-fail-modal.component';
 import { UpdateUserProfile, UserProfileSelectors } from '../state';
 import { IUserProfile } from '../state';
+import { GetStateList } from '../state/picklists';
+import { IPickListItem, PicklistsSelectors } from '../state/picklists';
+import {
+  ICountryReadOnlyModel,
+  IEthnicityReadOnlyModel,
+  IGenderReadOnlyModel,
+  ILanguageReadOnlyModel,
+  IRaceReadOnlyModel,
+  IStateReadOnlyModel,
+} from '../api';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-personal-profile',
   templateUrl: './personal-profile.component.html',
@@ -37,7 +50,7 @@ import { IUserProfile } from '../state';
   ],
   providers: [provideNgxMask()],
 })
-export class PersonalProfileComponent implements OnDestroy {
+export class PersonalProfileComponent implements OnInit {
   // TODO: [Joe] set up input masks
   // TODO: [Joe] set up validation
   // TODO: [Joe] set up national provider identifier (NPI) report button
@@ -46,16 +59,39 @@ export class PersonalProfileComponent implements OnDestroy {
     | Observable<IUserProfile>
     | undefined;
 
-  stateValue = '';
-  userSubscription: Subscription | undefined;
+  @Select(PicklistsSelectors.slices.countries) countries$:
+    | Observable<ICountryReadOnlyModel[]>
+    | undefined;
+
+  @Select(PicklistsSelectors.slices.ethnicities) ethnicities$:
+    | Observable<IEthnicityReadOnlyModel[]>
+    | undefined;
+
+  @Select(PicklistsSelectors.slices.genders) genders$:
+    | Observable<IGenderReadOnlyModel[]>
+    | undefined;
+
+  @Select(PicklistsSelectors.slices.languages) languages$:
+    | Observable<ILanguageReadOnlyModel[]>
+    | undefined;
+
+  @Select(PicklistsSelectors.slices.races) races$:
+    | Observable<IRaceReadOnlyModel[]>
+    | undefined;
+
+  @Select(PicklistsSelectors.slices.states) states$:
+    | Observable<IStateReadOnlyModel[]>
+    | undefined;
+
+  mailingStates$: Observable<IStateReadOnlyModel[]> = of([]);
+
   isEdit = true;
 
   // TODO: [Joe] this is eventually getting moved to a service for universal modals
   call!: any;
 
-  // userProfileForm: IUserProfileForm;
   userProfileForm: FormGroup = new FormGroup({
-    aBSId: new FormControl(0, []),
+    aBSId: new FormControl('', []),
     bestLanguageId: new FormControl(0, []),
     birthCity: new FormControl('', []),
     birthCountry: new FormControl('', []),
@@ -89,14 +125,46 @@ export class PersonalProfileComponent implements OnDestroy {
     zipCode: new FormControl('', []),
   });
 
-  constructor(private store: Store, private formBuilder: FormBuilder) {
-    this.userSubscription = this.user$?.subscribe((user) => {
-      this.userProfileForm.patchValue({ ...user });
-    });
+  constructor(private _store: Store, private formBuilder: FormBuilder) {
+    this.user$
+      ?.pipe(debounceTime(300), untilDestroyed(this))
+      .subscribe((user: IUserProfile) => {
+        this.userProfileForm.patchValue({ ...user });
+        // this.userProfileForm.setValue('country', user.country);
+        // console.log('-------------------->', this.userProfileForm);
+        this.userProfileForm.patchValue({ country: user.country });
+      });
   }
 
-  ngOnDestroy(): void {
-    this.userSubscription?.unsubscribe();
+  ngOnInit() {
+    // Country field
+    this.userProfileForm
+      .get('country')
+      ?.valueChanges.pipe(debounceTime(300), untilDestroyed(this))
+      .subscribe((value) => {
+        // console.log('country', value);
+        this._store.dispatch(new GetStateList(value));
+        // const el: any = document.getElementById('country');
+        // if (el) {
+        //   el.value = value;
+        // }
+      });
+    // Birth Country field
+    this.userProfileForm
+      .get('birthCountry')
+      ?.valueChanges.pipe(debounceTime(300), untilDestroyed(this))
+      .subscribe((value) => {
+        // console.log('birthCountry', value);
+        this._store.dispatch(new GetStateList(value));
+      });
+    // Citizenship Country field
+    this.userProfileForm
+      .get('countryCitizenship')
+      ?.valueChanges.pipe(debounceTime(300), untilDestroyed(this))
+      .subscribe((value) => {
+        // console.log('countryCitizenship', value);
+        this._store.dispatch(new GetStateList(value));
+      });
   }
 
   save() {
@@ -127,17 +195,24 @@ export class PersonalProfileComponent implements OnDestroy {
     const formControl = $event.target.getAttribute('data-controlname');
     const patchObj: any = {};
     patchObj[formControl] = select.value;
-    console.log('handleSelects', patchObj);
+    // console.log('handleSelects', patchObj);
     this.userProfileForm.patchValue(patchObj);
   }
 
   toggleDialog($event: any) {
-    console.log('toggleDialog', $event.show);
+    // console.log('toggleDialog', $event.show);
     this.call.showDialog = $event.show;
   }
 
+  trackByFn(
+    index: number,
+    item: IPickListItem
+  ): string | number | null | undefined {
+    return item.itemValue;
+  }
+
   onSubmit() {
-    console.log('onSubmit');
-    this.store.dispatch(new UpdateUserProfile(this.userProfileForm.value));
+    // console.log('onSubmit');
+    this._store.dispatch(new UpdateUserProfile(this.userProfileForm.value));
   }
 }

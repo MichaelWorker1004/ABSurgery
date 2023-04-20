@@ -7,7 +7,12 @@ import {
 } from '@angular/common/http';
 
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin';
+import {
+  LOCAL_STORAGE_ENGINE,
+  NgxsStoragePluginModule,
+  SESSION_STORAGE_ENGINE,
+  StorageOption,
+} from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -20,6 +25,7 @@ import { surgeonPortalState } from './app/state/surgeon-portal.state';
 import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
 import { AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN } from './app/state';
+import { PICKLISTS_STATE_TOKEN } from './app/state/picklists';
 
 // TODO: Explore ngx-mask configs to see if onkeypress
 //  and onchange can be mapped to sl_change, etc
@@ -38,9 +44,25 @@ bootstrapApplication(AppComponent, {
       NgxsModule.forRoot(surgeonPortalState, {
         developmentMode: true,
       }),
+      // NgxsStoragePluginModule.forRoot({
+      //   storage: StorageOption.SessionStorage,
+      //   key: [AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN],
+      // }),
       NgxsStoragePluginModule.forRoot({
-        storage: StorageOption.SessionStorage,
-        key: [AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN],
+        key: [
+          {
+            key: AUTH_STATE_TOKEN,
+            engine: SESSION_STORAGE_ENGINE,
+          },
+          {
+            key: USER_PROFILE_STATE_TOKEN,
+            engine: SESSION_STORAGE_ENGINE,
+          },
+          {
+            key: PICKLISTS_STATE_TOKEN,
+            engine: LOCAL_STORAGE_ENGINE,
+          },
+        ],
       }),
       NgxsLoggerPluginModule.forRoot(),
       NgxsReduxDevtoolsPluginModule.forRoot(),

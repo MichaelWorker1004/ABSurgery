@@ -1,62 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormControl, FormGroup } from '@angular/forms';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Action, State, StateContext, StateToken } from '@ngxs/store';
-import { IAppUserReadOnlyModel, IUserProfileModel } from '../../api';
+import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
+import {
+  IAppUserReadOnlyModel,
+  ICountryReadOnlyModel,
+  IGenderReadOnlyModel,
+  ILanguageReadOnlyModel,
+  IRaceReadOnlyModel,
+  IStateReadOnlyModel,
+  IUserProfileModel,
+} from '../../api';
 import { IFormErrors } from '../../shared/common';
 import { UserProfilesService } from '../../api';
-import { GetUserProfile, UpdateUserProfile } from './user-profile.actions';
+import {
+  GetUserProfile,
+  LinkUserData,
+  UpdateUserProfile,
+} from './user-profile.actions';
+import {
+  GetPicklists,
+  IPicklist,
+  PicklistsSelectors,
+  PicklistsState,
+} from '../picklists';
+import { AuthSelectors } from '../auth';
 
 export interface IUserProfile extends IUserProfileModel, IAppUserReadOnlyModel {
+  countryDO?: ICountryReadOnlyModel;
+  countryBirthDO?: ICountryReadOnlyModel;
+  countryCitizenDO?: ICountryReadOnlyModel;
+  stateDO?: IStateReadOnlyModel;
+  stateBirthDO?: IStateReadOnlyModel;
+  genderDO?: IGenderReadOnlyModel;
+  raceDO?: IRaceReadOnlyModel;
+  ethnicityDO?: IRaceReadOnlyModel;
+  firstLanguageDO?: ILanguageReadOnlyModel;
+  bestLanguageDO?: ILanguageReadOnlyModel;
   claims: string[];
   profilePicture: string; // TODO: <API>This is not generated
   errors?: IFormErrors | null;
 }
-
-// TODO: work out how to implement this in the store and use it in the form
-// export interface IUserProfileForm extends FormGroup {
-//   value: IUserProfileModel;
-//   controls: {
-//     userProfileId: FormControl;
-//     userId: FormControl;
-//     firstName: FormControl;
-//     middleName: FormControl;
-//     lastName: FormControl;
-//     suffix: FormControl;
-//     displayName: FormControl;
-//     officePhoneNumber: FormControl;
-//     mobilePhoneNumber: FormControl;
-//     birthCity: FormControl;
-//     birthState: FormControl;
-//     birthCountry: FormControl;
-//     countryCitizenship: FormControl;
-//     aBSId: FormControl;
-//     certificationStatusId: FormControl;
-//     nPI: FormControl;
-//     genderId: FormControl;
-//     birthDate: FormControl;
-//     race: FormControl;
-//     ethnicity: FormControl;
-//     firstLanguageId: FormControl;
-//     bestLanguageId: FormControl;
-//     receiveComms: FormControl;
-//     userConfirmed: FormControl;
-//     userConfirmedDate: FormControl;
-//     createdByUserId: FormControl;
-//     createdAtUtc: FormControl;
-//     lastUpdatedAtUtc: FormControl;
-//     lastUpdatedByUserId: FormControl;
-//     street1: FormControl;
-//     street2: FormControl;
-//     city: FormControl;
-//     state: FormControl;
-//     zipCode: FormControl;
-//     country: FormControl;
-//     profilePicture: FormControl;
-//   };
-// }
 
 export const USER_PROFILE_STATE_TOKEN = new StateToken<IUserProfile>(
   'userProfile'
@@ -110,7 +95,10 @@ export const USER_PROFILE_STATE_TOKEN = new StateToken<IUserProfile>(
 })
 @Injectable()
 export class UserProfileState {
-  constructor(private userProfilesService: UserProfilesService) {}
+  constructor(
+    private store: Store,
+    private userProfilesService: UserProfilesService
+  ) {}
 
   @Action(GetUserProfile)
   getUserProfile(
@@ -118,7 +106,7 @@ export class UserProfileState {
     { loginUser, claims }: GetUserProfile
   ) {
     const state = ctx.getState();
-    const userId = loginUser?.userId ? loginUser.userId : -1;
+    const userId = loginUser?.userId;
     return this.userProfilesService
       .retrieveUserProfile_GetByUserId(userId)
       .pipe(
@@ -128,11 +116,17 @@ export class UserProfileState {
             ...state,
             ...loginUser,
             ...res,
+            country: '500',
             claims,
             profilePicture:
               'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU',
             errors: null,
           });
+          this.store.dispatch(new GetPicklists(ctx.getState().country));
+          console.log(
+            '----------------> userValues',
+            this.store.selectSnapshot(PicklistsSelectors.userValues)
+          );
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
@@ -147,7 +141,6 @@ export class UserProfileState {
     ctx: StateContext<IUserProfile>,
     { payload }: UpdateUserProfile
   ) {
-    // const state = ctx.getState();
     const model = {} as unknown as IUserProfileModel;
 
     ctx.setState({
@@ -157,8 +150,6 @@ export class UserProfileState {
 
     Object.assign(model, ctx.getState());
     const payloadTest = ctx.getState();
-    // const payloadTest = { model };
-    // console.log('------------>', payload, ctx.getState());
     return this.userProfilesService
       .updateUserProfile(ctx.getState().userId, payloadTest)
       .pipe(
@@ -171,7 +162,6 @@ export class UserProfileState {
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
-          // ctx.patchState({ errors });
           ctx.setState({
             ...ctx.getState(),
             errors,
@@ -179,5 +169,10 @@ export class UserProfileState {
           return of(errors);
         })
       );
+  }
+
+  @Action(LinkUserData)
+  linkUserData(ctx: StateContext<IUserProfile>) {
+    this.store.dispatch(new GetPicklists());
   }
 }

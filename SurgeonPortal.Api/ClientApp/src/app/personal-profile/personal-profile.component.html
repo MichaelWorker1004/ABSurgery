@@ -7,7 +7,6 @@
       <div class="col-12 flex">
         <abs-profile-header
           [profilePicture]="user.profilePicture"
-          [user]="user"
         ></abs-profile-header>
       </div>
     </div>
@@ -143,10 +142,14 @@
                 label="State / Province"
                 data-controlname="state"
                 (sl-change)="handleSelects($event)"
+                *ngIf="mailingStates$ | async as states"
+                [disabled]="!states.length"
               >
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
+                <sl-option
+                  *ngFor="let state of states; index as i; trackBy: trackByFn"
+                  [value]="state.itemValue"
+                  >{{ state.itemDescription }}</sl-option
+                >
               </sl-select>
               <sl-input
                 class="col-12 md:col-3"
@@ -155,14 +158,25 @@
                 ngDefaultControl
               ></sl-input>
               <sl-select
+                id="country"
                 class="col-12 md:col-3"
                 label="Country"
                 data-controlname="country"
+                ngDefaultControl
+                clearable
                 (sl-change)="handleSelects($event)"
+                *ngIf="countries$ | async as countries"
               >
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
+                <sl-option
+                  *ngFor="
+                    let country of countries;
+                    index as i;
+                    trackBy: trackByFn
+                  "
+                  [value]="country.itemValue"
+                >
+                  {{ country.itemDescription }}</sl-option
+                >
               </sl-select>
             </div>
           </div>
@@ -276,20 +290,36 @@
                 data-controlname="birthCountry"
                 label="Country of Birth"
                 (sl-change)="handleSelects($event)"
+                *ngIf="countries$ | async as countries"
               >
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
+                <sl-option
+                  *ngFor="
+                    let country of countries;
+                    index as i;
+                    trackBy: trackByFn
+                  "
+                  [value]="country.itemValue"
+                >
+                  {{ country.itemDescription }}</sl-option
+                >
               </sl-select>
               <sl-select
                 class="col-12 md:col-6"
                 data-controlname="countryCitizenship"
                 label="Country of Citizenship"
                 (sl-change)="handleSelects($event)"
+                *ngIf="countries$ | async as countries"
               >
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
+                <sl-option
+                  *ngFor="
+                    let country of countries;
+                    index as i;
+                    trackBy: trackByFn
+                  "
+                  [value]="country.itemValue"
+                >
+                  {{ country.itemDescription }}</sl-option
+                >
               </sl-select>
             </div>
           </div>

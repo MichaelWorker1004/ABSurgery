@@ -15,3 +15,7 @@ export class UpdateUserProfile {
 
   constructor(public payload: IUserProfile) {}
 }
+
+export class LinkUserData {
+  static readonly type = '[UserProfile] Get the user profile values';
+}
