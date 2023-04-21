@@ -33,7 +33,6 @@ namespace SurgeonPortal.Api.Controllers.Users
         ///<summary>
         /// YtgIm 
         ///<summary>
-        [Authorize]
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserCredentialModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -50,7 +49,6 @@ namespace SurgeonPortal.Api.Controllers.Users
         ///<summary>
         /// YtgIm 
         ///<summary>
-        [Authorize]
         [MapToApiVersion("1")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400, Type = typeof(UserCredentialModel))]

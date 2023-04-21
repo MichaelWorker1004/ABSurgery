@@ -30,66 +30,63 @@ namespace SurgeonPortal.Api.Controllers.Users
       _mapper = mapper;
     }
 
-    ///<summary>
-    /// YtgIm 
-    ///<summary>
-    [Authorize]
-    [MapToApiVersion("1")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserProfileModel))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [HttpGet("by-userId")]
-    public async Task<ActionResult<UserProfileModel>> GetUserProfile_GetByUserIdAsync(
-        [FromServices] IUserProfileFactory userProfileFactory,
-        int userId)
-    {
-      var item = await userProfileFactory.GetByUserIdAsync(userId);
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserProfileModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("by-userId")]
+        public async Task<ActionResult<UserProfileModel>> GetUserProfile_GetByUserIdAsync(
+            [FromServices] IUserProfileFactory userProfileFactory,
+            int userId)
+        {
+            var item = await userProfileFactory.GetByUserIdAsync(userId);
+        
+            return Ok(_mapper.Map<UserProfileModel>(item));
+        } 
 
-      return Ok(_mapper.Map<UserProfileModel>(item));
-    }
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("")]
+        public async Task<IActionResult> CreateAsync(
+            [FromServices] IUserProfileFactory userProfileFactory,
+            [FromServices] IAbsoluteUriProvider absoluteUriProvider,
+            [FromBody] UserProfileModel model)
+        {
+            var item = userProfileFactory.Create();
+            AssignCreateProperties(item, model);
+        
+            return await CreateAsync<UserProfileModel>(
+                _mapper,
+                item,
+                absoluteUriProvider.GetAbsoluteUri($"/v1/users/profiles/{item.UserProfileId}"));
+        } 
 
-    ///<summary>
-    /// YtgIm 
-    ///<summary>
-    [Authorize]
-    [MapToApiVersion("1")]
-    [ProducesResponseType(201)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [HttpPost("")]
-    public async Task<IActionResult> CreateAsync(
-        [FromServices] IUserProfileFactory userProfileFactory,
-        [FromServices] IAbsoluteUriProvider absoluteUriProvider,
-        [FromBody] UserProfileModel model)
-    {
-      var item = userProfileFactory.Create();
-      AssignCreateProperties(item, model);
-
-      return await CreateAsync<UserProfileModel>(
-          _mapper,
-          item,
-          absoluteUriProvider.GetAbsoluteUri($"/v1/users/profiles/{item.UserProfileId}"));
-    }
-
-    ///<summary>
-    /// YtgIm 
-    ///<summary>
-    [Authorize]
-    [MapToApiVersion("1")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(400, Type = typeof(UserProfileModel))]
-    [ProducesResponseType(401)]
-    [HttpPut("")]
-    public async Task<IActionResult> EditAsync(
-        [FromServices] IUserProfileFactory userProfileFactory,
-        [FromBody] UserProfileModel model,
-        int userId)
-    {
-      var item = await userProfileFactory.GetByUserIdAsync(userId);
-      AssignEditProperties(item, model);
-
-      return await UpdateAsync<UserProfileModel>(_mapper, item);
-    }
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400, Type = typeof(UserProfileModel))]
+        [ProducesResponseType(401)]
+        [HttpPut("")]
+        public async Task<IActionResult> EditAsync(
+            [FromServices] IUserProfileFactory userProfileFactory,
+            [FromBody] UserProfileModel model,
+            int userId)
+        {
+            var item = await userProfileFactory.GetByUserIdAsync(userId);
+            AssignEditProperties(item, model);
+            
+            return await UpdateAsync<UserProfileModel>(_mapper, item);
+        } 
 
     private void AssignCreateProperties(IUserProfile entity, UserProfileModel model)
     {

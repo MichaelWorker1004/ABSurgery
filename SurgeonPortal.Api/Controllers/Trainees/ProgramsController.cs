@@ -29,23 +29,22 @@ namespace SurgeonPortal.Api.Controllers.Trainees
       _mapper = mapper;
     }
 
-    ///<summary>
-    /// YtgIm 
-    ///<summary>
-    [Authorize]
-    [MapToApiVersion("1")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProgramReadOnlyModel))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [HttpGet("")]
-    public async Task<ActionResult<ProgramReadOnlyModel>> GetProgramReadOnly_GetByUserIdAsync(
-        [FromServices] IProgramReadOnlyFactory programReadOnlyFactory,
-        int userId)
-    {
-      var item = await programReadOnlyFactory.GetByUserIdAsync(userId);
-
-      return Ok(_mapper.Map<ProgramReadOnlyModel>(item));
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProgramReadOnlyModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("")]
+        public async Task<ActionResult<ProgramReadOnlyModel>> GetProgramReadOnly_GetByUserIdAsync(
+            [FromServices] IProgramReadOnlyFactory programReadOnlyFactory,
+            int userId)
+        {
+            var item = await programReadOnlyFactory.GetByUserIdAsync(userId);
+        
+            return Ok(_mapper.Map<ProgramReadOnlyModel>(item));
+        } 
     }
-  }
 }
 

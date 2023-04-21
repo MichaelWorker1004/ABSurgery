@@ -1,0 +1,576 @@
+{
+  "name": "OutcomeRegistry",
+  "implementationName": "ContinuousCertification\\OutcomeRegistry-update",
+  "template": "ytg-framework/editable-edit",
+  "parameters": {
+    "Adapter": "dbo.update_outcomeregistry_getbyuserid",
+    "ApiRoot": "$project.ApiRoot",
+    "ControllerName": "ContinuousCertification\\OutcomeRegistriesController",
+    "ControllerRoute": "continuous-certification/outcome-registries",
+    "ControllerVersion": "1",
+    "FetchImplementation": "ContinuousCertification\\OutcomeRegistry-getgetbyuserid",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ContinuousCertification\\OutcomeRegistry",
+    "ModelGroup": "OutcomeRegistry",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_outcomeregistry_getbyuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_outcomeregistry_getbyuserid]",
+        "parameters": [
+          {
+            "name": "SurgeonSpecificRegistry",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "SurgeonSpecificRegistry"
+          },
+          {
+            "name": "RegistryComments",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegistryComments"
+          },
+          {
+            "name": "RegisteredWithACHQC",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithACHQC"
+          },
+          {
+            "name": "RegisteredWithCESQIP",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithCESQIP"
+          },
+          {
+            "name": "RegisteredWithMBSAQIP",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithMBSAQIP"
+          },
+          {
+            "name": "RegisteredWithABA",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithABA"
+          },
+          {
+            "name": "RegisteredWithASBS",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithASBS"
+          },
+          {
+            "name": "RegisteredWithStatewideCollaboratives",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithStatewideCollaboratives"
+          },
+          {
+            "name": "RegisteredWithABMS",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithABMS"
+          },
+          {
+            "name": "RegisteredWithNCDB",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithNCDB"
+          },
+          {
+            "name": "RegisteredWithRQRS",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithRQRS"
+          },
+          {
+            "name": "RegisteredWithNSQIP",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithNSQIP"
+          },
+          {
+            "name": "RegisteredWithNTDB",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithNTDB"
+          },
+          {
+            "name": "RegisteredWithSTS",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithSTS"
+          },
+          {
+            "name": "RegisteredWithTQIP",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithTQIP"
+          },
+          {
+            "name": "RegisteredWithUNOS",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithUNOS"
+          },
+          {
+            "name": "RegisteredWithNCDR",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithNCDR"
+          },
+          {
+            "name": "RegisteredWithSVS",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithSVS"
+          },
+          {
+            "name": "RegisteredWithELSO",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithELSO"
+          },
+          {
+            "name": "UserConfirmed",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserConfirmed"
+          },
+          {
+            "name": "UserConfirmedDateUtc",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "UserConfirmedDateUtc"
+          },
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ContinuousCertification\\OutcomeRegistry",
+            "fields": [
+              {
+                "name": "SurgeonSpecificRegistry",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SurgeonSpecificRegistry"
+              },
+              {
+                "name": "RegistryComments",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegistryComments"
+              },
+              {
+                "name": "RegisteredWithACHQC",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithACHQC"
+              },
+              {
+                "name": "RegisteredWithCESQIP",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithCESQIP"
+              },
+              {
+                "name": "RegisteredWithMBSAQIP",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithMBSAQIP"
+              },
+              {
+                "name": "RegisteredWithABA",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithABA"
+              },
+              {
+                "name": "RegisteredWithASBS",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithASBS"
+              },
+              {
+                "name": "RegisteredWithStatewideCollaboratives",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithStatewideCollaboratives"
+              },
+              {
+                "name": "RegisteredWithABMS",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithABMS"
+              },
+              {
+                "name": "RegisteredWithNCDB",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithNCDB"
+              },
+              {
+                "name": "RegisteredWithRQRS",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithRQRS"
+              },
+              {
+                "name": "RegisteredWithNSQIP",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithNSQIP"
+              },
+              {
+                "name": "RegisteredWithNTDB",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithNTDB"
+              },
+              {
+                "name": "RegisteredWithSTS",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithSTS"
+              },
+              {
+                "name": "RegisteredWithTQIP",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithTQIP"
+              },
+              {
+                "name": "RegisteredWithUNOS",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithUNOS"
+              },
+              {
+                "name": "RegisteredWithNCDR",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithNCDR"
+              },
+              {
+                "name": "RegisteredWithSVS",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithSVS"
+              },
+              {
+                "name": "RegisteredWithELSO",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithELSO"
+              },
+              {
+                "name": "UserConfirmed",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserConfirmed"
+              },
+              {
+                "name": "UserConfirmedDateUtc",
+                "dataType": "datetime",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserConfirmedDateUtc"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "SurgeonSpecificRegistry",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegistryComments",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithACHQC",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithCESQIP",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithMBSAQIP",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithABA",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithASBS",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithStatewideCollaboratives",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithABMS",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithNCDB",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithRQRS",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithNSQIP",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithNTDB",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithSTS",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithTQIP",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithUNOS",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithNCDR",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithSVS",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "RegisteredWithELSO",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "UserConfirmed",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "UserConfirmedDateUtc",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ContinuousCertification\\OutcomeRegistry-update OutcomeRegistry -t=ytg-framework/editable-edit -p:Adapter=sp:ABSSP-[dbo].[update_outcomeregistry_getbyuserid] -p:Model=ContinuousCertification\\OutcomeRegistry -p:FetchImplementation=ContinuousCertification\\OutcomeRegistry-getgetbyuserid -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= ",
+    "inferredCommand": "ytgim generate i  ContinuousCertification\\OutcomeRegistry-update OutcomeRegistry -t=ytg-framework/editable-edit -p:Adapter=sp:ABSSP-[dbo].[update_outcomeregistry_getbyuserid] -p:Model=ContinuousCertification\\OutcomeRegistry -p:FetchImplementation=ContinuousCertification\\OutcomeRegistry-getgetbyuserid -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:ApiRoot=$project.ApiRoot -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=continuous-certification/outcome-registries -p:ControllerVersion=1",
+    "generatedDateUtc": "2023-04-21T19:38:52.8691466Z"
+  },
+  "version": 1
+}
