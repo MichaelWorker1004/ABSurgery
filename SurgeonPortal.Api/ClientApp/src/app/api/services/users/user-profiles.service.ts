@@ -192,7 +192,7 @@ export class UserProfilesService {
             * birthState:String
             * birthCountry:String
             * countryCitizenship:String
-            * aBSId:String
+            * absId:String
             * nPI:String
             * genderId:Number
             * birthDate:String
@@ -312,7 +312,7 @@ export class UserProfilesService {
             * birthState:String
             * birthCountry:String
             * countryCitizenship:String
-            * aBSId:String
+            * absId:String
             * nPI:String
             * genderId:Number
             * birthDate:String

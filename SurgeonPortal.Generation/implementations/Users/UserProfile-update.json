@@ -144,13 +144,13 @@
             "mapsTo": "CountryCitizenship"
           },
           {
-            "name": "ABSId",
+            "name": "AbsId",
             "dataType": "string",
             "maxLength": 20,
             "precision": 20,
             "scale": 0,
             "required": true,
-            "mapsTo": "ABSId"
+            "mapsTo": "AbsId"
           },
           {
             "name": "NPI",
@@ -468,14 +468,14 @@
                 "mapsTo": "model.CountryCitizenship"
               },
               {
-                "name": "ABSId",
+                "name": "AbsId",
                 "dataType": "string",
                 "maxLength": 20,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.ABSId"
+                "mapsTo": "model.AbsId"
               },
               {
                 "name": "CertificationStatus",
@@ -760,7 +760,7 @@
       "required": true
     },
     {
-      "name": "ABSId",
+      "name": "AbsId",
       "dataType": "string",
       "required": true
     },

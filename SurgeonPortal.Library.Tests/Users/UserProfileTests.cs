@@ -29,7 +29,7 @@ namespace SurgeonPortal.Library.Tests.Users
             dto.BirthState = Create<string>();
             dto.BirthCountry = Create<string>();
             dto.CountryCitizenship = Create<string>();
-            dto.ABSId = Create<string>();
+            dto.AbsId = Create<string>();
             dto.CertificationStatus = Create<string>();
             dto.NPI = Create<string>();
             dto.GenderId = Create<int?>();
@@ -1312,7 +1312,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.UserProfileId)
                 .Excluding(m => m.CertificationStatus)
-                .Excluding(m => m.ABSId)
+                .Excluding(m => m.AbsId)
                 .Excluding(m => m.NPI)
                 .ExcludingMissingMembers());
         
@@ -1338,15 +1338,15 @@ namespace SurgeonPortal.Library.Tests.Users
             var sut = factory.Create();
             sut.UserId = Create<int>();
         
-            //await sut.SaveAsync();
+            await sut.SaveAsync();
             
-            //dto.Should().BeEquivalentTo(sut,
-            //    options => options
-            //    .Excluding(m => m.CreatedAtUtc)
-            //        .Excluding(m => m.CreatedByUserId)
-            //        .Excluding(m => m.LastUpdatedAtUtc)
-            //        .Excluding(m => m.LastUpdatedByUserId)
-            //        .ExcludingMissingMembers());
+            dto.Should().BeEquivalentTo(sut,
+                options => options
+                .Excluding(m => m.CreatedAtUtc)
+                    .Excluding(m => m.CreatedByUserId)
+                    .Excluding(m => m.LastUpdatedAtUtc)
+                    .Excluding(m => m.LastUpdatedByUserId)
+                    .ExcludingMissingMembers());
         }
         
         #endregion
@@ -1458,7 +1458,7 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.CertificationStatus)
-                    .Excluding(m => m.ABSId)
+                    .Excluding(m => m.AbsId)
                     .Excluding(m => m.NPI)
                 .ExcludingMissingMembers());
         

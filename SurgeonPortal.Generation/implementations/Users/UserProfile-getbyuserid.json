@@ -171,14 +171,14 @@
                 "mapsTo": "model.CountryCitizenship"
               },
               {
-                "name": "ABSId",
+                "name": "AbsId",
                 "dataType": "string",
                 "maxLength": 20,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.ABSId"
+                "mapsTo": "model.AbsId"
               },
               {
                 "name": "CertificationStatus",
