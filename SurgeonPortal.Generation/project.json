@@ -9,6 +9,7 @@
     },
     "mappings": {
         "regex:^USERID$": "$UserId",
-        "regex:^UserName$": "$UserName"
+        "regex:^UserName$": "$UserName",
+        "regex:ABSI[dD]": "AbsId"
     }
 }

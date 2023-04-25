@@ -1,7 +1,7 @@
 {
   "name": "OutcomeRegistry",
   "implementationName": "ContinuousCertification\\OutcomeRegistry-getgetbyuserid",
-  "template": "ytg-framework/readonly-get",
+  "template": "ytg-framework/editable-get",
   "parameters": {
     "Adapter": "dbo.get_outcomeregistry_getbyuserid",
     "ApiRoot": "$project.ApiRoot",

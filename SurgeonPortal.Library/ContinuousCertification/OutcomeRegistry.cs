@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
+using static SurgeonPortal.Library.ContinuousCertification.OutcomeRegistryFactory;
 
 namespace SurgeonPortal.Library.ContinuousCertification
 {
@@ -217,6 +218,25 @@ namespace SurgeonPortal.Library.ContinuousCertification
 
 
 
+
+        [Fetch]
+        [RunLocal]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
+           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+        private async Task GetByUserId(GetByUserIdCriteria criteria)
+        
+        {
+            using (BypassPropertyChecks)
+            {
+                var dto = await _outcomeRegistryDal.GetByUserIdAsync(criteria.UserId);
+        
+                if(dto == null)
+                {
+                    throw new Ytg.Framework.Exceptions.DataNotFoundException("OutcomeRegistry not found based on criteria");
+                }
+                FetchData(dto);
+            }
+        }
 
         [RunLocal]
         [Insert]

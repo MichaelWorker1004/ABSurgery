@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Contracts.Users
         public string BirthState { get; set; }
         public string BirthCountry { get; set; }
         public string CountryCitizenship { get; set; }
-        public string ABSId { get; set; }
+        public string AbsId { get; set; }
         public string CertificationStatus { get; set; }
         public string NPI { get; set; }
         public int? GenderId { get; set; }

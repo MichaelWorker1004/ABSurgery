@@ -134,13 +134,13 @@ namespace SurgeonPortal.Library.Users
 		}
 		public static readonly PropertyInfo<string> CountryCitizenshipProperty = RegisterProperty<string>(c => c.CountryCitizenship);
 
-        [DisplayName(nameof(ABSId))]
-		public string ABSId
+        [DisplayName(nameof(AbsId))]
+		public string AbsId
 		{
-			get { return GetProperty(ABSIdProperty); }
-			 private set { SetProperty(ABSIdProperty, value); }
+			get { return GetProperty(AbsIdProperty); }
+			 private set { SetProperty(AbsIdProperty, value); }
 		}
-		public static readonly PropertyInfo<string> ABSIdProperty = RegisterProperty<string>(c => c.ABSId);
+		public static readonly PropertyInfo<string> AbsIdProperty = RegisterProperty<string>(c => c.AbsId);
 
         [DisplayName(nameof(CertificationStatus))]
 		public string CertificationStatus
@@ -398,7 +398,7 @@ namespace SurgeonPortal.Library.Users
 			this.BirthState = dto.BirthState;
 			this.BirthCountry = dto.BirthCountry;
 			this.CountryCitizenship = dto.CountryCitizenship;
-			this.ABSId = dto.ABSId;
+			this.AbsId = dto.AbsId;
 			this.CertificationStatus = dto.CertificationStatus;
 			this.NPI = dto.NPI;
 			this.GenderId = dto.GenderId;
@@ -440,7 +440,7 @@ namespace SurgeonPortal.Library.Users
 			dto.BirthState = this.BirthState;
 			dto.BirthCountry = this.BirthCountry;
 			dto.CountryCitizenship = this.CountryCitizenship;
-			dto.ABSId = this.ABSId;
+			dto.AbsId = this.AbsId;
 			dto.CertificationStatus = this.CertificationStatus;
 			dto.NPI = this.NPI;
 			dto.GenderId = this.GenderId;

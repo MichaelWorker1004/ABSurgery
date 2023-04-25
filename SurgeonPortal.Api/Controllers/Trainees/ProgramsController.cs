@@ -13,21 +13,21 @@ using Ytg.AspNetCore.Controllers;
 
 namespace SurgeonPortal.Api.Controllers.Trainees
 {
-  [ApiVersion("1")]
-  [ApiController]
-  [Produces("application/json")]
+    [ApiVersion("1")]
+    [ApiController]
+    [Produces("application/json")]
   [Route("api/trainees/programs")]
-  public class ProgramsController : YtgControllerBase
-  {
-    private readonly IMapper _mapper;
+	public class ProgramsController : YtgControllerBase
+	{
+        private readonly IMapper _mapper;
 
-    public ProgramsController(
-        IWebHostEnvironment webHostEnvironment,
-        IMapper mapper)
-        : base(webHostEnvironment)
-    {
-      _mapper = mapper;
-    }
+        public ProgramsController(
+            IWebHostEnvironment webHostEnvironment,
+            IMapper mapper)
+            : base(webHostEnvironment)
+        {
+            _mapper = mapper;
+        }
 
         ///<summary>
         /// YtgIm 

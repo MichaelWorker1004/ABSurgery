@@ -26,7 +26,7 @@ namespace SurgeonPortal.Models.Users
         public string BirthCountry { get; set; }
         [Required(ErrorMessage = "CountryCitizenship is required")]
         public string CountryCitizenship { get; set; }
-        public string ABSId { get; set; }
+        public string AbsId { get; set; }
         public string CertificationStatus { get; set; }
         public string NPI { get; set; }
         [Required(ErrorMessage = "GenderId is required")]

@@ -14,21 +14,21 @@ using Ytg.AspNetCore.Helpers;
 
 namespace SurgeonPortal.Api.Controllers.Users
 {
-  [ApiVersion("1")]
-  [ApiController]
-  [Produces("application/json")]
+    [ApiVersion("1")]
+    [ApiController]
+    [Produces("application/json")]
   [Route("api/users/profiles")]
-  public class UserProfilesController : YtgControllerBase
-  {
-    private readonly IMapper _mapper;
+	public class UserProfilesController : YtgControllerBase
+	{
+        private readonly IMapper _mapper;
 
-    public UserProfilesController(
-        IWebHostEnvironment webHostEnvironment,
-        IMapper mapper)
-        : base(webHostEnvironment)
-    {
-      _mapper = mapper;
-    }
+        public UserProfilesController(
+            IWebHostEnvironment webHostEnvironment,
+            IMapper mapper)
+            : base(webHostEnvironment)
+        {
+            _mapper = mapper;
+        }
 
         ///<summary>
         /// YtgIm 
@@ -88,68 +88,68 @@ namespace SurgeonPortal.Api.Controllers.Users
             return await UpdateAsync<UserProfileModel>(_mapper, item);
         } 
 
-    private void AssignCreateProperties(IUserProfile entity, UserProfileModel model)
-    {
-      entity.UserId = model.UserId;
-      entity.FirstName = model.FirstName;
-      entity.MiddleName = model.MiddleName;
-      entity.LastName = model.LastName;
-      entity.Suffix = model.Suffix;
-      entity.DisplayName = model.DisplayName;
-      entity.OfficePhoneNumber = model.OfficePhoneNumber;
-      entity.MobilePhoneNumber = model.MobilePhoneNumber;
-      entity.BirthCity = model.BirthCity;
-      entity.BirthState = model.BirthState;
-      entity.BirthCountry = model.BirthCountry;
-      entity.CountryCitizenship = model.CountryCitizenship;
-      entity.GenderId = model.GenderId;
-      entity.BirthDate = model.BirthDate;
-      entity.Race = model.Race;
-      entity.Ethnicity = model.Ethnicity;
-      entity.FirstLanguageId = model.FirstLanguageId;
-      entity.BestLanguageId = model.BestLanguageId;
-      entity.ReceiveComms = model.ReceiveComms;
-      entity.UserConfirmed = model.UserConfirmed;
-      entity.UserConfirmedDate = model.UserConfirmedDate;
-      entity.Street1 = model.Street1;
-      entity.Street2 = model.Street2;
-      entity.City = model.City;
-      entity.State = model.State;
-      entity.ZipCode = model.ZipCode;
-      entity.Country = model.Country;
-    }
+        private void AssignCreateProperties(IUserProfile entity, UserProfileModel model)
+        {
+            entity.UserId = model.UserId;
+            entity.FirstName = model.FirstName;
+            entity.MiddleName = model.MiddleName;
+            entity.LastName = model.LastName;
+            entity.Suffix = model.Suffix;
+            entity.DisplayName = model.DisplayName;
+            entity.OfficePhoneNumber = model.OfficePhoneNumber;
+            entity.MobilePhoneNumber = model.MobilePhoneNumber;
+            entity.BirthCity = model.BirthCity;
+            entity.BirthState = model.BirthState;
+            entity.BirthCountry = model.BirthCountry;
+            entity.CountryCitizenship = model.CountryCitizenship;
+            entity.GenderId = model.GenderId;
+            entity.BirthDate = model.BirthDate;
+            entity.Race = model.Race;
+            entity.Ethnicity = model.Ethnicity;
+            entity.FirstLanguageId = model.FirstLanguageId;
+            entity.BestLanguageId = model.BestLanguageId;
+            entity.ReceiveComms = model.ReceiveComms;
+            entity.UserConfirmed = model.UserConfirmed;
+            entity.UserConfirmedDate = model.UserConfirmedDate;
+            entity.Street1 = model.Street1;
+            entity.Street2 = model.Street2;
+            entity.City = model.City;
+            entity.State = model.State;
+            entity.ZipCode = model.ZipCode;
+            entity.Country = model.Country;
+        }
 
-    private void AssignEditProperties(IUserProfile entity, UserProfileModel model)
-    {
-      entity.UserProfileId = model.UserProfileId;
-      entity.UserId = model.UserId;
-      entity.FirstName = model.FirstName;
-      entity.MiddleName = model.MiddleName;
-      entity.LastName = model.LastName;
-      entity.Suffix = model.Suffix;
-      entity.DisplayName = model.DisplayName;
-      entity.OfficePhoneNumber = model.OfficePhoneNumber;
-      entity.MobilePhoneNumber = model.MobilePhoneNumber;
-      entity.BirthCity = model.BirthCity;
-      entity.BirthState = model.BirthState;
-      entity.BirthCountry = model.BirthCountry;
-      entity.CountryCitizenship = model.CountryCitizenship;
-      entity.GenderId = model.GenderId;
-      entity.BirthDate = model.BirthDate;
-      entity.Race = model.Race;
-      entity.Ethnicity = model.Ethnicity;
-      entity.FirstLanguageId = model.FirstLanguageId;
-      entity.BestLanguageId = model.BestLanguageId;
-      entity.ReceiveComms = model.ReceiveComms;
-      entity.UserConfirmed = model.UserConfirmed;
-      entity.UserConfirmedDate = model.UserConfirmedDate;
-      entity.Street1 = model.Street1;
-      entity.Street2 = model.Street2;
-      entity.City = model.City;
-      entity.State = model.State;
-      entity.ZipCode = model.ZipCode;
-      entity.Country = model.Country;
+        private void AssignEditProperties(IUserProfile entity, UserProfileModel model)
+        {
+            entity.UserProfileId = model.UserProfileId;
+            entity.UserId = model.UserId;
+            entity.FirstName = model.FirstName;
+            entity.MiddleName = model.MiddleName;
+            entity.LastName = model.LastName;
+            entity.Suffix = model.Suffix;
+            entity.DisplayName = model.DisplayName;
+            entity.OfficePhoneNumber = model.OfficePhoneNumber;
+            entity.MobilePhoneNumber = model.MobilePhoneNumber;
+            entity.BirthCity = model.BirthCity;
+            entity.BirthState = model.BirthState;
+            entity.BirthCountry = model.BirthCountry;
+            entity.CountryCitizenship = model.CountryCitizenship;
+            entity.GenderId = model.GenderId;
+            entity.BirthDate = model.BirthDate;
+            entity.Race = model.Race;
+            entity.Ethnicity = model.Ethnicity;
+            entity.FirstLanguageId = model.FirstLanguageId;
+            entity.BestLanguageId = model.BestLanguageId;
+            entity.ReceiveComms = model.ReceiveComms;
+            entity.UserConfirmed = model.UserConfirmed;
+            entity.UserConfirmedDate = model.UserConfirmedDate;
+            entity.Street1 = model.Street1;
+            entity.Street2 = model.Street2;
+            entity.City = model.City;
+            entity.State = model.State;
+            entity.ZipCode = model.ZipCode;
+            entity.Country = model.Country;
+        }
     }
-  }
 }
 
