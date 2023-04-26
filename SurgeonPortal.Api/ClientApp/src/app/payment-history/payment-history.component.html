@@ -1,1 +1,34 @@
-<p>payment-history works!</p>
+<h1>Payment History</h1>
+<sl-card>
+  <div slot="header">Invoices and Payments Received</div>
+
+  <div class="mb-3">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+      nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas
+      sit amet tortor at, condimentum tempor erat.
+    </p>
+  </div>
+
+  <abs-grid [columns]="paymentHistoryCols" [data]="paymentHistoryData">
+    <abs-alert alertType="info" [hideIcon]="true">
+      <div class="div flex justify-content-end footer">
+        <strong>Total Unpaid balance</strong> as of
+        {{ paymentFooterData.date | date : 'shortDate' }}:
+        <div class="amount">
+          {{ paymentFooterData.amount }}
+        </div>
+      </div>
+    </abs-alert>
+  </abs-grid>
+
+  <div class="flex justify-content-end mt-3">
+    <sl-button
+      variant="warning"
+      size="large"
+      type="primary"
+      (click)="handlePaymentClick()"
+      >Make a Payment</sl-button
+    >
+  </div>
+</sl-card>

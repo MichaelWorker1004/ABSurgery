@@ -1,5 +1,5 @@
 <div class="alert flex align-items-center" [class]="alertType">
-  <div class="icon">
+  <div class="icon" *ngIf="!hideIcon">
     <i
       class="fa-solid fa-circle-exclamation"
       *ngIf="alertType === 'danger'"
