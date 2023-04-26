@@ -1,4 +1,8 @@
-<form action="">
+<form
+  name="outcomeRegistriesForm"
+  [formGroup]="outcomeRegistriesForm"
+  (ngSubmit)="onSubmit()"
+>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
     dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
@@ -12,9 +16,8 @@
       <sl-radio-group
         *ngIf="formField.type === 'radio'"
         [label]="formField.label"
-        [name]="formField.name"
+        [formControlName]="formField.name"
         ngDefaultControl
-        [(ngModel)]="formField.value"
       >
         <span>{{ formField.subLabel }}</span>
         <div class="flex flex-wrap">
@@ -26,31 +29,49 @@
         </div>
       </sl-radio-group>
 
-      <div
-        class="col-12"
-        *ngIf="formField.type === 'textarea'"
-        [name]="formField.name"
-        ngDefaultControl
-        [(ngModel)]="formField.value"
-      >
-        <label for="describe"
-          >{{ formField.label }} <span>{{ formField.subLabel }}</span></label
+      <div class="col-12" *ngIf="formField.type === 'textarea'">
+        <label>
+          {{ formField.label }} <span>{{ formField.subLabel }}</span></label
         >
-        <sl-textarea></sl-textarea>
+        <sl-textarea
+          [formControlName]="formField.name"
+          ngDefaultControl
+        ></sl-textarea>
       </div>
     </div>
 
     <div class="col-12 md:col-6">
-      <sl-checkbox name="aknowledgement"
-        >I confirm the above information is completed and correct to the best of
-        my knowledge</sl-checkbox
+      <sl-checkbox
+        formControlName="userConfirmed"
+        ngDefaultControl
+        [checked]="outcomeRegistriesForm.get('userConfirmed')?.value"
       >
+        I confirm the above information is completed and correct to the best of
+        my knowledge
+      </sl-checkbox>
     </div>
     <div class="col-12 md:col-6 align-right">
       <sl-button variant="default" size="large" (click)="close()"
         >Cancel</sl-button
       >
-      <sl-button class="wide" size="large" variant="warning">Save</sl-button>
+      <sl-button
+        class="wide"
+        size="large"
+        variant="warning"
+        type="submit"
+        [disabled]="
+          outcomeRegistriesForm.untouched && !outcomeRegistriesForm.valid
+        "
+        >Save</sl-button
+      >
     </div>
   </div>
 </form>
+
+<abs-success-fail-modal
+  [isSuccess]="call.isSuccess"
+  [showDialog]="call.showDialog"
+  [message]="call.message"
+  (closeDialog)="close()"
+>
+</abs-success-fail-modal>

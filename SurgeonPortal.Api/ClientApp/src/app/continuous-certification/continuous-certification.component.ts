@@ -11,6 +11,9 @@ import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outc
 import { AttestationModalComponent } from './attestation-modal/attestation-modal.component';
 import { ReferenceFormModalComponent } from './reference-form-modal/reference-form-modal.component';
 import { Action } from '../shared/components/action-card/action.enum';
+import { IUserProfile, UserProfileSelectors } from '../state';
+import { Observable } from 'rxjs';
+import { Select } from '@ngxs/store';
 
 interface ActionMap {
   [key: string]: () => void;

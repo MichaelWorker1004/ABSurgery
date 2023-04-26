@@ -2,387 +2,143 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
+  OnInit,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Select, Store } from '@ngxs/store';
+import {
+  ContinuousCertificationSelectors,
+  GetOutcomeRegistries,
+  UpdateOutcomeRegistries,
+} from 'src/app/state/continuous-certification';
+import { UserProfileSelectors } from 'src/app/state';
+import { Observable } from 'rxjs';
+import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertification/outcome-registry.model';
+import { OutcomeRegistriesFormFields } from './outcome-registries-form';
+import { SuccessFailModalComponent } from 'src/app/shared/components/success-fail-modal/success-fail-modal.component';
 
 @Component({
   selector: 'abs-outcome-registries-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SuccessFailModalComponent,
+  ],
   templateUrl: './outcome-registries-modal.component.html',
   styleUrls: ['./outcome-registries-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class OutcomeRegistriesModalComponent {
+export class OutcomeRegistriesModalComponent implements OnInit {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
+  userId!: number;
 
-  outcomesandRegistriesFormFields = [
-    {
-      label: 'Surgeeon Specific Registry (case log)',
-      subLabel: '(ACS; with 30-day complications reporting)',
-      value: '',
-      required: false,
-      name: 'surgeonSpecificRegistry',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'Abdominal Core Health Quality Collaborative',
-      subLabel: '(ACHQC)',
-      value: '',
-      required: false,
-      name: 'abdominalCoreHealthQualityCollaborative',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
+  @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
+  @Select(ContinuousCertificationSelectors.GetOutcomeRegistries)
+  outcomeRegistries$: Observable<IOutcomeRegistryModel> | undefined;
+  outcomesandRegistriesFormFields = OutcomeRegistriesFormFields;
 
-    {
-      label: 'Collaborative Endocrine Surgery Quality Improvement Program',
-      subLabel: '(CESQIP)',
-      value: '',
-      required: false,
-      name: 'collaborativeEndocrineSurgeryQualityImprovementProgram',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label:
-        'Metabolic and Bariatric Surgery Accreditation and Quality Improvement Program (MBSAQIP)',
-      subLabel: '(ACS)',
-      value: '',
-      required: false,
-      name: 'metabolicAndBariatricSurgeryAccreditationAndQualityImprovementProgram',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
+  call = {
+    isSuccess: false,
+    message: '',
+    showDialog: false,
+  };
 
-    {
-      label: 'National Burn Repository',
-      subLabel: '(ABA)',
-      value: '',
-      required: false,
-      name: 'nationalBurnRepository',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'Mastery of Breast Surgery',
-      subLabel: '(ASBS)',
-      value: '',
-      required: false,
-      name: 'masteryOfBreastSurgery',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
+  disableSubmit = true;
 
-    {
-      label: 'Statewide Collaboratives',
-      subLabel: '(MSQC, SCOAP, etc.)',
-      value: '',
-      required: false,
-      name: 'statewideCollaboratives',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'Multi-specialty Portfolio Program',
-      subLabel: '(ABMS)',
-      value: '',
-      required: false,
-      name: 'multiSpecialityPortfolioProgram',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
+  outcomeRegistriesForm = new FormGroup({
+    surgeonSpecificRegistry: new FormControl(false, [Validators.required]),
+    registryComments: new FormControl('', [Validators.required]),
+    registeredWithACHQC: new FormControl(false, [Validators.required]),
+    registeredWithCESQIP: new FormControl(false, [Validators.required]),
+    registeredWithMBSAQIP: new FormControl(false, [Validators.required]),
+    registeredWithABA: new FormControl(false, [Validators.required]),
+    registeredWithASBS: new FormControl(false, [Validators.required]),
+    registeredWithStatewideCollaboratives: new FormControl(false, [
+      Validators.required,
+    ]),
+    registeredWithABMS: new FormControl(false, [Validators.required]),
+    registeredWithNCDB: new FormControl(false, [Validators.required]),
+    registeredWithRQRS: new FormControl(false, [Validators.required]),
+    registeredWithNSQIP: new FormControl(false, [Validators.required]),
+    registeredWithNTDB: new FormControl(false, [Validators.required]),
+    registeredWithSTS: new FormControl(false, [Validators.required]),
+    registeredWithTQIP: new FormControl(false, [Validators.required]),
+    registeredWithUNOS: new FormControl(false, [Validators.required]),
+    registeredWithNCDR: new FormControl(false, [Validators.required]),
+    registeredWithSVS: new FormControl(false, [Validators.required]),
+    registeredWithELSO: new FormControl(false, [Validators.required]),
+    userConfirmed: new FormControl(false, [Validators.requiredTrue]),
+  });
 
-    {
-      label: 'National Cancer Data Base',
-      subLabel: '(NCDB)',
-      value: '',
-      required: false,
-      name: 'nationalCancerDataBase',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'CoC Rapid Quality Reporting System',
-      subLabel: '(RQRS)',
-      value: '',
-      required: false,
-      name: 'cocRapidQualityReportingSystem',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
+  constructor(private _store: Store) {
+    this.userId$?.subscribe((res: number) => {
+      if (res) {
+        this.userId = res;
+        this._store.dispatch(new GetOutcomeRegistries(res));
+      }
+    });
+  }
 
-    {
-      label: 'National Surgical Quality Improvement Program',
-      subLabel: '(ACS NSQIP or VASQIP; adult or pediatric)',
-      value: '',
-      required: false,
-      name: 'nationalSurgicalQualityImprovementProgram',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'National Trauma Data Bank',
-      subLabel: '(NTDB)',
-      value: '',
-      required: false,
-      name: 'nationalTraumaDataBase',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
+  ngOnInit(): void {
+    this.getOutcomeRegistriesData();
+  }
 
-    {
-      label: 'Society of Thoracic Surgeons National Database',
-      subLabel: '(STS)',
-      value: '',
-      required: false,
-      name: 'societyOfThoracicSurgeonsNationalDatabase',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'Trauma Quality Improvement Program',
-      subLabel: '(ACS TQIP; adult or pediatric)',
-      value: '',
-      required: false,
-      name: 'traumaQualityImprovementProgram',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
+  getOutcomeRegistriesData() {
+    this.outcomeRegistries$?.subscribe((res: any) => {
+      const outcomeRegistries = res.outcomeRegistries;
+      if (outcomeRegistries) {
+        for (const [key, value] of Object.entries(outcomeRegistries)) {
+          this.outcomeRegistriesForm.patchValue({
+            [key]: value,
+          });
+        }
+      }
+    });
+  }
 
-    {
-      label: 'Organ Procurement and Transplantation Network',
-      subLabel: '(UNOS)',
-      value: '',
-      required: false,
-      name: 'organProcurementAndTransplantationNetwork',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'Peripheral Vascular Intervention Registry',
-      subLabel: '(NCDR)',
-      value: '',
-      required: false,
-      name: 'peripheralVascularInterventionRegistry',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
+  onSubmit() {
+    const formValues = {
+      ...this.outcomeRegistriesForm.value,
+      userId: this.userId,
+      userConfirmedDateUtc: new Date(),
+    };
 
-    {
-      label: 'Vascular Quality Initiative',
-      subLabel: '(SVS)',
-      value: '',
-      required: false,
-      name: 'vascularQualityInitiative',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'Extracorporeal Life Support Organization Registry',
-      subLabel: '(ELSO)',
-      value: '',
-      required: false,
-      name: 'extracorporealLifeSupportOrganizationRegistry',
-      type: 'radio',
-      size: 'col-6',
-      options: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-    },
-    {
-      label: 'Describe',
-      subLabel:
-        'NOTE: if you responded “No” to all of the choices above, you MUST describe your Part 4 activity in the space provided below.',
-      value: '',
-      required: false,
-      name: 'describe',
-      type: 'textarea',
-      size: 'col-12',
-    },
-  ];
+    this._store
+      .dispatch(new UpdateOutcomeRegistries(<IOutcomeRegistryModel>formValues))
+      .subscribe((result: any) => {
+        if (!result.continuous_certification.errors) {
+          this.call = {
+            showDialog: true,
+            message:
+              'Outcome Registries / Quality Assessment Programs Saved Successfully',
+            isSuccess: true,
+          };
+        } else {
+          this.call = {
+            showDialog: true,
+            message: 'An error occured while saving',
+            isSuccess: false,
+          };
+        }
+      });
+  }
 
   close() {
     this.closeDialog.emit();
+    this.call = {
+      isSuccess: false,
+      message: '',
+      showDialog: false,
+    };
   }
 }

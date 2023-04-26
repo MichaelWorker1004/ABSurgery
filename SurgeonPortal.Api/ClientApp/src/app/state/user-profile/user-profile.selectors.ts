@@ -26,6 +26,14 @@ export class UserProfileSelectors {
   }
 
   @Selector([UserProfileState])
+  static userId(state: IUserProfile): number | undefined {
+    if (state?.userId) {
+      return state.userId;
+    }
+    return;
+  }
+
+  @Selector([UserProfileState])
   static userClaims(state: IUserProfile): string[] | undefined {
     if (state?.claims.length > 0) {
       return state.claims;
