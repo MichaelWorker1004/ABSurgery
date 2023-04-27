@@ -1,0 +1,4 @@
+<sl-select [value]="value" (sl-change)="dispatchChange($event)"
+  ><ng-content></ng-content
+></sl-select>
+<button type="button" (click)="changeBtn()">Change: {{ value }}</button>

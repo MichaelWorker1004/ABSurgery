@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IMenuItem } from 'src/web-components/menuItem';
-import { NgxsModule, Select, Store } from '@ngxs/store';
-import { Logout } from '../state/auth/auth.actions';
+import { NgxsModule, Store } from '@ngxs/store';
+import { Logout } from '../state';
 import { CERTIFIED_NAV_ITEMS, TRAINEE_NAV_ITEMS } from './nav-items';
 
 @Component({

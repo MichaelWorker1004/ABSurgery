@@ -10,7 +10,7 @@ export class PicklistsSelectors {
   static slices = createPropertySelectors<IPicklist>(PicklistsState);
 
   @Selector([PicklistsState])
-  static userValues(state: IPicklist): IPicklistUserValues | undefined {
+  static userPicklistValues(state: IPicklist): IPicklistUserValues | undefined {
     if (state) {
       return {
         countries: state.countries,

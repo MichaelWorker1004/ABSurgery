@@ -44,27 +44,31 @@ bootstrapApplication(AppComponent, {
       NgxsModule.forRoot(surgeonPortalState, {
         developmentMode: true,
       }),
-      // NgxsStoragePluginModule.forRoot({
-      //   storage: StorageOption.SessionStorage,
-      //   key: [AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN],
-      // }),
       NgxsStoragePluginModule.forRoot({
+        storage: StorageOption.SessionStorage,
         key: [
-          {
-            key: AUTH_STATE_TOKEN,
-            engine: SESSION_STORAGE_ENGINE,
-          },
-          {
-            key: USER_PROFILE_STATE_TOKEN,
-            engine: SESSION_STORAGE_ENGINE,
-          },
-          {
-            key: PICKLISTS_STATE_TOKEN,
-            engine: LOCAL_STORAGE_ENGINE,
-          },
+          AUTH_STATE_TOKEN,
+          USER_PROFILE_STATE_TOKEN,
+          PICKLISTS_STATE_TOKEN,
         ],
       }),
-      NgxsLoggerPluginModule.forRoot(),
+      // NgxsStoragePluginModule.forRoot({
+      //   key: [
+      //     {
+      //       key: AUTH_STATE_TOKEN,
+      //       engine: SESSION_STORAGE_ENGINE,
+      //     },
+      //     {
+      //       key: USER_PROFILE_STATE_TOKEN,
+      //       engine: SESSION_STORAGE_ENGINE,
+      //     },
+      //     {
+      //       key: PICKLISTS_STATE_TOKEN,
+      //       engine: SESSION_STORAGE_ENGINE,
+      //     },
+      //   ],
+      // }),
+      // NgxsLoggerPluginModule.forRoot(),
       NgxsReduxDevtoolsPluginModule.forRoot(),
       NgxsFormPluginModule.forRoot()
     ),

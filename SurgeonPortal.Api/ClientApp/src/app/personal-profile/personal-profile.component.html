@@ -19,7 +19,6 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
-
         <form
           name="personProfileForm"
           [formGroup]="userProfileForm"
@@ -105,7 +104,7 @@
               </div>
               <div class="col-12 md:col-3">
                 <label>State / Province</label>
-                <div>{{ user.state }}</div>
+                <div>{{ user?.state }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Zipcode</label>
@@ -113,7 +112,7 @@
               </div>
               <div class="col-12 md:col-3">
                 <label>Country</label>
-                <div>{{ user.country }}</div>
+                <div>{{ user?.country }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
@@ -137,35 +136,32 @@
                 formControlName="city"
                 ngDefaultControl
               ></sl-input>
-              <sl-select
+              <abs-input-select
                 class="col-12 md:col-3"
                 label="State / Province"
-                data-controlname="state"
-                (sl-change)="handleSelects($event)"
+                formControlName="state"
                 *ngIf="mailingStates$ | async as states"
                 [disabled]="!states.length"
+                ngDefaultControl
               >
                 <sl-option
                   *ngFor="let state of states; index as i; trackBy: trackByFn"
                   [value]="state.itemValue"
                   >{{ state.itemDescription }}</sl-option
                 >
-              </sl-select>
+              </abs-input-select>
               <sl-input
                 class="col-12 md:col-3"
                 label="Zipcode"
                 formControlName="zipCode"
                 ngDefaultControl
               ></sl-input>
-              <sl-select
-                id="country"
+              <abs-input-select
                 class="col-12 md:col-3"
                 label="Country"
-                data-controlname="country"
-                ngDefaultControl
-                clearable
-                (sl-change)="handleSelects($event)"
+                formControlName="country"
                 *ngIf="countries$ | async as countries"
+                ngDefaultControl
               >
                 <sl-option
                   *ngFor="
@@ -174,10 +170,9 @@
                     trackBy: trackByFn
                   "
                   [value]="country.itemValue"
+                  >{{ country.itemDescription }}</sl-option
                 >
-                  {{ country.itemDescription }}</sl-option
-                >
-              </sl-select>
+              </abs-input-select>
             </div>
           </div>
 
@@ -192,7 +187,11 @@
               <div class="col-12 md:col-6">
                 <label>Daytime Phone Number</label>
                 <div>
-                  {{ user.officePhoneNumber | mask : '(000) 000-0000' }}
+                  {{
+                    user.officePhoneNumber
+                      ? user.officePhoneNumber
+                      : ('' | mask : '(000) 000-0000')
+                  }}
                 </div>
               </div>
               <div class="col-12 md:col-6">
@@ -234,16 +233,6 @@
                 ngDefaultControl
                 mask="(000) 000-0000"
               ></sl-input>
-              <!--              <sl-input-->
-              <!--                type="fax"-->
-              <!--                inputmode="tel"-->
-              <!--                class="col-12 md:col-6"-->
-              <!--                name="fax"-->
-              <!--                label="Fax Number"-->
-              <!--                ngDefaultControl-->
-              <!--                [(ngModel)]="profile.fax"-->
-              <!--                mask="(000) 000-0000"-->
-              <!--              ></sl-input>-->
             </div>
           </div>
 
@@ -257,15 +246,15 @@
               </div>
               <div class="col-12 md:col-6">
                 <label>State, Province, or Territory of Birth</label>
-                <div>{{ user.birthState }}</div>
+                <div>{{ user?.birthState }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Country of Birth</label>
-                <div>{{ user.birthCountry }}</div>
+                <div>{{ user?.birthCountry }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Country of Citizenship</label>
-                <div>{{ user.countryCitizenship }}</div>
+                <div>{{ user?.countryCitizenship }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
@@ -275,21 +264,26 @@
                 label="Town or City of Birth"
                 ngDefaultControl
               ></sl-input>
-              <sl-select
+              <abs-input-select
                 class="col-12 md:col-6"
-                data-controlname="birthState"
+                name="stateOfBirth"
+                ngDefaultControl
+                formControlName="birthState"
                 label="State, Province, or Territory of Birth"
-                (sl-change)="handleSelects($event)"
+                *ngIf="birthStates$ | async as states"
               >
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
-              </sl-select>
-              <sl-select
+                <sl-option
+                  *ngFor="let state of states; index as i; trackBy: trackByFn"
+                  [value]="state.itemValue"
+                  >{{ state.itemDescription }}</sl-option
+                >
+              </abs-input-select>
+              <abs-input-select
                 class="col-12 md:col-6"
-                data-controlname="birthCountry"
+                name="countryOfBirth"
+                formControlName="birthCountry"
                 label="Country of Birth"
-                (sl-change)="handleSelects($event)"
+                ngDefaultControl
                 *ngIf="countries$ | async as countries"
               >
                 <sl-option
@@ -302,12 +296,13 @@
                 >
                   {{ country.itemDescription }}</sl-option
                 >
-              </sl-select>
-              <sl-select
+              </abs-input-select>
+              <abs-input-select
                 class="col-12 md:col-6"
-                data-controlname="countryCitizenship"
+                name="countryOfCitizenship"
+                formControlName="countryCitizenship"
                 label="Country of Citizenship"
-                (sl-change)="handleSelects($event)"
+                ngDefaultControl
                 *ngIf="countries$ | async as countries"
               >
                 <sl-option
@@ -320,7 +315,7 @@
                 >
                   {{ country.itemDescription }}</sl-option
                 >
-              </sl-select>
+              </abs-input-select>
             </div>
           </div>
 
@@ -338,7 +333,7 @@
               </div>
               <div class="col-12 md:col-3">
                 <label>Gender</label>
-                <div>{{ user.genderId }}</div>
+                <div>{{ user?.genderId }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Date of Birth</label>
@@ -346,25 +341,25 @@
               </div>
               <div class="col-12 md:col-3">
                 <label>Race</label>
-                <div>{{ user.race }}</div>
+                <div>{{ user?.race }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Ethnicity</label>
-                <div>{{ user.ethnicity }}</div>
+                <div>{{ user?.ethnicity }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>First Language</label>
-                <div>{{ user.firstLanguageId }}</div>
+                <div>{{ user?.firstLanguageId }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Best Language</label>
-                <div>{{ user.bestLanguageId }}</div>
+                <div>{{ user?.bestLanguageId }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <sl-input
                 class="col-12 md:col-6"
-                formControlName="aBSId"
+                formControlName="absId"
                 label="ABS ID"
                 ngDefaultControl
                 readonly
@@ -376,16 +371,19 @@
                 ngDefaultControl
                 readonly
               ></sl-input>
-              <sl-select
+              <abs-input-select
                 class="col-12 md:col-3"
-                data-controlname="genderId"
+                formControlName="genderId"
+                *ngIf="genders$ | async as genders"
                 label="Gender"
-                (sl-change)="handleSelects($event)"
               >
-                <sl-option value="male">Male</sl-option>
-                <sl-option value="female">Female</sl-option>
-                <sl-option value="other">Other</sl-option>
-              </sl-select>
+                <sl-option
+                  *ngFor="let gender of genders; index as i; trackBy: trackByFn"
+                  [value]="gender.itemValue"
+                >
+                  {{ gender.itemDescription }}</sl-option
+                >
+              </abs-input-select>
               <sl-input
                 type="date"
                 class="col-12 md:col-3"
@@ -393,65 +391,89 @@
                 label="Date of Birth"
                 ngDefaultControl
               ></sl-input>
-              <sl-select
+              <abs-input-select
                 class="col-12 md:col-3"
-                data-controlname="race"
+                name="race"
+                ngDefaultControl
+                formControlName="race"
                 label="Race"
-                (sl-change)="handleSelects($event)"
+                *ngIf="races$ | async as races"
               >
-                <sl-option value="white">White</sl-option>
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
-              </sl-select>
-              <sl-select
+                <sl-option
+                  *ngFor="let race of races; index as i; trackBy: trackByFn"
+                  [value]="race.itemValue"
+                  >{{ race.itemDescription }}</sl-option
+                >
+              </abs-input-select>
+              <abs-input-select
                 class="col-12 md:col-3"
-                data-controlname="ethnicity"
+                name="ethnicity"
+                ngDefaultControl
+                formControlName="ethnicity"
                 label="Ethnicity"
-                (sl-change)="handleSelects($event)"
+                *ngIf="ethnicities$ | async as ethnicities"
               >
-                <sl-option value="white">White</sl-option>
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
-              </sl-select>
-              <sl-select
+                <sl-option
+                  *ngFor="
+                    let ethnicity of ethnicities;
+                    index as i;
+                    trackBy: trackByFn
+                  "
+                  [value]="ethnicity.itemValue"
+                  >{{ ethnicity.itemDescription }}</sl-option
+                >
+              </abs-input-select>
+              <abs-input-select
                 class="col-12 md:col-3"
-                data-controlname="firstLanguageId"
+                name="firstLanguage"
+                ngDefaultControl
+                formControlName="firstLanguageId"
                 label="First Language"
-                (sl-change)="handleSelects($event)"
+                *ngIf="languages$ | async as languages"
               >
-                <sl-option value="English">English</sl-option>
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
-              </sl-select>
-              <sl-select
+                <sl-option
+                  *ngFor="
+                    let language of languages;
+                    index as i;
+                    trackBy: trackByFn
+                  "
+                  [value]="language.itemValue + ''"
+                  >{{ language.itemDescription }}</sl-option
+                >
+              </abs-input-select>
+              <abs-input-select
                 class="col-12 md:col-3"
-                data-controlname="bestLanguageId"
+                name="bestLanguage"
+                ngDefaultControl
+                formControlName="bestLanguageId"
                 label="Best Language"
-                (sl-change)="handleSelects($event)"
+                *ngIf="languages$ | async as languages"
               >
-                <sl-option value="English">English</sl-option>
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
-              </sl-select>
+                <sl-option
+                  *ngFor="
+                    let language of languages;
+                    index as i;
+                    trackBy: trackByFn
+                  "
+                  [value]="language.itemValue + ''"
+                  >{{ language.itemDescription }}</sl-option
+                >
+              </abs-input-select>
             </div>
           </div>
 
           <div class="form-section" *ngIf="isEdit">
             <div class="grid">
               <div class="col-12 text-center">
-                <sl-checkbox
+                <abs-input-checkbox
                   class="col-12"
-                  data-controlname="userConfirmed"
+                  formControlName="userConfirmed"
+                  ngDefaultControl
                   form="userProfileForm"
-                  (sl-change)="handleCheckbox($event)"
                 >
                   I confirm the above information is completed and correct to
                   the best of my knowledge
-                </sl-checkbox>
+                </abs-input-checkbox>
               </div>
             </div>
           </div>

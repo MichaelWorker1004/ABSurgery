@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { debounceTime, Observable, of } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+
+import { NgxMaskDirective } from 'ngx-mask';
+import { NgxMaskPipe } from 'ngx-mask';
+import { provideNgxMask } from 'ngx-mask';
 
 import {
   FormBuilder,
@@ -13,24 +17,30 @@ import {
 } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 
-import { NgxMaskDirective } from 'ngx-mask';
-import { NgxMaskPipe } from 'ngx-mask';
-import { provideNgxMask } from 'ngx-mask';
-
-import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
-import { SuccessFailModalComponent } from '../shared/components/success-fail-modal/success-fail-modal.component';
 import { UpdateUserProfile, UserProfileSelectors } from '../state';
 import { IUserProfile } from '../state';
-import { GetStateList } from '../state/picklists';
-import { IPickListItem, PicklistsSelectors } from '../state/picklists';
 import {
-  ICountryReadOnlyModel,
+  GetStateList,
+  IPicklist,
+  IPickListItem,
+  PicklistsSelectors,
+} from '../state/picklists';
+import {
   IEthnicityReadOnlyModel,
   IGenderReadOnlyModel,
   ILanguageReadOnlyModel,
   IRaceReadOnlyModel,
   IStateReadOnlyModel,
 } from '../api';
+
+import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
+import { SuccessFailModalComponent } from '../shared/components/success-fail-modal/success-fail-modal.component';
+
+import '../../web-components';
+import { InputSelectComponent } from '../shared/components/base-input/input-select.component';
+import { InputCheckboxComponent } from '../shared/components/base-input/input-checkbox.component';
+import { InputRadioGroupComponent } from '../shared/components/base-input/input-radio-group.component';
+import { tap } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -47,10 +57,13 @@ import {
     SuccessFailModalComponent,
     NgxMaskDirective,
     NgxMaskPipe,
+    InputSelectComponent,
+    InputCheckboxComponent,
+    InputRadioGroupComponent,
   ],
   providers: [provideNgxMask()],
 })
-export class PersonalProfileComponent implements OnInit {
+export class PersonalProfileComponent {
   // TODO: [Joe] set up input masks
   // TODO: [Joe] set up validation
   // TODO: [Joe] set up national provider identifier (NPI) report button
@@ -58,32 +71,29 @@ export class PersonalProfileComponent implements OnInit {
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
-
-  @Select(PicklistsSelectors.slices.countries) countries$:
-    | Observable<ICountryReadOnlyModel[]>
+  @Select(PicklistsSelectors.userPicklistValues) userPicklistValues$:
+    | Observable<IPickListItem[]>
     | undefined;
-
+  @Select(PicklistsSelectors.slices.countries) countries$:
+    | Observable<IPickListItem[]>
+    | undefined;
   @Select(PicklistsSelectors.slices.ethnicities) ethnicities$:
     | Observable<IEthnicityReadOnlyModel[]>
     | undefined;
-
   @Select(PicklistsSelectors.slices.genders) genders$:
-    | Observable<IGenderReadOnlyModel[]>
+    | Observable<IPickListItem[]>
     | undefined;
-
   @Select(PicklistsSelectors.slices.languages) languages$:
-    | Observable<ILanguageReadOnlyModel[]>
+    | Observable<IPickListItem[]>
     | undefined;
-
   @Select(PicklistsSelectors.slices.races) races$:
     | Observable<IRaceReadOnlyModel[]>
     | undefined;
 
-  @Select(PicklistsSelectors.slices.states) states$:
-    | Observable<IStateReadOnlyModel[]>
-    | undefined;
+  mailingStates$: Observable<IStateReadOnlyModel[] | undefined> = of([]);
+  birthStates$: Observable<IStateReadOnlyModel[] | undefined> = of([]);
 
-  mailingStates$: Observable<IStateReadOnlyModel[]> = of([]);
+  user: IUserProfile | undefined;
 
   isEdit = true;
 
@@ -91,8 +101,8 @@ export class PersonalProfileComponent implements OnInit {
   call!: any;
 
   userProfileForm: FormGroup = new FormGroup({
-    aBSId: new FormControl('', []),
-    bestLanguageId: new FormControl(0, []),
+    absId: new FormControl('', []),
+    bestLanguageId: new FormControl('', []),
     birthCity: new FormControl('', []),
     birthCountry: new FormControl('', []),
     birthDate: new FormControl('', []),
@@ -103,9 +113,9 @@ export class PersonalProfileComponent implements OnInit {
     displayName: new FormControl('', [Validators.required]),
     emailAddress: new FormControl('', []),
     ethnicity: new FormControl('', []),
-    firstLanguageId: new FormControl(0, []),
+    firstLanguageId: new FormControl('', []),
     firstName: new FormControl('', [Validators.required]),
-    genderId: new FormControl(0, []),
+    genderId: new FormControl('', []),
     lastName: new FormControl('', [Validators.required]),
     middleName: new FormControl('', [
       Validators.minLength(1),
@@ -117,7 +127,7 @@ export class PersonalProfileComponent implements OnInit {
     profilePicture: new FormControl('', []),
     race: new FormControl('', []),
     receiveComms: new FormControl(false, []),
-    state: new FormControl('', []),
+    state: new FormControl({ value: '', disabled: true }, []),
     street1: new FormControl('', []),
     street2: new FormControl('', []),
     suffix: new FormControl('', []),
@@ -129,42 +139,21 @@ export class PersonalProfileComponent implements OnInit {
     this.user$
       ?.pipe(debounceTime(300), untilDestroyed(this))
       .subscribe((user: IUserProfile) => {
+        this.user = user;
+        this._store.dispatch(new GetStateList(user.country));
+        this.mailingStates$ = of(
+          this._store.selectSnapshot(PicklistsSelectors.slices.states)
+        );
+        this._store.dispatch(new GetStateList(user.birthCountry));
+        this.birthStates$ = of(
+          this._store.selectSnapshot(PicklistsSelectors.slices.states)
+        );
         this.userProfileForm.patchValue({ ...user });
-        // this.userProfileForm.setValue('country', user.country);
-        // console.log('-------------------->', this.userProfileForm);
-        this.userProfileForm.patchValue({ country: user.country });
       });
-  }
 
-  ngOnInit() {
-    // Country field
-    this.userProfileForm
-      .get('country')
-      ?.valueChanges.pipe(debounceTime(300), untilDestroyed(this))
-      .subscribe((value) => {
-        // console.log('country', value);
-        this._store.dispatch(new GetStateList(value));
-        // const el: any = document.getElementById('country');
-        // if (el) {
-        //   el.value = value;
-        // }
-      });
-    // Birth Country field
-    this.userProfileForm
-      .get('birthCountry')
-      ?.valueChanges.pipe(debounceTime(300), untilDestroyed(this))
-      .subscribe((value) => {
-        // console.log('birthCountry', value);
-        this._store.dispatch(new GetStateList(value));
-      });
-    // Citizenship Country field
-    this.userProfileForm
-      .get('countryCitizenship')
-      ?.valueChanges.pipe(debounceTime(300), untilDestroyed(this))
-      .subscribe((value) => {
-        // console.log('countryCitizenship', value);
-        this._store.dispatch(new GetStateList(value));
-      });
+    // this.userProfileForm.valueChanges.pipe().subscribe((value) => {
+    //   console.log('valueChanges', value);
+    // });
   }
 
   save() {
@@ -177,26 +166,6 @@ export class PersonalProfileComponent implements OnInit {
     this.toggleDialog(true);
 
     this.isEdit = false;
-  }
-
-  // TODO: <Alan>Using this to record the checkbox state
-  //  We will want to make this global if this hack has to be used
-  //  There seems to currently be no elegant way to do this
-  handleCheckbox($event: any) {
-    const checkbox = $event.target;
-    const formControl = $event.target.getAttribute('data-controlname');
-    const patchObj: any = {};
-    patchObj[formControl] = checkbox.checked;
-    this.userProfileForm.patchValue(patchObj);
-  }
-
-  handleSelects($event: any) {
-    const select = $event.target;
-    const formControl = $event.target.getAttribute('data-controlname');
-    const patchObj: any = {};
-    patchObj[formControl] = select.value;
-    // console.log('handleSelects', patchObj);
-    this.userProfileForm.patchValue(patchObj);
   }
 
   toggleDialog($event: any) {

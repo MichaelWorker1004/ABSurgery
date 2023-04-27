@@ -6,7 +6,7 @@ export class UserProfileSelectors {
 
   @Selector([UserProfileState])
   static user(state: IUserProfile): IUserProfile | undefined {
-    if (state?.userId > -1) {
+    if (state?.userId) {
       return state;
     }
     return;
@@ -14,12 +14,12 @@ export class UserProfileSelectors {
 
   @Selector([UserProfileState])
   static isUserProfileLoaded(state: IUserProfile): boolean {
-    return state?.userId > -1;
+    return !!state?.userId;
   }
 
   @Selector([UserProfileState])
   static userDisplayName(state: IUserProfile): string | undefined {
-    if (state?.displayName.length > 0) {
+    if (state?.displayName?.length) {
       return state.displayName;
     }
     return;
@@ -35,7 +35,7 @@ export class UserProfileSelectors {
 
   @Selector([UserProfileState])
   static userClaims(state: IUserProfile): string[] | undefined {
-    if (state?.claims.length > 0) {
+    if (state?.claims.length) {
       return state.claims;
     }
     return;
@@ -44,7 +44,7 @@ export class UserProfileSelectors {
   @Selector([UserProfileState])
   static profilePicture(state: IUserProfile): string | undefined {
     console.log('profilePicture', state?.profilePicture);
-    if (state?.profilePicture.length > 0) {
+    if (state?.profilePicture?.length) {
       return state.profilePicture;
     }
     return;

@@ -25,5 +25,6 @@ export class GetStateList {
 
 export class GetPicklists {
   static readonly type = '[Picklists] Get all picklists';
-  constructor(public countryCode?: string) {}
+
+  constructor(public countryCode?: string | null | undefined) {}
 }

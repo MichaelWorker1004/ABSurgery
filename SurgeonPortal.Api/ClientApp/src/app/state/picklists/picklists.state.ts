@@ -25,8 +25,8 @@ import { IFormErrors } from '../../shared/common';
 export interface IPicklist {
   countries: ICountryReadOnlyModel[] | undefined;
   ethnicities: IEthnicityReadOnlyModel[] | undefined;
-  genders: IGenderReadOnlyModel[] | undefined;
-  languages: ILanguageReadOnlyModel[] | undefined;
+  genders: IPickListItem[] | undefined;
+  languages: IPickListItem[] | undefined;
   races: IRaceReadOnlyModel[] | undefined;
   states: IStateReadOnlyModel[] | undefined;
   statesMap: { [key: string]: IStateReadOnlyModel[] };
@@ -34,15 +34,16 @@ export interface IPicklist {
 }
 
 export interface IPickListItem {
-  itemValue: string | number | null | undefined;
+  itemValue: string | null | undefined;
   itemDescription: string | null | undefined;
+  modifier?: string | null | undefined;
 }
 
 export interface IPicklistUserValues {
   countries: ICountryReadOnlyModel[] | undefined;
   ethnicities: IEthnicityReadOnlyModel[] | undefined;
-  genders: IGenderReadOnlyModel[] | undefined;
-  languages: ILanguageReadOnlyModel[] | undefined;
+  genders: IPickListItem[] | undefined;
+  languages: IPickListItem[] | undefined;
   races: IRaceReadOnlyModel[] | undefined;
   states: IStateReadOnlyModel[] | undefined;
   statesMap: { [key: string]: IStateReadOnlyModel[] } | undefined;
@@ -112,14 +113,22 @@ export class PicklistsState {
   @Action(GetGenderList)
   getGenderList(
     ctx: StateContext<IPicklist>
-  ): Observable<IGenderReadOnlyModel[] | undefined> {
+  ): Observable<IPickListItem[] | undefined> {
     if (ctx.getState()?.genders) {
       return of(ctx.getState()?.genders);
     }
     return this.picklistsService.retrieveGenderReadOnly_GetAll().pipe(
       tap((genders: IGenderReadOnlyModel[]) => {
+        const transGenders = [] as IPickListItem[];
+        genders.forEach((gender) => {
+          transGenders.push({
+            itemValue: gender.itemValue?.toString(),
+            itemDescription: gender.itemDescription,
+          });
+        });
+
         ctx.patchState({
-          genders,
+          genders: transGenders,
         });
       }),
       catchError((error) => {
@@ -132,14 +141,21 @@ export class PicklistsState {
   @Action(GetLanguageList)
   getLanguageList(
     ctx: StateContext<IPicklist>
-  ): Observable<ILanguageReadOnlyModel[] | undefined> {
+  ): Observable<IPickListItem[] | undefined> {
     if (ctx.getState()?.languages) {
       return of(ctx.getState()?.languages);
     }
     return this.picklistsService.retrieveLanguageReadOnly_GetAll().pipe(
       tap((languages: ILanguageReadOnlyModel[]) => {
+        const transLanguages = [] as IPickListItem[];
+        languages.forEach((language) => {
+          transLanguages.push({
+            itemValue: language.itemValue?.toString(),
+            itemDescription: language.itemDescription,
+          });
+        });
         ctx.patchState({
-          languages,
+          languages: transLanguages,
         });
       }),
       catchError((error) => {

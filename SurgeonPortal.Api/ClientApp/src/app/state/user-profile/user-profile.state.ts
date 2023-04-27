@@ -3,43 +3,53 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
-import {
-  IAppUserReadOnlyModel,
-  ICountryReadOnlyModel,
-  IGenderReadOnlyModel,
-  ILanguageReadOnlyModel,
-  IRaceReadOnlyModel,
-  IStateReadOnlyModel,
-  IUserProfileModel,
-} from '../../api';
+import { IUserProfileModel } from '../../api';
 import { IFormErrors } from '../../shared/common';
 import { UserProfilesService } from '../../api';
-import {
-  GetUserProfile,
-  LinkUserData,
-  UpdateUserProfile,
-} from './user-profile.actions';
-import {
-  GetPicklists,
-  IPicklist,
-  PicklistsSelectors,
-  PicklistsState,
-} from '../picklists';
-import { AuthSelectors } from '../auth';
+import { GetUserProfile, UpdateUserProfile } from './user-profile.actions';
+import { GetPicklists } from '../picklists';
 
-export interface IUserProfile extends IUserProfileModel, IAppUserReadOnlyModel {
-  countryDO?: ICountryReadOnlyModel;
-  countryBirthDO?: ICountryReadOnlyModel;
-  countryCitizenDO?: ICountryReadOnlyModel;
-  stateDO?: IStateReadOnlyModel;
-  stateBirthDO?: IStateReadOnlyModel;
-  genderDO?: IGenderReadOnlyModel;
-  raceDO?: IRaceReadOnlyModel;
-  ethnicityDO?: IRaceReadOnlyModel;
-  firstLanguageDO?: ILanguageReadOnlyModel;
-  bestLanguageDO?: ILanguageReadOnlyModel;
+export interface IUserProfile {
+  userProfileId: number;
+  userId: number;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  suffix: string;
+  displayName: string;
+  officePhoneNumber: string;
+  mobilePhoneNumber: string;
+  birthCity: string;
+  birthState: string;
+  birthCountry: string;
+  countryCitizenship: string;
+  absId: string;
+  certificationStatus: string;
+  nPI: string;
+  genderId: string; // Need to cast as number on saves
+  birthDate: string;
+  race: string;
+  ethnicity: string;
+  firstLanguageId: string; // Need to cast as number on saves
+  bestLanguageId: string; // Need to cast as number on saves
+  receiveComms: boolean;
+  userConfirmed: boolean;
+  userConfirmedDate: string;
+  createdByUserId: number;
+  createdAtUtc: string;
+  lastUpdatedAtUtc: string;
+  lastLoginDateUtc: string;
+  lastUpdatedByUserId: number;
+  street1: string;
+  street2: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+  emailAddress: string;
+  fullName: string;
+  profilePicture: string;
   claims: string[];
-  profilePicture: string; // TODO: <API>This is not generated
   errors?: IFormErrors | null;
 }
 
@@ -66,12 +76,12 @@ export const USER_PROFILE_STATE_TOKEN = new StateToken<IUserProfile>(
     absId: '',
     certificationStatus: '',
     nPI: '',
-    genderId: 0,
+    genderId: '',
     birthDate: '',
     race: '',
     ethnicity: '',
-    firstLanguageId: 0,
-    bestLanguageId: 0,
+    firstLanguageId: '',
+    bestLanguageId: '',
     receiveComms: false,
     userConfirmed: false,
     userConfirmedDate: '',
@@ -111,22 +121,22 @@ export class UserProfileState {
       .retrieveUserProfile_GetByUserId(userId)
       .pipe(
         tap((result: IUserProfileModel) => {
-          const res = result as IUserProfile;
+          const res = result as unknown as IUserProfile;
+          res.birthDate = res.birthDate?.split('T')[0];
+          res.firstLanguageId = res.firstLanguageId?.toString();
+          res.bestLanguageId = res.bestLanguageId?.toString();
+          res.genderId = res.genderId?.toString();
           ctx.setState({
             ...state,
             ...loginUser,
             ...res,
-            country: '500',
+            userConfirmed: false,
             claims,
             profilePicture:
               'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU',
             errors: null,
           });
           this.store.dispatch(new GetPicklists(ctx.getState().country));
-          console.log(
-            '----------------> userValues',
-            this.store.selectSnapshot(PicklistsSelectors.userValues)
-          );
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
@@ -149,14 +159,26 @@ export class UserProfileState {
     });
 
     Object.assign(model, ctx.getState());
-    const payloadTest = ctx.getState();
+    const userProfile: IUserProfileModel =
+      model as unknown as IUserProfileModel;
+    userProfile.userConfirmedDate = new Date().toISOString();
+    userProfile.userConfirmed = true;
+    userProfile.genderId = +userProfile.genderId;
+    userProfile.firstLanguageId = +userProfile.firstLanguageId;
+    userProfile.bestLanguageId = +userProfile.bestLanguageId;
+    userProfile.lastUpdatedByUserId = ctx.getState().userId;
+    userProfile.birthDate = userProfile.birthDate?.split('T')[0];
+
     return this.userProfilesService
-      .updateUserProfile(ctx.getState().userId, payloadTest)
+      .updateUserProfile(ctx.getState().userId, userProfile)
       .pipe(
         tap((result: IUserProfileModel) => {
+          const userProfile = result as unknown as IUserProfile;
+          userProfile.genderId = userProfile.genderId.toString();
+          userProfile.firstLanguageId = userProfile.firstLanguageId.toString();
+          userProfile.bestLanguageId = userProfile.bestLanguageId.toString();
           ctx.setState({
-            ...ctx.getState(),
-            ...result,
+            ...userProfile,
             errors: null,
           });
         }),
@@ -169,10 +191,5 @@ export class UserProfileState {
           return of(errors);
         })
       );
-  }
-
-  @Action(LinkUserData)
-  linkUserData(ctx: StateContext<IUserProfile>) {
-    this.store.dispatch(new GetPicklists());
   }
 }
