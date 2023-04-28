@@ -16,7 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-  [Route("api/picklists")]
+	[Route("api/picklists")]
 	public class PicklistsController : YtgControllerBase
 	{
         private readonly IMapper _mapper;

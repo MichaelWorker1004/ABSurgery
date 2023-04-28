@@ -4,9 +4,8 @@
   "template": "ytg-framework/editable-create",
   "parameters": {
     "Adapter": "dbo.ins_outcomeregistry_getbyuserid",
-    "ApiRoot": "$project.ApiRoot",
     "ControllerName": "ContinuousCertification\\OutcomeRegistriesController",
-    "ControllerRoute": "continuous-certification/outcome-registries",
+    "ControllerRoute": "api/continuous-certification/outcome-registries",
     "ControllerVersion": "1",
     "FetchImplementation": "ContinuousCertification\\OutcomeRegistry-getgetbyuserid",
     "IncludeControllerInGeneration": "true",

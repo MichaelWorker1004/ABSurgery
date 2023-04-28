@@ -5,11 +5,10 @@
   "parameters": {
     "Adapter": "dbo.get_user_profile_byuserid",
     "ControllerName": "Users\\UserProfilesController",
-    "ControllerRoute": "users/profiles",
+    "ControllerRoute": "api/users/profiles",
     "ControllerVersion": "1",
     "FetchMethodName": "GetByUserId",
     "IncludeControllerInGeneration": "true",
-    "ApiRoot": "$project.ApiRoot",
     "IsChild": "false",
     "IsRoot": "true",
     "Model": "Users\\UserProfile",

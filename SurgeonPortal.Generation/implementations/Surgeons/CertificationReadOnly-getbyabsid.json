@@ -5,11 +5,10 @@
   "parameters": {
     "Adapter": "dbo.get_user_certifications",
     "ControllerName": "Surgeons\\CertificationsController",
-    "ControllerRoute": "surgeons/certifications",
+    "ControllerRoute": "api/surgeons/certifications",
     "ControllerVersion": "1",
     "FetchMethodName": "GetByAbsId",
     "IncludeControllerInGeneration": "true",
-    "ApiRoot": "$project.ApiRoot",
     "IsChild": "false",
     "IsRoot": "true",
     "Model": "Surgeons\\CertificationReadOnly",

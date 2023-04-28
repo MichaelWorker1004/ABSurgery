@@ -5,10 +5,9 @@
   "parameters": {
     "Adapter": "dbo.get_picklist_states_bycountry",
     "ControllerName": "Picklists\\PicklistsController",
-    "ControllerRoute": "picklists",
+    "ControllerRoute": "api/picklists",
     "ControllerVersion": "1",
     "IncludeControllerInGeneration": "True",
-    "ApiRoot": "$project.ApiRoot",
     "FetchMethodName": "GetByCountry",
     "Model": "Picklists\\StateReadOnly",
     "ModelGroup": "StateReadOnly",

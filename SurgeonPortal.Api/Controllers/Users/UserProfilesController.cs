@@ -17,7 +17,7 @@ namespace SurgeonPortal.Api.Controllers.Users
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-  [Route("api/users/profiles")]
+	[Route("api/users/profiles")]
 	public class UserProfilesController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -66,7 +66,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             return await CreateAsync<UserProfileModel>(
                 _mapper,
                 item,
-                absoluteUriProvider.GetAbsoluteUri($"/v1/users/profiles/{item.UserProfileId}"));
+                absoluteUriProvider.GetAbsoluteUri("/api/users/profiles/{item.UserProfileId}"));
         } 
 
         ///<summary>

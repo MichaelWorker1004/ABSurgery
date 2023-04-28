@@ -16,7 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Surgeons
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-  [Route("api/surgeons/certifications")]
+	[Route("api/surgeons/certifications")]
 	public class CertificationsController : YtgControllerBase
 	{
         private readonly IMapper _mapper;

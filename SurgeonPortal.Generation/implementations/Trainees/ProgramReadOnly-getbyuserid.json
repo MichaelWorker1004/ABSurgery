@@ -5,11 +5,10 @@
   "parameters": {
     "Adapter": "dbo.get_user_programs",
     "ControllerName": "Trainees\\ProgramsController",
-    "ControllerRoute": "trainees/programs",
+    "ControllerRoute": "api/trainees/programs",
     "ControllerVersion": "1",
     "FetchMethodName": "GetByUserId",
     "IncludeControllerInGeneration": "true",
-    "ApiRoot": "$project.ApiRoot",
     "IsChild": "false",
     "IsRoot": "true",
     "Model": "Trainees\\ProgramReadOnly",

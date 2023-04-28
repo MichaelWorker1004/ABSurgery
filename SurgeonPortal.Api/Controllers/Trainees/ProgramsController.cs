@@ -16,7 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Trainees
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-  [Route("api/trainees/programs")]
+	[Route("api/trainees/programs")]
 	public class ProgramsController : YtgControllerBase
 	{
         private readonly IMapper _mapper;

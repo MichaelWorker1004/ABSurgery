@@ -4,8 +4,7 @@
     "parameters": {
         "RootNamespace": "SurgeonPortal",
         "Title": "SurgeonPortal",
-        "Language" : "C#",
-        "ApiRoot": "api/"
+        "Language" : "C#"
     },
     "mappings": {
         "regex:^USERID$": "$UserId",

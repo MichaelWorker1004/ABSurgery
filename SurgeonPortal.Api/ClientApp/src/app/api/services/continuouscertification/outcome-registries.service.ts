@@ -18,7 +18,7 @@ developer when the API is created. Please do not make changes to this file
   providedIn: 'root',
 })
 export class OutcomeRegistriesService {
-    private readonly baseEndpoint = 'v1/api/continuous-certification/outcome-registries';
+    private readonly baseEndpoint = 'api/continuous-certification/outcome-registries';
 
     constructor(private httpClient: HttpClient) {}
 
@@ -83,7 +83,7 @@ export class OutcomeRegistriesService {
             * registeredWithSVS:Boolean
             * registeredWithELSO:Boolean
             * userConfirmed:Boolean
-            * userConfirmedDateUtc:String
+            * userConfirmedDateUtc:Date
             * apiVersion
             */
             
@@ -131,7 +131,7 @@ export class OutcomeRegistriesService {
             * registeredWithSVS:Boolean
             * registeredWithELSO:Boolean
             * userConfirmed:Boolean
-            * userConfirmedDateUtc:String
+            * userConfirmedDateUtc:Date
             * userId:Number
             * apiVersion
             */

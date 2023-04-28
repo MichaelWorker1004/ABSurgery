@@ -8,26 +8,26 @@ developer when the API is created. Please do not make changes to this file
 ############################################################################
 **/
 export interface IOutcomeRegistryModel {
-  surgeonSpecificRegistry: boolean;
-  registryComments: string;
-  registeredWithACHQC: boolean;
-  registeredWithCESQIP: boolean;
-  registeredWithMBSAQIP: boolean;
-  registeredWithABA: boolean;
-  registeredWithASBS: boolean;
-  registeredWithStatewideCollaboratives: boolean;
-  registeredWithABMS: boolean;
-  registeredWithNCDB: boolean;
-  registeredWithRQRS: boolean;
-  registeredWithNSQIP: boolean;
-  registeredWithNTDB: boolean;
-  registeredWithSTS: boolean;
-  registeredWithTQIP: boolean;
-  registeredWithUNOS: boolean;
-  registeredWithNCDR: boolean;
-  registeredWithSVS: boolean;
-  registeredWithELSO: boolean;
-  userConfirmed: boolean;
-  userConfirmedDateUtc: Date;
-  userId: number;
+    surgeonSpecificRegistry: boolean;
+    registryComments: string;
+    registeredWithACHQC: boolean;
+    registeredWithCESQIP: boolean;
+    registeredWithMBSAQIP: boolean;
+    registeredWithABA: boolean;
+    registeredWithASBS: boolean;
+    registeredWithStatewideCollaboratives: boolean;
+    registeredWithABMS: boolean;
+    registeredWithNCDB: boolean;
+    registeredWithRQRS: boolean;
+    registeredWithNSQIP: boolean;
+    registeredWithNTDB: boolean;
+    registeredWithSTS: boolean;
+    registeredWithTQIP: boolean;
+    registeredWithUNOS: boolean;
+    registeredWithNCDR: boolean;
+    registeredWithSVS: boolean;
+    registeredWithELSO: boolean;
+    userConfirmed: boolean;
+    userConfirmedDateUtc: Date;
+    userId: number;
 }

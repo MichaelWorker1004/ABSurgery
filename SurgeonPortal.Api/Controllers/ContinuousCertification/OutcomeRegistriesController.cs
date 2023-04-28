@@ -17,7 +17,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
   [ApiVersion("1")]
   [ApiController]
   [Produces("application/json")]
-  [Route("v{version:apiVersion}/api/continuous-certification/outcome-registries")]
+	[Route("api/continuous-certification/outcome-registries")]
   public class OutcomeRegistriesController : YtgControllerBase
   {
     private readonly IMapper _mapper;
@@ -66,7 +66,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
       return await CreateAsync<OutcomeRegistryModel>(
           _mapper,
           item,
-          absoluteUriProvider.GetAbsoluteUri($"/v1/continuous-certification/outcome-registries/"));
+                absoluteUriProvider.GetAbsoluteUri($"/api/continuous-certification/outcome-registries/"));
     }
 
     ///<summary>

@@ -335,7 +335,7 @@ namespace SurgeonPortal.Library.Users
       {
         var dto = await _userProfileDal.GetByUserIdAsync(criteria.UserId);
 
-        if (dto == null)
+                if(dto == null)
         {
           throw new Ytg.Framework.Exceptions.DataNotFoundException("UserProfile not found based on criteria");
         }

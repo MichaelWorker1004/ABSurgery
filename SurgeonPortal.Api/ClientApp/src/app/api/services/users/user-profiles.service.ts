@@ -195,14 +195,14 @@ export class UserProfilesService {
             * absId:String
             * nPI:String
             * genderId:Number
-            * birthDate:String
+            * birthDate:Date
             * race:String
             * ethnicity:String
             * firstLanguageId:Number
             * bestLanguageId:Number
             * receiveComms:Boolean
             * userConfirmed:Boolean
-            * userConfirmedDate:String
+            * userConfirmedDate:Date
             * street1:String
             * street2:String
             * city:String
@@ -210,8 +210,8 @@ export class UserProfilesService {
             * zipCode:String
             * country:String
             * createdByUserId:Number
-            * createdAtUtc:String
-            * lastUpdatedAtUtc:String
+            * createdAtUtc:Date
+            * lastUpdatedAtUtc:Date
             * lastUpdatedByUserId:Number
             * apiVersion
             */
@@ -315,14 +315,14 @@ export class UserProfilesService {
             * absId:String
             * nPI:String
             * genderId:Number
-            * birthDate:String
+            * birthDate:Date
             * race:String
             * ethnicity:String
             * firstLanguageId:Number
             * bestLanguageId:Number
             * receiveComms:Boolean
             * userConfirmed:Boolean
-            * userConfirmedDate:String
+            * userConfirmedDate:Date
             * street1:String
             * street2:String
             * city:String
@@ -330,8 +330,8 @@ export class UserProfilesService {
             * zipCode:String
             * country:String
             * createdByUserId:Number
-            * createdAtUtc:String
-            * lastUpdatedAtUtc:String
+            * createdAtUtc:Date
+            * lastUpdatedAtUtc:Date
             * lastUpdatedByUserId:Number
             * apiVersion
             */
