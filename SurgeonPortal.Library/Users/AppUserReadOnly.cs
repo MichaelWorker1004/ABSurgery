@@ -35,6 +35,11 @@ namespace SurgeonPortal.Library.Users
 		public static readonly PropertyInfo<string> FullNameProperty = RegisterProperty<string>(c => c.FullName);
 
         [DataMember]
+		[DisplayName(nameof(UserName))]
+        public string UserName => ReadProperty(UserNameProperty);
+		public static readonly PropertyInfo<string> UserNameProperty = RegisterProperty<string>(c => c.UserName);
+
+        [DataMember]
 		[DisplayName(nameof(EmailAddress))]
         public string EmailAddress => ReadProperty(EmailAddressProperty);
 		public static readonly PropertyInfo<string> EmailAddressProperty = RegisterProperty<string>(c => c.EmailAddress);
@@ -69,7 +74,7 @@ namespace SurgeonPortal.Library.Users
         
         {
             var dto = await _appUserReadOnlyDal.GetByCredentialsAsync(
-                criteria.EmailAddress,
+                criteria.UserName,
                 criteria.Password);
             
             if (dto == null)
@@ -100,6 +105,7 @@ namespace SurgeonPortal.Library.Users
 		{
             LoadProperty(UserIdProperty, dto.UserId);
             LoadProperty(FullNameProperty, dto.FullName);
+            LoadProperty(UserNameProperty, dto.UserName);
             LoadProperty(EmailAddressProperty, dto.EmailAddress);
             LoadProperty(LastLoginDateUtcProperty, dto.LastLoginDateUtc);
 

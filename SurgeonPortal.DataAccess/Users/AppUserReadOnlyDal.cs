@@ -14,17 +14,19 @@ namespace SurgeonPortal.DataAccess.Users
         {
         }
 
+
+
         public async Task<AppUserReadOnlyDto> GetByCredentialsAsync(
-            string emailAddress,
+            string userName,
             string password)
         {
             using (var connection = CreateConnection())
             {
                 var multi = await connection.QueryMultipleAsync(
-                    "[dbo].[get_userlogin]",
+                    "[dbo].[get_userlogin_v2]",
                         new
                         {
-                            EmailAddress = emailAddress,
+                            UserName = userName,
                             Password = password,
                         });
                         

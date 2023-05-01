@@ -31,9 +31,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               // TODO: [Joe] - add error specific messages here
 
               let message = `${err.status} Error: ${err.statusText}`;
-              if (err.error) {
-                message = err.error;
-              }
+              // if (err.error) {
+              //   message = err.error;
+              // }
               this.globalToastService.showError(message);
             }
           }

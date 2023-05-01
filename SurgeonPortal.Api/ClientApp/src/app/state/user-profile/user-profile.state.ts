@@ -161,13 +161,12 @@ export class UserProfileState {
     Object.assign(model, ctx.getState());
     const userProfile: IUserProfileModel =
       model as unknown as IUserProfileModel;
-    userProfile.userConfirmedDate = new Date().toISOString();
+    userProfile.userConfirmedDate = new Date();
     userProfile.userConfirmed = true;
     userProfile.genderId = +userProfile.genderId;
     userProfile.firstLanguageId = +userProfile.firstLanguageId;
     userProfile.bestLanguageId = +userProfile.bestLanguageId;
     userProfile.lastUpdatedByUserId = ctx.getState().userId;
-    userProfile.birthDate = userProfile.birthDate?.split('T')[0];
 
     return this.userProfilesService
       .updateUserProfile(ctx.getState().userId, userProfile)

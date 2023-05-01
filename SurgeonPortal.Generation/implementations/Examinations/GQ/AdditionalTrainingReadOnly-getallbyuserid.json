@@ -1,0 +1,143 @@
+{
+  "name": "AdditionalTrainingReadOnly",
+  "implementationName": "Examinations\\GQ\\AdditionalTrainingReadOnly-getallbyuserid",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_additionaltrainingreadonly_allbyuserid",
+    "ApiRoot": "$project.ApiRoot",
+    "ControllerName": "Examinations\\GQ\\AdditionalTrainingsController",
+    "ControllerRoute": "api/examinations/gq/additional-trainings",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAllByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\GQ\\AdditionalTrainingReadOnly",
+    "ModelGroup": "AdditionalTrainingReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "all",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_additionaltrainingreadonly_allbyuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_additionaltrainingreadonly_allbyuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\GQ\\AdditionalTrainingReadOnly",
+            "fields": [
+              {
+                "name": "TrainingId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.TrainingId"
+              },
+              {
+                "name": "TypeOfTraining",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.TypeOfTraining"
+              },
+              {
+                "name": "State",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.State"
+              },
+              {
+                "name": "City",
+                "dataType": "string",
+                "maxLength": 40,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.City"
+              },
+              {
+                "name": "InstitutionName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InstitutionName"
+              },
+              {
+                "name": "Other",
+                "dataType": "string",
+                "maxLength": 41,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Other"
+              },
+              {
+                "name": "DateStarted",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DateStarted"
+              },
+              {
+                "name": "DateEnded",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DateEnded"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim generate i s Examinations\\GQ\\AdditionalTrainingReadOnly-getallbyuserid AdditionalTrainingReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Examinations\\GQ\\AdditionalTrainingReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_additionaltrainingreadonly_allbyuserid] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdditionalTrainingReadOnly -p:ControllerName=Examinations\\GQ\\AdditionalTrainingController -p:ControllerRoute=examinations/gq/additional-training -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=all ",
+    "inferredCommand": "ytgim generate i  Examinations\\GQ\\AdditionalTrainingReadOnly-getallbyuserid AdditionalTrainingReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Examinations\\GQ\\AdditionalTrainingReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_additionaltrainingreadonly_allbyuserid] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdditionalTrainingReadOnly -p:ControllerName=Examinations\\GQ\\AdditionalTrainingController -p:ControllerRoute=examinations/gq/additional-trainings -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=all -p:ApiRoot=$project.ApiRoot -p:UsePaginatedList=false",
+    "generatedDateUtc": "2023-04-19T16:45:26.7771292Z"
+  },
+  "version": 1
+}

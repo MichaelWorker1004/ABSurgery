@@ -66,7 +66,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             return await CreateAsync<UserProfileModel>(
                 _mapper,
                 item,
-                absoluteUriProvider.GetAbsoluteUri("/api/users/profiles/{item.UserProfileId}"));
+                absoluteUriProvider.GetAbsoluteUri($"/api/users/profiles/{item.UserProfileId}"));
         } 
 
         ///<summary>

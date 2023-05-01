@@ -1,6 +1,9 @@
 // TODO: Instead of a module, this might work? We can revisit
 
 // models
+export * from './models/examinations/gq/additional-training.model';
+export * from './models/examinations/gq/additional-training-read-only.model';
+
 export * from './models/users/user-credential.model';
 export * from './models/users/user-profile.model';
 export * from './models/users/app-user-read-only.model';
@@ -19,3 +22,4 @@ export * from './services/picklists/picklists.service';
 export * from './services/users/user-credentials.service';
 export * from './services/users/user-profiles.service';
 export * from './services/users/users.service';
+export * from './services/examinations/gq/additional-trainings.service';

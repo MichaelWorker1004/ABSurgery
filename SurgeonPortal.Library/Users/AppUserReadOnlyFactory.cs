@@ -9,12 +9,12 @@ namespace SurgeonPortal.Library.Users
     public class AppUserReadOnlyFactory : IAppUserReadOnlyFactory
     {
         public async Task<IAppUserReadOnly> GetByCredentialsAsync(
-            string emailAddress,
+            string userName,
             string password)
         {
-            if (string.IsNullOrEmpty(emailAddress) == true)
+            if (string.IsNullOrEmpty(userName) == true)
             {
-                throw new FactoryInvalidCriteriaException("emailAddress is a required field.");
+                throw new FactoryInvalidCriteriaException("userName is a required field.");
             }
             if (string.IsNullOrEmpty(password) == true)
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.Library.Users
             
             return await DataPortal.FetchAsync<AppUserReadOnly>(
                 new GetByCredentialsCriteria(
-                emailAddress,
+                userName,
                 password));
             
         }
@@ -45,14 +45,14 @@ namespace SurgeonPortal.Library.Users
             [Serializable]
             internal class GetByCredentialsCriteria
             {
-                public string EmailAddress { get; set; }
+                public string UserName { get; set; }
                 public string Password { get; set; }
             
                 public GetByCredentialsCriteria(
-                string emailAddress,
+                string userName,
                 string password)
              {
-                    EmailAddress = emailAddress;
+                    UserName = userName;
                     Password = password;
               }
             }

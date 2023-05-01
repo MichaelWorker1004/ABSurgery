@@ -1,0 +1,226 @@
+{
+  "name": "AdditionalTraining",
+  "implementationName": "Examinations\\GQ\\AdditionalTraining-insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.ins_additionaltraining_bytrainingid",
+    "ApiRoot": "$project.ApiRoot",
+    "ControllerName": "Examinations\\GQ\\AdditionalTrainingsController",
+    "ControllerRoute": "api/examinations/gq/additional-trainings",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Examinations\\GQ\\AdditionalTraining-getbytrainingid",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\GQ\\AdditionalTraining",
+    "ModelGroup": "AdditionalTraining",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.ins_additionaltraining_bytrainingid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[ins_additionaltraining_bytrainingid]",
+        "parameters": [
+          {
+            "name": "DateEnded",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "DateEnded"
+          },
+          {
+            "name": "DateStarted",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "DateStarted"
+          },
+          {
+            "name": "Other",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Other"
+          },
+          {
+            "name": "InstitutionId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "InstitutionId"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "City"
+          },
+          {
+            "name": "StateId",
+            "dataType": "string",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "StateId"
+          },
+          {
+            "name": "TypeOfTraining",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "TypeOfTraining"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\GQ\\AdditionalTraining",
+            "fields": [
+              {
+                "name": "TrainingId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.TrainingId"
+              },
+              {
+                "name": "DateEnded",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DateEnded"
+              },
+              {
+                "name": "DateStarted",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DateStarted"
+              },
+              {
+                "name": "Other",
+                "dataType": "string",
+                "maxLength": 41,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Other"
+              },
+              {
+                "name": "InstitutionId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InstitutionId"
+              },
+              {
+                "name": "City",
+                "dataType": "string",
+                "maxLength": 40,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.City"
+              },
+              {
+                "name": "StateId",
+                "dataType": "string",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StateId"
+              },
+              {
+                "name": "TypeOfTraining",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.TypeOfTraining"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "DateEnded",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "DateStarted",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "Other",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "InstitutionId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "City",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "StateId",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "TypeOfTraining",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\GQ\\AdditionalTraining-insert AdditionalTraining -t=ytg-framework/editable-create -p:Adapter=sp:ABSSP-[dbo].[ins_additionaltraining_bytrainingid] -p:Model=Examinations\\GQ\\AdditionalTraining -p:FetchImplementation=Examinations\\GQ\\AdditionalTraining-getbytrainingid -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdditionalTraining -p:Route= ",
+    "inferredCommand": "ytgim generate i  Examinations\\GQ\\AdditionalTraining-insert AdditionalTraining -t=ytg-framework/editable-create -p:Adapter=sp:ABSSP-[dbo].[ins_additionaltraining_bytrainingid] -p:Model=Examinations\\GQ\\AdditionalTraining -p:FetchImplementation=Examinations\\GQ\\AdditionalTraining-getbytrainingid -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdditionalTraining -p:Route= -p:ApiRoot=$project.ApiRoot -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:ControllerName=Examinations\\GQ\\AdditionalTrainingsController -p:ControllerRoute=examinations/gq/additional-trainings -p:ControllerVersion=1",
+    "generatedDateUtc": "2023-04-19T17:35:37.6359658Z"
+  },
+  "version": 1
+}

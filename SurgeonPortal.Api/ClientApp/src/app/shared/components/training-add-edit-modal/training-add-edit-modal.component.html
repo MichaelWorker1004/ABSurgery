@@ -1,4 +1,9 @@
-<form id="appointmentAddEdit" *ngIf="localTraining">
+<form
+  name="personProfileForm"
+  [formGroup]="additionalTrainingForm"
+  (ngSubmit)="save()"
+  *ngIf="additionalTrainingForm"
+>
   <div class="grid">
     <div class="col-12">
       <p class="m-0">
@@ -13,52 +18,53 @@
       label="Type of Training"
       placeholder="Type your answer..."
       ngDefaultControl
-      [(ngModel)]="localTraining.type"
-      required
+      formControlName="typeOfTraining"
+      [required]="typeOfTraining?.hasError('required') ? true : false"
     >
     </sl-input>
     <sl-input
-      class="col-12 md:col-4"
+      class="col-12 md:col-6"
       name="city"
       label="City"
       placeholder="Type your answer..."
       ngDefaultControl
-      [(ngModel)]="localTraining.city"
+      formControlName="city"
     >
     </sl-input>
-    <sl-select
+    <abs-input-select
       class="col-12 md:col-6"
-      name="state"
       label="State"
+      formControlName="stateId"
+      *ngIf="states$ | async as states"
+      [disabled]="!states.length"
+      ngDefaultControl
       placeholder="Choose a state"
-      ngDefaultControl
-      [(ngModel)]="localTraining.state"
     >
-      <sl-option value="PA">PA</sl-option>
-      <sl-option value="option-1">Option 1</sl-option>
-      <sl-option value="option-2">Option 2</sl-option>
-      <sl-option value="option-3">Option 3</sl-option>
-    </sl-select>
-    <sl-select
+      <sl-option
+        *ngFor="let state of states; index as i; trackBy: trackByFn"
+        [value]="state.itemValue"
+        >{{ state.itemDescription }}</sl-option
+      >
+    </abs-input-select>
+
+    <abs-input-select
       class="col-12"
-      name="institution"
       label="Institution"
-      placeholder="Choose an institution"
+      formControlName="institutionId"
       ngDefaultControl
-      [(ngModel)]="localTraining.institution"
+      placeholder="Choose an institution"
     >
-      <sl-option value="PA">PA</sl-option>
-      <sl-option value="option-1">Option 1</sl-option>
-      <sl-option value="option-2">Option 2</sl-option>
-      <sl-option value="option-3">Option 3</sl-option>
-    </sl-select>
+      <sl-option value="1">Option 1</sl-option>
+      <sl-option value="2">Option 2</sl-option>
+      <sl-option value="3">Option 3</sl-option>
+    </abs-input-select>
     <sl-input
       class="col-12"
       name="other"
       label="Other"
       placeholder="Type your answer..."
       ngDefaultControl
-      [(ngModel)]="localTraining.other"
+      formControlName="other"
     >
     </sl-input>
     <sl-input
@@ -68,7 +74,7 @@
       name="from"
       label="Date Started"
       ngDefaultControl
-      [(ngModel)]="localTraining.from"
+      formControlName="dateStarted"
       required
     >
     </sl-input>
@@ -79,19 +85,21 @@
       name="to"
       label="Date Ended"
       ngDefaultControl
-      [(ngModel)]="localTraining.to"
+      formControlName="dateEnded"
       required
     >
     </sl-input>
   </div>
+  <div class="flex justify-content-end mt-4" slot="footer">
+    <sl-button type="button" variant="text" (click)="cancel()"
+      >Cancel</sl-button
+    >
+    <sl-button
+      type="submit"
+      style="width: 337px"
+      variant="primary"
+      [disabled]="additionalTrainingForm.invalid"
+      >Save
+    </sl-button>
+  </div>
 </form>
-<div class="flex justify-content-end mt-4" slot="footer">
-  <sl-button type="button" variant="text" (click)="cancel()">Cancel</sl-button>
-  <sl-button
-    type="button"
-    style="width: 337px"
-    variant="primary"
-    (click)="save()"
-    >Save
-  </sl-button>
-</div>

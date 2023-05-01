@@ -74,11 +74,11 @@ namespace SurgeonPortal.Api.Controllers.Users
         userAgent = HttpContext.Request.Headers["User-Agent"];
 
         var user = await appUserReadOnlyFactory.GetByCredentialsAsync(
-            model.EmailAddress,
+            model.UserName,
             model.Password);
 
         //log successfuly attempt
-        await _userLoginAuditCommandFactory.AuditAsync(user.UserId, model.EmailAddress, 1, ipAddress, userAgent, true, string.Empty);
+        await _userLoginAuditCommandFactory.AuditAsync(user.UserId, model.UserName, 1, ipAddress, userAgent, true, string.Empty);
         _logger.LogInformation($"User authenticated successfully. User: {user.UserId}");
 
         var claims = GetClaimsFromUser(user);
@@ -87,9 +87,9 @@ namespace SurgeonPortal.Api.Controllers.Users
       }
       catch (DataPortalException ex) when (ex.BusinessException is AuthenticationFailedException)
       {
-        await _userLoginAuditCommandFactory.AuditAsync(-1, model.EmailAddress, 1, ipAddress, userAgent, false, string.Empty);
+        await _userLoginAuditCommandFactory.AuditAsync(-1, model.UserName, 1, ipAddress, userAgent, false, string.Empty);
 
-        _logger.LogInformation($"GetUserToken(): User failed authentication. ({model.EmailAddress})");
+        _logger.LogInformation($"GetUserToken(): User failed authentication. ({model.UserName})");
         return BadRequest("Login failed");
       }
       catch (Exception ex)

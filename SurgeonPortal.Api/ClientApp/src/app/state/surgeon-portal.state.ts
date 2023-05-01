@@ -4,6 +4,7 @@ import { MyAccountState } from './my-account';
 import { UserProfileState } from './user-profile';
 import { PicklistsState } from './picklists/picklists.state';
 import { ContinuousCertificationState } from './continuous-certification';
+import { GQAdditionalTrainingState } from './examination-gq-additional-training';
 
 export const surgeonPortalState = [
   AuthState,
@@ -12,4 +13,5 @@ export const surgeonPortalState = [
   PicklistsState,
   DashboardState,
   ContinuousCertificationState,
+  GQAdditionalTrainingState,
 ];

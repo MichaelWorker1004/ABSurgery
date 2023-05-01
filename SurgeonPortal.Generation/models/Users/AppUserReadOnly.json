@@ -9,8 +9,10 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": true
+      "isIdentityColumn": true,
+      "rules": {}
     },
     {
       "name": "FullName",
@@ -18,8 +20,21 @@
       "maxLength": 70,
       "precision": 0,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "UserName",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "EmailAddress",
@@ -27,8 +42,10 @@
       "maxLength": 320,
       "precision": 0,
       "scale": 0,
-      "isNullable": false,
-      "isIdentityColumn": false
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
     },
     {
       "name": "LastLoginDateUtc",
@@ -36,14 +53,16 @@
       "maxLength": 8,
       "precision": 23,
       "scale": 3,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {
-    "command": "ytgim g m s Users\\AppUserReadOnly -sp [dbo].[get_userlogin] -cn ABSSP -f ",
+    "command": "ytgim g m s Users\\AppUserReadOnly -sp [dbo].[get_userlogin_v2] -cn ABSSP -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-03-29T12:05:06.2069644Z"
+    "generatedDateUtc": "2023-05-01T18:43:07.9831673Z"
   },
   "version": 1
 }

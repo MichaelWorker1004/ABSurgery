@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { AbsGridCellRendererType } from './abs-grid.enum';
 import { IGridOptions } from './grid-options.model';
+import { isObservable } from 'rxjs';
 
 interface GridAction {
   data: any;
@@ -40,9 +41,18 @@ export class GridComponent implements OnInit {
 
   searchText!: string;
   filteredData: Array<any> = [];
+  localData: Array<any> = [];
 
   ngOnInit() {
-    this.filteredData = this.data;
+    if (isObservable(this.data)) {
+      this.data.subscribe((data: any) => {
+        this.localData = data;
+        this.filteredData = this.localData;
+      });
+    } else {
+      this.localData = this.data;
+      this.filteredData = this.data;
+    }
   }
 
   handleAction(action: GridAction, data: unknown) {
@@ -63,7 +73,7 @@ export class GridComponent implements OnInit {
       }
     });
     column.sort = column.sort === 'asc' ? 'desc' : 'asc';
-    this.data = this.data.sort((a: string, b: string) => {
+    this.localData = this.localData.sort((a: string, b: string) => {
       if (column.sort === 'asc') {
         return a[column.field] > b[column.field] ? 1 : -1;
       } else {
@@ -73,7 +83,7 @@ export class GridComponent implements OnInit {
   }
 
   onGridFilterChange($event: any) {
-    this.filteredData = this.data.filter((item: any) =>
+    this.filteredData = this.localData.filter((item: any) =>
       item[this.gridOptions.filterOn]
         .toLowerCase()
         .includes($event.target.value.toLowerCase())

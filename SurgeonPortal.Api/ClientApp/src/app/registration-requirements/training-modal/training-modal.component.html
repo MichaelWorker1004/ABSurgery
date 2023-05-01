@@ -45,7 +45,7 @@
             label="Select the statement that best describes you (Country of medical school)"
             placeholder="Select a Country"
             ngDefaultControl
-            [(ngModel)]="medicalTraining.statement"
+            [(ngModel)]="medicalTraining.medicalSchool.statement"
           >
             <sl-option value="option-1">Option 1</sl-option>
             <sl-option value="option-2">Option 2</sl-option>
@@ -261,14 +261,14 @@
             <sl-button
               variant="default"
               class="btn-add mt-2 mb-2"
-              (click)="showTrainingModal(null)"
+              (click)="showTrainingModal()"
             >
               <i slot="prefix" class="fa-solid fa-plus"></i>
               ADD RECORD
             </sl-button>
             <abs-grid
               [columns]="trainingCols"
-              [data]="medicalTraining.additionalTraining"
+              [data]="additionalTrainingList$"
               (action)="handleGridAction($event)"
               class="margin-bottom-2"
             ></abs-grid>
@@ -373,10 +373,15 @@
     </sl-button>
   </div>
 
-  <abs-training-add-edit-modal
-    [showDialog]="showTrainingAddEdit"
-    [training]="tempTraining$"
-    (cancelDialog)="cancelAddEditTraining($event)"
-    (saveDialog)="saveTraining($event)"
-  ></abs-training-add-edit-modal>
+  <abs-modal
+    [open]="showTrainingAddEdit"
+    (closeDialog)="cancelAddEditTraining($event)"
+    [title]="trainingAddEditTitle"
+  >
+    <abs-training-add-edit-modal
+      [training$]="tempTraining$"
+      (cancelDialog)="cancelAddEditTraining($event)"
+      (saveDialog)="saveTraining($event)"
+    ></abs-training-add-edit-modal>
+  </abs-modal>
 </div>

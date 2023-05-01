@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NgxsModule } from '@ngxs/store';
+import { surgeonPortalState } from '../../state/surgeon-portal.state';
 
 import { TrainingModalComponent } from './training-modal.component';
 
@@ -8,7 +11,11 @@ describe('TrainingModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TrainingModalComponent],
+      imports: [
+        HttpClientTestingModule,
+        TrainingModalComponent,
+        NgxsModule.forRoot(surgeonPortalState),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TrainingModalComponent);

@@ -1,6 +1,6 @@
 <sl-dialog
   [open]="open"
-  style="--width: 70%"
+  [style]="'--width: ' + width + '%'"
   [class]="hideClose ? 'hide-close' : ''"
   (sl-request-close)="close($event)"
 >

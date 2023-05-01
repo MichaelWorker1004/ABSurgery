@@ -6,39 +6,87 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import {
+  GetStateList,
+  IPickListItem,
+  PicklistsSelectors,
+} from 'src/app/state/picklists';
+import { IAdditionalTrainingModel, IStateReadOnlyModel } from 'src/app/api';
+import { Select, Store } from '@ngxs/store';
+import { InputSelectComponent } from '../../../shared/components/base-input/input-select.component';
 
 @Component({
   selector: 'abs-training-add-edit-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputSelectComponent,
+  ],
   templateUrl: './training-add-edit-modal.component.html',
   styleUrls: ['./training-add-edit-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TrainingAddEditModalComponent implements OnInit {
   @Input() showDialog = false;
-  @Input() training: Subject<any> = new Subject();
+  @Input() training$: Subject<IAdditionalTrainingModel> = new Subject();
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
 
-  localTraining: any = {};
+  @Select(PicklistsSelectors.slices.states) states$:
+    | Observable<IStateReadOnlyModel[]>
+    | undefined;
+
+  additionalTrainingForm!: FormGroup;
+
+  stateOptions: IPickListItem[] = [];
+
+  constructor(private _store: Store, private formBuilder: FormBuilder) {
+    this._store.dispatch(new GetStateList('500'));
+    this.states$?.subscribe((value) => {
+      this.stateOptions = value;
+    });
+  }
 
   ngOnInit() {
-    this.training.subscribe((value) => {
-      this.localTraining = value;
-      if (value.from) {
-        // TODO: [Joe] convert to string format yyyy-MM-dd
-        this.localTraining.from = new Date(value.from)
+    this.additionalTrainingForm = this.formBuilder.group({
+      trainingId: [''],
+      typeOfTraining: ['', Validators.required],
+      dateStarted: ['', Validators.required],
+      dateEnded: ['', Validators.required],
+      institutionId: [''],
+      stateId: [''],
+      city: [''],
+      other: [''],
+    });
+    this.training$.subscribe((value) => {
+      this.additionalTrainingForm.patchValue({ ...value });
+      if (value.dateStarted) {
+        const dateStarted = new Date(value.dateStarted)
           .toISOString()
           .split('T')[0];
+        this.additionalTrainingForm.patchValue({ dateStarted: dateStarted });
       }
-      if (value.to) {
-        this.localTraining.to = new Date(value.to).toISOString().split('T')[0];
+      if (value.dateEnded) {
+        const dateEnded = new Date(value.dateEnded).toISOString().split('T')[0];
+        this.additionalTrainingForm.patchValue({ dateEnded: dateEnded });
       }
     });
+  }
+
+  get typeOfTraining() {
+    return this.additionalTrainingForm.get('typeOfTraining');
   }
 
   handleDefaultClose(event: any) {
@@ -50,6 +98,24 @@ export class TrainingAddEditModalComponent implements OnInit {
   }
 
   save() {
-    this.saveDialog.emit({ show: false, license: this.localTraining });
+    this.saveDialog.emit({
+      show: false,
+      trainingRecord: this.additionalTrainingForm.value,
+    });
+  }
+
+  trackByFn(
+    index: number,
+    item: IPickListItem
+  ): string | number | null | undefined {
+    return item.itemValue;
+  }
+
+  handleSelects($event: any) {
+    const select = $event.target;
+    const formControl = $event.target.getAttribute('data-controlname');
+    const patchObj: any = {};
+    patchObj[formControl] = select.value;
+    this.additionalTrainingForm.patchValue(patchObj);
   }
 }
