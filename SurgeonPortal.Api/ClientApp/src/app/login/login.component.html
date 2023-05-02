@@ -42,11 +42,11 @@
           <sl-input
             placeholder="Username"
             ngDefaultControl
-            formControlName="emailAddress"
+            formControlName="userName"
           ></sl-input>
           <div
             *ngIf="
-              loginForm.get('emailAddress')?.hasError('required') &&
+              loginForm.get('userName')?.hasError('required') &&
               !loginForm.pristine
             "
           >

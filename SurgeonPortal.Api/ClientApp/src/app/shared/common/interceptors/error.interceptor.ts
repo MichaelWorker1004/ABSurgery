@@ -30,7 +30,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err.status !== 401) {
               // TODO: [Joe] - add error specific messages here
 
-              let message = `${err.status} Error: ${err.statusText}`;
+              const message = `${err.status} Error: ${err.statusText}`;
               // if (err.error) {
               //   message = err.error;
               // }

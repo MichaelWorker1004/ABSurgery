@@ -24,7 +24,7 @@ import { tap } from 'rxjs/operators';
 })
 export class LoginComponent {
   loginForm = new FormGroup({
-    emailAddress: new FormControl('', [
+    userName: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
     ]),
@@ -47,12 +47,12 @@ export class LoginComponent {
   getErrors(error: IError) {
     let errorArray: string[] = [];
     const errors = error.errors as {
-      EmailAddress: string[];
+      userName: string[];
       Password: string[];
     };
-    if (errors?.EmailAddress || errors?.Password) {
+    if (errors?.userName || errors?.Password) {
       errorArray = errorArray.concat(
-        errors.EmailAddress ? errors.EmailAddress : [],
+        errors.userName ? errors.userName : [],
         errors.Password ? errors.Password : []
       );
     }

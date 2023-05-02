@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { IAppUserReadOnlyModel } from "../../models/users/app-user-read-only.model";
-import { IAuthState } from "../../../state";
+import { IAppUserReadOnlyModel } from '../../models/users/app-user-read-only.model';
+import { IAuthState } from '../../../state';
 
 export interface IAuthCredentials {
-  emailAddress: string;
+  userName: string;
   password: string;
 }
 
@@ -23,7 +23,7 @@ export interface AuthStateModel {
   access_token: string | null;
   refresh_token: string | null;
   token_type: string | null;
-  user_name: string | null;
+  userName: string | null;
   expiration: string | null;
   expires_in_minutes: number | null;
   user: IAppUserReadOnlyModel | null;
@@ -33,14 +33,13 @@ export interface AuthStateModel {
   providedIn: 'root',
 })
 export class AuthService {
-
   token: string | undefined;
   constructor(private httpClient: HttpClient) {}
 
   login(payload: IAuthCredentials): Observable<IAuthState | IError> {
     return this.httpClient
       .post<IAuthState>(`/api/users/authenticate`, {
-        emailAddress: payload.emailAddress,
+        userName: payload.userName,
         password: payload.password,
       })
       .pipe(
