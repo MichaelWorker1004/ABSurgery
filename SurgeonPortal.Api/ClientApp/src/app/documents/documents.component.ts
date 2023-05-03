@@ -22,6 +22,7 @@ export class DocumentsComponent implements OnInit {
   fileUploadedName: string | undefined;
   uploadedFile: File | undefined;
   documentType!: string;
+  canUpload = false;
   selectOptions = [
     {
       label: 'Medical License',

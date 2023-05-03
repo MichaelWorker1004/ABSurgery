@@ -7,7 +7,7 @@
     dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
     amet tortor at, condimentum tempor erat.
   </div>
-  <div class="flex upload-controls">
+  <div class="flex upload-controls" *ngIf="canUpload">
     <sl-select
       style="margin-right: 1rem"
       placeholder="Select a document type"
