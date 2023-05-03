@@ -89,13 +89,13 @@ export class DashboardComponent implements OnInit {
   fetchUserData() {
     if (this.isSurgeon) {
       this.certificateInformation$?.subscribe((userInformation) => {
-        if (userInformation.certificates.length > 0) {
+        if (userInformation?.certificates?.length > 0) {
           this.userInformation = userInformation.certificates;
         }
       });
     } else {
       this.programInformation$?.subscribe((userInformation) => {
-        if (userInformation.programs.programName.length > 0) {
+        if (userInformation?.programs?.programName.length > 0) {
           this.userInformation = userInformation.programs;
         }
       });

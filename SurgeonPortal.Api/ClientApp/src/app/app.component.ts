@@ -42,16 +42,18 @@ export class AppComponent implements OnDestroy {
   userSub: Subscription | undefined;
 
   isSurgeon = false;
-
   isSideNavOpen = false;
 
-  constructor(private _router: Router, private _store: Store) {
+  constructor(private _store: Store) {
     this.authSub = this.isAuthenticated$?.subscribe((isAuthed) => {
       const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);
       const claims = this._store.selectSnapshot(AuthSelectors.claims);
       if (isAuthed && loginUser && claims) {
         if (claims.includes(UserClaims.surgeon)) {
           this.isSurgeon = true;
+        }
+        if (claims.includes(UserClaims.trainee)) {
+          this.isSurgeon = false;
         }
         this._store.dispatch(new GetUserProfile(loginUser, claims));
       }
