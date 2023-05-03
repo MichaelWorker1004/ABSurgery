@@ -15,7 +15,7 @@ export const TRAINEE_NAV_ITEMS = [
     icon: 'fa-solid fa-graduation-cap',
   },
   {
-    display: 'GME History',
+    display: 'GME',
     action: 'gme-history',
     icon: 'fa-regular fa-folder-open',
   },

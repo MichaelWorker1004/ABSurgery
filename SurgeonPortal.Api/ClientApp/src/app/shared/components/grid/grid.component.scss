@@ -3,14 +3,28 @@
 }
 
 .bg-gray {
-  background-color: #f4f4f4;
   overflow-x: auto;
+}
+
+.pagination,
+.bg-gray,
+table {
+  background-color: #f4f4f4;
+}
+
+.pagination {
+  padding: 0 1.5rem;
+  .active {
+    color: var(--global-warning);
+    font-weight: bold;
+    cursor: unset;
+  }
 }
 
 table {
   width: 100%;
   text-align: left;
-  background-color: #f4f4f4;
+
   padding: 1.5rem;
   border-radius: 6px;
   margin-top: 1rem;

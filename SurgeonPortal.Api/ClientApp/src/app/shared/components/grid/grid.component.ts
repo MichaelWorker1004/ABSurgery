@@ -35,10 +35,15 @@ export class GridComponent implements OnInit {
     showFilter: false,
     filterOn: '',
   };
+  @Input() pagination = false;
   @Input() expandTemplate!: any;
-  @Output() action: EventEmitter<any> = new EventEmitter();
-  AbsGridCellRendererType = AbsGridCellRendererType;
+  @Input() currentPage = 1;
+  @Input() itemsPerPage = 5;
 
+  @Output() action: EventEmitter<unknown> = new EventEmitter();
+
+  pages: number[] = [];
+  AbsGridCellRendererType = AbsGridCellRendererType;
   searchText!: string;
   filteredData: Array<any> = [];
   localData: Array<any> = [];
@@ -53,6 +58,29 @@ export class GridComponent implements OnInit {
       this.localData = this.data;
       this.filteredData = this.data;
     }
+
+    this.initPagintion();
+  }
+
+  initPagintion() {
+    if (this.pagination) {
+      const total = this.filteredData.length;
+      const pagesCount = Math.ceil(total / this.itemsPerPage);
+      this.pages = [...Array(pagesCount).keys()].map((i) => i + 1);
+
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = this.currentPage * this.itemsPerPage;
+      this.filteredData = this.filteredData.slice(start, end);
+    }
+  }
+
+  changePage(page: number) {
+    this.currentPage = page;
+
+    this.filteredData = this.localData.slice(
+      (this.currentPage - 1) * this.itemsPerPage,
+      this.currentPage * this.itemsPerPage
+    );
   }
 
   handleAction(action: GridAction, data: unknown) {
@@ -80,13 +108,21 @@ export class GridComponent implements OnInit {
         return a[column.field] < b[column.field] ? 1 : -1;
       }
     });
+    if (this.pagination) {
+      this.changePage(1);
+    }
   }
 
   onGridFilterChange($event: any) {
-    this.filteredData = this.localData.filter((item: any) =>
+    this.filteredData = this.data.filter((item: any) =>
       item[this.gridOptions.filterOn]
         .toLowerCase()
         .includes($event.target.value.toLowerCase())
     );
+    if (this.pagination) {
+      this.localData = this.filteredData;
+      this.initPagintion();
+      this.changePage(1);
+    }
   }
 }

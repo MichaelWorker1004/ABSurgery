@@ -109,6 +109,45 @@
       </ng-container>
     </tbody>
   </table>
+  <div
+    class="pagination flex justify-content-end"
+    *ngIf="pagination && pages.length > 1"
+  >
+    <div>
+      <button
+        *ngIf="currentPage > 1 && pages.length > 2 && currentPage > 2"
+        (click)="changePage(1)"
+      >
+        <i class="fa-solid fa-angles-left"></i>
+      </button>
+      <button *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)">
+        <i class="fa-solid fa-angle-left"></i>
+      </button>
+      <button
+        *ngFor="let p of pages"
+        [class.active]="p === currentPage"
+        (click)="changePage(p)"
+      >
+        {{ p }}
+      </button>
+      <button
+        *ngIf="currentPage < pages.length"
+        (click)="changePage(currentPage + 1)"
+      >
+        <i class="fa-solid fa-angle-right"></i>
+      </button>
+      <button
+        *ngIf="
+          currentPage < pages.length &&
+          pages.length > 2 &&
+          currentPage < pages.length - 1
+        "
+        (click)="changePage(pages.length)"
+      >
+        <i class="fa-solid fa-angles-right"></i>
+      </button>
+    </div>
+  </div>
   <div class="pl-5 pr-5 pb-5 bg-gray">
     <ng-content></ng-content>
   </div>
