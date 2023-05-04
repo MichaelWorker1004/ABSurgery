@@ -12,4 +12,5 @@ import { CommonModule } from '@angular/common';
 export class AlertComponent {
   @Input() alertType!: string;
   @Input() hideIcon = false;
+  @Input() fontSize = 1.25;
 }

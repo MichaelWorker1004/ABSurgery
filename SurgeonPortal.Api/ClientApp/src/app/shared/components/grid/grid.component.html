@@ -5,11 +5,30 @@
   >
     <h4>{{ title }}</h4>
     <div class="search-container" *ngIf="gridOptions.showFilter">
-      <sl-input
-        placeholder="Search"
-        (keyup)="onGridFilterChange($event)"
-      ></sl-input>
-      <i class="fa-solid fa-search"></i>
+      <div class="text-search" *ngIf="gridOptions.filterType === 'text'">
+        <sl-input
+          [placeholder]="gridOptions.placeholder ?? 'Search'"
+          (keyup)="onGridFilterChange($event)"
+        ></sl-input>
+        <i class="fa-solid fa-search"></i>
+      </div>
+      <div
+        class="dropdown-search"
+        *ngIf="gridOptions.filterType === 'dropdown'"
+      >
+        <sl-select
+          (sl-change)="onGridFilterChange($event)"
+          [placeholder]="gridOptions.placeholder ?? 'Search'"
+          clearable
+        >
+          <sl-option
+            [value]="option.value"
+            *ngFor="let option of gridOptions.filterOptions"
+          >
+            {{ option.label }}
+          </sl-option>
+        </sl-select>
+      </div>
     </div>
   </div>
 
@@ -114,13 +133,13 @@
     *ngIf="pagination && pages.length > 1"
   >
     <div>
-      <button
-        *ngIf="currentPage > 1 && pages.length > 2 && currentPage > 2"
-        (click)="changePage(1)"
-      >
+      <button [disabled]="firstPageDisabled" (click)="changePage(1)">
         <i class="fa-solid fa-angles-left"></i>
       </button>
-      <button *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)">
+      <button
+        [disabled]="previousPageDisabled"
+        (click)="changePage(currentPage - 1)"
+      >
         <i class="fa-solid fa-angle-left"></i>
       </button>
       <button
@@ -131,19 +150,12 @@
         {{ p }}
       </button>
       <button
-        *ngIf="currentPage < pages.length"
+        [disabled]="nextPageDisabled"
         (click)="changePage(currentPage + 1)"
       >
         <i class="fa-solid fa-angle-right"></i>
       </button>
-      <button
-        *ngIf="
-          currentPage < pages.length &&
-          pages.length > 2 &&
-          currentPage < pages.length - 1
-        "
-        (click)="changePage(pages.length)"
-      >
+      <button [disabled]="lastPageDisabled" (click)="changePage(pages.length)">
         <i class="fa-solid fa-angles-right"></i>
       </button>
     </div>

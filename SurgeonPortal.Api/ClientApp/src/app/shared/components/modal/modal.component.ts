@@ -23,7 +23,7 @@ export class ModalComponent {
   @Input() modalName!: any;
   @Input() preventOverlayClose = false;
   @Input() hideClose = false;
-  @Input() width: number = 70;
+  @Input() width = 70;
 
   close(event: any) {
     if (this.preventOverlayClose && event.detail.source === 'overlay') {

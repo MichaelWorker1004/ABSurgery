@@ -19,6 +19,10 @@ table {
     font-weight: bold;
     cursor: unset;
   }
+  button:disabled {
+    color: var(--global-gray);
+    cursor: initial;
+  }
 }
 
 table {

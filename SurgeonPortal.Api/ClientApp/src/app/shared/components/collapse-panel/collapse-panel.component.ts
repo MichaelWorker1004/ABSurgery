@@ -12,18 +12,16 @@ import { Subject } from 'rxjs';
 export class CollapsePanelComponent implements OnInit {
   @Input() panelId!: number;
   @Input() startExpanded = false;
-  @Input() heightToggle: Subject<boolean> = new Subject();
+  @Input() editToggle: Subject<boolean> = new Subject();
 
   ngOnInit() {
-    // setTimeout is needed to wait for the DOM to be ready
-    setTimeout(() => {
-      this.heightToggle.subscribe(() => {
-        this.resetHeight();
-      });
-      if (this.startExpanded) {
-        this.togglePanel();
-      }
-    }, 0);
+    this.editToggle.subscribe(() => {
+      this.resetHeight();
+    });
+    if (this.startExpanded) {
+      // setTimeout is needed to wait for the DOM to be ready
+      setTimeout(() => this.togglePanel(), 0);
+    }
   }
 
   togglePanel() {
@@ -44,7 +42,7 @@ export class CollapsePanelComponent implements OnInit {
     const panelBody = document.querySelector<HTMLElement>(
       '#panel-body-' + this.panelId
     );
-    if (panelBody?.style.maxHeight && panelBody?.style.maxHeight !== '0px') {
+    if (panelBody!.style.maxHeight && panelBody!.style.maxHeight !== '0px') {
       // setTimeout is needed to wait for the DOM to update with new content
       setTimeout(() => {
         panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';

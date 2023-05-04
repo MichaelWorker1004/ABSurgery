@@ -1,3 +1,6 @@
+sl-radio-group::part(form-control-label) {
+  font-weight: 700;
+}
 sl-radio-group::part(form-control-input) {
   display: flex;
 }

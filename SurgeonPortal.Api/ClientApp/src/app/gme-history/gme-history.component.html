@@ -1,1 +1,152 @@
-<p>gme-history works!</p>
+<header>
+  <h1>Graduate Medical Education (GME)</h1>
+</header>
+<ng-container>
+  <section>
+    <div class="grid">
+      <sl-card class="col-12">
+        <div slot="header">
+          My GME rotations
+          <span class="block font-normal text-base"
+            >Current 5-year cycle: 2018-01-01 through 2022-12-31</span
+          >
+        </div>
+        <div class="grid">
+          <div class="col-12 flex align-items-center">
+            <abs-input-select
+              [(ngModel)]="calendarFilter"
+              ngDefaultControl
+              style="width: 200px"
+              clearable
+              placeholder="Current Year"
+            >
+              <sl-divider></sl-divider>
+              <small>Clinical Years</small>
+              <sl-option value="clincial-year-1">Year 1</sl-option>
+              <sl-option value="clincial-year-2">Year 2</sl-option>
+              <sl-option value="clincial-year-3">Year 3</sl-option>
+              <sl-option value="clincial-year-4">Year 4</sl-option>
+              <sl-option value="clincial-year-5">Year 5</sl-option>
+              <sl-divider></sl-divider>
+              <small>Fellowship Years</small>
+              <sl-option value="fellowship-year-1">Year 1</sl-option>
+              <sl-option value="fellowship-year-2">Year 2</sl-option>
+            </abs-input-select>
+
+            <sl-button variant="default" class="btn-add mt-2 mb-2">
+              <i slot="prefix" class="fa-solid fa-plus"></i>
+              add a record
+            </sl-button>
+
+            <div class="legend inline-flex justify-content-end flex-wrap">
+              <div class="l flex align-items-center clinical">
+                <div class="i"></div>
+                Clinical Activity
+              </div>
+              <div class="l flex align-items-center non-clinical">
+                <div class="i"></div>
+                Non-Clinical Activity
+              </div>
+              <div class="l flex align-items-center conflict">
+                <div class="i"></div>
+                Conflict
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12" *ngIf="calendarReady">
+            <full-calendar
+              class="gme-rotations-calendar"
+              [options]="calendarOptions"
+            ></full-calendar>
+          </div>
+
+          <div class="col-12">
+            <abs-alert alertType="danger" [fontSize]="1">
+              <span class="font-normal"
+                >You have a conflict - two of your rotates conflict with each
+                other. Lorem ipsum dolor iset!</span
+              >
+              <sl-button
+                class="btn-link"
+                variant="text"
+                (click)="viewConflictsToResolve(conflicts)"
+                >View Details</sl-button
+              >
+            </abs-alert>
+          </div>
+        </div>
+      </sl-card>
+
+      <sl-card class="col-12">
+        <abs-collapse-panel
+          [panelId]="1"
+          [startExpanded]="true"
+          [heightToggle]="itemizedGme$"
+        >
+          <h5 class="mt-0 mb-2" panel-header>Itemized GME</h5>
+          <div class="grid">
+            <div class="col-12">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
+                sed neque nec dolor lacinia interdum quis nec nisi. Pellentesque
+                dolor erat, egestas sit amet tortor at, condimentum tempor erat.
+              </p>
+              <sl-button
+                variant="default"
+                class="btn-add mb-5 absolute"
+                (click)="handleAddEditGmeRotation()"
+              >
+                <i slot="prefix" class="fa-solid fa-plus"></i>
+                ADD RECORD
+              </sl-button>
+              <abs-grid
+                class="margin-bottom-2"
+                [columns]="itemizedGmeCols"
+                [data]="itemizedGmeData"
+                [gridOptions]="itemizedGridOptions"
+                (action)="handleGridAction($event)"
+                [pagination]="true"
+                [itemsPerPage]="4"
+              ></abs-grid>
+              <abs-modal
+                [open]="showAddEditGmeRotation"
+                title="{{
+                  isEditGmeRotation ? 'Edit' : 'Add'
+                }} Graduate Medical Education Record"
+                modalName="addGmeRotation"
+                (closeDialog)="handleAddEditGmeRotation()"
+              >
+                <abs-add-record-modal></abs-add-record-modal>
+              </abs-modal>
+            </div>
+          </div>
+        </abs-collapse-panel>
+      </sl-card>
+    </div>
+
+    <abs-modal
+      [open]="showConflictResolutionModal"
+      (closeDialog)="toggleConflictResolutionModal()"
+      title="Resolve Conflicts"
+      modalName="conflictResolutionModal"
+      [hideClose]="true"
+      [width]="80"
+    >
+      <abs-conflict-resolution-modal
+        (closeDialog)="toggleConflictResolutionModal()"
+      >
+      </abs-conflict-resolution-modal>
+    </abs-modal>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <div class="my-5 flex flex-column justify-content-center align-items-center">
+    <sl-spinner
+      class="block"
+      style="font-size: 3rem; --indicator-color: var(--global-primary)"
+    ></sl-spinner>
+    <p>loading gme rotations...</p>
+  </div>
+</ng-template>

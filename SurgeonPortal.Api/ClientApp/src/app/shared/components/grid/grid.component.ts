@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbsGridCellRendererType } from './abs-grid.enum';
+import { AbsFilterType, AbsGridCellRendererType } from './abs-grid.enum';
 import { IGridOptions } from './grid-options.model';
 import { isObservable } from 'rxjs';
 
@@ -34,6 +34,8 @@ export class GridComponent implements OnInit {
   @Input() gridOptions: IGridOptions = {
     showFilter: false,
     filterOn: '',
+    filterType: AbsFilterType.Text,
+    filterOptions: [],
   };
   @Input() pagination = false;
   @Input() expandTemplate!: any;
@@ -48,6 +50,11 @@ export class GridComponent implements OnInit {
   filteredData: Array<any> = [];
   localData: Array<any> = [];
 
+  previousPageDisabled!: boolean;
+  firstPageDisabled!: boolean;
+  nextPageDisabled!: boolean;
+  lastPageDisabled!: boolean;
+
   ngOnInit() {
     if (isObservable(this.data)) {
       this.data.subscribe((data: any) => {
@@ -58,8 +65,8 @@ export class GridComponent implements OnInit {
       this.localData = this.data;
       this.filteredData = this.data;
     }
-
     this.initPagintion();
+    this.setPaginationActions();
   }
 
   initPagintion() {
@@ -74,6 +81,17 @@ export class GridComponent implements OnInit {
     }
   }
 
+  setPaginationActions() {
+    this.previousPageDisabled = this.currentPage === 1;
+    this.firstPageDisabled =
+      this.previousPageDisabled ||
+      this.pages.length <= 2 ||
+      this.currentPage <= 2;
+
+    this.nextPageDisabled = this.currentPage === this.pages.length;
+    this.lastPageDisabled = this.nextPageDisabled;
+  }
+
   changePage(page: number) {
     this.currentPage = page;
 
@@ -81,6 +99,8 @@ export class GridComponent implements OnInit {
       (this.currentPage - 1) * this.itemsPerPage,
       this.currentPage * this.itemsPerPage
     );
+
+    this.setPaginationActions();
   }
 
   handleAction(action: GridAction, data: unknown) {
@@ -114,11 +134,17 @@ export class GridComponent implements OnInit {
   }
 
   onGridFilterChange($event: any) {
+    const value =
+      this.gridOptions.filterType === AbsFilterType.Text
+        ? $event?.target.value
+        : $event?.target.displayLabel;
+
     this.filteredData = this.data.filter((item: any) =>
       item[this.gridOptions.filterOn]
         .toLowerCase()
-        .includes($event.target.value.toLowerCase())
+        .includes(value.toLowerCase())
     );
+
     if (this.pagination) {
       this.localData = this.filteredData;
       this.initPagintion();

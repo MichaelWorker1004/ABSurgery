@@ -1,0 +1,54 @@
+sl-button[variant='text'].btn-link::part(label) {
+  text-transform: unset !important;
+  text-decoration: underline;
+  padding: 0 0.5rem;
+}
+
+.grid {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.legend {
+  position: relative;
+  right: 0;
+  margin-left: auto;
+  text-align: right;
+  .l {
+    margin-left: 2rem;
+    font-weight: bold;
+    position: relative;
+    &:first-child {
+      margin-left: 0;
+    }
+    .i {
+      margin-right: 0.5rem;
+      width: 15px;
+      height: 15px;
+      background-color: var(--global-gray);
+      left: 0;
+      border-radius: 50%;
+    }
+    &.clinical {
+      color: var(--global-success);
+      .i {
+        background-color: var(--global-success);
+      }
+    }
+    &.non-clinical {
+      color: var(--global-warning);
+      .i {
+        background-color: var(--global-warning);
+      }
+    }
+    &.conflict {
+      color: var(--global-danger);
+      .i {
+        background-color: var(--global-danger);
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { IGridOptions } from '../shared/components/grid/grid-options.model';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { DOCUMENTS_COLS } from './documents-col';
+import { AbsFilterType } from '../shared/components/grid/abs-grid.enum';
 
 @Component({
   selector: 'abs-documents',
@@ -18,6 +19,7 @@ export class DocumentsComponent implements OnInit {
   gridOptions: IGridOptions = {
     showFilter: true,
     filterOn: 'documentName',
+    filterType: AbsFilterType.Text,
   };
   fileUploadedName: string | undefined;
   uploadedFile: File | undefined;

@@ -477,6 +477,106 @@ sl-button.btn-add::part(base):hover {
   background-position: left bottom;
 }
 
+/* Full Calendar Override Styles */
+.gme-rotations-calendar {
+  width: 100%;
+  position: relative;
+  .fc-header-toolbar {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    left: 5px;
+    z-index: 2;
+    .fc-button {
+      background: transparent !important;
+      color: var(--global-success) !important;
+      border: none !important;
+      border-radius: 50% !important;
+      .fc-icon-chevron-left,
+      .fc-icon-chevron-right {
+        font-size: 1.4rem !important;
+      }
+    }
+  }
+  .fc-col-header-cell {
+    padding: 0.5rem 0;
+    background-color: white !important;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: var(--global-gray-light) !important;
+    .fc-col-header-cell-cushion {
+      color: var(--global-gray) !important;
+    }
+  }
+  .fc-daygrid-day {
+    border-color: #fafafa !important;
+    &.fc-day-disabled {
+      background: none;
+    }
+  }
+  .fc-daygrid-day-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fc-bg-event {
+    opacity: 1;
+    z-index: 5 !important;
+    border-radius: 45px;
+    margin: 0.25rem;
+
+    &.clickable-event {
+      cursor: pointer;
+    }
+
+    .gme-calendar-highlight {
+      height: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &.clinical {
+        background-color: var(--global-success);
+        color: white;
+      }
+      &.non-clinical {
+        background-color: var(--global-warning);
+        color: var(--global-text-primary);
+      }
+      &.conflict {
+        background-color: var(--global-danger);
+        color: white;
+      }
+    }
+  }
+  .fc-bg-event:hover {
+    .gme-calendar-highlight {
+      &.clinical {
+        background-color: var(--global-success-lighten-20);
+      }
+      &.non-clinical {
+        background-color: var(--global-warning-lighten-20);
+      }
+      &.conflict {
+        background-color: var(--global-danger-lighten-20);
+      }
+    }
+  }
+
+  sl-tooltip::part(body) {
+    background-color: white;
+    color: var(--global-text-primary);
+    border: 1px solid var(--global-gray-lightest);
+    box-shadow: 0px 0px 6px rgba(36, 54, 85, 0.1490196078);
+  }
+  sl-tooltip::part(base__arrow) {
+    background-color: white;
+    border: 1px solid var(--global-gray-light);
+  }
+}
+
 /* Helper Classes */
 /* primarily using helper classes from PrimeFlex */
 .text-success {
@@ -547,13 +647,13 @@ label {
 }
 
 .app-content {
-  width: 100vw;
-  height: 100vh;
+  //width: 100vw;
+  //height: 100vh;
   background: transparent
     linear-gradient(180deg, rgba(114, 141, 177, 0.15) 0%, #ffffff 100%) 0% 0%
     no-repeat padding-box;
   color: var(--global-text-primary);
-  overflow-x: hidden;
+  //overflow-x: hidden;
 }
 .login-content {
   width: 100vw;

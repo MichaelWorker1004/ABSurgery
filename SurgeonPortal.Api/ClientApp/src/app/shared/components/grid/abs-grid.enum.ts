@@ -6,3 +6,8 @@ export enum AbsGridCellRendererType {
   ExpandToggle = 'expandToggle',
   FileLink = 'fileLink',
 }
+
+export enum AbsFilterType {
+  Text = 'text',
+  Dropdown = 'dropdown',
+}
