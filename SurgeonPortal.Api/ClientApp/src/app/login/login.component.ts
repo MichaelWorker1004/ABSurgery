@@ -7,12 +7,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Select, Store } from '@ngxs/store';
-
-import { AuthSelectors, Login } from '../state';
-import { IError, IAuthCredentials } from '../api/services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Select, Store } from '@ngxs/store';
+import { AuthSelectors, Login } from '../state';
+import { IError, IAuthCredentials } from '../api';
 
 @Component({
   selector: 'abs-login',
