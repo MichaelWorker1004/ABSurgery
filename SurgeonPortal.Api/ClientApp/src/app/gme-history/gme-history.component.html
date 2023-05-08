@@ -80,6 +80,35 @@
 
       <sl-card class="col-12">
         <abs-collapse-panel
+          [panelId]="2"
+          [startExpanded]="true"
+          class="table-sm"
+        >
+          <h5 class="mt-0 mb-2" panel-header>GME Summary</h5>
+          <div class="grid">
+            <div class="col-12">
+              <p>
+                The table below is a summary, by residency level, of your
+                clinical experience based on the dates you entered in the table
+                above. Columns 2 through 4 summarize the number of weeks of
+                clinical experience during each year of residency. Column 5 is a
+                total of weeks per residency year, of rotations devoted to the
+                content areas of surgery. Column 6 summarizes chief resident
+                year rotations also devoted to the content areas of surgery.
+              </p>
+              <abs-grid
+                class="margin-bottom-2"
+                [columns]="gmeSummaryCols"
+                [data]="gmeSummaryData"
+                [showGridLines]="false"
+              ></abs-grid>
+            </div>
+          </div>
+        </abs-collapse-panel>
+      </sl-card>
+
+      <sl-card class="col-12">
+        <abs-collapse-panel
           [panelId]="1"
           [startExpanded]="true"
           [heightToggle]="itemizedGme$"

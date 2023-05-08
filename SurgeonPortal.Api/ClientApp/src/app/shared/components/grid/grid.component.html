@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <table class="abs-table">
+  <table class="abs-table {{ showGridLines ? '' : 'no-grid-lines' }}">
     <thead>
       <tr>
         <th *ngFor="let c of columns">
@@ -52,7 +52,11 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let r of filteredData; let i = index">
-        <tr [ngClass]="{ 'alternate-row': i % 2 === 1 }">
+        <tr
+          class="{{ r.rowClass }}"
+          [ngClass]="{ 'alternate-row': i % 2 === 1 }"
+          [ngStyle]="r.rowStyle"
+        >
           <td *ngFor="let c of columns" [style.width]="c.width + 'px'">
             <div *ngIf="!c.cellRenderer">
               {{ r[c.field] }}

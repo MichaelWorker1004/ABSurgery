@@ -41,6 +41,7 @@ export class GridComponent implements OnInit {
   @Input() expandTemplate!: any;
   @Input() currentPage = 1;
   @Input() itemsPerPage = 5;
+  @Input() showGridLines = true;
 
   @Output() action: EventEmitter<unknown> = new EventEmitter();
 

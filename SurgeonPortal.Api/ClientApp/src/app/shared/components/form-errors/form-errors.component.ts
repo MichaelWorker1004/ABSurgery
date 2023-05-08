@@ -23,8 +23,9 @@ export class FormErrorsComponent implements OnDestroy {
   constructor(private store: Store) {}
 
   focusElement(element: string) {
+    const camelCaseElement = element.charAt(0).toLowerCase() + element.slice(1);
     const el: any = document.querySelector(
-      '[formcontrolname="' + element + '"]'
+      '[formcontrolname="' + camelCaseElement + '"]'
     );
     if (el) {
       el.focus();

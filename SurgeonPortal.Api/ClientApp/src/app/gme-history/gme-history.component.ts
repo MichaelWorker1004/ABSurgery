@@ -15,6 +15,7 @@ import { CollapsePanelComponent } from '../shared/components/collapse-panel/coll
 import { InputSelectComponent } from '../shared/components/base-input/input-select.component';
 import { AlertComponent } from '../shared/components/alert/alert.component';
 import { ITEMIZED_GME_COLS } from './itemized-gme-cols';
+import { GME_SUMMARY_COLS } from './gme-summary-cols';
 import { BehaviorSubject, filter, Subject } from 'rxjs';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { ModalComponent } from '../shared/components/modal/modal.component';
@@ -126,6 +127,9 @@ export class GmeHistoryComponent implements OnInit {
   itemizedGmeCols = ITEMIZED_GME_COLS;
   itemizedGmeData!: any[];
 
+  gmeSummaryCols = GME_SUMMARY_COLS;
+  gmeSummaryData!: any[];
+
   showAddEditGmeRotation = false;
   isEditGmeRotation!: boolean;
 
@@ -139,7 +143,121 @@ export class GmeHistoryComponent implements OnInit {
       this.calendarReady = true;
     }, 0);
 
+    this.getGMESummaryData();
     this.getItemizedGmeData();
+  }
+
+  getGMESummaryData() {
+    const gmeSummaryData = [
+      {
+        residencyYear: '1',
+        clinicalRotation: 12,
+        clincalYears1To3: 11,
+        clincalYears4To6: 1,
+        essentialContentArea: 6,
+        primaryChief: 1,
+        nonClinicalActivity: 0,
+      },
+      {
+        residencyYear: '2',
+        clinicalRotation: 5,
+        clincalYears1To3: 7,
+        clincalYears4To6: 3,
+        essentialContentArea: 0,
+        primaryChief: 0,
+        nonClinicalActivity: 12,
+      },
+      {
+        residencyYear: '3',
+        clinicalRotation: 4,
+        clincalYears1To3: 12,
+        clincalYears4To6: 8,
+        essentialContentArea: 3,
+        primaryChief: 4,
+        nonClinicalActivity: 10,
+      },
+      {
+        residencyYear: '4',
+        clinicalRotation: 6,
+        clincalYears1To3: 7,
+        clincalYears4To6: 3,
+        essentialContentArea: 10,
+        primaryChief: 12,
+        nonClinicalActivity: 4,
+      },
+      {
+        residencyYear: '5',
+        clinicalRotation: 6,
+        clincalYears1To3: 7,
+        clincalYears4To6: 3,
+        essentialContentArea: 10,
+        primaryChief: 12,
+        nonClinicalActivity: 4,
+      },
+      {
+        residencyYear: '6',
+        clinicalRotation: 6,
+        clincalYears1To3: 7,
+        clincalYears4To6: 3,
+        essentialContentArea: 10,
+        primaryChief: 12,
+        nonClinicalActivity: 4,
+      },
+    ];
+    const gmeSummaryTotals = {
+      residencyYear: 'Total Weeks',
+      clinicalRotation: this.getTotals(gmeSummaryData, 'clinicalRotation'),
+      clincalYears1To3: this.getTotals(gmeSummaryData, 'clincalYears1To3'),
+      clincalYears4To6: this.getTotals(gmeSummaryData, 'clincalYears4To6'),
+      essentialContentArea: this.getTotals(
+        gmeSummaryData,
+        'essentialContentArea'
+      ),
+      primaryChief: this.getTotals(gmeSummaryData, 'primaryChief'),
+      nonClinicalActivity: this.getTotals(
+        gmeSummaryData,
+        'nonClinicalActivity'
+      ),
+      rowStyle: {
+        'font-weight': 'bold',
+        'background-color': '#1F3758',
+        color: '#FFF',
+      },
+    };
+    const gmeSummaryAverages = {
+      residencyYear: 'Avg Weeks',
+      clinicalRotation: this.getAverages(gmeSummaryData, 'clinicalRotation'),
+      clincalYears1To3: this.getAverages(gmeSummaryData, 'clincalYears1To3'),
+      clincalYears4To6: this.getAverages(gmeSummaryData, 'clincalYears4To6'),
+      essentialContentArea: this.getAverages(
+        gmeSummaryData,
+        'essentialContentArea'
+      ),
+      primaryChief: this.getAverages(gmeSummaryData, 'primaryChief'),
+      nonClinicalActivity: this.getAverages(
+        gmeSummaryData,
+        'nonClinicalActivity'
+      ),
+      rowStyle: {
+        'font-weight': 'bold',
+        'background-color': '#1F3758',
+        color: '#FFF',
+      },
+    };
+
+    this.gmeSummaryData = [
+      ...gmeSummaryData,
+      gmeSummaryTotals,
+      gmeSummaryAverages,
+    ];
+  }
+
+  getTotals(items: any[], prop: string) {
+    return items.reduce((a, b) => a + b[prop], 0);
+  }
+  getAverages(items: any[], prop: string) {
+    const avg = items.reduce((a, b) => a + b[prop], 0) / items.length;
+    return Math.round(avg * 10) / 10;
   }
 
   getItemizedGmeData() {

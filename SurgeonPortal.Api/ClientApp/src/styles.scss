@@ -704,7 +704,7 @@ label {
 }
 
 .toast-bottom-right {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column-reverse;
   bottom: 10px;

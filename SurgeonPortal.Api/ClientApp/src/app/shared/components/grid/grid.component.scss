@@ -32,6 +32,9 @@ table {
   padding: 1.5rem;
   border-radius: 6px;
   margin-top: 1rem;
+  &.no-grid-lines {
+    border-spacing: 0px;
+  }
   thead {
     position: relative;
     &::after {

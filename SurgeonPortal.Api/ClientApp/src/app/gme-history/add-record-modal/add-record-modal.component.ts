@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './add-record-modal.component.html',
-  styleUrls: ['./add-record-modal.component.scss']
+  styleUrls: ['./add-record-modal.component.scss'],
 })
-export class AddRecordModalComponent {
-
-}
+export class AddRecordModalComponent {}
