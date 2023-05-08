@@ -131,7 +131,8 @@ export class GmeHistoryComponent implements OnInit {
   gmeSummaryData!: any[];
 
   showAddEditGmeRotation = false;
-  isEditGmeRotation!: boolean;
+  isEditGmeRotation$ = new BehaviorSubject(false);
+  selectedGmeRotation$ = new BehaviorSubject<any[]>([]);
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -272,7 +273,7 @@ export class GmeHistoryComponent implements OnInit {
         affiliatedInstitute: '',
         clinicalLevel: 'Level 1',
         description: 'Internal Medicine',
-        intlRotation: 'No',
+        internationalRotation: 'No',
       },
       {
         from: new Date('10/30/15'),
@@ -282,7 +283,7 @@ export class GmeHistoryComponent implements OnInit {
         affiliatedInstitute: '',
         clinicalLevel: 'Level 2',
         description: 'Internal Medicine',
-        intlRotation: 'No',
+        internationalRotation: 'Yes',
       },
       {
         from: new Date('12/02/15'),
@@ -292,7 +293,7 @@ export class GmeHistoryComponent implements OnInit {
         affiliatedInstitute: '',
         clinicalLevel: 'Level 3',
         description: 'Internal Medicine',
-        intlRotation: 'No',
+        internationalRotation: 'No',
       },
       {
         from: new Date('12/02/15'),
@@ -302,7 +303,7 @@ export class GmeHistoryComponent implements OnInit {
         affiliatedInstitute: '',
         clinicalLevel: 'Level 4',
         description: 'Internal Medicine',
-        intlRotation: 'No',
+        internationalRotation: 'No',
       },
       {
         from: new Date('09/29/15'),
@@ -312,7 +313,7 @@ export class GmeHistoryComponent implements OnInit {
         affiliatedInstitute: '',
         clinicalLevel: 'Level 5',
         description: 'Internal Medicine',
-        intlRotation: 'No',
+        internationalRotation: 'No',
       },
       {
         from: new Date('10/30/15'),
@@ -322,7 +323,7 @@ export class GmeHistoryComponent implements OnInit {
         affiliatedInstitute: '',
         clinicalLevel: 'Level 6',
         description: 'Internal Medicine',
-        intlRotation: 'No',
+        internationalRotation: 'No',
       },
       {
         from: new Date('12/02/15'),
@@ -332,7 +333,7 @@ export class GmeHistoryComponent implements OnInit {
         affiliatedInstitute: '',
         clinicalLevel: 'Level 7',
         description: 'Internal Medicine',
-        intlRotation: 'No',
+        internationalRotation: 'No',
       },
       {
         from: new Date('12/02/15'),
@@ -342,7 +343,7 @@ export class GmeHistoryComponent implements OnInit {
         affiliatedInstitute: '',
         clinicalLevel: 'Level 8',
         description: 'Internal Medicine',
-        intlRotation: 'No',
+        internationalRotation: 'No',
       },
     ];
 
@@ -460,15 +461,19 @@ export class GmeHistoryComponent implements OnInit {
 
   handleAddEditGmeRotation(isEdit = false) {
     if (!isEdit) {
-      this.isEditGmeRotation = false;
+      this.isEditGmeRotation$.next(false);
     }
+
     this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
   }
 
   handleGridAction($event: any) {
-    console.log($event);
+    const { data } = $event;
     if ($event.fieldKey === 'edit') {
-      this.isEditGmeRotation = true;
+      data['to'] = new Date(data.to).toISOString().split('T')[0];
+      data['from'] = new Date(data.from).toISOString().split('T')[0];
+      this.isEditGmeRotation$.next(true);
+      this.selectedGmeRotation$.next(data);
       this.handleAddEditGmeRotation(true);
     }
   }

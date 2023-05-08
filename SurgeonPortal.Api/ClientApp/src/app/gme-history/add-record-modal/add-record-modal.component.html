@@ -1,1 +1,75 @@
-<p>add-record-modal works!</p>
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
+  dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
+  amet tortor at, condimentum tempor erat.
+</p>
+<form [formGroup]="addEditRecordsForm" (ngSubmit)="onSubmit()">
+  <div class="grid">
+    <div
+      *ngFor="let formField of addEditRecordFields"
+      class="col-12 md:{{
+        formField.size
+      }} flex flex-column justify-content-start"
+    >
+      <sl-input
+        *ngIf="formField.type === 'text'"
+        [placeholder]="formField.placeholder"
+        [name]="formField.name"
+        [id]="formField.name"
+        [label]="formField.label"
+        [required]="formField.required"
+        [attr.readonly]="formField.readonly"
+        [formControlName]="formField.name"
+        ngDefaultControl
+      ></sl-input>
+      <sl-input
+        *ngIf="formField.type === 'date'"
+        type="date"
+        [placeholder]="formField.placeholder"
+        [name]="formField.name"
+        [attr.id]="formField.name"
+        [label]="formField.label"
+        [required]="formField.required"
+        [formControlName]="formField.name"
+        ngDefaultControl
+      >
+      </sl-input>
+      <abs-input-select
+        *ngIf="formField.type === 'select'"
+        [placeholder]="formField.placeholder"
+        [name]="formField.name"
+        [id]="formField.name"
+        [label]="formField.label"
+        [required]="formField.required"
+        [formControlName]="formField.name"
+        ngDefaultControl
+      >
+        <sl-option
+          *ngFor="let option of formField.options"
+          [value]="option.value"
+          >{{ option.label }}</sl-option
+        >
+      </abs-input-select>
+      <div *ngIf="formField.type === 'textarea'">
+        <label>
+          {{ formField.label }} <span>{{ formField.subLabel }}</span></label
+        >
+        <sl-textarea
+          [name]="formField.name"
+          ngDefaultControl
+          [formControlName]="formField.name"
+        ></sl-textarea>
+      </div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12 mt-5 flex justify-content-end btn-container">
+      <sl-button variant="default" size="large" (click)="close()">
+        Cancel
+      </sl-button>
+      <sl-button class="wide" size="large" variant="warning" type="submit"
+        >Save</sl-button
+      >
+    </div>
+  </div>
+</form>

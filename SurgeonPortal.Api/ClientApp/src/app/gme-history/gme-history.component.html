@@ -141,12 +141,16 @@
               <abs-modal
                 [open]="showAddEditGmeRotation"
                 title="{{
-                  isEditGmeRotation ? 'Edit' : 'Add'
+                  (isEditGmeRotation$ | async) ? 'Edit' : 'Add'
                 }} Graduate Medical Education Record"
                 modalName="addGmeRotation"
                 (closeDialog)="handleAddEditGmeRotation()"
               >
-                <abs-add-record-modal></abs-add-record-modal>
+                <abs-add-record-modal
+                  [isEdit$]="isEditGmeRotation$"
+                  [slectedGmeRotation$]="selectedGmeRotation$"
+                  (closeDialog)="handleAddEditGmeRotation()"
+                ></abs-add-record-modal>
               </abs-modal>
             </div>
           </div>
