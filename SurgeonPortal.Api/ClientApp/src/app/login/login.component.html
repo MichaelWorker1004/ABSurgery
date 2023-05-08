@@ -30,6 +30,7 @@
           closable
           class="alert-closable login-alert"
           *ngIf="errors$ | async as error"
+          (sl-hide)="clearErrors()"
         >
           <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
           <strong>{{ error.title }}</strong

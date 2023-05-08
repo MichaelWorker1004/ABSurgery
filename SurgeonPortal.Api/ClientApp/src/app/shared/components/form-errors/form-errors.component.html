@@ -1,5 +1,10 @@
 <div>
-  <sl-alert variant="danger" open>
+  <sl-alert
+    variant="danger"
+    open
+    [closable]="closable"
+    (sl-hide)="clearFormErrors()"
+  >
     <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
     <p
       class="font-bold error-message"

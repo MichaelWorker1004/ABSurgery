@@ -26,7 +26,10 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err instanceof HttpErrorResponse) {
           // do not handle 401 errors here, they will be handled in the auth interceptor
-          if (!err.error || typeof err.error === 'string') {
+          if (
+            !err.error ||
+            (typeof err.error === 'string' && err.error !== 'Login failed')
+          ) {
             if (err.status !== 401) {
               // TODO: [Joe] - add error specific messages here
 

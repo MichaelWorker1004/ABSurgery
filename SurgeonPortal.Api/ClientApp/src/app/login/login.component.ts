@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -12,6 +12,7 @@ import { tap } from 'rxjs/operators';
 import { Select, Store } from '@ngxs/store';
 import { AuthSelectors, Login } from '../state';
 import { IError, IAuthCredentials } from '../api';
+import { ClearAuthErrors } from '../state/auth/auth.actions';
 
 @Component({
   selector: 'abs-login',
@@ -21,7 +22,7 @@ import { IError, IAuthCredentials } from '../api';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
     userName: new FormControl('', [
       Validators.required,
@@ -33,6 +34,8 @@ export class LoginComponent {
     ]),
   });
 
+  clearErrorAction = new ClearAuthErrors();
+
   @Select(AuthSelectors.getErrors) errors$?: Observable<IError> | undefined;
 
   constructor(private store: Store) {
@@ -42,7 +45,13 @@ export class LoginComponent {
       })
     );
   }
+  ngOnInit(): void {
+    this.clearErrors();
+  }
 
+  clearErrors() {
+    this.store.dispatch(this.clearErrorAction);
+  }
   getErrors(error: IError) {
     let errorArray: string[] = [];
     const errors = error.errors as {

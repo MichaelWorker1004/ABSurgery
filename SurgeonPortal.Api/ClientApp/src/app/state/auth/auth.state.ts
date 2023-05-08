@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
-import { Login, Logout } from './auth.actions';
+import { Login, Logout, ClearAuthErrors } from './auth.actions';
 import {
   AuthStateModel,
   AuthService,
@@ -38,8 +38,27 @@ export class AuthState {
   login(ctx: StateContext<IAuthState>, action: Login) {
     return this.authService.login(action.payload).pipe(
       tap((result: AuthStateModel | IError) => {
+        if (typeof result === 'string' && result === 'Login failed') {
+          ctx.setState({
+            access_token: '',
+            refresh_token: '',
+            token_type: '',
+            userName: '',
+            expiration: '',
+            expires_in_minutes: 0,
+            user: {} as IAppUserReadOnlyModel,
+            claims: [],
+            errors: {
+              type: 'Login failed',
+              title: 'Login failed',
+              status: 400,
+              traceId: '',
+              errors: null,
+            },
+          });
+        }
         // eslint-disable-next-line no-prototype-builtins
-        if (result.hasOwnProperty('status')) {
+        else if (result.hasOwnProperty('status')) {
           ctx.setState({
             access_token: '',
             refresh_token: '',
@@ -100,5 +119,10 @@ export class AuthState {
       returnObj['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
     return returnObj;
+  }
+
+  @Action(ClearAuthErrors)
+  clearErrors(ctx: StateContext<IAuthState>) {
+    ctx.patchState({ errors: null });
   }
 }

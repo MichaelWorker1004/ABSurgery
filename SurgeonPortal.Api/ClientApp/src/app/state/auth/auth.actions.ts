@@ -7,3 +7,7 @@ export class Login {
 export class Logout {
   static readonly type = '[Auth] Logout';
 }
+
+export class ClearAuthErrors {
+  static readonly type = '[Auth] Clear Erros';
+}

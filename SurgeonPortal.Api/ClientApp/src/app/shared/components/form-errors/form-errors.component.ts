@@ -19,6 +19,7 @@ import { Store } from '@ngxs/store';
 export class FormErrorsComponent implements OnDestroy {
   @Input() errors!: IFormErrors;
   @Input() clearErrors: any | undefined;
+  @Input() closable = false;
 
   constructor(private store: Store) {}
 
@@ -32,9 +33,13 @@ export class FormErrorsComponent implements OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
+  clearFormErrors() {
     if (this.clearErrors) {
       this.store.dispatch(this.clearErrors);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.clearFormErrors();
   }
 }
