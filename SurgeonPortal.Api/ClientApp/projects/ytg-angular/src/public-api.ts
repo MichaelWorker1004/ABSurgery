@@ -5,6 +5,7 @@
 export * from './lib/ytg-angular.service';
 export * from './lib/ytg-angular.component';
 export * from './lib/ytg-angular.module';
+export * from './lib/api.service';
 
 // Ytg.Angular library
 // export * from './lib/legacy/api';

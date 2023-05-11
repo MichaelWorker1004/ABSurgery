@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from 'ytg-n';
+import { ApiService } from 'ytg-angular';
 
 import { IAppUserReadOnlyModel } from '../../models/users/app-user-read-only.model';
 

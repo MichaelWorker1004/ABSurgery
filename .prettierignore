@@ -15,10 +15,11 @@ pnpm-lock.yaml
 /tmp
 /out-tsc
 /bazel-out
-/src/app/api
+SurgeonPortal.Api/ClientApp/src/app/api
 
 # Node
 /node_modules
+node_modules
 npm-debug.log
 yarn-error.log
 

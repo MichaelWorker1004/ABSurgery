@@ -1,10 +1,11 @@
 // TODO - Convert this to use the setup for YTGIM, currently this is hand codede
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IAppUserReadOnlyModel } from '../../models/users/app-user-read-only.model';
 import { IAuthState } from '../../../state';
+import { ApiService } from "ytg-angular";
 
 export interface IAuthCredentials {
   userName: string;
@@ -34,10 +35,10 @@ export interface AuthStateModel {
 })
 export class AuthService {
   token: string | undefined;
-  constructor(private httpClient: HttpClient) {}
+  constructor(private apiService: ApiService) {}
 
   login(payload: IAuthCredentials): Observable<IAuthState | IError> {
-    return this.httpClient
+    return this.apiService
       .post<IAuthState>(`/api/users/authenticate`, {
         userName: payload.userName,
         password: payload.password,
