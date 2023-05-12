@@ -1,8 +1,10 @@
 /* Please avoid using global styles unless there is no other way! */
 // primeNG Styles
-@import 'primeng/resources/themes/lara-light-blue/theme.css';
-@import 'primeng/resources/primeng.css';
-@import 'primeicons/primeicons.css';
+@import '/node_modules/primeflex/primeflex.css';
+@import '/node_modules/primeng/resources/primeng.min.css';
+@import '/node_modules/primeng/resources/themes/lara-light-blue/theme.css';
+@import '/node_modules/primeicons/primeicons.css';
+@import '/src/primeng-theme.css';
 
 :root {
   /* Shoelace Theme Import */
@@ -420,22 +422,6 @@ sl-dialog.status-header-dialog::part(header)::after {
   height: 1px;
   color: var(--global-gray-lightest);
 }
-
-.status-header-dialog {
-  .status {
-    text-transform: capitalize;
-  }
-  .completed {
-    color: var(--global-success);
-  }
-  .in-progress {
-    color: var(--global-warning);
-  }
-  .alert {
-    color: var(--global-danger);
-  }
-}
-
 sl-button {
   margin-left: 5px;
   &.wide {
@@ -475,6 +461,35 @@ sl-button.btn-add::part(base) {
 }
 sl-button.btn-add::part(base):hover {
   background-position: left bottom;
+}
+
+/* PrimeNG overrides */
+.p-dropdown,
+.p-inputtext,
+.p-calendar {
+  display: inline-block;
+  width: 100%;
+  border-color: var(--global-gray);
+  background-color: var(--global-table-background);
+}
+.p-checkbox {
+  .p-checkbox-box {
+    border-color: var(--global-gray);
+    //background-color: var(--global-table-background);
+  }
+}
+.p-radiobutton {
+  .p-radiobutton-box {
+    border-color: var(--global-gray);
+    //background-color: var(--global-table-background);
+  }
+}
+.p-radiobutton-label {
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.p-dropdown-trigger-icon {
+  color: var(--global-warning);
 }
 
 /* Full Calendar Override Styles */
@@ -577,6 +592,21 @@ sl-button.btn-add::part(base):hover {
   }
 }
 
+.status-header-dialog {
+  .status {
+    text-transform: capitalize;
+  }
+  .completed {
+    color: var(--global-success);
+  }
+  .in-progress {
+    color: var(--global-warning);
+  }
+  .alert {
+    color: var(--global-danger);
+  }
+}
+
 /* Helper Classes */
 /* primarily using helper classes from PrimeFlex */
 .text-success {
@@ -644,6 +674,7 @@ p {
 }
 label {
   font-weight: 700;
+  margin-bottom: 0.25rem;
 }
 
 .app-content {

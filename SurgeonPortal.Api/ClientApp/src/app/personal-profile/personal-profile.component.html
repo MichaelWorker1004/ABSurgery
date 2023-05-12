@@ -52,37 +52,48 @@
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
-              <sl-input
-                class="col-12 sm:col-8 md:col-3"
-                label="First Name"
-                formControlName="firstName"
-                ngDefaultControl
-              ></sl-input>
-              <sl-input
-                class="col-12 sm:col-4 md:col-3"
-                label="M. I."
-                formControlName="middleName"
-                maxlength="1"
-                ngDefaultControl
-              ></sl-input>
-              <sl-input
-                class="col-12 md:col-3"
-                label="Last Name"
-                formControlName="lastName"
-                ngDefaultControl
-              ></sl-input>
-              <sl-input
-                class="col-12 md:col-3"
-                label="Suffix"
-                formControlName="suffix"
-                ngDefaultControl
-              ></sl-input>
-              <sl-input
-                class="col-12"
-                label="Name as it should appear on your printed certificate"
-                formControlName="displayName"
-                ngDefaultControl
-              ></sl-input>
+              <div class="col-12 sm:col-8 md:col-3">
+                <label class="block" for="firstName">First Name</label>
+                <input
+                  id="firstName"
+                  pInputText
+                  type="text"
+                  formControlName="firstName"
+                />
+              </div>
+              <div class="col-12 sm:col-4 md:col-3">
+                <label class="block" for="middleName">M. I.</label>
+                <input
+                  id="middleName"
+                  pInputText
+                  type="text"
+                  formControlName="middleName"
+                />
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="lastName">Last Name</label>
+                <input
+                  id="lastName"
+                  pInputText
+                  type="text"
+                  formControlName="lastName"
+                />
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="suffix">Suffix</label>
+                <input
+                  id="suffix"
+                  pInputText
+                  type="text"
+                  formControlName="suffix"
+                />
+              </div>
+              <div class="col-12">
+                <label class="block" for="displayName"
+                  >Name as it should appear on your printed certificate</label
+                >
+                <input pInputText type="text" formControlName="displayName" />
+              </div>
             </div>
           </div>
 
@@ -116,63 +127,74 @@
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
-              <sl-input
-                class="col-12 md:col-9"
-                label="Street Address"
-                formControlName="street1"
-                help-text="Address Line 1"
-                ngDefaultControl
-              ></sl-input>
-              <sl-input
-                class="col-12 md:col-3"
-                label="&nbsp;"
-                formControlName="street2"
-                help-text="Address Line 2"
-                ngDefaultControl
-              ></sl-input>
-              <sl-input
-                class="col-12 md:col-3"
-                label="City"
-                formControlName="city"
-                ngDefaultControl
-              ></sl-input>
-              <abs-input-select
-                class="col-12 md:col-3"
-                label="State / Province"
-                formControlName="state"
-                *ngIf="mailingStates$ | async as states"
-                [disabled]="!states.length"
-                ngDefaultControl
-              >
-                <sl-option
-                  *ngFor="let state of states; index as i; trackBy: trackByFn"
-                  [value]="state.itemValue"
-                  >{{ state.itemDescription }}</sl-option
+              <div class="col-12 md:col-9 flex flex-column gap-1">
+                <label class="block" for="street1">Street Address</label>
+                <input
+                  id="street1"
+                  pInputText
+                  type="text"
+                  formControlName="street1"
+                />
+                <small id="street1Help" class="form-helper-text text-muted"
+                  >Address Line 1</small
                 >
-              </abs-input-select>
-              <sl-input
-                class="col-12 md:col-3"
-                label="Zipcode"
-                formControlName="zipCode"
-                ngDefaultControl
-              ></sl-input>
-              <abs-input-select
-                class="col-12 md:col-3"
-                label="Country"
-                formControlName="country"
-                *ngIf="countries$ | async as countries"
-                ngDefaultControl
-              >
-                <sl-option
-                  *ngFor="
-                    let country of countries;
-                    index as i;
-                    trackBy: trackByFn
-                  "
-                  [value]="country.itemValue"
-                  >{{ country.itemDescription }}</sl-option
+              </div>
+              <div class="col-12 md:col-3 flex flex-column gap-1">
+                <label class="block" for="street2">&nbsp;</label>
+                <input
+                  id="street2"
+                  pInputText
+                  type="text"
+                  formControlName="street2"
+                />
+                <small id="street2Help" class="form-helper-text text-muted"
+                  >Address Line 2</small
                 >
-              </abs-input-select>
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="city">City</label>
+                <input
+                  id="city"
+                  pInputText
+                  type="text"
+                  formControlName="city"
+                />
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="state">State / Province</label>
+                <p-dropdown
+                  inputId="state"
+                  *ngIf="mailingStates$ | async as states"
+                  [options]="states"
+                  formControlName="state"
+                  placeholder="Select a State"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="zipCode">Zipcode</label>
+                <input
+                  id="zipCode"
+                  pInputText
+                  type="text"
+                  formControlName="zipCode"
+                />
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="country">Country</label>
+                <p-dropdown
+                  inputId="country"
+                  *ngIf="countries$ | async as countries"
+                  [options]="countries"
+                  formControlName="country"
+                  placeholder="Select a Country"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
             </div>
           </div>
 
@@ -206,33 +228,41 @@
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
-              <sl-input
-                inputmode="email"
-                class="col-12 md:col-6"
-                formControlName="emailAddress"
-                label="Email Address"
-                ngDefaultControl
-                help-text="Go to your My Account page to change your email"
-                readonly
-              ></sl-input>
-              <sl-input
-                type="phone"
-                inputmode="tel"
-                class="col-12 md:col-6"
-                formControlName="officePhoneNumber"
-                label="Daytime Phone Number"
-                mask="(000) 000-0000"
-                ngDefaultControl
-              ></sl-input>
-              <sl-input
-                type="phone"
-                inputmode="tel"
-                class="col-12 md:col-6"
-                formControlName="mobilePhoneNumber"
-                label="Mobile Phone Number"
-                ngDefaultControl
-                mask="(000) 000-0000"
-              ></sl-input>
+              <div class="col-12 md:col-6 flex flex-column gap-1">
+                <label class="block" for="emailAddress">Email Address</label>
+                <input
+                  id="emailAddress"
+                  pInputText
+                  type="text"
+                  formControlName="emailAddress"
+                  [disabled]="true"
+                />
+                <small id="emailAddressHelp" class="form-helper-text text-muted"
+                  >Go to your My Account page to change your email</small
+                >
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="officePhoneNumber"
+                  >Daytime Phone Number</label
+                >
+                <p-inputMask
+                  inputId="officePhoneNumber"
+                  mask="(999) 999-9999"
+                  formControlName="officePhoneNumber"
+                  placeholder="(999) 999-9999"
+                ></p-inputMask>
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="mobilePhoneNumber"
+                  >Mobile Phone Number</label
+                >
+                <p-inputMask
+                  inputId="mobilePhoneNumber"
+                  mask="(999) 999-9999"
+                  formControlName="mobilePhoneNumber"
+                  placeholder="(999) 999-9999"
+                ></p-inputMask>
+              </div>
             </div>
           </div>
 
@@ -258,64 +288,60 @@
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
-              <sl-input
-                class="col-12 md:col-6"
-                formControlName="birthCity"
-                label="Town or City of Birth"
-                ngDefaultControl
-              ></sl-input>
-              <abs-input-select
-                class="col-12 md:col-6"
-                name="stateOfBirth"
-                ngDefaultControl
-                formControlName="birthState"
-                label="State, Province, or Territory of Birth"
-                *ngIf="birthStates$ | async as states"
-              >
-                <sl-option
-                  *ngFor="let state of states; index as i; trackBy: trackByFn"
-                  [value]="state.itemValue"
-                  >{{ state.itemDescription }}</sl-option
+              <div class="col-12 md:col-6">
+                <label class="block" for="birthCity"
+                  >Town or City of Birth</label
                 >
-              </abs-input-select>
-              <abs-input-select
-                class="col-12 md:col-6"
-                name="countryOfBirth"
-                formControlName="birthCountry"
-                label="Country of Birth"
-                ngDefaultControl
-                *ngIf="countries$ | async as countries"
-              >
-                <sl-option
-                  *ngFor="
-                    let country of countries;
-                    index as i;
-                    trackBy: trackByFn
-                  "
-                  [value]="country.itemValue"
+                <input
+                  id="birthCity"
+                  pInputText
+                  type="text"
+                  formControlName="birthCity"
+                />
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="birthState"
+                  >State, Province, or Territory of Birth</label
                 >
-                  {{ country.itemDescription }}</sl-option
+                <p-dropdown
+                  inputId="birthState"
+                  *ngIf="birthStates$ | async as states"
+                  [options]="states"
+                  formControlName="birthState"
+                  placeholder="Select a Birth State"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="birthCountry">Country of Birth</label>
+                <p-dropdown
+                  inputId="birthCountry"
+                  *ngIf="countries$ | async as countries"
+                  [options]="countries"
+                  formControlName="birthCountry"
+                  placeholder="Select a Birth Country"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="countryCitizenship"
+                  >Country of Citizenship</label
                 >
-              </abs-input-select>
-              <abs-input-select
-                class="col-12 md:col-6"
-                name="countryOfCitizenship"
-                formControlName="countryCitizenship"
-                label="Country of Citizenship"
-                ngDefaultControl
-                *ngIf="countries$ | async as countries"
-              >
-                <sl-option
-                  *ngFor="
-                    let country of countries;
-                    index as i;
-                    trackBy: trackByFn
-                  "
-                  [value]="country.itemValue"
-                >
-                  {{ country.itemDescription }}</sl-option
-                >
-              </abs-input-select>
+                <p-dropdown
+                  inputId="countryCitizenship"
+                  *ngIf="countries$ | async as countries"
+                  [options]="countries"
+                  formControlName="countryCitizenship"
+                  placeholder="Select a Citizenship Country"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
             </div>
           </div>
 
@@ -357,123 +383,122 @@
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
-              <sl-input
-                class="col-12 md:col-6"
-                formControlName="absId"
-                label="ABS ID"
-                ngDefaultControl
-                readonly
-              ></sl-input>
-              <sl-input
-                class="col-12 md:col-6"
-                formControlName="nPI"
-                label="National Provider Identification"
-                ngDefaultControl
-                readonly
-              ></sl-input>
-              <abs-input-select
-                class="col-12 md:col-3"
-                formControlName="genderId"
-                *ngIf="genders$ | async as genders"
-                label="Gender"
-              >
-                <sl-option
-                  *ngFor="let gender of genders; index as i; trackBy: trackByFn"
-                  [value]="gender.itemValue"
+              <div class="col-12 md:col-6">
+                <label class="block" for="absId">ABS ID</label>
+                <input
+                  id="absId"
+                  pInputText
+                  type="text"
+                  formControlName="absId"
+                  readonly
+                />
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="nPI"
+                  >National Provider Identification</label
                 >
-                  {{ gender.itemDescription }}</sl-option
+                <input
+                  id="nPI"
+                  pInputText
+                  type="text"
+                  formControlName="nPI"
+                  readonly
+                />
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="gender">Gender</label>
+                <p-dropdown
+                  inputId="gender"
+                  *ngIf="genders$ | async as genders"
+                  [options]="genders"
+                  formControlName="genderId"
+                  placeholder="Select a Gender"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="birthDate">Date of Birth</label>
+                <p-calendar
+                  id="birthDate"
+                  [showIcon]="true"
+                  formControlName="birthDate"
+                  appendTo="body"
+                ></p-calendar>
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="race">Race</label>
+                <p-dropdown
+                  inputId="race"
+                  *ngIf="races$ | async as races"
+                  [options]="races"
+                  formControlName="race"
+                  placeholder="Select a Race"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="ethnicity">Ethnicity</label>
+                <p-dropdown
+                  inputId="ethnicity"
+                  *ngIf="ethnicities$ | async as ethnicities"
+                  [options]="ethnicities"
+                  formControlName="ethnicity"
+                  placeholder="Select an Ethnicity"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="firstLanguageId"
+                  >First Language</label
                 >
-              </abs-input-select>
-              <sl-input
-                type="date"
-                class="col-12 md:col-3"
-                formControlName="birthDate"
-                label="Date of Birth"
-                ngDefaultControl
-              ></sl-input>
-              <abs-input-select
-                class="col-12 md:col-3"
-                name="race"
-                ngDefaultControl
-                formControlName="race"
-                label="Race"
-                *ngIf="races$ | async as races"
-              >
-                <sl-option
-                  *ngFor="let race of races; index as i; trackBy: trackByFn"
-                  [value]="race.itemValue"
-                  >{{ race.itemDescription }}</sl-option
-                >
-              </abs-input-select>
-              <abs-input-select
-                class="col-12 md:col-3"
-                name="ethnicity"
-                ngDefaultControl
-                formControlName="ethnicity"
-                label="Ethnicity"
-                *ngIf="ethnicities$ | async as ethnicities"
-              >
-                <sl-option
-                  *ngFor="
-                    let ethnicity of ethnicities;
-                    index as i;
-                    trackBy: trackByFn
-                  "
-                  [value]="ethnicity.itemValue"
-                  >{{ ethnicity.itemDescription }}</sl-option
-                >
-              </abs-input-select>
-              <abs-input-select
-                class="col-12 md:col-3"
-                name="firstLanguage"
-                ngDefaultControl
-                formControlName="firstLanguageId"
-                label="First Language"
-                *ngIf="languages$ | async as languages"
-              >
-                <sl-option
-                  *ngFor="
-                    let language of languages;
-                    index as i;
-                    trackBy: trackByFn
-                  "
-                  [value]="language.itemValue + ''"
-                  >{{ language.itemDescription }}</sl-option
-                >
-              </abs-input-select>
-              <abs-input-select
-                class="col-12 md:col-3"
-                name="bestLanguage"
-                ngDefaultControl
-                formControlName="bestLanguageId"
-                label="Best Language"
-                *ngIf="languages$ | async as languages"
-              >
-                <sl-option
-                  *ngFor="
-                    let language of languages;
-                    index as i;
-                    trackBy: trackByFn
-                  "
-                  [value]="language.itemValue + ''"
-                  >{{ language.itemDescription }}</sl-option
-                >
-              </abs-input-select>
+                <p-dropdown
+                  inputId="firstLanguageId"
+                  *ngIf="languages$ | async as languages"
+                  [options]="languages"
+                  formControlName="firstLanguageId"
+                  placeholder="Select a First Language"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="bestLanguageId">Best Language</label>
+                <p-dropdown
+                  inputId="bestLanguageId"
+                  *ngIf="languages$ | async as languages"
+                  [options]="languages"
+                  formControlName="bestLanguageId"
+                  placeholder="Select a Best Language"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
             </div>
           </div>
 
           <div class="form-section" *ngIf="isEdit">
             <div class="grid">
-              <div class="col-12 text-center">
-                <abs-input-checkbox
-                  class="col-12"
+              <div
+                class="col-12 text-center flex justify-content-center align-items-center gap-2"
+              >
+                <p-checkbox
+                  inputId="userConfirmed"
+                  name="userConfirmed"
                   formControlName="userConfirmed"
-                  ngDefaultControl
-                  form="userProfileForm"
+                  [binary]="true"
+                ></p-checkbox>
+                <label for="userConfirmed"
+                  >I confirm the above information is completed and correct to
+                  the best of my knowledge</label
                 >
-                  I confirm the above information is completed and correct to
-                  the best of my knowledge
-                </abs-input-checkbox>
               </div>
             </div>
           </div>

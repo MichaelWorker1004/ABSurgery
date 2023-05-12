@@ -9,12 +9,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { provideNgxMask } from 'ngx-mask';
-import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+// import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @Component({
   selector: 'abs-surgeon-profile-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxMaskDirective],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgxMaskDirective,
+    InputTextModule,
+    DropdownModule,
+    InputMaskModule,
+  ],
   templateUrl: './surgeon-profile-modal.component.html',
   styleUrls: ['./surgeon-profile-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -23,12 +34,18 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
 export class SurgeonProfileModalComponent implements OnInit {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
+  fakeOptions = [
+    { itemDescription: 'Option 1', itemValue: 'option-1' },
+    { itemDescription: 'Option 2', itemValue: 'option-2' },
+    { itemDescription: 'Option 3', itemValue: 'option-3' },
+  ];
+
   panels = ['personalInformation', 'contactInformation'];
   activePanel = 0;
 
   surgeonProfile: any;
 
-  constructor(private _globalDialogService: GlobalDialogService) {}
+  // constructor(private _globalDialogService: GlobalDialogService) {}
 
   ngOnInit() {
     this.getSurgeonProfile();
@@ -56,9 +73,9 @@ export class SurgeonProfileModalComponent implements OnInit {
         state: 'PA',
         zip: '94105',
         country: 'USA',
-        phone: '123-456-7890',
-        mobile: '123-456-7890',
-        fax: '123-456-7890',
+        phone: '1234567890',
+        mobile: '1234567890',
+        fax: '1234567890',
         email: 'test@test.io',
         npid: '123456789',
       },
@@ -83,11 +100,11 @@ export class SurgeonProfileModalComponent implements OnInit {
   }
 
   close() {
-    // this.closeDialog.emit();
-    this._globalDialogService.closeOpenDialog();
+    this.closeDialog.emit();
+    // this._globalDialogService.closeOpenDialog();
     // timeout is needed to allow the modal to close before the tab panel is reset
-    // setTimeout(() => {
-    //   this.showTabPanel(this.panels[0]);
-    // }, 500);
+    setTimeout(() => {
+      this.showTabPanel(this.panels[0]);
+    }, 500);
   }
 }

@@ -25,9 +25,12 @@ a {
   }
 }
 
+.panel-header {
+  width: 100%;
+}
 .status {
-  position: absolute;
-  right: 50px;
+  margin-right: 1rem;
+  line-height: 2rem;
   &.completed {
     color: var(--global-success);
   }

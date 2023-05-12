@@ -10,10 +10,13 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+
 @Component({
   selector: 'abs-appointments-add-edit-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, InputTextModule, DropdownModule],
   templateUrl: './appointments-add-edit-modal.component.html',
   styleUrls: ['./appointments-add-edit-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -23,6 +26,12 @@ export class AppointmentsAddEditModalComponent implements OnInit {
   @Input() appointment: Subject<any> = new Subject();
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
+
+  fakeOptions = [
+    { itemDescription: 'Option 1', itemValue: 'option-1' },
+    { itemDescription: 'Option 2', itemValue: 'option-2' },
+    { itemDescription: 'Option 3', itemValue: 'option-3' },
+  ];
 
   localAppointment: any;
 

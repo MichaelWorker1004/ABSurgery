@@ -9,11 +9,12 @@ import { CommonModule } from '@angular/common';
 import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'abs-special-accommodations-modal',
   standalone: true,
-  imports: [CommonModule, GridComponent, FormsModule],
+  imports: [CommonModule, GridComponent, FormsModule, DropdownModule],
   templateUrl: './special-accommodations-modal.component.html',
   styleUrls: ['./special-accommodations-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

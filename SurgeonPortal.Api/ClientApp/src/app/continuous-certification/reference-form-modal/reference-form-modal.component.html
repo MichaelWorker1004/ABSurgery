@@ -24,33 +24,26 @@
         formField.size
       }} flex flex-column justify-content-start"
     >
-      <sl-input
+      <label [htmlFor]="formField.name">{{ formField.label }}</label>
+      <input
         *ngIf="formField.type === 'text'"
-        [placeholder]="formField.placeholder"
+        [placeholder]="formField.placeholder ?? ''"
         [name]="formField.name"
         [id]="formField.name"
-        [label]="formField.label"
         [required]="formField.required"
-        [attr.readonly]="formField.readonly"
-        ngDefaultControl
-        [(ngModel)]="formField.value"
-      ></sl-input>
-      <sl-select
+        pInputText
+      />
+      <p-dropdown
         *ngIf="formField.type === 'select'"
-        [placeholder]="formField.placeholder"
+        [placeholder]="formField.placeholder ?? ''"
+        [options]="formField.options ?? []"
         [name]="formField.name"
         [id]="formField.name"
-        [label]="formField.label"
-        [required]="formField.required"
-        ngDefaultControl
-        [(ngModel)]="formField.value"
-      >
-        <sl-option
-          *ngFor="let option of formField.options"
-          [value]="option.value"
-          >{{ option.label }}</sl-option
-        >
-      </sl-select>
+        [editable]="true"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
       <span>{{ formField.subLabel }}</span>
     </div>
     <div class="col-12 mb-3">
@@ -70,9 +63,10 @@
       physician at the email address above, and affirm that it ultimately
       remains my responsibility to ensure these forms are completed.
     </div>
-    <div class="col-12 md:col-6">
-      <sl-checkbox name="sendEmail"
-        >I would like my reference form sent to me via email</sl-checkbox
+    <div class="col-12 md:col-6 flex align-items-start gap-3">
+      <p-checkbox value="Yes" inputId="sendEmail"></p-checkbox>
+      <label for="ny"
+        >I would like my reference form sent to me via email</label
       >
     </div>
     <div class="col-12 md:col-6 mt-5 flex justify-content-end btn-container">

@@ -37,10 +37,13 @@ import { ProfileHeaderComponent } from '../shared/components/profile-header/prof
 import { SuccessFailModalComponent } from '../shared/components/success-fail-modal/success-fail-modal.component';
 
 import '../../web-components';
-import { InputSelectComponent } from '../shared/components/base-input/input-select.component';
-import { InputCheckboxComponent } from '../shared/components/base-input/input-checkbox.component';
-import { InputRadioGroupComponent } from '../shared/components/base-input/input-radio-group.component';
 import { tap } from 'rxjs/operators';
+
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @UntilDestroy()
 @Component({
@@ -57,9 +60,12 @@ import { tap } from 'rxjs/operators';
     SuccessFailModalComponent,
     NgxMaskDirective,
     NgxMaskPipe,
-    InputSelectComponent,
-    InputCheckboxComponent,
-    InputRadioGroupComponent,
+
+    InputTextModule,
+    DropdownModule,
+    InputMaskModule,
+    CalendarModule,
+    CheckboxModule,
   ],
   providers: [provideNgxMask()],
 })
@@ -67,6 +73,13 @@ export class PersonalProfileComponent {
   // TODO: [Joe] set up input masks
   // TODO: [Joe] set up validation
   // TODO: [Joe] set up national provider identifier (NPI) report button
+  testStates = [
+    { itemDescription: 'Alabama', itemValue: 'AL' },
+    { itemDescription: 'Alaska', itemValue: 'AK' },
+    { itemDescription: 'Arizona', itemValue: 'AZ' },
+    { itemDescription: 'Arkansas', itemValue: 'AR' },
+    { itemDescription: 'California', itemValue: 'CA' },
+  ];
 
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
@@ -127,7 +140,7 @@ export class PersonalProfileComponent {
     profilePicture: new FormControl('', []),
     race: new FormControl('', []),
     receiveComms: new FormControl(false, []),
-    state: new FormControl({ value: '', disabled: true }, []),
+    state: new FormControl('', []),
     street1: new FormControl('', []),
     street2: new FormControl('', []),
     suffix: new FormControl('', []),
@@ -135,15 +148,30 @@ export class PersonalProfileComponent {
     zipCode: new FormControl('', []),
   });
 
+  // TODO: [Joe] we need to include logic to update the mailingStates and birthStates when the respective country values are changed
+
   constructor(private _store: Store, private formBuilder: FormBuilder) {
     this.user$
       ?.pipe(debounceTime(300), untilDestroyed(this))
       .subscribe((user: IUserProfile) => {
         this.user = user;
-        this._store.dispatch(new GetStateList(user.country));
+
+        if (user.country) {
+          this._store.dispatch(new GetStateList(user.country));
+        } else {
+          // TODO: [Joe] this is a hack to get the states to load on the first load if the user has no country
+          this._store.dispatch(new GetStateList('500'));
+        }
         this.mailingStates$ = of(
           this._store.selectSnapshot(PicklistsSelectors.slices.states)
         );
+
+        if (user.birthCountry) {
+          this._store.dispatch(new GetStateList(user.birthCountry));
+        } else {
+          // TODO: [Joe] this is a hack to get the states to load on the first load if the user has no country
+          this._store.dispatch(new GetStateList('500'));
+        }
         this._store.dispatch(new GetStateList(user.birthCountry));
         this.birthStates$ = of(
           this._store.selectSnapshot(PicklistsSelectors.slices.states)

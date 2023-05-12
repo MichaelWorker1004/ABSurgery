@@ -28,116 +28,144 @@
         egestas sit amet tortor at, condimentum tempor erat.
       </p>
       <div class="grid">
-        <sl-input
-          class="col-12"
-          label="Candidate Identification Number"
-          name="cid"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.cid"
-          required
-        ></sl-input>
-        <sl-input
-          class="col-12"
-          label="Full Name"
-          name="fullName"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.fullName"
-          required
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-4"
-          label="First Name"
-          name="firstName"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.firstName"
-          required
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-4"
-          label="Middle Name"
-          name="middleName"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.middleName"
-          required
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-4"
-          label="Last Name"
-          name="lastName"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.lastName"
-          required
-        ></sl-input>
-        <sl-input
-          class="col-12"
-          label="Name as it Should Appear on Certificate"
-          name="certName"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.certName"
-          required
-        ></sl-input>
-        <sl-select
-          class="col-12 md:col-4"
-          name="gender"
-          label="Gender"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.gender"
-          required
-        >
-          <sl-option value="male">Male</sl-option>
-          <sl-option value="female">Female</sl-option>
-          <sl-option value="other">Other</sl-option>
-        </sl-select>
-        <sl-select
-          class="col-12 md:col-4"
-          name="race"
-          label="Race"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.race"
-          required
-        >
-          <sl-option value="white">White</sl-option>
-          <sl-option value="option-1">Option 1</sl-option>
-          <sl-option value="option-2">Option 2</sl-option>
-          <sl-option value="option-3">Option 3</sl-option>
-        </sl-select>
-        <sl-select
-          class="col-12 md:col-4"
-          name="ethnicity"
-          label="Ethnicity"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.ethnicity"
-          required
-        >
-          <sl-option value="white">White</sl-option>
-          <sl-option value="option-1">Option 1</sl-option>
-          <sl-option value="option-2">Option 2</sl-option>
-          <sl-option value="option-3">Option 3</sl-option>
-        </sl-select>
-        <sl-select
-          class="col-12 md:col-6"
-          name="firstLanguage"
-          label="What Language Did You Learn to Speak First?"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.firstLanguage"
-        >
-          <sl-option value="english">English</sl-option>
-          <sl-option value="option-1">Option 1</sl-option>
-          <sl-option value="option-2">Option 2</sl-option>
-          <sl-option value="option-3">Option 3</sl-option>
-        </sl-select>
-        <sl-select
-          class="col-12 md:col-6"
-          name="bestLanguage"
-          label="What Language Do You Speak Best?"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.personalInfo.bestLanguage"
-        >
-          <sl-option value="english">English</sl-option>
-          <sl-option value="option-1">Option 1</sl-option>
-          <sl-option value="option-2">Option 2</sl-option>
-          <sl-option value="option-3">Option 3</sl-option>
-        </sl-select>
+        <div class="col-12">
+          <label class="block" for="cid">Candidate Identification Number</label>
+          <input
+            id="cid"
+            pInputText
+            type="text"
+            name="cid"
+            [(ngModel)]="surgeonProfile.personalInfo.cid"
+            required
+          />
+        </div>
+        <div class="col-12">
+          <label class="block" for="fullName">Full Name</label>
+          <input
+            id="fullName"
+            pInputText
+            type="text"
+            name="fullName"
+            [(ngModel)]="surgeonProfile.personalInfo.fullName"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="firstName">First Name</label>
+          <input
+            id="firstName"
+            pInputText
+            type="text"
+            name="firstName"
+            [(ngModel)]="surgeonProfile.personalInfo.firstName"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="middleName">Middle Name</label>
+          <input
+            id="middleName"
+            pInputText
+            type="text"
+            name="middleName"
+            [(ngModel)]="surgeonProfile.personalInfo.middleName"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="lastName">Last Name</label>
+          <input
+            id="lastName"
+            pInputText
+            type="text"
+            name="lastName"
+            [(ngModel)]="surgeonProfile.personalInfo.lastName"
+            required
+          />
+        </div>
+        <div class="col-12">
+          <label class="block" for="certName"
+            >Name as it Should Appear on Certificate</label
+          >
+          <input
+            id="certName"
+            pInputText
+            type="text"
+            name="certName"
+            [(ngModel)]="surgeonProfile.personalInfo.certName"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="gender">Gender</label>
+          <p-dropdown
+            inputId="gender"
+            name="gender"
+            [options]="fakeOptions"
+            [(ngModel)]="surgeonProfile.personalInfo.gender"
+            placeholder="Select a Gender"
+            optionLabel="itemDescription"
+            optionValue="itemValue"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="race">Race</label>
+          <p-dropdown
+            inputId="race"
+            name="race"
+            [options]="fakeOptions"
+            [(ngModel)]="surgeonProfile.personalInfo.race"
+            placeholder="Select a Race"
+            optionLabel="itemDescription"
+            optionValue="itemValue"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="ethnicity">Ethnicity</label>
+          <p-dropdown
+            inputId="ethnicity"
+            name="ethnicity"
+            [options]="fakeOptions"
+            [(ngModel)]="surgeonProfile.personalInfo.ethnicity"
+            placeholder="Select a Ethnicity"
+            optionLabel="itemDescription"
+            optionValue="itemValue"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block" for="firstLanguage"
+            >What Language Did You Learn to Speak First?</label
+          >
+          <p-dropdown
+            inputId="firstLanguage"
+            name="firstLanguage"
+            [options]="fakeOptions"
+            [(ngModel)]="surgeonProfile.personalInfo.firstLanguage"
+            placeholder="Select a First Language"
+            optionLabel="itemDescription"
+            optionValue="itemValue"
+            [required]="true"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block" for="bestLanguage"
+            >What Language Do You Speak Best?</label
+          >
+          <p-dropdown
+            inputId="bestLanguage"
+            name="bestLanguage"
+            [options]="fakeOptions"
+            [(ngModel)]="surgeonProfile.personalInfo.bestLanguage"
+            placeholder="Select a Best Language"
+            optionLabel="itemDescription"
+            optionValue="itemValue"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
       </div>
     </sl-tab-panel>
     <sl-tab-panel name="contactInformation">
@@ -147,100 +175,134 @@
         egestas sit amet tortor at, condimentum tempor erat.
       </p>
       <div class="grid">
-        <sl-input
-          class="col-12 md:col-8"
-          label="Street Address"
-          name="address"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.address"
-          required
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-4"
-          label="Address 2"
-          name="address2"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.address2"
-          required
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-4"
-          label="City"
-          name="city"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.city"
-          required
-        ></sl-input>
-        <sl-select
-          class="col-12 md:col-4"
-          name="state"
-          label="State / Province / Territory"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.state"
-        >
-          <sl-option value="PA">Pennsylvania</sl-option>
-          <sl-option value="option-1">Option 1</sl-option>
-          <sl-option value="option-2">Option 2</sl-option>
-          <sl-option value="option-3">Option 3</sl-option>
-        </sl-select>
-        <sl-input
-          class="col-12 md:col-4"
-          label="Zip"
-          name="zip"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.zip"
-          required
-        ></sl-input>
-        <sl-select
-          class="col-12 md:col-4"
-          name="country"
-          label="Country"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.country"
-        >
-          <sl-option value="USA">United States</sl-option>
-          <sl-option value="option-1">Option 1</sl-option>
-          <sl-option value="option-2">Option 2</sl-option>
-          <sl-option value="option-3">Option 3</sl-option>
-        </sl-select>
-        <sl-input
-          class="col-12 md:col-4"
-          label="Daytime Phone Number"
-          name="phone"
-          mask="(000) 000-0000"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.phone"
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-4"
-          label="Mobile Phone Number"
-          name="mobile"
-          mask="(000) 000-0000"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.mobile"
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-6"
-          label="Fax Number"
-          name="fax"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.fax"
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-6"
-          label="Email Address"
-          name="email"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.email"
-        ></sl-input>
-        <sl-input
-          class="col-12 md:col-6"
-          label="National Provider ID"
-          name="npid"
-          ngDefaultControl
-          [(ngModel)]="surgeonProfile.contactInfo.npid"
-          readonly
-        ></sl-input>
+        <div class="col-12 md:col-8">
+          <label class="block" for="street1">Street Address</label>
+          <input
+            id="street1"
+            pInputText
+            type="text"
+            name="street1"
+            [(ngModel)]="surgeonProfile.contactInfo.address"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="street2">Address Line 2</label>
+          <input
+            id="street2"
+            pInputText
+            type="text"
+            name="street2"
+            [(ngModel)]="surgeonProfile.contactInfo.address2"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="city">City</label>
+          <input
+            id="city"
+            pInputText
+            type="text"
+            name="city"
+            [(ngModel)]="surgeonProfile.contactInfo.city"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="state">State / Province / Territory</label>
+          <p-dropdown
+            inputId="state"
+            name="state"
+            [options]="fakeOptions"
+            [(ngModel)]="surgeonProfile.contactInfo.state"
+            placeholder="Select a State"
+            optionLabel="itemDescription"
+            optionValue="itemValue"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="zip">Zip</label>
+          <input
+            id="zip"
+            pInputText
+            type="text"
+            name="zip"
+            [(ngModel)]="surgeonProfile.contactInfo.zip"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="country">Country</label>
+          <p-dropdown
+            inputId="country"
+            name="country"
+            [options]="fakeOptions"
+            [(ngModel)]="surgeonProfile.contactInfo.country"
+            placeholder="Select a State"
+            optionLabel="itemDescription"
+            optionValue="itemValue"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="officePhoneNumber"
+            >Daytime Phone Number</label
+          >
+          <!-- NOTE: p-inputMask is apparently broken using ngModel, but works file (on profile page) using reactive forms -->
+          <p-inputMask
+            inputId="officePhoneNumber"
+            mask="(999) 999-9999"
+            name="officePhoneNumber"
+            [(ngModel)]="surgeonProfile.contactInfo.phone"
+            placeholder="(999) 999-9999"
+          ></p-inputMask>
+        </div>
+        <div class="col-12 md:col-4">
+          <label class="block" for="mobilePhoneNumber"
+            >Mobile Phone Number</label
+          >
+          <p-inputMask
+            inputId="mobilePhoneNumber"
+            mask="(999) 999-9999"
+            name="mobilePhoneNumber"
+            [(ngModel)]="surgeonProfile.contactInfo.mobile"
+            placeholder="(999) 999-9999"
+            [unmask]="true"
+          ></p-inputMask>
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block" for="faxNumber">Fax Number</label>
+          <p-inputMask
+            inputId="faxNumber"
+            mask="(999) 999-9999"
+            name="faxNumber"
+            [(ngModel)]="surgeonProfile.contactInfo.fax"
+            placeholder="(999) 999-9999"
+          ></p-inputMask>
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block" for="emailAddress">Email Address</label>
+          <input
+            id="emailAddress"
+            pInputText
+            type="email"
+            name="emailAddress"
+            [(ngModel)]="surgeonProfile.contactInfo.email"
+            required
+          />
+        </div>
+        <div class="col-12 md:col-6">
+          <label class="block" for="npid">National Provider ID</label>
+          <input
+            id="npid"
+            pInputText
+            type="text"
+            name="npid"
+            [(ngModel)]="surgeonProfile.contactInfo.npid"
+            readonly
+          />
+        </div>
       </div>
     </sl-tab-panel>
   </sl-tab-group>

@@ -29,7 +29,7 @@
     <!-- Site Selection -->
     <sl-card class="col-12">
       <abs-collapse-panel [panelId]="1" [startExpanded]="true">
-        <div class="flex" panel-header>
+        <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">Site Selection</h5>
           <div class="status completed">
             Nov 16 - Nov 18, 2022, General Surgery Certifying Exam (Virtual)
@@ -49,20 +49,21 @@
                 *ngFor="let formField of siteSelectionFormData"
                 class="col-12 md:{{ formField.size }}"
               >
-                <sl-radio-group
-                  *ngIf="formField.type === 'radio'"
-                  [label]="formField.label"
-                  [name]="formField.name"
-                  ngDefaultControl
-                  (sl-change)="onSiteSelectionChange($event)"
+                <label
+                  class="block"
+                  [for]="formField.name"
+                  *ngIf="formField.label && formField.label.length > 0"
+                  >{{ formField.label }}</label
                 >
-                  <sl-radio
+                <div class="flex flex-column gap-3">
+                  <p-radioButton
                     *ngFor="let option of formField.options"
+                    [name]="formField.name"
                     [value]="option.value"
-                    class="bold"
-                    >{{ option.label }}</sl-radio
-                  >
-                </sl-radio-group>
+                    [label]="option.label"
+                    [(ngModel)]="formField.value"
+                  ></p-radioButton>
+                </div>
               </div>
               <div class="col-12 align-right">
                 <sl-button variant="default" size="large">Cancel</sl-button>
@@ -83,7 +84,7 @@
     <!-- Exam Registration Form -->
     <sl-card class="col-12">
       <abs-collapse-panel [panelId]="2" [startExpanded]="true">
-        <div class="flex" panel-header>
+        <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">Site Selection</h5>
           <div class="status completed">Received 07/28/2022</div>
         </div>
@@ -104,7 +105,7 @@
     <!-- Exam Registration Fee -->
     <sl-card class="col-12">
       <abs-collapse-panel [panelId]="3" [startExpanded]="true">
-        <div class="flex" panel-header>
+        <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">Exam Registration Fee</h5>
           <div class="status alert">Amount Owed: $1500.00</div>
         </div>
@@ -124,7 +125,7 @@
     <!-- Digital Signature-->
     <sl-card class="col-12">
       <abs-collapse-panel [panelId]="4" [startExpanded]="true">
-        <div class="flex" panel-header>
+        <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">Digital Signature</h5>
           <div class="status completed">Completed</div>
         </div>
@@ -162,12 +163,16 @@
             quo voluptas nulla pariatur?
           </li>
         </ul>
-        <div class="col-12">
-          <sl-checkbox
-            class="mb-5"
-            (sl-change)="handleDigitalSignatureChange($event)"
+        <div class="col-12 flex align-items-center gap-2">
+          <p-checkbox
+            inputId="acknowlegement"
+            name="acknowlegement"
+            (change)="handleDigitalSignatureChange($event)"
+            [binary]="true"
+          ></p-checkbox>
+          <label for="userConfirmed"
             >I agree to the following statements above to the fullest of my
-            knowledge.</sl-checkbox
+            knowledge</label
           >
         </div>
 
@@ -181,7 +186,7 @@
     <!-- Exam Admission Card / Authorization Letter Status -->
     <sl-card class="col-12">
       <abs-collapse-panel [panelId]="6" [startExpanded]="true">
-        <div class="flex" panel-header>
+        <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">
             Exam Admission Card / Authorization Letter Status
           </h5>

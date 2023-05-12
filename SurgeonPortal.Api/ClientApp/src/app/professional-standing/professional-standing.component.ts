@@ -11,6 +11,11 @@ import { APPOINTMENTS_PRIVILEGES_COLS } from './appointments-privileges-cols';
 import { LICENSES_COLS } from './licenses-cols';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+
 @Component({
   selector: 'abs-professional-standing',
   templateUrl: './professional-standing.component.html',
@@ -26,9 +31,19 @@ import { ModalComponent } from '../shared/components/modal/modal.component';
     GridComponent,
     FormsModule,
     ModalComponent,
+    InputTextModule,
+    DropdownModule,
+    InputTextareaModule,
+    RadioButtonModule,
   ],
 })
 export class ProfessionalStandingComponent implements OnInit {
+  fakeOptions = [
+    { itemDescription: 'Option 1', itemValue: 'option-1' },
+    { itemDescription: 'Option 2', itemValue: 'option-2' },
+    { itemDescription: 'Option 3', itemValue: 'option-3' },
+  ];
+
   appointmentsPrivilegesCols = APPOINTMENTS_PRIVILEGES_COLS;
   licensesCols = LICENSES_COLS;
 

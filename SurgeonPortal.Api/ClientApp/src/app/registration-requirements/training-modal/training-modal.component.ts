@@ -29,6 +29,12 @@ import {
   IAdditionalTrainingReadOnlyModel,
 } from 'src/app/api';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+
 interface MedicalTrainingData {
   medicalSchool: any;
   residency: any;
@@ -45,6 +51,11 @@ interface MedicalTrainingData {
     TrainingAddEditModalComponent,
     FileUploadButtonComponent,
     ModalComponent,
+    InputTextModule,
+    InputTextareaModule,
+    DropdownModule,
+    CheckboxModule,
+    RadioButtonModule,
   ],
   templateUrl: './training-modal.component.html',
   styleUrls: ['./training-modal.component.scss'],
@@ -61,6 +72,19 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
 
   @Select(GQAdditionalTrainingSelectors.selectedAdditionalTrainingDetails)
   selectedTraining$: Observable<IAdditionalTrainingModel> | undefined;
+
+  fakeOptions = [
+    { itemDescription: 'Option 1', itemValue: 'option-1' },
+    { itemDescription: 'Option 2', itemValue: 'option-2' },
+    { itemDescription: 'Option 3', itemValue: 'option-3' },
+    { itemDescription: 'Option 4', itemValue: 'option-4' },
+    { itemDescription: 'Option 5', itemValue: 'option-5' },
+    { itemDescription: 'Option 6', itemValue: 'option-6' },
+    { itemDescription: 'Option 7', itemValue: 'option-7' },
+    { itemDescription: 'Option 8', itemValue: 'option-8' },
+    { itemDescription: 'Option 9', itemValue: 'option-9' },
+    { itemDescription: 'Option 10', itemValue: 'option-10' },
+  ];
 
   userSubscription: Subscription | undefined;
   selectedTrainingSubscription: Subscription | undefined;

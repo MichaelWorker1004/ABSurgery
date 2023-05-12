@@ -57,11 +57,13 @@
           space provided.
         </strong>
       </p>
-      <sl-textarea
+      <label for="describe">Describe</label>
+      <textarea
         label="Describe"
+        pInputTextarea
         [value]="explanationOfLackOfPrivilegesForm"
         rows="10"
-      ></sl-textarea>
+      ></textarea>
     </sl-tab-panel>
 
     <sl-tab-panel name="nonClinicalActivities">
@@ -71,11 +73,13 @@
           their current non-clinical activities.
         </strong>
       </p>
-      <sl-textarea
+      <label for="describe">Describe</label>
+      <textarea
+        pInputTextarea
         label="Describe"
         [value]="nonClincalActivitiesForm"
         rows="10"
-      ></sl-textarea>
+      ></textarea>
     </sl-tab-panel>
   </sl-tab-group>
 </div>

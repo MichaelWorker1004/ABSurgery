@@ -11,44 +11,44 @@
   <div class="grid">
     <div
       *ngFor="let formField of outcomesandRegistriesFormFields"
-      class="col-12 md:{{ formField.size }}"
+      class="flex-column col-12 md:{{ formField.size }} gap-3"
     >
-      <sl-radio-group
-        *ngIf="formField.type === 'radio'"
-        [label]="formField.label"
+      <label>{{ formField.label }}</label>
+      <small class="mb-2">{{ formField.subLabel }}</small>
+      <div class="flex gap-3" *ngIf="formField.type === 'radio'">
+        <div
+          class="flex flex-row align-items-center"
+          *ngFor="let option of formField.options"
+        >
+          <p-radioButton
+            [name]="formField.name"
+            [formControlName]="formField.name"
+            [inputId]="formField.name"
+            [value]="option.value"
+            [formControlName]="formField.name"
+            ngDefaultControl
+          ></p-radioButton>
+          <label [for]="formField.name" class="ml-2">{{ option.label }}</label>
+        </div>
+      </div>
+      <textarea
+        *ngIf="formField.type === 'textarea'"
+        pInputTextarea
         [formControlName]="formField.name"
         ngDefaultControl
-      >
-        <span>{{ formField.subLabel }}</span>
-        <div class="flex flex-wrap">
-          <sl-radio
-            *ngFor="let option of formField.options"
-            [value]="option.value"
-            >{{ option.label }}</sl-radio
-          >
-        </div>
-      </sl-radio-group>
-
-      <div class="col-12" *ngIf="formField.type === 'textarea'">
-        <label>
-          {{ formField.label }} <span>{{ formField.subLabel }}</span></label
-        >
-        <sl-textarea
-          [formControlName]="formField.name"
-          ngDefaultControl
-        ></sl-textarea>
-      </div>
+      ></textarea>
     </div>
 
-    <div class="col-12 md:col-6">
-      <sl-checkbox
+    <div class="col-12 md:col-6 flex align-items-start gap-2">
+      <p-checkbox
+        value="yes"
         formControlName="userConfirmed"
         ngDefaultControl
-        [checked]="outcomeRegistriesForm.get('userConfirmed')?.value"
+      ></p-checkbox>
+      <label for="userConfirmed"
+        >I confirm the above information is completed and correct to the best of
+        my knowledge</label
       >
-        I confirm the above information is completed and correct to the best of
-        my knowledge
-      </sl-checkbox>
     </div>
     <div class="col-12 md:col-6 align-right">
       <sl-button variant="default" size="large" (click)="close()"

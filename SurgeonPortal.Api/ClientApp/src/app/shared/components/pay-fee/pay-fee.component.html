@@ -34,36 +34,30 @@
   <div class="grid">
     <div
       *ngFor="let formField of paymentInformationFormFields"
-      class="col-12 md:{{
+      class="flex flex-column gap-2 col-12 md:{{
         formField.size
       }} flex flex-column justify-content-start"
     >
-      <sl-input
+      <label [htmlFor]="formField.name">{{ formField.label }}</label>
+      <input
         *ngIf="formField.type === 'text'"
-        [placeholder]="formField.placeholder"
+        [placeholder]="formField.placeholder ?? ''"
         [name]="formField.name"
         [id]="formField.name"
-        [label]="formField.label"
         [required]="formField.required"
-        ngDefaultControl
-        [(ngModel)]="formField.value"
-      ></sl-input>
-      <sl-select
+        pInputText
+      />
+      <p-dropdown
         *ngIf="formField.type === 'select'"
-        [placeholder]="formField.placeholder"
+        [placeholder]="formField.placeholder ?? ''"
+        [options]="formField.options ?? []"
         [name]="formField.name"
         [id]="formField.name"
-        [label]="formField.label"
-        [required]="formField.required"
-        ngDefaultControl
-        [(ngModel)]="formField.value"
-      >
-        <sl-option
-          *ngFor="let option of formField.options"
-          [value]="option.value"
-          >{{ option.label }}</sl-option
-        >
-      </sl-select>
+        [editable]="true"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
       <span>{{ formField.subLabel }}</span>
     </div>
     <div class="col-12 md:col-12 align-right mt-5">

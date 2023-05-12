@@ -107,55 +107,70 @@
                 class="grid"
                 *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
               >
-                <sl-select
-                  class="col-12 md:col-6"
-                  name="primaryPractice"
-                  label="Primary Current Practice or Training"
-                  placeholder="Choose a practice or training"
-                  ngDefaultControl
-                  [(ngModel)]="
-                    profile.appointmentsAndPrivileges.primaryPractice
-                  "
-                  required
-                >
-                  <sl-option value="option-1">Option 1</sl-option>
-                  <sl-option value="option-2">Option 2</sl-option>
-                  <sl-option value="option-3">Option 3</sl-option>
-                </sl-select>
-                <sl-input
-                  class="col-12 md:col-6"
-                  name="primaryPracticeOrg"
-                  label="Type of Organization of Primary Practice or Training"
-                  placeholder="Enter an organization type"
-                  ngDefaultControl
-                  [(ngModel)]="
-                    profile.appointmentsAndPrivileges.primaryPracticeOrg
-                  "
-                  required
-                ></sl-input>
-                <sl-textarea
-                  class="col-12 md:col-6"
-                  label="Lack of Hospital Privileges"
-                  placeholder="Explain any lack of hospital privileges"
-                  resize="none"
-                  name="lackOfHospitalPrivilegesReason"
-                  ngDefaultControl
-                  [(ngModel)]="
-                    profile.appointmentsAndPrivileges
-                      .lackOfHospitalPrivilegesReason
-                  "
-                ></sl-textarea>
-                <sl-textarea
-                  class="col-12 md:col-6"
-                  label="Non-Clinical Activities"
-                  placeholder="Explain any non-clinical activities"
-                  resize="none"
-                  name="nonClinicalActivities"
-                  ngDefaultControl
-                  [(ngModel)]="
-                    profile.appointmentsAndPrivileges.nonClinicalActivities
-                  "
-                ></sl-textarea>
+                <div class="col-12 md:col-6">
+                  <label class="block" for="primaryPractice"
+                    >Primary Current Practice or Training</label
+                  >
+                  <p-dropdown
+                    inputId="primaryPractice"
+                    [options]="fakeOptions"
+                    name="primaryPractice"
+                    [(ngModel)]="
+                      profile.appointmentsAndPrivileges.primaryPractice
+                    "
+                    placeholder="Choose a practice or training"
+                    optionLabel="itemDescription"
+                    optionValue="itemValue"
+                    appendTo="body"
+                  ></p-dropdown>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label class="block" for="primaryPracticeOrg"
+                    >Type of Organization of Primary Practice or Training</label
+                  >
+                  <input
+                    id="primaryPracticeOrg"
+                    pInputText
+                    type="text"
+                    placeholder="Enter an organization type"
+                    name="primaryPracticeOrg"
+                    [(ngModel)]="
+                      profile.appointmentsAndPrivileges.primaryPracticeOrg
+                    "
+                    required
+                  />
+                </div>
+                <div class="col-12 md:col-6">
+                  <label class="block" for="lackOfHospitalPrivilegesReason"
+                    >Lack of Hospital Privileges</label
+                  >
+                  <textarea
+                    rows="5"
+                    pInputTextarea
+                    id="lackOfHospitalPrivilegesReason"
+                    placeholder="Explain any lack of hospital privileges"
+                    name="lackOfHospitalPrivilegesReason"
+                    [(ngModel)]="
+                      profile.appointmentsAndPrivileges
+                        .lackOfHospitalPrivilegesReason
+                    "
+                  ></textarea>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label class="block" for="nonClinicalActivities"
+                    >Lack of Hospital Privileges</label
+                  >
+                  <textarea
+                    rows="5"
+                    pInputTextarea
+                    id="nonClinicalActivities"
+                    placeholder="Explain any non-clinical activities"
+                    name="nonClinicalActivities"
+                    [(ngModel)]="
+                      profile.appointmentsAndPrivileges.nonClinicalActivities
+                    "
+                  ></textarea>
+                </div>
               </div>
 
               <h6 class="section__sub-header">
@@ -305,91 +320,171 @@
               </div>
               <div class="grid" *ngIf="editSanctionsAndEthics$ | async">
                 <div class="col-12 mb-3">
-                  <sl-radio-group
-                    label="Have you had treatment for drug or alcohol abuse?"
-                    name="drugOrAlchohol"
-                    ngDefaultControl
-                    [(ngModel)]="profile.sanctionsEthics.drugOrAlchohol"
-                    (sl-change)="checkSantionsAndEthics()"
+                  <label class="block"
+                    >Have you had treatment for drug or alcohol abuse?</label
                   >
-                    <sl-radio [value]="true">Yes</sl-radio>
-                    <sl-radio [value]="false">No</sl-radio>
-                  </sl-radio-group>
+                  <div class="flex gap-5">
+                    <p-radioButton
+                      name="drugOrAlchohol"
+                      [value]="true"
+                      [(ngModel)]="profile.sanctionsEthics.drugOrAlchohol"
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="drugOrAlchoholYes"
+                      label="Yes"
+                    ></p-radioButton>
+                    <p-radioButton
+                      name="drugOrAlchohol"
+                      [value]="false"
+                      [(ngModel)]="profile.sanctionsEthics.drugOrAlchohol"
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="drugOrAlchoholYes"
+                      label="No"
+                    ></p-radioButton>
+                  </div>
                 </div>
                 <div class="col-12 mb-3">
-                  <sl-radio-group
-                    label="Have you been denied hospital privileges?"
-                    name="hospitalPrivilegesRevoked"
-                    ngDefaultControl
-                    [(ngModel)]="
-                      profile.sanctionsEthics.hospitalPrivilegesRevoked
-                    "
-                    (sl-change)="checkSantionsAndEthics()"
+                  <label class="block"
+                    >Have you been denied hospital privileges?</label
                   >
-                    <sl-radio [value]="true">Yes</sl-radio>
-                    <sl-radio [value]="false">No</sl-radio>
-                  </sl-radio-group>
+                  <div class="flex gap-5">
+                    <p-radioButton
+                      name="hospitalPrivilegesRevoked"
+                      [value]="true"
+                      [(ngModel)]="
+                        profile.sanctionsEthics.hospitalPrivilegesRevoked
+                      "
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="hospitalPrivilegesRevokedYes"
+                      label="Yes"
+                    ></p-radioButton>
+                    <p-radioButton
+                      name="hospitalPrivilegesRevoked"
+                      [value]="false"
+                      [(ngModel)]="
+                        profile.sanctionsEthics.hospitalPrivilegesRevoked
+                      "
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="hospitalPrivilegesRevokedNo"
+                      label="No"
+                    ></p-radioButton>
+                  </div>
                 </div>
                 <div class="col-12 mb-3">
-                  <sl-radio-group
-                    label="Have you been reprimanded by any licensing authority or had your license to practice medicine restricted, denied, suspended or revoked, or has it been voluntarily surrendered in any jurisdiction while under investigation?"
-                    name="liscensureRevoked"
-                    ngDefaultControl
-                    [(ngModel)]="profile.sanctionsEthics.liscensureRevoked"
-                    (sl-change)="checkSantionsAndEthics()"
+                  <label class="block"
+                    >Have you been reprimanded by any licensing authority or had
+                    your license to practice medicine restricted, denied,
+                    suspended or revoked, or has it been voluntarily surrendered
+                    in any jurisdiction while under investigation?</label
                   >
-                    <sl-radio [value]="true">Yes</sl-radio>
-                    <sl-radio [value]="false">No</sl-radio>
-                  </sl-radio-group>
+                  <div class="flex gap-5">
+                    <p-radioButton
+                      name="liscensureRevoked"
+                      [value]="true"
+                      [(ngModel)]="profile.sanctionsEthics.liscensureRevoked"
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="liscensureRevokedYes"
+                      label="Yes"
+                    ></p-radioButton>
+                    <p-radioButton
+                      name="liscensureRevoked"
+                      [value]="false"
+                      [(ngModel)]="profile.sanctionsEthics.liscensureRevoked"
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="liscensureRevokedNo"
+                      label="No"
+                    ></p-radioButton>
+                  </div>
                 </div>
                 <div class="col-12 mb-3">
-                  <sl-radio-group
-                    label="Have you had hospital staff privileges (or any portion thereof) restricted, suspended, or revoked, or otherwise subject to disciplinary action?"
-                    name="hospitalStaffPrivilegesRevoked"
-                    ngDefaultControl
-                    [(ngModel)]="
-                      profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
-                    "
-                    (sl-change)="checkSantionsAndEthics()"
+                  <label class="block"
+                    >Have you had hospital staff privileges (or any portion
+                    thereof) restricted, suspended, or revoked, or otherwise
+                    subject to disciplinary action?</label
                   >
-                    <sl-radio [value]="true">Yes</sl-radio>
-                    <sl-radio [value]="false">No</sl-radio>
-                  </sl-radio-group>
+                  <div class="flex gap-5">
+                    <p-radioButton
+                      name="hospitalStaffPrivilegesRevoked"
+                      [value]="true"
+                      [(ngModel)]="
+                        profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
+                      "
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="hospitalStaffPrivilegesRevokedYes"
+                      label="Yes"
+                    ></p-radioButton>
+                    <p-radioButton
+                      name="hospitalStaffPrivilegesRevoked"
+                      [value]="false"
+                      [(ngModel)]="
+                        profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
+                      "
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="hospitalStaffPrivilegesRevokedNo"
+                      label="No"
+                    ></p-radioButton>
+                  </div>
                 </div>
                 <div class="col-12 mb-3">
-                  <sl-radio-group
-                    label="Have you been convicted of a felony?"
-                    name="felony"
-                    ngDefaultControl
-                    [(ngModel)]="profile.sanctionsEthics.felony"
-                    (sl-change)="checkSantionsAndEthics()"
+                  <label class="block"
+                    >Have you been convicted of a felony?</label
                   >
-                    <sl-radio [value]="true">Yes</sl-radio>
-                    <sl-radio [value]="false">No</sl-radio>
-                  </sl-radio-group>
+                  <div class="flex gap-5">
+                    <p-radioButton
+                      name="felony"
+                      [value]="true"
+                      [(ngModel)]="profile.sanctionsEthics.felony"
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="felonyYes"
+                      label="Yes"
+                    ></p-radioButton>
+                    <p-radioButton
+                      name="felony"
+                      [value]="false"
+                      [(ngModel)]="profile.sanctionsEthics.felony"
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="felonyNo"
+                      label="No"
+                    ></p-radioButton>
+                  </div>
                 </div>
                 <div class="col-12 mb-3">
-                  <sl-radio-group
-                    label="Have you been censured by the American College of Surgeons, a hospital or other national or state society?"
-                    name="censured"
-                    ngDefaultControl
-                    [(ngModel)]="profile.sanctionsEthics.censured"
-                    (sl-change)="checkSantionsAndEthics()"
+                  <label class="block"
+                    >Have you been censured by the American College of Surgeons,
+                    a hospital or other national or state society?</label
                   >
-                    <sl-radio [value]="true">Yes</sl-radio>
-                    <sl-radio [value]="false">No</sl-radio>
-                  </sl-radio-group>
+                  <div class="flex gap-5">
+                    <p-radioButton
+                      name="censured"
+                      [value]="true"
+                      [(ngModel)]="profile.sanctionsEthics.censured"
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="censuredYes"
+                      label="Yes"
+                    ></p-radioButton>
+                    <p-radioButton
+                      name="censured"
+                      [value]="false"
+                      [(ngModel)]="profile.sanctionsEthics.censured"
+                      (ngModelChange)="checkSantionsAndEthics()"
+                      inputId="censuredNo"
+                      label="No"
+                    ></p-radioButton>
+                  </div>
                 </div>
                 <div class="col-12 mb-3">
-                  <sl-textarea
-                    label="Describe"
-                    help-text="Only if you answered YES to any of the above questions."
-                    resize="none"
-                    [disabled]="disableDescribe"
+                  <label class="block" for="describe">Describe</label>
+                  <small class="block form-helper-text text-muted"
+                    >Only if you answered YES to any of the above
+                    questions.</small
+                  >
+                  <textarea
+                    rows="5"
+                    pInputTextarea
+                    id="describe"
+                    placeholder="Explain..."
                     name="describe"
-                    ngDefaultControl
                     [(ngModel)]="profile.sanctionsEthics.describe"
-                  ></sl-textarea>
+                  ></textarea>
                 </div>
               </div>
               <div class="grid">

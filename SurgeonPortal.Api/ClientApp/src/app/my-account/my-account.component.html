@@ -36,10 +36,15 @@
             <label>Password</label>
             <div>********</div>
           </div>
-          <div class="col-12 md:col-6">
-            <sl-checkbox [checked]="user.receiveComms"
-              >Receive ABS Emails / Newsletters?</sl-checkbox
-            >
+          <div class="col-12 md:col-6 flex align-items-center gap-2">
+            <p-checkbox
+              inputId="mailingList"
+              name="mailingList"
+              formControlName="mailingList"
+              [binary]="true"
+              [readonly]="true"
+            ></p-checkbox>
+            <label for="mailingList">Receive ABS Emails / Newsletters?</label>
           </div>
           <div class="col-12 flex justify-content-end">
             <sl-button
@@ -56,47 +61,55 @@
           (ngSubmit)="onSubmit()"
         >
           <div class="grid" *ngIf="isEdit">
-            <sl-input
-              type="email"
-              class="col-12 md:col-6"
-              label="Email Address"
-              (sl-focus)="selectAll($event)"
-              ngDefaultControl
-              formControlName="emailAddress"
-            ></sl-input>
-            <sl-input
-              type="email"
-              class="col-12 md:col-6"
-              label="Confirm Email Address"
-              (sl-focus)="selectAll($event)"
-              ngDefaultControl
-              formControlName="confirmEmailAddress"
-            ></sl-input>
-            <sl-input
-              type="password"
-              class="col-12 md:col-6"
-              label="Password"
-              (sl-focus)="selectAll($event)"
-              ngDefaultControl
-              formControlName="password"
-              password-toggle
-            ></sl-input>
-            <sl-input
-              type="password"
-              class="col-12 md:col-6"
-              label="Confirm Password"
-              (sl-focus)="selectAll($event)"
-              ngDefaultControl
-              formControlName="confirmPassword"
-              password-toggle
-            ></sl-input>
-            <sl-checkbox
-              class="col-12 md:col-6"
-              ngDefaultControl
-              formControlName="mailingList"
-              checked
-              >Receive ABS Emails / Newsletters?</sl-checkbox
-            >
+            <div class="col-12 md:col-6">
+              <label class="block" for="emailAddress">Email Address</label>
+              <input
+                id="emailAddress"
+                pInputText
+                type="email"
+                formControlName="emailAddress"
+              />
+            </div>
+            <div class="col-12 md:col-6">
+              <label class="block" for="confirmEmailAddress"
+                >Confirm Email Address</label
+              >
+              <input
+                id="confirmEmailAddress"
+                pInputText
+                type="email"
+                formControlName="confirmEmailAddress"
+              />
+            </div>
+            <div class="col-12 md:col-6">
+              <label class="block" htmlFor="password">Password</label>
+              <p-password
+                id="password"
+                formControlName="password"
+                [feedback]="false"
+                [toggleMask]="true"
+              ></p-password>
+            </div>
+            <div class="col-12 md:col-6">
+              <label class="block" for="confirmPassword"
+                >Confirm Password</label
+              >
+              <p-password
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                [feedback]="false"
+                [toggleMask]="true"
+              ></p-password>
+            </div>
+            <div class="col-12 md:col-6 flex align-items-center gap-2">
+              <p-checkbox
+                inputId="mailingList"
+                name="mailingList"
+                formControlName="mailingList"
+                [binary]="true"
+              ></p-checkbox>
+              <label for="mailingList">Receive ABS Emails / Newsletters?</label>
+            </div>
             <div class="col-12 flex justify-content-end">
               <sl-button type="reset" variant="text" (click)="resetForm($event)"
                 >Cancel</sl-button

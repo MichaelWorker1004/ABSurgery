@@ -13,7 +13,8 @@ import { ReferenceFormModalComponent } from './reference-form-modal/reference-fo
 import { Action } from '../shared/components/action-card/action.enum';
 import { IUserProfile, UserProfileSelectors } from '../state';
 import { Observable } from 'rxjs';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
+import { GetStateList } from '../state/picklists';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -69,6 +70,10 @@ export class ContinuousCertificationComponent implements OnInit {
       this.payFeeModal = !this.payFeeModal;
     },
   };
+
+  constructor(private _store: Store) {
+    this._store.dispatch(new GetStateList('500'));
+  }
 
   ngOnInit(): void {
     this.getUserData();

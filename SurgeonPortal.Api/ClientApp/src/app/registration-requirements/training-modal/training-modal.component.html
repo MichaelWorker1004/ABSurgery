@@ -39,80 +39,98 @@
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
         <div class="grid">
-          <sl-select
-            class="col-12"
-            name="statement"
-            label="Select the statement that best describes you (Country of medical school)"
-            placeholder="Select a Country"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.medicalSchool.statement"
-          >
-            <sl-option value="option-1">Option 1</sl-option>
-            <sl-option value="option-2">Option 2</sl-option>
-            <sl-option value="option-3">Option 3</sl-option>
-          </sl-select>
-          <sl-input
-            class="col-12"
-            label="Medical School"
-            placeholder="Enter school name"
-            name="medicalSchool"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.medicalSchool.name"
-            required
-          ></sl-input>
-          <sl-input
-            class="col-12 md:col-4"
-            label="City or Town"
-            placeholder="Enter city name"
-            name="city"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.medicalSchool.city"
-            required
-          ></sl-input>
-          <sl-select
-            class="col-12 md:col-4"
-            name="state"
-            label="State / Province / Territory"
-            placeholder="Choose state"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.medicalSchool.state"
-          >
-            <sl-option value="option-1">Option 1</sl-option>
-            <sl-option value="option-2">Option 2</sl-option>
-            <sl-option value="option-3">Option 3</sl-option>
-          </sl-select>
-          <sl-select
-            class="col-12 md:col-4"
-            name="country"
-            label="Country"
-            placeholder="Choose country"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.medicalSchool.country"
-          >
-            <sl-option value="USA">United States</sl-option>
-            <sl-option value="option-1">Option 1</sl-option>
-            <sl-option value="option-2">Option 2</sl-option>
-            <sl-option value="option-3">Option 3</sl-option>
-          </sl-select>
-          <sl-input
-            class="col-12 md:col-6"
-            label="Degree"
-            placeholder="Enter degree name"
-            name="degree"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.medicalSchool.degree"
-            required
-          ></sl-input>
-          <sl-input
-            inputmode="numeric"
-            class="col-12 md:col-6"
-            label="Year of Completion"
-            placeholder="YYYY"
-            name="yearSchool"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.medicalSchool.yearGraduated"
-            required
-          ></sl-input>
+          <div class="col-12">
+            <label class="block" for="statement"
+              >Select the statement that best describes you (Country of medical
+              school)</label
+            >
+            <p-dropdown
+              inputId="statement"
+              name="statement"
+              [options]="fakeOptions"
+              [(ngModel)]="medicalTraining.medicalSchool.statement"
+              placeholder="Select a Country"
+              optionLabel="itemDescription"
+              optionValue="itemValue"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
+          <div class="col-12">
+            <label class="block" for="medicalSchool">Medical School</label>
+            <input
+              id="medicalSchool"
+              pInputText
+              type="text"
+              name="medicalSchool"
+              placeholder="Enter school name"
+              [(ngModel)]="medicalTraining.medicalSchool.name"
+              required
+            />
+          </div>
+          <div class="col-12 md:col-4">
+            <label class="block" for="city">City or Town</label>
+            <input
+              id="city"
+              pInputText
+              type="text"
+              name="city"
+              placeholder="Enter city name"
+              [(ngModel)]="medicalTraining.medicalSchool.city"
+              required
+            />
+          </div>
+          <div class="col-12 md:col-4">
+            <label class="block" for="state"
+              >State / Province / Territory</label
+            >
+            <p-dropdown
+              inputId="state"
+              name="state"
+              [options]="fakeOptions"
+              [(ngModel)]="medicalTraining.medicalSchool.state"
+              placeholder="Choose a State"
+              optionLabel="itemDescription"
+              optionValue="itemValue"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
+          <div class="col-12 md:col-4">
+            <label class="block" for="country">Country</label>
+            <p-dropdown
+              inputId="country"
+              name="country"
+              [options]="fakeOptions"
+              [(ngModel)]="medicalTraining.medicalSchool.country"
+              placeholder="Choose a Country"
+              optionLabel="itemDescription"
+              optionValue="itemValue"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
+          <div class="col-12 md:col-6">
+            <label class="block" for="degree">Degree</label>
+            <input
+              id="degree"
+              pInputText
+              type="text"
+              name="degree"
+              placeholder="Enter degree name"
+              [(ngModel)]="medicalTraining.medicalSchool.degree"
+              required
+            />
+          </div>
+          <div class="col-12 md:col-6">
+            <label class="block" for="yearGraduated">Year of Completion</label>
+            <input
+              id="yearGraduated"
+              pInputText
+              type="text"
+              name="yearGraduated"
+              placeholder="YYYY"
+              [(ngModel)]="medicalTraining.medicalSchool.yearGraduated"
+              required
+            />
+          </div>
         </div>
       </sl-tab-panel>
       <sl-tab-panel name="residency">
@@ -125,129 +143,176 @@
           <h5 class="col-12 mb-1">Residency</h5>
           <div class="col-6">
             <div class="grid">
-              <sl-input
-                class="col-12"
-                label="Program Name"
-                placeholder="Enter program name"
-                name="residencyName"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.residency.programName"
-                required
-              ></sl-input>
-              <sl-input
-                inputmode="numeric"
-                class="col-12"
-                label="Year of Completion"
-                placeholder="YYYY"
-                name="residencyYear"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.residency.yearOfCompletion"
-                required
-              ></sl-input>
+              <div class="col-12">
+                <label class="block" for="residencyName">Program Name</label>
+                <input
+                  id="residencyName"
+                  pInputText
+                  type="text"
+                  name="residencyName"
+                  placeholder="Enter program name"
+                  [(ngModel)]="medicalTraining.residency.programName"
+                  required
+                />
+              </div>
+              <div class="col-12">
+                <label class="block" for="residencyYear"
+                  >Year of Completion</label
+                >
+                <input
+                  id="residencyYear"
+                  pInputText
+                  type="text"
+                  name="residencyYear"
+                  placeholder="YYYY"
+                  [(ngModel)]="medicalTraining.residency.yearOfCompletion"
+                  required
+                />
+              </div>
             </div>
           </div>
           <div class="col-6">
             <div class="grid">
-              <sl-textarea
-                class="col-12"
-                label="My program is not listed"
-                placeholder="Explain..."
-                name="residencyNotListed"
-                rows="5"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.residency.programNotListed"
-              ></sl-textarea>
+              <div class="col-12">
+                <label class="block" for="residencyNotListed"
+                  >My program is not listed</label
+                >
+                <textarea
+                  rows="5"
+                  pInputTextarea
+                  id="residencyNotListed"
+                  placeholder="Explain..."
+                  name="residencyNotListed"
+                  [(ngModel)]="medicalTraining.residency.programNotListed"
+                ></textarea>
+              </div>
             </div>
           </div>
-          <sl-checkbox
-            class="col-12"
-            name="completedInCanada"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.residency.completedInCanada"
-          >
-            Did you complete your training in canada?
-          </sl-checkbox>
+          <div class="col-12 text-center flex align-items-center gap-2">
+            <p-checkbox
+              inputId="completedInCanada"
+              name="completedInCanada"
+              [(ngModel)]="medicalTraining.residency.completedInCanada"
+              [binary]="true"
+            ></p-checkbox>
+            <label for="completedInCanada"
+              >Did you complete your training in canada?</label
+            >
+          </div>
         </div>
         <div class="grid align-items-baseline">
           <h5 class="col-12 mb-1 mt-3">Post Residency and Fellowship Plans</h5>
-          <sl-select
-            class="col-12 md:col-6"
-            name="postResidencyPlans"
-            label="Upon completing my General Surgery residency I will:"
-            placeholder="Make a selection"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.residency.postResidencyPlans"
-            required
-          >
-            <sl-option value="option-1">Option 1</sl-option>
-            <sl-option value="option-2">Option 2</sl-option>
-            <sl-option value="option-3">Option 3</sl-option>
-          </sl-select>
-          <sl-select
-            class="col-12 md:col-6"
-            name="postFellowshipPlans"
-            label="Upon completing my fellowship, I anticipate that my clinical practice will include:"
-            placeholder="Make a selection"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.residency.postFellowshipPlans"
-            required
-          >
-            <sl-option value="option-1">Option 1</sl-option>
-            <sl-option value="option-2">Option 2</sl-option>
-            <sl-option value="option-3">Option 3</sl-option>
-          </sl-select>
+          <div class="col-12 md:col-6">
+            <label class="block" for="postResidencyPlans"
+              >Upon completing my General Surgery residency I will:</label
+            >
+            <p-dropdown
+              inputId="postResidencyPlans"
+              name="postResidencyPlans"
+              [options]="fakeOptions"
+              [(ngModel)]="medicalTraining.residency.postResidencyPlans"
+              placeholder="Make a selection"
+              optionLabel="itemDescription"
+              optionValue="itemValue"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
+          <div class="col-12 md:col-6">
+            <label class="block" for="fellowshipPlans"
+              >Upon completing my fellowship, I anticipate that my clinical
+              practice will include:</label
+            >
+            <p-dropdown
+              inputId="fellowshipPlans"
+              name="fellowshipPlans"
+              [options]="fakeOptions"
+              [(ngModel)]="medicalTraining.residency.fellowshipPlans"
+              placeholder="Make a selection"
+              optionLabel="itemDescription"
+              optionValue="itemValue"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
         </div>
         <div class="grid align-items-baseline">
           <h5 class="col-12 mb-1 mt-3">Vascular Surgery Training</h5>
-          <sl-radio-group
-            class="col-12 md:col-6 horizontal"
-            label="Will you be pursuing vascular surgery training?"
-            name="vascularTraining"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.residency.vascularTraining"
-          >
-            <sl-radio [value]="true">Yes</sl-radio>
-            <sl-radio [value]="false">No</sl-radio>
-          </sl-radio-group>
-          <sl-select
-            class="col-12 md:col-6"
-            name="vascularFellowship"
-            label="In which program will you complete a vascular surgery fellowship?"
-            placeholder="Make a selection"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.residency.vascularFellowship"
-            required
-          >
-            <sl-option value="option-1">Option 1</sl-option>
-            <sl-option value="option-2">Option 2</sl-option>
-            <sl-option value="option-3">Option 3</sl-option>
-          </sl-select>
+          <div class="col-12 md:col-6">
+            <label class="block"
+              >Will you be pursuing vascular surgery training?</label
+            >
+            <div class="flex gap-5">
+              <p-radioButton
+                name="vascularTraining"
+                [value]="true"
+                [(ngModel)]="medicalTraining.residency.vascularTraining"
+                inputId="vascularTrainingYes"
+                label="Yes"
+              ></p-radioButton>
+              <p-radioButton
+                name="vascularTraining"
+                [value]="false"
+                [(ngModel)]="medicalTraining.residency.vascularTraining"
+                inputId="vascularTrainingNo"
+                label="No"
+              ></p-radioButton>
+            </div>
+          </div>
+          <div class="col-12 md:col-6">
+            <label class="block" for="vascularFellowship"
+              >In which program will you complete a vascular surgery
+              fellowship?</label
+            >
+            <p-dropdown
+              inputId="vascularFellowship"
+              name="vascularFellowship"
+              [options]="fakeOptions"
+              [(ngModel)]="medicalTraining.residency.vascularFellowship"
+              placeholder="Make a selection"
+              optionLabel="itemDescription"
+              optionValue="itemValue"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
         </div>
         <div class="grid align-items-baseline">
           <h5 class="col-12 mb-1 mt-3">Thoracic Surgery Training</h5>
-          <sl-radio-group
-            class="col-12 md:col-6 horizontal"
-            label="Will you be pursuing thoracic surgery training?"
-            name="thoracicTraining"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.residency.thoracicTraining"
-          >
-            <sl-radio [value]="true">Yes</sl-radio>
-            <sl-radio [value]="false">No</sl-radio>
-          </sl-radio-group>
-          <sl-select
-            class="col-12 md:col-6"
-            name="thoracicFellowship"
-            label="In which program will you complete a thoracic surgery fellowship?"
-            placeholder="Make a selection"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.residency.thoracicFellowship"
-            required
-          >
-            <sl-option value="option-1">Option 1</sl-option>
-            <sl-option value="option-2">Option 2</sl-option>
-            <sl-option value="option-3">Option 3</sl-option>
-          </sl-select>
+          <div class="col-12 md:col-6">
+            <label class="block"
+              >Will you be pursuing thoracic surgery training?</label
+            >
+            <div class="flex gap-5">
+              <p-radioButton
+                name="thoracicTraining"
+                [value]="true"
+                [(ngModel)]="medicalTraining.residency.thoracicTraining"
+                inputId="thoracicTrainingYes"
+                label="Yes"
+              ></p-radioButton>
+              <p-radioButton
+                name="thoracicTraining"
+                [value]="false"
+                [(ngModel)]="medicalTraining.residency.thoracicTraining"
+                inputId="thoracicTrainingNo"
+                label="No"
+              ></p-radioButton>
+            </div>
+          </div>
+          <div class="col-12 md:col-6">
+            <label class="block" for="thoracicFellowship"
+              >In which program will you complete a thoracic surgery
+              fellowship?</label
+            >
+            <p-dropdown
+              inputId="thoracicFellowship"
+              name="thoracicFellowship"
+              [options]="fakeOptions"
+              [(ngModel)]="medicalTraining.residency.thoracicFellowship"
+              placeholder="Make a selection"
+              optionLabel="itemDescription"
+              optionValue="itemValue"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
         </div>
       </sl-tab-panel>
       <sl-tab-panel name="additionalTraining">
@@ -283,17 +348,32 @@
         </p>
         <div class="grid align-items-baseline">
           <h5 class="col-12 mb-1 mt-3">Trained in Multiple Programs</h5>
-          <sl-radio-group
-            class="col-12 horizontal"
-            label="Did you complete training in more than one program in the speciality for which you are applying?"
-            name="multiplePrograms"
-            ngDefaultControl
-            [(ngModel)]="medicalTraining.additionalDocuments.multiplePrograms"
-            required
-          >
-            <sl-radio [value]="true">Yes</sl-radio>
-            <sl-radio [value]="false">No</sl-radio>
-          </sl-radio-group>
+          <div class="col-12">
+            <label class="block"
+              >Did you complete training in more than one program in the
+              speciality for which you are applying?</label
+            >
+            <div class="flex gap-5">
+              <p-radioButton
+                name="multiplePrograms"
+                [value]="true"
+                [(ngModel)]="
+                  medicalTraining.additionalDocuments.multiplePrograms
+                "
+                inputId="multipleProgramsYes"
+                label="Yes"
+              ></p-radioButton>
+              <p-radioButton
+                name="multiplePrograms"
+                [value]="false"
+                [(ngModel)]="
+                  medicalTraining.additionalDocuments.multiplePrograms
+                "
+                inputId="multipleProgramsNo"
+                label="No"
+              ></p-radioButton>
+            </div>
+          </div>
           <div class="col-12">
             <abs-file-upload-button
               inputId="completionDocument"
@@ -321,19 +401,33 @@
         </div>
         <div class="grid align-items-baseline">
           <h5 class="col-12 mb-1 mt-3">ABS Approval Letter</h5>
-          <sl-radio-group
-            class="col-12 horizontal"
-            label="Did you have international rotations, flexible rotations and/or did you receive credit for foreign medical education or ABS approval letter for other reasons?"
-            name="recievedABSApprovalLetter"
-            ngDefaultControl
-            [(ngModel)]="
-              medicalTraining.additionalDocuments.recievedABSApprovalLetter
-            "
-            required
-          >
-            <sl-radio [value]="true">Yes</sl-radio>
-            <sl-radio [value]="false">No</sl-radio>
-          </sl-radio-group>
+          <div class="col-12">
+            <label class="block"
+              >Did you have international rotations, flexible rotations and/or
+              did you receive credit for foreign medical education or ABS
+              approval letter for other reasons?</label
+            >
+            <div class="flex gap-5">
+              <p-radioButton
+                name="recievedABSApprovalLetter"
+                [value]="true"
+                [(ngModel)]="
+                  medicalTraining.additionalDocuments.recievedABSApprovalLetter
+                "
+                inputId="recievedABSApprovalLetterYes"
+                label="Yes"
+              ></p-radioButton>
+              <p-radioButton
+                name="recievedABSApprovalLetter"
+                [value]="false"
+                [(ngModel)]="
+                  medicalTraining.additionalDocuments.recievedABSApprovalLetter
+                "
+                inputId="recievedABSApprovalLetterNo"
+                label="No"
+              ></p-radioButton>
+            </div>
+          </div>
           <div class="col-12">
             <abs-file-upload-button
               inputId="approvalLetter"

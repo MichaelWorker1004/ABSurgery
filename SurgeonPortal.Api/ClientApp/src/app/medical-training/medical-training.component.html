@@ -58,79 +58,97 @@
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
-              <sl-select
-                class="col-12"
-                name="statement"
-                label="Select the statement that best describes you (Country of medical school)"
-                placeholder="Select a Country"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.statement"
-              >
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
-              </sl-select>
-              <sl-input
-                class="col-12"
-                label="Medical School"
-                placeholder="Enter school name"
-                name="medicalSchool"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.medicalSchool.name"
-                required
-              ></sl-input>
-              <sl-input
-                class="col-12 md:col-4"
-                label="City or Town"
-                placeholder="Enter city name"
-                name="city"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.medicalSchool.city"
-                required
-              ></sl-input>
-              <sl-select
-                class="col-12 md:col-4"
-                name="state"
-                label="State / Province / Territory"
-                placeholder="Choose state"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.medicalSchool.state"
-              >
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
-              </sl-select>
-              <sl-select
-                class="col-12 md:col-4"
-                name="country"
-                label="Country"
-                placeholder="Choose country"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.medicalSchool.country"
-              >
-                <sl-option value="option-1">Option 1</sl-option>
-                <sl-option value="option-2">Option 2</sl-option>
-                <sl-option value="option-3">Option 3</sl-option>
-              </sl-select>
-              <sl-input
-                class="col-12 md:col-6"
-                label="Degree"
-                placeholder="Enter degree name"
-                name="degree"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.medicalSchool.degree"
-                required
-              ></sl-input>
-              <sl-input
-                inputmode="numeric"
-                class="col-12 md:col-6"
-                label="Year of Completion"
-                placeholder="YYYY"
-                name="yearSchool"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.medicalSchool.yearGraduated"
-                required
-              ></sl-input>
+              <div class="col-12">
+                <label class="block" for="statement"
+                  >Select the statement that best describes you (Country of
+                  medical school)</label
+                >
+                <p-dropdown
+                  inputId="statement"
+                  [options]="fakeOptions"
+                  name="statement"
+                  [(ngModel)]="medicalTraining.statement"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12">
+                <label class="block" for="medicalSchool">Medical School</label>
+                <input
+                  id="medicalSchool"
+                  pInputText
+                  type="text"
+                  placeholder="Enter school name"
+                  name="medicalSchool"
+                  [(ngModel)]="medicalTraining.medicalSchool.name"
+                  required
+                />
+              </div>
+              <div class="col-12 md:col-4">
+                <label class="block" for="city">City or Town</label>
+                <input
+                  id="city"
+                  pInputText
+                  type="text"
+                  placeholder="Enter city name"
+                  name="city"
+                  [(ngModel)]="medicalTraining.medicalSchool.city"
+                  required
+                />
+              </div>
+              <div class="col-12 md:col-4">
+                <label class="block" for="state"
+                  >State / Province / Territory</label
+                >
+                <p-dropdown
+                  inputId="state"
+                  [options]="fakeOptions"
+                  placeholder="Choose state"
+                  name="state"
+                  [(ngModel)]="medicalTraining.medicalSchool.state"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-4">
+                <label class="block" for="country">Country</label>
+                <p-dropdown
+                  inputId="country"
+                  [options]="fakeOptions"
+                  placeholder="Choose country"
+                  name="country"
+                  [(ngModel)]="medicalTraining.medicalSchool.country"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="degree">Degree</label>
+                <input
+                  id="degree"
+                  pInputText
+                  type="text"
+                  placeholder="Enter degree name"
+                  name="degree"
+                  [(ngModel)]="medicalTraining.medicalSchool.degree"
+                  required
+                />
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="yearSchool">Year of Completion</label>
+                <input
+                  id="yearSchool"
+                  pInputText
+                  type="text"
+                  placeholder="YYYY"
+                  name="yearSchool"
+                  [(ngModel)]="medicalTraining.medicalSchool.yearGraduated"
+                  required
+                />
+              </div>
             </div>
           </div>
 
@@ -167,38 +185,52 @@
             <div class="grid" *ngIf="isEdit">
               <div class="col-6">
                 <div class="grid">
-                  <sl-input
-                    class="col-12"
-                    label="Program Name"
-                    placeholder="Enter program name"
-                    name="residencyName"
-                    ngDefaultControl
-                    [(ngModel)]="medicalTraining.residency.programName"
-                    required
-                  ></sl-input>
-                  <sl-input
-                    inputmode="numeric"
-                    class="col-12"
-                    label="Year of Completion"
-                    placeholder="YYYY"
-                    name="residencyYear"
-                    ngDefaultControl
-                    [(ngModel)]="medicalTraining.residency.yearOfCompletion"
-                    required
-                  ></sl-input>
+                  <div class="col-12">
+                    <label class="block" for="residencyName"
+                      >Enter program name</label
+                    >
+                    <input
+                      id="residencyName"
+                      pInputText
+                      type="text"
+                      placeholder="Enter program name"
+                      name="residencyName"
+                      [(ngModel)]="medicalTraining.residency.programName"
+                      required
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="block" for="residencyYear"
+                      >Year of Completion</label
+                    >
+                    <input
+                      id="residencyYear"
+                      pInputText
+                      type="text"
+                      placeholder="YYYY"
+                      name="residencyYear"
+                      [(ngModel)]="medicalTraining.residency.yearOfCompletion"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="grid">
-                  <sl-textarea
-                    class="col-12"
-                    label="My program is not listed"
-                    placeholder="Explain..."
-                    name="residencyNotListed"
-                    rows="5"
-                    ngDefaultControl
-                    [(ngModel)]="medicalTraining.residency.programNotListed"
-                  ></sl-textarea>
+                  <div class="col-12">
+                    <label class="block" for="residencyNotListed"
+                      >My program is not listed</label
+                    >
+                    <textarea
+                      rows="5"
+                      pInputTextarea
+                      id="residencyNotListed"
+                      placeholder="Explain..."
+                      name="residencyNotListed"
+                      [(ngModel)]="medicalTraining.residency.programNotListed"
+                      required
+                    ></textarea>
+                  </div>
                 </div>
               </div>
             </div>
@@ -237,38 +269,52 @@
             <div class="grid" *ngIf="isEdit">
               <div class="col-6">
                 <div class="grid">
-                  <sl-input
-                    class="col-12"
-                    label="Program Name"
-                    placeholder="Enter program name"
-                    name="fellowshipName"
-                    ngDefaultControl
-                    [(ngModel)]="medicalTraining.fellowship.programName"
-                    required
-                  ></sl-input>
-                  <sl-input
-                    inputmode="numeric"
-                    class="col-12"
-                    label="Year of Completion"
-                    placeholder="YYYY"
-                    name="fellowshipYear"
-                    ngDefaultControl
-                    [(ngModel)]="medicalTraining.fellowship.yearOfCompletion"
-                    required
-                  ></sl-input>
+                  <div class="col-12">
+                    <label class="block" for="fellowshipName"
+                      >Enter program name</label
+                    >
+                    <input
+                      id="fellowshipName"
+                      pInputText
+                      type="text"
+                      placeholder="Enter program name"
+                      name="fellowshipName"
+                      [(ngModel)]="medicalTraining.fellowship.programName"
+                      required
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="block" for="fellowshipYear"
+                      >Year of Completion</label
+                    >
+                    <input
+                      id="fellowshipYear"
+                      pInputText
+                      type="text"
+                      placeholder="YYYY"
+                      name="fellowshipYear"
+                      [(ngModel)]="medicalTraining.fellowship.yearOfCompletion"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="grid">
-                  <sl-textarea
-                    class="col-12"
-                    label="My program is not listed"
-                    placeholder="Explain..."
-                    name="fellowshipNotListed"
-                    rows="5"
-                    ngDefaultControl
-                    [(ngModel)]="medicalTraining.fellowship.programNotListed"
-                  ></sl-textarea>
+                  <div class="col-12">
+                    <label class="block" for="fellowshipNotListed"
+                      >My program is not listed</label
+                    >
+                    <textarea
+                      rows="5"
+                      pInputTextarea
+                      id="fellowshipNotListed"
+                      placeholder="Explain..."
+                      name="fellowshipNotListed"
+                      [(ngModel)]="medicalTraining.fellowship.programNotListed"
+                      required
+                    ></textarea>
+                  </div>
                 </div>
               </div>
             </div>
@@ -411,22 +457,32 @@
                   Remove
                 </sl-button>
               </div>
-              <sl-input
-                class="col-12 sm:col-7 md:col-9"
-                label="Registered Physician in Vascular Interpretation"
-                name="registeredPhysician"
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.certifications.registeredPhysician"
-              ></sl-input>
-              <sl-input
-                type="date"
-                class="col-12 sm:col-5 md:col-3"
-                name="issueDate"
-                label="Issue Date"
-                valueAsDate
-                ngDefaultControl
-                [(ngModel)]="medicalTraining.certifications.issueDate"
-              ></sl-input>
+
+              <div class="col-12 sm:col-7 md:col-9">
+                <label class="block" for="registeredPhysician"
+                  >Registered Physician in Vascular Interpretation</label
+                >
+                <input
+                  id="registeredPhysician"
+                  pInputText
+                  type="text"
+                  name="registeredPhysician"
+                  [(ngModel)]="
+                    medicalTraining.certifications.registeredPhysician
+                  "
+                  required
+                />
+              </div>
+              <div class="col-12 sm:col-5 md:col-3">
+                <label class="block" for="issueDate">Issue Date</label>
+                <p-calendar
+                  id="issueDate"
+                  [showIcon]="true"
+                  name="issueDate"
+                  [(ngModel)]="medicalTraining.certifications.issueDate"
+                  appendTo="body"
+                ></p-calendar>
+              </div>
             </div>
           </div>
 

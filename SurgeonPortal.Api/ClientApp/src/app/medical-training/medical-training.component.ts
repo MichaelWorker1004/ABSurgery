@@ -10,6 +10,11 @@ import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-trainin
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
+
 @Component({
   selector: 'abs-medical-training',
   templateUrl: './medical-training.component.html',
@@ -24,9 +29,20 @@ import { ModalComponent } from '../shared/components/modal/modal.component';
     TrainingAddEditModalComponent,
     GridComponent,
     ModalComponent,
+
+    InputTextModule,
+    DropdownModule,
+    InputTextareaModule,
+    CalendarModule,
   ],
 })
 export class MedicalTrainingComponent {
+  fakeOptions = [
+    { itemDescription: 'Option 1', itemValue: 'option-1' },
+    { itemDescription: 'Option 2', itemValue: 'option-2' },
+    { itemDescription: 'Option 3', itemValue: 'option-3' },
+  ];
+
   isEdit = true;
   trainingCols = MEDICAL_TRAINING_COLS;
   showTrainingAddEdit = false;

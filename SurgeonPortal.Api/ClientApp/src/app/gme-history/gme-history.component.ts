@@ -470,8 +470,6 @@ export class GmeHistoryComponent implements OnInit {
   handleGridAction($event: any) {
     const { data } = $event;
     if ($event.fieldKey === 'edit') {
-      data['to'] = new Date(data.to).toISOString().split('T')[0];
-      data['from'] = new Date(data.from).toISOString().split('T')[0];
       this.isEditGmeRotation$.next(true);
       this.selectedGmeRotation$.next(data);
       this.handleAddEditGmeRotation(true);

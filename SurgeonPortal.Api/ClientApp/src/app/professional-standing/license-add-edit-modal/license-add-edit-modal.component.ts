@@ -10,10 +10,20 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+
 @Component({
   selector: 'abs-license-add-edit-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    DropdownModule,
+    CalendarModule,
+  ],
   templateUrl: './license-add-edit-modal.component.html',
   styleUrls: ['./license-add-edit-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -23,6 +33,12 @@ export class LicenseAddEditModalComponent implements OnInit {
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
 
+  fakeOptions = [
+    { itemDescription: 'Option 1', itemValue: 'option-1' },
+    { itemDescription: 'Option 2', itemValue: 'option-2' },
+    { itemDescription: 'Option 3', itemValue: 'option-3' },
+  ];
+
   localLicense: any = {};
 
   ngOnInit() {
@@ -30,14 +46,14 @@ export class LicenseAddEditModalComponent implements OnInit {
       this.localLicense = value;
       if (value.issueDate) {
         // TODO: [Joe] convert to string format yyyy-MM-dd
-        this.localLicense.issueDate = new Date(value.issueDate)
-          .toISOString()
-          .split('T')[0];
+        // this.localLicense.issueDate = new Date(value.issueDate)
+        //   .toISOString()
+        //   .split('T')[0];
       }
       if (value.expireDate) {
-        this.localLicense.expireDate = new Date(value.expireDate)
-          .toISOString()
-          .split('T')[0];
+        // this.localLicense.expireDate = new Date(value.expireDate)
+        //   .toISOString()
+        //   .split('T')[0];
       }
     });
   }

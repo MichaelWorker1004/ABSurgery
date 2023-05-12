@@ -24,6 +24,9 @@ import { Observable } from 'rxjs';
 import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertification/outcome-registry.model';
 import { OutcomeRegistriesFormFields } from './outcome-registries-form';
 import { SuccessFailModalComponent } from 'src/app/shared/components/success-fail-modal/success-fail-modal.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'abs-outcome-registries-modal',
@@ -33,6 +36,9 @@ import { SuccessFailModalComponent } from 'src/app/shared/components/success-fai
     FormsModule,
     ReactiveFormsModule,
     SuccessFailModalComponent,
+    RadioButtonModule,
+    InputTextareaModule,
+    CheckboxModule,
   ],
   templateUrl: './outcome-registries-modal.component.html',
   styleUrls: ['./outcome-registries-modal.component.scss'],

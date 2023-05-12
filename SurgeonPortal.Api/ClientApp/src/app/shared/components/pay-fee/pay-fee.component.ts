@@ -3,28 +3,48 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GridComponent } from '../grid/grid.component';
 import { PAY_FEE_COLS } from './pay-fee-cols';
 import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { GetStateList, PicklistsSelectors } from 'src/app/state/picklists';
+import { Observable } from 'rxjs';
+import { IStateReadOnlyModel } from 'src/app/api';
+import { Select, Store } from '@ngxs/store';
+import { IFormFields } from '../../models/form-fields/form-fields';
 
 @Component({
   selector: 'abs-pay-fee',
   standalone: true,
-  imports: [CommonModule, GridComponent, FormsModule],
+  imports: [
+    CommonModule,
+    GridComponent,
+    FormsModule,
+    InputTextModule,
+    DropdownModule,
+  ],
   templateUrl: './pay-fee.component.html',
   styleUrls: ['./pay-fee.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class PayFeeComponent {
+export class PayFeeComponent implements OnInit {
+  @Select(PicklistsSelectors.slices.states) states$:
+    | Observable<IStateReadOnlyModel[]>
+    | undefined;
+
   @Output() cancelAction: EventEmitter<any> = new EventEmitter();
 
   @Input() payFeeData: any;
   @Input() paymentGridData: any;
 
-  paymentInformationFormFields = [
+  states: IStateReadOnlyModel[] = [];
+
+  paymentInformationFormFields: IFormFields[] = [
     {
       label: 'First Name',
       value: '',
@@ -100,16 +120,7 @@ export class PayFeeComponent {
       placeholder: 'Choose your state',
       type: 'select',
       size: 'col-4',
-      options: [
-        {
-          label: 'Alabama',
-          value: 'AL',
-        },
-        {
-          label: 'Alaska',
-          value: 'AK',
-        },
-      ],
+      options: [],
     },
     {
       label: 'Zipcode',
@@ -124,6 +135,25 @@ export class PayFeeComponent {
   ];
 
   payFeeCols = PAY_FEE_COLS;
+
+  constructor(private _store: Store) {
+    this._store.dispatch(new GetStateList('500'));
+  }
+
+  ngOnInit(): void {
+    this.setPicklists();
+  }
+
+  setPicklists() {
+    this.states$?.subscribe((states) => {
+      this.states = states;
+      this.paymentInformationFormFields.filter((fields) => {
+        if (fields.name === 'state') {
+          fields.options = states;
+        }
+      });
+    });
+  }
 
   handleGridAction(event: any) {
     console.log(event);

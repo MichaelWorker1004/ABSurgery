@@ -1,9 +1,9 @@
 export interface IGridOptions {
   showFilter: boolean;
   filterOn: string;
-  placeholder?: string;
   filterType?: string;
   filterOptions?: IDropdown[];
+  placeholder?: string;
 }
 
 export interface IDropdown {

@@ -1,12 +1,23 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
+
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'abs-exam-registration',
   standalone: true,
-  imports: [CommonModule, CollapsePanelComponent, PayFeeComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CollapsePanelComponent,
+    PayFeeComponent,
+    RadioButtonModule,
+    CheckboxModule,
+  ],
   templateUrl: './exam-registration.component.html',
   styleUrls: ['./exam-registration.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -58,7 +69,7 @@ export class ExamRegistrationComponent implements OnInit {
   }
 
   onSiteSelectionChange(event: any) {
-    console.log(event.target.name);
+    console.log(event);
     this.siteSelectionFormData
       .filter((item) => item.name === event.target.name)
       .map((item) => {

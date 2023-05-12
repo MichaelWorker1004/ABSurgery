@@ -16,6 +16,12 @@ import {
 } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { InputSelectComponent } from 'src/app/shared/components/base-input/input-select.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
+import { IFormFields } from 'src/app/shared/models/form-fields/form-fields';
+import { ADD_EDIT_RECORD_FIELDS } from './add-record-form-fields';
 
 @Component({
   selector: 'abs-add-record-modal',
@@ -25,6 +31,10 @@ import { InputSelectComponent } from 'src/app/shared/components/base-input/input
     FormsModule,
     ReactiveFormsModule,
     InputSelectComponent,
+    InputTextModule,
+    DropdownModule,
+    InputTextareaModule,
+    CalendarModule,
   ],
   templateUrl: './add-record-modal.component.html',
   styleUrls: ['./add-record-modal.component.scss'],
@@ -35,101 +45,7 @@ export class AddRecordModalComponent implements OnInit {
   @Input() isEdit$ = new BehaviorSubject<boolean>(false);
   @Input() slectedGmeRotation$ = new BehaviorSubject<any[]>([]);
 
-  addEditRecordFields = [
-    {
-      label: 'Start Date',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'from',
-      placeholder: 'MM/DD/YYYY',
-      type: 'date',
-      size: 'col-4',
-    },
-    {
-      label: 'End Date',
-      subLabel: '',
-      required: true,
-      name: 'to',
-      placeholder: 'MM/DD/YYYY',
-      type: 'date',
-      size: 'col-4',
-    },
-    {
-      label: 'Week(s)',
-      required: false,
-      name: 'weeks',
-      placeholder: '',
-      readonly: true,
-      type: 'text',
-      size: 'col-4',
-    },
-    {
-      label: 'Program Name',
-      subLabel: '',
-      required: true,
-      name: 'programName',
-      placeholder: 'Type your answer...',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Affiliated Organization',
-      subLabel: '',
-      required: true,
-      name: 'affiliatedOrganization',
-      placeholder: 'Type your answer...',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Clinical Level',
-      subLabel: '',
-      required: true,
-      name: 'clinicalLevel',
-      placeholder: 'Type your answer...',
-      type: 'text',
-      size: 'col-12',
-    },
-    {
-      label: 'Explain',
-      subLabel: '',
-      required: true,
-      name: 'explain',
-      placeholder: 'Type your answer...',
-      type: 'textarea',
-      size: 'col-6',
-    },
-    {
-      label: 'Description (Non-Surgical Only)',
-      subLabel: '',
-      required: true,
-      name: 'description',
-      placeholder: 'Type your answer...',
-      type: 'textarea',
-      size: 'col-6',
-    },
-    {
-      label: 'International Rotation',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'internationalRotation',
-      placeholder: 'Make a selection...',
-      type: 'select',
-      size: 'col-4',
-      options: [
-        {
-          label: 'Yes',
-          value: 'Yes',
-        },
-        {
-          label: 'No',
-          value: 'No',
-        },
-      ],
-    },
-  ];
+  addEditRecordFields: IFormFields[] = ADD_EDIT_RECORD_FIELDS;
 
   addEditRecordsForm = new FormGroup({
     to: new FormControl('', [Validators.required]),

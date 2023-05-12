@@ -8,16 +8,14 @@
   <div class="grid">
     <div
       *ngFor="let formField of attestationFormFields"
-      [class]="formField.size"
+      class="flex align-items-center gap-2 {{ formField.size }}"
     >
-      <sl-checkbox
+      <p-checkbox
         [value]="formField.value"
         [name]="formField.name"
         [id]="formField.name"
-        ngDefaultControl
-        [(ngModel)]="formField.value"
-        >{{ formField.label }}</sl-checkbox
-      >
+      ></p-checkbox>
+      <label [for]="formField.name">{{ formField.label }}</label>
     </div>
     <div class="col-12 flex justify-content-end btn-container mt-3">
       <sl-button variant="default" size="large" (click)="close()"

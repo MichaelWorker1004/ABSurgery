@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExamRegistrationComponent } from './exam-registration.component';
+import { NgxsModule } from '@ngxs/store';
+import { surgeonPortalState } from '../state/surgeon-portal.state';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ExamRegistrationComponent', () => {
   let component: ExamRegistrationComponent;
@@ -8,7 +11,11 @@ describe('ExamRegistrationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExamRegistrationComponent],
+      imports: [
+        ExamRegistrationComponent,
+        NgxsModule.forRoot(surgeonPortalState),
+        HttpClientTestingModule,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExamRegistrationComponent);

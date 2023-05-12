@@ -22,6 +22,10 @@ import { ClearErrors } from '../state/my-account/my-account.actions';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { CheckboxModule } from 'primeng/checkbox';
+
 @Component({
   selector: 'abs-my-account',
   templateUrl: './my-account.component.html',
@@ -34,6 +38,9 @@ import { FormErrorsComponent } from '../shared/components/form-errors/form-error
     ReactiveFormsModule,
     ProfileHeaderComponent,
     FormErrorsComponent,
+    InputTextModule,
+    PasswordModule,
+    CheckboxModule,
   ],
 })
 export class MyAccountComponent implements OnDestroy {

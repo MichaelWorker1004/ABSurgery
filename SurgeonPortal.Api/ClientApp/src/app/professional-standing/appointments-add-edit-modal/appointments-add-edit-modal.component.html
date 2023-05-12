@@ -7,85 +7,88 @@
         egestas sit amet tortor at, condimentum tempor erat.
       </p>
     </div>
-    <sl-select
-      class="col-12 md:col-6"
-      name="practiceType"
-      label="Practice Type"
-      ngDefaultControl
-      [(ngModel)]="localAppointment.practiceType"
-    >
-      <sl-option value="Practice_1">Practice 1</sl-option>
-      <sl-option value="option-1">Option 1</sl-option>
-      <sl-option value="option-2">Option 2</sl-option>
-      <sl-option value="option-3">Option 3</sl-option>
-    </sl-select>
-    <sl-select
-      class="col-12 md:col-6"
-      name="appointmentType"
-      label="Appointment Type"
-      ngDefaultControl
-      [(ngModel)]="localAppointment.appointmentType"
-    >
-      <sl-option value="Appointment_1">Appointment 1</sl-option>
-      <sl-option value="option-1">Option 1</sl-option>
-      <sl-option value="option-2">Option 2</sl-option>
-      <sl-option value="option-3">Option 3</sl-option>
-    </sl-select>
-    <sl-select
-      class="col-12 md:col-6"
-      name="organizationType"
-      label="Organization Type"
-      ngDefaultControl
-      [(ngModel)]="localAppointment.organizationType"
-    >
-      <sl-option value="Organization_1">Organization 1</sl-option>
-      <sl-option value="option-1">Option 1</sl-option>
-      <sl-option value="option-2">Option 2</sl-option>
-      <sl-option value="option-3">Option 3</sl-option>
-    </sl-select>
-    <sl-select
-      class="col-12 md:col-6"
-      name="state"
-      label="State"
-      ngDefaultControl
-      [(ngModel)]="localAppointment.state"
-    >
-      <sl-option value="PA">PA</sl-option>
-      <sl-option value="option-1">Option 1</sl-option>
-      <sl-option value="option-2">Option 2</sl-option>
-      <sl-option value="option-3">Option 3</sl-option>
-    </sl-select>
-    <sl-select
-      class="col-12 md:col-6"
-      name="institution"
-      label="Institution"
-      ngDefaultControl
-      [(ngModel)]="localAppointment.institution"
-    >
-      <sl-option value="LVHN">LVHN</sl-option>
-      <sl-option value="option-1">Option 1</sl-option>
-      <sl-option value="option-2">Option 2</sl-option>
-      <sl-option value="option-3">Option 3</sl-option>
-    </sl-select>
-    <sl-input
-      class="col-12 md:col-6"
-      name="other"
-      label="Other"
-      ngDefaultControl
-      [(ngModel)]="localAppointment.other"
-    ></sl-input>
-    <sl-select
-      class="col-12 md:col-6"
-      name="official"
-      label="Official"
-      ngDefaultControl
-      [(ngModel)]="localAppointment.official"
-    >
-      <sl-option value="ABE">ABE</sl-option>
-      <sl-option value="option-1">Option 1</sl-option>
-      <sl-option value="option-2">Option 2</sl-option>
-      <sl-option value="option-3">Option 3</sl-option>
-    </sl-select>
+    <div class="col-12 md:col-6">
+      <label class="block" for="practiceType">Practice Type</label>
+      <p-dropdown
+        inputId="practiceType"
+        [options]="fakeOptions"
+        name="practiceType"
+        [(ngModel)]="localAppointment.practiceType"
+        placeholder="Select Practice Type"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+    <div class="col-12 md:col-6">
+      <label class="block" for="appointmentType">Appointment Type</label>
+      <p-dropdown
+        inputId="appointmentType"
+        [options]="fakeOptions"
+        name="appointmentType"
+        [(ngModel)]="localAppointment.appointmentType"
+        placeholder="Select Appointment Type"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+    <div class="col-12 md:col-6">
+      <label class="block" for="organizationType">Organization Type</label>
+      <p-dropdown
+        inputId="organizationType"
+        [options]="fakeOptions"
+        name="organizationType"
+        [(ngModel)]="localAppointment.organizationType"
+        placeholder="Select Organization Type"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+    <div class="col-12 md:col-6">
+      <label class="block" for="state">State</label>
+      <p-dropdown
+        inputId="state"
+        [options]="fakeOptions"
+        name="state"
+        [(ngModel)]="localAppointment.state"
+        placeholder="Select State"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+    <div class="col-12 md:col-6">
+      <label class="block" for="institution">Institution</label>
+      <p-dropdown
+        inputId="institution"
+        [options]="fakeOptions"
+        name="institution"
+        [(ngModel)]="localAppointment.institution"
+        placeholder="Select Institution"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+    <div class="col-12 md:col-6">
+      <label class="block" for="other">Other</label>
+      <input
+        id="other"
+        pInputText
+        type="text"
+        name="other"
+        [(ngModel)]="localAppointment.other"
+      />
+    </div>
+    <div class="col-12 md:col-6">
+      <label class="block" for="official">Official</label>
+      <p-dropdown
+        inputId="official"
+        [options]="fakeOptions"
+        name="official"
+        [(ngModel)]="localAppointment.official"
+        placeholder="Select Official"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
   </div>
 </form>
 <div class="flex justify-content-end" slot="footer">

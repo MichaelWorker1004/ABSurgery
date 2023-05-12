@@ -11,54 +11,48 @@
         formField.size
       }} flex flex-column justify-content-start"
     >
-      <sl-input
+      <label [htmlFor]="formField.name"
+        >{{ formField.label }}{{ formField.required ? '*' : '' }}</label
+      >
+      <input
         *ngIf="formField.type === 'text'"
-        [placeholder]="formField.placeholder"
+        [placeholder]="formField.placeholder ?? ''"
         [name]="formField.name"
         [id]="formField.name"
-        [label]="formField.label"
         [required]="formField.required"
-        [attr.readonly]="formField.readonly"
         [formControlName]="formField.name"
         ngDefaultControl
-      ></sl-input>
-      <sl-input
+        pInputText
+      />
+      <p-calendar
         *ngIf="formField.type === 'date'"
-        type="date"
-        [placeholder]="formField.placeholder"
-        [name]="formField.name"
-        [attr.id]="formField.name"
-        [label]="formField.label"
-        [required]="formField.required"
         [formControlName]="formField.name"
+        [showIcon]="true"
+        [placeholder]="formField.placeholder ?? ''"
+        [required]="formField.required"
         ngDefaultControl
-      >
-      </sl-input>
-      <abs-input-select
+        appendTo="body"
+      ></p-calendar>
+      <p-dropdown
         *ngIf="formField.type === 'select'"
-        [placeholder]="formField.placeholder"
+        [placeholder]="formField.placeholder ?? ''"
+        [options]="formField.options ?? []"
         [name]="formField.name"
         [id]="formField.name"
-        [label]="formField.label"
-        [required]="formField.required"
+        [editable]="true"
         [formControlName]="formField.name"
         ngDefaultControl
-      >
-        <sl-option
-          *ngFor="let option of formField.options"
-          [value]="option.value"
-          >{{ option.label }}</sl-option
-        >
-      </abs-input-select>
+        appendTo="body"
+        optionLabel="label"
+        optionValue="value"
+      ></p-dropdown>
       <div *ngIf="formField.type === 'textarea'">
-        <label>
-          {{ formField.label }} <span>{{ formField.subLabel }}</span></label
-        >
-        <sl-textarea
+        <textarea
+          pInputTextarea
           [name]="formField.name"
-          ngDefaultControl
           [formControlName]="formField.name"
-        ></sl-textarea>
+          ngDefaultControl
+        ></textarea>
       </div>
     </div>
   </div>

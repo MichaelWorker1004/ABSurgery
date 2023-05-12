@@ -2,22 +2,42 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
+  OnInit,
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { FormsModule } from '@angular/forms';
 import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
+import { IFormFields } from 'src/app/shared/models/form-fields/form-fields';
+import { Select } from '@ngxs/store';
+import { PicklistsSelectors } from 'src/app/state/picklists';
+import { Observable } from 'rxjs';
+import { IStateReadOnlyModel } from 'src/app/api';
 
 @Component({
   selector: 'abs-reference-form-modal',
   standalone: true,
-  imports: [CommonModule, GridComponent, FormsModule],
+  imports: [
+    CommonModule,
+    GridComponent,
+    FormsModule,
+    InputTextModule,
+    DropdownModule,
+    CheckboxModule,
+  ],
   templateUrl: './reference-form-modal.component.html',
   styleUrls: ['./reference-form-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ReferenceFormModalComponent {
+export class ReferenceFormModalComponent implements OnInit {
+  @Select(PicklistsSelectors.slices.states) states$:
+    | Observable<IStateReadOnlyModel[]>
+    | undefined;
+
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
   userData = {
@@ -25,7 +45,7 @@ export class ReferenceFormModalComponent {
   };
 
   referenceFormsCols = REFERENCE_FORMS_COLS;
-  referenceFormFields = [
+  referenceFormFields: IFormFields[] = [
     {
       label: 'Name of Authenticating Official',
       subLabel: '(Must be a Physician)',
@@ -47,16 +67,16 @@ export class ReferenceFormModalComponent {
       size: 'col-4',
       options: [
         {
-          label: 'Chief of Staff',
-          value: 'chief',
+          itemDescription: 'Chief of Staff',
+          itemValue: 'chief',
         },
         {
-          label: 'Medical Director',
-          value: 'medical',
+          itemDescription: 'Medical Director',
+          itemValue: 'medical',
         },
         {
-          label: 'Program Director',
-          value: 'program',
+          itemDescription: 'Program Director',
+          itemValue: 'program',
         },
       ],
     },
@@ -71,16 +91,16 @@ export class ReferenceFormModalComponent {
       size: 'col-4',
       options: [
         {
-          label: 'Option 1',
-          value: 'option1',
+          itemDescription: 'Option 1',
+          itemValue: 'option1',
         },
         {
-          label: 'Option 2',
-          value: 'option2',
+          itemDescription: 'Option 2',
+          itemValue: 'option2',
         },
         {
-          label: 'Option 3',
-          value: 'option3',
+          itemDescription: 'Option 3',
+          itemValue: 'option3',
         },
       ],
     },
@@ -149,20 +169,11 @@ export class ReferenceFormModalComponent {
       subLabel: '',
       value: '',
       required: true,
-      name: 'state',
+      name: 'states',
       placeholder: 'Choose your state',
       type: 'select',
       size: 'col-4',
-      options: [
-        {
-          label: 'Alabama',
-          value: 'AL',
-        },
-        {
-          label: 'Alaska',
-          value: 'AK',
-        },
-      ],
+      options: [],
     },
     {
       label: 'Name',
@@ -199,6 +210,20 @@ export class ReferenceFormModalComponent {
       status: 'Approved',
     },
   ];
+
+  ngOnInit(): void {
+    this.setPicklists();
+  }
+
+  setPicklists() {
+    this.states$?.subscribe((states) => {
+      this.referenceFormFields.filter((field) => {
+        if (field.name === 'states') {
+          field.options = states;
+        }
+      });
+    });
+  }
 
   handleGridAction(event: any) {
     console.log(event);

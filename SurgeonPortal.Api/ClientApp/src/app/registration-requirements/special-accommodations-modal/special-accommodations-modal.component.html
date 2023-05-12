@@ -4,18 +4,20 @@
     <a href="#">Accommodation Request Other Medical Conditions</a>
   </p>
 </div>
-<div class="flex">
-  <sl-select
-    placeholder="Select one"
-    (sl-change)="handleSelectChange($event)"
-    class="mr-3"
-  >
-    <sl-option
-      *ngFor="let option of specialAccommodationsTypeOptions"
-      [value]="option.value"
-      >{{ option.label }}</sl-option
-    >
-  </sl-select>
+<div class="flex align-items-end gap-3">
+  <div>
+    <label class="block" for="appointmentType">Appointment Type</label>
+    <p-dropdown
+      [options]="specialAccommodationsTypeOptions"
+      (onChange)="handleSelectChange($event)"
+      inputId="appointmentType"
+      name="appointmentType"
+      placeholder="Select an Appointment Type"
+      optionLabel="label"
+      optionValue="value"
+    ></p-dropdown>
+  </div>
+
   <div class="flex">
     <div class="input-file">
       <label>
