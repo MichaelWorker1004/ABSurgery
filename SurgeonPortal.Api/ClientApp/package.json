@@ -1,9 +1,6 @@
 {
   "name": "surgeon-portal",
   "version": "0.0.0",
-  "eslintIgnore": [
-    "projects/ytg-n/src/lib/legacy"
-  ],
   "type": "module",
   "scripts": {
     "ng": "ng",
@@ -11,11 +8,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "run-app": "cd ../ && dotnet run",
-    "lib-build": "ng build ytg-n && ng build ytg-angular",
-    "lib-dev-build": "npm run lib-build && npm run ytg-n:pack && npm run ytg-angular:pack && node scripts/build-install-lib.js",
-    "ytg-n:pack": "cd dist/ytg-n && npm pack .",
+    "lib-build": "ng build ytg-angular",
+    "lib-dev-build": "npm run lib-build && npm run ytg-angular:pack && node scripts/build-install-lib.js",
     "ytg-angular:pack": "cd dist/ytg-angular && npm pack .",
-    "lib-watch": "ng build ytg-n --watch",
     "test-lint": "ng test --source-map=false --browsers=ChromeHeadless --watch=false",
     "test": "ng test",
     "lint": "eslint src --ext js,ts,tsx",
@@ -55,8 +50,7 @@
     "primeng": "^15.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "ytg-angular": "file:ytg-angular-0.0.1.tgz",
-    "ytg-n": "file:ytg-n-0.0.1.tgz",
+    "ytg-angular": "file:ytg-angular-0.0.2.tgz",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
