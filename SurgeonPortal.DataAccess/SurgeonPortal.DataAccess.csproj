@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ytg.Framework" Version="6.0.10" />
-    <PackageReference Include="Ytg.Framework.Sql" Version="6.0.7" />
+    <PackageReference Include="Ytg.Framework" Version="6.0.11" />
+    <PackageReference Include="Ytg.Framework.Sql" Version="6.0.8" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Csla" Version="5.5.3" />
-    <PackageReference Include="Ytg.Framework" Version="6.0.10" />
+    <PackageReference Include="Ytg.Framework" Version="6.0.11" />
   </ItemGroup>
 
 </Project>

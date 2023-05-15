@@ -23,6 +23,15 @@ export class GetStateList {
   constructor(public countryCode?: string) {}
 }
 
+export class GetAccreditedProgramInstitutionsList {
+  static readonly type =
+    '[Picklists] Get the accredited program insitutions list';
+}
+
+export class GetTrainingTypeList {
+  static readonly type = '[Picklists] Get the Training Type list';
+}
+
 export class GetPicklists {
   static readonly type = '[Picklists] Get all picklists';
 

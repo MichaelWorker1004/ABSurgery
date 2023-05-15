@@ -75,7 +75,7 @@ namespace SurgeonPortal.Library.Users
 
             BusinessRules.AddRule(new RegExMatch(EmailAddressProperty, @"^$|^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", @"The email address must be a valid format"));
             BusinessRules.AddRule(new RegExMatch(PasswordProperty, @"^$|^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$", @"The password does not meet the minimum requirements.  Passwords must be a minimum length of 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character"));
-            BusinessRules.AddRule(new CredentialEmailAndPasswordValidRule(PasswordProperty, EmailAddressProperty, 1));
+            BusinessRules.AddRule(new EitherOrRequiredRule(PasswordProperty, EmailAddressProperty, 1));
         }
         private void InitializeInjectionDependentRules()
         {

@@ -20,6 +20,8 @@ export class PicklistsSelectors {
         races: state.races,
         states: state.states,
         statesMap: state.statesMap,
+        accreditedInstitutions: state.accreditedInstitutions,
+        trainingTypes: state.trainingTypes,
       } as IPicklistUserValues;
     }
     return;

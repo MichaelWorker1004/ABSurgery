@@ -1,0 +1,57 @@
+{
+  "refs": {},
+  "name": "Picklists\\AccreditedProgramInstitutionReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ProgramId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "InstitutionName",
+      "dataType": "string",
+      "maxLength": 150,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "City",
+      "dataType": "string",
+      "maxLength": 30,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "State",
+      "dataType": "string",
+      "maxLength": 2,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\AccreditedProgramInstitutionReadOnly -sp [dbo].[get_accredited_program_institutions] -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-08T16:31:03.295583Z"
+  },
+  "version": 1
+}

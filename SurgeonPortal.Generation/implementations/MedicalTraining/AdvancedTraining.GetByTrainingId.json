@@ -1,0 +1,211 @@
+{
+  "name": "AdvancedTraining",
+  "implementationName": "MedicalTraining\\AdvancedTraining.GetByTrainingId",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_advanced_training_by_trainingid",
+    "ControllerName": "MedicalTraining\\AdvancedTrainingController",
+    "ControllerRoute": "api/advanced-training",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByTrainingId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\AdvancedTraining",
+    "ModelGroup": "AdvancedTraining",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-trainingid"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_advanced_training_by_trainingid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_advanced_training_by_trainingid]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "MedicalTraining\\AdvancedTraining",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "TrainingTypeId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.TrainingTypeId"
+              },
+              {
+                "name": "TrainingType",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.TrainingType"
+              },
+              {
+                "name": "ProgramId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramId"
+              },
+              {
+                "name": "InstitutionName",
+                "dataType": "string",
+                "maxLength": 150,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InstitutionName"
+              },
+              {
+                "name": "City",
+                "dataType": "string",
+                "maxLength": 30,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.City"
+              },
+              {
+                "name": "State",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.State"
+              },
+              {
+                "name": "Other",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Other"
+              },
+              {
+                "name": "StartDate",
+                "dataType": "datetime",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StartDate"
+              },
+              {
+                "name": "EndDate",
+                "dataType": "datetime",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.EndDate"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\AdvancedTraining.GetByTrainingId AdvancedTraining -t=ytg-framework/editable-get -p:Model=MedicalTraining\\AdvancedTraining -p:Adapter=sp:ABSSP-[dbo].[get_advanced_training_by_trainingid] -p:FetchMethodName=GetByTrainingId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdvancedTraining -p:Route=by-trainingid -p:ControllerName=MedicalTraining\\AdvancedTrainingController -p:ControllerRoute=api/advanced-training -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\AdvancedTraining.GetByTrainingId AdvancedTraining -t=ytg-framework/editable-get -p:Model=MedicalTraining\\AdvancedTraining -p:Adapter=sp:ABSSP-[dbo].[get_advanced_training_by_trainingid] -p:FetchMethodName=GetByTrainingId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdvancedTraining -p:Route=by-trainingid -p:ControllerName=MedicalTraining\\AdvancedTrainingController -p:ControllerRoute=api/advanced-training -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-09T18:41:12.9845754Z"
+  },
+  "version": 1
+}

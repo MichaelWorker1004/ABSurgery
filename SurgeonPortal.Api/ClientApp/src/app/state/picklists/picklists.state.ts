@@ -13,6 +13,7 @@ import {
   PicklistsService,
 } from '../../api';
 import {
+  GetAccreditedProgramInstitutionsList,
   GetCountryList,
   GetEthnicityList,
   GetGenderList,
@@ -20,8 +21,11 @@ import {
   GetPicklists,
   GetRaceList,
   GetStateList,
+  GetTrainingTypeList,
 } from './picklists.actions';
 import { IFormErrors } from '../../shared/common';
+import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
+import { ITrainingTypeReadOnlyModel } from 'src/app/api/models/picklists/training-type-read-only.model';
 export interface IPicklist {
   countries: ICountryReadOnlyModel[] | undefined;
   ethnicities: IEthnicityReadOnlyModel[] | undefined;
@@ -30,6 +34,10 @@ export interface IPicklist {
   races: IRaceReadOnlyModel[] | undefined;
   states: IStateReadOnlyModel[] | undefined;
   statesMap: { [key: string]: IStateReadOnlyModel[] };
+  accreditedInstitutions:
+    | IAccreditedProgramInstitutionReadOnlyModel[]
+    | undefined;
+  trainingTypes: ITrainingTypeReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -47,6 +55,10 @@ export interface IPicklistUserValues {
   races: IRaceReadOnlyModel[] | undefined;
   states: IStateReadOnlyModel[] | undefined;
   statesMap: { [key: string]: IStateReadOnlyModel[] } | undefined;
+  accreditedInstitutions:
+    | IAccreditedProgramInstitutionReadOnlyModel[]
+    | undefined;
+  trainingTypes: ITrainingTypeReadOnlyModel[] | undefined;
 }
 
 export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
@@ -61,6 +73,8 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     races: undefined,
     states: [],
     statesMap: {},
+    accreditedInstitutions: undefined,
+    trainingTypes: undefined,
   },
 })
 @Injectable()
@@ -223,6 +237,54 @@ export class PicklistsState {
     }
   }
 
+  @Action(GetAccreditedProgramInstitutionsList)
+  getAccreditedProgramInstitutionsList(
+    ctx: StateContext<IPicklist>
+  ): Observable<IAccreditedProgramInstitutionReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.accreditedInstitutions) {
+      return of(ctx.getState()?.accreditedInstitutions);
+    }
+    return this.picklistsService
+      .retrieveAccreditedProgramInstitutionReadOnly_GetAll()
+      .pipe(
+        tap((insitutions: IAccreditedProgramInstitutionReadOnlyModel[]) => {
+          ctx.patchState({
+            accreditedInstitutions: insitutions,
+          });
+        }),
+        catchError((error) => {
+          console.error(
+            '------- In Picklists Store: Accredited Institutions',
+            error
+          );
+          return of(error);
+        })
+      );
+  }
+
+  @Action(GetTrainingTypeList)
+  getTrainingTypeList(
+    ctx: StateContext<IPicklist>
+  ): Observable<ITrainingTypeReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.trainingTypes) {
+      return of(ctx.getState()?.trainingTypes);
+    }
+    return this.picklistsService.retrieveTrainingTypeReadOnly_GetAll().pipe(
+      tap((trainingTypes: ITrainingTypeReadOnlyModel[]) => {
+        ctx.patchState({
+          trainingTypes,
+        });
+      }),
+      catchError((error) => {
+        console.error(
+          '------- In Picklists Store: Accredited Institutions',
+          error
+        );
+        return of(error);
+      })
+    );
+  }
+
   @Action(GetPicklists)
   getPicklists(
     ctx: StateContext<IPicklist>,
@@ -234,6 +296,10 @@ export class PicklistsState {
       this.getGenderList(ctx).pipe(catchError((error) => of(error))),
       this.getLanguageList(ctx).pipe(catchError((error) => of(error))),
       this.getRaceList(ctx).pipe(catchError((error) => of(error))),
+      this.getAccreditedProgramInstitutionsList(ctx).pipe(
+        catchError((error) => of(error))
+      ),
+      this.getTrainingTypeList(ctx).pipe(catchError((error) => of(error))),
     ];
 
     if (payload && payload.countryCode) {

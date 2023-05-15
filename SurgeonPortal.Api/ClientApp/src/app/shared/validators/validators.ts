@@ -41,3 +41,19 @@ export function validatePassword(): ValidatorFn {
     return null;
   };
 }
+
+export function validateStartAndEndDates(
+  startDate: string,
+  endDate: string
+): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const start = control.get(startDate)?.value;
+    const end = control.get(endDate)?.value;
+
+    if (start > end) {
+      return { datesValid: false };
+    }
+
+    return null;
+  };
+}

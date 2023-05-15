@@ -28,6 +28,7 @@ import {
   IAdditionalTrainingModel,
   IAdditionalTrainingReadOnlyModel,
 } from 'src/app/api';
+import { IAdvancedTrainingModel } from 'src/app/api/models/medicaltraining/advanced-training.model';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -83,7 +84,7 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
     { itemDescription: 'Option 7', itemValue: 'option-7' },
     { itemDescription: 'Option 8', itemValue: 'option-8' },
     { itemDescription: 'Option 9', itemValue: 'option-9' },
-    { itemDescription: 'Option 10', itemValue: 'option-10' },
+    { itemDescription: 'Option 101', itemValue: 'option-101' },
   ];
 
   userSubscription: Subscription | undefined;
@@ -93,20 +94,26 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
   documentCols = BASIC_DOCUMENT_COLS;
   showTrainingAddEdit = false;
   trainingAddEditTitle: string | undefined;
-  emptyTraining = {
-    trainingId: -1,
-    typeOfTraining: '',
-    stateId: '',
-    state: '',
-    institutionId: -1,
+  emptyTraining: IAdvancedTrainingModel = {
+    id: 0,
+    userId: 0,
+    trainingTypeId: 0,
+    trainingType: '',
+    programId: 0,
     institutionName: '',
     city: '',
+    state: '',
     other: '',
-    dateStarted: '',
-    dateEnded: '',
+    startDate: new Date(),
+    endDate: new Date(),
+    createdByUserId: 0,
+    createdAtUtc: new Date(),
+    lastUpdatedAtUtc: new Date(),
+    lastUpdatedByUserId: 0,
   };
-  tempTraining$: BehaviorSubject<IAdditionalTrainingModel> =
-    new BehaviorSubject(this.emptyTraining);
+  tempTraining$: BehaviorSubject<IAdvancedTrainingModel> = new BehaviorSubject(
+    this.emptyTraining
+  );
   panels = [
     'medicalSchool',
     'residency',
@@ -132,7 +139,6 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getMedicalTraining();
-    // this.fetchMedicalTrainingList();
   }
 
   initTrainingData() {

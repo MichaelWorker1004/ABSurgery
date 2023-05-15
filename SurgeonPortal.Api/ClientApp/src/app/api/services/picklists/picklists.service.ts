@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+import { IAccreditedProgramInstitutionReadOnlyModel } from '../../models/picklists/accredited-program-institution-read-only.model';
 import { ICountryReadOnlyModel } from '../../models/picklists/country-read-only.model';
 import { IEthnicityReadOnlyModel } from '../../models/picklists/ethnicity-read-only.model';
 import { IGenderReadOnlyModel } from '../../models/picklists/gender-read-only.model';
 import { ILanguageReadOnlyModel } from '../../models/picklists/language-read-only.model';
 import { IRaceReadOnlyModel } from '../../models/picklists/race-read-only.model';
 import { IStateReadOnlyModel } from '../../models/picklists/state-read-only.model';
-import { ApiService } from 'ytg-angular';
+import { ApiService } from "ytg-angular";
+import { ITrainingTypeReadOnlyModel } from '../../models/picklists/training-type-read-only.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +20,31 @@ export class PicklistsService {
 
     constructor(private apiService: ApiService) {}
 
-
+ 
+        public retrieveAccreditedProgramInstitutionReadOnly_GetAll(apiVersion = '1.0'): Observable<IAccreditedProgramInstitutionReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_accredited_program_institutions]
+            */
+            
+            
+            return this.apiService.get<IAccreditedProgramInstitutionReadOnlyModel[]>(`${this.baseEndpoint}/accredited-program-institutions?api-version=${apiVersion}`);
+        }
+ 
         public retrieveCountryReadOnly_GetAll(apiVersion = '1.0'): Observable<ICountryReadOnlyModel[]> {
             /**
             * Claims
@@ -161,6 +189,30 @@ export class PicklistsService {
 
 
             return this.apiService.get<IStateReadOnlyModel[]>(`${this.baseEndpoint}/states?api-version=${apiVersion}&countryCode=${countryCode}`);
+        }
+ 
+        public retrieveTrainingTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<ITrainingTypeReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_training_type]
+            */
+            
+            
+            return this.apiService.get<ITrainingTypeReadOnlyModel[]>(`${this.baseEndpoint}/training-types?api-version=${apiVersion}`);
         }
 
 

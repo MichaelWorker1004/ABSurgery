@@ -1,0 +1,86 @@
+{
+  "name": "AccreditedProgramInstitutionReadOnly",
+  "implementationName": "Picklists\\AccreditedProgramInstitutionReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_accredited_program_institutions",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\AccreditedProgramInstitutionReadOnly",
+    "ModelGroup": "AccreditedProgramInstitutionReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "accredited-program-institutions",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_accredited_program_institutions",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_accredited_program_institutions]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\AccreditedProgramInstitutionReadOnly",
+            "fields": [
+              {
+                "name": "ProgramId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ProgramId"
+              },
+              {
+                "name": "InstitutionName",
+                "dataType": "string",
+                "maxLength": 150,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InstitutionName"
+              },
+              {
+                "name": "City",
+                "dataType": "string",
+                "maxLength": 30,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.City"
+              },
+              {
+                "name": "State",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.State"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\AccreditedProgramInstitutionReadOnly.GetAll AccreditedProgramInstitutionReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\AccreditedProgramInstitutionReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_accredited_program_institutions] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AccreditedProgramInstitutionReadOnly -p:Route=accredited-program-institutions -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\AccreditedProgramInstitutionReadOnly.GetAll AccreditedProgramInstitutionReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\AccreditedProgramInstitutionReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_accredited_program_institutions] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AccreditedProgramInstitutionReadOnly -p:Route=accredited-program-institutions -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-08T16:32:23.8791705Z"
+  },
+  "version": 1
+}

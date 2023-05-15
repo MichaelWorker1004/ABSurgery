@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace SurgeonPortal.Library.Users
 {
-    public class CredentialEmailAndPasswordValidRule : Csla.Rules.BusinessRule
+    public class EitherOrRequiredRule : Csla.Rules.BusinessRule
     {
         private IPropertyInfo SecondaryProperty { get; set; }
-        public CredentialEmailAndPasswordValidRule(IPropertyInfo primaryProperty,
+        public EitherOrRequiredRule(IPropertyInfo primaryProperty,
                 IPropertyInfo secondaryProperty,
                 int priority)
           : base(primaryProperty)
@@ -31,10 +31,10 @@ namespace SurgeonPortal.Library.Users
 
             if ((propertyValue == null &&
                 secondaryValue == null) ||
-                (string.IsNullOrWhiteSpace(propertyValue.ToString()) &&
-                 string.IsNullOrWhiteSpace(secondaryValue.ToString())))
+                (string.IsNullOrWhiteSpace(propertyValue?.ToString()) &&
+                 string.IsNullOrWhiteSpace(secondaryValue?.ToString())))
             {
-                context.AddErrorResult("At least one value must be provided (EmailAddress or Password)");
+                context.AddErrorResult($"At least one value must be provided ({PrimaryProperty.FriendlyName} or {SecondaryProperty.FriendlyName})");
             }
         }
     }

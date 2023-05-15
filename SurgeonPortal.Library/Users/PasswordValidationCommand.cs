@@ -55,7 +55,7 @@ namespace SurgeonPortal.Library.Users
                 var dto = _passwordValidationCommandDal.Validate(
                     UserId,
                     Password);
-
+            
             			this.PasswordsMatch = dto.PasswordsMatch;
         			this.Password = dto.Password;
         			this.UserId = dto.UserId;

@@ -1,0 +1,66 @@
+{
+  "name": "TrainingTypeReadOnly",
+  "implementationName": "Picklists\\TrainingTypeReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_training_type",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\TrainingTypeReadOnly",
+    "ModelGroup": "TrainingTypeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "training-types",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_training_type",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_training_type]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\TrainingTypeReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "TrainingType",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.TrainingType"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\TrainingTypeReadOnly.GetAll TrainingTypeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\TrainingTypeReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_training_type] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=TrainingTypeReadOnly -p:Route=training-types -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\TrainingTypeReadOnly.GetAll TrainingTypeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\TrainingTypeReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_training_type] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=TrainingTypeReadOnly -p:Route=training-types -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-08T17:20:56.721096Z"
+  },
+  "version": 1
+}

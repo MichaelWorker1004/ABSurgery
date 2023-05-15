@@ -6,4 +6,4 @@ coverage
 __snapshots__
 projects/ytg-n/src/lib/legacy
 scripts
-
+src/app/api

@@ -116,6 +116,8 @@ export class AddRecordModalComponent implements OnInit {
             this.addEditRecordsForm.get(key)?.setValue(value);
           }
         });
+      } else {
+        this.addEditRecordsForm.reset();
       }
     });
   }

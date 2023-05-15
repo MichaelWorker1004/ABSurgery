@@ -5,90 +5,129 @@
   *ngIf="additionalTrainingForm"
 >
   <div class="grid">
-    <div class="col-12">
-      <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
-        nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat,
-        egestas sit amet tortor at, condimentum tempor erat.
-      </p>
-    </div>
-    <sl-input
-      class="col-12"
-      name="type"
-      label="Type of Training"
-      placeholder="Type your answer..."
-      ngDefaultControl
-      formControlName="typeOfTraining"
-      [required]="typeOfTraining?.hasError('required') ? true : false"
-    >
-    </sl-input>
-    <sl-input
-      class="col-12 md:col-6"
-      name="city"
-      label="City"
-      placeholder="Type your answer..."
-      ngDefaultControl
-      formControlName="city"
-    >
-    </sl-input>
-    <abs-input-select
-      class="col-12 md:col-6"
-      label="State"
-      formControlName="stateId"
-      *ngIf="states$ | async as states"
-      [disabled]="!states.length"
-      ngDefaultControl
-      placeholder="Choose a state"
-    >
-      <sl-option
-        *ngFor="let state of states; index as i; trackBy: trackByFn"
-        [value]="state.itemValue"
-        >{{ state.itemDescription }}</sl-option
+    <div class="flex flex-column gap-2 col-12">
+      <label htmlFor="trainingType">Type of Training *</label>
+      <p-dropdown
+        [options]="trainingTypes"
+        [style]="{ width: '100%' }"
+        [inputStyle]="{ width: '100%' }"
+        appendTo="body"
+        optionLabel="trainingType"
+        optionValue="id"
+        formControlName="trainingType"
+        placeholder="Choose a Training Type"
+      ></p-dropdown>
+      <small
+        *ngIf="
+          additionalTrainingForm.get('trainingType')?.errors &&
+          additionalTrainingForm.get('trainingType')?.dirty
+        "
+        id="trainingType-help"
+        class="form-error-text"
       >
-    </abs-input-select>
-
-    <abs-input-select
-      class="col-12"
-      label="Institution"
-      formControlName="institutionId"
-      ngDefaultControl
-      placeholder="Choose an institution"
-    >
-      <sl-option value="1">Option 1</sl-option>
-      <sl-option value="2">Option 2</sl-option>
-      <sl-option value="3">Option 3</sl-option>
-    </abs-input-select>
-    <sl-input
-      class="col-12"
-      name="other"
-      label="Other"
-      placeholder="Type your answer..."
-      ngDefaultControl
-      formControlName="other"
-    >
-    </sl-input>
-    <sl-input
-      type="date"
-      valueAsDate
-      class="col-12 md:col-6"
-      name="from"
-      label="Date Started"
-      ngDefaultControl
-      formControlName="dateStarted"
-      required
-    >
-    </sl-input>
-    <sl-input
-      type="date"
-      valueAsDate
-      class="col-12 md:col-6"
-      name="to"
-      label="Date Ended"
-      ngDefaultControl
-      formControlName="dateEnded"
-      required
-    >
-    </sl-input>
+        This is required
+      </small>
+    </div>
+    <div class="col-12 full-width gap-2 flex flex-column">
+      <label htmlFor="institutionName">Institution</label>
+      <p-autoComplete
+        [dropdown]="true"
+        [suggestions]="filteredInstitutionOptions"
+        (completeMethod)="filterItems($event)"
+        (onSelect)="onInstitutionSelect($event)"
+        (onClear)="clearAutoComplete()"
+        [style]="{ width: '100%' }"
+        [inputStyle]="{ width: '100%' }"
+        [disabled]="additionalTrainingForm.get('other')?.value ? true : false"
+        [showClear]="true"
+        appendTo="body"
+        id="institutionName"
+        placeholder="Select or Enter Institution name"
+        field="itemDescription"
+        formControlName="institutionName"
+      >
+      </p-autoComplete>
+    </div>
+    <div class="flex flex-column gap-2 col-12 md:col-6">
+      <label htmlFor="city">City</label>
+      <input
+        pInputText
+        id="city"
+        placeholder="Choose an Institution"
+        formControlName="city"
+      />
+    </div>
+    <div class="flex flex-column gap-2 col-12 md:col-6">
+      <label htmlFor="state">State</label>
+      <p-dropdown
+        [options]="stateOptions"
+        [style]="{ width: '100%' }"
+        [inputStyle]="{ width: '100%' }"
+        [readonly]="true"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+        formControlName="state"
+        placeholder="Choose an Institution"
+      ></p-dropdown>
+    </div>
+    <div class="flex flex-column gap-2 col-12">
+      <label htmlFor="other">Other</label>
+      <input
+        [attr.disabled]="additionalTrainingForm.get('institutionName')?.value"
+        pInputText
+        id="other"
+        placeholder="If you do not see your Institution in the list, type it in here..."
+        formControlName="other"
+      />
+    </div>
+    <div class="flex flex-column gap-2 col-12 md:col-6">
+      <label htmlFor="startDate">Date Started *</label>
+      <p-calendar
+        [showIcon]="true"
+        [style]="{ width: '100%' }"
+        [inputStyle]="{ width: '100%' }"
+        appendTo="body"
+        id="startDate"
+        placeholder="Type your answer..."
+        formControlName="startDate"
+      >
+      </p-calendar>
+      <small
+        *ngIf="additionalTrainingForm.get('endDate')?.dirty"
+        id="startDate-help"
+        class="form-error-text"
+      >
+        {{
+            this.additionalTrainingForm.errors?.['datesValid'] === false
+              ? 'Start Date must come before End Date'
+              : ''
+        }}
+      </small>
+    </div>
+    <div class="flex flex-column gap-2 col-12 md:col-6">
+      <label htmlFor="endDate">Date Ended *</label>
+      <p-calendar
+        [showIcon]="true"
+        [style]="{ width: '100%' }"
+        [inputStyle]="{ width: '100%' }"
+        appendTo="body"
+        id="endDate"
+        placeholder="Type your answer..."
+        formControlName="endDate"
+      >
+      </p-calendar>
+      <small
+        *ngIf="additionalTrainingForm.get('endDate')?.dirty"
+        id="endDate-help"
+        class="form-error-text"
+      >
+        {{
+          this.additionalTrainingForm.errors?.['datesValid'] === false
+            ? 'Date Started must be before Date Ended'
+            : ''
+        }}
+      </small>
+    </div>
   </div>
   <div class="flex justify-content-end mt-4" slot="footer">
     <sl-button type="button" variant="text" (click)="cancel()"

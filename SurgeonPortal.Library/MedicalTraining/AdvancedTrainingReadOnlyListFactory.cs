@@ -1,0 +1,22 @@
+using Csla;
+using SurgeonPortal.Library.Contracts.MedicalTraining;
+using System;
+using System.Threading.Tasks;
+using Ytg.Framework.Exceptions;
+
+namespace SurgeonPortal.Library.MedicalTraining
+{
+    public class AdvancedTrainingReadOnlyListFactory : IAdvancedTrainingReadOnlyListFactory
+    {
+        public async Task<IAdvancedTrainingReadOnlyList> GetByUserIdAsync()
+        {
+            
+            return await DataPortal.FetchAsync<AdvancedTrainingReadOnlyList>();
+            
+        }
+
+            
+
+
+    }
+}

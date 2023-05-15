@@ -6,9 +6,13 @@
         "Title": "SurgeonPortal",
         "Language" : "C#"
     },
+    "claimsInfo" :
+    {
+        "claimSets" :
+        [
+        ]
+    },
     "mappings": {
-        "regex:^USERID$": "$UserId",
-        "regex:^UserName$": "$UserName",
         "regex:ABSI[dD]": "AbsId"
     }
 }

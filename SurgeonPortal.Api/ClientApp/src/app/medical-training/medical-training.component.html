@@ -5,10 +5,7 @@
   <section>
     <div class="grid">
       <div class="col-12 flex">
-        <abs-profile-header
-          [profilePicture]="user.profilePicture"
-          [user]="user"
-        ></abs-profile-header>
+        <abs-profile-header></abs-profile-header>
       </div>
     </div>
   </section>
@@ -496,14 +493,14 @@
                 <sl-button
                   variant="default"
                   class="btn-add mt-4 mb-5"
-                  (click)="showTrainingModal(null)"
+                  (click)="showTrainingModal()"
                 >
                   <i slot="prefix" class="fa-solid fa-plus"></i>
                   ADD RECORD
                 </sl-button>
                 <abs-grid
                   [columns]="trainingCols"
-                  [data]="medicalTraining.additionalTraining"
+                  [data]="advancedTraining$"
                   (action)="handleGridAction($event)"
                   class="margin-bottom-2"
                 ></abs-grid>
@@ -539,10 +536,14 @@
     <abs-modal
       [open]="showTrainingAddEdit"
       (closeDialog)="cancelAddEditTraining($event)"
-      [title]="trainingAddEditTitle"
+      title="{{
+        (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add'
+      }} Additional / Advanced Medical Training"
     >
       <abs-training-add-edit-modal
-        [training]="tempTraining$"
+        [userId]="userId"
+        [training$]="tempTraining$"
+        [isEdit$]="isAdditionalAdvancedEdit$"
         (cancelDialog)="cancelAddEditTraining($event)"
         (saveDialog)="saveTraining($event)"
       ></abs-training-add-edit-modal>

@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\TrainingTypeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "TrainingType",
+      "dataType": "string",
+      "maxLength": 100,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\TrainingTypeReadOnly -sp [dbo].[get_training_type] -cn ABSSP ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-08T17:19:39.3559078Z"
+  },
+  "version": 1
+}

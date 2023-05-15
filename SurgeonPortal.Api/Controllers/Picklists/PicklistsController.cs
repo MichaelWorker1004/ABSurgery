@@ -33,6 +33,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm 
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AccreditedProgramInstitutionReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("accredited-program-institutions")]
+        public async Task<ActionResult<IEnumerable<AccreditedProgramInstitutionReadOnlyModel>>> GetAccreditedProgramInstitutionReadOnly_GetAllAsync(
+            [FromServices] IAccreditedProgramInstitutionReadOnlyListFactory accreditedProgramInstitutionReadOnlyListFactory)
+        {
+            var items = await accreditedProgramInstitutionReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<AccreditedProgramInstitutionReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CountryReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -124,6 +140,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             var items = await stateReadOnlyListFactory.GetByCountryAsync(countryCode);
         
             return Ok(_mapper.Map<IEnumerable<StateReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TrainingTypeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("training-types")]
+        public async Task<ActionResult<IEnumerable<TrainingTypeReadOnlyModel>>> GetTrainingTypeReadOnly_GetAllAsync(
+            [FromServices] ITrainingTypeReadOnlyListFactory trainingTypeReadOnlyListFactory)
+        {
+            var items = await trainingTypeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<TrainingTypeReadOnlyModel>>(items));
         } 
     }
 }

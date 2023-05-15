@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { TrainingAddEditModalComponent } from '../shared/components/training-add-edit-modal/training-add-edit-modal.component';
@@ -9,6 +9,10 @@ import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-trainin
 
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { ModalComponent } from '../shared/components/modal/modal.component';
+import { UserProfileSelectors } from '../state';
+import { Select } from '@ngxs/store';
+import { AdvancedTrainingService } from '../api/services/medicaltraining/advanced-training.service';
+import { IAdvancedTrainingReadOnlyModel } from '../api/models/medicaltraining/advanced-training-read-only.model';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
@@ -36,27 +40,25 @@ import { CalendarModule } from 'primeng/calendar';
     CalendarModule,
   ],
 })
-export class MedicalTrainingComponent {
-  fakeOptions = [
-    { itemDescription: 'Option 1', itemValue: 'option-1' },
-    { itemDescription: 'Option 2', itemValue: 'option-2' },
-    { itemDescription: 'Option 3', itemValue: 'option-3' },
-  ];
-
+export class MedicalTrainingComponent implements OnInit {
+  @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
+  userId!: number;
   isEdit = true;
   trainingCols = MEDICAL_TRAINING_COLS;
   showTrainingAddEdit = false;
   trainingAddEditTitle: string | undefined;
   tempTraining$: BehaviorSubject<any> = new BehaviorSubject({});
-  // TODO: [Joe] faked user data, replace with real data
-  user = {
-    profilePicture:
-      'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU',
-    fullName: 'John Doe',
-    title: 'M.D',
-    emailAddress: 'email@test.io',
-    status: 'Trainee',
-  };
+  isAdditionalAdvancedEdit$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
+  advancedTraining$: BehaviorSubject<IAdvancedTrainingReadOnlyModel[]> =
+    new BehaviorSubject<IAdvancedTrainingReadOnlyModel[]>([]);
+
+  fakeOptions = [
+    { itemDescription: 'Option 1', itemValue: 'option-1' },
+    { itemDescription: 'Option 2', itemValue: 'option-2' },
+    { itemDescription: 'Option 3', itemValue: 'option-3' },
+  ];
 
   // TODO: [Joe] faked user data, replace with real data
   medicalTraining = {
@@ -99,9 +101,9 @@ export class MedicalTrainingComponent {
       {
         trainingId: 1,
         typeOfTraining: 'Advanced 01 Surgery',
-        state: 'NY',
-        city: 'New York',
-        institutionName: 'York Hospital',
+        state: 'MN',
+        city: 'Minneapolis',
+        institutionName: 'Abbott-Northwestern (Vascular Surgery)',
         other: '-',
         dateStarted: new Date('7/01/2007'),
         dateEnded: new Date('7/01/2008'),
@@ -129,40 +131,80 @@ export class MedicalTrainingComponent {
     ],
   };
 
-  constructor(private globalDialogService: GlobalDialogService) {}
+  constructor(
+    private globalDialogService: GlobalDialogService,
+    private advancedTrainingService: AdvancedTrainingService
+  ) {}
+
+  ngOnInit(): void {
+    this.userId$?.subscribe((id) => {
+      this.userId = id;
+    });
+    this.getAdvancedTrainingGridData();
+  }
+
+  getAdvancedTrainingGridData() {
+    this.advancedTrainingService
+      .retrieveAdvancedTrainingReadOnly_GetByUserId()
+      .subscribe((res: IAdvancedTrainingReadOnlyModel[]) => {
+        this.advancedTraining$.next(res);
+      });
+  }
 
   handleGridAction($event: any) {
+    const data = $event.data;
+
     if ($event.fieldKey === 'edit') {
-      this.showTrainingModal($event.data);
+      this.isAdditionalAdvancedEdit$.next(true);
+      this.tempTraining$.next(data);
+      this.showTrainingModal(true);
     } else {
       console.log('unhandled action', $event);
     }
   }
-  showTrainingModal(training: any) {
-    if (training) {
-      this.tempTraining$.next(training);
-      this.trainingAddEditTitle = 'Edit Additional / Advanced Training';
-    } else {
-      this.tempTraining$.next({
-        type: null,
-        state: null,
-        city: null,
-        institution: null,
-        other: null,
-        from: null,
-        to: null,
-      });
-      this.trainingAddEditTitle = 'Add Additional / Advanced Training';
-    }
-    this.showTrainingAddEdit = true;
+
+  showTrainingModal(isEdit = false) {
+    this.isAdditionalAdvancedEdit$.next(isEdit);
+    this.showTrainingAddEdit = !this.showTrainingAddEdit;
   }
+
   saveTraining($event: any) {
-    // TODO: [Joe] handle the save call
-    // TODO: [Joe] handle the update call
-    // TODO: [Joe] show the universal success/error message
+    const formValues = $event.trainingRecord;
+    const programId: number | undefined = parseInt(
+      formValues.institutionName?.itemValue ?? ''
+    );
+    const trainingTypeId: number | undefined = parseInt(
+      formValues.trainingType ?? ''
+    );
+
+    const createModel = {
+      trainingTypeId: trainingTypeId ?? null,
+      programId: programId ?? null,
+      other: formValues.other ?? undefined,
+      startDate: new Date(formValues.startDate ?? '') ?? null,
+      endDate: new Date(formValues.endDate ?? '') ?? null,
+    };
+
+    if ($event.edit === true && $event.trainingId) {
+      this.advancedTrainingService
+        .updateAdvancedTraining($event.trainingId, createModel)
+        .subscribe(() => {
+          this.getAdvancedTrainingGridData();
+        });
+    }
+
+    if ($event.edit === false) {
+      this.advancedTrainingService
+        .createAdvancedTraining(createModel)
+        .subscribe(() => {
+          this.getAdvancedTrainingGridData();
+        });
+    }
+
     this.showTrainingAddEdit = $event.show;
     this.tempTraining$.next({});
   }
+
   cancelAddEditTraining($event: any) {
     this.showTrainingAddEdit = $event.show;
     this.tempTraining$.next({});
@@ -222,6 +264,7 @@ export class MedicalTrainingComponent {
     file.file = null;
     file.fileName = null;
   }
+
   clearUploadFile(file: any) {
     file.newFile = null;
     file.newFileName = null;
