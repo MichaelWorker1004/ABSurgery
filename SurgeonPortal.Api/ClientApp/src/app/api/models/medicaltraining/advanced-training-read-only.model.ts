@@ -6,6 +6,6 @@ export interface IAdvancedTrainingReadOnlyModel {
     city: string;
     state: string;
     other: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: string;
+    endDate: string;
 }

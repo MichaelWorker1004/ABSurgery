@@ -152,6 +152,7 @@ namespace SurgeonPortal.Library.MedicalTraining
             BusinessRules.AddRule(new EitherOrRequiredRule(ProgramIdProperty, OtherProperty, 1));
         }
 
+
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

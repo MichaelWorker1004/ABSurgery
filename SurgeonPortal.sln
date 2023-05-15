@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Layer", "Business Layer", "{ECE5E658-9A9F-47B8-A077-E66E37E601F1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Access Layer", "Data Access Layer", "{B7E7BC78-CA70-4659-9E89-2E323D0B7032}"
+	ProjectSection(SolutionItems) = preProject
+		SurgeonPortal.Api\Program.cs = SurgeonPortal.Api\Program.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{13631FF7-889B-4DDF-9ACE-339B1E4B557F}"
 EndProject
@@ -29,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurgeonPortal.DataAccess.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurgeonPortal.Library.Tests", "SurgeonPortal.Library.Tests\SurgeonPortal.Library.Tests.csproj", "{F3A86258-A3AD-4CF3-9199-CEDE409967BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurgeonPortal.Shared", "SurgeonPortal.Shared\SurgeonPortal.Shared.csproj", "{16FADD27-8541-41FF-9615-5C57035372B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurgeonPortal.Shared", "SurgeonPortal.Shared\SurgeonPortal.Shared.csproj", "{16FADD27-8541-41FF-9615-5C57035372B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

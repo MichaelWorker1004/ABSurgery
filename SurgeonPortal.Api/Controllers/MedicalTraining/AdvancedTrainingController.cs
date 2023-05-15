@@ -118,6 +118,7 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
 
         private void AssignEditProperties(IAdvancedTraining entity, AdvancedTrainingModel model)
         {
+            entity.Id = model.Id;
             entity.UserId = IdentityHelper.UserId;
             entity.TrainingTypeId = model.TrainingTypeId;
             entity.ProgramId = model.ProgramId;

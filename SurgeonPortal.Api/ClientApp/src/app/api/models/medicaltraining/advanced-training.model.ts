@@ -9,10 +9,10 @@ export interface IAdvancedTrainingModel {
   city?: string;
   state?: string;
   other?: string;
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
   createdByUserId?: number;
-  createdAtUtc?: Date;
-  lastUpdatedAtUtc?: Date;
+  createdAtUtc?: string;
+  lastUpdatedAtUtc?: string;
   lastUpdatedByUserId?: number;
 }

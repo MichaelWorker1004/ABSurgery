@@ -181,8 +181,8 @@ export class MedicalTrainingComponent implements OnInit {
       trainingTypeId: trainingTypeId ?? null,
       programId: programId ?? null,
       other: formValues.other ?? undefined,
-      startDate: new Date(formValues.startDate ?? '') ?? null,
-      endDate: new Date(formValues.endDate ?? '') ?? null,
+      startDate: new Date(formValues.startDate ?? '').toDateString() ?? null,
+      endDate: new Date(formValues.endDate ?? '').toDateString() ?? null,
     };
 
     if ($event.edit === true && $event.trainingId) {

@@ -110,8 +110,8 @@ export class TrainingAddEditModalComponent implements OnInit {
     this.training$.subscribe((formData) => {
       if (Object.keys(formData).length > 0) {
         this.trainingId = formData.id;
-        formData.startDate = new Date(formData.startDate ?? '');
-        formData.endDate = new Date(formData.endDate ?? '');
+        formData.startDate = new Date(formData.startDate ?? '').toDateString();
+        formData.endDate = new Date(formData.endDate ?? '').toDateString();
         for (const [key, value] of Object.entries(formData)) {
           this.additionalTrainingForm.get(key)?.patchValue(value);
           if (key === 'institutionName') {

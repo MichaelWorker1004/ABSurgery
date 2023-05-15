@@ -11,31 +11,31 @@ export class CertificationsService {
 
     constructor(private apiService: ApiService) {}
 
- 
+
         public retrieveCertificationReadOnly_GetByAbsId(absId: string,
         apiVersion = '1.0'): Observable<ICertificationReadOnlyModel[]> {
             /**
             * Claims
             */
-            
+
             /**
             * Business Rules
             * No business rules exist for this model
             */
-            
+
             /**
             * Required Parameters
             * absId:String
             * apiVersion
             */
-            
+
             /**
             * Calls Sp(s)
             * [get_user_certifications]
             */
-            
-            
-            return this.apiService.get<ICertificationReadOnlyModel[]>(`${this.baseEndpoint}/?api-version=${apiVersion}&absId=${absId}`);
+
+
+            return this.apiService.get<ICertificationReadOnlyModel[]>(`${this.baseEndpoint}?api-version=${apiVersion}&absId=${absId}`);
         }
 
 

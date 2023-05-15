@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-
 import { IAdvancedTrainingModel } from '../../models/medicaltraining/advanced-training.model';
 import { IAdvancedTrainingReadOnlyModel } from '../../models/medicaltraining/advanced-training-read-only.model';
+import { ApiService } from 'ytg-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ import { IAdvancedTrainingReadOnlyModel } from '../../models/medicaltraining/adv
 export class AdvancedTrainingService {
     private readonly baseEndpoint = 'api/advanced-training';
 
-    constructor(private httpClient: HttpClient) {}
+    constructor(private apiService: ApiService) {}
 
  
         public retrieveAdvancedTraining_GetByTrainingId(id: number,
@@ -48,7 +47,7 @@ export class AdvancedTrainingService {
             */
             
             
-            return this.httpClient.get<IAdvancedTrainingModel>(`${this.baseEndpoint}/by-trainingid?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.get<IAdvancedTrainingModel>(`${this.baseEndpoint}/by-trainingid?api-version=${apiVersion}&id=${id}`);
         }
  
         public createAdvancedTraining(model: IAdvancedTrainingModel, 
@@ -79,8 +78,8 @@ export class AdvancedTrainingService {
             * trainingTypeId:Number
             * programId:Number
             * other:String
-            * startDate:Date
-            * endDate:Date
+            * startDate:String
+            * endDate:String
             * createdByUserId:Number
             * apiVersion
             */
@@ -91,7 +90,7 @@ export class AdvancedTrainingService {
             */
             
             
-            return this.httpClient.post<IAdvancedTrainingModel>(`${this.baseEndpoint}/?api-version=${apiVersion}`, 
+            return this.apiService.post<IAdvancedTrainingModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -125,8 +124,8 @@ export class AdvancedTrainingService {
             * trainingTypeId:Number
             * programId:Number
             * other:String
-            * startDate:Date
-            * endDate:Date
+            * startDate:String
+            * endDate:String
             * lastUpdatedByUserId:Number
             * apiVersion
             */
@@ -138,7 +137,7 @@ export class AdvancedTrainingService {
             
             
             
-            return this.httpClient.put<IAdvancedTrainingModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`,
+            return this.apiService.put<IAdvancedTrainingModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`,
             model);
         }
  
@@ -163,7 +162,7 @@ export class AdvancedTrainingService {
             */
             
             
-            return this.httpClient.get<IAdvancedTrainingReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IAdvancedTrainingReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
         }
 
 

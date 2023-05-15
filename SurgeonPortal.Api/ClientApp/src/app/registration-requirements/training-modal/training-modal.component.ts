@@ -104,11 +104,11 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
     city: '',
     state: '',
     other: '',
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: '',
+    endDate: '',
     createdByUserId: 0,
-    createdAtUtc: new Date(),
-    lastUpdatedAtUtc: new Date(),
+    createdAtUtc: '',
+    lastUpdatedAtUtc: '',
     lastUpdatedByUserId: 0,
   };
   tempTraining$: BehaviorSubject<IAdvancedTrainingModel> = new BehaviorSubject(
