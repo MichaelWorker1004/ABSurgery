@@ -5,6 +5,11 @@
 @import '/node_modules/primeng/resources/themes/lara-light-blue/theme.css';
 @import '/node_modules/primeicons/primeicons.css';
 @import '/src/primeng-theme.css';
+@import '/node_modules/primeflex/primeflex.css';
+@import '/node_modules/primeng/resources/primeng.min.css';
+@import '/node_modules/primeng/resources/themes/lara-light-blue/theme.css';
+@import '/node_modules/primeicons/primeicons.css';
+@import '/src/primeng-theme.css';
 
 :root {
   /* Shoelace Theme Import */
@@ -466,7 +471,11 @@ sl-button.btn-add::part(base):hover {
 /* PrimeNG overrides */
 .p-dropdown,
 .p-inputtext,
-.p-calendar {
+.p-calendar,
+.p-password,
+.p-autocomplete,
+.p-multiselect,
+.p-treeselect {
   display: inline-block;
   width: 100%;
   border-color: var(--global-gray);
@@ -475,13 +484,11 @@ sl-button.btn-add::part(base):hover {
 .p-checkbox {
   .p-checkbox-box {
     border-color: var(--global-gray);
-    //background-color: var(--global-table-background);
   }
 }
 .p-radiobutton {
   .p-radiobutton-box {
     border-color: var(--global-gray);
-    //background-color: var(--global-table-background);
   }
 }
 .p-radiobutton-label {
@@ -490,6 +497,20 @@ sl-button.btn-add::part(base):hover {
 }
 .p-dropdown-trigger-icon {
   color: var(--global-warning);
+}
+.form-helper-text {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--global-gray);
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+.form-error-text {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--global-danger);
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
 }
 
 /* Full Calendar Override Styles */

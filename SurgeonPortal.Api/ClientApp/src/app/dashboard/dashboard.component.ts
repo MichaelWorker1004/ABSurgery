@@ -21,6 +21,7 @@ import {
 } from './user-action-cards';
 import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.model';
 import { ICertificationReadOnlyModel } from '../api/models/surgeons/certification-read-only.model';
+import { GetStateList } from '../state/picklists';
 
 @Component({
   selector: 'abs-dashboard',

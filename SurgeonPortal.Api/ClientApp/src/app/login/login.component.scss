@@ -45,3 +45,10 @@ sl-button[variant='primary']::part(label) {
   margin-bottom: 1rem;
   border: solid thin red;
 }
+
+.form-error-text {
+  color: var(--global-danger-lighten-40);
+}
+.p-inputtext {
+  position: relative;
+}

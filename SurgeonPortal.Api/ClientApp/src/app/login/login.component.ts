@@ -14,13 +14,22 @@ import { AuthSelectors, Login } from '../state';
 import { IError, IAuthCredentials } from '../api';
 import { ClearAuthErrors } from '../state/auth/auth.actions';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+
 @Component({
   selector: 'abs-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    PasswordModule,
+  ],
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({

@@ -40,29 +40,42 @@
           </div>
         </sl-alert>
         <form name="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <sl-input
+          <input
+            id="userName"
             placeholder="Username"
-            ngDefaultControl
+            pInputText
             formControlName="userName"
-          ></sl-input>
-          <div
+          />
+          <small
             *ngIf="
               loginForm.get('userName')?.hasError('required') &&
               !loginForm.pristine
             "
+            class="form-error-text"
           >
             The Username field is required.
-          </div>
+          </small>
           <sl-button class="mb-2" variant="text" size="small"
             >I forgot my username</sl-button
           >
-          <sl-input
-            type="password"
-            formControlName="password"
-            ngDefaultControl
+
+          <p-password
+            id="password"
             placeholder="Password"
-            password-toggle
-          ></sl-input>
+            formControlName="password"
+            [feedback]="false"
+            [toggleMask]="true"
+          ></p-password>
+          <small
+            *ngIf="
+              loginForm.get('password')?.hasError('required') &&
+              !loginForm.pristine &&
+              loginForm.get('password')?.dirty
+            "
+            class="form-error-text"
+          >
+            The Password field is required.
+          </small>
           <sl-button class="mb-2" variant="text" size="small"
             >I forgot my password</sl-button
           >
