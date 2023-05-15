@@ -102,8 +102,8 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
     institutionName: '',
     city: '',
     other: '',
-    dateStarted: new Date(),
-    dateEnded: new Date(),
+    dateStarted: '',
+    dateEnded: '',
   };
   tempTraining$: BehaviorSubject<IAdditionalTrainingModel> =
     new BehaviorSubject(this.emptyTraining);

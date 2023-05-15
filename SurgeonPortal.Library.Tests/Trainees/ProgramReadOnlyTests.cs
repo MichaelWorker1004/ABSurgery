@@ -21,6 +21,8 @@ namespace SurgeonPortal.Library.Tests.Trainees
             dto.ProgramNumber = Create<string>();
             dto.Exam = Create<string>();
             dto.ClinicalLevel = Create<string>();
+            dto.City = Create<string>();
+            dto.State = Create<string>();
     
             return dto;
         }

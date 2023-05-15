@@ -11,28 +11,21 @@
 
   <div class="info-container" *ngIf="!isSurgeon; else certified">
     <div class="info">
-      <span>Program Director</span>
+      <span>Program Director:</span>
+      {{ userInformation?.programDirector ?? 'N/A' }}
+    </div>
+    <div class="info">
+      <span>Program:</span>
+      {{ userInformation?.programName || 'N/A' }} <br />
       {{
-        userInformation?.programDirector?.length > 0
-          ? userInformation?.programDirector
-          : 'N/A'
+        userInformation?.city && userInformation?.state
+          ? userInformation?.city + ', ' + userInformation?.state
+          : ''
       }}
     </div>
     <div class="info">
-      <span>Program</span>
-      {{
-        userInformation?.programName?.length > 0
-          ? userInformation?.program
-          : 'N/A'
-      }}
-    </div>
-    <div class="info">
-      <span>Clinical Level</span>
-      {{
-        userInformation?.clinicalLevel?.length > 0
-          ? userInformation?.clinicalLevel
-          : 'N/A'
-      }}
+      <span>Clinical Level:</span>
+      {{ userInformation?.clinicalLevel ?? 'N/A' }}
     </div>
   </div>
 

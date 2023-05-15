@@ -28,6 +28,8 @@ const USER_ACCOUNT_STATE_TOKEN = new StateToken<IDashboardState>('dashboard');
       programNumber: '',
       exam: '',
       clinicalLevel: '',
+      city: '',
+      state: '',
     },
   },
 })

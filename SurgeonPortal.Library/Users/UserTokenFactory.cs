@@ -2,6 +2,7 @@ using Csla;
 using SurgeonPortal.Library.Contracts.Users;
 using System;
 using System.Threading.Tasks;
+using Ytg.Framework.Exceptions;
 
 namespace SurgeonPortal.Library.Users
 {
@@ -9,6 +10,11 @@ namespace SurgeonPortal.Library.Users
     {
         public async Task<IUserToken> GetActiveAsync(string token)
         {
+            if (string.IsNullOrEmpty(token) == true)
+            {
+                throw new FactoryInvalidCriteriaException("token is a required field.");
+            }
+            
             return await DataPortal.FetchAsync<UserToken>(
                 new GetActiveCriteria(token));
             

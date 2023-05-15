@@ -116,7 +116,7 @@ export class OutcomeRegistriesModalComponent implements OnInit {
     const formValues = {
       ...this.outcomeRegistriesForm.value,
       userId: this.userId,
-      userConfirmedDateUtc: new Date(),
+      userConfirmedDateUtc: '',
     };
 
     this._store

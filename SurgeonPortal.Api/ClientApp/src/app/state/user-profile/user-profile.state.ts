@@ -161,7 +161,7 @@ export class UserProfileState {
     Object.assign(model, ctx.getState());
     const userProfile: IUserProfileModel =
       model as unknown as IUserProfileModel;
-    userProfile.userConfirmedDate = new Date();
+    userProfile.userConfirmedDate = '';
     userProfile.userConfirmed = true;
     userProfile.genderId = +userProfile.genderId;
     userProfile.firstLanguageId = +userProfile.firstLanguageId;

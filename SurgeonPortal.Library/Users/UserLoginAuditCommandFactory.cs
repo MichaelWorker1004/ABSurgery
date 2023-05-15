@@ -2,6 +2,7 @@ using Csla;
 using SurgeonPortal.Library.Contracts.Users;
 using System;
 using System.Threading.Tasks;
+using Ytg.Framework.Exceptions;
 
 namespace SurgeonPortal.Library.Users
 {

@@ -88,6 +88,25 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.ClinicalLevel"
+              },
+              {
+                "name": "City",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.City"
+              },
+              {
+                "name": "State",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "mapsTo": "model.State"
               }
             ]
           }

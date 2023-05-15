@@ -9,5 +9,7 @@ namespace SurgeonPortal.Library.Contracts.Trainees
         string ProgramNumber { get; set; }
         string Exam { get; set; }
         string ClinicalLevel { get; set; }
+        string City { get; set; }
+        string State { get; set; }
     }
 }

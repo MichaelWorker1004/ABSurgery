@@ -68,6 +68,22 @@ namespace SurgeonPortal.Library.Trainees
 		}
 		public static readonly PropertyInfo<string> ClinicalLevelProperty = RegisterProperty<string>(c => c.ClinicalLevel);
 
+        [DisplayName(nameof(City))]
+		public string City
+		{
+			get { return GetProperty(CityProperty); }
+			set { SetProperty(CityProperty, value); }
+		}
+		public static readonly PropertyInfo<string> CityProperty = RegisterProperty<string>(c => c.City);
+
+        [DisplayName(nameof(State))]
+		public string State
+		{
+			get { return GetProperty(StateProperty); }
+			set { SetProperty(StateProperty, value); }
+		}
+		public static readonly PropertyInfo<string> StateProperty = RegisterProperty<string>(c => c.State);
+
 
 
         /// <summary>
@@ -113,6 +129,8 @@ namespace SurgeonPortal.Library.Trainees
 			this.ProgramNumber = dto.ProgramNumber;
 			this.Exam = dto.Exam;
 			this.ClinicalLevel = dto.ClinicalLevel;
+			this.City = dto.City;
+			this.State = dto.State;
 		}
 
 		internal ProgramReadOnlyDto ToDto()
@@ -129,6 +147,8 @@ namespace SurgeonPortal.Library.Trainees
 			dto.ProgramNumber = this.ProgramNumber;
 			dto.Exam = this.Exam;
 			dto.ClinicalLevel = this.ClinicalLevel;
+			dto.City = this.City;
+			dto.State = this.State;
 
 			return dto;
 		}

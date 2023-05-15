@@ -2,6 +2,7 @@ using Csla;
 using SurgeonPortal.Library.Contracts.Examinations.GQ;
 using System;
 using System.Threading.Tasks;
+using Ytg.Framework.Exceptions;
 
 namespace SurgeonPortal.Library.Examinations.GQ
 {
@@ -9,6 +10,11 @@ namespace SurgeonPortal.Library.Examinations.GQ
     {
         public async Task<IAdditionalTraining> GetByTrainingIdAsync(int trainingId)
         {
+            if (trainingId <= 0)
+            {
+                throw new FactoryInvalidCriteriaException("trainingId is a required field.");
+            }
+            
             return await DataPortal.FetchAsync<AdditionalTraining>(
                 new GetByTrainingIdCriteria(trainingId));
             
