@@ -48,8 +48,8 @@ export class GridComponent implements OnInit {
   pages: number[] = [];
   AbsGridCellRendererType = AbsGridCellRendererType;
   searchText!: string;
-  filteredData: Array<any> = [];
   localData: Array<any> = [];
+  filteredData: Array<any> = [];
 
   previousPageDisabled!: boolean;
   firstPageDisabled!: boolean;
@@ -60,25 +60,23 @@ export class GridComponent implements OnInit {
     if (isObservable(this.data)) {
       this.data.subscribe((data: any) => {
         this.localData = data;
-        this.filteredData = this.localData;
+        this.filteredData = data;
+        this.initPagintion(data);
       });
     } else {
       this.localData = this.data;
       this.filteredData = this.data;
+      this.initPagintion(this.data);
     }
-    this.initPagintion();
-    this.setPaginationActions();
   }
 
-  initPagintion() {
+  initPagintion(data: any[]) {
     if (this.pagination) {
-      const total = this.filteredData.length;
+      const total = data?.length ?? 0;
       const pagesCount = Math.ceil(total / this.itemsPerPage);
       this.pages = [...Array(pagesCount).keys()].map((i) => i + 1);
 
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = this.currentPage * this.itemsPerPage;
-      this.filteredData = this.filteredData.slice(start, end);
+      this.setPaginationActions();
     }
   }
 
@@ -96,12 +94,19 @@ export class GridComponent implements OnInit {
   changePage(page: number) {
     this.currentPage = page;
 
-    this.filteredData = this.localData.slice(
-      (this.currentPage - 1) * this.itemsPerPage,
-      this.currentPage * this.itemsPerPage
-    );
-
     this.setPaginationActions();
+  }
+
+  getPagedData(data: any[]) {
+    const sortedData = data?.sort(this.sortColumn.bind(this));
+    if (this.pagination) {
+      return sortedData.slice(
+        (this.currentPage - 1) * this.itemsPerPage,
+        this.currentPage * this.itemsPerPage
+      );
+    } else {
+      return sortedData;
+    }
   }
 
   handleAction(action: GridAction, data: unknown) {
@@ -115,22 +120,26 @@ export class GridComponent implements OnInit {
     this.action.emit(action);
   }
 
-  sortColumn(column: any) {
+  setColumnSort(column: any) {
     this.columns.forEach((col: any) => {
-      if (col.fieldKey !== column.fieldKey) {
+      if (col.field === column.field) {
+        col.sort = column.sort === 'asc' ? 'desc' : 'asc';
+      } else {
         col.sort = null;
       }
     });
-    column.sort = column.sort === 'asc' ? 'desc' : 'asc';
-    this.localData = this.localData.sort((a: string, b: string) => {
-      if (column.sort === 'asc') {
-        return a[column.field] > b[column.field] ? 1 : -1;
+  }
+
+  sortColumn(a: any, b: any) {
+    const sortColumn = this.columns?.find((col: any) => col.sort);
+    if (sortColumn) {
+      if (sortColumn.sort === 'asc') {
+        return a[sortColumn.field] > b[sortColumn.field] ? 1 : -1;
       } else {
-        return a[column.field] < b[column.field] ? 1 : -1;
+        return a[sortColumn.field] < b[sortColumn.field] ? 1 : -1;
       }
-    });
-    if (this.pagination) {
-      this.changePage(1);
+    } else {
+      return 0;
     }
   }
 
@@ -140,15 +149,14 @@ export class GridComponent implements OnInit {
         ? $event?.target.value
         : $event?.target.displayLabel;
 
-    this.filteredData = this.data.filter((item: any) =>
+    this.filteredData = this.localData.filter((item: any) =>
       item[this.gridOptions.filterOn]
         .toLowerCase()
         .includes(value.toLowerCase())
     );
 
     if (this.pagination) {
-      this.localData = this.filteredData;
-      this.initPagintion();
+      this.initPagintion(this.filteredData);
       this.changePage(1);
     }
   }

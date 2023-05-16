@@ -43,7 +43,7 @@
             "
           >
             {{ c.headerName }}
-            <button (click)="sortColumn(c)" *ngIf="c.sortable">
+            <button (click)="setColumnSort(c)" *ngIf="c.sortable">
               <i class="fa-solid fa-sort"></i>
             </button>
           </div>
@@ -51,7 +51,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let r of filteredData; let i = index">
+      <ng-container *ngFor="let r of getPagedData(filteredData); let i = index">
         <tr
           class="{{ r.rowClass }}"
           [ngClass]="{ 'alternate-row': i % 2 === 1 }"
