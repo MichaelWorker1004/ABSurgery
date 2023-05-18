@@ -9,6 +9,21 @@ const AbsGrid = {
     return colDef;
   },
 
+  setYesNoDisplayCol(
+    headerName: string,
+    fieldName: string,
+    sortable?: boolean
+  ) {
+    const colDef = {
+      headerName: headerName,
+      field: fieldName,
+      cellRenderer: 'yesNo',
+      sortable,
+    };
+
+    return colDef;
+  },
+
   setCustomButtonCol(
     headerName: string,
     fieldName: string,

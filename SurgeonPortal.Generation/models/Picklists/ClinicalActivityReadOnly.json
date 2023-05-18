@@ -1,0 +1,57 @@
+{
+  "refs": {},
+  "name": "Picklists\\ClinicalActivityReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Name",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "IsCredit",
+      "dataType": "bool",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "IsEssential",
+      "dataType": "bool",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ClinicalActivityReadOnly -sp [dbo].[get_clinicalactivity] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-16T18:05:18.0528197Z"
+  },
+  "version": 1
+}

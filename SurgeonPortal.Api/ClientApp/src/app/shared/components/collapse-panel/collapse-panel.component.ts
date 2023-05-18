@@ -42,7 +42,7 @@ export class CollapsePanelComponent implements OnInit {
     const panelBody = document.querySelector<HTMLElement>(
       '#panel-body-' + this.panelId
     );
-    if (panelBody!.style.maxHeight && panelBody!.style.maxHeight !== '0px') {
+    if (panelBody?.style.maxHeight && panelBody?.style.maxHeight !== '0px') {
       // setTimeout is needed to wait for the DOM to update with new content
       setTimeout(() => {
         panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';

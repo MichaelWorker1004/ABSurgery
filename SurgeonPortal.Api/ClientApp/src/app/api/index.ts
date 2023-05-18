@@ -15,6 +15,11 @@ export * from './models/picklists/gender-read-only.model';
 export * from './models/picklists/language-read-only.model';
 export * from './models/picklists/race-read-only.model';
 export * from './models/picklists/state-read-only.model';
+export * from './models/picklists/clinical-activity-read-only.model';
+export * from './models/picklists/clinical-level-read-only.model';
+
+export * from './models/graduatemedicaleducation/rotation-read-only.model';
+export * from './models/graduatemedicaleducation/rotation.model';
 
 // Services
 export * from './services/auth/auth.service';
@@ -23,3 +28,4 @@ export * from './services/users/user-credentials.service';
 export * from './services/users/user-profiles.service';
 export * from './services/users/users.service';
 export * from './services/examinations/gq/additional-trainings.service';
+export * from './services/graduatemedicaleducation/rotation.service';

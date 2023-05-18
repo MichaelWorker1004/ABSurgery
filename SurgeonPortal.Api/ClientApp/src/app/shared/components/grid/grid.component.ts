@@ -59,9 +59,9 @@ export class GridComponent implements OnInit {
   ngOnInit() {
     if (isObservable(this.data)) {
       this.data.subscribe((data: any) => {
-        this.localData = data;
-        this.filteredData = data;
-        this.initPagintion(data);
+        this.localData = data ?? [];
+        this.filteredData = data ?? [];
+        this.initPagintion(this.localData);
       });
     } else {
       this.localData = this.data;
@@ -98,7 +98,11 @@ export class GridComponent implements OnInit {
   }
 
   getPagedData(data: any[]) {
-    const sortedData = data?.sort(this.sortColumn.bind(this));
+    let sortedData = data;
+    if (data?.length > 0) {
+      sortedData = [...data];
+      sortedData.sort(this.sortColumn.bind(this));
+    }
     if (this.pagination) {
       return sortedData.slice(
         (this.currentPage - 1) * this.itemsPerPage,

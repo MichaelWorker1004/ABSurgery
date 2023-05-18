@@ -37,3 +37,11 @@ export class GetPicklists {
 
   constructor(public countryCode?: string | null | undefined) {}
 }
+
+export class GetClinicalLevelList {
+  static readonly type = '[Picklists] Get the Clinical Level list';
+}
+
+export class GetClinicalActivityList {
+  static readonly type = '[Picklists] Get the Clinical Activity list';
+}

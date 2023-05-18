@@ -1,0 +1,66 @@
+{
+  "name": "ClinicalLevelReadOnly",
+  "implementationName": "Picklists\\ClinicalLevelReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_clinicallevel",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\ClinicalLevelReadOnly",
+    "ModelGroup": "ClinicalLevelReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "clinical-levels",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_clinicallevel",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_clinicallevel]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\ClinicalLevelReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Name",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Name"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\ClinicalLevelReadOnly.GetAll ClinicalLevelReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ClinicalLevelReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_clinicallevel] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ClinicalLevelReadOnly -p:Route=clinical-levels -p:ControllerName=PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\ClinicalLevelReadOnly.GetAll ClinicalLevelReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ClinicalLevelReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_clinicallevel] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ClinicalLevelReadOnly -p:Route=clinical-levels -p:ControllerName=PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-16T18:07:10.5142178Z"
+  },
+  "version": 1
+}

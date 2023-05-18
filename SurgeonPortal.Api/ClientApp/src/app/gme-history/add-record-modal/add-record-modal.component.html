@@ -3,6 +3,15 @@
   dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
   amet tortor at, condimentum tempor erat.
 </p>
+<ng-container>
+  <div class="mb-3">
+    <abs-form-errors
+      *ngIf="errors$ | async as error"
+      [errors]="error"
+      [clearErrors]="clearErrors"
+    ></abs-form-errors>
+  </div>
+</ng-container>
 <form [formGroup]="addEditRecordsForm" (ngSubmit)="onSubmit()">
   <div class="grid">
     <div
@@ -28,32 +37,64 @@
         *ngIf="formField.type === 'date'"
         [formControlName]="formField.name"
         [showIcon]="true"
+        [inputId]="formField.name"
         [placeholder]="formField.placeholder ?? ''"
         [required]="formField.required"
+        [minDate]="formField.validators.minDate"
+        [maxDate]="formField.validators.maxDate"
         ngDefaultControl
         appendTo="body"
       ></p-calendar>
+      <p-autoComplete
+        *ngIf="formField.type === 'autocomplete'"
+        [inputId]="formField.name"
+        [formControlName]="formField.name"
+        [placeholder]="formField.placeholder ?? ''"
+        [suggestions]="formField.filteredOptions ?? []"
+        (completeMethod)="filterItems($event, formField)"
+        [forceSelection]="true"
+        appendTo="body"
+      ></p-autoComplete>
       <p-dropdown
         *ngIf="formField.type === 'select'"
         [placeholder]="formField.placeholder ?? ''"
         [options]="formField.options ?? []"
         [name]="formField.name"
-        [id]="formField.name"
-        [editable]="true"
+        [inputId]="formField.name"
+        [editable]="false"
         [formControlName]="formField.name"
         ngDefaultControl
         appendTo="body"
         optionLabel="label"
         optionValue="value"
       ></p-dropdown>
+      <p-dropdown
+        *ngIf="formField.type === 'grouped-select'"
+        [placeholder]="formField.placeholder ?? ''"
+        [options]="formField.options ?? []"
+        [name]="formField.name"
+        [id]="formField.name"
+        [group]="true"
+        [formControlName]="formField.name"
+        ngDefaultControl
+        appendTo="body"
+      >
+        <ng-template let-group pTemplate="group">
+          <strong>{{ group.label }}</strong>
+        </ng-template>
+      </p-dropdown>
       <div *ngIf="formField.type === 'textarea'">
         <textarea
           pInputTextarea
+          [id]="formField.name"
           [name]="formField.name"
           [formControlName]="formField.name"
           ngDefaultControl
         ></textarea>
       </div>
+      <small class="form-helper-text text-muted" *ngIf="formField.helpText">{{
+        formField.helpText
+      }}</small>
     </div>
   </div>
   <div class="grid">
@@ -61,7 +102,12 @@
       <sl-button variant="default" size="large" (click)="close()">
         Cancel
       </sl-button>
-      <sl-button class="wide" size="large" variant="warning" type="submit"
+      <sl-button
+        class="wide"
+        size="large"
+        variant="warning"
+        type="submit"
+        [disabled]="addEditRecordsForm.invalid"
         >Save</sl-button
       >
     </div>

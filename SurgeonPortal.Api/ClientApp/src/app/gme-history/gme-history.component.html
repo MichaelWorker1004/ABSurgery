@@ -33,7 +33,11 @@
               <sl-option value="fellowship-year-2">Year 2</sl-option>
             </abs-input-select>
 
-            <sl-button variant="default" class="btn-add mt-2 mb-2">
+            <sl-button
+              variant="default"
+              class="btn-add mt-2 mb-2"
+              (click)="handleAddEditGmeRotation()"
+            >
               <i slot="prefix" class="fa-solid fa-plus"></i>
               add a record
             </sl-button>
@@ -111,7 +115,8 @@
         <abs-collapse-panel
           [panelId]="1"
           [startExpanded]="true"
-          [heightToggle]="itemizedGme$"
+          [editToggle]="itemizedGme$"
+          class="table-sm"
         >
           <h5 class="mt-0 mb-2" panel-header>Itemized GME</h5>
           <div class="grid">
@@ -127,12 +132,12 @@
                 (click)="handleAddEditGmeRotation()"
               >
                 <i slot="prefix" class="fa-solid fa-plus"></i>
-                ADD RECORD
+                ADD A RECORD
               </sl-button>
               <abs-grid
                 class="margin-bottom-2"
                 [columns]="itemizedGmeCols"
-                [data]="itemizedGmeData"
+                [data]="gmeRotations$"
                 [gridOptions]="itemizedGridOptions"
                 (action)="handleGridAction($event)"
                 [pagination]="true"
@@ -148,7 +153,7 @@
               >
                 <abs-add-record-modal
                   [isEdit$]="isEditGmeRotation$"
-                  [slectedGmeRotation$]="selectedGmeRotation$"
+                  [slectedGmeRotationId$]="selectedGmeRotationId$"
                   (closeDialog)="handleAddEditGmeRotation()"
                 ></abs-add-record-modal>
               </abs-modal>

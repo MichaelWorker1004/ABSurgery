@@ -10,6 +10,8 @@ import {
   ILanguageReadOnlyModel,
   IRaceReadOnlyModel,
   IStateReadOnlyModel,
+  IClinicalLevelReadOnlyModel,
+  IClinicalActivityReadOnlyModel,
   PicklistsService,
 } from '../../api';
 import {
@@ -22,6 +24,8 @@ import {
   GetRaceList,
   GetStateList,
   GetTrainingTypeList,
+  GetClinicalLevelList,
+  GetClinicalActivityList,
 } from './picklists.actions';
 import { IFormErrors } from '../../shared/common';
 import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
@@ -38,6 +42,8 @@ export interface IPicklist {
     | IAccreditedProgramInstitutionReadOnlyModel[]
     | undefined;
   trainingTypes: ITrainingTypeReadOnlyModel[] | undefined;
+  clinicalLevels: IClinicalLevelReadOnlyModel[] | undefined;
+  clinicalActivities: IClinicalActivityReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -45,6 +51,8 @@ export interface IPickListItem {
   itemValue: string | null | undefined;
   itemDescription: string | null | undefined;
   modifier?: string | null | undefined;
+  isCredit?: boolean | null | undefined;
+  isEssential?: boolean | null | undefined;
 }
 
 export interface IPicklistUserValues {
@@ -75,6 +83,8 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     statesMap: {},
     accreditedInstitutions: undefined,
     trainingTypes: undefined,
+    clinicalLevels: undefined,
+    clinicalActivities: undefined,
   },
 })
 @Injectable()
@@ -280,6 +290,46 @@ export class PicklistsState {
           '------- In Picklists Store: Accredited Institutions',
           error
         );
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetClinicalLevelList)
+  getClinicalLevelList(
+    ctx: StateContext<IPicklist>
+  ): Observable<IClinicalLevelReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.clinicalLevels) {
+      return of(ctx.getState()?.clinicalLevels);
+    }
+    return this.picklistsService.retrieveClinicalLevelReadOnly_GetAll().pipe(
+      tap((clinicalLevels: IClinicalLevelReadOnlyModel[]) => {
+        ctx.patchState({
+          clinicalLevels,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Clinical Levels', error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetClinicalActivityList)
+  getClinicalActivityList(
+    ctx: StateContext<IPicklist>
+  ): Observable<IClinicalActivityReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.clinicalActivities) {
+      return of(ctx.getState()?.clinicalActivities);
+    }
+    return this.picklistsService.retrieveClinicalActivityReadOnly_GetAll().pipe(
+      tap((clinicalActivities: IClinicalActivityReadOnlyModel[]) => {
+        ctx.patchState({
+          clinicalActivities,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Clinical Activities', error);
         return of(error);
       })
     );

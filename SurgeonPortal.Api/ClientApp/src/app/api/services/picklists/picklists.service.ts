@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-
 import { IAccreditedProgramInstitutionReadOnlyModel } from '../../models/picklists/accredited-program-institution-read-only.model';
+import { IClinicalActivityReadOnlyModel } from '../../models/picklists/clinical-activity-read-only.model';
+import { IClinicalLevelReadOnlyModel } from '../../models/picklists/clinical-level-read-only.model';
 import { ICountryReadOnlyModel } from '../../models/picklists/country-read-only.model';
 import { IEthnicityReadOnlyModel } from '../../models/picklists/ethnicity-read-only.model';
 import { IGenderReadOnlyModel } from '../../models/picklists/gender-read-only.model';
 import { ILanguageReadOnlyModel } from '../../models/picklists/language-read-only.model';
 import { IRaceReadOnlyModel } from '../../models/picklists/race-read-only.model';
 import { IStateReadOnlyModel } from '../../models/picklists/state-read-only.model';
-import { ApiService } from "ytg-angular";
 import { ITrainingTypeReadOnlyModel } from '../../models/picklists/training-type-read-only.model';
+import { ApiService } from 'ytg-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +43,54 @@ export class PicklistsService {
             
             
             return this.apiService.get<IAccreditedProgramInstitutionReadOnlyModel[]>(`${this.baseEndpoint}/accredited-program-institutions?api-version=${apiVersion}`);
+        }
+ 
+        public retrieveClinicalActivityReadOnly_GetAll(apiVersion = '1.0'): Observable<IClinicalActivityReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_clinicalactivity]
+            */
+            
+            
+            return this.apiService.get<IClinicalActivityReadOnlyModel[]>(`${this.baseEndpoint}/clinical-activities?api-version=${apiVersion}`);
+        }
+ 
+        public retrieveClinicalLevelReadOnly_GetAll(apiVersion = '1.0'): Observable<IClinicalLevelReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_clinicallevel]
+            */
+            
+            
+            return this.apiService.get<IClinicalLevelReadOnlyModel[]>(`${this.baseEndpoint}/clinical-levels?api-version=${apiVersion}`);
         }
  
         public retrieveCountryReadOnly_GetAll(apiVersion = '1.0'): Observable<ICountryReadOnlyModel[]> {

@@ -5,6 +5,7 @@ import { UserProfileState } from './user-profile';
 import { PicklistsState } from './picklists/picklists.state';
 import { ContinuousCertificationState } from './continuous-certification';
 import { GQAdditionalTrainingState } from './examination-gq-additional-training';
+import { GraduateMedicalEducationState } from './graduatemedicaleducation';
 
 export const surgeonPortalState = [
   AuthState,
@@ -14,4 +15,5 @@ export const surgeonPortalState = [
   DashboardState,
   ContinuousCertificationState,
   GQAdditionalTrainingState,
+  GraduateMedicalEducationState,
 ];

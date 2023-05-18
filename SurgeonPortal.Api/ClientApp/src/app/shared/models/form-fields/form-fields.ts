@@ -1,6 +1,7 @@
 export interface IFormFields {
   label: string;
   subLabel?: string;
+  helpText?: string;
   value?: string;
   required: boolean;
   name: string;
@@ -9,4 +10,6 @@ export interface IFormFields {
   type: string;
   size: string;
   options?: any[];
+  filteredOptions?: any[];
+  validators?: any;
 }

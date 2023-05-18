@@ -1,0 +1,86 @@
+{
+  "name": "ClinicalActivityReadOnly",
+  "implementationName": "Picklists\\ClinicalActivityReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_clinicalactivity",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\ClinicalActivityReadOnly",
+    "ModelGroup": "ClinicalActivityReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "clinical-activities",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_clinicalactivity",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_clinicalactivity]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\ClinicalActivityReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Name",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Name"
+              },
+              {
+                "name": "IsCredit",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsCredit"
+              },
+              {
+                "name": "IsEssential",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsEssential"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\ClinicalActivityReadOnly.GetAll ClinicalActivityReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ClinicalActivityReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_clinicalactivity] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ClinicalActivityReadOnly -p:Route=clinical-activities -p:ControllerName=PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\ClinicalActivityReadOnly.GetAll ClinicalActivityReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ClinicalActivityReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_clinicalactivity] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ClinicalActivityReadOnly -p:Route=clinical-activities -p:ControllerName=PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-16T18:06:10.0606016Z"
+  },
+  "version": 1
+}

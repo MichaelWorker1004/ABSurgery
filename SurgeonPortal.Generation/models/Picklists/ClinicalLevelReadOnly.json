@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\ClinicalLevelReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Name",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ClinicalLevelReadOnly -sp [dbo].[get_clinicallevel] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-16T18:05:54.5188641Z"
+  },
+  "version": 1
+}

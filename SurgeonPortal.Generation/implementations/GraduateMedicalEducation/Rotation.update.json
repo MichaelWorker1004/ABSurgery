@@ -1,0 +1,375 @@
+{
+  "name": "Rotation",
+  "implementationName": "GraduateMedicalEducation\\Rotation.update",
+  "template": "ytg-framework/editable-edit",
+  "parameters": {
+    "Adapter": "dbo.update_gmerotations",
+    "ControllerName": "GraduateMedicalEducation\\RotationController",
+    "ControllerRoute": "api/graduate-medical-education",
+    "ControllerVersion": "1",
+    "FetchImplementation": "GraduateMedicalEducation\\Rotation.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "GraduateMedicalEducation\\Rotation",
+    "ModelGroup": "Rotation",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_gmerotations",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_gmerotations]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          },
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "StartDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "StartDate"
+          },
+          {
+            "name": "EndDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "EndDate"
+          },
+          {
+            "name": "ClinicalLevelId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ClinicalLevelId"
+          },
+          {
+            "name": "ClinicalActivityId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ClinicalActivityId"
+          },
+          {
+            "name": "ProgramName",
+            "dataType": "string",
+            "maxLength": 250,
+            "precision": 250,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ProgramName"
+          },
+          {
+            "name": "NonSurgicalActivity",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "NonSurgicalActivity"
+          },
+          {
+            "name": "AlternateInstitutionName",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "AlternateInstitutionName"
+          },
+          {
+            "name": "IsInternationalRotation",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "IsInternationalRotation"
+          },
+          {
+            "name": "Other",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Other"
+          },
+         {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LastUpdatedByUserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "GraduateMedicalEducation\\Rotation",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "StartDate",
+                "dataType": "datetime",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StartDate"
+              },
+              {
+                "name": "EndDate",
+                "dataType": "datetime",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.EndDate"
+              },
+              {
+                "name": "ClinicalLevelId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicalLevelId"
+              },
+              {
+                "name": "ClinicalActivityId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicalActivityId"
+              },
+              {
+                "name": "ProgramName",
+                "dataType": "string",
+                "maxLength": 250,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramName"
+              },
+              {
+                "name": "NonSurgicalActivity",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.NonSurgicalActivity"
+              },
+              {
+                "name": "AlternateInstitutionName",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AlternateInstitutionName"
+              },
+              {
+                "name": "IsInternationalRotation",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsInternationalRotation"
+              },
+              {
+                "name": "Other",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Other"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "StartDate",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "EndDate",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "ClinicalLevelId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ClinicalActivityId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ProgramName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "NonSurgicalActivity",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "AlternateInstitutionName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "IsInternationalRotation",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "Other",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "IsNonEssentialRotation",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "NoCredit",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s GraduateMedicalEducation\\Rotation.update Rotation -t=ytg-framework/editable-edit -p:Model=GraduateMedicalEducation\\Rotation -p:Adapter=sp:ABSSP-[dbo].[update_gmerotations] -p:FetchImplementation=GraduateMedicalEducation\\Rotation.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Rotation -p:Route= -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\Rotation.update Rotation -t=ytg-framework/editable-edit -p:Model=GraduateMedicalEducation\\Rotation -p:Adapter=sp:ABSSP-[dbo].[update_gmerotations] -p:FetchImplementation=GraduateMedicalEducation\\Rotation.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Rotation -p:Route= -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-16T13:07:05.8376213Z"
+  },
+  "version": 1
+}

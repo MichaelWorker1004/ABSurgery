@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { Calendar, CalendarOptions } from '@fullcalendar/core';
 import multiMonthPlugin from '@fullcalendar/multimonth';
@@ -11,18 +16,37 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { InputSelectComponent } from '../shared/components/base-input/input-select.component';
 import { AlertComponent } from '../shared/components/alert/alert.component';
 import { ITEMIZED_GME_COLS } from './itemized-gme-cols';
 import { GME_SUMMARY_COLS } from './gme-summary-cols';
-import { BehaviorSubject, filter, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  filter,
+  Observable,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { ConflictResolutionModalComponent } from './conflict-resolution-modal/conflict-resolution-modal.component';
 import { IGridOptions } from '../shared/components/grid/grid-options.model';
 import { AbsFilterType } from '../shared/components/grid/abs-grid.enum';
 import { AddRecordModalComponent } from './add-record-modal/add-record-modal.component';
+
+import {
+  GraduateMedicalEducationSelectors,
+  GetGraduateMedicalEducationList,
+  GetGraduateMedicalEducationDetails,
+  UpdateGraduateMedicalEducation,
+  CreateGraduateMedicalEducation,
+  DeleteGraduateMedicalEducation,
+} from '../state';
+import { GraduateMedicalEducationState } from '../state';
+import { Select, Store } from '@ngxs/store';
+import { IRotationModel, IRotationReadOnlyModel } from 'src/app/api';
 
 @Component({
   selector: 'abs-gme-history',
@@ -44,7 +68,12 @@ import { AddRecordModalComponent } from './add-record-modal/add-record-modal.com
     ModalComponent,
   ],
 })
-export class GmeHistoryComponent implements OnInit {
+export class GmeHistoryComponent implements OnInit, OnDestroy {
+  @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationList)
+  gmeRotations$: Observable<IRotationReadOnlyModel[]> | undefined;
+
+  gmeRotationsSubscription: Subscription | undefined;
+
   calendar: any;
   calendarReady = false;
   calendarFilter = 'current-year';
@@ -123,7 +152,7 @@ export class GmeHistoryComponent implements OnInit {
     filterOn: 'clinicalLevel',
     filterOptions: [],
   };
-  itemizedGme$: Subject<boolean> = new BehaviorSubject(true);
+  itemizedGme$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   itemizedGmeCols = ITEMIZED_GME_COLS;
   itemizedGmeData!: any[];
 
@@ -132,7 +161,44 @@ export class GmeHistoryComponent implements OnInit {
 
   showAddEditGmeRotation = false;
   isEditGmeRotation$ = new BehaviorSubject(false);
-  selectedGmeRotation$ = new BehaviorSubject<any[]>([]);
+  selectedGmeRotationId$ = new BehaviorSubject<number | undefined>(undefined);
+
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {
+    this.initRotationsData();
+  }
+
+  initRotationsData() {
+    this._store.dispatch(new GetGraduateMedicalEducationList());
+
+    this.gmeRotationsSubscription = this.gmeRotations$?.subscribe(
+      (gmeRotations) => {
+        if (gmeRotations) {
+          // set filter options for grid
+          const filterOptions: { value: any; label: any }[] | undefined = [];
+          gmeRotations.forEach((item) => {
+            if (
+              !filterOptions.some(
+                (x) => x.value === item.clinicalLevel?.replace(' ', '_').trim()
+              )
+            ) {
+              filterOptions.push({
+                value: item.clinicalLevel?.replace(' ', '_').trim(),
+                label: item.clinicalLevel,
+              });
+            }
+          });
+          // need to remove dups here
+          this.itemizedGridOptions.filterOptions = filterOptions;
+
+          // get the value from the observable to inject into the calendar
+          this.itemizedGme$.next(!this.itemizedGme$.getValue());
+        }
+      }
+    );
+  }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -145,7 +211,9 @@ export class GmeHistoryComponent implements OnInit {
     }, 0);
 
     this.getGMESummaryData();
-    this.getItemizedGmeData();
+  }
+  ngOnDestroy(): void {
+    this.gmeRotationsSubscription?.unsubscribe();
   }
 
   getGMESummaryData() {
@@ -261,102 +329,6 @@ export class GmeHistoryComponent implements OnInit {
     return Math.round(avg * 10) / 10;
   }
 
-  getItemizedGmeData() {
-    const filterOptions: { value: any; label: any }[] | undefined = [];
-
-    this.itemizedGmeData = [
-      {
-        from: new Date('09/29/15'),
-        to: new Date('10/29/15'),
-        weeks: 4,
-        programName: 'AZ - University of Arizona [0017]',
-        affiliatedInstitute: '',
-        clinicalLevel: 'Level 1',
-        description: 'Internal Medicine',
-        internationalRotation: 'No',
-      },
-      {
-        from: new Date('10/30/15'),
-        to: new Date('11/27/15'),
-        weeks: 4,
-        programName: 'AZ - University of Arizona [0017]',
-        affiliatedInstitute: '',
-        clinicalLevel: 'Level 2',
-        description: 'Internal Medicine',
-        internationalRotation: 'Yes',
-      },
-      {
-        from: new Date('12/02/15'),
-        to: new Date('12/23/15'),
-        weeks: 4,
-        programName: 'AZ - University of Arizona [0017]',
-        affiliatedInstitute: '',
-        clinicalLevel: 'Level 3',
-        description: 'Internal Medicine',
-        internationalRotation: 'No',
-      },
-      {
-        from: new Date('12/02/15'),
-        to: new Date('12/23/15'),
-        weeks: 4,
-        programName: 'AZ - University of Arizona [0017]',
-        affiliatedInstitute: '',
-        clinicalLevel: 'Level 4',
-        description: 'Internal Medicine',
-        internationalRotation: 'No',
-      },
-      {
-        from: new Date('09/29/15'),
-        to: new Date('10/29/15'),
-        weeks: 4,
-        programName: 'AZ - University of Arizona [0017]',
-        affiliatedInstitute: '',
-        clinicalLevel: 'Level 5',
-        description: 'Internal Medicine',
-        internationalRotation: 'No',
-      },
-      {
-        from: new Date('10/30/15'),
-        to: new Date('11/27/15'),
-        weeks: 4,
-        programName: 'AZ - University of Arizona [0017]',
-        affiliatedInstitute: '',
-        clinicalLevel: 'Level 6',
-        description: 'Internal Medicine',
-        internationalRotation: 'No',
-      },
-      {
-        from: new Date('12/02/15'),
-        to: new Date('12/23/15'),
-        weeks: 4,
-        programName: 'AZ - University of Arizona [0017]',
-        affiliatedInstitute: '',
-        clinicalLevel: 'Level 7',
-        description: 'Internal Medicine',
-        internationalRotation: 'No',
-      },
-      {
-        from: new Date('12/02/15'),
-        to: new Date('12/23/15'),
-        weeks: 4,
-        programName: 'AZ - University of Arizona [0017]',
-        affiliatedInstitute: '',
-        clinicalLevel: 'Level 8',
-        description: 'Internal Medicine',
-        internationalRotation: 'No',
-      },
-    ];
-
-    this.itemizedGmeData.forEach((item) => {
-      filterOptions.push({
-        value: item.clinicalLevel.replace(' ', '_'),
-        label: item.clinicalLevel,
-      });
-    });
-
-    this.itemizedGridOptions.filterOptions = filterOptions;
-  }
-
   getClinicalActivity() {
     this.clinicalActivity = [
       {
@@ -465,15 +437,31 @@ export class GmeHistoryComponent implements OnInit {
     }
 
     this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
+    this.itemizedGme$.next(!this.itemizedGme$.getValue());
   }
 
   handleGridAction($event: any) {
     const { data } = $event;
     if ($event.fieldKey === 'edit') {
       this.isEditGmeRotation$.next(true);
-      this.selectedGmeRotation$.next(data);
+      this.selectedGmeRotationId$.next(data.id);
       this.handleAddEditGmeRotation(true);
+    } else if ($event.fieldKey === 'delete') {
+      this.globalDialogService
+        .showConfirmation(
+          'Confirm Delete',
+          'Are you sure you want to delete this record?'
+        )
+        .then((result) => {
+          if (result) {
+            this.deleteGmeRotation(data.id);
+          }
+        });
     }
+  }
+
+  deleteGmeRotation(id: number) {
+    this._store.dispatch(new DeleteGraduateMedicalEducation(id));
   }
 
   viewConflictsToResolve(conflictList: any[]) {

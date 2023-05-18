@@ -1,0 +1,112 @@
+{
+  "refs": {},
+  "name": "GraduateMedicalEducation\\RotationReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "StartDate",
+      "dataType": "datetime",
+      "maxLength": 3,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "EndDate",
+      "dataType": "datetime",
+      "maxLength": 3,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ProgramName",
+      "dataType": "string",
+      "maxLength": 250,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "AlternateInstitutionName",
+      "dataType": "string",
+      "maxLength": 500,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ClinicalLevel",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Other",
+      "dataType": "string",
+      "maxLength": 500,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "NonSurgicalActivity",
+      "dataType": "string",
+      "maxLength": 500,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "IsInternationalRotation",
+      "dataType": "bool",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s GraduateMedicalEducation\\RotationReadOnly -sp [dbo].[get_gmerotations_byuserid] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-16T12:39:42.0825451Z"
+  },
+  "version": 1
+}

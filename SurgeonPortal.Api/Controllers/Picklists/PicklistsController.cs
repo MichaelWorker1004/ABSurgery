@@ -49,6 +49,38 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm 
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClinicalActivityReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("clinical-activities")]
+        public async Task<ActionResult<IEnumerable<ClinicalActivityReadOnlyModel>>> GetClinicalActivityReadOnly_GetAllAsync(
+            [FromServices] IClinicalActivityReadOnlyListFactory clinicalActivityReadOnlyListFactory)
+        {
+            var items = await clinicalActivityReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<ClinicalActivityReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClinicalLevelReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("clinical-levels")]
+        public async Task<ActionResult<IEnumerable<ClinicalLevelReadOnlyModel>>> GetClinicalLevelReadOnly_GetAllAsync(
+            [FromServices] IClinicalLevelReadOnlyListFactory clinicalLevelReadOnlyListFactory)
+        {
+            var items = await clinicalLevelReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<ClinicalLevelReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CountryReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
