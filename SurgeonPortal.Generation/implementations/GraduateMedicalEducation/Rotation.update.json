@@ -124,7 +124,7 @@
             "required": true,
             "mapsTo": "Other"
           },
-         {
+          {
             "name": "LastUpdatedByUserId",
             "dataType": "int",
             "maxLength": 4,
@@ -189,13 +189,23 @@
                 "mapsTo": "model.ClinicalLevelId"
               },
               {
+                "name": "ClinicalLevel",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicalLevel"
+              },
+              {
                 "name": "ClinicalActivityId",
                 "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
                 "isNullable": false,
-                "isIdentityColumn": false,
+                "isIdentityColumn": true,
                 "mapsTo": "model.ClinicalActivityId"
               },
               {
@@ -237,6 +247,26 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.IsInternationalRotation"
+              },
+              {
+                "name": "IsEssential",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsEssential"
+              },
+              {
+                "name": "IsCredit",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsCredit"
               },
               {
                 "name": "Other",
@@ -351,25 +381,15 @@
       "required": true
     },
     {
-      "name": "IsNonEssentialRotation",
-      "dataType": "bool",
-      "required": true
-    },
-    {
-      "name": "NoCredit",
-      "dataType": "bool",
-      "required": true
-    },
-    {
       "name": "LastUpdatedByUserId",
       "dataType": "int",
       "required": true
     }
   ],
   "metadata": {
-    "command": "ytgim g i s GraduateMedicalEducation\\Rotation.update Rotation -t=ytg-framework/editable-edit -p:Model=GraduateMedicalEducation\\Rotation -p:Adapter=sp:ABSSP-[dbo].[update_gmerotations] -p:FetchImplementation=GraduateMedicalEducation\\Rotation.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Rotation -p:Route= -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 ",
+    "command": "ytgim g i s GraduateMedicalEducation\\Rotation.update Rotation -t=ytg-framework/editable-edit -p:Model=GraduateMedicalEducation\\Rotation -p:Adapter=sp:ABSSP-[dbo].[update_gmerotations] -p:FetchImplementation=GraduateMedicalEducation\\Rotation.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Rotation -p:Route= -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\Rotation.update Rotation -t=ytg-framework/editable-edit -p:Model=GraduateMedicalEducation\\Rotation -p:Adapter=sp:ABSSP-[dbo].[update_gmerotations] -p:FetchImplementation=GraduateMedicalEducation\\Rotation.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Rotation -p:Route= -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-05-16T13:07:05.8376213Z"
+    "generatedDateUtc": "2023-05-19T18:13:04.6623559Z"
   },
   "version": 1
 }

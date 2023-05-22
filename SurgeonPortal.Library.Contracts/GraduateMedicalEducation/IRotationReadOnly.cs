@@ -10,7 +10,10 @@ namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
         DateTime EndDate { get; }
         string ProgramName { get; }
         string AlternateInstitutionName { get; }
+        int ClinicalLevelId { get; }
         string ClinicalLevel { get; }
+        bool IsEssential { get; }
+        bool IsCredit { get; }
         string Other { get; }
         string NonSurgicalActivity { get; }
         bool IsInternationalRotation { get; }

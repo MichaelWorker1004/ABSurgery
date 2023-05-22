@@ -16,6 +16,8 @@ namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
         string NonSurgicalActivity { get; set; }
         string AlternateInstitutionName { get; set; }
         bool IsInternationalRotation { get; set; }
+        bool IsEssential { get; set; }
+        bool IsCredit { get; set; }
         string Other { get; set; }
     }
 }

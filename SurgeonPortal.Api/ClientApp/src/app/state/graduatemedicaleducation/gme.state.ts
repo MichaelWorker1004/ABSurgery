@@ -97,9 +97,12 @@ export class GraduateMedicalEducationState {
           programName: result.programName,
           alternateInstitutionName: result.alternateInstitutionName,
           clinicalLevel: result.clinicalLevel,
+          clinicalLevelId: result.clinicalLevelId,
           other: result.other,
           nonSurgicalActivity: result.nonSurgicalActivity,
           isInternationalRotation: result.isInternationalRotation,
+          isCredit: result.isCredit,
+          isEssential: result.isEssential,
         };
         const gmeRotations = state.gmeRotations.map((item) =>
           item.id === readOnlyResult.id ? readOnlyResult : item
@@ -137,9 +140,12 @@ export class GraduateMedicalEducationState {
           programName: result.programName,
           alternateInstitutionName: result.alternateInstitutionName,
           clinicalLevel: result.clinicalLevel,
+          clinicalLevelId: result.clinicalLevelId,
           other: result.other,
           nonSurgicalActivity: result.nonSurgicalActivity,
           isInternationalRotation: result.isInternationalRotation,
+          isCredit: result.isCredit,
+          isEssential: result.isEssential,
         };
         ctx.setState({
           ...state,

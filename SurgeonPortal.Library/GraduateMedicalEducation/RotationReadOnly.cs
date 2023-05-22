@@ -39,9 +39,24 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		public static readonly PropertyInfo<string> AlternateInstitutionNameProperty = RegisterProperty<string>(c => c.AlternateInstitutionName);
 
         [DataMember]
+		[DisplayName(nameof(ClinicalLevelId))]
+        public int ClinicalLevelId => ReadProperty(ClinicalLevelIdProperty);
+		public static readonly PropertyInfo<int> ClinicalLevelIdProperty = RegisterProperty<int>(c => c.ClinicalLevelId);
+
+        [DataMember]
 		[DisplayName(nameof(ClinicalLevel))]
         public string ClinicalLevel => ReadProperty(ClinicalLevelProperty);
 		public static readonly PropertyInfo<string> ClinicalLevelProperty = RegisterProperty<string>(c => c.ClinicalLevel);
+
+        [DataMember]
+		[DisplayName(nameof(IsEssential))]
+        public bool IsEssential => ReadProperty(IsEssentialProperty);
+		public static readonly PropertyInfo<bool> IsEssentialProperty = RegisterProperty<bool>(c => c.IsEssential);
+
+        [DataMember]
+		[DisplayName(nameof(IsCredit))]
+        public bool IsCredit => ReadProperty(IsCreditProperty);
+		public static readonly PropertyInfo<bool> IsCreditProperty = RegisterProperty<bool>(c => c.IsCredit);
 
         [DataMember]
 		[DisplayName(nameof(Other))]
@@ -75,7 +90,10 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             LoadProperty(EndDateProperty, dto.EndDate);
             LoadProperty(ProgramNameProperty, dto.ProgramName);
             LoadProperty(AlternateInstitutionNameProperty, dto.AlternateInstitutionName);
+            LoadProperty(ClinicalLevelIdProperty, dto.ClinicalLevelId);
             LoadProperty(ClinicalLevelProperty, dto.ClinicalLevel);
+            LoadProperty(IsEssentialProperty, dto.IsEssential);
+            LoadProperty(IsCreditProperty, dto.IsCredit);
             LoadProperty(OtherProperty, dto.Other);
             LoadProperty(NonSurgicalActivityProperty, dto.NonSurgicalActivity);
             LoadProperty(IsInternationalRotationProperty, dto.IsInternationalRotation);

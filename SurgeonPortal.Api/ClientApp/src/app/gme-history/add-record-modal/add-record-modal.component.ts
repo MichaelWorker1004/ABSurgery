@@ -21,6 +21,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { CalendarModule } from 'primeng/calendar';
 import { IFormFields } from 'src/app/shared/models/form-fields/form-fields';
 import { ADD_EDIT_RECORD_FIELDS } from './add-record-form-fields';
@@ -59,6 +60,7 @@ import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/p
     InputTextModule,
     DropdownModule,
     InputTextareaModule,
+    RadioButtonModule,
     CalendarModule,
     AutoCompleteModule,
     FormErrorsComponent,
@@ -70,9 +72,9 @@ import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/p
 export class AddRecordModalComponent implements OnInit, OnDestroy {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
   @Input() isEdit$ = new BehaviorSubject<boolean>(false);
-  @Input() slectedGmeRotationId$ = new BehaviorSubject<number | undefined>(
-    undefined
-  );
+  @Input() slectedGmeRotationId$ = new BehaviorSubject<
+    { id?: number; nextStart: string } | undefined
+  >(undefined);
 
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationDetails)
   selectedRotation$: Observable<IRotationModel> | undefined;
@@ -249,15 +251,22 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
 
     this.isEdit$.subscribe((isEdit) => {
       this.isEditLocal = isEdit;
-      if (isEdit) {
-        this.slectedGmeRotationId$.subscribe((rotationId) => {
-          if (rotationId) {
-            this._store.dispatch(
-              new GetGraduateMedicalEducationDetails(rotationId)
-            );
-          }
-        });
-      } else {
+      this.slectedGmeRotationId$.subscribe((value) => {
+        if (value?.id) {
+          this._store.dispatch(
+            new GetGraduateMedicalEducationDetails(value.id)
+          );
+        }
+        if (value?.nextStart) {
+          const startDate = new Date(value.nextStart);
+          startDate.setDate(startDate.getDate() + 1);
+
+          this.addEditRecordsForm
+            .get('startDate')
+            ?.setValue(startDate.toLocaleDateString());
+        }
+      });
+      if (!isEdit) {
         this.addEditRecordsForm.reset();
         this.addEditRecordsForm.get('isInternationalRotation')?.setValue(false);
         this.onChanges();

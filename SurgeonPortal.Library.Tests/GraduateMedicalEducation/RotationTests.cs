@@ -27,6 +27,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             dto.NonSurgicalActivity = Create<string>();
             dto.AlternateInstitutionName = Create<string>();
             dto.IsInternationalRotation = Create<bool>();
+            dto.IsEssential = Create<bool>();
+            dto.IsCredit = Create<bool>();
             dto.Other = Create<string>();
             dto.CreatedByUserId = Create<int>();
             dto.CreatedAtUtc = Create<System.DateTime>();
@@ -161,6 +163,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.NonSurgicalActivity = dto.NonSurgicalActivity;
             sut.AlternateInstitutionName = dto.AlternateInstitutionName;
             sut.IsInternationalRotation = dto.IsInternationalRotation;
+            sut.IsEssential = dto.IsEssential;
+            sut.IsCredit = dto.IsCredit;
             sut.Other = dto.Other;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
@@ -179,6 +183,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
                 .Excluding(m => m.ClinicalLevel)
+                .Excluding(m => m.IsEssential)
+                .Excluding(m => m.IsCredit)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
@@ -256,6 +262,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.NonSurgicalActivity = dto.NonSurgicalActivity;
             sut.AlternateInstitutionName = dto.AlternateInstitutionName;
             sut.IsInternationalRotation = dto.IsInternationalRotation;
+            sut.IsEssential = dto.IsEssential;
+            sut.IsCredit = dto.IsCredit;
             sut.Other = dto.Other;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
@@ -277,6 +285,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.NonSurgicalActivity = dto.NonSurgicalActivity;
             sut.AlternateInstitutionName = dto.AlternateInstitutionName;
             sut.IsInternationalRotation = dto.IsInternationalRotation;
+            sut.IsEssential = dto.IsEssential;
+            sut.IsCredit = dto.IsCredit;
             sut.Other = dto.Other;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
@@ -294,6 +304,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.ClinicalLevel)
+                    .Excluding(m => m.IsEssential)
+                    .Excluding(m => m.IsCredit)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)

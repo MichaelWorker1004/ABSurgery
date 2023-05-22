@@ -59,10 +59,43 @@
       "rules": {}
     },
     {
+      "name": "ClinicalLevelId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
       "name": "ClinicalLevel",
       "dataType": "string",
       "maxLength": 50,
       "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "IsEssential",
+      "dataType": "bool",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "IsCredit",
+      "dataType": "bool",
+      "maxLength": 1,
+      "precision": 1,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": false,
@@ -104,9 +137,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g m s GraduateMedicalEducation\\RotationReadOnly -sp [dbo].[get_gmerotations_byuserid] -cn abssp ",
+    "command": "ytgim g m s GraduateMedicalEducation\\RotationReadOnly -sp [dbo].[get_gmerotations_byuserid] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-05-16T12:39:42.0825451Z"
+    "generatedDateUtc": "2023-05-19T18:09:06.6940083Z"
   },
   "version": 1
 }

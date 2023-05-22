@@ -5,7 +5,10 @@ export interface IRotationReadOnlyModel {
     endDate: string;
     programName: string;
     alternateInstitutionName: string;
+    clinicalLevelId: number;
     clinicalLevel: string;
+    isEssential: boolean;
+    isCredit: boolean;
     other: string;
     nonSurgicalActivity: string;
     isInternationalRotation: boolean;

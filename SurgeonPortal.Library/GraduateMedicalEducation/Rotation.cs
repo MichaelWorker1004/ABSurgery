@@ -118,6 +118,22 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		}
 		public static readonly PropertyInfo<bool> IsInternationalRotationProperty = RegisterProperty<bool>(c => c.IsInternationalRotation);
 
+        [DisplayName(nameof(IsEssential))]
+		public bool IsEssential
+		{
+			get { return GetProperty(IsEssentialProperty); }
+			set { SetProperty(IsEssentialProperty, value); }
+		}
+		public static readonly PropertyInfo<bool> IsEssentialProperty = RegisterProperty<bool>(c => c.IsEssential);
+
+        [DisplayName(nameof(IsCredit))]
+		public bool IsCredit
+		{
+			get { return GetProperty(IsCreditProperty); }
+			set { SetProperty(IsCreditProperty, value); }
+		}
+		public static readonly PropertyInfo<bool> IsCreditProperty = RegisterProperty<bool>(c => c.IsCredit);
+
         [DisplayName(nameof(Other))]
 		public string Other
 		{
@@ -239,6 +255,8 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			this.NonSurgicalActivity = dto.NonSurgicalActivity;
 			this.AlternateInstitutionName = dto.AlternateInstitutionName;
 			this.IsInternationalRotation = dto.IsInternationalRotation;
+			this.IsEssential = dto.IsEssential;
+			this.IsCredit = dto.IsCredit;
 			this.Other = dto.Other;
 		}
 
@@ -262,6 +280,8 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			dto.NonSurgicalActivity = this.NonSurgicalActivity;
 			dto.AlternateInstitutionName = this.AlternateInstitutionName;
 			dto.IsInternationalRotation = this.IsInternationalRotation;
+			dto.IsEssential = this.IsEssential;
+			dto.IsCredit = this.IsCredit;
 			dto.Other = this.Other;
 
 			return dto;

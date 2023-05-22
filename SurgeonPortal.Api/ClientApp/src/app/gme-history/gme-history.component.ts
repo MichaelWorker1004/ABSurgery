@@ -3,17 +3,12 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { Calendar, CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions } from '@fullcalendar/core';
 import multiMonthPlugin from '@fullcalendar/multimonth';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
@@ -22,31 +17,37 @@ import { InputSelectComponent } from '../shared/components/base-input/input-sele
 import { AlertComponent } from '../shared/components/alert/alert.component';
 import { ITEMIZED_GME_COLS } from './itemized-gme-cols';
 import { GME_SUMMARY_COLS } from './gme-summary-cols';
-import {
-  BehaviorSubject,
-  filter,
-  Observable,
-  Subject,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { ConflictResolutionModalComponent } from './conflict-resolution-modal/conflict-resolution-modal.component';
 import { IGridOptions } from '../shared/components/grid/grid-options.model';
 import { AbsFilterType } from '../shared/components/grid/abs-grid.enum';
 import { AddRecordModalComponent } from './add-record-modal/add-record-modal.component';
+import { DropdownModule } from 'primeng/dropdown';
+
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 import {
   GraduateMedicalEducationSelectors,
   GetGraduateMedicalEducationList,
-  GetGraduateMedicalEducationDetails,
-  UpdateGraduateMedicalEducation,
-  CreateGraduateMedicalEducation,
   DeleteGraduateMedicalEducation,
 } from '../state';
-import { GraduateMedicalEducationState } from '../state';
 import { Select, Store } from '@ngxs/store';
-import { IRotationModel, IRotationReadOnlyModel } from 'src/app/api';
+import { IRotationReadOnlyModel } from 'src/app/api';
+
+export interface ICalendarFilterValue {
+  value: string;
+  field: string;
+}
+export interface ICalendarFilter {
+  label: string;
+  value: ICalendarFilterValue;
+}
+export interface ICalendarFilterOptions {
+  label: string;
+  items: ICalendarFilter[];
+}
 
 @Component({
   selector: 'abs-gme-history',
@@ -66,17 +67,20 @@ import { IRotationModel, IRotationReadOnlyModel } from 'src/app/api';
     ConflictResolutionModalComponent,
     AddRecordModalComponent,
     ModalComponent,
+    DropdownModule,
   ],
 })
 export class GmeHistoryComponent implements OnInit, OnDestroy {
+  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationList)
   gmeRotations$: Observable<IRotationReadOnlyModel[]> | undefined;
 
   gmeRotationsSubscription: Subscription | undefined;
 
-  calendar: any;
   calendarReady = false;
-  calendarFilter = 'current-year';
+  calendarFilterOptions: ICalendarFilterOptions[] = [];
+  calendarFilter: ICalendarFilterValue | undefined;
 
   clinicalActivity!: any[];
   nonClinicalActivity!: any[];
@@ -115,6 +119,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
         let innerContent = `<div slot="content">${info.event.start?.toLocaleDateString()}${
           info.event.end ? ' - ' + realEnd?.toLocaleDateString() : ''
         }
+          <br>${info.event.extendedProps['programName']}
           <br>${info.event.extendedProps['eventTitle']}</div>
           <div style="width: 100%; height: 100%;display:flex;">`;
 
@@ -154,14 +159,18 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   };
   itemizedGme$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   itemizedGmeCols = ITEMIZED_GME_COLS;
-  itemizedGmeData!: any[];
+  itemizedGmeData!: IRotationReadOnlyModel[];
 
   gmeSummaryCols = GME_SUMMARY_COLS;
   gmeSummaryData!: any[];
 
   showAddEditGmeRotation = false;
   isEditGmeRotation$ = new BehaviorSubject(false);
-  selectedGmeRotationId$ = new BehaviorSubject<number | undefined>(undefined);
+  selectedGmeRotationId$ = new BehaviorSubject<
+    { id?: number; nextStart: string } | undefined
+  >(undefined);
+
+  nextStartDate: string | undefined;
 
   constructor(
     private _store: Store,
@@ -175,37 +184,160 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
 
     this.gmeRotationsSubscription = this.gmeRotations$?.subscribe(
       (gmeRotations) => {
+        this.clinicalActivity = [];
+        this.nonClinicalActivity = [];
+        this.conflicts = [];
+
+        this.nextStartDate = '';
         if (gmeRotations) {
+          this.calendarFilterOptions = [
+            {
+              label: 'Activity Types',
+              items: [
+                {
+                  label: 'Clinical',
+                  value: { value: 'clinical', field: 'type' },
+                },
+                {
+                  label: 'Non-Clinical',
+                  value: { value: 'non-clinical', field: 'type' },
+                },
+                //{ label: 'Conflicts', value: { value: 'conflict', field: 'type' }, },
+              ],
+            },
+            {
+              label: 'Clinical Levels',
+              items: [],
+            },
+          ];
+
           // set filter options for grid
-          const filterOptions: { value: any; label: any }[] | undefined = [];
+          const clinicalFilterOptions: { value: string; label: string }[] = [];
+          const yearFilterOptions: ICalendarFilter[] = [];
           gmeRotations.forEach((item) => {
+            //get latest start date
+            if (this.nextStartDate) {
+              if (new Date(item.endDate) > new Date(this.nextStartDate)) {
+                this.nextStartDate = item.endDate;
+              }
+            } else {
+              this.nextStartDate = item.endDate;
+            }
+
+            // build filter options for grid
             if (
-              !filterOptions.some(
-                (x) => x.value === item.clinicalLevel?.replace(' ', '_').trim()
+              !clinicalFilterOptions.some(
+                (x) =>
+                  x.value === item.clinicalLevel?.replaceAll(' ', '_').trim()
               )
             ) {
-              filterOptions.push({
-                value: item.clinicalLevel?.replace(' ', '_').trim(),
+              clinicalFilterOptions.push({
+                value: item.clinicalLevel?.replaceAll(' ', '_').trim(),
                 label: item.clinicalLevel,
               });
+              this.calendarFilterOptions[1].items.push({
+                label: item.clinicalLevel,
+                value: {
+                  value: item.clinicalLevel?.replaceAll(' ', '_').trim(),
+                  field: 'clinicalLevel',
+                },
+              });
+            }
+
+            const itemMonth = new Date(item.startDate).getMonth();
+            const itemYear = new Date(item.startDate).getFullYear().toString();
+            let yearFilter = '';
+            // hardcoded to 5 for June
+            if (itemMonth >= 5) {
+              yearFilter = itemYear.concat(
+                ' - ',
+                (parseInt(itemYear) + 1).toString()
+              );
+            } else {
+              yearFilter = (parseInt(itemYear) - 1)
+                .toString()
+                .concat(' - ', itemYear);
+            }
+            if (!yearFilterOptions.some((x) => x.label === yearFilter)) {
+              yearFilterOptions.push({
+                label: yearFilter,
+                value: {
+                  value: yearFilter?.replaceAll(' ', '_').trim(),
+                  field: 'year',
+                },
+              });
+            }
+
+            // build calendar items
+            const endDate = new Date(item.endDate);
+            endDate.setDate(endDate.getDate() + 1);
+            const calendarItem = {
+              id: item.id,
+              start: item.startDate,
+              end: endDate,
+              class: '',
+              color: '',
+              highlightColor: '',
+              eventTitle: item.clinicalLevel,
+              programName: item.programName,
+              type: '',
+              year: yearFilter.replaceAll(' ', '_').trim(),
+              clinicalLevel: item.clinicalLevel?.replaceAll(' ', '_').trim(),
+              allDay: true,
+              rawData: item,
+            };
+
+            if (item.isCredit) {
+              // clinical activity
+              calendarItem.class = 'clinical';
+              calendarItem.color = 'rgba(28, 130, 125, 0.25)';
+              calendarItem.highlightColor = 'rgba(28, 130, 125, 1)';
+              calendarItem.type = 'clinical';
+              this.clinicalActivity.push(calendarItem);
+            } else {
+              // non clinical activity
+              calendarItem.class = 'non-clinical';
+              calendarItem.color = 'rgba(219, 173, 106, 0.25)';
+              calendarItem.highlightColor = 'rgba(219, 173, 106, 1)';
+              calendarItem.type = 'non-clinical';
+              this.nonClinicalActivity.push(calendarItem);
             }
           });
-          // need to remove dups here
-          this.itemizedGridOptions.filterOptions = filterOptions;
 
-          // get the value from the observable to inject into the calendar
+          clinicalFilterOptions.sort((a, b) => {
+            return a.label > b.label ? 1 : -1;
+          });
+          this.calendarFilterOptions.push({
+            label: 'Years',
+            items: yearFilterOptions,
+          });
+          this.calendarFilterOptions.forEach((filterOption) => {
+            if (filterOption.label !== 'Activity Types') {
+              filterOption.items.sort(
+                (a: ICalendarFilter, b: ICalendarFilter) => {
+                  return a.label > b.label ? 1 : -1;
+                }
+              );
+            }
+          });
+
+          this.itemizedGridOptions.filterOptions = clinicalFilterOptions;
+
           this.itemizedGme$.next(!this.itemizedGme$.getValue());
         }
+
+        this.applyCalendarFilters();
       }
     );
   }
 
   ngOnInit(): void {
+    this.calendarFilter = undefined;
     setTimeout(() => {
       this.calendarOptions.eventSources = [
         this.getClinicalActivity(),
         this.getNonClinicalActivity(),
-        this.getConflicts(),
+        //this.getConflicts(),
       ];
       this.calendarReady = true;
     }, 0);
@@ -329,111 +461,59 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     return Math.round(avg * 10) / 10;
   }
 
-  getClinicalActivity() {
-    this.clinicalActivity = [
-      {
-        id: 'a1',
-        start: '2023-06-01',
-        end: '2023-06-08', //created by adding 1 to the date of the .to date
-        allDay: true,
-        class: 'clinical',
-        backgroundColor: 'rgba(28, 130, 125, 0.25)',
-        highlightColor: 'rgba(28, 130, 125, 1)',
-        eventTitle: 'Clinical Rotation',
-      },
-      {
-        id: 'a2',
-        start: '2023-05-19',
-        end: '2023-05-24',
-        allDay: true,
-        class: 'clinical',
-        backgroundColor: 'rgba(28, 130, 125, 0.25)',
-        highlightColor: 'rgba(28, 130, 125, 1)',
-        eventTitle: 'Clinical Rotation',
-      },
-      {
-        id: 'a3',
-        start: '2023-05-01',
-        end: '2023-05-08',
-        allDay: true,
-        class: 'clinical',
-        backgroundColor: 'rgba(28, 130, 125, 0.25)',
-        highlightColor: 'rgba(28, 130, 125, 1)',
-        eventTitle: 'Clinical Rotation',
-      },
-    ];
+  getClinicalActivity(filters?: ICalendarFilterValue) {
     return {
-      events: this.clinicalActivity,
+      events: this.clinicalActivity.filter((event) => {
+        if (filters) {
+          return filters.value === event[filters.field];
+        } else {
+          return true;
+        }
+      }),
     };
   }
-
-  getNonClinicalActivity() {
-    this.nonClinicalActivity = [
-      {
-        id: 'b1',
-        start: '2023-06-09',
-        end: '2023-06-17',
-        class: 'non-clinical',
-        color: 'rgba(219, 173, 106, 0.25)',
-        highlightColor: 'rgba(219, 173, 106, 1)',
-        eventTitle: 'Non-Clinical Rotation',
-      },
-      {
-        id: 'b2',
-        start: '2023-05-09',
-        end: '2023-05-17',
-        class: 'non-clinical',
-        color: 'rgba(219, 173, 106, 0.25)',
-        highlightColor: 'rgba(219, 173, 106, 1)',
-        eventTitle: 'Non-Clinical Rotation',
-      },
-    ];
+  getNonClinicalActivity(filters?: ICalendarFilterValue) {
     return {
-      events: this.nonClinicalActivity,
+      events: this.nonClinicalActivity.filter((event) => {
+        if (filters) {
+          return filters.value === event[filters.field];
+        } else {
+          return true;
+        }
+      }),
     };
   }
-
-  getConflicts() {
-    this.conflicts = [
-      {
-        id: 'c1',
-        start: '2023-05-08',
-        allDay: true,
-        class: 'conflict',
-        classNames: ['clickable-event'],
-        color: 'rgba(139, 4, 10, 0.25)',
-        highlightColor: 'rgba(139, 4, 10, 1)',
-        eventTitle: 'Rotation Conflict',
-      },
-      {
-        id: 'c2',
-        start: '2023-06-08',
-        allDay: true,
-        class: 'conflict',
-        classNames: ['clickable-event'],
-        color: 'rgba(139, 4, 10, 0.25)',
-        highlightColor: 'rgba(139, 4, 10, 1)',
-        eventTitle: 'Rotation Conflict',
-      },
-      {
-        id: 'c3',
-        start: '2023-05-17',
-        end: '2023-05-19',
-        class: 'conflict',
-        classNames: ['clickable-event'],
-        color: 'rgba(139, 4, 10, 0.25)',
-        highlightColor: 'rgba(139, 4, 10, 1)',
-        eventTitle: 'Rotation Conflict',
-      },
-    ];
+  getConflicts(filters?: ICalendarFilterValue) {
+    // class: 'conflict',
+    // classNames: ['clickable-event'],
+    // color: 'rgba(139, 4, 10, 0.25)',
+    // highlightColor: 'rgba(139, 4, 10, 1)',
+    // eventTitle: 'Rotation Conflict',
+    // type: 'conflict',
     return {
-      events: this.conflicts,
+      events: this.conflicts.filter((event) => {
+        if (filters) {
+          return filters.value === event[filters.field];
+        } else {
+          return true;
+        }
+      }),
     };
+  }
+  getEventSources(filters?: ICalendarFilterValue) {
+    return [
+      this.getClinicalActivity(filters),
+      this.getNonClinicalActivity(filters),
+      //this.getConflicts(filters),
+    ];
   }
 
   handleAddEditGmeRotation(isEdit = false) {
     if (!isEdit) {
       this.isEditGmeRotation$.next(false);
+      this.selectedGmeRotationId$.next({
+        nextStart: this.nextStartDate ?? '',
+      });
     }
 
     this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
@@ -444,7 +524,10 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     const { data } = $event;
     if ($event.fieldKey === 'edit') {
       this.isEditGmeRotation$.next(true);
-      this.selectedGmeRotationId$.next(data.id);
+      this.selectedGmeRotationId$.next({
+        id: data.id,
+        nextStart: this.nextStartDate ?? '',
+      });
       this.handleAddEditGmeRotation(true);
     } else if ($event.fieldKey === 'delete') {
       this.globalDialogService
@@ -464,7 +547,49 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     this._store.dispatch(new DeleteGraduateMedicalEducation(id));
   }
 
+  handleCalendarFilterChange($event: any) {
+    if ($event.value) {
+      this.calendarFilter = $event.value;
+    } else {
+      this.calendarFilter = undefined;
+    }
+
+    this.applyCalendarFilters();
+  }
+
+  applyCalendarFilters() {
+    if (this.calendarComponent) {
+      const calendarApi = this.calendarComponent.getApi();
+      // clear calendar of events
+      calendarApi.getEventSources().forEach((eventSource) => {
+        eventSource.remove();
+      });
+      // refetch all calendar events from sources using new filter value
+      const sources = this.getEventSources(this.calendarFilter);
+      sources.forEach((source) => {
+        calendarApi.addEventSource(source);
+      });
+
+      let firstDate: Date | string | null = null;
+      calendarApi.getEvents().forEach((event) => {
+        if (!firstDate) {
+          firstDate = event.start;
+        } else {
+          if (event.start && event.start < firstDate) {
+            firstDate = event.start;
+          }
+        }
+      });
+      if (firstDate && this.calendarFilter) {
+        calendarApi.gotoDate(firstDate);
+      } else {
+        calendarApi.today();
+      }
+    }
+  }
+
   viewConflictsToResolve(conflictList: any[]) {
+    console.log(conflictList);
     this.toggleConflictResolutionModal();
   }
   toggleConflictResolutionModal() {

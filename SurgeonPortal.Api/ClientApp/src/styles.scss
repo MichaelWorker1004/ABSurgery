@@ -467,6 +467,9 @@ sl-button.btn-add::part(base) {
 sl-button.btn-add::part(base):hover {
   background-position: left bottom;
 }
+sl-dialog.hide-close::part(header-actions) {
+  display: none;
+}
 
 /* PrimeNG overrides */
 .p-dropdown,
@@ -511,6 +514,10 @@ sl-button.btn-add::part(base):hover {
   color: var(--global-danger);
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
+}
+
+sl-dialog.hide-close::part(header-actions) {
+  display: none;
 }
 
 /* Full Calendar Override Styles */

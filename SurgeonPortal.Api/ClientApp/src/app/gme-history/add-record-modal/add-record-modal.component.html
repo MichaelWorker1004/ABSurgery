@@ -83,6 +83,25 @@
           <strong>{{ group.label }}</strong>
         </ng-template>
       </p-dropdown>
+      <div
+        class="flex flex-wrap gap-3"
+        *ngIf="formField.type === 'radio-group'"
+      >
+        <div
+          class="flex align-items-center"
+          *ngFor="let option of formField.options"
+        >
+          <p-radioButton
+            [name]="formField.name"
+            [value]="option.value"
+            [formControlName]="formField.name"
+            [inputId]="formField.name + formField.value"
+          ></p-radioButton>
+          <label [for]="formField.name + formField.value" class="ml-2">{{
+            option.label
+          }}</label>
+        </div>
+      </div>
       <div *ngIf="formField.type === 'textarea'">
         <textarea
           pInputTextarea

@@ -13,25 +13,21 @@
         </div>
         <div class="grid">
           <div class="col-12 flex align-items-center">
-            <abs-input-select
-              [(ngModel)]="calendarFilter"
-              ngDefaultControl
-              style="width: 200px"
-              clearable
-              placeholder="Current Year"
-            >
-              <sl-divider></sl-divider>
-              <small>Clinical Years</small>
-              <sl-option value="clincial-year-1">Year 1</sl-option>
-              <sl-option value="clincial-year-2">Year 2</sl-option>
-              <sl-option value="clincial-year-3">Year 3</sl-option>
-              <sl-option value="clincial-year-4">Year 4</sl-option>
-              <sl-option value="clincial-year-5">Year 5</sl-option>
-              <sl-divider></sl-divider>
-              <small>Fellowship Years</small>
-              <sl-option value="fellowship-year-1">Year 1</sl-option>
-              <sl-option value="fellowship-year-2">Year 2</sl-option>
-            </abs-input-select>
+            <div class="calendar-filter-container">
+              <p-dropdown
+                placeholder="View All Rotations"
+                [options]="calendarFilterOptions"
+                id="calendarFilter"
+                [group]="true"
+                (onChange)="handleCalendarFilterChange($event)"
+                [showClear]="true"
+                appendTo="body"
+              >
+                <ng-template let-group pTemplate="group">
+                  <strong>{{ group.label }}</strong>
+                </ng-template>
+              </p-dropdown>
+            </div>
 
             <sl-button
               variant="default"
@@ -51,21 +47,24 @@
                 <div class="i"></div>
                 Non-Clinical Activity
               </div>
-              <div class="l flex align-items-center conflict">
+              <!-- conflicts legend key -->
+              <!-- <div class="l flex align-items-center conflict">
                 <div class="i"></div>
                 Conflict
-              </div>
+              </div> -->
             </div>
           </div>
 
           <div class="col-12" *ngIf="calendarReady">
             <full-calendar
+              #calendar
               class="gme-rotations-calendar"
               [options]="calendarOptions"
             ></full-calendar>
           </div>
 
-          <div class="col-12">
+          <!-- conflict alert banner -->
+          <!-- <div class="col-12">
             <abs-alert alertType="danger" [fontSize]="1">
               <span class="font-normal"
                 >You have a conflict - two of your rotates conflict with each
@@ -78,7 +77,7 @@
                 >View Details</sl-button
               >
             </abs-alert>
-          </div>
+          </div> -->
         </div>
       </sl-card>
 
@@ -150,6 +149,8 @@
                 }} Graduate Medical Education Record"
                 modalName="addGmeRotation"
                 (closeDialog)="handleAddEditGmeRotation()"
+                [hideClose]="true"
+                [preventOverlayClose]="true"
               >
                 <abs-add-record-modal
                   [isEdit$]="isEditGmeRotation$"
@@ -169,6 +170,7 @@
       title="Resolve Conflicts"
       modalName="conflictResolutionModal"
       [hideClose]="true"
+      [preventOverlayClose]="true"
       [width]="80"
     >
       <abs-conflict-resolution-modal

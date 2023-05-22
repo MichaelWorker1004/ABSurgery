@@ -91,6 +91,16 @@
                 "mapsTo": "model.AlternateInstitutionName"
               },
               {
+                "name": "ClinicalLevelId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ClinicalLevelId"
+              },
+              {
                 "name": "ClinicalLevel",
                 "dataType": "string",
                 "maxLength": 50,
@@ -99,6 +109,26 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.ClinicalLevel"
+              },
+              {
+                "name": "IsEssential",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsEssential"
+              },
+              {
+                "name": "IsCredit",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsCredit"
               },
               {
                 "name": "Other",
@@ -136,11 +166,11 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": [ ],
   "metadata": {
-    "command": "ytgim g i s GraduateMedicalEducation\\RotationReadOnly.GetByUserId RotationReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\RotationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_gmerotations_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RotationReadOnly -p:Route=by-userid -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 ",
+    "command": "ytgim g i s GraduateMedicalEducation\\RotationReadOnly.GetByUserId RotationReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\RotationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_gmerotations_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RotationReadOnly -p:Route=by-userid -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\RotationReadOnly.GetByUserId RotationReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\RotationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_gmerotations_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RotationReadOnly -p:Route=by-userid -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-05-16T12:49:15.875454Z"
+    "generatedDateUtc": "2023-05-19T18:10:28.0359773Z"
   },
   "version": 1
 }

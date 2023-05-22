@@ -127,8 +127,6 @@ export class RotationService {
             * alternateInstitutionName:String
             * isInternationalRotation:Boolean
             * other:String
-            * isNonEssentialRotation:Boolean
-            * noCredit:Boolean
             * lastUpdatedByUserId:Number
             * apiVersion
             */

@@ -11,6 +11,8 @@ export interface IRotationModel {
     nonSurgicalActivity: string;
     alternateInstitutionName: string;
     isInternationalRotation: boolean;
+    isEssential: boolean;
+    isCredit: boolean;
     other: string;
     createdByUserId: number;
     createdAtUtc: string;

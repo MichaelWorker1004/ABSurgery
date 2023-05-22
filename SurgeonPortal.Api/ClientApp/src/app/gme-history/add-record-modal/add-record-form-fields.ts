@@ -53,7 +53,7 @@ export const ADD_EDIT_RECORD_FIELDS = [
   {
     label: 'Affiliated Organization',
     subLabel: '',
-    required: true,
+    required: false,
     name: 'alternateInstitutionName',
     placeholder: 'Enter affiliated organization...',
     helpText:
@@ -84,7 +84,7 @@ export const ADD_EDIT_RECORD_FIELDS = [
   {
     label: 'Explain',
     subLabel: '',
-    required: true,
+    required: false,
     name: 'other',
     placeholder: 'Type your answer...',
     type: 'textarea',
@@ -93,7 +93,7 @@ export const ADD_EDIT_RECORD_FIELDS = [
   {
     label: 'Description (Non-Surgical Only)',
     subLabel: '',
-    required: true,
+    required: false,
     name: 'nonSurgicalActivity',
     placeholder: 'Type your answer...',
     type: 'textarea',
@@ -106,8 +106,10 @@ export const ADD_EDIT_RECORD_FIELDS = [
     required: true,
     name: 'isInternationalRotation',
     placeholder: 'Make a selection...',
-    type: 'select',
-    size: 'col-4',
+    helpText:
+      'If you selected yes please upload the ABS Approval letter under the training section',
+    type: 'radio-group',
+    size: 'col-6',
     options: [
       {
         label: 'Yes',
