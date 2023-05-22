@@ -38,6 +38,7 @@ export interface IPicklist {
   races: IRaceReadOnlyModel[] | undefined;
   states: IStateReadOnlyModel[] | undefined;
   statesMap: { [key: string]: IStateReadOnlyModel[] };
+  defaultStates: IStateReadOnlyModel[] | undefined;
   accreditedInstitutions:
     | IAccreditedProgramInstitutionReadOnlyModel[]
     | undefined;
@@ -63,6 +64,7 @@ export interface IPicklistUserValues {
   races: IRaceReadOnlyModel[] | undefined;
   states: IStateReadOnlyModel[] | undefined;
   statesMap: { [key: string]: IStateReadOnlyModel[] } | undefined;
+  defaultStates: IStateReadOnlyModel[] | undefined;
   accreditedInstitutions:
     | IAccreditedProgramInstitutionReadOnlyModel[]
     | undefined;
@@ -81,6 +83,7 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     races: undefined,
     states: [],
     statesMap: {},
+    defaultStates: undefined,
     accreditedInstitutions: undefined,
     trainingTypes: undefined,
     clinicalLevels: undefined,
@@ -225,7 +228,7 @@ export class PicklistsState {
       });
       return of(ctx.getState().states);
     }
-    if (payload && payload.countryCode) {
+    if (payload?.countryCode) {
       return this.picklistsService
         .retrieveStateReadOnly_GetByCountry(payload.countryCode)
         .pipe(
@@ -243,6 +246,9 @@ export class PicklistsState {
           })
         );
     } else {
+      ctx.patchState({
+        states: [],
+      });
       return of(ctx.getState().states);
     }
   }
@@ -352,7 +358,7 @@ export class PicklistsState {
       this.getTrainingTypeList(ctx).pipe(catchError((error) => of(error))),
     ];
 
-    if (payload && payload.countryCode) {
+    if (payload?.countryCode) {
       joins.push(
         this.getStateList(ctx, { countryCode: payload.countryCode }).pipe(
           catchError((error) => of(error))

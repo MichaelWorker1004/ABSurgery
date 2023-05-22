@@ -164,8 +164,7 @@
                 <label class="block" for="state">State / Province</label>
                 <p-dropdown
                   inputId="state"
-                  *ngIf="mailingStates$ | async as states"
-                  [options]="states"
+                  [options]="mailingStates"
                   formControlName="state"
                   placeholder="Select a State"
                   optionLabel="itemDescription"
@@ -305,8 +304,7 @@
                 >
                 <p-dropdown
                   inputId="birthState"
-                  *ngIf="birthStates$ | async as states"
-                  [options]="states"
+                  [options]="birthStates"
                   formControlName="birthState"
                   placeholder="Select a Birth State"
                   optionLabel="itemDescription"

@@ -20,7 +20,7 @@ export class GetRaceList {
 
 export class GetStateList {
   static readonly type = '[Picklists] Get the states list';
-  constructor(public countryCode?: string) {}
+  constructor(public countryCode?: string | undefined) {}
 }
 
 export class GetAccreditedProgramInstitutionsList {

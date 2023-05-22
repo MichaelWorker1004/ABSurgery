@@ -7,7 +7,7 @@ import { IUserProfileModel } from '../../api';
 import { IFormErrors } from '../../shared/common';
 import { UserProfilesService } from '../../api';
 import { GetUserProfile, UpdateUserProfile } from './user-profile.actions';
-import { GetPicklists } from '../picklists';
+import { GetPicklists, GetStateList } from '../picklists';
 
 export interface IUserProfile {
   userProfileId: number;
@@ -136,6 +136,7 @@ export class UserProfileState {
               'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU',
             errors: null,
           });
+          this.store.dispatch(new GetStateList(ctx.getState().birthCountry));
           this.store.dispatch(new GetPicklists(ctx.getState().country));
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -161,7 +162,7 @@ export class UserProfileState {
     Object.assign(model, ctx.getState());
     const userProfile: IUserProfileModel =
       model as unknown as IUserProfileModel;
-    userProfile.userConfirmedDate = new Date().toDateString();
+    userProfile.userConfirmedDate = new Date().toISOString();
     userProfile.userConfirmed = true;
     userProfile.genderId = +userProfile.genderId;
     userProfile.firstLanguageId = +userProfile.firstLanguageId;

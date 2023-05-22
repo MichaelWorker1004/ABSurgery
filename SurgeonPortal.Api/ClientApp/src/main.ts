@@ -26,10 +26,7 @@ import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
 import { AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN } from './app/state';
 import { PICKLISTS_STATE_TOKEN } from './app/state/picklists';
-import {
-  BrowserAnimationsModule,
-  provideAnimations,
-} from '@angular/platform-browser/animations';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 // TODO: Explore ngx-mask configs to see if onkeypress
 //  and onchange can be mapped to sl_change, etc
@@ -72,7 +69,7 @@ bootstrapApplication(AppComponent, {
       //     },
       //   ],
       // }),
-      // NgxsLoggerPluginModule.forRoot(),
+      NgxsLoggerPluginModule.forRoot(),
       NgxsReduxDevtoolsPluginModule.forRoot(),
       NgxsFormPluginModule.forRoot()
     ),

@@ -8,6 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "run-app": "cd ../ && dotnet run",
+    "restore": "cd ../ && dotnet restore",
     "lib-build": "ng build ytg-angular",
     "lib-dev-build": "npm run lib-build && npm run ytg-angular:pack && node scripts/build-install-lib.js",
     "ytg-angular:pack": "cd dist/ytg-angular && npm pack .",
