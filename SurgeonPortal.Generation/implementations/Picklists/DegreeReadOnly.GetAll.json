@@ -1,0 +1,65 @@
+{
+  "name": "DegreeReadOnly",
+  "implementationName": "Picklists\\DegreeReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_degree",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\DegreeReadOnly",
+    "ModelGroup": "DegreeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "degrees"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_degree",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_degree]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\DegreeReadOnly",
+            "fields": [
+              {
+                "name": "ItemDisplay",
+                "dataType": "string",
+                "maxLength": 24,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ItemDisplay"
+              },
+              {
+                "name": "ItemValue",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ItemValue"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\DegreeReadOnly.GetAll DegreeReadOnly -t=ytg-framework/editable-get -p:Model=Picklists\\DegreeReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_degree] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:ModelGroup=DegreeReadOnly -p:Route=degrees -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Picklists\\DegreeReadOnly.GetAll DegreeReadOnly -t=ytg-framework/editable-get -p:Model=Picklists\\DegreeReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_degree] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:ModelGroup=DegreeReadOnly -p:Route=degrees -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-17T15:46:10.0060736Z"
+  },
+  "version": 1
+}

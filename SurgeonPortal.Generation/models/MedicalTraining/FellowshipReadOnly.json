@@ -1,0 +1,57 @@
+{
+  "refs": {},
+  "name": "MedicalTraining\\FellowshipReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "ProgramName",
+      "dataType": "string",
+      "maxLength": 500,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CompletionYear",
+      "dataType": "string",
+      "maxLength": 4,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ProgramOther",
+      "dataType": "string",
+      "maxLength": 500,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s MedicalTraining\\FellowshipReadOnly -sp [dbo].[get_userfellowships_byuserid] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-18T15:56:29.7019561Z"
+  },
+  "version": 1
+}

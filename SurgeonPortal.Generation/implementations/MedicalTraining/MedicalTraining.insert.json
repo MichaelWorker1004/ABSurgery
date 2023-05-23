@@ -1,0 +1,415 @@
+{
+  "name": "MedicalTraining",
+  "implementationName": "MedicalTraining\\MedicalTraining.insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.ins_medical_training",
+    "ControllerName": "MedicalTraining\\MedicalTrainingController",
+    "ControllerRoute": "api/medical-training",
+    "ControllerVersion": "1",
+    "FetchImplementation": "MedicalTraining\\MedicalTraining.GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\MedicalTraining",
+    "ModelGroup": "MedicalTraining",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.ins_medical_training",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[ins_medical_training]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "GraduateProfileId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "GraduateProfileId"
+          },
+          {
+            "name": "MedicalSchoolName",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "MedicalSchoolName"
+          },
+          {
+            "name": "MedicalSchoolCity",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "MedicalSchoolCity"
+          },
+          {
+            "name": "MedicalSchoolStateId",
+            "dataType": "string",
+            "maxLength": 2,
+            "precision": 2,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "MedicalSchoolStateId"
+          },
+          {
+            "name": "MedicalSchoolCountryId",
+            "dataType": "string",
+            "maxLength": 3,
+            "precision": 3,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "MedicalSchoolCountryId"
+          },
+          {
+            "name": "DegreeId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "DegreeId"
+          },
+          {
+            "name": "MedicalSchoolCompletionYear",
+            "dataType": "string",
+            "maxLength": 4,
+            "precision": 4,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "MedicalSchoolCompletionYear"
+          },
+          {
+            "name": "ResidencyProgramName",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ResidencyProgramName"
+          },
+          {
+            "name": "ResidencyCompletionYear",
+            "dataType": "string",
+            "maxLength": 4,
+            "precision": 4,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ResidencyCompletionYear"
+          },
+          {
+            "name": "ResidencyProgramOther",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ResidencyProgramOther"
+          },
+          {
+            "name": "CreatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CreatedByUserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "MedicalTraining\\MedicalTraining",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "GraduateProfileId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.GraduateProfileId"
+              },
+              {
+                "name": "GraduateProfileDescription",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.GraduateProfileDescription"
+              },
+              {
+                "name": "MedicalSchoolName",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MedicalSchoolName"
+              },
+              {
+                "name": "MedicalSchoolCity",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MedicalSchoolCity"
+              },
+              {
+                "name": "MedicalSchoolStateId",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MedicalSchoolStateId"
+              },
+              {
+                "name": "MedicalSchoolStateName",
+                "dataType": "string",
+                "maxLength": 255,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MedicalSchoolStateName"
+              },
+              {
+                "name": "MedicalSchoolCountryId",
+                "dataType": "string",
+                "maxLength": 3,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MedicalSchoolCountryId"
+              },
+              {
+                "name": "MedicalSchoolCountryName",
+                "dataType": "string",
+                "maxLength": 60,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MedicalSchoolCountryName"
+              },
+              {
+                "name": "DegreeId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DegreeId"
+              },
+              {
+                "name": "DegreeName",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DegreeName"
+              },
+              {
+                "name": "MedicalSchoolCompletionYear",
+                "dataType": "string",
+                "maxLength": 4,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MedicalSchoolCompletionYear"
+              },
+              {
+                "name": "ResidencyProgramName",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ResidencyProgramName"
+              },
+              {
+                "name": "ResidencyCompletionYear",
+                "dataType": "string",
+                "maxLength": 4,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ResidencyCompletionYear"
+              },
+              {
+                "name": "ResidencyProgramOther",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ResidencyProgramOther"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "GraduateProfileId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "MedicalSchoolName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "MedicalSchoolCity",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "MedicalSchoolStateId",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "MedicalSchoolCountryId",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "DegreeId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "MedicalSchoolCompletionYear",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ResidencyProgramName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ResidencyCompletionYear",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ResidencyProgramOther",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\MedicalTraining.insert MedicalTraining -t=ytg-framework/editable-create -p:Model=MedicalTraining\\MedicalTraining -p:Adapter=sp:ABSSP-[dbo].[ins_medical_training] -p:FetchImplementation=MedicalTraining\\MedicalTraining.GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=MedicalTraining -p:Route= -p:ControllerName=MedicalTraining\\MedicalTrainingController -p:ControllerRoute=api/medical-training -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\MedicalTraining.insert MedicalTraining -t=ytg-framework/editable-create -p:Model=MedicalTraining\\MedicalTraining -p:Adapter=sp:ABSSP-[dbo].[ins_medical_training] -p:FetchImplementation=MedicalTraining\\MedicalTraining.GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=MedicalTraining -p:Route= -p:ControllerName=MedicalTraining\\MedicalTrainingController -p:ControllerRoute=api/medical-training -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-11T16:10:46.2265303Z"
+  },
+  "version": 1
+}

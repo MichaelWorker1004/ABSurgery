@@ -1,0 +1,66 @@
+{
+  "name": "FellowshipProgramReadOnly",
+  "implementationName": "Picklists\\FellowshipProgramReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_fellowship_program",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\FellowshipProgramReadOnly",
+    "ModelGroup": "FellowshipProgramReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "fellowship-programs",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_fellowship_program",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_fellowship_program]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\FellowshipProgramReadOnly",
+            "fields": [
+              {
+                "name": "ProgramId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ProgramId"
+              },
+              {
+                "name": "ProgramName",
+                "dataType": "string",
+                "maxLength": 37,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramName"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\FellowshipProgramReadOnly.GetAll FellowshipProgramReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\FellowshipProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_fellowship_program] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=FellowshipProgramReadOnly -p:Route=fellowship-programs -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\FellowshipProgramReadOnly.GetAll FellowshipProgramReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\FellowshipProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_fellowship_program] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=FellowshipProgramReadOnly -p:Route=fellowship-programs -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-19T20:20:32.6018189Z"
+  },
+  "version": 1
+}

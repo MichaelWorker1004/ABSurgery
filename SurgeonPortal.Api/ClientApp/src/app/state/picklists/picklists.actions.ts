@@ -32,6 +32,22 @@ export class GetTrainingTypeList {
   static readonly type = '[Picklists] Get the Training Type list';
 }
 
+export class GetGraduateProfiles {
+  static readonly type = '[Picklists] Get all graduate profiles';
+}
+
+export class GetDegrees {
+  static readonly type = '[Picklists] Get all degrees';
+}
+
+export class GetFellowshipPrograms {
+  static readonly type = '[Picklists] Get all Fellowship Programs';
+}
+
+export class GetResidencyPrograms {
+  static readonly type = '[Picklists] Get all Fellowship Programs';
+}
+
 export class GetPicklists {
   static readonly type = '[Picklists] Get all picklists';
 

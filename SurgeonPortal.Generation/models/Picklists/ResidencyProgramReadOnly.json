@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\ResidencyProgramReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ProgramId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "ProgramName",
+      "dataType": "string",
+      "maxLength": 37,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ResidencyProgramReadOnly -sp [dbo].[get_residency_program] -cn ABSSP -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-19T20:18:38.5833073Z"
+  },
+  "version": 1
+}

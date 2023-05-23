@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\DegreeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ItemDisplay",
+      "dataType": "string",
+      "maxLength": 24,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ItemValue",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\DegreeReadOnly -sp [dbo].[get_degree] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-17T15:43:01.4349327Z"
+  },
+  "version": 1
+}

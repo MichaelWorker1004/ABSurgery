@@ -11,7 +11,7 @@ export class UserCredentialsService {
 
     constructor(private apiService: ApiService) {}
 
-
+ 
         public retrieveUserCredential_GetByUserId(apiVersion = '1.0'): Observable<IUserCredentialModel> {
             /**
             * Claims
@@ -36,8 +36,8 @@ export class UserCredentialsService {
             * Calls Sp(s)
             * [get_user_account]
             */
-
-
+            
+            
             return this.apiService.get<IUserCredentialModel>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
         }
 
@@ -68,9 +68,9 @@ export class UserCredentialsService {
             * Calls Sp(s)
             * [upd_user_account]
             */
-
-
-
+            
+            
+            
             return this.apiService.put<IUserCredentialModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
             model);
         }

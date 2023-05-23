@@ -1,0 +1,66 @@
+{
+  "name": "ResidencyProgramReadOnly",
+  "implementationName": "Picklists\\ResidencyProgramReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_residency_program",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\ResidencyProgramReadOnly",
+    "ModelGroup": "ResidencyProgramReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "residency-programs",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_residency_program",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_residency_program]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\ResidencyProgramReadOnly",
+            "fields": [
+              {
+                "name": "ProgramId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ProgramId"
+              },
+              {
+                "name": "ProgramName",
+                "dataType": "string",
+                "maxLength": 37,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramName"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\ResidencyProgramReadOnly.GetAll ResidencyProgramReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ResidencyProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_residency_program] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ResidencyProgramReadOnly -p:Route=residency-programs -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\ResidencyProgramReadOnly.GetAll ResidencyProgramReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ResidencyProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_residency_program] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ResidencyProgramReadOnly -p:Route=residency-programs -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-19T20:21:24.8379677Z"
+  },
+  "version": 1
+}

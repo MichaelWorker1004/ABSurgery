@@ -1,0 +1,151 @@
+{
+  "name": "Fellowship",
+  "implementationName": "MedicalTraining\\Fellowship.GetById",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_userfellowships_byid",
+    "ControllerName": "MedicalTraining\\FellowshipController",
+    "ControllerRoute": "api/fellowships",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\Fellowship",
+    "ModelGroup": "Fellowship",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-id"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_userfellowships_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_userfellowships_byid]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "MedicalTraining\\Fellowship",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "ProgramName",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramName"
+              },
+              {
+                "name": "CompletionYear",
+                "dataType": "string",
+                "maxLength": 4,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CompletionYear"
+              },
+              {
+                "name": "ProgramOther",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramOther"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\Fellowship.GetById Fellowship -t=ytg-framework/editable-get -p:Model=MedicalTraining\\Fellowship -p:Adapter=sp:ABSSP-[dbo].[get_userfellowships_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Fellowship -p:Route=by-id -p:ControllerName=MedicalTraining\\FellowshipController -p:ControllerRoute=api/fellowships -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\Fellowship.GetById Fellowship -t=ytg-framework/editable-get -p:Model=MedicalTraining\\Fellowship -p:Adapter=sp:ABSSP-[dbo].[get_userfellowships_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Fellowship -p:Route=by-id -p:ControllerName=MedicalTraining\\FellowshipController -p:ControllerRoute=api/fellowships -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-18T15:36:53.2395924Z"
+  },
+  "version": 1
+}

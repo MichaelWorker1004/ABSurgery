@@ -1,0 +1,66 @@
+{
+  "name": "GraduateProfileReadOnly",
+  "implementationName": "Picklists\\GraduateProfileReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_graduate_profile",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\GraduateProfileReadOnly",
+    "ModelGroup": "GraduateProfileReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "graduate-profile",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_graduate_profile",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_graduate_profile]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\GraduateProfileReadOnly",
+            "fields": [
+              {
+                "name": "Type",
+                "dataType": "string",
+                "maxLength": 1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Type"
+              },
+              {
+                "name": "Description",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Description"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\GraduateProfileReadOnly.GetAll GraduateProfileReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\GraduateProfileReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_graduate_profile] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=GraduateProfileReadOnly -p:Route=genders -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\GraduateProfileReadOnly.GetAll GraduateProfileReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\GraduateProfileReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_graduate_profile] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=GraduateProfileReadOnly -p:Route=genders -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-11T17:17:15.4953813Z"
+  },
+  "version": 1
+}

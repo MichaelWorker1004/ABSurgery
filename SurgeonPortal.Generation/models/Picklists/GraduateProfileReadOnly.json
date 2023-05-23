@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\GraduateProfileReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Type",
+      "dataType": "string",
+      "maxLength": 1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Description",
+      "dataType": "string",
+      "maxLength": 100,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\GraduateProfileReadOnly -sp [dbo].[get_graduate_profile] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-11T17:15:13.6041398Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,55 @@
+{
+  "name": "Fellowship",
+  "implementationName": "MedicalTraining\\Fellowship.delete",
+  "template": "ytg-framework/editable-delete",
+  "parameters": {
+    "Adapter": "dbo.delete_userfellowships",
+    "ControllerName": "MedicalTraining\\FellowshipController",
+    "ControllerRoute": "api/fellowships",
+    "ControllerVersion": "1",
+    "FetchImplementation": "MedicalTraining\\Fellowship.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\Fellowship",
+    "ModelGroup": "Fellowship",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.delete_userfellowships",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[delete_userfellowships]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\Fellowship.delete Fellowship -t=ytg-framework/editable-delete -p:Model=MedicalTraining\\Fellowship -p:Adapter=sp:ABSSP-[dbo].[delete_userfellowships] -p:FetchImplementation=MedicalTraining\\Fellowship.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Fellowship -p:Route= -p:ControllerName=MedicalTraining\\FellowshipController -p:ControllerRoute=api/fellowships -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\Fellowship.delete Fellowship -t=ytg-framework/editable-delete -p:Model=MedicalTraining\\Fellowship -p:Adapter=sp:ABSSP-[dbo].[delete_userfellowships] -p:FetchImplementation=MedicalTraining\\Fellowship.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Fellowship -p:Route= -p:ControllerName=MedicalTraining\\FellowshipController -p:ControllerRoute=api/fellowships -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-18T15:40:32.4288221Z"
+  },
+  "version": 1
+}

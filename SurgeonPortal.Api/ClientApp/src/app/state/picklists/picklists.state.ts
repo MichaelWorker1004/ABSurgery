@@ -17,11 +17,15 @@ import {
 import {
   GetAccreditedProgramInstitutionsList,
   GetCountryList,
+  GetDegrees,
   GetEthnicityList,
+  GetFellowshipPrograms,
   GetGenderList,
+  GetGraduateProfiles,
   GetLanguageList,
   GetPicklists,
   GetRaceList,
+  GetResidencyPrograms,
   GetStateList,
   GetTrainingTypeList,
   GetClinicalLevelList,
@@ -30,6 +34,10 @@ import {
 import { IFormErrors } from '../../shared/common';
 import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
 import { ITrainingTypeReadOnlyModel } from 'src/app/api/models/picklists/training-type-read-only.model';
+import { IGraduateProfileReadOnlyModel } from 'src/app/api/models/picklists/graduate-profile-read-only.model';
+import { IDegreeReadOnlyModel } from 'src/app/api/models/picklists/degree-read-only.model';
+import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fellowship-program-read-only.model';
+import { IResidencyProgramReadOnlyModel } from 'src/app/api/models/picklists/residency-program-read-only.model';
 export interface IPicklist {
   countries: ICountryReadOnlyModel[] | undefined;
   ethnicities: IEthnicityReadOnlyModel[] | undefined;
@@ -43,6 +51,10 @@ export interface IPicklist {
     | IAccreditedProgramInstitutionReadOnlyModel[]
     | undefined;
   trainingTypes: ITrainingTypeReadOnlyModel[] | undefined;
+  graduateProfiles: IGraduateProfileReadOnlyModel[] | undefined;
+  degrees: IDegreeReadOnlyModel[] | undefined;
+  fellowshipPrograms: IFellowshipProgramReadOnlyModel[] | undefined;
+  residencyPrograms: IResidencyProgramReadOnlyModel[] | undefined;
   clinicalLevels: IClinicalLevelReadOnlyModel[] | undefined;
   clinicalActivities: IClinicalActivityReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
@@ -69,6 +81,10 @@ export interface IPicklistUserValues {
     | IAccreditedProgramInstitutionReadOnlyModel[]
     | undefined;
   trainingTypes: ITrainingTypeReadOnlyModel[] | undefined;
+  graduateProfiles: IGraduateProfileReadOnlyModel[] | undefined;
+  degrees: IDegreeReadOnlyModel[] | undefined;
+  fellowshipPrograms: IFellowshipProgramReadOnlyModel[] | undefined;
+  residencyPrograms: IResidencyProgramReadOnlyModel[] | undefined;
 }
 
 export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
@@ -86,6 +102,10 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     defaultStates: undefined,
     accreditedInstitutions: undefined,
     trainingTypes: undefined,
+    graduateProfiles: undefined,
+    degrees: undefined,
+    fellowshipPrograms: undefined,
+    residencyPrograms: undefined,
     clinicalLevels: undefined,
     clinicalActivities: undefined,
   },
@@ -301,6 +321,26 @@ export class PicklistsState {
     );
   }
 
+  @Action(GetGraduateProfiles)
+  getGraduateProfiles(
+    ctx: StateContext<IPicklist>
+  ): Observable<IGraduateProfileReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.graduateProfiles) {
+      return of(ctx.getState()?.graduateProfiles);
+    }
+    return this.picklistsService.retrieveGraduateProfileReadOnly_GetAll().pipe(
+      tap((graduateProfiles: IGraduateProfileReadOnlyModel[]) => {
+        ctx.patchState({
+          graduateProfiles,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: States', error);
+        return of(error);
+      })
+    );
+  }
+
   @Action(GetClinicalLevelList)
   getClinicalLevelList(
     ctx: StateContext<IPicklist>
@@ -316,6 +356,68 @@ export class PicklistsState {
       }),
       catchError((error) => {
         console.error('------- In Picklists Store: Clinical Levels', error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetDegrees)
+  getDegrees(
+    ctx: StateContext<IPicklist>
+  ): Observable<IDegreeReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.degrees) {
+      return of(ctx.getState()?.degrees);
+    }
+    return this.picklistsService.retrieveDegreeReadOnly_GetAll().pipe(
+      tap((degrees: IDegreeReadOnlyModel[]) => {
+        ctx.patchState({
+          degrees,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: States', error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetFellowshipPrograms)
+  getFellowshipPrograms(
+    ctx: StateContext<IPicklist>
+  ): Observable<IFellowshipProgramReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.fellowshipPrograms) {
+      return of(ctx.getState()?.fellowshipPrograms);
+    }
+    return this.picklistsService
+      .retrieveFellowshipProgramReadOnly_GetAll()
+      .pipe(
+        tap((fellowshipPrograms: IFellowshipProgramReadOnlyModel[]) => {
+          ctx.patchState({
+            fellowshipPrograms,
+          });
+        }),
+        catchError((error) => {
+          console.error('------- In Picklists Store: States', error);
+          return of(error);
+        })
+      );
+  }
+
+  @Action(GetResidencyPrograms)
+  getResidencyPrograms(
+    ctx: StateContext<IPicklist>
+  ): Observable<IResidencyProgramReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.residencyPrograms) {
+      return of(ctx.getState()?.residencyPrograms);
+    }
+    return this.picklistsService.retrieveResidencyProgramReadOnly_GetAll().pipe(
+      tap((residencyPrograms: IResidencyProgramReadOnlyModel[]) => {
+        ctx.patchState({
+          residencyPrograms,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: States', error);
         return of(error);
       })
     );
@@ -355,7 +457,10 @@ export class PicklistsState {
       this.getAccreditedProgramInstitutionsList(ctx).pipe(
         catchError((error) => of(error))
       ),
+      this.getDegrees(ctx).pipe(catchError((error) => of(error))),
       this.getTrainingTypeList(ctx).pipe(catchError((error) => of(error))),
+      this.getFellowshipPrograms(ctx).pipe(catchError((error) => of(error))),
+      this.getResidencyPrograms(ctx).pipe(catchError((error) => of(error))),
     ];
 
     if (payload?.countryCode) {

@@ -1,0 +1,67 @@
+<form
+  name="personProfileForm"
+  [formGroup]="fellowshipForm"
+  (ngSubmit)="save()"
+  *ngIf="fellowshipForm"
+>
+  <div class="grid">
+    <div class="flex flex-column gap-2 col-12">
+      <label htmlFor="trainingType">Program Name</label>
+      <p-dropdown
+        [options]="fellowshipPrograms"
+        [disabled]="fellowshipForm.get('programOther')?.value ? true : false"
+        [showClear]="true"
+        appendTo="body"
+        optionLabel="programName"
+        optionValue="programName"
+        formControlName="programName"
+        placeholder="Choose a Training Type"
+      ></p-dropdown>
+    </div>
+    <div class="flex flex-column gap-2 col-12">
+      <label htmlFor="other">Other</label>
+      <input
+        [attr.disabled]="fellowshipForm.get('programName')?.value"
+        pInputText
+        id="other"
+        placeholder="If you do not see your Program in the list, type it in here..."
+        formControlName="programOther"
+      />
+    </div>
+    <div class="flex flex-column gap-2 col-12">
+      <label htmlFor="other">Year of Completion *</label>
+      <p-calendar
+        [required]="true"
+        [maxDate]="maxYear"
+        view="year"
+        dateFormat="yy"
+        inputId="yearpicker"
+        formControlName="completionYear"
+        placeholder="YYYY"
+        appendTo="body"
+      ></p-calendar>
+      <small
+        *ngIf="
+          fellowshipForm.get('completionYear')?.errors &&
+          fellowshipForm.get('completionYear')?.dirty
+        "
+        id="trainingType-help"
+        class="form-error-text"
+      >
+        This is required
+      </small>
+    </div>
+  </div>
+  <div class="flex justify-content-end mt-4" slot="footer">
+    <sl-button type="button" variant="text" (click)="cancel()"
+      >Cancel</sl-button
+    >
+    <sl-button
+      type="submit"
+      style="width: 337px"
+      variant="primary"
+      [disabled]="fellowshipForm.invalid"
+      >Save
+    </sl-button>
+  </div>
+</form>

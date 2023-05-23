@@ -22,6 +22,10 @@ export class PicklistsSelectors {
         statesMap: state.statesMap,
         accreditedInstitutions: state.accreditedInstitutions,
         trainingTypes: state.trainingTypes,
+        graduateProfiles: state.graduateProfiles,
+        degrees: state.degrees,
+        fellowshipPrograms: state.fellowshipPrograms,
+        residencyPrograms: state.residencyPrograms,
       } as IPicklistUserValues;
     }
     return;

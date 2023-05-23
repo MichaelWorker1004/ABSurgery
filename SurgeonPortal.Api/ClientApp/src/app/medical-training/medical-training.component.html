@@ -12,7 +12,7 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <form id="medicalTrainingForm">
+        <form id="medicalTrainingForm" [formGroup]="medicalTrainingForm">
           <div class="form-section mt-0">
             <h5 class="form-section__title">Medical School</h5>
             <hr />
@@ -27,72 +27,82 @@
                   >Select the statement that best describes you (Country of
                   medical school)</label
                 >
-                <div>{{ medicalTraining.statement }}</div>
+                <div>
+                  {{ medicalTrainingReadOnly.graduateProfileDescription }}
+                </div>
               </div>
-              <div class="col-12">
+              <div class="col-12 flex flex-column">
                 <label>Medical School</label>
-                <div>{{ medicalTraining.medicalSchool.name }}</div>
+                <div>
+                  {{ medicalTrainingReadOnly.medicalSchoolName }}
+                </div>
               </div>
-              <div class="col-12 md:col-4">
-                <label>City or Town</label>
-                <div>{{ medicalTraining.medicalSchool.city }}</div>
-              </div>
-              <div class="col-12 md:col-4">
-                <label>State / Province / Territory</label>
-                <div>{{ medicalTraining.medicalSchool.state }}</div>
-              </div>
-              <div class="col-12 md:col-4">
+              <div class="col-12 md:col-4 flex flex-column">
                 <label>Country</label>
-                <div>{{ medicalTraining.medicalSchool.country }}</div>
+                {{ medicalTrainingReadOnly.medicalSchoolCountryId }}
               </div>
-              <div class="col-12 md:col-6">
+              <div class="col-12 md:col-4 flex flex-column">
+                <label>State / Province / Territory</label>
+                {{ medicalTrainingReadOnly.medicalSchoolStateId }}
+              </div>
+              <div class="col-12 md:col-4 flex flex-column">
+                <label>City or Town</label>
+                <div>
+                  {{ medicalTrainingReadOnly.medicalSchoolCity }}
+                </div>
+              </div>
+              <div class="col-12 md:col-4 flex flex-column">
                 <label>Degree</label>
-                <div>{{ medicalTraining.medicalSchool.degree }}</div>
+                {{ medicalTrainingReadOnly.degreeName }}
               </div>
-              <div class="col-12 md:col-6">
+              <div class="col-12 md:col-6 flex flex-column">
                 <label>Year of Completion</label>
-                <div>{{ medicalTraining.medicalSchool.yearGraduated }}</div>
+                {{ medicalTrainingReadOnly.medicalSchoolCompletionYear }}
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <div class="col-12">
-                <label class="block" for="statement"
+                <label class="block" for="graduateProfileId"
                   >Select the statement that best describes you (Country of
                   medical school)</label
                 >
                 <p-dropdown
-                  inputId="statement"
-                  [options]="fakeOptions"
-                  name="statement"
-                  [(ngModel)]="medicalTraining.statement"
-                  optionLabel="itemDescription"
-                  optionValue="itemValue"
+                  [options]="graduateProfiles"
+                  formControlName="graduateProfileId"
+                  inputId="graduateProfileId"
+                  placeholder="Select one"
+                  optionLabel="description"
+                  optionValue="type"
                   appendTo="body"
                 ></p-dropdown>
               </div>
               <div class="col-12">
-                <label class="block" for="medicalSchool">Medical School</label>
+                <label class="block" for="medicalSchool"
+                  >Medical School *</label
+                >
                 <input
-                  id="medicalSchool"
                   pInputText
+                  required
+                  formControlName="medicalSchoolName"
                   type="text"
                   placeholder="Enter school name"
                   name="medicalSchool"
-                  [(ngModel)]="medicalTraining.medicalSchool.name"
-                  required
                 />
               </div>
               <div class="col-12 md:col-4">
-                <label class="block" for="city">City or Town</label>
-                <input
-                  id="city"
-                  pInputText
-                  type="text"
-                  placeholder="Enter city name"
-                  name="city"
-                  [(ngModel)]="medicalTraining.medicalSchool.city"
-                  required
-                />
+                <label class="block" for="medicalSchoolCountryId">
+                  Country
+                </label>
+                <p-dropdown
+                  inputId="country"
+                  [options]="countries"
+                  (onChange)="onCountryChange($event)"
+                  placeholder="Choose country"
+                  formControlName="medicalSchoolCountryId"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
               </div>
               <div class="col-12 md:col-4">
                 <label class="block" for="state"
@@ -100,51 +110,63 @@
                 >
                 <p-dropdown
                   inputId="state"
-                  [options]="fakeOptions"
+                  [options]="states"
                   placeholder="Choose state"
-                  name="state"
-                  [(ngModel)]="medicalTraining.medicalSchool.state"
+                  formControlName="medicalSchoolStateId"
                   optionLabel="itemDescription"
                   optionValue="itemValue"
                   appendTo="body"
                 ></p-dropdown>
               </div>
               <div class="col-12 md:col-4">
-                <label class="block" for="country">Country</label>
+                <label class="block" for="medicalSchoolCity"
+                  >City or Town *</label
+                >
+                <input
+                  pInputText
+                  required
+                  type="text"
+                  placeholder="Enter city name"
+                  formControlName="medicalSchoolCity"
+                />
+              </div>
+              <div class="col-12 md:col-6">
+                <label class="block" for="degreeId">Degree *</label>
                 <p-dropdown
-                  inputId="country"
-                  [options]="fakeOptions"
-                  placeholder="Choose country"
-                  name="country"
-                  [(ngModel)]="medicalTraining.medicalSchool.country"
-                  optionLabel="itemDescription"
+                  [required]="true"
+                  [options]="degrees"
+                  formControlName="degreeId"
+                  inputId="degreeId"
+                  placeholder="Select a degree"
+                  optionLabel="itemDisplay"
                   optionValue="itemValue"
                   appendTo="body"
                 ></p-dropdown>
               </div>
-              <div class="col-12 md:col-6">
-                <label class="block" for="degree">Degree</label>
-                <input
-                  id="degree"
-                  pInputText
-                  type="text"
-                  placeholder="Enter degree name"
-                  name="degree"
-                  [(ngModel)]="medicalTraining.medicalSchool.degree"
-                  required
-                />
-              </div>
-              <div class="col-12 md:col-6">
-                <label class="block" for="yearSchool">Year of Completion</label>
-                <input
-                  id="yearSchool"
-                  pInputText
-                  type="text"
+              <div class="flex flex-column col-12 md:col-6">
+                <label htmlFor="other">Year of Completion *</label>
+                <p-calendar
+                  [required]="true"
+                  [maxDate]="maxYear"
+                  view="year"
+                  dateFormat="yy"
+                  inputId="yearpicker"
+                  formControlName="medicalSchoolCompletionYear"
                   placeholder="YYYY"
-                  name="yearSchool"
-                  [(ngModel)]="medicalTraining.medicalSchool.yearGraduated"
-                  required
-                />
+                  appendTo="body"
+                ></p-calendar>
+                <small
+                  *ngIf="
+                    medicalTrainingForm.get('medicalSchoolCompletionYear')
+                      ?.errors &&
+                    medicalTrainingForm.get('medicalSchoolCompletionYear')
+                      ?.dirty
+                  "
+                  id="trainingType-help"
+                  class="form-error-text"
+                >
+                  This is required
+                </small>
               </div>
             </div>
           </div>
@@ -162,11 +184,15 @@
                 <div class="grid">
                   <div class="col-12">
                     <label>Program Name</label>
-                    <div>{{ medicalTraining.residency.programName }}</div>
+                    <div>
+                      {{ medicalTrainingReadOnly.residencyProgramName }}
+                    </div>
                   </div>
                   <div class="col-12">
                     <label>Year of Completion</label>
-                    <div>{{ medicalTraining.residency.yearOfCompletion }}</div>
+                    <div>
+                      {{ medicalTrainingReadOnly.residencyCompletionYear }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -174,7 +200,9 @@
                 <div class="grid">
                   <div class="col-12">
                     <label>My program is not listed</label>
-                    <div>{{ medicalTraining.residency.programNotListed }}</div>
+                    <div>
+                      {{ medicalTrainingReadOnly.residencyProgramOther }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -183,49 +211,58 @@
               <div class="col-6">
                 <div class="grid">
                   <div class="col-12">
-                    <label class="block" for="residencyName"
+                    <label class="block" for="residencyProgramName"
                       >Enter program name</label
                     >
-                    <input
-                      id="residencyName"
-                      pInputText
-                      type="text"
-                      placeholder="Enter program name"
-                      name="residencyName"
-                      [(ngModel)]="medicalTraining.residency.programName"
-                      required
-                    />
+                    <p-dropdown
+                      [options]="residencyPrograms"
+                      formControlName="residencyProgramName"
+                      inputId="residencyProgramName"
+                      placeholder="Select a program"
+                      optionLabel="programName"
+                      optionValue="programId"
+                      appendTo="body"
+                    ></p-dropdown>
                   </div>
-                  <div class="col-12">
-                    <label class="block" for="residencyYear"
-                      >Year of Completion</label
-                    >
-                    <input
-                      id="residencyYear"
-                      pInputText
-                      type="text"
+                  <div class="flex flex-column col-12">
+                    <label htmlFor="other">Year of Completion *</label>
+                    <p-calendar
+                      [required]="true"
+                      [maxDate]="maxYear"
+                      view="year"
+                      dateFormat="yy"
+                      inputId="yearpicker"
+                      formControlName="residencyCompletionYear"
                       placeholder="YYYY"
-                      name="residencyYear"
-                      [(ngModel)]="medicalTraining.residency.yearOfCompletion"
-                      required
-                    />
+                      appendTo="body"
+                    ></p-calendar>
+                    <small
+                      *ngIf="
+                        medicalTrainingForm.get('residencyCompletionYear')
+                          ?.errors &&
+                        medicalTrainingForm.get('residencyCompletionYear')
+                          ?.dirty
+                      "
+                      id="trainingType-help"
+                      class="form-error-text"
+                    >
+                      This is required
+                    </small>
                   </div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="grid">
                   <div class="col-12">
-                    <label class="block" for="residencyNotListed"
+                    <label class="block" for="residencyProgramOther"
                       >My program is not listed</label
                     >
                     <textarea
-                      rows="5"
-                      pInputTextarea
-                      id="residencyNotListed"
-                      placeholder="Explain..."
-                      name="residencyNotListed"
-                      [(ngModel)]="medicalTraining.residency.programNotListed"
                       required
+                      pInputTextarea
+                      rows="5"
+                      formControlName="residencyProgramOther"
+                      placeholder="Explain..."
                     ></textarea>
                   </div>
                 </div>
@@ -241,78 +278,22 @@
               neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
               erat, egestas sit amet tortor at, condimentum tempor erat.
             </p>
-            <div class="grid" *ngIf="!isEdit">
-              <div class="col-6">
-                <div class="grid">
-                  <div class="col-12">
-                    <label>Program Name</label>
-                    <div>{{ medicalTraining.fellowship.programName }}</div>
-                  </div>
-                  <div class="col-12">
-                    <label>Year of Completion</label>
-                    <div>{{ medicalTraining.fellowship.yearOfCompletion }}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="grid">
-                  <div class="col-12">
-                    <label>My program is not listed</label>
-                    <div>{{ medicalTraining.fellowship.programNotListed }}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="grid" *ngIf="isEdit">
-              <div class="col-6">
-                <div class="grid">
-                  <div class="col-12">
-                    <label class="block" for="fellowshipName"
-                      >Enter program name</label
-                    >
-                    <input
-                      id="fellowshipName"
-                      pInputText
-                      type="text"
-                      placeholder="Enter program name"
-                      name="fellowshipName"
-                      [(ngModel)]="medicalTraining.fellowship.programName"
-                      required
-                    />
-                  </div>
-                  <div class="col-12">
-                    <label class="block" for="fellowshipYear"
-                      >Year of Completion</label
-                    >
-                    <input
-                      id="fellowshipYear"
-                      pInputText
-                      type="text"
-                      placeholder="YYYY"
-                      name="fellowshipYear"
-                      [(ngModel)]="medicalTraining.fellowship.yearOfCompletion"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="grid">
-                  <div class="col-12">
-                    <label class="block" for="fellowshipNotListed"
-                      >My program is not listed</label
-                    >
-                    <textarea
-                      rows="5"
-                      pInputTextarea
-                      id="fellowshipNotListed"
-                      placeholder="Explain..."
-                      name="fellowshipNotListed"
-                      [(ngModel)]="medicalTraining.fellowship.programNotListed"
-                      required
-                    ></textarea>
-                  </div>
-                </div>
+            <div class="grid">
+              <div class="col-12">
+                <sl-button
+                  variant="default"
+                  class="btn-add mt-4 mb-1"
+                  (click)="showFellowshipModal()"
+                >
+                  <i slot="prefix" class="fa-solid fa-plus"></i>
+                  ADD RECORD
+                </sl-button>
+                <abs-grid
+                  [columns]="fellowshipCols"
+                  [data]="fellowships$"
+                  (action)="handleGridAction($event, 'fellowship')"
+                  class="margin-bottom-2"
+                ></abs-grid>
               </div>
             </div>
           </div>
@@ -322,165 +303,6 @@
               Certificates or Other Certifications
             </h5>
             <hr />
-            <div class="grid" *ngIf="!isEdit">
-              <div class="col-12">
-                <label>FLS Certification</label>
-                <!-- TODO: [Joe] handle viewing of uploaded document -->
-                <div>{{ medicalTraining.certifications.flsCert.fileName }}</div>
-              </div>
-              <div class="col-12">
-                <label>FES Certification</label>
-                <!-- TODO: [Joe] handle viewing of uploaded document -->
-                <div>{{ medicalTraining.certifications.fesCert.fileName }}</div>
-              </div>
-              <div class="col-12 sm:col-7 md:col-8">
-                <label>Registered Physician in Vascular Interpretation</label>
-                <div>
-                  {{ medicalTraining.certifications.registeredPhysician }}
-                </div>
-              </div>
-              <div class="col-12 sm:col-5 md:col-4">
-                <label>Issue Date</label>
-                <div>
-                  {{
-                    medicalTraining.certifications.issueDate
-                      | date : 'shortDate'
-                  }}
-                </div>
-              </div>
-            </div>
-            <div class="grid" *ngIf="isEdit">
-              <div class="col-12 flex align-items-center">
-                <div style="width: 100%">
-                  <label class="block" for="flsCert">FLS Certification</label>
-                  <div class="file-upload">
-                    <label for="flsCert" class="file-upload__label">
-                      <i class="fa-solid fa-file-lines"></i>
-                      {{
-                        medicalTraining.certifications.flsCert.newFileName ||
-                          medicalTraining.certifications.flsCert.fileName ||
-                          'empty'
-                      }}
-                    </label>
-                    <input
-                      type="file"
-                      name="flsCert"
-                      id="flsCert"
-                      class="file-upload__input"
-                      (change)="
-                        onFileAdded(
-                          $event,
-                          medicalTraining.certifications.flsCert
-                        )
-                      "
-                    />
-                  </div>
-                </div>
-                <sl-button
-                  variant="text"
-                  class="btn-upload"
-                  (click)="uploadFile(medicalTraining.certifications.flsCert)"
-                  [disabled]="!medicalTraining.certifications.flsCert.newFile"
-                  *ngIf="
-                    medicalTraining.certifications.flsCert.newFile ||
-                    !medicalTraining.certifications.flsCert.file
-                  "
-                >
-                  <i class="fa-solid fa-cloud-arrow-up mr-1"></i>
-                  Upload
-                </sl-button>
-                <sl-button
-                  variant="text"
-                  class="btn-remove"
-                  (click)="removeFile(medicalTraining.certifications.flsCert)"
-                  *ngIf="
-                    !medicalTraining.certifications.flsCert.newFile &&
-                    medicalTraining.certifications.flsCert.file
-                  "
-                >
-                  <i class="fa-solid fa-x mr-1"></i>
-                  Remove
-                </sl-button>
-              </div>
-              <div class="col-12 flex align-items-center">
-                <div style="width: 100%">
-                  <label class="block" for="fesCert">FES Certification</label>
-                  <div class="file-upload">
-                    <label for="fesCert" class="file-upload__label">
-                      <i class="fa-solid fa-file-lines"></i>
-                      {{
-                        medicalTraining.certifications.fesCert.newFileName ||
-                          medicalTraining.certifications.fesCert.fileName ||
-                          'empty'
-                      }}
-                    </label>
-                    <input
-                      type="file"
-                      name="fesCert"
-                      id="fesCert"
-                      class="file-upload__input"
-                      (change)="
-                        onFileAdded(
-                          $event,
-                          medicalTraining.certifications.fesCert
-                        )
-                      "
-                    />
-                  </div>
-                </div>
-                <sl-button
-                  variant="text"
-                  class="btn-upload"
-                  (click)="uploadFile(medicalTraining.certifications.fesCert)"
-                  [disabled]="!medicalTraining.certifications.fesCert.newFile"
-                  *ngIf="
-                    medicalTraining.certifications.fesCert.newFile ||
-                    !medicalTraining.certifications.fesCert.file
-                  "
-                >
-                  <i class="fa-solid fa-cloud-arrow-up mr-1"></i>
-                  Upload
-                </sl-button>
-                <sl-button
-                  variant="text"
-                  class="btn-remove"
-                  (click)="removeFile(medicalTraining.certifications.fesCert)"
-                  *ngIf="
-                    !medicalTraining.certifications.fesCert.newFile &&
-                    medicalTraining.certifications.fesCert.file
-                  "
-                >
-                  <i class="fa-solid fa-x mr-1"></i>
-                  Remove
-                </sl-button>
-              </div>
-
-              <div class="col-12 sm:col-7 md:col-9">
-                <label class="block" for="registeredPhysician"
-                  >Registered Physician in Vascular Interpretation</label
-                >
-                <input
-                  id="registeredPhysician"
-                  pInputText
-                  type="text"
-                  name="registeredPhysician"
-                  [(ngModel)]="
-                    medicalTraining.certifications.registeredPhysician
-                  "
-                  required
-                />
-              </div>
-              <div class="col-12 sm:col-5 md:col-3">
-                <label class="block" for="issueDate">Issue Date</label>
-                <p-calendar
-                  id="issueDate"
-                  [showIcon]="true"
-                  name="issueDate"
-                  [(ngModel)]="medicalTraining.certifications.issueDate"
-                  appendTo="body"
-                ></p-calendar>
-              </div>
-            </div>
           </div>
 
           <div class="form-section">
@@ -492,7 +314,7 @@
               <div class="col-12">
                 <sl-button
                   variant="default"
-                  class="btn-add mt-4 mb-5"
+                  class="btn-add mt-4 mb-1"
                   (click)="showTrainingModal()"
                 >
                   <i slot="prefix" class="fa-solid fa-plus"></i>
@@ -501,8 +323,10 @@
                 <abs-grid
                   [columns]="trainingCols"
                   [data]="advancedTraining$"
-                  (action)="handleGridAction($event)"
+                  (action)="handleGridAction($event, 'additionalTraining')"
                   class="margin-bottom-2"
+                  [pagination]="true"
+                  [itemsPerPage]="5"
                 ></abs-grid>
               </div>
             </div>
@@ -533,23 +357,38 @@
         </form>
       </sl-card>
     </div>
-    <abs-modal
-      [open]="showTrainingAddEdit"
-      (closeDialog)="cancelAddEditTraining($event)"
-      title="{{
-        (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add'
-      }} Additional / Advanced Medical Training"
-    >
-      <abs-training-add-edit-modal
-        [userId]="userId"
-        [training$]="tempTraining$"
-        [isEdit$]="isAdditionalAdvancedEdit$"
-        (cancelDialog)="cancelAddEditTraining($event)"
-        (saveDialog)="saveTraining($event)"
-      ></abs-training-add-edit-modal>
-    </abs-modal>
   </section>
 </ng-container>
+
+<abs-modal
+  [open]="showTrainingAddEdit"
+  (closeDialog)="cancelAddEditTraining($event)"
+  title="{{
+    (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add'
+  }} Additional / Advanced Medical Training"
+>
+  <abs-training-add-edit-modal
+    [userId]="userId"
+    [training$]="tempData$"
+    [isEdit$]="isAdditionalAdvancedEdit$"
+    (cancelDialog)="cancelAddEditTraining($event)"
+    (saveDialog)="saveTraining($event)"
+  ></abs-training-add-edit-modal>
+</abs-modal>
+
+<abs-modal
+  [open]="showFellowshipAddEdit"
+  (closeDialog)="cancelAddEditFellowship($event)"
+  title="{{ (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add' }} Fellowship"
+>
+  <abs-fellowship-add-edit-modal
+    [userId]="userId"
+    [fellowship$]="tempData$"
+    [isEdit$]="isFellowshipEdit$"
+    (cancelDialog)="cancelAddEditFellowship($event)"
+    (saveDialog)="saveFellowship($event)"
+  ></abs-fellowship-add-edit-modal>
+</abs-modal>
 
 <ng-template #loading>
   <div class="my-5 flex flex-column justify-content-center align-items-center">

@@ -11,7 +11,7 @@ export class ProgramsService {
 
     constructor(private apiService: ApiService) {}
 
-
+ 
         public retrieveProgramReadOnly_GetByUserId(userId: number,
         apiVersion = '1.0'): Observable<IProgramReadOnlyModel> {
             /**
@@ -33,8 +33,8 @@ export class ProgramsService {
             * Calls Sp(s)
             * [get_user_programs]
             */
-
-
+            
+            
             return this.apiService.get<IProgramReadOnlyModel>(`${this.baseEndpoint}?api-version=${apiVersion}&userId=${userId}`);
         }
 

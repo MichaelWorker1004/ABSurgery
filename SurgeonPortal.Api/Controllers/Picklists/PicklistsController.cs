@@ -97,6 +97,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm 
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DegreeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("degrees")]
+        public async Task<ActionResult<IEnumerable<DegreeReadOnlyModel>>> GetDegreeReadOnly_GetAllAsync(
+            [FromServices] IDegreeReadOnlyListFactory degreeReadOnlyListFactory)
+        {
+            var items = await degreeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<DegreeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EthnicityReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -113,6 +129,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm 
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FellowshipProgramReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("fellowship-programs")]
+        public async Task<ActionResult<IEnumerable<FellowshipProgramReadOnlyModel>>> GetFellowshipProgramReadOnly_GetAllAsync(
+            [FromServices] IFellowshipProgramReadOnlyListFactory fellowshipProgramReadOnlyListFactory)
+        {
+            var items = await fellowshipProgramReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<FellowshipProgramReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GenderReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -123,6 +155,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             var items = await genderReadOnlyListFactory.GetAllAsync();
         
             return Ok(_mapper.Map<IEnumerable<GenderReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GraduateProfileReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("graduate-profile")]
+        public async Task<ActionResult<IEnumerable<GraduateProfileReadOnlyModel>>> GetGraduateProfileReadOnly_GetAllAsync(
+            [FromServices] IGraduateProfileReadOnlyListFactory graduateProfileReadOnlyListFactory)
+        {
+            var items = await graduateProfileReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<GraduateProfileReadOnlyModel>>(items));
         } 
 
         ///<summary>
@@ -155,6 +203,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             var items = await raceReadOnlyListFactory.GetAllAsync();
         
             return Ok(_mapper.Map<IEnumerable<RaceReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ResidencyProgramReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("residency-programs")]
+        public async Task<ActionResult<IEnumerable<ResidencyProgramReadOnlyModel>>> GetResidencyProgramReadOnly_GetAllAsync(
+            [FromServices] IResidencyProgramReadOnlyListFactory residencyProgramReadOnlyListFactory)
+        {
+            var items = await residencyProgramReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<ResidencyProgramReadOnlyModel>>(items));
         } 
 
         ///<summary>

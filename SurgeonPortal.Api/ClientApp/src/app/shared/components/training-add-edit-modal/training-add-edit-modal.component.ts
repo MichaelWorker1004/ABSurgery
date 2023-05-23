@@ -51,7 +51,6 @@ import { validateStartAndEndDates } from '../../validators/validators';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TrainingAddEditModalComponent implements OnInit {
-  @Input() showDialog = false;
   @Input() training$: Subject<IAdvancedTrainingModel> = new Subject();
   @Input() isEdit$: Subject<boolean> = new Subject();
   @Input() userId!: number;
@@ -74,8 +73,8 @@ export class TrainingAddEditModalComponent implements OnInit {
   additionalTrainingForm = new FormGroup(
     {
       trainingType: new FormControl(0, Validators.required),
-      startDate: new FormControl('', Validators.required),
-      endDate: new FormControl('', Validators.required),
+      startDate: new FormControl(new Date(), Validators.required),
+      endDate: new FormControl(new Date(), Validators.required),
       institutionName: new FormControl({ itemDescription: '', itemValue: '' }),
       state: new FormControl({ value: '', disabled: true }),
       city: new FormControl({ value: '', disabled: true }),
@@ -110,8 +109,6 @@ export class TrainingAddEditModalComponent implements OnInit {
     this.training$.subscribe((formData) => {
       if (Object.keys(formData).length > 0) {
         this.trainingId = formData.id;
-        formData.startDate = new Date(formData.startDate ?? '').toDateString();
-        formData.endDate = new Date(formData.endDate ?? '').toDateString();
         for (const [key, value] of Object.entries(formData)) {
           this.additionalTrainingForm.get(key)?.patchValue(value);
           if (key === 'institutionName') {
@@ -137,6 +134,14 @@ export class TrainingAddEditModalComponent implements OnInit {
             }
           }
         }
+
+        this.additionalTrainingForm
+          .get('startDate')
+          ?.patchValue(new Date(formData.startDate ?? ''));
+
+        this.additionalTrainingForm
+          .get('endDate')
+          ?.patchValue(new Date(formData.endDate ?? ''));
       } else {
         this.additionalTrainingForm.reset();
       }

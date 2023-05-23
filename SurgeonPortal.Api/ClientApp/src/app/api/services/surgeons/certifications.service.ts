@@ -7,36 +7,36 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class CertificationsService {
-    private readonly baseEndpoint = 'api/surgeons/certifications';
+  private readonly baseEndpoint = 'api/surgeons/certifications';
 
-    constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {}
 
-
+ 
         public retrieveCertificationReadOnly_GetByAbsId(absId: string,
         apiVersion = '1.0'): Observable<ICertificationReadOnlyModel[]> {
-            /**
-            * Claims
-            */
+    /**
+     * Claims
+     */
 
-            /**
-            * Business Rules
-            * No business rules exist for this model
-            */
+    /**
+     * Business Rules
+     * No business rules exist for this model
+     */
 
-            /**
-            * Required Parameters
-            * absId:String
-            * apiVersion
-            */
+    /**
+     * Required Parameters
+     * absId:String
+     * apiVersion
+     */
 
-            /**
-            * Calls Sp(s)
-            * [get_user_certifications]
-            */
+    /**
+     * Calls Sp(s)
+     * [get_user_certifications]
+     */
 
-
+            
             return this.apiService.get<ICertificationReadOnlyModel[]>(`${this.baseEndpoint}?api-version=${apiVersion}&absId=${absId}`);
-        }
+  }
 
 
 }

@@ -1,0 +1,197 @@
+{
+  "name": "Fellowship",
+  "implementationName": "MedicalTraining\\Fellowship.insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.ins_userfellowships",
+    "ControllerName": "MedicalTraining\\FellowshipController",
+    "ControllerRoute": "api/fellowships",
+    "ControllerVersion": "1",
+    "FetchImplementation": "MedicalTraining\\Fellowship.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\Fellowship",
+    "ModelGroup": "Fellowship",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.ins_userfellowships",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[ins_userfellowships]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ProgramName",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ProgramName"
+          },
+          {
+            "name": "CompletionYear",
+            "dataType": "string",
+            "maxLength": 4,
+            "precision": 4,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CompletionYear"
+          },
+          {
+            "name": "ProgramOther",
+            "dataType": "string",
+            "maxLength": 500,
+            "precision": 500,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ProgramOther"
+          },
+          {
+            "name": "CreatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CreatedByUserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "MedicalTraining\\Fellowship",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "ProgramName",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramName"
+              },
+              {
+                "name": "CompletionYear",
+                "dataType": "string",
+                "maxLength": 4,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CompletionYear"
+              },
+              {
+                "name": "ProgramOther",
+                "dataType": "string",
+                "maxLength": 500,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramOther"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ProgramName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "CompletionYear",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ProgramOther",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\Fellowship.insert Fellowship -t=ytg-framework/editable-create -p:Model=MedicalTraining\\Fellowship -p:Adapter=sp:ABSSP-[dbo].[ins_userfellowships] -p:FetchImplementation=MedicalTraining\\Fellowship.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Fellowship -p:Route= -p:ControllerName=MedicalTraining\\FellowshipController -p:ControllerRoute=api/fellowships -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\Fellowship.insert Fellowship -t=ytg-framework/editable-create -p:Model=MedicalTraining\\Fellowship -p:Adapter=sp:ABSSP-[dbo].[ins_userfellowships] -p:FetchImplementation=MedicalTraining\\Fellowship.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Fellowship -p:Route= -p:ControllerName=MedicalTraining\\FellowshipController -p:ControllerRoute=api/fellowships -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-18T15:37:01.8027258Z"
+  },
+  "version": 1
+}

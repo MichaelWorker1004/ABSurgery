@@ -17,7 +17,7 @@ export class UserProfilesService {
             /**
             * Claims
             */
-
+            
             /**
             * Business Rules
             * Business rules for property: FirstName
@@ -81,28 +81,28 @@ export class UserProfilesService {
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
-
+            
             /**
             * Required Parameters
             * userId:Number
             * apiVersion
             */
-
+            
             /**
             * Calls Sp(s)
             * [get_user_profile_byuserid]
             */
-
-
+            
+            
             return this.apiService.get<IUserProfileModel>(`${this.baseEndpoint}/by-userId?api-version=${apiVersion}&userId=${userId}`);
         }
-
-        public createUserProfile(model: IUserProfileModel,
+ 
+        public createUserProfile(model: IUserProfileModel, 
             apiVersion = '1.0'): Observable<IUserProfileModel> {
             /**
             * Claims
             */
-
+            
             /**
             * Business Rules
             * Business rules for property: FirstName
@@ -166,7 +166,7 @@ export class UserProfilesService {
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
-
+            
             /**
             * Required Parameters
             * userId:Number
@@ -204,24 +204,24 @@ export class UserProfilesService {
             * lastUpdatedByUserId:Number
             * apiVersion
             */
-
+            
             /**
             * Calls Sp(s)
             * [insert_user_profile]
             */
-
-
+            
+            
             return this.apiService.post<IUserProfileModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
                 model);
         }
-
+ 
         public updateUserProfile(userId: number,
         model: IUserProfileModel,
         apiVersion = '1.0') : Observable<IUserProfileModel> {
             /**
             * Claims
             */
-
+            
             /**
             * Business Rules
             * Business rules for property: FirstName
@@ -285,7 +285,7 @@ export class UserProfilesService {
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
-
+            
             /**
             * Required Parameters
             * userProfileId:Number
@@ -324,14 +324,14 @@ export class UserProfilesService {
             * lastUpdatedByUserId:Number
             * apiVersion
             */
-
+            
             /**
             * Calls Sp(s)
             * [update_user_profile]
             */
-
-
-
+            
+            
+            
             return this.apiService.put<IUserProfileModel>(`${this.baseEndpoint}?api-version=${apiVersion}&userId=${userId}`,
             model);
         }
