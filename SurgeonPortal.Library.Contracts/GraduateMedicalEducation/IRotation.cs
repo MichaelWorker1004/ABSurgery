@@ -19,5 +19,6 @@ namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
         bool IsEssential { get; set; }
         bool IsCredit { get; set; }
         string Other { get; set; }
+        string ClinicalActivity { get; set; }
     }
 }

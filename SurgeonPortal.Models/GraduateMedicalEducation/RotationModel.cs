@@ -23,5 +23,6 @@ namespace SurgeonPortal.Models.GraduateMedicalEducation
         public DateTime CreatedAtUtc { get; set; }
         public DateTime LastUpdatedAtUtc { get; set; }
         public int LastUpdatedByUserId { get; set; }
+        public string ClinicalActivity { get; set; }
     }
 }

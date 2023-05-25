@@ -73,6 +73,11 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         public bool IsInternationalRotation => ReadProperty(IsInternationalRotationProperty);
 		public static readonly PropertyInfo<bool> IsInternationalRotationProperty = RegisterProperty<bool>(c => c.IsInternationalRotation);
 
+        [DataMember]
+		[DisplayName(nameof(ClinicalActivity))]
+        public string ClinicalActivity => ReadProperty(ClinicalActivityProperty);
+		public static readonly PropertyInfo<string> ClinicalActivityProperty = RegisterProperty<string>(c => c.ClinicalActivity);
+
 
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -97,6 +102,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             LoadProperty(OtherProperty, dto.Other);
             LoadProperty(NonSurgicalActivityProperty, dto.NonSurgicalActivity);
             LoadProperty(IsInternationalRotationProperty, dto.IsInternationalRotation);
+            LoadProperty(ClinicalActivityProperty, dto.ClinicalActivity);
 		} 
         
     }

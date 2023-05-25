@@ -16,5 +16,6 @@ namespace SurgeonPortal.Models.GraduateMedicalEducation
         public string Other { get; set; }
         public string NonSurgicalActivity { get; set; }
         public bool IsInternationalRotation { get; set; }
+        public string ClinicalActivity { get; set; }
     }
 }

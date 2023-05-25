@@ -12,4 +12,5 @@ export interface IRotationReadOnlyModel {
     other: string;
     nonSurgicalActivity: string;
     isInternationalRotation: boolean;
+    clinicalActivity: string;
 }

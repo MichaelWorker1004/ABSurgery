@@ -1,0 +1,90 @@
+{
+  "refs": {},
+  "name": "GraduateMedicalEducation\\GmeSummaryReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ClinicalLevel",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "MinStartDate",
+      "dataType": "datetime?",
+      "maxLength": 3,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "MaxStartDate",
+      "dataType": "datetime?",
+      "maxLength": 3,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ProgramName",
+      "dataType": "string",
+      "maxLength": 250,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ClinicalWeeks",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "NonClinicalWeeks",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "EssentialsWeeks",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s GraduateMedicalEducation\\GmeSummaryReadOnly -sp [dbo].[get_gmesummary_byuserid] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-23T11:19:53.197171Z"
+  },
+  "version": 1
+}

@@ -17,5 +17,6 @@ namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
         string Other { get; }
         string NonSurgicalActivity { get; }
         bool IsInternationalRotation { get; }
+        string ClinicalActivity { get; }
     }
 }

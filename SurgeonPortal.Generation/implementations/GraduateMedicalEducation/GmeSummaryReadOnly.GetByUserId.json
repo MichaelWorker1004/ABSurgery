@@ -1,0 +1,126 @@
+{
+  "name": "GmeSummaryReadOnly",
+  "implementationName": "GraduateMedicalEducation\\GmeSummaryReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_gmesummary_byuserid",
+    "ControllerName": "GraduateMedicalEducation\\GmeSummaryController",
+    "ControllerRoute": "api/gme-summary",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "GraduateMedicalEducation\\GmeSummaryReadOnly",
+    "ModelGroup": "GmeSummaryReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_gmesummary_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_gmesummary_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "GraduateMedicalEducation\\GmeSummaryReadOnly",
+            "fields": [
+              {
+                "name": "ClinicalLevel",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicalLevel"
+              },
+              {
+                "name": "MinStartDate",
+                "dataType": "datetime?",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MinStartDate"
+              },
+              {
+                "name": "MaxStartDate",
+                "dataType": "datetime?",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MaxStartDate"
+              },
+              {
+                "name": "ProgramName",
+                "dataType": "string",
+                "maxLength": 250,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ProgramName"
+              },
+              {
+                "name": "ClinicalWeeks",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicalWeeks"
+              },
+              {
+                "name": "NonClinicalWeeks",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.NonClinicalWeeks"
+              },
+              {
+                "name": "EssentialsWeeks",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.EssentialsWeeks"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s GraduateMedicalEducation\\GmeSummaryReadOnly.GetByUserId GmeSummaryReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\GmeSummaryReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_gmesummary_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=GmeSummaryReadOnly -p:Route=by-userid -p:ControllerName=GraduateMedicalEducation\\GmeSummaryController -p:ControllerRoute=api/gme-summary -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\GmeSummaryReadOnly.GetByUserId GmeSummaryReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\GmeSummaryReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_gmesummary_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=GmeSummaryReadOnly -p:Route=by-userid -p:ControllerName=GraduateMedicalEducation\\GmeSummaryController -p:ControllerRoute=api/gme-summary -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-23T11:21:05.0731108Z"
+  },
+  "version": 1
+}

@@ -34,6 +34,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedByUserId = Create<int>();
+            dto.ClinicalActivity = Create<string>();
     
             return dto;
         }
@@ -170,6 +171,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
             sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
+            sut.ClinicalActivity = dto.ClinicalActivity;
         
             await sut.SaveAsync();
         
@@ -188,6 +190,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.ClinicalActivity)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -269,6 +272,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
             sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
+            sut.ClinicalActivity = dto.ClinicalActivity;
         
             // We now change all properties on the SUT to make it Dirty
             // or the SaveAsync() will not be called. :)
@@ -292,6 +296,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
             sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
+            sut.ClinicalActivity = dto.ClinicalActivity;
         
             await sut.SaveAsync();
         
@@ -309,6 +314,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
+                    .Excluding(m => m.ClinicalActivity)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

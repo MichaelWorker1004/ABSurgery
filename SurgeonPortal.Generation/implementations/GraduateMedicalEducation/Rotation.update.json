@@ -209,6 +209,16 @@
                 "mapsTo": "model.ClinicalActivityId"
               },
               {
+                "name": "ClinicalActivity",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicalActivity"
+              },
+              {
                 "name": "ProgramName",
                 "dataType": "string",
                 "maxLength": 250,

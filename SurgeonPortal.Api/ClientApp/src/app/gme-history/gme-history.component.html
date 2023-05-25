@@ -8,7 +8,9 @@
         <div slot="header">
           My GME rotations
           <span class="block font-normal text-base"
-            >Current 5-year cycle: 2018-01-01 through 2022-12-31</span
+            >Date Range Covered:
+            {{ minStartDate | date : 'yyyy-MM-dd' }} through
+            {{ maxEndDate | date : 'yyyy-MM-dd' }}</span
           >
         </div>
         <div class="grid">
@@ -85,6 +87,7 @@
         <abs-collapse-panel
           [panelId]="2"
           [startExpanded]="true"
+          [editToggle]="summaryGme$"
           class="table-sm"
         >
           <h5 class="mt-0 mb-2" panel-header>GME Summary</h5>
@@ -102,7 +105,7 @@
               <abs-grid
                 class="margin-bottom-2"
                 [columns]="gmeSummaryCols"
-                [data]="gmeSummaryData"
+                [data]="gmeSummary$"
                 [showGridLines]="false"
               ></abs-grid>
             </div>
@@ -121,9 +124,11 @@
           <div class="grid">
             <div class="col-12">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                sed neque nec dolor lacinia interdum quis nec nisi. Pellentesque
-                dolor erat, egestas sit amet tortor at, condimentum tempor erat.
+                Document all GME rotations completely, without any gaps
+                throughout your training years. Your program director must
+                attest to the accuracy of your rotations, and you will be able
+                to request an attestation from your PD upon completion of this
+                section.
               </p>
               <sl-button
                 variant="default"
@@ -140,7 +145,7 @@
                 [gridOptions]="itemizedGridOptions"
                 (action)="handleGridAction($event)"
                 [pagination]="true"
-                [itemsPerPage]="4"
+                [itemsPerPage]="5"
               ></abs-grid>
               <abs-modal
                 [open]="showAddEditGmeRotation"

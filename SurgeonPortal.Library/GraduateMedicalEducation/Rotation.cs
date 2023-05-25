@@ -142,6 +142,14 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		}
 		public static readonly PropertyInfo<string> OtherProperty = RegisterProperty<string>(c => c.Other);
 
+        [DisplayName(nameof(ClinicalActivity))]
+		public string ClinicalActivity
+		{
+			get { return GetProperty(ClinicalActivityProperty); }
+			set { SetProperty(ClinicalActivityProperty, value); }
+		}
+		public static readonly PropertyInfo<string> ClinicalActivityProperty = RegisterProperty<string>(c => c.ClinicalActivity);
+
 
 
         /// <summary>
@@ -258,6 +266,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			this.IsEssential = dto.IsEssential;
 			this.IsCredit = dto.IsCredit;
 			this.Other = dto.Other;
+			this.ClinicalActivity = dto.ClinicalActivity;
 		}
 
 		internal RotationDto ToDto()
@@ -283,6 +292,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			dto.IsEssential = this.IsEssential;
 			dto.IsCredit = this.IsCredit;
 			dto.Other = this.Other;
+			dto.ClinicalActivity = this.ClinicalActivity;
 
 			return dto;
 		}

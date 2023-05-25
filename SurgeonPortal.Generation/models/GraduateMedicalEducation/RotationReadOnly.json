@@ -134,6 +134,16 @@
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "ClinicalActivity",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false
     }
   ],
   "metadata": {

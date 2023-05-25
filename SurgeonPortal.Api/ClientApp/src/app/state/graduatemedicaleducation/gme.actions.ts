@@ -1,5 +1,10 @@
 import { IRotationModel } from '../../api';
 
+export class GetGraduateMedicalEducationSummary {
+  static readonly type = '[GME] get list of gme summary';
+
+  //constructor() {}
+}
 export class GetGraduateMedicalEducationList {
   static readonly type = '[GME] get list of gme rotations';
 

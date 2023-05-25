@@ -111,6 +111,16 @@
                 "mapsTo": "model.ClinicalLevel"
               },
               {
+                "name": "ClinicalActivity",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicalActivity"
+              },
+              {
                 "name": "IsEssential",
                 "dataType": "bool",
                 "maxLength": 1,

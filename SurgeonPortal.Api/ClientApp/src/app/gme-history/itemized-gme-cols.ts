@@ -3,10 +3,10 @@ import { AbsGrid } from '../shared/components/grid/abs-grid';
 export const ITEMIZED_GME_COLS = [
   AbsGrid.setFormattedDateCol('From', 'startDate'),
   AbsGrid.setFormattedDateCol('To', 'endDate'),
-  //AbsGrid.setTextDisplayCol('Weeks', 'weeks'),
   AbsGrid.setTextDisplayCol('Program Name', 'programName'),
   AbsGrid.setTextDisplayCol('Affiliated Institute', 'alternateInstitutionName'),
   AbsGrid.setTextDisplayCol('Clinical Level', 'clinicalLevel'),
+  AbsGrid.setTextDisplayCol('Clinical Activity', 'clinicalActivity'),
   AbsGrid.setTextDisplayCol(
     'Description (Non-Surgical Only)',
     'nonSurgicalActivity'

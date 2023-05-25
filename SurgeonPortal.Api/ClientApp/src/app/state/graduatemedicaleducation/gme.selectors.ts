@@ -3,7 +3,11 @@ import {
   IGraduateMedicalEducation,
   GraduateMedicalEducationState,
 } from './gme.state';
-import { IRotationModel, IRotationReadOnlyModel } from 'src/app/api';
+import {
+  IRotationModel,
+  IRotationReadOnlyModel,
+  IGmeSummaryReadOnlyModel,
+} from 'src/app/api';
 import { IFormErrors } from 'src/app/shared/common';
 
 export class GraduateMedicalEducationSelectors {
@@ -13,6 +17,16 @@ export class GraduateMedicalEducationSelectors {
   ): IRotationReadOnlyModel[] | undefined {
     if (state?.gmeRotations?.length > 0) {
       return state.gmeRotations;
+    }
+    return;
+  }
+
+  @Selector([GraduateMedicalEducationState])
+  static graduateMedicalEducationSummary(
+    state: IGraduateMedicalEducation
+  ): IGmeSummaryReadOnlyModel[] | undefined {
+    if (state?.gmeSummary?.length > 0) {
+      return state.gmeSummary;
     }
     return;
   }

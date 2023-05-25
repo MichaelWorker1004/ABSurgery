@@ -37,14 +37,21 @@
       <tr>
         <th *ngFor="let c of columns">
           <div
+            class="flex justify-content-between"
             *ngIf="
               c.cellRenderer !== AbsGridCellRendererType.Button &&
               c.cellRenderer !== AbsGridCellRendererType.ExpandToggle
             "
           >
-            {{ c.headerName }}
-            <button (click)="setColumnSort(c)" *ngIf="c.sortable">
-              <i class="fa-solid fa-sort"></i>
+            <span>{{ c.headerName }}</span>
+            <button
+              (click)="setColumnSort(c)"
+              class="pl-1 pr-0"
+              *ngIf="c.sortable"
+            >
+              <i class="fa-solid fa-sort" *ngIf="!c.sort"></i>
+              <i class="fa-solid fa-sort-up" *ngIf="c.sort === 'asc'"></i>
+              <i class="fa-solid fa-sort-down" *ngIf="c.sort === 'desc'"></i>
             </button>
           </div>
         </th>

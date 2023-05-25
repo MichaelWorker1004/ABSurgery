@@ -18,4 +18,5 @@ export interface IRotationModel {
     createdAtUtc: string;
     lastUpdatedAtUtc: string;
     lastUpdatedByUserId: number;
+    clinicalActivity: string;
 }

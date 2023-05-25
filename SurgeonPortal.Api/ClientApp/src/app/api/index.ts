@@ -20,6 +20,7 @@ export * from './models/picklists/clinical-level-read-only.model';
 
 export * from './models/graduatemedicaleducation/rotation-read-only.model';
 export * from './models/graduatemedicaleducation/rotation.model';
+export * from './models/graduatemedicaleducation/gme-summary-read-only.model';
 
 // Services
 export * from './services/auth/auth.service';
@@ -29,3 +30,4 @@ export * from './services/users/user-profiles.service';
 export * from './services/users/users.service';
 export * from './services/examinations/gq/additional-trainings.service';
 export * from './services/graduatemedicaleducation/rotation.service';
+export * from './services/graduatemedicaleducation/gme-summary.service';

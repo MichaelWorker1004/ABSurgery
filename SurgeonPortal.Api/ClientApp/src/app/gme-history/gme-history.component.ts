@@ -34,7 +34,7 @@ import {
   DeleteGraduateMedicalEducation,
 } from '../state';
 import { Select, Store } from '@ngxs/store';
-import { IRotationReadOnlyModel } from 'src/app/api';
+import { IRotationReadOnlyModel, IGmeSummaryReadOnlyModel } from 'src/app/api';
 
 export interface ICalendarFilterValue {
   value: string;
@@ -76,7 +76,11 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationList)
   gmeRotations$: Observable<IRotationReadOnlyModel[]> | undefined;
 
+  @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationSummary)
+  gmeSummary$: Observable<IGmeSummaryReadOnlyModel[]> | undefined;
+
   gmeRotationsSubscription: Subscription | undefined;
+  gmeSummarySubscription: Subscription | undefined;
 
   calendarReady = false;
   calendarFilterOptions: ICalendarFilterOptions[] = [];
@@ -162,6 +166,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   itemizedGmeData!: IRotationReadOnlyModel[];
 
   gmeSummaryCols = GME_SUMMARY_COLS;
+  summaryGme$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   gmeSummaryData!: any[];
 
   showAddEditGmeRotation = false;
@@ -170,13 +175,15 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     { id?: number; nextStart: string } | undefined
   >(undefined);
 
-  nextStartDate: string | undefined;
+  minStartDate: Date | undefined;
+  maxEndDate: Date | undefined;
 
   constructor(
     private _store: Store,
     private globalDialogService: GlobalDialogService
   ) {
     this.initRotationsData();
+    this.initSummaryData();
   }
 
   initRotationsData() {
@@ -188,7 +195,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
         this.nonClinicalActivity = [];
         this.conflicts = [];
 
-        this.nextStartDate = '';
         if (gmeRotations) {
           this.calendarFilterOptions = [
             {
@@ -215,13 +221,22 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
           const clinicalFilterOptions: { value: string; label: string }[] = [];
           const yearFilterOptions: ICalendarFilter[] = [];
           gmeRotations.forEach((item) => {
-            //get latest start date
-            if (this.nextStartDate) {
-              if (new Date(item.endDate) > new Date(this.nextStartDate)) {
-                this.nextStartDate = item.endDate;
+            //get min start date
+            if (this.minStartDate) {
+              if (new Date(item.startDate) < new Date(this.minStartDate)) {
+                this.minStartDate = new Date(item.startDate);
               }
             } else {
-              this.nextStartDate = item.endDate;
+              this.minStartDate = new Date(item.startDate);
+            }
+
+            //get max end date
+            if (this.maxEndDate) {
+              if (new Date(item.endDate) > new Date(this.maxEndDate)) {
+                this.maxEndDate = new Date(item.endDate);
+              }
+            } else {
+              this.maxEndDate = new Date(item.endDate);
             }
 
             // build filter options for grid
@@ -331,6 +346,15 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     );
   }
 
+  initSummaryData() {
+    this.gmeSummarySubscription = this.gmeSummary$?.subscribe((gmeSummary) => {
+      console.log('gmeSummary', gmeSummary);
+      if (gmeSummary) {
+        this.summaryGme$.next(!this.summaryGme$.getValue());
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.calendarFilter = undefined;
     setTimeout(() => {
@@ -341,124 +365,10 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
       ];
       this.calendarReady = true;
     }, 0);
-
-    this.getGMESummaryData();
   }
   ngOnDestroy(): void {
     this.gmeRotationsSubscription?.unsubscribe();
-  }
-
-  getGMESummaryData() {
-    const gmeSummaryData = [
-      {
-        residencyYear: '1',
-        clinicalRotation: 12,
-        clincalYears1To3: 11,
-        clincalYears4To6: 1,
-        essentialContentArea: 6,
-        primaryChief: 1,
-        nonClinicalActivity: 0,
-      },
-      {
-        residencyYear: '2',
-        clinicalRotation: 5,
-        clincalYears1To3: 7,
-        clincalYears4To6: 3,
-        essentialContentArea: 0,
-        primaryChief: 0,
-        nonClinicalActivity: 12,
-      },
-      {
-        residencyYear: '3',
-        clinicalRotation: 4,
-        clincalYears1To3: 12,
-        clincalYears4To6: 8,
-        essentialContentArea: 3,
-        primaryChief: 4,
-        nonClinicalActivity: 10,
-      },
-      {
-        residencyYear: '4',
-        clinicalRotation: 6,
-        clincalYears1To3: 7,
-        clincalYears4To6: 3,
-        essentialContentArea: 10,
-        primaryChief: 12,
-        nonClinicalActivity: 4,
-      },
-      {
-        residencyYear: '5',
-        clinicalRotation: 6,
-        clincalYears1To3: 7,
-        clincalYears4To6: 3,
-        essentialContentArea: 10,
-        primaryChief: 12,
-        nonClinicalActivity: 4,
-      },
-      {
-        residencyYear: '6',
-        clinicalRotation: 6,
-        clincalYears1To3: 7,
-        clincalYears4To6: 3,
-        essentialContentArea: 10,
-        primaryChief: 12,
-        nonClinicalActivity: 4,
-      },
-    ];
-    const gmeSummaryTotals = {
-      residencyYear: 'Total Weeks',
-      clinicalRotation: this.getTotals(gmeSummaryData, 'clinicalRotation'),
-      clincalYears1To3: this.getTotals(gmeSummaryData, 'clincalYears1To3'),
-      clincalYears4To6: this.getTotals(gmeSummaryData, 'clincalYears4To6'),
-      essentialContentArea: this.getTotals(
-        gmeSummaryData,
-        'essentialContentArea'
-      ),
-      primaryChief: this.getTotals(gmeSummaryData, 'primaryChief'),
-      nonClinicalActivity: this.getTotals(
-        gmeSummaryData,
-        'nonClinicalActivity'
-      ),
-      rowStyle: {
-        'font-weight': 'bold',
-        'background-color': '#1F3758',
-        color: '#FFF',
-      },
-    };
-    const gmeSummaryAverages = {
-      residencyYear: 'Avg Weeks',
-      clinicalRotation: this.getAverages(gmeSummaryData, 'clinicalRotation'),
-      clincalYears1To3: this.getAverages(gmeSummaryData, 'clincalYears1To3'),
-      clincalYears4To6: this.getAverages(gmeSummaryData, 'clincalYears4To6'),
-      essentialContentArea: this.getAverages(
-        gmeSummaryData,
-        'essentialContentArea'
-      ),
-      primaryChief: this.getAverages(gmeSummaryData, 'primaryChief'),
-      nonClinicalActivity: this.getAverages(
-        gmeSummaryData,
-        'nonClinicalActivity'
-      ),
-      rowStyle: {
-        'font-weight': 'bold',
-        'background-color': '#1F3758',
-        color: '#FFF',
-      },
-    };
-
-    this.gmeSummaryData = [
-      ...gmeSummaryData,
-      gmeSummaryTotals,
-      gmeSummaryAverages,
-    ];
-  }
-
-  getTotals(items: any[], prop: string) {
-    return items.reduce((a, b) => a + b[prop], 0);
-  }
-  getAverages(items: any[], prop: string) {
-    const avg = items.reduce((a, b) => a + b[prop], 0) / items.length;
-    return Math.round(avg * 10) / 10;
+    this.gmeSummarySubscription?.unsubscribe();
   }
 
   getClinicalActivity(filters?: ICalendarFilterValue) {
@@ -512,7 +422,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     if (!isEdit) {
       this.isEditGmeRotation$.next(false);
       this.selectedGmeRotationId$.next({
-        nextStart: this.nextStartDate ?? '',
+        nextStart: this.maxEndDate?.toISOString() ?? '',
       });
     }
 
@@ -526,7 +436,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
       this.isEditGmeRotation$.next(true);
       this.selectedGmeRotationId$.next({
         id: data.id,
-        nextStart: this.nextStartDate ?? '',
+        nextStart: this.maxEndDate?.toISOString() ?? '',
       });
       this.handleAddEditGmeRotation(true);
     } else if ($event.fieldKey === 'delete') {
