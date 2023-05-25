@@ -16,6 +16,7 @@ import { ClearAuthErrors } from '../state/auth/auth.actions';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-login',
@@ -29,6 +30,7 @@ import { PasswordModule } from 'primeng/password';
     ReactiveFormsModule,
     InputTextModule,
     PasswordModule,
+    ButtonModule,
   ],
 })
 export class LoginComponent implements OnInit {

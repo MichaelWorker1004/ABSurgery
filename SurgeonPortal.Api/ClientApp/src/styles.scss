@@ -479,10 +479,13 @@ sl-dialog.hide-close::part(header-actions) {
 .p-autocomplete,
 .p-multiselect,
 .p-treeselect {
-  display: inline-block;
   width: 100%;
   border-color: var(--global-gray);
   background-color: var(--global-table-background);
+}
+.p-datepicker:not(.p-datepicker-inline) {
+  max-width: 450px;
+  min-width: unset !important; // !important is needed to override PrimeNG's injected stylesheet
 }
 .p-checkbox {
   .p-checkbox-box {
@@ -514,6 +517,17 @@ sl-dialog.hide-close::part(header-actions) {
   color: var(--global-danger);
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
+}
+.login-button {
+  width: 100%;
+  font-weight: 700;
+  display: block;
+  .p-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 sl-dialog.hide-close::part(header-actions) {
