@@ -4,6 +4,10 @@ import { IGridOptions } from '../shared/components/grid/grid-options.model';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { DOCUMENTS_COLS } from './documents-col';
 import { AbsFilterType } from '../shared/components/grid/abs-grid.enum';
+import { Select, Store } from '@ngxs/store';
+import { DocumentSelectors, GetAllDocuments } from '../state/documents';
+import { IDocumentReadOnlyModel } from '../api/models/documents/document-read-only.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'abs-documents',
@@ -14,7 +18,13 @@ import { AbsFilterType } from '../shared/components/grid/abs-grid.enum';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DocumentsComponent implements OnInit {
-  documentsData: any = [];
+  @Select(DocumentSelectors.slices.documents) documents$:
+    | Observable<IDocumentReadOnlyModel[]>
+    | undefined;
+
+  documentsData$: BehaviorSubject<IDocumentReadOnlyModel[]> =
+    new BehaviorSubject<IDocumentReadOnlyModel[]>([]);
+
   documentsCols = DOCUMENTS_COLS;
   gridOptions: IGridOptions = {
     showFilter: true,
@@ -36,109 +46,20 @@ export class DocumentsComponent implements OnInit {
     },
   ];
 
+  constructor(private _store: Store) {
+    this._store.dispatch(new GetAllDocuments());
+  }
+
   ngOnInit() {
     this.getDocuments();
   }
 
   getDocuments() {
-    this.documentsData = [
-      {
-        documentName: 'page 1',
-        documentType: 'Medical License',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'Dr. John Doe',
-      },
-      {
-        documentName: '092119-Invoice-Reminder',
-        documentType: 'Invoice',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'ABS',
-      },
-      {
-        documentName: 'Medical-License-2019',
-        documentType: 'Medical License',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'Dr. John Doe',
-      },
-      {
-        documentName: 'page 2',
-        documentType: 'Invoice',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'ABS',
-      },
-      {
-        documentName: 'Medical-License-2019',
-        documentType: 'Medical License',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'Dr. John Doe',
-      },
-      {
-        documentName: '092119-Invoice-Reminder',
-        documentType: 'Invoice',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'ABS',
-      },
-      {
-        documentName: 'page 3',
-        documentType: 'Medical License',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'Dr. John Doe',
-      },
-      {
-        documentName: '092119-Invoice-Reminder',
-        documentType: 'Invoice',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'ABS',
-      },
-      {
-        documentName: 'Medical-License-2019',
-        documentType: 'Medical License',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'Dr. John Doe',
-      },
-      {
-        documentName: 'page 4',
-        documentType: 'Invoice',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'ABS',
-      },
-      {
-        documentName: 'Medical-License-2019',
-        documentType: 'Medical License',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'Dr. John Doe',
-      },
-      {
-        documentName: '092119-Invoice-Reminder',
-        documentType: 'Invoice',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'ABS',
-      },
-      {
-        documentName: 'page 5',
-        documentType: 'Medical License',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'Dr. John Doe',
-      },
-      {
-        documentName: '092119-Invoice-Reminder',
-        documentType: 'Invoice',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'ABS',
-      },
-      {
-        documentName: 'Medical-License-2019',
-        documentType: 'Medical License',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'Dr. John Doe',
-      },
-      {
-        documentName: 'page 6',
-        documentType: 'Invoice',
-        uploadDate: new Date('09/12/2019'),
-        uploadedBy: 'ABS',
-      },
-    ];
+    this.documents$?.subscribe((documentsData) => {
+      if (documentsData.length > 0) {
+        this.documentsData$.next(documentsData);
+      }
+    });
   }
 
   handleGridAction($event: any) {
@@ -154,15 +75,6 @@ export class DocumentsComponent implements OnInit {
     console.log('document upload', this.uploadedFile);
     console.log('document Name', this.fileUploadedName);
     console.log('document Type', this.documentType);
-    if (this.uploadedFile) {
-      this.documentsData.push({
-        documentName: this.fileUploadedName,
-        documentType: this.documentType,
-        uploadDate: new Date(),
-        uploadedBy: 'Dr. John Doe',
-      });
-      this.resetData();
-    }
   }
 
   resetData() {

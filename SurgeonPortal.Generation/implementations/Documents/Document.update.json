@@ -1,0 +1,272 @@
+{
+  "name": "Document",
+  "implementationName": "Documents\\Document.update",
+  "template": "ytg-framework/editable-edit",
+  "parameters": {
+    "Adapter": "dbo.update_userdocument",
+    "FetchImplementation": "Documents\\Document.GetById",
+    "IncludeControllerInGeneration": "false",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Documents\\Document",
+    "ModelGroup": "Document",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_userdocument",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_userdocument]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          },
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "StreamId",
+            "dataType": "guid",
+            "maxLength": 16,
+            "precision": 0,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "StreamId"
+          },
+          {
+            "name": "DocumentName",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "DocumentName"
+          },
+          {
+            "name": "DocumentTypeId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "DocumentTypeId"
+          },
+          {
+            "name": "InternalViewOnly",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "InternalViewOnly"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LastUpdatedByUserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Documents\\Document",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "StreamId",
+                "dataType": "guid",
+                "maxLength": 16,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StreamId"
+              },
+              {
+                "name": "DocumentTypeId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentTypeId"
+              },
+              {
+                "name": "DocumentName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentName"
+              },
+              {
+                "name": "DocumentType",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentType"
+              },
+              {
+                "name": "InternalViewOnly",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InternalViewOnly"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "UploadedBy",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UploadedBy"
+              },
+              {
+                "name": "UploadedDateUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UploadedDateUtc"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "StreamId",
+      "dataType": "guid",
+      "required": true
+    },
+    {
+      "name": "DocumentName",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "DocumentTypeId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "InternalViewOnly",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Documents\\Document.update Document -t=ytg-framework/editable-edit -p:Model=Documents\\Document -p:Adapter=sp:ABSSP-[dbo].[update_userdocument] -p:FetchImplementation=Documents\\Document.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Document -p:Route= -p:ControllerName=Documents\\DocumentController -p:ControllerRoute=api/documents -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Documents\\Document.update Document -t=ytg-framework/editable-edit -p:Model=Documents\\Document -p:Adapter=sp:ABSSP-[dbo].[update_userdocument] -p:FetchImplementation=Documents\\Document.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Document -p:Route= -p:ControllerName=Documents\\DocumentController -p:ControllerRoute=api/documents -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-25T18:43:28.7758813Z"
+  },
+  "version": 1
+}

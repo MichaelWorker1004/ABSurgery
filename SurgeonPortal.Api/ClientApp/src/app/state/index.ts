@@ -6,3 +6,4 @@ export * from './continuous-certification';
 export * from './examination-gq-additional-training';
 export * from './medical-training';
 export * from './graduatemedicaleducation';
+export * from './documents';

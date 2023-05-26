@@ -7,6 +7,7 @@ import { ContinuousCertificationState } from './continuous-certification';
 import { GQAdditionalTrainingState } from './examination-gq-additional-training';
 import { MedicalTrainingState } from './medical-training';
 import { GraduateMedicalEducationState } from './graduatemedicaleducation';
+import { DocumentsState } from './documents';
 
 export const surgeonPortalState = [
   AuthState,
@@ -18,4 +19,5 @@ export const surgeonPortalState = [
   GQAdditionalTrainingState,
   MedicalTrainingState,
   GraduateMedicalEducationState,
+  DocumentsState,
 ];

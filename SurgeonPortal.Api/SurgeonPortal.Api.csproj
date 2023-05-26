@@ -12,6 +12,7 @@
 
   <ItemGroup>
 	<PackageReference Include="AutoMapper" Version="11.0.1" />
+	<PackageReference Include="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Include="Csla" Version="5.5.3" />
     <PackageReference Include="Csla.AspNetCore" Version="5.5.3" />
 	<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />

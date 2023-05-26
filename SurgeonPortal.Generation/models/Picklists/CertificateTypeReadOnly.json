@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\CertificateTypeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Name",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\CertificateTypeReadOnly -sp [dbo].[get_certificate_types] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-25T18:23:15.9395716Z"
+  },
+  "version": 1
+}

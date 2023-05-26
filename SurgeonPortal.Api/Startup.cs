@@ -31,6 +31,10 @@ using Ytg.Framework.SqlServer;
 using Ytg.AspNetCore.Models;
 using Ytg.AspNetCore.Identity;
 using SurgeonPortal.DataAccess.Identity;
+using SurgeonPortal.Shared.Storage;
+using Microsoft.Extensions.Options;
+using SurgeonPortal.DataAccess.Contracts.Storage;
+using SurgeonPortal.DataAccess.Storage;
 
 namespace SurgeonPortal.Api
 {
@@ -55,6 +59,7 @@ namespace SurgeonPortal.Api
 
             services.Configure<SiteConfiguration>(Configuration.GetSection(ConfigurationSections.Site));
             services.Configure<TokensConfiguration>(Configuration.GetSection(ConfigurationSections.Tokens));
+            services.Configure<AzureStorageConfiguration>(Configuration.GetSection(ConfigurationSections.AzureStorageConfiguration));
 
             services.AddCsla();
 
@@ -102,10 +107,10 @@ namespace SurgeonPortal.Api
             services.AddSingleton<AutoMapper.IConfigurationProvider>(GetAutoMapperConfiguration());
             services.AddTransient<IPagination, Pagination>();
             services.AddTransient<IMapper, Mapper>();
-            //services.AddTransient<IIdentityProvider, HttpContextIdentityProvider>();
             services.AddTransient<IAbsIdentityProvider, AbsIdentityProvider>();
             services.AddTransient<IIdentityProvider, AspNetCoreIdentityProvider>();
             services.AddTransient<IAbsoluteUriProvider, AbsoluteUriProvider>();
+            services.AddTransient<IStorageDal, BlobStorageDal>();
 
             services.RegisterByConvention<LibraryConventionProvider, LibraryConventionResolver>();
             services.RegisterByConvention<DataAccessConventionProvider, DataAccessConventionResolver>();

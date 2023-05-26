@@ -49,6 +49,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm 
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CertificateTypeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("certificate-types")]
+        public async Task<ActionResult<IEnumerable<CertificateTypeReadOnlyModel>>> GetCertificateTypeReadOnly_GetAllAsync(
+            [FromServices] ICertificateTypeReadOnlyListFactory certificateTypeReadOnlyListFactory)
+        {
+            var items = await certificateTypeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<CertificateTypeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClinicalActivityReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -107,6 +123,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             var items = await degreeReadOnlyListFactory.GetAllAsync();
         
             return Ok(_mapper.Map<IEnumerable<DegreeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm 
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DocumentTypeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("document-types")]
+        public async Task<ActionResult<IEnumerable<DocumentTypeReadOnlyModel>>> GetDocumentTypeReadOnly_GetAllAsync(
+            [FromServices] IDocumentTypeReadOnlyListFactory documentTypeReadOnlyListFactory)
+        {
+            var items = await documentTypeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<DocumentTypeReadOnlyModel>>(items));
         } 
 
         ///<summary>

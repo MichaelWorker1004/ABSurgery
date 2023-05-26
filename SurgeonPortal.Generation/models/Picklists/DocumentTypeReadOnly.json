@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\DocumentTypeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Name",
+      "dataType": "string",
+      "maxLength": 100,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\DocumentTypeReadOnly -sp [dbo].[get_document_types] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-05-25T18:18:39.0317355Z"
+  },
+  "version": 1
+}

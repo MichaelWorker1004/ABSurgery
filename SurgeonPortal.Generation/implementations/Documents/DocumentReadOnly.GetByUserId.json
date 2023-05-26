@@ -1,0 +1,146 @@
+{
+  "name": "DocumentReadOnly",
+  "implementationName": "Documents\\DocumentReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_documents_byuserid",
+    "ControllerName": "Documents\\DocumentController",
+    "ControllerRoute": "api/documents",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Documents\\DocumentReadOnly",
+    "ModelGroup": "DocumentReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_documents_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_documents_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Documents\\DocumentReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "StreamId",
+                "dataType": "guid",
+                "maxLength": 16,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StreamId"
+              },
+              {
+                "name": "DocumentTypeId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentTypeId"
+              },
+              {
+                "name": "DocumentName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentName"
+              },
+              {
+                "name": "DocumentType",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentType"
+              },
+              {
+                "name": "InternalViewOnly",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InternalViewOnly"
+              },
+              {
+                "name": "UploadedBy",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UploadedBy"
+              },
+              {
+                "name": "UploadedDateUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UploadedDateUtc"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Documents\\DocumentReadOnly.GetByUserId DocumentReadOnly -t=ytg-framework/readonly-getlist -p:Model=Documents\\DocumentReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_documents_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=DocumentReadOnly -p:Route=by-userid -p:ControllerName=Documents\\DocumentController -p:ControllerRoute=api/documents -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Documents\\DocumentReadOnly.GetByUserId DocumentReadOnly -t=ytg-framework/readonly-getlist -p:Model=Documents\\DocumentReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_documents_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=DocumentReadOnly -p:Route=by-userid -p:ControllerName=Documents\\DocumentController -p:ControllerRoute=api/documents -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-25T18:30:25.68697Z"
+  },
+  "version": 1
+}

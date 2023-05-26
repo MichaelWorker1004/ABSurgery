@@ -1,0 +1,66 @@
+{
+  "name": "DocumentTypeReadOnly",
+  "implementationName": "Picklists\\DocumentTypeReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_document_types",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\DocumentTypeReadOnly",
+    "ModelGroup": "DocumentTypeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "document-types",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_document_types",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_document_types]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\DocumentTypeReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Name",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Name"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\DocumentTypeReadOnly.GetAll DocumentTypeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\DocumentTypeReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_document_types] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:ModelGroup=DocumentTypeReadOnly -p:Route=document-types -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\DocumentTypeReadOnly.GetAll DocumentTypeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\DocumentTypeReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_document_types] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:ModelGroup=DocumentTypeReadOnly -p:Route=document-types -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:UsePaginatedList=false",
+    "generatedDateUtc": "2023-05-25T18:22:45.7847769Z"
+  },
+  "version": 1
+}

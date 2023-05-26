@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IAccreditedProgramInstitutionReadOnlyModel } from '../../models/picklists/accredited-program-institution-read-only.model';
+import { ICertificateTypeReadOnlyModel } from '../../models/picklists/certificate-type-read-only.model';
 import { IClinicalActivityReadOnlyModel } from '../../models/picklists/clinical-activity-read-only.model';
 import { IClinicalLevelReadOnlyModel } from '../../models/picklists/clinical-level-read-only.model';
 import { ICountryReadOnlyModel } from '../../models/picklists/country-read-only.model';
 import { IDegreeReadOnlyModel } from '../../models/picklists/degree-read-only.model';
+import { IDocumentTypeReadOnlyModel } from '../../models/picklists/document-type-read-only.model';
 import { IEthnicityReadOnlyModel } from '../../models/picklists/ethnicity-read-only.model';
 import { IFellowshipProgramReadOnlyModel } from '../../models/picklists/fellowship-program-read-only.model';
 import { IGenderReadOnlyModel } from '../../models/picklists/gender-read-only.model';
@@ -47,6 +49,30 @@ export class PicklistsService {
             
             
             return this.apiService.get<IAccreditedProgramInstitutionReadOnlyModel[]>(`${this.baseEndpoint}/accredited-program-institutions?api-version=${apiVersion}`);
+        }
+ 
+        public retrieveCertificateTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<ICertificateTypeReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_certificate_types]
+            */
+            
+            
+            return this.apiService.get<ICertificateTypeReadOnlyModel[]>(`${this.baseEndpoint}/certificate-types?api-version=${apiVersion}`);
         }
  
         public retrieveClinicalActivityReadOnly_GetAll(apiVersion = '1.0'): Observable<IClinicalActivityReadOnlyModel[]> {
@@ -143,6 +169,30 @@ export class PicklistsService {
             
             
             return this.apiService.get<IDegreeReadOnlyModel[]>(`${this.baseEndpoint}/degrees?api-version=${apiVersion}`);
+        }
+ 
+        public retrieveDocumentTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<IDocumentTypeReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_document_types]
+            */
+            
+            
+            return this.apiService.get<IDocumentTypeReadOnlyModel[]>(`${this.baseEndpoint}/document-types?api-version=${apiVersion}`);
         }
  
         public retrieveEthnicityReadOnly_GetAll(apiVersion = '1.0'): Observable<IEthnicityReadOnlyModel[]> {
