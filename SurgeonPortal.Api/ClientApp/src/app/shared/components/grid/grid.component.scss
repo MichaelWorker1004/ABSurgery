@@ -1,6 +1,25 @@
 .grid {
   margin-top: 2rem;
 }
+.abs-grid-container {
+  overflow-x: auto;
+  padding: 0 0.5rem;
+  margin-top: 1.5rem;
+  background-color: var(--global-table-background);
+
+  &::-webkit-scrollbar {
+    height: 0.65rem;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--global-warning-lighten-60);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--global-warning);
+    &:hover {
+      background: var(--global-warning-darken-20);
+    }
+  }
+}
 
 .bg-gray {
   overflow-x: auto;
@@ -9,11 +28,11 @@
 .pagination,
 .bg-gray,
 table {
-  background-color: #f4f4f4;
+  background-color: var(--global-table-background);
 }
 
 .pagination {
-  padding: 0 1.5rem;
+  padding: 1.5rem 0.5rem 0.75rem;
   .active {
     color: var(--global-warning);
     font-weight: bold;
@@ -29,7 +48,6 @@ table {
   width: 100%;
   text-align: left;
 
-  padding: 1.5rem;
   border-radius: 6px;
   margin-top: 1rem;
   &.no-grid-lines {
@@ -50,6 +68,7 @@ table {
   th,
   td {
     padding: 15px;
+    min-width: 50px;
   }
   tr {
     //figure out how to use nth-of-type(even) to skip expanded rows

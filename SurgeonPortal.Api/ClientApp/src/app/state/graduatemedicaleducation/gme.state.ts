@@ -55,8 +55,6 @@ export class GraduateMedicalEducationState {
     const state = ctx.getState();
     return this.gmeSummaryService.retrieveGmeSummaryReadOnly_GetByUserId().pipe(
       tap((result: any) => {
-        console.log('summary', result);
-
         const level4AndChief = {
           clinicalLevel: 'Clinical Level 4 Totals',
           minStartDate: '',
@@ -167,7 +165,6 @@ export class GraduateMedicalEducationState {
     const state = ctx.getState();
     return this.rotationService.retrieveRotationReadOnly_GetByUserId().pipe(
       tap((result: any) => {
-        console.log('rotations', result);
         ctx.setState({
           ...state,
           gmeRotations: result.sort((a: any, b: any) =>

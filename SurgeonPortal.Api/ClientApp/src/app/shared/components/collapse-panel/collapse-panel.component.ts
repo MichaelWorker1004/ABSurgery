@@ -34,7 +34,7 @@ export class CollapsePanelComponent implements OnInit {
     if (panelBody!.style.maxHeight && panelBody!.style.maxHeight !== '0px') {
       panelBody!.style.maxHeight = '0px';
     } else {
-      panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
+      panelBody!.style.maxHeight = panelBody!.scrollHeight + 200 + 'px';
     }
   }
 
@@ -45,7 +45,7 @@ export class CollapsePanelComponent implements OnInit {
     if (panelBody?.style.maxHeight && panelBody?.style.maxHeight !== '0px') {
       // setTimeout is needed to wait for the DOM to update with new content
       setTimeout(() => {
-        panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
+        panelBody!.style.maxHeight = panelBody!.scrollHeight + 200 + 'px';
       }, 0);
     }
   }

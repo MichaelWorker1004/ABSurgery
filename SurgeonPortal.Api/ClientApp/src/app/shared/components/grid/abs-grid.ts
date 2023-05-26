@@ -1,9 +1,15 @@
 const AbsGrid = {
-  setTextDisplayCol(headerName: string, fieldName: string, sortable?: boolean) {
+  setTextDisplayCol(
+    headerName: string,
+    fieldName: string,
+    sortable?: boolean,
+    width?: number
+  ) {
     const colDef = {
       headerName: headerName,
       field: fieldName,
       sortable,
+      width,
     };
 
     return colDef;
@@ -12,13 +18,15 @@ const AbsGrid = {
   setYesNoDisplayCol(
     headerName: string,
     fieldName: string,
-    sortable?: boolean
+    sortable?: boolean,
+    width?: number
   ) {
     const colDef = {
       headerName: headerName,
       field: fieldName,
       cellRenderer: 'yesNo',
       sortable,
+      width,
     };
 
     return colDef;
@@ -76,7 +84,8 @@ const AbsGrid = {
     headerName: string,
     fieldName: string,
     onClick?: (data: any) => void,
-    sortable?: boolean
+    sortable?: boolean,
+    width?: number
   ) {
     const colDef = {
       headerName: headerName,
@@ -87,6 +96,7 @@ const AbsGrid = {
         onClick,
       },
       sortable,
+      width,
     };
 
     return colDef;
@@ -95,13 +105,15 @@ const AbsGrid = {
   setFormattedDateCol(
     headerName: string,
     fieldName: string,
-    sortable?: boolean
+    sortable?: boolean,
+    width?: number
   ) {
     const colDef = {
       headerName,
       field: fieldName,
       cellRenderer: 'dateFormatter',
       sortable,
+      width,
     };
     return colDef;
   },
@@ -110,7 +122,8 @@ const AbsGrid = {
     headerName: string,
     fieldName: string,
     className?: string,
-    sortable?: boolean
+    sortable?: boolean,
+    width?: number
   ) {
     const colDef = {
       headerName,
@@ -120,6 +133,7 @@ const AbsGrid = {
         return className ?? fieldName;
       },
       sortable,
+      width,
     };
     return colDef;
   },
@@ -128,7 +142,8 @@ const AbsGrid = {
     headerName: string,
     fieldName: string,
     style?: object,
-    sortable?: boolean
+    sortable?: boolean,
+    width?: number
   ) {
     const colDef = {
       headerName,
@@ -138,6 +153,7 @@ const AbsGrid = {
         return style ?? {};
       },
       sortable,
+      width,
     };
     return colDef;
   },

@@ -11,15 +11,17 @@
   </div>
 
   <abs-grid [columns]="paymentHistoryCols" [data]="paymentHistoryData">
-    <abs-alert alertType="info" [hideIcon]="true">
-      <div class="div flex justify-content-end footer">
-        <strong>Total Unpaid balance</strong> as of
-        {{ paymentFooterData.date | date : 'shortDate' }}:
-        <div class="amount">
-          {{ paymentFooterData.amount }}
+    <div class="pb-5 pl-5 pr-5">
+      <abs-alert alertType="info" [hideIcon]="true">
+        <div class="div flex justify-content-end footer">
+          <strong>Total Unpaid balance</strong> as of
+          {{ paymentFooterData.date | date : 'shortDate' }}:
+          <div class="amount">
+            {{ paymentFooterData.amount }}
+          </div>
         </div>
-      </div>
-    </abs-alert>
+      </abs-alert>
+    </div>
   </abs-grid>
 
   <div class="flex justify-content-end mt-3">

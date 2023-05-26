@@ -32,116 +32,130 @@
     </div>
   </div>
 
-  <table class="abs-table {{ showGridLines ? '' : 'no-grid-lines' }}">
-    <thead>
-      <tr>
-        <th *ngFor="let c of columns">
-          <div
-            class="flex justify-content-between"
-            *ngIf="
-              c.cellRenderer !== AbsGridCellRendererType.Button &&
-              c.cellRenderer !== AbsGridCellRendererType.ExpandToggle
-            "
+  <div class="abs-grid-container">
+    <table class="abs-table {{ showGridLines ? '' : 'no-grid-lines' }}">
+      <thead>
+        <tr>
+          <th
+            *ngFor="let c of columns"
+            [style.max-width]="c.width + 'px'"
+            [style.min-width]="c.width ? 'unset' : ''"
           >
-            <span>{{ c.headerName }}</span>
-            <button
-              (click)="setColumnSort(c)"
-              class="pl-1 pr-0"
-              *ngIf="c.sortable"
-            >
-              <i class="fa-solid fa-sort" *ngIf="!c.sort"></i>
-              <i class="fa-solid fa-sort-up" *ngIf="c.sort === 'asc'"></i>
-              <i class="fa-solid fa-sort-down" *ngIf="c.sort === 'desc'"></i>
-            </button>
-          </div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let r of getPagedData(filteredData); let i = index">
-        <tr
-          class="{{ r.rowClass }}"
-          [ngClass]="{ 'alternate-row': i % 2 === 1 }"
-          [ngStyle]="r.rowStyle"
-        >
-          <td *ngFor="let c of columns" [style.width]="c.width + 'px'">
-            <div *ngIf="!c.cellRenderer">
-              {{ r[c.field] }}
-            </div>
-            <div *ngIf="c.cellRenderer === AbsGridCellRendererType.YesNo">
-              {{ r[c.field] ? 'Yes' : 'No' }}
-            </div>
             <div
-              *ngIf="c.cellRenderer === AbsGridCellRendererType.Button"
-              class="action"
+              class="flex justify-content-between"
+              *ngIf="
+                c.cellRenderer !== AbsGridCellRendererType.Button &&
+                c.cellRenderer !== AbsGridCellRendererType.ExpandToggle
+              "
             >
-              <button (click)="handleAction(c.cellRendererParams, r)">
-                <i [class]="c.icon" *ngIf="c.icon"></i>
-                {{ c.headerName }}
+              <span>{{ c.headerName }}</span>
+              <button
+                (click)="setColumnSort(c)"
+                class="pl-1 pr-0"
+                *ngIf="c.sortable"
+              >
+                <i class="fa-solid fa-sort" *ngIf="!c.sort"></i>
+                <i class="fa-solid fa-sort-up" *ngIf="c.sort === 'asc'"></i>
+                <i class="fa-solid fa-sort-down" *ngIf="c.sort === 'desc'"></i>
               </button>
             </div>
-            <div *ngIf="c.cellRenderer === AbsGridCellRendererType.FileLink">
-              <button
-                class="file-link"
-                (click)="handleAction(c.cellRendererParams, r)"
-              >
-                <!-- TODO: [Joe] need to check what file types we are supporting and ensure that there are font awesome icons for all of them -->
-                <i
-                  [class]="'fa-solid fa-file-' + r[c.fileType]"
-                  *ngIf="c.fileType"
-                ></i>
-                <i class="fa-solid fa-file" *ngIf="!c.fileType"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container
+          *ngFor="let r of getPagedData(filteredData); let i = index"
+        >
+          <tr
+            class="{{ r.rowClass }}"
+            [ngClass]="{ 'alternate-row': i % 2 === 1 }"
+            [ngStyle]="r.rowStyle"
+          >
+            <td
+              *ngFor="let c of columns"
+              class="abs-grid-col"
+              [style.max-width]="c.width + 'px'"
+              [style.min-width]="c.width ? 'unset' : ''"
+            >
+              <div *ngIf="!c.cellRenderer">
                 {{ r[c.field] }}
-              </button>
-            </div>
-            <div
-              *ngIf="c.cellRenderer === AbsGridCellRendererType.DateFormatter"
-              [class]="c.cellClass"
-            >
-              {{ r[c.field] | date : 'MM/dd/yyyy' }}
-            </div>
-            <div
-              *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
-              [class]="c.cellClass(r[c.field]).toLowerCase()"
-            >
-              {{ r[c.field] }}
-            </div>
-            <div
-              *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomStyle"
-              [style]="c.style(r[c.field])"
-            >
-              {{ c.cellStyle }}
-              {{ r[c.field] }}
-            </div>
-            <div
-              *ngIf="c.cellRenderer === AbsGridCellRendererType.ExpandToggle"
-              class="expand-toggle"
-            >
-              <button
-                (click)="handleExpand(c.cellRendererParams, r)"
-                style="min-width: 95px"
+              </div>
+              <div *ngIf="c.cellRenderer === AbsGridCellRendererType.YesNo">
+                {{ r[c.field] ? 'Yes' : 'No' }}
+              </div>
+              <div
+                *ngIf="c.cellRenderer === AbsGridCellRendererType.Button"
+                class="action"
               >
-                <i class="fa-solid fa-circle-minus" *ngIf="r.expanded"></i>
-                <i class="fa-solid fa-circle-plus" *ngIf="!r.expanded"></i>
-                {{ r.expanded ? 'Collapse' : 'Expand' }}
-              </button>
-            </div>
-          </td>
-        </tr>
-        <tr
-          [ngClass]="{ 'expanded-row': true, 'alternate-row': i % 2 === 1 }"
-          *ngIf="expandTemplate && r.expanded"
-        >
-          <!-- <ng-container *ngTemplateOutlet="expandTemplate; context: { $implicit: r }"></ng-container> -->
-          <td [attr.colspan]="columns.length">
-            <ng-container
-              *ngTemplateOutlet="expandTemplate; context: { $implicit: r }"
-            ></ng-container>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+                <button (click)="handleAction(c.cellRendererParams, r)">
+                  <i [class]="c.icon" *ngIf="c.icon"></i>
+                  {{ c.headerName }}
+                </button>
+              </div>
+              <div *ngIf="c.cellRenderer === AbsGridCellRendererType.FileLink">
+                <button
+                  class="file-link"
+                  (click)="handleAction(c.cellRendererParams, r)"
+                >
+                  <!-- TODO: [Joe] need to check what file types we are supporting and ensure that there are font awesome icons for all of them -->
+                  <i
+                    [class]="'fa-solid fa-file-' + r[c.fileType]"
+                    *ngIf="c.fileType"
+                  ></i>
+                  <i class="fa-solid fa-file" *ngIf="!c.fileType"></i>
+                  {{ r[c.field] }}
+                </button>
+              </div>
+              <div
+                *ngIf="c.cellRenderer === AbsGridCellRendererType.DateFormatter"
+                [class]="c.cellClass"
+              >
+                {{ r[c.field] | date : 'MM/dd/yyyy' }}
+              </div>
+              <div
+                *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
+                [class]="c.cellClass(r[c.field]).toLowerCase()"
+              >
+                {{ r[c.field] }}
+              </div>
+              <div
+                *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomStyle"
+                [style]="c.style(r[c.field])"
+              >
+                {{ c.cellStyle }}
+                {{ r[c.field] }}
+              </div>
+              <div
+                *ngIf="c.cellRenderer === AbsGridCellRendererType.ExpandToggle"
+                class="expand-toggle"
+              >
+                <button
+                  (click)="handleExpand(c.cellRendererParams, r)"
+                  style="min-width: 95px"
+                >
+                  <i class="fa-solid fa-circle-minus" *ngIf="r.expanded"></i>
+                  <i class="fa-solid fa-circle-plus" *ngIf="!r.expanded"></i>
+                  {{ r.expanded ? 'Collapse' : 'Expand' }}
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr
+            [ngClass]="{ 'expanded-row': true, 'alternate-row': i % 2 === 1 }"
+            *ngIf="expandTemplate && r.expanded"
+          >
+            <!-- <ng-container *ngTemplateOutlet="expandTemplate; context: { $implicit: r }"></ng-container> -->
+            <td [attr.colspan]="columns.length">
+              <ng-container
+                *ngTemplateOutlet="expandTemplate; context: { $implicit: r }"
+              ></ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
   <div
     class="pagination flex justify-content-end"
     *ngIf="pagination && pages.length > 1"
@@ -174,7 +188,7 @@
       </button>
     </div>
   </div>
-  <div class="pl-5 pr-5 pb-5 bg-gray">
+  <div class="bg-gray">
     <ng-content></ng-content>
   </div>
 </div>
