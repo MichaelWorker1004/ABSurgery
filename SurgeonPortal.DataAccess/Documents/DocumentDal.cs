@@ -1,5 +1,4 @@
 using SurgeonPortal.DataAccess.Contracts.Documents;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
 using Ytg.Framework.SqlServer;
@@ -24,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Documents
                         new
                         {
                             Id = dto.Id,
-                            UserId = IdentityHelper.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }
@@ -39,7 +38,7 @@ namespace SurgeonPortal.DataAccess.Documents
                         new
                         {
                             Id = id,
-                            UserId = IdentityHelper.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }
@@ -53,32 +52,12 @@ namespace SurgeonPortal.DataAccess.Documents
                     "[dbo].[ins_userdocument]",
                         new
                         {
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             StreamId = dto.StreamId,
                             DocumentName = dto.DocumentName,
                             DocumentTypeId = dto.DocumentTypeId,
                             InternalViewOnly = dto.InternalViewOnly,
-                            CreatedByUserId = dto.CreatedByUserId,
-                        });
-                        
-            }
-        }
-
-        public async Task<DocumentDto> UpdateAsync(DocumentDto dto)
-        {
-            using (var connection = CreateConnection())
-            {
-                return await connection.ExecFirstOrDefaultAsync<DocumentDto>(
-                    "[dbo].[update_userdocument]",
-                        new
-                        {
-                            Id = dto.Id,
-                            UserId = dto.UserId,
-                            StreamId = dto.StreamId,
-                            DocumentName = dto.DocumentName,
-                            DocumentTypeId = dto.DocumentTypeId,
-                            InternalViewOnly = dto.InternalViewOnly,
-                            LastUpdatedByUserId = dto.LastUpdatedByUserId,
+                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

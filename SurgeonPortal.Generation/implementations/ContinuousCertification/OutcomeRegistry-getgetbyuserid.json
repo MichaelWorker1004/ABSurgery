@@ -32,7 +32,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
@@ -265,13 +265,7 @@
       }
     }
   ],
-  "inputParameters": [
-    {
-      "name": "UserId",
-      "dataType": "int",
-      "required": true
-    }
-  ],
+  "inputParameters": [],
   "metadata": {
     "command": "ytgim g i s ContinuousCertification\\OutcomeRegistry-getgetbyuserid OutcomeRegistry -t=ytg-framework/readonly-get -p:Model=ContinuousCertification\\OutcomeRegistry -p:Adapter=sp:ABSSP-[dbo].[get_outcomeregistry_getbyuserid] -p:ModelGroup=OutcomeRegistry -p:RootNamespace=$project.RootNamespace -p:FetchMethodName=GetByUserId -p:IncludeControllerInGeneration=true ",
     "inferredCommand": "ytgim generate i  ContinuousCertification\\OutcomeRegistry-getgetbyuserid OutcomeRegistry -t=ytg-framework/readonly-get -p:Model=ContinuousCertification\\OutcomeRegistry -p:Adapter=sp:ABSSP-[dbo].[get_outcomeregistry_getbyuserid] -p:ModelGroup=OutcomeRegistry -p:RootNamespace=$project.RootNamespace -p:FetchMethodName=GetByUserId -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:ApiRoot=$project.ApiRoot -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=continuous-certification/outcome-registries -p:ControllerVersion=1 -p:Route=",

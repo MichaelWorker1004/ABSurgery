@@ -8,6 +8,7 @@ import {
   IError,
   IAppUserReadOnlyModel,
 } from '../../api';
+import { Router } from '@angular/router';
 
 export interface IAuthState extends AuthStateModel {
   claims: string[] | null;
@@ -32,7 +33,11 @@ export const AUTH_STATE_TOKEN = new StateToken<IAuthState>('auth');
 })
 @Injectable()
 export class AuthState {
-  constructor(private authService: AuthService, private store: Store) {}
+  constructor(
+    private authService: AuthService,
+    private store: Store,
+    private router: Router
+  ) {}
 
   @Action(Login)
   login(ctx: StateContext<IAuthState>, action: Login) {
@@ -79,6 +84,7 @@ export class AuthState {
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
           });
+          this.router.navigate(['/']);
         }
       })
     );

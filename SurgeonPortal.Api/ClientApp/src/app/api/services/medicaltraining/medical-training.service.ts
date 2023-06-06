@@ -59,7 +59,6 @@ export class MedicalTrainingService {
             
             /**
             * Required Parameters
-            * userId:Number
             * graduateProfileId:Number
             * medicalSchoolName:String
             * medicalSchoolCity:String
@@ -70,7 +69,6 @@ export class MedicalTrainingService {
             * residencyProgramName:String
             * residencyCompletionYear:String
             * residencyProgramOther:String
-            * createdByUserId:Number
             * apiVersion
             */
             
@@ -114,7 +112,6 @@ export class MedicalTrainingService {
             * residencyProgramName:String
             * residencyCompletionYear:String
             * residencyProgramOther:String
-            * lastUpdatedByUserId:Number
             * apiVersion
             */
             

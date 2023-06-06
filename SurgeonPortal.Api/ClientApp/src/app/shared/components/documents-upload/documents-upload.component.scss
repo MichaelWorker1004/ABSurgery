@@ -1,0 +1,48 @@
+sl-card {
+  min-width: 100%;
+  position: relative;
+}
+
+input[type='file'] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.input-file {
+  label {
+    position: relative;
+    padding: 8px 80px 8px 40px;
+    border: 1px solid #595959;
+    border-radius: 6px;
+    opacity: 1;
+    color: #595959;
+    font-weight: 500;
+    transition: 250ms ease-in-out;
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+    cursor: pointer;
+    i {
+      color: var(--global-warning);
+      margin-left: 20px;
+      position: absolute;
+      top: 9px;
+      right: 25px;
+    }
+    &:hover &:focus-visible {
+      border: 1px solid var(--global-warning);
+    }
+  }
+}
+
+.upload-controls {
+  .absolute {
+    position: absolute;
+  }
+}

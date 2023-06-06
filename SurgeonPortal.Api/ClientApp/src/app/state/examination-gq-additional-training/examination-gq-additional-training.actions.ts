@@ -3,8 +3,6 @@ import { IAdditionalTrainingModel } from '../../api';
 export class GetAdditionalTrainingList {
   static readonly type =
     '[GQAdditionalTraining] get list of additional training';
-
-  constructor(public userId: number) {}
 }
 export class GetAdditionalTrainingDetails {
   static readonly type =

@@ -34,7 +34,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
@@ -127,13 +127,7 @@
       }
     }
   ],
-  "inputParameters": [
-    {
-      "name": "UserId",
-      "dataType": "int",
-      "required": true
-    }
-  ],
+  "inputParameters": [],
   "metadata": {
     "command": "ytgim generate i s Examinations\\GQ\\AdditionalTrainingReadOnly-getallbyuserid AdditionalTrainingReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Examinations\\GQ\\AdditionalTrainingReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_additionaltrainingreadonly_allbyuserid] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdditionalTrainingReadOnly -p:ControllerName=Examinations\\GQ\\AdditionalTrainingController -p:ControllerRoute=examinations/gq/additional-training -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=all ",
     "inferredCommand": "ytgim generate i  Examinations\\GQ\\AdditionalTrainingReadOnly-getallbyuserid AdditionalTrainingReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Examinations\\GQ\\AdditionalTrainingReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_additionaltrainingreadonly_allbyuserid] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdditionalTrainingReadOnly -p:ControllerName=Examinations\\GQ\\AdditionalTrainingController -p:ControllerRoute=examinations/gq/additional-trainings -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=all -p:ApiRoot=$project.ApiRoot -p:UsePaginatedList=false",

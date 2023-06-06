@@ -34,10 +34,9 @@ namespace SurgeonPortal.Library.Tests.Trainees
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
-            var expectedUserId = Create<int>();
             
             var mockDal = new Mock<IProgramReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(Create<ProgramReadOnlyDto>());
         
             UseMockServiceProvider()
@@ -47,7 +46,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
                 .Build();
         
             var factory = new ProgramReadOnlyFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = await factory.GetByUserIdAsync();
         
             mockDal.VerifyAll();
         }
@@ -58,7 +57,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
             var dto = CreateValidDto();
         
             var mockDal = new Mock<IProgramReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
@@ -68,7 +67,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
                 .Build();
         
             var factory = new ProgramReadOnlyFactory();
-            var sut = await factory.GetByUserIdAsync(Create<int>());
+            var sut = await factory.GetByUserIdAsync();
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

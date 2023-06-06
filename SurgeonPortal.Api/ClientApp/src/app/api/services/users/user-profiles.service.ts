@@ -169,7 +169,6 @@ export class UserProfilesService {
             
             /**
             * Required Parameters
-            * userId:Number
             * firstName:String
             * middleName:String
             * lastName:String
@@ -198,10 +197,8 @@ export class UserProfilesService {
             * state:String
             * zipCode:String
             * country:String
-            * createdByUserId:Number
             * createdAtUtc:String
             * lastUpdatedAtUtc:String
-            * lastUpdatedByUserId:Number
             * apiVersion
             */
             
@@ -289,7 +286,6 @@ export class UserProfilesService {
             /**
             * Required Parameters
             * userProfileId:Number
-            * userId:Number
             * firstName:String
             * middleName:String
             * lastName:String
@@ -318,10 +314,8 @@ export class UserProfilesService {
             * state:String
             * zipCode:String
             * country:String
-            * createdByUserId:Number
             * createdAtUtc:String
             * lastUpdatedAtUtc:String
-            * lastUpdatedByUserId:Number
             * apiVersion
             */
             

@@ -54,13 +54,12 @@ namespace SurgeonPortal.Library.Documents
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
         [DisplayName(nameof(StreamId))]
-		public Guid StreamId
-		{
-			get { return GetProperty(StreamIdProperty); }
-			set { SetProperty(StreamIdProperty, value); }
-		}
-		public static readonly PropertyInfo<Guid> StreamIdProperty = RegisterProperty<Guid>(c => c.StreamId);
-
+        public Guid StreamId
+        {
+            get { return GetProperty(StreamIdProperty); }
+            private set { SetProperty(StreamIdProperty, value); }
+        }
+        public static readonly PropertyInfo<Guid> StreamIdProperty = RegisterProperty<Guid>(c => c.StreamId);
         [DisplayName(nameof(DocumentTypeId))]
 		public int DocumentTypeId
 		{
@@ -109,15 +108,23 @@ namespace SurgeonPortal.Library.Documents
 		}
 		public static readonly PropertyInfo<DateTime> UploadedDateUtcProperty = RegisterProperty<DateTime>(c => c.UploadedDateUtc);
 
+        private string FileName
+        {
+            get
+            {
+                var fileName = $"{StreamId.ToString()}.pdf";
+                return fileName;
+            }
+        }
+
         public static readonly PropertyInfo<Stream> FileProperty = RegisterProperty<Stream>(c => c.File);
         [DataMember]
         [DisplayName(nameof(File))]
         public Stream File
         {
             get => GetProperty(FileProperty);
-            private set => SetProperty(FileProperty, value);
+            set => SetProperty(FileProperty, value);
         }
-
 
         /// <summary>
         /// This method is used to apply authorization rules on the object
@@ -142,9 +149,14 @@ namespace SurgeonPortal.Library.Documents
 
             BusinessRules.AddRule(new Required(IdProperty, "Id is required"));
             BusinessRules.AddRule(new Required(UserIdProperty, "UserId is required"));
-            BusinessRules.AddRule(new Required(DocumentTypeIdProperty, "DocumentTypeId is required"));
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(StreamIdProperty, Guid.NewGuid());
+
+        }
 
         [RunLocal]
         [DeleteSelf]
@@ -157,7 +169,9 @@ namespace SurgeonPortal.Library.Documents
                 base.DataPortal_DeleteSelf();
         
                 await _documentDal.DeleteAsync(ToDto());
-        
+                
+                await _storageDal.DeleteAsync(FileName);
+
                 MarkIdle();
             }
         }
@@ -177,18 +191,16 @@ namespace SurgeonPortal.Library.Documents
                 {
                     throw new Ytg.Framework.Exceptions.DataNotFoundException("Document not found based on criteria");
                 }
+                FetchData(dto);
 
-                var fileName = $"{dto.StreamId.ToString()}.pdf";
                 try
                 {
-                    File = await _storageDal.LoadAsync(fileName);
+                    File = await _storageDal.LoadAsync(FileName);
                 }
                 catch(Exception ex)
                 {
-                    throw new DataNotFoundException($"Unable to find the document named: {fileName}");
+                    throw new DataNotFoundException($"Unable to find the document named: {FileName}");
                 }
-
-                FetchData(dto);
             }
         }
 
@@ -203,25 +215,9 @@ namespace SurgeonPortal.Library.Documents
             using (BypassPropertyChecks)
             {
                 var dto = await _documentDal.InsertAsync(ToDto());
-        
-                FetchData(dto);
-        
-                MarkIdle();
-            }
-        }
 
-        [RunLocal]
-        [Update]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
-            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
-        private async Task Update()
-        {
-            base.DataPortal_Update();
-        
-            using (BypassPropertyChecks)
-            {
-                var dto = await _documentDal.UpdateAsync(ToDto());
-        
+                await _storageDal.SaveAsync(File, FileName);
+
                 FetchData(dto);
         
                 MarkIdle();

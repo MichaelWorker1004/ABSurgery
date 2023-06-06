@@ -24,6 +24,12 @@ namespace SurgeonPortal.DataAccess.Storage
 
         }
 
+        public Task DeleteAsync(string name)
+        {
+            BlobClient blobClient = _containerClient.GetBlobClient(name);
+            return blobClient.DeleteAsync();
+        }
+
         public Task<Stream> LoadAsync(string name)
         {
             var blobClient = _containerClient.GetBlobClient(name);
@@ -32,7 +38,11 @@ namespace SurgeonPortal.DataAccess.Storage
 
         public Task SaveAsync(Stream fileStream, string name)
         {
-            throw new NotImplementedException();
+            // Get the Blob Client used to interact with (including create) the blob
+            BlobClient blobClient = _containerClient.GetBlobClient(name);
+
+            // Upload the blob
+            return blobClient.UploadAsync(fileStream);
         }
 
     }

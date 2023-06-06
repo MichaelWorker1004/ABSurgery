@@ -50,7 +50,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                     "[dbo].[ins_gmerotations]",
                         new
                         {
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             StartDate = dto.StartDate,
                             EndDate = dto.EndDate,
                             ClinicalLevelId = dto.ClinicalLevelId,
@@ -60,7 +60,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                             AlternateInstitutionName = dto.AlternateInstitutionName,
                             IsInternationalRotation = dto.IsInternationalRotation,
                             Other = dto.Other,
-                            CreatedByUserId = dto.CreatedByUserId,
+                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }
@@ -75,7 +75,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                         new
                         {
                             Id = dto.Id,
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             StartDate = dto.StartDate,
                             EndDate = dto.EndDate,
                             ClinicalLevelId = dto.ClinicalLevelId,
@@ -85,7 +85,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                             AlternateInstitutionName = dto.AlternateInstitutionName,
                             IsInternationalRotation = dto.IsInternationalRotation,
                             Other = dto.Other,
-                            LastUpdatedByUserId = dto.LastUpdatedByUserId,
+                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

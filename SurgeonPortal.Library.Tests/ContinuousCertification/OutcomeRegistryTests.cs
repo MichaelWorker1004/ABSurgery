@@ -49,10 +49,9 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
-            var expectedUserId = Create<int>();
             
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(Create<OutcomeRegistryDto>());
         
             UseMockServiceProvider()
@@ -62,7 +61,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Build();
         
             var factory = new OutcomeRegistryFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = await factory.GetByUserIdAsync();
         
             mockDal.VerifyAll();
         }
@@ -73,7 +72,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             var dto = CreateValidDto();
         
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
@@ -83,7 +82,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Build();
         
             var factory = new OutcomeRegistryFactory();
-            var sut = await factory.GetByUserIdAsync(Create<int>());
+            var sut = await factory.GetByUserIdAsync();
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -145,6 +144,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.UserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -167,7 +167,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             var factory = new OutcomeRegistryFactory();
             var sut = factory.Create();
-            sut.UserId = Create<int>();
+            sut.SurgeonSpecificRegistry = Create<bool>();
         
             await sut.SaveAsync();
             
@@ -187,13 +187,12 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task Update_CallsDalCorrectly()
         {
-            var expectedUserId = Create<int>();
             
             var dto = Create<OutcomeRegistryDto>();
             OutcomeRegistryDto passedDto = null;
         
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                         .ReturnsAsync(dto);
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OutcomeRegistryDto>()))
                 .Callback<OutcomeRegistryDto>((p) => passedDto = p)
@@ -206,7 +205,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Build();
         
             var factory = new OutcomeRegistryFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = await factory.GetByUserIdAsync();
             
             sut.SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry;
             sut.RegistryComments = dto.RegistryComments;
@@ -268,6 +267,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
+                    .Excluding(m => m.UserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -276,12 +276,11 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task Update_YieldsCorrectResult()
         {
-            var expectedUserId = Create<int>();
             
             var dto = Create<OutcomeRegistryDto>();
         
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                         .ReturnsAsync(Create<OutcomeRegistryDto>());
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OutcomeRegistryDto>()))
                 .ReturnsAsync(dto);
@@ -293,7 +292,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Build();
         
             var factory = new OutcomeRegistryFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = await factory.GetByUserIdAsync();
             sut.SurgeonSpecificRegistry = Create<bool>();
         
             await sut.SaveAsync();

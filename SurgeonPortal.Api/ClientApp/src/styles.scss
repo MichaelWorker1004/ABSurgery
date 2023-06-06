@@ -11,6 +11,13 @@
 @import '/node_modules/primeicons/primeicons.css';
 @import '/src/primeng-theme.css';
 
+@media print {
+  html,
+  body {
+    display: none;
+  }
+}
+
 :root {
   /* Shoelace Theme Import */
   --sl-color-black: #1f3758;

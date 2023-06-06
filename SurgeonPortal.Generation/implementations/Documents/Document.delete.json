@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "value": "IdentityHelper.UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": []
@@ -54,7 +54,7 @@
       "dataType": "int",
       "required": true
     }
-  ],
+  ],  
   "metadata": {
     "command": "ytgim g i s Documents\\Document.delete Document -t=ytg-framework/editable-delete -p:Model=Documents\\Document -p:Adapter=sp:ABSSP-[dbo].[delete_userdocument_byid] -p:FetchImplementation=Documents\\Document.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Document -p:Route= -p:ControllerName=Documents\\DocumentController -p:ControllerRoute=api/documents -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  Documents\\Document.delete Document -t=ytg-framework/editable-delete -p:Model=Documents\\Document -p:Adapter=sp:ABSSP-[dbo].[delete_userdocument_byid] -p:FetchImplementation=Documents\\Document.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Document -p:Route= -p:ControllerName=Documents\\DocumentController -p:ControllerRoute=api/documents -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

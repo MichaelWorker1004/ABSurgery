@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormControl, FormGroup } from '@angular/forms';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
@@ -41,14 +40,10 @@ export class GQAdditionalTrainingState {
   constructor(private additionalTrainingsService: AdditionalTrainingsService) {}
 
   @Action(GetAdditionalTrainingList)
-  getAdditionalTrainingList(
-    ctx: StateContext<IGQAdditionalTraining>,
-    payload: { userId: number }
-  ) {
+  getAdditionalTrainingList(ctx: StateContext<IGQAdditionalTraining>) {
     const state = ctx.getState();
-    const userId = payload.userId;
     return this.additionalTrainingsService
-      .retrieveAdditionalTrainingReadOnly_GetAllByUserId(userId)
+      .retrieveAdditionalTrainingReadOnly_GetAllByUserId()
       .pipe(
         tap((result: any) => {
           ctx.setState({

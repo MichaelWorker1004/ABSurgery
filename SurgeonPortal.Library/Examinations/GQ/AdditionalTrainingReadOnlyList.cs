@@ -36,10 +36,10 @@ namespace SurgeonPortal.Library.Examinations.GQ
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
-        private async Task GetAllByUserId(GetAllByUserIdCriteria criteria)
+        private async Task GetAllByUserId()
         
         {
-            var dtos = await _additionalTrainingReadOnlyDal.GetAllByUserIdAsync(criteria.UserId);
+            var dtos = await _additionalTrainingReadOnlyDal.GetAllByUserIdAsync();
         			
             FetchChildren(dtos);
         }

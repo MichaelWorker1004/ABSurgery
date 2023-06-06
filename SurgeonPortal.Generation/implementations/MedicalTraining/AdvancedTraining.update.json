@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           },
           {
             "name": "TrainingTypeId",
@@ -95,7 +95,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "LastUpdatedByUserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
@@ -265,11 +265,6 @@
       "required": true
     },
     {
-      "name": "UserId",
-      "dataType": "int",
-      "required": true
-    },
-    {
       "name": "TrainingTypeId",
       "dataType": "int",
       "required": true
@@ -292,11 +287,6 @@
     {
       "name": "EndDate",
       "dataType": "datetime",
-      "required": true
-    },
-    {
-      "name": "LastUpdatedByUserId",
-      "dataType": "int",
       "required": true
     }
   ],

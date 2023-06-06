@@ -4,7 +4,7 @@ namespace SurgeonPortal.Library.Contracts.ContinuousCertification
 {
     public interface IOutcomeRegistryFactory
     {
-        Task<IOutcomeRegistry> GetByUserIdAsync(int userId);
+        Task<IOutcomeRegistry> GetByUserIdAsync();
         IOutcomeRegistry Create();
     }
 }

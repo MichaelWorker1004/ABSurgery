@@ -16,10 +16,9 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         [Test]
         public async Task GetAllByUserIdAsync_CallsDalCorrectly()
         {
-            var expectedUserId = Create<int>();
             
             var mockDal = new Mock<IAdditionalTrainingReadOnlyDal>();
-            mockDal.Setup(m => m.GetAllByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetAllByUserIdAsync())
                 .ReturnsAsync(CreateMany<AdditionalTrainingReadOnlyDto>());
         
             UseMockServiceProvider()
@@ -30,7 +29,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .Build();
         
             var factory = new AdditionalTrainingReadOnlyListFactory();
-            var sut = await factory.GetAllByUserIdAsync(expectedUserId);
+            var sut = await factory.GetAllByUserIdAsync();
         
             mockDal.VerifyAll();
         }
@@ -41,7 +40,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
             var expectedDtos = CreateMany<AdditionalTrainingReadOnlyDto>();
         
             var mockDal = new Mock<IAdditionalTrainingReadOnlyDal>();
-            mockDal.Setup(m => m.GetAllByUserIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetAllByUserIdAsync())
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
@@ -52,7 +51,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .Build();
         
             var factory = new AdditionalTrainingReadOnlyListFactory();
-            var sut = await factory.GetAllByUserIdAsync(Create<int>());
+            var sut = await factory.GetAllByUserIdAsync();
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

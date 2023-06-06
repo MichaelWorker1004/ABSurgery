@@ -7,6 +7,5 @@ namespace SurgeonPortal.DataAccess.Contracts.Documents
         Task DeleteAsync(DocumentDto dto);
         Task<DocumentDto> GetByIdAsync(int id);
         Task<DocumentDto> InsertAsync(DocumentDto dto);
-        Task<DocumentDto> UpdateAsync(DocumentDto dto);
     }
 }

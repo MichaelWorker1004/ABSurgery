@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
         }
       } else {
         if (user?.userId) {
-          this._store.dispatch(new GetDashboardProgramInformation(user.userId));
+          this._store.dispatch(new GetDashboardProgramInformation());
         }
       }
     });

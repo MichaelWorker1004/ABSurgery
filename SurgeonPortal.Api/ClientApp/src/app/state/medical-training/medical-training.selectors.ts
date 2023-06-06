@@ -16,6 +16,7 @@ export class MedicalTrainingSelectors {
       return {
         medicalTraining: state.medicalTraining,
         additionalTraining: state.additionalTraining,
+        userCertificates: state.userCertificates,
       };
     }
 

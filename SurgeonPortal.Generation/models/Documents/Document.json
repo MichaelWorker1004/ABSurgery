@@ -55,12 +55,7 @@
       "isAlwaysReadOnly": false,
       "isNullable": false,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "DocumentTypeId is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "DocumentName",

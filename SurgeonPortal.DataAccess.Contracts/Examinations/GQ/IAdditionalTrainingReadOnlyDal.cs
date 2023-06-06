@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Examinations.GQ
 {
     public interface IAdditionalTrainingReadOnlyDal
     {
-        Task<IEnumerable<AdditionalTrainingReadOnlyDto>> GetAllByUserIdAsync(int userId);
+        Task<IEnumerable<AdditionalTrainingReadOnlyDto>> GetAllByUserIdAsync();
     }
 }

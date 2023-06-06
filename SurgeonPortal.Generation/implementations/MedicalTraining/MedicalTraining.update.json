@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           },
           {
             "name": "GraduateProfileId",
@@ -140,7 +140,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "LastUpdatedByUserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
@@ -412,11 +412,6 @@
     {
       "name": "ResidencyProgramOther",
       "dataType": "string",
-      "required": true
-    },
-    {
-      "name": "LastUpdatedByUserId",
-      "dataType": "int",
       "required": true
     }
   ],

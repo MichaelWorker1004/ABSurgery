@@ -4,6 +4,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Trainees
 {
     public interface IProgramReadOnlyDal
     {
-        Task<ProgramReadOnlyDto> GetByUserIdAsync(int userId);
+        Task<ProgramReadOnlyDto> GetByUserIdAsync();
     }
 }

@@ -142,12 +142,7 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
   }
 
   initTrainingData() {
-    this.userSubscription = this.userId$?.subscribe((userId) => {
-      this.userId = userId;
-      if (this.userId > -1) {
-        this._store.dispatch(new GetAdditionalTrainingList(this.userId));
-      }
-    });
+    this._store.dispatch(new GetAdditionalTrainingList());
 
     this.selectedTrainingSubscription = this.selectedTraining$?.subscribe(
       (selectedTraining) => {

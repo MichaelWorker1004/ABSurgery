@@ -1,0 +1,62 @@
+<form
+  name="personProfileForm"
+  [formGroup]="otherCertificatesForm"
+  (ngSubmit)="save()"
+>
+  <div class="grid">
+    <div class="flex flex-column gap-2 col-12">
+      <label htmlFor="trainingType">Certification</label>
+      <p-dropdown
+        [options]="certificateTypes"
+        [showClear]="true"
+        appendTo="body"
+        optionLabel="name"
+        optionValue="id"
+        formControlName="certificationType"
+        placeholder="Choose a Certification"
+      ></p-dropdown>
+    </div>
+    <div class="flex flex-column gap-2 col-12">
+      <label htmlFor="other">Certification Number</label>
+      <input
+        pInputText
+        type="number"
+        placeholder="Enter a Certificate Number"
+        formControlName="certificateNumner"
+      />
+    </div>
+    <div class="flex flex-column gap-2 col-12">
+      <label htmlFor="other">Issue Date</label>
+      <p-calendar
+        [required]="true"
+        [showIcon]="true"
+        [panelStyle]="{ maxWidth: '300px' }"
+        formControlName="issueDate"
+        placeholder="MM/DD/YYYY"
+        appendTo="body"
+      ></p-calendar>
+      <small
+        *ngIf="
+          otherCertificatesForm.get('issueDate')?.errors &&
+          otherCertificatesForm.get('issueDate')?.dirty
+        "
+        id="trainingType-help"
+        class="form-error-text"
+      >
+        This is required
+      </small>
+    </div>
+  </div>
+  <div class="flex justify-content-end mt-4" slot="footer">
+    <sl-button type="button" variant="text" (click)="cancel()"
+      >Cancel</sl-button
+    >
+    <sl-button
+      type="submit"
+      style="width: 337px"
+      variant="primary"
+      [disabled]="otherCertificatesForm.invalid"
+      >Save
+    </sl-button>
+  </div>
+</form>

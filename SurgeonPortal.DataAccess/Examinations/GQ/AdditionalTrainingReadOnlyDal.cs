@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Examinations.GQ
 
 
 
-        public async Task<IEnumerable<AdditionalTrainingReadOnlyDto>> GetAllByUserIdAsync(int userId)
+        public async Task<IEnumerable<AdditionalTrainingReadOnlyDto>> GetAllByUserIdAsync()
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Examinations.GQ
                     "[dbo].[get_additionaltrainingreadonly_allbyuserid]",
                         new
                         {
-                            UserId = userId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

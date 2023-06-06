@@ -25,8 +25,8 @@
               <div class="col-12">
                 <label
                   >Select the statement that best describes you (Country of
-                  medical school)</label
-                >
+                  medical school)
+                </label>
                 <div>
                   {{ medicalTrainingReadOnly.graduateProfileDescription }}
                 </div>
@@ -286,7 +286,7 @@
                   (click)="showFellowshipModal()"
                 >
                   <i slot="prefix" class="fa-solid fa-plus"></i>
-                  ADD RECORD
+                  ADD FELLOWSHIP
                 </sl-button>
                 <abs-grid
                   [columns]="fellowshipCols"
@@ -299,10 +299,46 @@
           </div>
 
           <div class="form-section">
-            <h5 class="form-section__title">
-              Certificates or Other Certifications
-            </h5>
+            <h5 class="form-section__title">Certificates</h5>
             <hr />
+            <abs-documents-upload
+              [allowUpload]="true"
+              [documentsData$]="documentsData$"
+              [gridCols]="documentsCols"
+              [dropdownOptions]="certificateTypes"
+              [dropdownPlaceholder]="'Select a certificate type'"
+              [dropdownLabel]="'name'"
+              [dropdownValue]="'id'"
+              [filterOn]="'documentType'"
+              [showFilter]="true"
+              [userId]="userId"
+              (documentsAction)="handleGridAction($event, 'certificates')"
+            ></abs-documents-upload>
+          </div>
+
+          <div class="form-section">
+            <h5 class="form-section__title">Other Certifications</h5>
+            <hr />
+            <div class="grid">
+              <div class="col-12">
+                <sl-button
+                  variant="default"
+                  class="btn-add mt-4 mb-1"
+                  (click)="showOtherCertificaions()"
+                >
+                  <i slot="prefix" class="fa-solid fa-plus"></i>
+                  ADD CERTIFICATION
+                </sl-button>
+                <abs-grid
+                  [columns]="otherCertificationCols"
+                  [data]="otherCertifications$"
+                  (action)="handleGridAction($event, 'otherCertificates')"
+                  class="margin-bottom-2"
+                  [pagination]="true"
+                  [itemsPerPage]="5"
+                ></abs-grid>
+              </div>
+            </div>
           </div>
 
           <div class="form-section">
@@ -318,7 +354,7 @@
                   (click)="showTrainingModal()"
                 >
                   <i slot="prefix" class="fa-solid fa-plus"></i>
-                  ADD RECORD
+                  ADD TRAINING
                 </sl-button>
                 <abs-grid
                   [columns]="trainingCols"
@@ -368,6 +404,7 @@
   }} Additional / Advanced Medical Training"
 >
   <abs-training-add-edit-modal
+    *ngIf="showTrainingAddEdit"
     [userId]="userId"
     [training$]="tempData$"
     [isEdit$]="isAdditionalAdvancedEdit$"
@@ -382,12 +419,30 @@
   title="{{ (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add' }} Fellowship"
 >
   <abs-fellowship-add-edit-modal
+    *ngIf="showFellowshipAddEdit"
     [userId]="userId"
     [fellowship$]="tempData$"
     [isEdit$]="isFellowshipEdit$"
     (cancelDialog)="cancelAddEditFellowship($event)"
     (saveDialog)="saveFellowship($event)"
   ></abs-fellowship-add-edit-modal>
+</abs-modal>
+
+<abs-modal
+  [open]="showOtherCertificatesAddEdit"
+  (closeDialog)="cancelOtherCertificatesAddEditModal($event)"
+  title="{{
+    (isOtherCertificatesEdit$ | async) ? 'Edit' : 'Add'
+  }} Other Certification"
+>
+  <abs-other-certificates-add-edit-modal
+    *ngIf="showOtherCertificatesAddEdit"
+    [userId]="userId"
+    [otherCertificate$]="tempData$"
+    [isEdit$]="isOtherCertificatesEdit$"
+    (cancelDialog)="cancelOtherCertificatesAddEditModal($event)"
+    (saveDialog)="saveOtherCertificates($event)"
+  ></abs-other-certificates-add-edit-modal>
 </abs-modal>
 
 <ng-template #loading>

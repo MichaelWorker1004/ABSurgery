@@ -40,25 +40,22 @@ export class DashboardState {
     private certificationsService: CertificationsService
   ) {}
   @Action(GetDashboardProgramInformation) getDashboardProgramInformation(
-    ctx: StateContext<IDashboardState>,
-    payload: { userId: number }
+    ctx: StateContext<IDashboardState>
   ) {
     const state = ctx.getState();
-    return this.programsService
-      .retrieveProgramReadOnly_GetByUserId(payload.userId)
-      .pipe(
-        tap((result: IProgramReadOnlyModel) => {
-          const res = result as IProgramReadOnlyModel;
-          ctx.setState({
-            ...state,
-            programs: res,
-          });
-        }),
-        catchError((httpError: HttpErrorResponse) => {
-          const errors = httpError.error;
-          return of(errors);
-        })
-      );
+    return this.programsService.retrieveProgramReadOnly_GetByUserId().pipe(
+      tap((result: IProgramReadOnlyModel) => {
+        const res = result as IProgramReadOnlyModel;
+        ctx.setState({
+          ...state,
+          programs: res,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        return of(errors);
+      })
+    );
   }
 
   @Action(GetDashboardCertificationInformation)

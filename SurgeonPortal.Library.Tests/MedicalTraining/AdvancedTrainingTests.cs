@@ -357,10 +357,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
+                .Excluding(m => m.UserId)
                 .Excluding(m => m.TrainingType)
                 .Excluding(m => m.InstitutionName)
                 .Excluding(m => m.City)
                 .Excluding(m => m.State)
+                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
@@ -386,7 +388,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var factory = new AdvancedTrainingFactory();
             var sut = factory.Create();
-            sut.UserId = Create<int>();
+            sut.TrainingTypeId = Create<int>();
         
             await sut.SaveAsync();
             
@@ -465,6 +467,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
+                    .Excluding(m => m.UserId)
                     .Excluding(m => m.TrainingType)
                     .Excluding(m => m.InstitutionName)
                     .Excluding(m => m.City)
@@ -472,6 +475,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
+                    .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

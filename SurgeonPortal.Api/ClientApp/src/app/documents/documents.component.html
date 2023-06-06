@@ -7,42 +7,12 @@
     dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
     amet tortor at, condimentum tempor erat.
   </div>
-  <div class="flex upload-controls" *ngIf="canUpload">
-    <sl-select
-      style="margin-right: 1rem"
-      placeholder="Select a document type"
-      ngDefaultControl
-    >
-      <sl-option *ngFor="let option of selectOptions" [value]="option.value">{{
-        option.label
-      }}</sl-option>
-    </sl-select>
-    <div class="input-file">
-      <label>
-        <input type="file" (change)="handleFileOnChange($event)" />
-        <span
-          >{{ fileUploadedName ?? 'Upload a File' }}
-          <i class="fa-solid fa-upload"></i
-        ></span>
-      </label>
-    </div>
-    <sl-button
-      (click)="onDocumentUpload()"
-      [disabled]="!uploadedFile && !documentType"
-      class="btn-add"
-    >
-      <i slot="prefix" class="fa-solid fa-plus"></i>
-      <span>UPLOAD DOCUMENT</span>
-    </sl-button>
-  </div>
-  <abs-grid
-    [columns]="documentsCols"
-    [data]="documentsData$"
-    (action)="handleGridAction($event)"
-    [gridOptions]="gridOptions"
-    [pagination]="true"
-    [itemsPerPage]="3"
-    stlye="margin: 0 0 2rem 0"
-  >
-  </abs-grid>
+  <abs-documents-upload
+    [allowUpload]="false"
+    [documentsData$]="documentsData$"
+    [gridCols]="documentsCols"
+    [showFilter]="true"
+    [filterOn]="'documentName'"
+    (documentsAction)="handleGridAction($event)"
+  ></abs-documents-upload>
 </sl-card>

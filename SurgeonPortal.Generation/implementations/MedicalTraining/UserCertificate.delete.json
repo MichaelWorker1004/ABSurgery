@@ -1,0 +1,64 @@
+{
+  "name": "UserCertificate",
+  "implementationName": "MedicalTraining\\UserCertificate.delete",
+  "template": "ytg-framework/editable-delete",
+  "parameters": {
+    "Adapter": "dbo.del_usercertificate",
+    "ControllerName": "MedicalTraining\\UserCertificateController",
+    "ControllerRoute": "api/user-certificates",
+    "ControllerVersion": "1",
+    "FetchImplementation": "MedicalTraining\\UserCertificate.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\UserCertificate",
+    "ModelGroup": "UserCertificate",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.del_usercertificate",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[del_usercertificate]",
+        "parameters": [
+          {
+            "name": "CertificateId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CertificateId"
+          },
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "CertificateId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\UserCertificate.delete UserCertificate -t=ytg-framework/editable-delete -p:Model=MedicalTraining\\UserCertificate -p:Adapter=sp:ABSSP-[dbo].[del_usercertificate] -p:FetchImplementation=MedicalTraining\\UserCertificate.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserCertificate -p:Route= -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\UserCertificate.delete UserCertificate -t=ytg-framework/editable-delete -p:Model=MedicalTraining\\UserCertificate -p:Adapter=sp:ABSSP-[dbo].[del_usercertificate] -p:FetchImplementation=MedicalTraining\\UserCertificate.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserCertificate -p:Route= -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-30T16:28:57.2543504Z"
+  },
+  "version": 1
+}

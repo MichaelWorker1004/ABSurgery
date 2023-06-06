@@ -17,15 +17,15 @@ namespace SurgeonPortal.Api.Identity
 
         #region IAbsIdentityProvider Implementation
 
-        public T GetUserId<T>()
+        public T? GetUserId<T>()
         {
             try
             {
                 var httpContext = _httpContextAccessor.HttpContext;
 
-                var val = httpContext.User.FindFirst(YtgClaimType.UserId).Value;
+                var val = httpContext?.User.FindFirst(YtgClaimType.UserId)?.Value ?? default;
 
-                return (T)Convert.ChangeType(val, typeof(T));
+                return (T?)Convert.ChangeType(val, typeof(T?));
             }
             catch (Exception)
             {
@@ -33,7 +33,7 @@ namespace SurgeonPortal.Api.Identity
             }
         }
 
-        public string GetUserName() => ClaimsPrincipal.Current.FindFirst(ApplicationClaims.EmailAddress)?.Value;
+        public string GetUserName() => ClaimsPrincipal.Current?.FindFirst(ApplicationClaims.EmailAddress)?.Value ?? "Unknown";
 
         #endregion
     }

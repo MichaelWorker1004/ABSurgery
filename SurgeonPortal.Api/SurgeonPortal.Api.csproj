@@ -7,7 +7,17 @@
     <SpaRoot>ClientApp\</SpaRoot>
     <SpaProxyServerUrl>https://localhost:5001</SpaProxyServerUrl>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
-    <ImplicitUsings>enable</ImplicitUsings> 
+    <ImplicitUsings>enable</ImplicitUsings>
+	<StartupObject>SurgeonPortal.Api.Program</StartupObject>
+	<UserSecretsId>C38168F2-EFB9-492F-A6E7-E2A5C1322462</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +29,7 @@
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.14" />
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
 	<PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.14" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 	<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="6.0.0" />
@@ -60,7 +71,7 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build --configuration SurgeonPortal" />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>

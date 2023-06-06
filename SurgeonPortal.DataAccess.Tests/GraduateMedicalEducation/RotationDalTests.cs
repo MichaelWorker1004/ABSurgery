@@ -92,7 +92,6 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
             var p =
                 new
                 {
-                    UserId = expectedDto.UserId,
                     StartDate = expectedDto.StartDate,
                     EndDate = expectedDto.EndDate,
                     ClinicalLevelId = expectedDto.ClinicalLevelId,
@@ -102,7 +101,6 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                     AlternateInstitutionName = expectedDto.AlternateInstitutionName,
                     IsInternationalRotation = expectedDto.IsInternationalRotation,
                     Other = expectedDto.Other,
-                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -144,7 +142,6 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                 new
                 {
                     Id = expectedDto.Id,
-                    UserId = expectedDto.UserId,
                     StartDate = expectedDto.StartDate,
                     EndDate = expectedDto.EndDate,
                     ClinicalLevelId = expectedDto.ClinicalLevelId,
@@ -154,7 +151,6 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                     AlternateInstitutionName = expectedDto.AlternateInstitutionName,
                     IsInternationalRotation = expectedDto.IsInternationalRotation,
                     Other = expectedDto.Other,
-                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

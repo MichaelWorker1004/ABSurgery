@@ -8,15 +8,10 @@ namespace SurgeonPortal.Library.ContinuousCertification
 {
     public class OutcomeRegistryFactory : IOutcomeRegistryFactory
     {
-        public async Task<IOutcomeRegistry> GetByUserIdAsync(int userId)
+        public async Task<IOutcomeRegistry> GetByUserIdAsync()
         {
-            if (userId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("userId is a required field.");
-            }
             
-            return await DataPortal.FetchAsync<OutcomeRegistry>(
-                new GetByUserIdCriteria(userId));
+            return await DataPortal.FetchAsync<OutcomeRegistry>();
             
         }
 
@@ -27,16 +22,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
 
 
         
-            [Serializable]
-            internal class GetByUserIdCriteria
-            {
-                public int UserId { get; set; }
-            
-                public GetByUserIdCriteria(int userId)
-             {
-                    UserId = userId;
-              }
-            }
             
 
 

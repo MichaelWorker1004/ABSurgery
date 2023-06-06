@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
 
 
 
-        public async Task<OutcomeRegistryDto> GetByUserIdAsync(int userId)
+        public async Task<OutcomeRegistryDto> GetByUserIdAsync()
         {
             using (var connection = CreateConnection())
             {
@@ -22,7 +22,7 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                     "[dbo].[get_outcomeregistry_getbyuserid]",
                         new
                         {
-                            UserId = userId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }
@@ -36,7 +36,7 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                     "[dbo].[ins_outcomeregistry_getbyuserid]",
                         new
                         {
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry,
                             RegistryComments = dto.RegistryComments,
                             RegisteredWithACHQC = dto.RegisteredWithACHQC,
@@ -92,7 +92,7 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                             RegisteredWithELSO = dto.RegisteredWithELSO,
                             UserConfirmed = dto.UserConfirmed,
                             UserConfirmedDateUtc = dto.UserConfirmedDateUtc,
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

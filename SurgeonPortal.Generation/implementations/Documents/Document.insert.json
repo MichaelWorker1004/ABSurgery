@@ -29,7 +29,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           },
           {
             "name": "StreamId",
@@ -74,7 +74,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "CreatedByUserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
@@ -219,11 +219,6 @@
   ],
   "inputParameters": [
     {
-      "name": "UserId",
-      "dataType": "int",
-      "required": true
-    },
-    {
       "name": "StreamId",
       "dataType": "guid",
       "required": true
@@ -241,11 +236,6 @@
     {
       "name": "InternalViewOnly",
       "dataType": "bool",
-      "required": true
-    },
-    {
-      "name": "CreatedByUserId",
-      "dataType": "int",
       "required": true
     }
   ],

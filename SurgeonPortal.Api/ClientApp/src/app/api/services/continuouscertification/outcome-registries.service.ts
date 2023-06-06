@@ -12,8 +12,7 @@ export class OutcomeRegistriesService {
   constructor(private apiService: ApiService) {}
 
  
-        public retrieveOutcomeRegistry_GetByUserId(userId: number,
-        apiVersion = '1.0'): Observable<IOutcomeRegistryModel> {
+        public retrieveOutcomeRegistry_GetByUserId(apiVersion = '1.0'): Observable<IOutcomeRegistryModel> {
     /**
      * Claims
      */
@@ -25,7 +24,6 @@ export class OutcomeRegistriesService {
 
     /**
      * Required Parameters
-     * userId:Number
      * apiVersion
      */
 
@@ -35,7 +33,7 @@ export class OutcomeRegistriesService {
      */
 
             
-            return this.apiService.get<IOutcomeRegistryModel>(`${this.baseEndpoint}?api-version=${apiVersion}&userId=${userId}`);
+            return this.apiService.get<IOutcomeRegistryModel>(`${this.baseEndpoint}?api-version=${apiVersion}`);
   }
 
         public createOutcomeRegistry(model: IOutcomeRegistryModel, 
@@ -51,7 +49,6 @@ export class OutcomeRegistriesService {
 
     /**
      * Required Parameters
-     * userId:Number
      * surgeonSpecificRegistry:Boolean
      * registryComments:String
      * registeredWithACHQC:Boolean
@@ -86,8 +83,7 @@ export class OutcomeRegistriesService {
                 model);
   }
 
-        public updateOutcomeRegistry(userId: number,
-    model: IOutcomeRegistryModel,
+        public updateOutcomeRegistry(model: IOutcomeRegistryModel,
         apiVersion = '1.0') : Observable<IOutcomeRegistryModel> {
     /**
      * Claims
@@ -121,7 +117,6 @@ export class OutcomeRegistriesService {
      * registeredWithELSO:Boolean
      * userConfirmed:Boolean
      * userConfirmedDateUtc:String
-     * userId:Number
      * apiVersion
      */
 
@@ -132,7 +127,7 @@ export class OutcomeRegistriesService {
 
             
             
-            return this.apiService.put<IOutcomeRegistryModel>(`${this.baseEndpoint}?api-version=${apiVersion}&userId=${userId}`,
+            return this.apiService.put<IOutcomeRegistryModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
             model);
   }
 

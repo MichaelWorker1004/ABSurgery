@@ -70,8 +70,8 @@ namespace SurgeonPortal.Api.Controllers.Users
 
       try
       {
-        ipAddress = HttpContext.Connection.RemoteIpAddress.ToString();
-        userAgent = HttpContext.Request.Headers["User-Agent"];
+        ipAddress = HttpContext?.Connection?.RemoteIpAddress?.ToString() ?? "Unknown";
+        userAgent = HttpContext?.Request.Headers["User-Agent"];
 
         var user = await appUserReadOnlyFactory.GetByCredentialsAsync(
             model.UserName,
@@ -191,7 +191,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             access_token = new JwtSecurityTokenHandler().WriteToken(token),
             refresh_token = refreshToken,
             token_type = "Bearer",
-            user_name = user.EmailAddress,
+            user_name = user?.UserName ?? "Unknown",
             expiration = expiresAt,
             expires_in_minutes = _tokensConfiguration.ExpirationInMinutes,
             user = userModel,

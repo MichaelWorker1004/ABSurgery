@@ -28,13 +28,14 @@ using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
 using Ytg.Framework.IoC;
 using Ytg.Framework.SqlServer;
-using Ytg.AspNetCore.Models;
 using Ytg.AspNetCore.Identity;
 using SurgeonPortal.DataAccess.Identity;
 using SurgeonPortal.Shared.Storage;
 using Microsoft.Extensions.Options;
 using SurgeonPortal.DataAccess.Contracts.Storage;
 using SurgeonPortal.DataAccess.Storage;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SurgeonPortal.Api
 {
@@ -68,8 +69,7 @@ namespace SurgeonPortal.Api
 
             services.AddCors(options =>
                 options.AddPolicy("cors", policy => policy
-                    .WithOrigins("http://localhost:4200",
-                                 "https://localhost:5001")
+                    .WithOrigins("http://localhost:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
@@ -98,6 +98,7 @@ namespace SurgeonPortal.Api
                     options.UseApiBehavior = false;
                     options.DefaultApiVersion = new ApiVersion(1, 0);
                     options.AssumeDefaultVersionWhenUnspecified = true;
+                    options.ApiVersionReader = new QueryStringApiVersionReader("api-version");
                 });
 
             ConfigureSwagger(services);
@@ -164,48 +165,36 @@ namespace SurgeonPortal.Api
             }
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            app.UseSwagger(a => a.RouteTemplate = "swagger/{documentName}/swagger.json");
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 var siteConfig = Configuration.GetSection(ConfigurationSections.Site).Get<SiteConfiguration>();
-                var routePrefix = "";
-                if (!string.IsNullOrWhiteSpace(siteConfig.VirtualDirectoryPath))
-                {
-                    routePrefix = siteConfig.VirtualDirectoryPath;
-
-                    if (!routePrefix.StartsWith("/"))
-                    {
-                        routePrefix = "/" + routePrefix;
-                    }
-                    if (routePrefix.EndsWith("/"))
-                    {
-                        routePrefix = routePrefix.Substring(0, routePrefix.Length - 1);
-                    }
-                }
-
-                c.SwaggerEndpoint($"{routePrefix}/swagger/v1/swagger.json", "SurgeonPortal API v1.0");
-
-                
                 c.SwaggerEndpointWithVirtualDirectory(siteConfig?.VirtualDirectoryPath, "SurgeonPortal API v1.0");
-                 c.RoutePrefix = routePrefix;
+                c.RoutePrefix = "swagger";
             });
 
             app.UseCslaAuthenticationWrapper();
 
             app.UseYtgExceptionHandling();
 
-            app.UseRouting();
-
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapDefaultControllerRoute().RequireAuthorization();
+                endpoints.MapFallbackToFile("index.html");
             });
 
             Configuration.ConfigureCsla();
@@ -218,9 +207,9 @@ namespace SurgeonPortal.Api
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SurgeonPortal API", Version = "v1" });
-                c.CustomSchemaIds(i => i.FullName);
- 
+                c.OperationFilter<RemoveVersionFromParameter>();
+                c.DocumentFilter<ReplaceVersionWithExactValueInPath>();
+
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "Please enter JWT with Bearer into field",
@@ -243,8 +232,45 @@ namespace SurgeonPortal.Api
                     new List<string>()
                 }
                 });
+                c.CustomSchemaIds(i => i.FullName);
                 c.EnableAnnotations();
+                c.DocInclusionPredicate((version, desc) =>
+                {
+                    if (!desc.TryGetMethodInfo(out var methodInfo))
+                    {
+                        return false;
+                    }
+
+                    var versions = methodInfo
+                        .DeclaringType?
+                        .GetCustomAttributes(true)
+                        .OfType<ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions);
+
+                    var maps = methodInfo
+                        .GetCustomAttributes(true)
+                        .OfType<MapToApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions)
+                        .ToList();
+
+                    return versions?.Any(v => $"v{v}" == version) == true
+                        && (!maps.Any() || maps.Any(v => $"v{v}" == version));
+                });
+                AddSwaggerDocs(c);
             });
+        }
+
+        private static void AddSwaggerDocs(SwaggerGenOptions options)
+        {
+            options.SwaggerDoc(
+                "v1",
+                new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "SurgeonPortal API",
+                });
+
+            //Add future versions here
         }
 
         private MapperConfiguration GetAutoMapperConfiguration()

@@ -1,5 +1,4 @@
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
 using Ytg.Framework.SqlServer;
@@ -51,11 +50,11 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                     "[dbo].[ins_userfellowships]",
                         new
                         {
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             ProgramName = dto.ProgramName,
                             CompletionYear = dto.CompletionYear,
                             ProgramOther = dto.ProgramOther,
-                            CreatedByUserId = IdentityHelper.UserId,
+                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }
@@ -70,11 +69,11 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         new
                         {
                             Id = dto.Id,
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             ProgramName = dto.ProgramName,
                             CompletionYear = dto.CompletionYear,
                             ProgramOther = dto.ProgramOther,
-                            LastUpdatedByUserId = IdentityHelper.UserId,
+                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

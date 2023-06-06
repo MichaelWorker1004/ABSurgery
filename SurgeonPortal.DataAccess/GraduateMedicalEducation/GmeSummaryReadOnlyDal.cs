@@ -1,5 +1,4 @@
 using SurgeonPortal.DataAccess.Contracts.GraduateMedicalEducation;
-using SurgeonPortal.Shared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
@@ -24,7 +23,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                     "[dbo].[get_gmesummary_byuserid]",
                         new
                         {
-                            UserId = IdentityHelper.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

@@ -4,6 +4,7 @@ import { IGridOptions } from '../shared/components/grid/grid-options.model';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { DOCUMENTS_COLS } from './documents-col';
 import { AbsFilterType } from '../shared/components/grid/abs-grid.enum';
+import { DocumentsUploadComponent } from '../shared/components/documents-upload/documents-upload.component';
 import { Select, Store } from '@ngxs/store';
 import { DocumentSelectors, GetAllDocuments } from '../state/documents';
 import { IDocumentReadOnlyModel } from '../api/models/documents/document-read-only.model';
@@ -14,7 +15,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
   standalone: true,
-  imports: [CommonModule, GridComponent],
+  imports: [CommonModule, GridComponent, DocumentsUploadComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DocumentsComponent implements OnInit {
@@ -35,16 +36,6 @@ export class DocumentsComponent implements OnInit {
   uploadedFile: File | undefined;
   documentType!: string;
   canUpload = false;
-  selectOptions = [
-    {
-      label: 'Medical License',
-      value: 'Medical_License',
-    },
-    {
-      label: 'Invoice',
-      value: 'Invoice',
-    },
-  ];
 
   constructor(private _store: Store) {
     this._store.dispatch(new GetAllDocuments());
@@ -56,7 +47,7 @@ export class DocumentsComponent implements OnInit {
 
   getDocuments() {
     this.documents$?.subscribe((documentsData) => {
-      if (documentsData.length > 0) {
+      if (documentsData && documentsData.length > 0) {
         this.documentsData$.next(documentsData);
       }
     });
@@ -69,12 +60,6 @@ export class DocumentsComponent implements OnInit {
   handleFileOnChange($event: any) {
     this.fileUploadedName = $event.target.files[0].name;
     this.uploadedFile = $event.target.files;
-  }
-
-  onDocumentUpload() {
-    console.log('document upload', this.uploadedFile);
-    console.log('document Name', this.fileUploadedName);
-    console.log('document Type', this.documentType);
   }
 
   resetData() {

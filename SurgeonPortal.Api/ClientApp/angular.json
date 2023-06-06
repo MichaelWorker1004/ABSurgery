@@ -61,7 +61,8 @@
               "browserTarget": "SurgeonPortal:build:production"
             },
             "development": {
-              "browserTarget": "SurgeonPortal:build:development"
+              "browserTarget": "SurgeonPortal:build:development",
+              "proxyConfig": "proxy.conf.js"
             }
           },
           "defaultConfiguration": "development"

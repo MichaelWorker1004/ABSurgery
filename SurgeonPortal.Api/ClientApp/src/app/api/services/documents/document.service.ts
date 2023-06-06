@@ -13,7 +13,7 @@ export class DocumentService {
     constructor(private apiService: ApiService) {}
 
  
-        public deleteDocument(id: number,
+        public deleteCertificate(id: number,
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
@@ -25,9 +25,6 @@ export class DocumentService {
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: UserId
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: DocumentTypeId
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
@@ -59,9 +56,6 @@ export class DocumentService {
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: UserId
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: DocumentTypeId
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
@@ -105,5 +99,12 @@ export class DocumentService {
             return this.apiService.get<IDocumentReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
         }
 
+        public downloadDocument_GetById(id: number, apiVersion = '1.0'): Observable<File> {
+
+            return this.apiService.get<File>(`${this.baseEndpoint}/${id}?api-version=${apiVersion}`, {
+                responseType: 'blob' as 'json'
+            });
+        }
+            
 
 }

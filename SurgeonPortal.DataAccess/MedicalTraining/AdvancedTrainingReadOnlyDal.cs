@@ -1,5 +1,4 @@
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
-using SurgeonPortal.Shared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
@@ -24,7 +23,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                     "[dbo].[get_advanced_training_by_userid]",
                         new
                         {
-                            UserId = IdentityHelper.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

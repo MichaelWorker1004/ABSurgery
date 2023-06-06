@@ -143,11 +143,13 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
+                .Excluding(m => m.UserId)
                 .Excluding(m => m.GraduateProfileDescription)
                 .Excluding(m => m.MedicalSchoolStateName)
                 .Excluding(m => m.MedicalSchoolCountryName)
                 .Excluding(m => m.DegreeName)
                 .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .ExcludingMissingMembers());
@@ -172,7 +174,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
-            sut.UserId = Create<int>();
+            sut.GraduateProfileId = Create<int>();
         
             await sut.SaveAsync();
             
@@ -274,6 +276,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .Excluding(m => m.DegreeName)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.CreatedByUserId)
+                    .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                 .ExcludingMissingMembers());
         

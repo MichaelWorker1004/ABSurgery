@@ -87,12 +87,7 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   });
 
   constructor(private _store: Store) {
-    this.userId$?.subscribe((res: number) => {
-      if (res) {
-        this.userId = res;
-        this._store.dispatch(new GetOutcomeRegistries(res));
-      }
-    });
+    this._store.dispatch(new GetOutcomeRegistries());
   }
 
   ngOnInit(): void {

@@ -38,10 +38,9 @@ namespace SurgeonPortal.Api.Controllers.Trainees
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("")]
         public async Task<ActionResult<ProgramReadOnlyModel>> GetProgramReadOnly_GetByUserIdAsync(
-            [FromServices] IProgramReadOnlyFactory programReadOnlyFactory,
-            int userId)
+            [FromServices] IProgramReadOnlyFactory programReadOnlyFactory)
         {
-            var item = await programReadOnlyFactory.GetByUserIdAsync(userId);
+            var item = await programReadOnlyFactory.GetByUserIdAsync();
         
             return Ok(_mapper.Map<ProgramReadOnlyModel>(item));
         } 

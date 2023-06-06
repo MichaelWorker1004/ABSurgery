@@ -78,7 +78,6 @@ export class RotationService {
             
             /**
             * Required Parameters
-            * userId:Number
             * startDate:String
             * endDate:String
             * clinicalLevelId:Number
@@ -88,7 +87,6 @@ export class RotationService {
             * alternateInstitutionName:String
             * isInternationalRotation:Boolean
             * other:String
-            * createdByUserId:Number
             * apiVersion
             */
             
@@ -117,7 +115,6 @@ export class RotationService {
             /**
             * Required Parameters
             * id:Number
-            * userId:Number
             * startDate:String
             * endDate:String
             * clinicalLevelId:Number
@@ -127,7 +124,6 @@ export class RotationService {
             * alternateInstitutionName:String
             * isInternationalRotation:Boolean
             * other:String
-            * lastUpdatedByUserId:Number
             * apiVersion
             */
             

@@ -7,13 +7,13 @@ namespace SurgeonPortal.Library.Contracts.Documents
     {
         int Id { get; set; }
         int UserId { get; set; }
-        Guid StreamId { get; set; }
+        Guid StreamId { get; }
         int DocumentTypeId { get; set; }
         string DocumentName { get; set; }
         string DocumentType { get; set; }
         bool InternalViewOnly { get; set; }
         string UploadedBy { get; set; }
         DateTime UploadedDateUtc { get; set; }
-        System.IO.Stream File { get; }
+        System.IO.Stream File { get; set; }
     }
 }

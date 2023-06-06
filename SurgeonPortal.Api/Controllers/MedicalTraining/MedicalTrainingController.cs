@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
 using SurgeonPortal.Models.MedicalTraining;
-using SurgeonPortal.Shared;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -89,7 +88,6 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
 
         private void AssignCreateProperties(IMedicalTraining entity, MedicalTrainingModel model)
         {
-            entity.UserId = IdentityHelper.UserId;
             entity.GraduateProfileId = model.GraduateProfileId;
             entity.MedicalSchoolName = model.MedicalSchoolName;
             entity.MedicalSchoolCity = model.MedicalSchoolCity;
@@ -105,7 +103,6 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
         private void AssignEditProperties(IMedicalTraining entity, MedicalTrainingModel model)
         {
             entity.Id = model.Id;
-            entity.UserId = IdentityHelper.UserId;
             entity.GraduateProfileId = model.GraduateProfileId;
             entity.MedicalSchoolName = model.MedicalSchoolName;
             entity.MedicalSchoolCity = model.MedicalSchoolCity;

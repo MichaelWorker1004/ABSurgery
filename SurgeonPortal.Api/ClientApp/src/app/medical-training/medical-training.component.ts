@@ -14,7 +14,11 @@ import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-trainin
 
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { ModalComponent } from '../shared/components/modal/modal.component';
-import { MedicalTrainingSelectors, UserProfileSelectors } from '../state';
+import {
+  MedicalTrainingSelectors,
+  UploadDocument,
+  UserProfileSelectors,
+} from '../state';
 import { Select, Store } from '@ngxs/store';
 import { AdvancedTrainingService } from '../api/services/medicaltraining/advanced-training.service';
 import { IAdvancedTrainingReadOnlyModel } from '../api/models/medicaltraining/advanced-training-read-only.model';
@@ -26,9 +30,11 @@ import { CalendarModule } from 'primeng/calendar';
 import {
   CreateMedicalTraining,
   GetMedicalTraining,
+  GetUserCertificates,
   UpdateMedicalTraining,
 } from '../state/medical-training/medical-training.actions';
 import {
+  GetCertificateTypes,
   GetDegrees,
   GetFellowshipPrograms,
   GetGraduateProfiles,
@@ -47,6 +53,13 @@ import { IFellowshipReadOnlyModel } from '../api/models/medicaltraining/fellowsh
 import { MedicalTrainingActions } from './medical-training-models';
 import { IMedicalTrainingModel } from '../api/models/medicaltraining/medical-training.model';
 import { IResidencyProgramReadOnlyModel } from '../api/models/picklists/residency-program-read-only.model';
+import { DocumentsUploadComponent } from '../shared/components/documents-upload/documents-upload.component';
+import { DOCUMENTS_COLS } from './documents-col';
+import { OTHER_CERTIFICATIONS_COLS } from './other-certifications-cols';
+import { OtherCertificatesAddEditModalComponent } from './other-certificates-add-edit-modal/other-certificates-add-edit-modal.component';
+import { ICertificateTypeReadOnlyModel } from '../api/models/picklists/certificate-type-read-only.model';
+import { IDocumentTypeReadOnlyModel } from '../api/models/picklists/document-type-read-only.model';
+import { IUserCertificateReadOnlyModel } from '../api/models/medicaltraining/user-certificate-read-only.model';
 
 @Component({
   selector: 'abs-medical-training',
@@ -68,6 +81,8 @@ import { IResidencyProgramReadOnlyModel } from '../api/models/picklists/residenc
     InputTextareaModule,
     CalendarModule,
     FellowshipAddEditModalComponent,
+    DocumentsUploadComponent,
+    OtherCertificatesAddEditModalComponent,
   ],
 })
 export class MedicalTrainingComponent implements OnInit {
@@ -76,6 +91,7 @@ export class MedicalTrainingComponent implements OnInit {
   @Select(PicklistsSelectors.slices.countries) countries$:
     | Observable<IPickListItem[]>
     | undefined;
+
   @Select(PicklistsSelectors.slices.states) states$:
     | Observable<IStateReadOnlyModel[]>
     | undefined;
@@ -84,18 +100,30 @@ export class MedicalTrainingComponent implements OnInit {
     | Observable<IGraduateProfileReadOnlyModel[]>
     | undefined;
 
-  @Select(MedicalTrainingSelectors.slices.additionalTraining)
-  additionalTraining$: Observable<IAdvancedTrainingReadOnlyModel[]> | undefined;
-
-  @Select(MedicalTrainingSelectors.slices.medicalTraining)
-  medicalTraining$: Observable<IMedicalTrainingModel> | undefined;
-
   @Select(PicklistsSelectors.slices.degrees) degrees$:
     | Observable<IDegreeReadOnlyModel[]>
     | undefined;
 
   @Select(PicklistsSelectors.slices.residencyPrograms) residencyPrograms$:
     | Observable<IResidencyProgramReadOnlyModel[]>
+    | undefined;
+
+  @Select(PicklistsSelectors.slices.documentTypes) documentTypes$:
+    | Observable<IDocumentTypeReadOnlyModel[]>
+    | undefined;
+
+  @Select(PicklistsSelectors.slices.certificateTypes) certificateTypes$:
+    | Observable<ICertificateTypeReadOnlyModel[]>
+    | undefined;
+
+  @Select(MedicalTrainingSelectors.slices.additionalTraining)
+  additionalTraining$: Observable<IAdvancedTrainingReadOnlyModel[]> | undefined;
+
+  @Select(MedicalTrainingSelectors.slices.medicalTraining)
+  medicalTraining$: Observable<IMedicalTrainingModel> | undefined;
+
+  @Select(MedicalTrainingSelectors.slices.userCertificates) userCertificates$:
+    | Observable<IUserCertificateReadOnlyModel[]>
     | undefined;
 
   advancedTraining$: BehaviorSubject<IAdvancedTrainingReadOnlyModel[]> =
@@ -110,23 +138,36 @@ export class MedicalTrainingComponent implements OnInit {
 
   isFellowshipEdit$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  isOtherCertificatesEdit$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
+
+  documentsData$: BehaviorSubject<any> = new BehaviorSubject([]);
+  documentTypeOptions!: any;
+  otherCertifications$: BehaviorSubject<any> = new BehaviorSubject([]);
+
   tempData$: BehaviorSubject<any> = new BehaviorSubject({});
   countries!: IPickListItem[];
   states!: IStateReadOnlyModel[];
   graduateProfiles!: IGraduateProfileReadOnlyModel[];
   medicalTraining!: IMedicalTrainingModel;
   residencyPrograms!: IResidencyProgramReadOnlyModel[];
+  certificateTypes!: ICertificateTypeReadOnlyModel[];
+  documentTypes!: IDocumentTypeReadOnlyModel[];
   degrees: IDegreeReadOnlyModel[] = [];
   userId!: number;
   createMode!: boolean;
   trainingCols = MEDICAL_TRAINING_COLS;
   fellowshipCols = FELLOWSHIP_COLS;
+  documentsCols = DOCUMENTS_COLS;
+  otherCertificationCols = OTHER_CERTIFICATIONS_COLS;
   medicalTrainingReadOnly!: IMedicalTrainingModel;
   medicalTrainingId!: number;
   trainingAddEditTitle: string | undefined;
   isEdit = true;
   showTrainingAddEdit = false;
   showFellowshipAddEdit = false;
+  showOtherCertificatesAddEdit = false;
   year = new Date().getFullYear();
   maxYear: Date = new Date();
 
@@ -148,26 +189,27 @@ export class MedicalTrainingComponent implements OnInit {
     private globalDialogService: GlobalDialogService,
     private advancedTrainingService: AdvancedTrainingService,
     private fellowshipService: FellowshipService
-  ) {}
+  ) {
+    this._store.dispatch(new GetFellowshipPrograms());
+    this._store.dispatch(new GetResidencyPrograms());
+    this._store.dispatch(new GetUserCertificates());
+    this._store.dispatch(new GetDegrees());
+    this._store.dispatch(new GetMedicalTraining());
+    this._store.dispatch(new GetCertificateTypes());
+    this._store.dispatch(new GetGraduateProfiles());
+  }
 
   ngOnInit(): void {
     this.maxYear.setFullYear(this.year);
     this.userId$?.subscribe((id) => {
       this.userId = id;
     });
-    this.dispatchState();
     this.setPicklists();
+    this.getDocumentsData();
+    this.getOtherCertificationsData();
     this.getAdvancedTrainingGridData();
     this.getFellowshipGridData();
     this.getMedicalTraining();
-  }
-
-  dispatchState() {
-    this._store.dispatch(new GetMedicalTraining());
-    this._store.dispatch(new GetFellowshipPrograms());
-    this._store.dispatch(new GetResidencyPrograms());
-    this._store.dispatch(new GetGraduateProfiles());
-    this._store.dispatch(new GetDegrees());
   }
 
   setPicklists() {
@@ -185,6 +227,16 @@ export class MedicalTrainingComponent implements OnInit {
     this.residencyPrograms$?.subscribe(
       (residencyPrograms: IResidencyProgramReadOnlyModel[]) => {
         this.residencyPrograms = residencyPrograms;
+      }
+    );
+    this.documentTypes$?.subscribe(
+      (documentTypes: IDocumentTypeReadOnlyModel[]) => {
+        this.documentTypes = documentTypes;
+      }
+    );
+    this.certificateTypes$?.subscribe(
+      (certificateTypes: ICertificateTypeReadOnlyModel[]) => {
+        this.certificateTypes = certificateTypes;
       }
     );
   }
@@ -252,6 +304,33 @@ export class MedicalTrainingComponent implements OnInit {
     });
   }
 
+  getDocumentsData() {
+    this.userCertificates$?.subscribe(
+      (userCertificates: IUserCertificateReadOnlyModel[]) => {
+        this.documentsData$.next(userCertificates);
+      }
+    );
+  }
+
+  getOtherCertificationsData() {
+    this.otherCertifications$.next([
+      {
+        certificateType: 'RVPI',
+        certificateNumber: '13456',
+        issueDate: new Date('11/23/2017'),
+      },
+      {
+        certificateType: 'RVPI',
+        certificateNumber: '789456',
+        issueDate: new Date('05/23/2023'),
+      },
+    ]);
+  }
+
+  handleDocumentUpload(event: any) {
+    console.log(event);
+  }
+
   handleGridAction($event: any, form: string) {
     const data = $event.data;
 
@@ -267,12 +346,25 @@ export class MedicalTrainingComponent implements OnInit {
           this.tempData$.next(data);
           this.showFellowshipModal(true);
         },
+        otherCertificates: () => {
+          this.isOtherCertificatesEdit$.next(true);
+          this.tempData$.next(data);
+          this.showOtherCertificaions(true);
+        },
       },
       delete: {
         fellowship: () => {
           this.fellowshipService.deleteFellowship(data.id).subscribe(() => {
             this.getFellowshipGridData();
           });
+        },
+        certificates: () => {
+          this.getDocumentsData();
+        },
+      },
+      upload: {
+        certificates: () => {
+          this.getDocumentsData();
         },
       },
     };
@@ -291,6 +383,11 @@ export class MedicalTrainingComponent implements OnInit {
   showFellowshipModal(isEdit = false) {
     this.isFellowshipEdit$.next(isEdit);
     this.showFellowshipAddEdit = !this.showFellowshipAddEdit;
+  }
+
+  showOtherCertificaions(isEdit = false) {
+    this.isOtherCertificatesEdit$.next(isEdit);
+    this.showOtherCertificatesAddEdit = !this.showOtherCertificatesAddEdit;
   }
 
   saveTraining($event: any) {
@@ -359,6 +456,10 @@ export class MedicalTrainingComponent implements OnInit {
     this.tempData$.next({});
   }
 
+  saveOtherCertificates($event: any) {
+    console.log($event);
+  }
+
   cancelAddEditTraining($event: any) {
     this.showTrainingAddEdit = $event.show;
     this.tempData$.next({});
@@ -366,6 +467,11 @@ export class MedicalTrainingComponent implements OnInit {
 
   cancelAddEditFellowship($event: any) {
     this.showFellowshipAddEdit = $event.show;
+    this.tempData$.next({});
+  }
+
+  cancelOtherCertificatesAddEditModal($event: any) {
+    this.showOtherCertificatesAddEdit = $event.show;
     this.tempData$.next({});
   }
 

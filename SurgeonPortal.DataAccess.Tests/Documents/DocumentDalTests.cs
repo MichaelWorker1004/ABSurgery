@@ -95,12 +95,10 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             var p =
                 new
                 {
-                    UserId = expectedDto.UserId,
                     StreamId = expectedDto.StreamId,
                     DocumentName = expectedDto.DocumentName,
                     DocumentTypeId = expectedDto.DocumentTypeId,
                     InternalViewOnly = expectedDto.InternalViewOnly,
-                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -117,53 +115,6 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
         
             var sut = new DocumentDal(sqlManager);
             var result = await sut.InsertAsync(Create<DocumentDto>());
-        
-            expectedDto.Should().BeEquivalentTo(result,
-                options => options.ExcludingMissingMembers());
-        }
-        
-        #endregion
-
-        #region UpdateAsync
-        
-        [Test]
-        public async Task UpdateAsync_ExecutesSprocCorrectly()
-        {
-            var expectedSprocName = "[dbo].[update_userdocument]";
-            var expectedDto = Create<DocumentDto>();
-        
-            var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(expectedDto);
-        
-            var sut = new DocumentDal(sqlManager);
-            await sut.UpdateAsync(expectedDto);
-        
-            var p =
-                new
-                {
-                    Id = expectedDto.Id,
-                    UserId = expectedDto.UserId,
-                    StreamId = expectedDto.StreamId,
-                    DocumentName = expectedDto.DocumentName,
-                    DocumentTypeId = expectedDto.DocumentTypeId,
-                    InternalViewOnly = expectedDto.InternalViewOnly,
-                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
-                };
-        
-            Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
-            Assert.That(sqlManager.SqlConnection.ShouldPassParameters(p));
-        }
-        
-        [Test]
-        public async Task UpdateAsync_YieldsCorrectResult()
-        {
-            var expectedDto = Create<DocumentDto>();
-        
-            var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(expectedDto);
-        
-            var sut = new DocumentDal(sqlManager);
-            var result = await sut.UpdateAsync(Create<DocumentDto>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());

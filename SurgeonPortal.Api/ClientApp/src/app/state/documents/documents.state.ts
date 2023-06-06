@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
-import { catchError, share, tap } from 'rxjs/operators';
-import { forkJoin, map, Observable, of } from 'rxjs';
+import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
 import { IFormErrors } from 'src/app/shared/common';
 import { IDocumentReadOnlyModel } from 'src/app/api/models/documents/document-read-only.model';
 import { DocumentService } from 'src/app/api/services/documents/document.service';
-import { GetAllDocuments } from './documents.actions';
+import {
+  DeleteCertificate,
+  DeleteDocument,
+  DownloadDocument,
+  GetAllDocuments,
+  UploadDocument,
+} from './documents.actions';
+import { UserCertificateService } from 'src/app/api/services/medicaltraining/user-certificate.service';
+import { IUserCertificateModel } from 'src/app/api/models/medicaltraining/user-certificate.model';
+import { GetUserCertificates } from '../medical-training/medical-training.actions';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 export interface IDocuments {
   documents: IDocumentReadOnlyModel[] | undefined;
@@ -22,7 +32,12 @@ export const DOCUMENTS_STATE_TOKEN = new StateToken<IDocuments>('documents');
 })
 @Injectable()
 export class DocumentsState {
-  constructor(private documentService: DocumentService) {}
+  constructor(
+    private documentService: DocumentService,
+    private userCertificateService: UserCertificateService,
+    private globalDialogService: GlobalDialogService,
+    private _store: Store
+  ) {}
 
   @Action(GetAllDocuments)
   getAllDocuments({
@@ -40,5 +55,106 @@ export class DocumentsState {
         return of(error);
       })
     );
+  }
+
+  @Action(DownloadDocument)
+  downloadDocument(
+    ctx: StateContext<IDocuments>,
+    action: { payload: { documentId: number; documentName: string } }
+  ): Observable<Blob> {
+    return this.documentService
+      .downloadDocument_GetById(action.payload.documentId)
+      .pipe(
+        tap((blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = action.payload.documentName;
+          link.click();
+        }),
+        catchError((error) => {
+          console.error('------- In Documents Store', error);
+          console.error(error);
+          return of(error);
+        })
+      );
+  }
+
+  @Action(DeleteCertificate)
+  DeleteCertificate(
+    ctx: StateContext<IDocuments>,
+    action: { payload: number }
+  ): Observable<void> {
+    const id = action.payload;
+    return this.userCertificateService.deleteUserCertificate(id).pipe(
+      tap(() => {
+        this._store.dispatch(new GetUserCertificates(true));
+        this._store.dispatch(new GetAllDocuments());
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Document Deleted Successfully',
+          true
+        );
+      }),
+      catchError((error) => {
+        console.error('------- In Documents Store', error);
+        console.error(error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(DeleteDocument)
+  deleteDocument(
+    ctx: StateContext<IDocuments>,
+    action: { payload: number }
+  ): Observable<void> {
+    const id = action.payload;
+    return this.documentService.deleteCertificate(id).pipe(
+      tap(() => {
+        this._store.dispatch(new GetUserCertificates(true));
+        this._store.dispatch(new GetAllDocuments());
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Document Deleted Successfully',
+          true
+        );
+      }),
+      catchError((error) => {
+        console.error('------- In Documents Store', error);
+        console.error(error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(UploadDocument)
+  uploadDocument(
+    ctx: StateContext<IDocuments>,
+    action: { payload: { model: FormData } }
+  ): Observable<void> {
+    return this.userCertificateService
+      .createUserCertificate(action.payload.model)
+      .pipe(
+        tap(() => {
+          this._store.dispatch(new GetUserCertificates(true));
+          this._store.dispatch(new GetAllDocuments());
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Document Uploaded Successfully',
+            true
+          );
+        }),
+        catchError((error) => {
+          console.error('------- In Documents Store', error);
+          console.error(error);
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Document Uploaded Failed',
+            false
+          );
+          return of(error);
+        })
+      );
   }
 }

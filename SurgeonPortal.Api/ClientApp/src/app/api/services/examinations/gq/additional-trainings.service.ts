@@ -108,8 +108,7 @@ export class AdditionalTrainingsService {
             model);
         }
 
-        public retrieveAdditionalTrainingReadOnly_GetAllByUserId(userId: number,
-        apiVersion = '1.0'): Observable<IAdditionalTrainingReadOnlyModel[]> {
+        public retrieveAdditionalTrainingReadOnly_GetAllByUserId(apiVersion = '1.0'): Observable<IAdditionalTrainingReadOnlyModel[]> {
             /**
             * Claims
             */
@@ -121,7 +120,6 @@ export class AdditionalTrainingsService {
 
             /**
             * Required Parameters
-            * userId:Number
             * apiVersion
             */
 
@@ -131,7 +129,7 @@ export class AdditionalTrainingsService {
             */
             
             
-            return this.apiService.get<IAdditionalTrainingReadOnlyModel[]>(`${this.baseEndpoint}/all?api-version=${apiVersion}&userId=${userId}`);
+            return this.apiService.get<IAdditionalTrainingReadOnlyModel[]>(`${this.baseEndpoint}/all?api-version=${apiVersion}`);
         }
 
 

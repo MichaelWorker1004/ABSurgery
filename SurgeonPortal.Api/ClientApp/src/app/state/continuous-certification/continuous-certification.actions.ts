@@ -2,8 +2,6 @@ import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertificatio
 
 export class GetOutcomeRegistries {
   static readonly type = '[Continuous Certification] Get Outcome Registries';
-
-  constructor(public userId: number) {}
 }
 
 export class UpdateOutcomeRegistries {

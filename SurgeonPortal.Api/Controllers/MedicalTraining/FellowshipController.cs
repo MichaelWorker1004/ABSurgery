@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
 using SurgeonPortal.Models.MedicalTraining;
-using SurgeonPortal.Shared;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -122,7 +121,6 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
 
         private void AssignCreateProperties(IFellowship entity, FellowshipModel model)
         {
-            entity.UserId = IdentityHelper.UserId;
             entity.ProgramName = model.ProgramName;
             entity.CompletionYear = model.CompletionYear;
             entity.ProgramOther = model.ProgramOther;
@@ -130,7 +128,6 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
 
         private void AssignEditProperties(IFellowship entity, FellowshipModel model)
         {
-            entity.UserId = IdentityHelper.UserId;
             entity.ProgramName = model.ProgramName;
             entity.CompletionYear = model.CompletionYear;
             entity.ProgramOther = model.ProgramOther;

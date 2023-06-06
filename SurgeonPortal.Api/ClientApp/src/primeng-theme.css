@@ -341,6 +341,7 @@ p-calendar.ng-dirty.ng-invalid > .p-calendar > .p-inputtext {
   color: #212529;
   border: 1px solid #ced4da;
   border-radius: 4px;
+  max-width: 300px;
 }
 .p-datepicker:not(.p-datepicker-inline) {
   background: #fff;

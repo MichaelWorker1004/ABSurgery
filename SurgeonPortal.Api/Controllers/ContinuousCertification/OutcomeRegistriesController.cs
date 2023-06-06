@@ -39,10 +39,9 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("")]
         public async Task<ActionResult<OutcomeRegistryModel>> GetOutcomeRegistry_GetByUserIdAsync(
-            [FromServices] IOutcomeRegistryFactory outcomeRegistryFactory,
-            int userId)
+            [FromServices] IOutcomeRegistryFactory outcomeRegistryFactory)
         {
-            var item = await outcomeRegistryFactory.GetByUserIdAsync(userId);
+            var item = await outcomeRegistryFactory.GetByUserIdAsync();
         
             return Ok(_mapper.Map<OutcomeRegistryModel>(item));
         } 
@@ -79,10 +78,9 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
         [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] IOutcomeRegistryFactory outcomeRegistryFactory,
-            [FromBody] OutcomeRegistryModel model,
-            int userId)
+            [FromBody] OutcomeRegistryModel model)
         {
-            var item = await outcomeRegistryFactory.GetByUserIdAsync(userId);
+            var item = await outcomeRegistryFactory.GetByUserIdAsync();
             AssignEditProperties(item, model);
             
             return await UpdateAsync<OutcomeRegistryModel>(_mapper, item);
@@ -90,7 +88,6 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
 
         private void AssignCreateProperties(IOutcomeRegistry entity, OutcomeRegistryModel model)
         {
-            entity.UserId = model.UserId;
             entity.SurgeonSpecificRegistry = model.SurgeonSpecificRegistry;
             entity.RegistryComments = model.RegistryComments;
             entity.RegisteredWithACHQC = model.RegisteredWithACHQC;
@@ -137,7 +134,6 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
             entity.RegisteredWithELSO = model.RegisteredWithELSO;
             entity.UserConfirmed = model.UserConfirmed;
             entity.UserConfirmedDateUtc = model.UserConfirmedDateUtc;
-            entity.UserId = model.UserId;
         }
     }
 }

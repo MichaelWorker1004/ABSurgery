@@ -12,8 +12,7 @@ export class ProgramsService {
     constructor(private apiService: ApiService) {}
 
  
-        public retrieveProgramReadOnly_GetByUserId(userId: number,
-        apiVersion = '1.0'): Observable<IProgramReadOnlyModel> {
+        public retrieveProgramReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IProgramReadOnlyModel> {
             /**
             * Claims
             */
@@ -25,7 +24,6 @@ export class ProgramsService {
 
             /**
             * Required Parameters
-            * userId:Number
             * apiVersion
             */
 
@@ -35,7 +33,7 @@ export class ProgramsService {
             */
             
             
-            return this.apiService.get<IProgramReadOnlyModel>(`${this.baseEndpoint}?api-version=${apiVersion}&userId=${userId}`);
+            return this.apiService.get<IProgramReadOnlyModel>(`${this.baseEndpoint}?api-version=${apiVersion}`);
         }
 
 

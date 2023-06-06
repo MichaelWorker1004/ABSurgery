@@ -5,14 +5,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
 using SurgeonPortal.Models.MedicalTraining;
-using SurgeonPortal.Shared;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Ytg.AspNetCore.Controllers;
 using Ytg.AspNetCore.Helpers;
-using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Api.Controllers.MedicalTraining
 {
@@ -108,7 +106,6 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
 
         private void AssignCreateProperties(IAdvancedTraining entity, AdvancedTrainingModel model)
         {
-            entity.UserId = IdentityHelper.UserId;
             entity.TrainingTypeId = model.TrainingTypeId;
             entity.ProgramId = model.ProgramId;
             entity.Other = model.Other;
@@ -118,7 +115,6 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
 
         private void AssignEditProperties(IAdvancedTraining entity, AdvancedTrainingModel model)
         {
-            entity.UserId = IdentityHelper.UserId;
             entity.TrainingTypeId = model.TrainingTypeId;
             entity.ProgramId = model.ProgramId;
             entity.Other = model.Other;

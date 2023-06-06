@@ -1,15 +1,18 @@
 {
-  "name": "Document",
-  "implementationName": "Documents\\Document.update",
-  "template": "ytg-framework/editable-edit",
+  "name": "UserCertificate",
+  "implementationName": "MedicalTraining\\UserCertificate.insert",
+  "template": "ytg-framework/editable-create",
   "parameters": {
-    "Adapter": "dbo.update_userdocument",
-    "FetchImplementation": "Documents\\Document.GetById",
-    "IncludeControllerInGeneration": "false",
+    "Adapter": "dbo.insert_usercertificates",
+    "ControllerName": "MedicalTraining\\UserCertificateController",
+    "ControllerRoute": "api/user-certificates",
+    "ControllerVersion": "1",
+    "FetchImplementation": "MedicalTraining\\UserCertificate.GetById",
+    "IncludeControllerInGeneration": "true",
     "IsChild": "false",
     "IsRoot": "true",
-    "Model": "Documents\\Document",
-    "ModelGroup": "Document",
+    "Model": "MedicalTraining\\UserCertificate",
+    "ModelGroup": "UserCertificate",
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
@@ -17,20 +20,11 @@
   "adapters": [
     {
       "type": "storedProcedure",
-      "name": "dbo.update_userdocument",
+      "name": "dbo.insert_usercertificates",
       "storedProcedure": {
         "schema": "[dbo]",
-        "procedureName": "[update_userdocument]",
+        "procedureName": "[insert_usercertificates]",
         "parameters": [
-          {
-            "name": "Id",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "Id"
-          },
           {
             "name": "UserId",
             "dataType": "int",
@@ -38,67 +32,67 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           },
           {
-            "name": "StreamId",
-            "dataType": "guid",
-            "maxLength": 16,
-            "precision": 0,
+            "name": "DocumentId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "StreamId"
+            "mapsTo": "DocumentId"
           },
           {
-            "name": "DocumentName",
+            "name": "CertificateTypeId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CertificateTypeId"
+          },
+          {
+            "name": "IssueDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "IssueDate"
+          },
+          {
+            "name": "CertificateNumber",
             "dataType": "string",
-            "maxLength": 50,
+            "maxLength": 100,
             "precision": 50,
             "scale": 0,
             "required": true,
-            "mapsTo": "DocumentName"
+            "mapsTo": "CertificateNumber"
           },
           {
-            "name": "DocumentTypeId",
+            "name": "CreatedByUserId",
             "dataType": "int",
             "maxLength": 4,
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "DocumentTypeId"
-          },
-          {
-            "name": "InternalViewOnly",
-            "dataType": "bool",
-            "maxLength": 1,
-            "precision": 1,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "InternalViewOnly"
-          },
-          {
-            "name": "LastUpdatedByUserId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "LastUpdatedByUserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
           {
-            "model": "Documents\\Document",
+            "model": "MedicalTraining\\UserCertificate",
             "fields": [
               {
-                "name": "Id",
+                "name": "CertificateId",
                 "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": true,
-                "mapsTo": "model.Id"
+                "mapsTo": "model.CertificateId"
               },
               {
                 "name": "UserId",
@@ -111,54 +105,54 @@
                 "mapsTo": "model.UserId"
               },
               {
-                "name": "StreamId",
-                "dataType": "guid",
-                "maxLength": 16,
-                "precision": 0,
-                "scale": 0,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.StreamId"
-              },
-              {
-                "name": "DocumentTypeId",
+                "name": "DocumentId",
                 "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.DocumentTypeId"
+                "mapsTo": "model.DocumentId"
               },
               {
-                "name": "DocumentName",
+                "name": "CertificateTypeId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificateTypeId"
+              },
+              {
+                "name": "CertificateType",
                 "dataType": "string",
                 "maxLength": 50,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.DocumentName"
+                "mapsTo": "model.CertificateType"
               },
               {
-                "name": "DocumentType",
+                "name": "IssueDate",
+                "dataType": "datetime",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IssueDate"
+              },
+              {
+                "name": "CertificateNumber",
                 "dataType": "string",
-                "maxLength": 100,
+                "maxLength": 25,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.DocumentType"
-              },
-              {
-                "name": "InternalViewOnly",
-                "dataType": "bool",
-                "maxLength": 1,
-                "precision": 1,
-                "scale": 0,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.InternalViewOnly"
+                "mapsTo": "model.CertificateNumber"
               },
               {
                 "name": "CreatedByUserId",
@@ -169,26 +163,6 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.CreatedByUserId"
-              },
-              {
-                "name": "UploadedBy",
-                "dataType": "string",
-                "maxLength": 50,
-                "precision": 0,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.UploadedBy"
-              },
-              {
-                "name": "UploadedDateUtc",
-                "dataType": "datetime",
-                "maxLength": 8,
-                "precision": 23,
-                "scale": 3,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.UploadedDateUtc"
               },
               {
                 "name": "CreatedAtUtc",
@@ -228,45 +202,30 @@
   ],
   "inputParameters": [
     {
-      "name": "Id",
+      "name": "DocumentId",
       "dataType": "int",
       "required": true
     },
     {
-      "name": "UserId",
+      "name": "CertificateTypeId",
       "dataType": "int",
       "required": true
     },
     {
-      "name": "StreamId",
-      "dataType": "guid",
+      "name": "IssueDate",
+      "dataType": "datetime",
       "required": true
     },
     {
-      "name": "DocumentName",
+      "name": "CertificateNumber",
       "dataType": "string",
-      "required": true
-    },
-    {
-      "name": "DocumentTypeId",
-      "dataType": "int",
-      "required": true
-    },
-    {
-      "name": "InternalViewOnly",
-      "dataType": "bool",
-      "required": true
-    },
-    {
-      "name": "LastUpdatedByUserId",
-      "dataType": "int",
       "required": true
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Documents\\Document.update Document -t=ytg-framework/editable-edit -p:Model=Documents\\Document -p:Adapter=sp:ABSSP-[dbo].[update_userdocument] -p:FetchImplementation=Documents\\Document.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Document -p:Route= -p:ControllerName=Documents\\DocumentController -p:ControllerRoute=api/documents -p:ControllerVersion=1 ",
-    "inferredCommand": "ytgim generate i  Documents\\Document.update Document -t=ytg-framework/editable-edit -p:Model=Documents\\Document -p:Adapter=sp:ABSSP-[dbo].[update_userdocument] -p:FetchImplementation=Documents\\Document.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Document -p:Route= -p:ControllerName=Documents\\DocumentController -p:ControllerRoute=api/documents -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-05-25T18:43:28.7758813Z"
+    "command": "ytgim g i s MedicalTraining\\UserCertificate.insert UserCertificate -t=ytg-framework/editable-create -p:Model=MedicalTraining\\UserCertificate -p:Adapter=sp:ABSSP-[dbo].[insert_usercertificates] -p:FetchImplementation=MedicalTraining\\UserCertificate.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserCertificate -p:Route= -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\UserCertificate.insert UserCertificate -t=ytg-framework/editable-create -p:Model=MedicalTraining\\UserCertificate -p:Adapter=sp:ABSSP-[dbo].[insert_usercertificates] -p:FetchImplementation=MedicalTraining\\UserCertificate.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserCertificate -p:Route= -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-05-30T16:28:41.8688147Z"
   },
   "version": 1
 }

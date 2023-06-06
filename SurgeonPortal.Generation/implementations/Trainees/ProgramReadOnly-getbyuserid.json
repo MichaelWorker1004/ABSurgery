@@ -32,7 +32,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
@@ -114,13 +114,7 @@
       }
     }
   ],
-  "inputParameters": [
-    {
-      "name": "UserId",
-      "dataType": "int",
-      "required": true
-    }
-  ],
+  "inputParameters": [],
   "metadata": {
     "command": "ytgim generate i s Trainees\\ProgamReadOnly-getbyuserid ProgramReadOnly -t=ytg-framework\\editable-get -p:Model=Trainees\\ProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_programs] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ProgramReadOnly -p:ControllerName=Trainees\\ProgramsController -p:ControllerRoute=trainee/programs -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
     "inferredCommand": "ytgim generate i  Trainees\\ProgamReadOnly-getbyuserid ProgramReadOnly -t=ytg-framework\\editable-get -p:Model=Trainees\\ProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_programs] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ProgramReadOnly -p:ControllerName=Trainees\\ProgramsController -p:ControllerRoute=trainees/progam-read-onlies -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=",

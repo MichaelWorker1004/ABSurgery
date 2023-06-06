@@ -1,5 +1,4 @@
 using SurgeonPortal.DataAccess.Contracts.Documents;
-using SurgeonPortal.Shared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
@@ -24,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Documents
                     "[dbo].[get_documents_byuserid]",
                         new
                         {
-                            UserId = IdentityHelper.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

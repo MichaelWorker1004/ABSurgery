@@ -1,5 +1,4 @@
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
 using Ytg.Framework.SqlServer;
@@ -23,7 +22,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                     "[dbo].[get_medical_training_byuserid]",
                         new
                         {
-                            UserId = IdentityHelper.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }
@@ -37,7 +36,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                     "[dbo].[ins_medical_training]",
                         new
                         {
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             GraduateProfileId = dto.GraduateProfileId,
                             MedicalSchoolName = dto.MedicalSchoolName,
                             MedicalSchoolCity = dto.MedicalSchoolCity,
@@ -48,7 +47,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                             ResidencyProgramName = dto.ResidencyProgramName,
                             ResidencyCompletionYear = dto.ResidencyCompletionYear,
                             ResidencyProgramOther = dto.ResidencyProgramOther,
-                            CreatedByUserId = dto.CreatedByUserId,
+                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }
@@ -63,7 +62,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         new
                         {
                             Id = dto.Id,
-                            UserId = dto.UserId,
+                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             GraduateProfileId = dto.GraduateProfileId,
                             MedicalSchoolName = dto.MedicalSchoolName,
                             MedicalSchoolCity = dto.MedicalSchoolCity,
@@ -74,7 +73,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                             ResidencyProgramName = dto.ResidencyProgramName,
                             ResidencyCompletionYear = dto.ResidencyCompletionYear,
                             ResidencyProgramOther = dto.ResidencyProgramOther,
-                            LastUpdatedByUserId = dto.LastUpdatedByUserId,
+                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         
             }

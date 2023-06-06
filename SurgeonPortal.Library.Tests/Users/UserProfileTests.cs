@@ -1311,9 +1311,10 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.UserProfileId)
+                .Excluding(m => m.UserId)
                 .Excluding(m => m.CertificationStatus)
-                .Excluding(m => m.AbsId)
-                .Excluding(m => m.NPI)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -1336,7 +1337,7 @@ namespace SurgeonPortal.Library.Tests.Users
         
             var factory = new UserProfileFactory();
             var sut = factory.Create();
-            sut.UserId = Create<int>();
+            sut.FirstName = Create<string>();
         
             await sut.SaveAsync();
             
@@ -1457,9 +1458,10 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
+                    .Excluding(m => m.UserId)
                     .Excluding(m => m.CertificationStatus)
-                    .Excluding(m => m.AbsId)
-                    .Excluding(m => m.NPI)
+                    .Excluding(m => m.CreatedByUserId)
+                    .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

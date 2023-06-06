@@ -32,7 +32,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           },
           {
             "name": "StartDate",
@@ -122,7 +122,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "CreatedByUserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
@@ -327,11 +327,6 @@
   ],
   "inputParameters": [
     {
-      "name": "UserId",
-      "dataType": "int",
-      "required": true
-    },
-    {
       "name": "StartDate",
       "dataType": "datetime",
       "required": true
@@ -374,11 +369,6 @@
     {
       "name": "Other",
       "dataType": "string",
-      "required": true
-    },
-    {
-      "name": "CreatedByUserId",
-      "dataType": "int",
       "required": true
     }
   ],

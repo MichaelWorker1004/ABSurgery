@@ -21,11 +21,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { Observable, Subject } from 'rxjs';
 import { IFellowshipReadOnlyModel } from 'src/app/api/models/medicaltraining/fellowship-read-only.model';
-import { Select, Store } from '@ngxs/store';
-import {
-  GetFellowshipPrograms,
-  PicklistsSelectors,
-} from 'src/app/state/picklists';
+import { Select } from '@ngxs/store';
+import { PicklistsSelectors } from 'src/app/state/picklists';
 import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fellowship-program-read-only.model';
 
 @Component({
@@ -68,8 +65,6 @@ export class FellowshipAddEditModalComponent implements OnInit {
     programOther: new FormControl(''),
     completionYear: new FormControl('', Validators.required),
   });
-
-  constructor(private _store: Store) {}
 
   ngOnInit(): void {
     this.maxYear.setFullYear(this.year);

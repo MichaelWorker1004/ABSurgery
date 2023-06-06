@@ -11,5 +11,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Storage
     {
         Task SaveAsync(Stream fileStream, string name);
         Task<Stream> LoadAsync(string name);
+        Task DeleteAsync(string name);
     }
 }

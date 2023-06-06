@@ -4,6 +4,7 @@ using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.GraduateMedicalEducation;
 using SurgeonPortal.Library.Contracts.GraduateMedicalEducation;
 using SurgeonPortal.Library.GraduateMedicalEducation;
+using System;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 
@@ -184,9 +185,11 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
+                .Excluding(m => m.UserId)
                 .Excluding(m => m.ClinicalLevel)
                 .Excluding(m => m.IsEssential)
                 .Excluding(m => m.IsCredit)
+                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
@@ -213,7 +216,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             var factory = new RotationFactory();
             var sut = factory.Create();
-            sut.UserId = Create<int>();
+            sut.StartDate = Create<DateTime>();
         
             await sut.SaveAsync();
             
@@ -308,12 +311,14 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
+                    .Excluding(m => m.UserId)
                     .Excluding(m => m.ClinicalLevel)
                     .Excluding(m => m.IsEssential)
                     .Excluding(m => m.IsCredit)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
+                    .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.ClinicalActivity)
                 .ExcludingMissingMembers());
         

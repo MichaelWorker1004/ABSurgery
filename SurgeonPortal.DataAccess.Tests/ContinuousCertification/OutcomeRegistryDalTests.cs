@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
             sqlManager.AddRecord(Create<OutcomeRegistryDto>());
         
             var sut = new OutcomeRegistryDal(sqlManager);
-            await sut.GetByUserIdAsync(expectedUserId);
+            await sut.GetByUserIdAsync();
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
             sqlManager.AddRecord(expectedDto);
         
             var sut = new OutcomeRegistryDal(sqlManager);
-            var result = await sut.GetByUserIdAsync(Create<int>());
+            var result = await sut.GetByUserIdAsync();
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -67,7 +67,6 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
             var p =
                 new
                 {
-                    UserId = expectedDto.UserId,
                     SurgeonSpecificRegistry = expectedDto.SurgeonSpecificRegistry,
                     RegistryComments = expectedDto.RegistryComments,
                     RegisteredWithACHQC = expectedDto.RegisteredWithACHQC,
@@ -150,7 +149,6 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
                     RegisteredWithELSO = expectedDto.RegisteredWithELSO,
                     UserConfirmed = expectedDto.UserConfirmed,
                     UserConfirmedDateUtc = expectedDto.UserConfirmedDateUtc,
-                    UserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

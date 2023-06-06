@@ -8,28 +8,13 @@ namespace SurgeonPortal.Library.Examinations.GQ
 {
     public class AdditionalTrainingReadOnlyListFactory : IAdditionalTrainingReadOnlyListFactory
     {
-        public async Task<IAdditionalTrainingReadOnlyList> GetAllByUserIdAsync(int userId)
+        public async Task<IAdditionalTrainingReadOnlyList> GetAllByUserIdAsync()
         {
-            if (userId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("userId is a required field.");
-            }
             
-            return await DataPortal.FetchAsync<AdditionalTrainingReadOnlyList>(
-                new GetAllByUserIdCriteria(userId));
+            return await DataPortal.FetchAsync<AdditionalTrainingReadOnlyList>();
             
         }
 
-            [Serializable]
-            internal class GetAllByUserIdCriteria
-            {
-                public int UserId { get; set; }
-            
-                public GetAllByUserIdCriteria(int userId)
-             {
-                    UserId = userId;
-              }
-            }
             
 
 

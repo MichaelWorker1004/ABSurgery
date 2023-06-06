@@ -67,7 +67,6 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
             var p =
                 new
                 {
-                    UserId = expectedDto.UserId,
                     GraduateProfileId = expectedDto.GraduateProfileId,
                     MedicalSchoolName = expectedDto.MedicalSchoolName,
                     MedicalSchoolCity = expectedDto.MedicalSchoolCity,
@@ -78,7 +77,6 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
                     ResidencyProgramName = expectedDto.ResidencyProgramName,
                     ResidencyCompletionYear = expectedDto.ResidencyCompletionYear,
                     ResidencyProgramOther = expectedDto.ResidencyProgramOther,
-                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -120,7 +118,6 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
                 new
                 {
                     Id = expectedDto.Id,
-                    UserId = expectedDto.UserId,
                     GraduateProfileId = expectedDto.GraduateProfileId,
                     MedicalSchoolName = expectedDto.MedicalSchoolName,
                     MedicalSchoolCity = expectedDto.MedicalSchoolCity,
@@ -131,7 +128,6 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
                     ResidencyProgramName = expectedDto.ResidencyProgramName,
                     ResidencyCompletionYear = expectedDto.ResidencyCompletionYear,
                     ResidencyProgramOther = expectedDto.ResidencyProgramOther,
-                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

@@ -90,7 +90,6 @@ namespace SurgeonPortal.Api.Controllers.Users
 
         private void AssignCreateProperties(IUserProfile entity, UserProfileModel model)
         {
-            entity.UserId = model.UserId;
             entity.FirstName = model.FirstName;
             entity.MiddleName = model.MiddleName;
             entity.LastName = model.LastName;
@@ -121,8 +120,6 @@ namespace SurgeonPortal.Api.Controllers.Users
 
         private void AssignEditProperties(IUserProfile entity, UserProfileModel model)
         {
-            entity.UserProfileId = model.UserProfileId;
-            entity.UserId = model.UserId;
             entity.FirstName = model.FirstName;
             entity.MiddleName = model.MiddleName;
             entity.LastName = model.LastName;

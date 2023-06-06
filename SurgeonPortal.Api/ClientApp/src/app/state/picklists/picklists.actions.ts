@@ -48,6 +48,14 @@ export class GetResidencyPrograms {
   static readonly type = '[Picklists] Get all Fellowship Programs';
 }
 
+export class GetCertificateTypes {
+  static readonly type = '[Picklists] Get all Certificate Types';
+}
+
+export class GetDocumentTypes {
+  static readonly type = '[Picklists] Get all Document Types';
+}
+
 export class GetPicklists {
   static readonly type = '[Picklists] Get all picklists';
 

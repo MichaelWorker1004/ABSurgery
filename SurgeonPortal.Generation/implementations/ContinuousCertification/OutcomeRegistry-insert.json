@@ -32,7 +32,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           },
           {
             "name": "SurgeonSpecificRegistry",
@@ -455,11 +455,6 @@
     }
   ],
   "inputParameters": [
-    {
-      "name": "UserId",
-      "dataType": "int",
-      "required": true
-    },
     {
       "name": "SurgeonSpecificRegistry",
       "dataType": "bool",

@@ -97,10 +97,9 @@ namespace SurgeonPortal.Api.Controllers.Examinations.GQ
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<AdditionalTrainingReadOnlyModel>>> GetAdditionalTrainingReadOnly_GetAllByUserIdAsync(
-            [FromServices] IAdditionalTrainingReadOnlyListFactory additionalTrainingReadOnlyListFactory,
-            int userId)
+            [FromServices] IAdditionalTrainingReadOnlyListFactory additionalTrainingReadOnlyListFactory)
         {
-            var items = await additionalTrainingReadOnlyListFactory.GetAllByUserIdAsync(userId);
+            var items = await additionalTrainingReadOnlyListFactory.GetAllByUserIdAsync();
         
             return Ok(_mapper.Map<IEnumerable<AdditionalTrainingReadOnlyModel>>(items));
         } 
@@ -118,7 +117,6 @@ namespace SurgeonPortal.Api.Controllers.Examinations.GQ
 
         private void AssignEditProperties(IAdditionalTraining entity, AdditionalTrainingModel model)
         {
-            entity.TrainingId = model.TrainingId;
             entity.DateEnded = model.DateEnded;
             entity.DateStarted = model.DateStarted;
             entity.Other = model.Other;

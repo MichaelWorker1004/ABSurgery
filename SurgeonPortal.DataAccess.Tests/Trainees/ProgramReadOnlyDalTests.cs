@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.Trainees
             sqlManager.AddRecord(Create<ProgramReadOnlyDto>());
         
             var sut = new ProgramReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync(expectedUserId);
+            await sut.GetByUserIdAsync();
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Trainees
             sqlManager.AddRecord(expectedDto);
         
             var sut = new ProgramReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync(Create<int>());
+            var result = await sut.GetByUserIdAsync();
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());

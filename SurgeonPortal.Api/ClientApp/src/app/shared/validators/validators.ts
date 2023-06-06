@@ -32,7 +32,6 @@ export function matchFields(field1: string, field2: string): ValidatorFn {
 export function validatePassword(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     // eslint-disable-next-line no-debugger
-    // debugger;
     const value: string = control.value;
     const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
     if (value && !value.match(regex)) {

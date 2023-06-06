@@ -74,13 +74,11 @@ export class AdvancedTrainingService {
             
             /**
             * Required Parameters
-            * userId:Number
             * trainingTypeId:Number
             * programId:Number
             * other:String
             * startDate:String
             * endDate:String
-            * createdByUserId:Number
             * apiVersion
             */
             
@@ -120,13 +118,11 @@ export class AdvancedTrainingService {
             /**
             * Required Parameters
             * id:Number
-            * userId:Number
             * trainingTypeId:Number
             * programId:Number
             * other:String
             * startDate:String
             * endDate:String
-            * lastUpdatedByUserId:Number
             * apiVersion
             */
             

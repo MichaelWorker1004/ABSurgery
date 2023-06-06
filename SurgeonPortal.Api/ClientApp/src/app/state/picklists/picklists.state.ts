@@ -30,6 +30,8 @@ import {
   GetTrainingTypeList,
   GetClinicalLevelList,
   GetClinicalActivityList,
+  GetCertificateTypes,
+  GetDocumentTypes,
 } from './picklists.actions';
 import { IFormErrors } from '../../shared/common';
 import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
@@ -38,6 +40,8 @@ import { IGraduateProfileReadOnlyModel } from 'src/app/api/models/picklists/grad
 import { IDegreeReadOnlyModel } from 'src/app/api/models/picklists/degree-read-only.model';
 import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fellowship-program-read-only.model';
 import { IResidencyProgramReadOnlyModel } from 'src/app/api/models/picklists/residency-program-read-only.model';
+import { ICertificateTypeReadOnlyModel } from 'src/app/api/models/picklists/certificate-type-read-only.model';
+import { IDocumentTypeReadOnlyModel } from 'src/app/api/models/picklists/document-type-read-only.model';
 export interface IPicklist {
   countries: ICountryReadOnlyModel[] | undefined;
   ethnicities: IEthnicityReadOnlyModel[] | undefined;
@@ -57,6 +61,8 @@ export interface IPicklist {
   residencyPrograms: IResidencyProgramReadOnlyModel[] | undefined;
   clinicalLevels: IClinicalLevelReadOnlyModel[] | undefined;
   clinicalActivities: IClinicalActivityReadOnlyModel[] | undefined;
+  certificateTypes: ICertificateTypeReadOnlyModel[] | undefined;
+  documentTypes: IDocumentTypeReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -85,6 +91,8 @@ export interface IPicklistUserValues {
   degrees: IDegreeReadOnlyModel[] | undefined;
   fellowshipPrograms: IFellowshipProgramReadOnlyModel[] | undefined;
   residencyPrograms: IResidencyProgramReadOnlyModel[] | undefined;
+  clinicalLevels: IClinicalLevelReadOnlyModel[] | undefined;
+  documentTypes: IDocumentTypeReadOnlyModel[] | undefined;
 }
 
 export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
@@ -108,6 +116,8 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     residencyPrograms: undefined,
     clinicalLevels: undefined,
     clinicalActivities: undefined,
+    certificateTypes: undefined,
+    documentTypes: undefined,
   },
 })
 @Injectable()
@@ -443,6 +453,46 @@ export class PicklistsState {
     );
   }
 
+  @Action(GetCertificateTypes)
+  getCertificateTypes(
+    ctx: StateContext<IPicklist>
+  ): Observable<ICertificateTypeReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.certificateTypes) {
+      return of(ctx.getState()?.certificateTypes);
+    }
+    return this.picklistsService.retrieveCertificateTypeReadOnly_GetAll().pipe(
+      tap((certificateTypes: ICertificateTypeReadOnlyModel[]) => {
+        ctx.patchState({
+          certificateTypes,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Certificate Types', error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetDocumentTypes)
+  getDocumentTypes(
+    ctx: StateContext<IPicklist>
+  ): Observable<IDocumentTypeReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.documentTypes) {
+      return of(ctx.getState()?.documentTypes);
+    }
+    return this.picklistsService.retrieveDocumentTypeReadOnly_GetAll().pipe(
+      tap((documentTypes: IDocumentTypeReadOnlyModel[]) => {
+        ctx.patchState({
+          documentTypes,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Document Types', error);
+        return of(error);
+      })
+    );
+  }
+
   @Action(GetPicklists)
   getPicklists(
     ctx: StateContext<IPicklist>,
@@ -461,6 +511,7 @@ export class PicklistsState {
       this.getTrainingTypeList(ctx).pipe(catchError((error) => of(error))),
       this.getFellowshipPrograms(ctx).pipe(catchError((error) => of(error))),
       this.getResidencyPrograms(ctx).pipe(catchError((error) => of(error))),
+      this.getCertificateTypes(ctx).pipe(catchError((error) => of(error))),
     ];
 
     if (payload?.countryCode) {

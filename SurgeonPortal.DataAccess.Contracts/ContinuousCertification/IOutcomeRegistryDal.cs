@@ -4,7 +4,7 @@ namespace SurgeonPortal.DataAccess.Contracts.ContinuousCertification
 {
     public interface IOutcomeRegistryDal
     {
-        Task<OutcomeRegistryDto> GetByUserIdAsync(int userId);
+        Task<OutcomeRegistryDto> GetByUserIdAsync();
         Task<OutcomeRegistryDto> InsertAsync(OutcomeRegistryDto dto);
         Task<OutcomeRegistryDto> UpdateAsync(OutcomeRegistryDto dto);
     }

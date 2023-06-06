@@ -33,15 +33,14 @@ export class ContinuousCertificationState {
 
   @Action(GetOutcomeRegistries)
   getOutcomeRegistries(
-    ctx: StateContext<IContinuousCertication>,
-    payload: { userId: number }
+    ctx: StateContext<IContinuousCertication>
   ): Observable<IOutcomeRegistryModel | undefined> {
     if (ctx.getState().outcomeRegistries) {
       return of(ctx.getState()?.outcomeRegistries);
     }
 
     return this.outcomeRegistriesService
-      .retrieveOutcomeRegistry_GetByUserId(payload.userId)
+      .retrieveOutcomeRegistry_GetByUserId()
       .pipe(
         tap((outcomeRegistries: IOutcomeRegistryModel) => {
           ctx.patchState({
@@ -64,18 +63,16 @@ export class ContinuousCertificationState {
       outcomeRegistries: payload,
     });
 
-    return this.outcomeRegistriesService
-      .updateOutcomeRegistry(payload.userId, payload)
-      .pipe(
-        tap((outcomeRegistries: IOutcomeRegistryModel) => {
-          ctx.patchState({
-            outcomeRegistries,
-          });
-        }),
-        catchError((httpError: HttpErrorResponse) => {
-          const errors = httpError.error;
-          return of(errors);
-        })
-      );
+    return this.outcomeRegistriesService.updateOutcomeRegistry(payload).pipe(
+      tap((outcomeRegistries: IOutcomeRegistryModel) => {
+        ctx.patchState({
+          outcomeRegistries,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        return of(errors);
+      })
+    );
   }
 }

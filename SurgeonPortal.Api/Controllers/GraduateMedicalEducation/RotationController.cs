@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurgeonPortal.Library.Contracts.GraduateMedicalEducation;
 using SurgeonPortal.Models.GraduateMedicalEducation;
-using SurgeonPortal.Shared;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -122,7 +121,6 @@ namespace SurgeonPortal.Api.Controllers.GraduateMedicalEducation
 
         private void AssignCreateProperties(IRotation entity, RotationModel model)
         {
-            entity.UserId = IdentityHelper.UserId;
             entity.StartDate = model.StartDate;
             entity.EndDate = model.EndDate;
             entity.ClinicalLevelId = model.ClinicalLevelId;
@@ -136,7 +134,6 @@ namespace SurgeonPortal.Api.Controllers.GraduateMedicalEducation
 
         private void AssignEditProperties(IRotation entity, RotationModel model)
         {
-            entity.UserId = IdentityHelper.UserId;
             entity.StartDate = model.StartDate;
             entity.EndDate = model.EndDate;
             entity.ClinicalLevelId = model.ClinicalLevelId;

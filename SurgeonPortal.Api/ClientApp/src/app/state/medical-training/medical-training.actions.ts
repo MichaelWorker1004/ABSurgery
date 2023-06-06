@@ -24,3 +24,9 @@ export class UpdateAdvancedTrainingData {
 
   constructor(public payload: IAdvancedTrainingModel) {}
 }
+
+export class GetUserCertificates {
+  static readonly type = '[Medical Training] Get user certificates';
+
+  constructor(public isUpload?: boolean) {}
+}

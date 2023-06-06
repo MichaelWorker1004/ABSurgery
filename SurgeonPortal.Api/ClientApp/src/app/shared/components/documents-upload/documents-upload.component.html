@@ -1,0 +1,54 @@
+<div class="mt-5">
+  <div
+    class="flex upload-controls gap-3 {{
+      gridOptions.showFilter ? 'absolute' : ''
+    }}"
+    *ngIf="allowUpload"
+  >
+    <form class="flex gap-3" [formGroup]="uploadForm">
+      <p-dropdown
+        [options]="dropdownOptions"
+        [placeholder]="dropdownPlaceholder"
+        [optionLabel]="dropdownLabel"
+        [optionValue]="dropdownValue"
+        [showClear]="true"
+        formControlName="certificateTypeId"
+      ></p-dropdown>
+      <div class="input-file">
+        <label>
+          <input
+            type="file"
+            accept=".pdf"
+            (change)="handleFileOnChange($event)"
+          />
+          <span
+            >{{ fileUploadedName ?? 'Upload a File' }}
+            <i class="fa-solid fa-upload"></i
+          ></span>
+        </label>
+      </div>
+      <sl-button
+        (click)="onDocumentUpload()"
+        [disabled]="
+          !uploadForm.valid ||
+          !fileUploadedName ||
+          !uploadForm.value.certificateTypeId
+        "
+        class="btn-add"
+      >
+        <i slot="prefix" class="fa-solid fa-plus"></i>
+        <span>UPLOAD DOCUMENT</span>
+      </sl-button>
+    </form>
+  </div>
+  <abs-grid
+    [columns]="gridCols"
+    [data]="documentsData$"
+    (action)="handleGridAction($event)"
+    [gridOptions]="gridOptions"
+    [pagination]="true"
+    [itemsPerPage]="5"
+    stlye="margin: 0 0 2rem 0"
+  >
+  </abs-grid>
+</div>

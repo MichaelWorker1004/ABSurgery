@@ -9,14 +9,18 @@ import {
   CreateMedicalTraining,
   GetAdvancedTrainingData,
   GetMedicalTraining,
+  GetUserCertificates,
   UpdateMedicalTraining,
 } from './medical-training.actions';
 import { AdvancedTrainingService } from 'src/app/api/services/medicaltraining/advanced-training.service';
 import { IAdvancedTrainingReadOnlyModel } from 'src/app/api/models/medicaltraining/advanced-training-read-only.model';
+import { IUserCertificateReadOnlyModel } from 'src/app/api/models/medicaltraining/user-certificate-read-only.model';
+import { UserCertificateService } from 'src/app/api/services/medicaltraining/user-certificate.service';
 
 export interface IMedicalTraining {
   medicalTraining: IMedicalTrainingModel | undefined;
   additionalTraining: IAdvancedTrainingReadOnlyModel[] | undefined;
+  userCertificates: IUserCertificateReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -29,13 +33,15 @@ export const MEDICALSTATE_STATE_TOKEN = new StateToken<IMedicalTraining>(
   defaults: {
     medicalTraining: undefined,
     additionalTraining: undefined,
+    userCertificates: undefined,
   },
 })
 @Injectable()
 export class MedicalTrainingState {
   constructor(
     private medicalTrainingService: MedicalTrainingService,
-    private advancedTrainingService: AdvancedTrainingService
+    private advancedTrainingService: AdvancedTrainingService,
+    private userCertificateService: UserCertificateService
   ) {}
 
   @Action(GetMedicalTraining)
@@ -103,6 +109,25 @@ export class MedicalTrainingState {
         tap((additionalTraining: IAdvancedTrainingReadOnlyModel[]) => {
           ctx.patchState({
             additionalTraining,
+          });
+        })
+      );
+  }
+
+  @Action(GetUserCertificates)
+  getUserCertificates(
+    ctx: StateContext<IMedicalTraining>,
+    payload: GetUserCertificates
+  ): Observable<IUserCertificateReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.userCertificates && !payload?.isUpload) {
+      return of(ctx.getState()?.userCertificates);
+    }
+    return this.userCertificateService
+      .retrieveUserCertificateReadOnly_GetByUserId()
+      .pipe(
+        tap((userCertificates: IUserCertificateReadOnlyModel[]) => {
+          ctx.patchState({
+            userCertificates,
           });
         })
       );
