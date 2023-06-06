@@ -36,12 +36,14 @@ export class GridComponent implements OnInit {
     filterOn: '',
     filterType: AbsFilterType.Text,
     filterOptions: [],
+    noFilteredResultsMessage: 'There are no results to display.',
   };
   @Input() pagination = false;
   @Input() expandTemplate!: any;
   @Input() currentPage = 1;
   @Input() itemsPerPage = 5;
   @Input() showGridLines = true;
+  @Input() noResultsMessage = 'There are no results to display.';
 
   @Output() action: EventEmitter<unknown> = new EventEmitter();
 
@@ -65,7 +67,7 @@ export class GridComponent implements OnInit {
       });
     } else {
       this.localData = this.data;
-      this.filteredData = this.data;
+      this.filteredData = this.data ?? [];
       this.initPagintion(this.data);
     }
   }

@@ -4,6 +4,7 @@ export interface IGridOptions {
   filterType?: string;
   filterOptions?: IDropdown[];
   placeholder?: string;
+  noFilteredResultsMessage?: string;
 }
 
 export interface IDropdown {

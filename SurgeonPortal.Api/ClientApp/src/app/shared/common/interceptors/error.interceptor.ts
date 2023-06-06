@@ -25,26 +25,30 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(errorReq).pipe(
       catchError((err) => {
         if (err instanceof HttpErrorResponse) {
-          // do not handle 401 errors here, they will be handled in the auth interceptor
+          // do not handle 401/404 errors here, they will be handled in the auth interceptor or the app respectively
+          // carve out specifically for the Login Failed error as it is shaped differently from other errors
           if (
-            !err.error ||
-            (typeof err.error === 'string' && err.error !== 'Login failed')
+            (!err.error ||
+              (typeof err.error === 'string' &&
+                err.error !== 'Login failed')) &&
+            err.status !== 401 &&
+            err.status !== 404
           ) {
-            if (err.status !== 401) {
-              // TODO: [Joe] - add error specific messages here
+            // TODO: [Joe] - add error specific messages here
 
-              const message = `${err.status} Error: ${err.statusText}`;
-              // if (err.error) {
-              //   message = err.error;
-              // }
-              this.globalToastService.showError(message);
-            }
+            const message = `${err.status} Error: ${err.statusText}`;
+            // if (err.error) {
+            //   message = err.error;
+            // }
+            this.globalToastService.showError(message);
           }
+          //throw err;
           // log error to console for debugging
           console.log(err);
           console.log(`Error Code: ${err.status}\nMessage: ${err.message}`);
-          throw err;
         }
+
+        // always allow the error to continue to propagate
         throw err;
       })
     );

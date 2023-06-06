@@ -152,6 +152,18 @@
             </td>
           </tr>
         </ng-container>
+        <tr *ngIf="!filteredData || filteredData.length <= 0">
+          <td colspan="100%" class="text-center">
+            <div class="no-data font-italic">
+              <span *ngIf="!localData || localData.length <= 0">{{
+                noResultsMessage
+              }}</span>
+              <span *ngIf="localData && localData.length > 0">{{
+                gridOptions.noFilteredResultsMessage
+              }}</span>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
