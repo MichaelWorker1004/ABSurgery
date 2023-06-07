@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
 import { IFormErrors } from 'src/app/shared/common';
@@ -13,7 +13,6 @@ import {
   UploadDocument,
 } from './documents.actions';
 import { UserCertificateService } from 'src/app/api/services/medicaltraining/user-certificate.service';
-import { IUserCertificateModel } from 'src/app/api/models/medicaltraining/user-certificate.model';
 import { GetUserCertificates } from '../medical-training/medical-training.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
@@ -110,7 +109,7 @@ export class DocumentsState {
     action: { payload: number }
   ): Observable<void> {
     const id = action.payload;
-    return this.documentService.deleteCertificate(id).pipe(
+    return this.documentService.deleteDocument(id).pipe(
       tap(() => {
         this._store.dispatch(new GetUserCertificates(true));
         this._store.dispatch(new GetAllDocuments());
@@ -141,7 +140,7 @@ export class DocumentsState {
           this._store.dispatch(new GetAllDocuments());
           this.globalDialogService.showSuccessError(
             'Success',
-            'Document Uploaded Successfully',
+            'Document uploaded successfully',
             true
           );
         }),
@@ -150,7 +149,7 @@ export class DocumentsState {
           console.error(error);
           this.globalDialogService.showSuccessError(
             'Error',
-            'Document Uploaded Failed',
+            'Document uploaded failed',
             false
           );
           return of(error);

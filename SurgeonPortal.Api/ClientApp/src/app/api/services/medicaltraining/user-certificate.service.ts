@@ -13,7 +13,7 @@ export class UserCertificateService {
     constructor(private apiService: ApiService) {}
 
  
-        public deleteUserCertificate(id: number,
+        public deleteUserCertificate(certificateId: number,
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
@@ -36,10 +36,10 @@ export class UserCertificateService {
             */
             
             
-            return this.apiService.delete<IUserCertificateModel>(`${this.baseEndpoint}?id=${id}&api-version=${apiVersion}`);
+            return this.apiService.delete<IUserCertificateModel>(`${this.baseEndpoint}?api-version=${apiVersion}&certificateId=${certificateId}`);
         }
  
-        public retrieveUserCertificate_GetById(id: number,
+        public retrieveUserCertificate_GetById(certificateId: number,
         apiVersion = '1.0'): Observable<IUserCertificateModel> {
             /**
             * Claims
@@ -52,7 +52,7 @@ export class UserCertificateService {
             
             /**
             * Required Parameters
-            * id:Number
+            * certificateId:Number
             * apiVersion
             */
             
@@ -62,7 +62,7 @@ export class UserCertificateService {
             */
             
             
-            return this.apiService.get<IUserCertificateModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.get<IUserCertificateModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&certificateId=${certificateId}`);
         }
  
         public createUserCertificate(model: FormData, 
@@ -78,7 +78,6 @@ export class UserCertificateService {
             
             /**
             * Required Parameters
-            * certificateId:Number
             * documentId:Number
             * certificateTypeId:Number
             * issueDate:String
@@ -92,7 +91,8 @@ export class UserCertificateService {
             */
             
             
-            return this.apiService.post<IUserCertificateModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, model);
+            return this.apiService.post<IUserCertificateModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+                model);
         }
  
         public retrieveUserCertificateReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IUserCertificateReadOnlyModel[]> {

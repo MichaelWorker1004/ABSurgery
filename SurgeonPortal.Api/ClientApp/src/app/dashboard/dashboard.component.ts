@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
-        action: 'documents',
+        action: '/documents',
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',

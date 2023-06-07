@@ -54,12 +54,13 @@ namespace SurgeonPortal.Library.Documents
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
         [DisplayName(nameof(StreamId))]
-        public Guid StreamId
-        {
-            get { return GetProperty(StreamIdProperty); }
+		public Guid StreamId
+		{
+			get { return GetProperty(StreamIdProperty); }
             private set { SetProperty(StreamIdProperty, value); }
-        }
-        public static readonly PropertyInfo<Guid> StreamIdProperty = RegisterProperty<Guid>(c => c.StreamId);
+		}
+		public static readonly PropertyInfo<Guid> StreamIdProperty = RegisterProperty<Guid>(c => c.StreamId);
+
         [DisplayName(nameof(DocumentTypeId))]
 		public int DocumentTypeId
 		{
@@ -169,7 +170,7 @@ namespace SurgeonPortal.Library.Documents
                 base.DataPortal_DeleteSelf();
         
                 await _documentDal.DeleteAsync(ToDto());
-                
+        
                 await _storageDal.DeleteAsync(FileName);
 
                 MarkIdle();
@@ -215,7 +216,7 @@ namespace SurgeonPortal.Library.Documents
             using (BypassPropertyChecks)
             {
                 var dto = await _documentDal.InsertAsync(ToDto());
-
+        
                 await _storageDal.SaveAsync(File, FileName);
 
                 FetchData(dto);

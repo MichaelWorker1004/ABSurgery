@@ -82,10 +82,10 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         [Test]
         public async Task GetByIdAsync_CallsDalCorrectly()
         {
-            var expectedId = Create<int>();
+            var expectedCertificateId = Create<int>();
             
             var mockDal = new Mock<IUserCertificateDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedId))
+            mockDal.Setup(m => m.GetByIdAsync(expectedCertificateId))
                 .ReturnsAsync(Create<UserCertificateDto>());
         
             UseMockServiceProvider()
@@ -95,7 +95,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new UserCertificateFactory();
-            var sut = await factory.GetByIdAsync(expectedId);
+            var sut = await factory.GetByIdAsync(expectedCertificateId);
         
             mockDal.VerifyAll();
         }
@@ -167,6 +167,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.CertificateId)
                 .Excluding(m => m.UserId)
                 .Excluding(m => m.CertificateType)
                 .Excluding(m => m.CreatedByUserId)
@@ -195,7 +196,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var factory = new UserCertificateFactory();
             var sut = factory.Create();
-            sut.CertificateId = Create<int>();
+            sut.DocumentId = Create<int>();
         
             await sut.SaveAsync();
             

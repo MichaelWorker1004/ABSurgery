@@ -29,7 +29,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
             }
         }
 
-        public async Task<UserCertificateDto> GetByIdAsync(int id)
+        public async Task<UserCertificateDto> GetByIdAsync(int certificateId)
         {
             using (var connection = CreateConnection())
             {
@@ -37,7 +37,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                     "[dbo].[get_usercertificates_byid]",
                         new
                         {
-                            Id = id,
+                            CertificateId = certificateId,
                         });
                         
             }

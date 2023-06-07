@@ -25,11 +25,11 @@ export class DashboardHeaderComponent {
     },
     {
       display: 'About',
-      action: 'https://www.absurgery.org/default.jsp?aboutcontact',
+      action: 'https://www.absurgery.org/default.jsp?abouthome',
     },
     {
       display: 'Contact',
-      action: 'https://www.absurgery.org/default.jsp?abouthome',
+      action: 'https://www.absurgery.org/default.jsp?aboutcontact',
     },
   ];
 

@@ -1,0 +1,116 @@
+{
+  "name": "OtherCertificationsReadOnly",
+  "implementationName": "MedicalTraining\\OtherCertificationsReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_user_certificates_other_byuserid",
+    "ControllerName": "MedicalTraining\\OtherCertificationsController",
+    "ControllerRoute": "api/medical-training/other-certifications",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\OtherCertificationsReadOnly",
+    "ModelGroup": "OtherCertificationsReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_certificates_other_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_certificates_other_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "MedicalTraining\\OtherCertificationsReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "CertificateTypeId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificateTypeId"
+              },
+              {
+                "name": "CertificateTypeName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificateTypeName"
+              },
+              {
+                "name": "IssueDate",
+                "dataType": "datetime",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IssueDate"
+              },
+              {
+                "name": "CertificateNumber",
+                "dataType": "string",
+                "maxLength": 25,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificateNumber"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [ ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\OtherCertificationsReadOnly.GetByUserId OtherCertificationsReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\OtherCertificationsReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certificates_other_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=OtherCertificationsReadOnly -p:Route=by-userid -p:ControllerName=MedicalTraining\\OtherCertificationsController -p:ControllerRoute=api/medical-training/other-certifications -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\OtherCertificationsReadOnly.GetByUserId OtherCertificationsReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\OtherCertificationsReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certificates_other_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=OtherCertificationsReadOnly -p:Route=by-userid -p:ControllerName=MedicalTraining\\OtherCertificationsController -p:ControllerRoute=api/medical-training/other-certifications -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-07T17:09:22.7104631Z"
+  },
+  "version": 1
+}

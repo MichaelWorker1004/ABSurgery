@@ -8,26 +8,25 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
 {
-	public class UserCertificateDalTests : TestBase<string>
+	public class OtherCertificationsDalTests : TestBase<string>
     {
         #region DeleteAsync
                 
         [Test]
         public async Task DeleteAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[del_usercertificate]";
-            var expectedDto = Create<UserCertificateDto>();
+            var expectedSprocName = "[dbo].[del_user_certificates_other_byid]";
+            var expectedDto = Create<OtherCertificationsDto>();
         
             var sqlManager = new MockSqlConnectionManager();
             
-            var sut = new UserCertificateDal(sqlManager);
+            var sut = new OtherCertificationsDal(sqlManager);
             await sut.DeleteAsync(expectedDto);
         
             var p =
                 new
                 {
-                    CertificateId = expectedDto.CertificateId,
-                    UserId = expectedDto.UserId,
+                    Id = expectedDto.Id,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -41,19 +40,19 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
         [Test]
         public async Task GetByIdAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[get_usercertificates_byid]";
-            var expectedCertificateId = Create<int>();
+            var expectedSprocName = "[dbo].[get_user_certificates_other_byid]";
+            var expectedId = Create<int>();
             var expectedParams =
                 new
                 {
-                    CertificateId = expectedCertificateId,
+                    Id = expectedId,
                 };
         
             var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(Create<UserCertificateDto>());
+            sqlManager.AddRecord(Create<OtherCertificationsDto>());
         
-            var sut = new UserCertificateDal(sqlManager);
-            await sut.GetByIdAsync(expectedCertificateId);
+            var sut = new OtherCertificationsDal(sqlManager);
+            await sut.GetByIdAsync(expectedId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -62,12 +61,12 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
         [Test]
         public async Task GetByIdAsync_YieldsCorrectResult()
         {
-            var expectedDto = Create<UserCertificateDto>();
+            var expectedDto = Create<OtherCertificationsDto>();
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(expectedDto);
         
-            var sut = new UserCertificateDal(sqlManager);
+            var sut = new OtherCertificationsDal(sqlManager);
             var result = await sut.GetByIdAsync(Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
@@ -81,19 +80,18 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
         [Test]
         public async Task InsertAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[insert_usercertificates]";
-            var expectedDto = Create<UserCertificateDto>();
+            var expectedSprocName = "[dbo].[ins_user_certificates_other]";
+            var expectedDto = Create<OtherCertificationsDto>();
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(expectedDto);
         
-            var sut = new UserCertificateDal(sqlManager);
+            var sut = new OtherCertificationsDal(sqlManager);
             await sut.InsertAsync(expectedDto);
         
             var p =
                 new
                 {
-                    DocumentId = expectedDto.DocumentId,
                     CertificateTypeId = expectedDto.CertificateTypeId,
                     IssueDate = expectedDto.IssueDate,
                     CertificateNumber = expectedDto.CertificateNumber,
@@ -106,13 +104,57 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
         [Test]
         public async Task InsertAsync_YieldsCorrectResult()
         {
-            var expectedDto = Create<UserCertificateDto>();
+            var expectedDto = Create<OtherCertificationsDto>();
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(expectedDto);
         
-            var sut = new UserCertificateDal(sqlManager);
-            var result = await sut.InsertAsync(Create<UserCertificateDto>());
+            var sut = new OtherCertificationsDal(sqlManager);
+            var result = await sut.InsertAsync(Create<OtherCertificationsDto>());
+        
+            expectedDto.Should().BeEquivalentTo(result,
+                options => options.ExcludingMissingMembers());
+        }
+        
+        #endregion
+
+        #region UpdateAsync
+        
+        [Test]
+        public async Task UpdateAsync_ExecutesSprocCorrectly()
+        {
+            var expectedSprocName = "[dbo].[update_user_certificates_other_byid]";
+            var expectedDto = Create<OtherCertificationsDto>();
+        
+            var sqlManager = new MockSqlConnectionManager();
+            sqlManager.AddRecord(expectedDto);
+        
+            var sut = new OtherCertificationsDal(sqlManager);
+            await sut.UpdateAsync(expectedDto);
+        
+            var p =
+                new
+                {
+                    Id = expectedDto.Id,
+                    CertificateTypeId = expectedDto.CertificateTypeId,
+                    IssueDate = expectedDto.IssueDate,
+                    CertificateNumber = expectedDto.CertificateNumber,
+                };
+        
+            Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
+            Assert.That(sqlManager.SqlConnection.ShouldPassParameters(p));
+        }
+        
+        [Test]
+        public async Task UpdateAsync_YieldsCorrectResult()
+        {
+            var expectedDto = Create<OtherCertificationsDto>();
+        
+            var sqlManager = new MockSqlConnectionManager();
+            sqlManager.AddRecord(expectedDto);
+        
+            var sut = new OtherCertificationsDal(sqlManager);
+            var result = await sut.UpdateAsync(Create<OtherCertificationsDto>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());

@@ -1398,7 +1398,8 @@
     "lastGeneratedHash": "B8EBCFFA753A37608A2BC1D95E95AEB8"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\documents\\document.service.ts": {
-    "lastGeneratedHash": "A9DB65DE45E8A6A3A09E78966B90CB3A"
+    "lastGeneratedHash": "A9DB65DE45E8A6A3A09E78966B90CB3A",
+    "lastMergedHash": "55E8463851C8C2385B6A8F08BD62FCF3"
   },
   "\\SurgeonPortal.Api\\Controllers\\Documents\\DocumentController.cs": {
     "lastGeneratedHash": "89F49764DE72687612ED7EB5DC209985",
@@ -1406,7 +1407,7 @@
   },
   "\\SurgeonPortal.Library\\Documents\\Document.cs": {
     "lastGeneratedHash": "E92F419B50F4151D911519FDFEF11B6D",
-    "lastMergedHash": "25E91991BA99306C2481F447EA3F96C0"
+    "lastMergedHash": "C9C8FA50FF0A1D0CDBE0F3B09CA1409B"
   },
   "\\SurgeonPortal.DataAccess\\Documents\\DocumentDal.cs": {
     "lastGeneratedHash": "510CC203B4756DE81D798842CA12468B",
@@ -1414,14 +1415,14 @@
   },
   "\\SurgeonPortal.Library.Contracts\\Documents\\IDocument.cs": {
     "lastGeneratedHash": "7C1DE130C972C870A7C2C0C61A101E6B",
-    "lastMergedHash": "D8322FC59368B6D6A38CF05BD30FC289"
+    "lastMergedHash": "27F2E268636FB20045CA51B36FB34372"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Documents\\IDocumentDal.cs": {
     "lastGeneratedHash": "A57AA1A3E6528F84C9EE033890A91115"
   },
   "\\SurgeonPortal.Library.Tests\\Documents\\DocumentTests.cs": {
     "lastGeneratedHash": "5AAC00AF77C0F247EB9BB344DC725763",
-    "lastMergedHash": "D0C103C0BFD6C9DCE084D52B68B05A35"
+    "lastMergedHash": "7B47948BFA9F38B65CBAF926A81EA8E5"
   },
   "\\SurgeonPortal.DataAccess.Tests\\Documents\\DocumentDalTests.cs": {
     "lastGeneratedHash": "AB35DC8F6CB90810FA3A543F3164CACA"
@@ -1658,7 +1659,8 @@
     "lastGeneratedHash": "CDE7FBA69EB460D30623283BA118E662"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\medicaltraining\\user-certificate.model.ts": {
-    "lastGeneratedHash": "92A972C1682735938DF2A5C0F97B7D74"
+    "lastGeneratedHash": "92A972C1682735938DF2A5C0F97B7D74",
+    "lastMergedHash": "9CD16002D7818EE51B104A5ABB72547A"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\MedicalTraining\\UserCertificateDto.cs": {
     "lastGeneratedHash": "E818A8116610D94B8DF32A642F5E11E2"
@@ -1683,38 +1685,40 @@
     "lastGeneratedHash": "B2169D8982BED60DE4E95C2476337EC6"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\medicaltraining\\user-certificate.service.ts": {
-    "lastGeneratedHash": "3AEBD254A6B4D293A5E7B12A6FE84B35"
+    "lastGeneratedHash": "D1AFD8BBE0B406AA2620FCEAE3C02485",
+    "lastMergedHash": "5BA7B5E3A2C1B405FE194963278392C5"
   },
   "\\SurgeonPortal.Api\\Controllers\\MedicalTraining\\UserCertificateController.cs": {
-    "lastGeneratedHash": "B5EC1BF0126E4A01E6143E4B1C78EA21",
-    "lastMergedHash": "2F4C91F326C26F6A8DF4087E49EBE492"
+    "lastGeneratedHash": "A74555E6A31D77A80D1023D8F570615A",
+    "lastMergedHash": "944D6583A0CA894B70DA84B74C11C8F7"
   },
   "\\SurgeonPortal.Library\\MedicalTraining\\UserCertificate.cs": {
-    "lastGeneratedHash": "FB3ADC3CB47DF8C4BAC3582E19823B6F",
-    "lastMergedHash": "5065DD6904AA5C638327EBC0071EFB67"
+    "lastGeneratedHash": "D32740FAE506CAFE95AED35EC3DDAB63",
+    "lastMergedHash": "C76EDA6A088CA24CC7A98AAD56F9B3AF"
   },
   "\\SurgeonPortal.DataAccess\\MedicalTraining\\UserCertificateDal.cs": {
-    "lastGeneratedHash": "01FBBA9F259D722A0B63D84BC9C9F55B"
+    "lastGeneratedHash": "D807CA650B5CE8816208DB6C4F783974",
+    "lastMergedHash": "D807CA650B5CE8816208DB6C4F783974"
   },
   "\\SurgeonPortal.Library.Contracts\\MedicalTraining\\IUserCertificate.cs": {
     "lastGeneratedHash": "B6111D7E0BDE600CC063D9ACA8305E71",
     "lastMergedHash": "B513F33AC1CC7FFDFD9CFA3575C91305"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\MedicalTraining\\IUserCertificateDal.cs": {
-    "lastGeneratedHash": "8760CB2AB715B8D4AD11E09054F088A9"
+    "lastGeneratedHash": "B0A4C56EDCA13FC095BB6E545D64DCC9"
   },
   "\\SurgeonPortal.Library.Tests\\MedicalTraining\\UserCertificateTests.cs": {
-    "lastGeneratedHash": "61240927E8D1B97B658FA0A2C2E107E4",
+    "lastGeneratedHash": "089ADB3962AB5B49F10DD2FCB898A208",
     "lastMergedHash": "61240927E8D1B97B658FA0A2C2E107E4"
   },
   "\\SurgeonPortal.DataAccess.Tests\\MedicalTraining\\UserCertificateDalTests.cs": {
-    "lastGeneratedHash": "03862D8B07A7BB0F0AE6BE526E55866D"
+    "lastGeneratedHash": "A6489F5B75FB990DFCBB65A31F50BE3D"
   },
   "\\SurgeonPortal.Library\\MedicalTraining\\UserCertificateFactory.cs": {
-    "lastGeneratedHash": "2CBD9D53F69CAF1C7BCF90BC76B2CCE7"
+    "lastGeneratedHash": "C9A5BA65C8382B7D6222130EC0E957BC"
   },
   "\\SurgeonPortal.Library.Contracts\\MedicalTraining\\IUserCertificateFactory.cs": {
-    "lastGeneratedHash": "B2390B66CA7C084D02ED7AAF333A682C"
+    "lastGeneratedHash": "2EBFEEA3A03A37652D11AE603D1D02E4"
   },
   "\\SurgeonPortal.Library\\MedicalTraining\\UserCertificateReadOnly.cs": {
     "lastGeneratedHash": "2D082365CFB4121DEDB90347E18D7E7D"
@@ -1739,5 +1743,83 @@
   },
   "\\SurgeonPortal.DataAccess.Tests\\MedicalTraining\\UserCertificateReadOnlyDalTests.cs": {
     "lastGeneratedHash": "15492879BCF4BFA06706B7E8DB27A0EC"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\medicaltraining\\other-certifications.model.ts": {
+    "lastGeneratedHash": "F4F0C7C703E6BA0ADEB4D9770E661895"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\MedicalTraining\\OtherCertificationsDto.cs": {
+    "lastGeneratedHash": "F5A47E841B93E5373F7C5FC92C94FEA0"
+  },
+  "\\SurgeonPortal.Models\\MedicalTraining\\OtherCertificationsModel.cs": {
+    "lastGeneratedHash": "690480EADA2C4C7877C34850DE21C8A7"
+  },
+  "\\SurgeonPortal.Library.Contracts\\MedicalTraining\\IOtherCertificationsReadOnly.cs": {
+    "lastGeneratedHash": "185A75E660859B5CA5340475937B4129"
+  },
+  "\\SurgeonPortal.Library.Contracts\\MedicalTraining\\IOtherCertificationsReadOnlyList.cs": {
+    "lastGeneratedHash": "2E1398768D5E3A9057B79EF99481A4BE"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\medicaltraining\\other-certifications-read-only.model.ts": {
+    "lastGeneratedHash": "A69BFE55450553F7091CBC126E70F5E5"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\MedicalTraining\\OtherCertificationsReadOnlyDto.cs": {
+    "lastGeneratedHash": "FB19B1149C9C14DDD8B16810CCA18ECC"
+  },
+  "\\SurgeonPortal.Models\\MedicalTraining\\OtherCertificationsReadOnlyModel.cs": {
+    "lastGeneratedHash": "CB7C195A776ED17CCE02E7F8E7688B6F"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\medicaltraining\\other-certifications.service.ts": {
+    "lastGeneratedHash": "9795FE4F6B8AE7316E619FE6CA73E71D"
+  },
+  "\\SurgeonPortal.Api\\Controllers\\MedicalTraining\\OtherCertificationsController.cs": {
+    "lastGeneratedHash": "33BED6975939955F18217A0DF99950F3"
+  },
+  "\\SurgeonPortal.Library\\MedicalTraining\\OtherCertifications.cs": {
+    "lastGeneratedHash": "EE6A3CA545325A572B415A56B68EFE61"
+  },
+  "\\SurgeonPortal.DataAccess\\MedicalTraining\\OtherCertificationsDal.cs": {
+    "lastGeneratedHash": "D70BF495B8D76F152FC1CA41537083B3"
+  },
+  "\\SurgeonPortal.Library.Contracts\\MedicalTraining\\IOtherCertifications.cs": {
+    "lastGeneratedHash": "A62732F6331A9704421852D92CDEA429"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\MedicalTraining\\IOtherCertificationsDal.cs": {
+    "lastGeneratedHash": "CC37D8E6B6F49D8476069B47A3ABB4D5"
+  },
+  "\\SurgeonPortal.Library.Tests\\MedicalTraining\\OtherCertificationsTests.cs": {
+    "lastGeneratedHash": "1DF00AFFB6386C870E23DDC9CCB710E8"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\MedicalTraining\\OtherCertificationsDalTests.cs": {
+    "lastGeneratedHash": "903D8E5F489A7C73AB2C58E3BF78063C"
+  },
+  "\\SurgeonPortal.Library\\MedicalTraining\\OtherCertificationsFactory.cs": {
+    "lastGeneratedHash": "888DFD4C1F3E33D58A175E1A98DA5E33"
+  },
+  "\\SurgeonPortal.Library.Contracts\\MedicalTraining\\IOtherCertificationsFactory.cs": {
+    "lastGeneratedHash": "EC87A2162BC0B7E810B6F4418908CB56"
+  },
+  "\\SurgeonPortal.Library\\MedicalTraining\\OtherCertificationsReadOnly.cs": {
+    "lastGeneratedHash": "806B2D933DE85D5125CB7CB34F5850E9"
+  },
+  "\\SurgeonPortal.Library\\MedicalTraining\\OtherCertificationsReadOnlyList.cs": {
+    "lastGeneratedHash": "6CEFD0D75C22973BA1286E43449CB635"
+  },
+  "\\SurgeonPortal.DataAccess\\MedicalTraining\\OtherCertificationsReadOnlyDal.cs": {
+    "lastGeneratedHash": "9F0B8C0A0B02E630005ADAABCC35071B"
+  },
+  "\\SurgeonPortal.Library\\MedicalTraining\\OtherCertificationsReadOnlyListFactory.cs": {
+    "lastGeneratedHash": "592839B8A7EDA6879D6ED955D59A8675"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\MedicalTraining\\IOtherCertificationsReadOnlyDal.cs": {
+    "lastGeneratedHash": "E8A84E1351F0B8C6A308B1E30E4CCA0C"
+  },
+  "\\SurgeonPortal.Library.Contracts\\MedicalTraining\\IOtherCertificationsReadOnlyListFactory.cs": {
+    "lastGeneratedHash": "A98294C196D1AB1E04F08F04E4CFB6B1"
+  },
+  "\\SurgeonPortal.Library.Tests\\MedicalTraining\\OtherCertificationsReadOnlyListTests.cs": {
+    "lastGeneratedHash": "27A4EB803A203FB60F4673C42D3E786B"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\MedicalTraining\\OtherCertificationsReadOnlyDalTests.cs": {
+    "lastGeneratedHash": "F4C178E9D39B0B443C01318C0C2768BE"
   }
 }

@@ -5,7 +5,7 @@ namespace SurgeonPortal.DataAccess.Contracts.MedicalTraining
     public interface IUserCertificateDal
     {
         Task DeleteAsync(UserCertificateDto dto);
-        Task<UserCertificateDto> GetByIdAsync(int id);
+        Task<UserCertificateDto> GetByIdAsync(int certificateId);
         Task<UserCertificateDto> InsertAsync(UserCertificateDto dto);
     }
 }

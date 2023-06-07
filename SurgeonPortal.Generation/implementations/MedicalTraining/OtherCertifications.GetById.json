@@ -1,18 +1,18 @@
 {
-  "name": "UserCertificate",
-  "implementationName": "MedicalTraining\\UserCertificate.GetById",
+  "name": "OtherCertifications",
+  "implementationName": "MedicalTraining\\OtherCertifications.GetById",
   "template": "ytg-framework/editable-get",
   "parameters": {
-    "Adapter": "dbo.get_usercertificates_byid",
-    "ControllerName": "MedicalTraining\\UserCertificateController",
-    "ControllerRoute": "api/user-certificates",
+    "Adapter": "dbo.get_user_certificates_other_byid",
+    "ControllerName": "MedicalTraining\\OtherCertificationsController",
+    "ControllerRoute": "api/medical-training/other-certifications",
     "ControllerVersion": "1",
     "FetchMethodName": "GetById",
     "IncludeControllerInGeneration": "true",
     "IsChild": "false",
     "IsRoot": "true",
-    "Model": "MedicalTraining\\UserCertificate",
-    "ModelGroup": "UserCertificate",
+    "Model": "MedicalTraining\\OtherCertifications",
+    "ModelGroup": "OtherCertifications",
     "RootNamespace": "$project.RootNamespace",
     "Route": "by-id"
   },
@@ -20,34 +20,34 @@
   "adapters": [
     {
       "type": "storedProcedure",
-      "name": "dbo.get_usercertificates_byid",
+      "name": "dbo.get_user_certificates_other_byid",
       "storedProcedure": {
         "schema": "[dbo]",
-        "procedureName": "[get_usercertificates_byid]",
+        "procedureName": "[get_user_certificates_other_byid]",
         "parameters": [
           {
-            "name": "CertificateId",
+            "name": "Id",
             "dataType": "int",
             "maxLength": 4,
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "CertificateId"
+            "mapsTo": "Id"
           }
         ],
         "recordsets": [
           {
-            "model": "MedicalTraining\\UserCertificate",
+            "model": "MedicalTraining\\OtherCertifications",
             "fields": [
               {
-                "name": "CertificateId",
+                "name": "Id",
                 "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": true,
-                "mapsTo": "model.CertificateId"
+                "mapsTo": "model.Id"
               },
               {
                 "name": "UserId",
@@ -60,16 +60,6 @@
                 "mapsTo": "model.UserId"
               },
               {
-                "name": "DocumentId",
-                "dataType": "int",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.DocumentId"
-              },
-              {
                 "name": "CertificateTypeId",
                 "dataType": "int",
                 "maxLength": 4,
@@ -80,14 +70,14 @@
                 "mapsTo": "model.CertificateTypeId"
               },
               {
-                "name": "CertificateType",
+                "name": "CertificateTypeName",
                 "dataType": "string",
                 "maxLength": 50,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.CertificateType"
+                "mapsTo": "model.CertificateTypeName"
               },
               {
                 "name": "IssueDate",
@@ -157,15 +147,15 @@
   ],
   "inputParameters": [
     {
-      "name": "CertificateId",
+      "name": "Id",
       "dataType": "int",
       "required": true
     }
   ],
   "metadata": {
-    "command": "ytgim g i s MedicalTraining\\UserCertificate.GetById UserCertificate -t=ytg-framework/editable-get -p:Model=MedicalTraining\\UserCertificate -p:Adapter=sp:ABSSP-[dbo].[get_usercertificates_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserCertificate -p:Route=by-id -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 ",
-    "inferredCommand": "ytgim generate i  MedicalTraining\\UserCertificate.GetById UserCertificate -t=ytg-framework/editable-get -p:Model=MedicalTraining\\UserCertificate -p:Adapter=sp:ABSSP-[dbo].[get_usercertificates_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserCertificate -p:Route=by-id -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-05-30T16:28:33.8713995Z"
+    "command": "ytgim g i s MedicalTraining\\OtherCertifications.GetById OtherCertifications -t=ytg-framework/editable-get -p:Model=MedicalTraining\\OtherCertifications -p:Adapter=sp:ABSSP-[dbo].[get_user_certificates_other_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OtherCertifications -p:Route=by-id -p:ControllerName=MedicalTraining\\OtherCertificationsController -p:ControllerRoute=api/medical-training/other-certifications -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\OtherCertifications.GetById OtherCertifications -t=ytg-framework/editable-get -p:Model=MedicalTraining\\OtherCertifications -p:Adapter=sp:ABSSP-[dbo].[get_user_certificates_other_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OtherCertifications -p:Route=by-id -p:ControllerName=MedicalTraining\\OtherCertificationsController -p:ControllerRoute=api/medical-training/other-certifications -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-07T17:08:47.6581614Z"
   },
   "version": 1
 }

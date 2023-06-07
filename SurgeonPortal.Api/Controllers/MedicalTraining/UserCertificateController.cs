@@ -37,9 +37,9 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
         [HttpDelete("")]
         public async Task<IActionResult> DeleteAsync(
             [FromServices] IUserCertificateFactory userCertificateFactory,
-            int id)
+            int certificateId)
         {
-            var item = await userCertificateFactory.GetByIdAsync(id);
+            var item = await userCertificateFactory.GetByIdAsync(certificateId);
             item.Delete();
             await item.SaveAsync();
             return NoContent();
@@ -55,9 +55,9 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
         [HttpGet("by-id")]
         public async Task<ActionResult<UserCertificateModel>> GetUserCertificate_GetByIdAsync(
             [FromServices] IUserCertificateFactory userCertificateFactory,
-            int id)
+            int certificateId)
         {
-            var item = await userCertificateFactory.GetByIdAsync(id);
+            var item = await userCertificateFactory.GetByIdAsync(certificateId);
         
             return Ok(_mapper.Map<UserCertificateModel>(item));
         } 

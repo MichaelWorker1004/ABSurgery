@@ -1,18 +1,14 @@
 using Csla;
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
-using SurgeonPortal.Library.Contracts.Documents;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
-using SurgeonPortal.Library.Documents;
-using SurgeonPortal.Shared;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
-using static SurgeonPortal.Library.MedicalTraining.UserCertificateFactory;
+using static SurgeonPortal.Library.MedicalTraining.OtherCertificationsFactory;
 
 namespace SurgeonPortal.Library.MedicalTraining
 {
@@ -20,29 +16,26 @@ namespace SurgeonPortal.Library.MedicalTraining
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
 	[Serializable]
 	[DataContract] 
-	public class UserCertificate : YtgBusinessBase<UserCertificate>, IUserCertificate
+	public class OtherCertifications : YtgBusinessBase<OtherCertifications>, IOtherCertifications
     {
-        private readonly IUserCertificateDal _userCertificateDal;
-        private readonly IDocumentFactory _documentFactory;
+        private readonly IOtherCertificationsDal _otherCertificationsDal;
 
-        public UserCertificate(
+        public OtherCertifications(
             IIdentityProvider identityProvider,
-            IUserCertificateDal userCertificateDal,
-            IDocumentFactory documentFactory)
+            IOtherCertificationsDal otherCertificationsDal)
             : base(identityProvider)
         {
-            _userCertificateDal = userCertificateDal;
-            _documentFactory = documentFactory;
+            _otherCertificationsDal = otherCertificationsDal;
         }
 
         [Key] 
-        [DisplayName(nameof(CertificateId))]
-		public int CertificateId
+        [DisplayName(nameof(Id))]
+		public int Id
 		{
-			get { return GetProperty(CertificateIdProperty); }
-			set { SetProperty(CertificateIdProperty, value); }
+			get { return GetProperty(IdProperty); }
+			set { SetProperty(IdProperty, value); }
 		}
-		public static readonly PropertyInfo<int> CertificateIdProperty = RegisterProperty<int>(c => c.CertificateId);
+		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
 
         [DisplayName(nameof(UserId))]
 		public int UserId
@@ -52,14 +45,6 @@ namespace SurgeonPortal.Library.MedicalTraining
 		}
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
-        [DisplayName(nameof(DocumentId))]
-		public int DocumentId
-		{
-			get { return GetProperty(DocumentIdProperty); }
-			set { SetProperty(DocumentIdProperty, value); }
-		}
-		public static readonly PropertyInfo<int> DocumentIdProperty = RegisterProperty<int>(c => c.DocumentId);
-
         [DisplayName(nameof(CertificateTypeId))]
 		public int CertificateTypeId
 		{
@@ -68,13 +53,13 @@ namespace SurgeonPortal.Library.MedicalTraining
 		}
 		public static readonly PropertyInfo<int> CertificateTypeIdProperty = RegisterProperty<int>(c => c.CertificateTypeId);
 
-        [DisplayName(nameof(CertificateType))]
-		public string CertificateType
+        [DisplayName(nameof(CertificateTypeName))]
+		public string CertificateTypeName
 		{
-			get { return GetProperty(CertificateTypeProperty); }
-			set { SetProperty(CertificateTypeProperty, value); }
+			get { return GetProperty(CertificateTypeNameProperty); }
+			set { SetProperty(CertificateTypeNameProperty, value); }
 		}
-		public static readonly PropertyInfo<string> CertificateTypeProperty = RegisterProperty<string>(c => c.CertificateType);
+		public static readonly PropertyInfo<string> CertificateTypeNameProperty = RegisterProperty<string>(c => c.CertificateTypeName);
 
         [DisplayName(nameof(IssueDate))]
 		public DateTime IssueDate
@@ -92,14 +77,7 @@ namespace SurgeonPortal.Library.MedicalTraining
 		}
 		public static readonly PropertyInfo<string> CertificateNumberProperty = RegisterProperty<string>(c => c.CertificateNumber);
 
-        public static readonly PropertyInfo<Document> DocumentProperty = RegisterProperty<Document>(c => c.Document);
-        [DataMember]
-        [DisplayName(nameof(Document))]
-        public IDocument Document
-        {
-            get => GetProperty(DocumentProperty);
-            private set => SetProperty(DocumentProperty, value);
-        }
+
 
         /// <summary>
         /// This method is used to apply authorization rules on the object
@@ -124,15 +102,8 @@ namespace SurgeonPortal.Library.MedicalTraining
             {
                 base.DataPortal_DeleteSelf();
         
-                await _userCertificateDal.DeleteAsync(ToDto());
+                await _otherCertificationsDal.DeleteAsync(ToDto());
         
-                if (Document != null)
-                {
-                    Document.Delete();
-                    var document = await Document.SaveAsync();
-                    LoadProperty(DocumentProperty, document);
-                }
-
                 MarkIdle();
             }
         }
@@ -146,15 +117,12 @@ namespace SurgeonPortal.Library.MedicalTraining
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _userCertificateDal.GetByIdAsync(criteria.CertificateId);
+                var dto = await _otherCertificationsDal.GetByIdAsync(criteria.Id);
         
                 if(dto == null)
                 {
-                    throw new Ytg.Framework.Exceptions.DataNotFoundException("UserCertificate not found based on criteria");
+                    throw new Ytg.Framework.Exceptions.DataNotFoundException("OtherCertifications not found based on criteria");
                 }
-
-                LoadProperty(DocumentProperty, await _documentFactory.GetByIdAsync(dto.DocumentId));
-
                 FetchData(dto);
             }
         }
@@ -169,14 +137,25 @@ namespace SurgeonPortal.Library.MedicalTraining
         
             using (BypassPropertyChecks)
             {
-                if(Document != null)
-                {
-                    var newDocument = await Document.SaveAsync();
-                    LoadProperty(DocumentProperty, newDocument);
-                    LoadProperty(DocumentIdProperty, Document.Id);
-                }
+                var dto = await _otherCertificationsDal.InsertAsync(ToDto());
+        
+                FetchData(dto);
+        
+                MarkIdle();
+            }
+        }
 
-                var dto = await _userCertificateDal.InsertAsync(ToDto());
+        [RunLocal]
+        [Update]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
+            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+        private async Task Update()
+        {
+            base.DataPortal_Update();
+        
+            using (BypassPropertyChecks)
+            {
+                var dto = await _otherCertificationsDal.UpdateAsync(ToDto());
         
                 FetchData(dto);
         
@@ -186,49 +165,37 @@ namespace SurgeonPortal.Library.MedicalTraining
 
 
 
-        private void FetchData(UserCertificateDto dto)
+        private void FetchData(OtherCertificationsDto dto)
 		{
             base.FetchData(dto);
             
-			this.CertificateId = dto.CertificateId;
+			this.Id = dto.Id;
 			this.UserId = dto.UserId;
-			this.DocumentId = dto.DocumentId;
 			this.CertificateTypeId = dto.CertificateTypeId;
-			this.CertificateType = dto.CertificateType;
+			this.CertificateTypeName = dto.CertificateTypeName;
 			this.IssueDate = dto.IssueDate;
 			this.CertificateNumber = dto.CertificateNumber;
 		}
 
-		internal UserCertificateDto ToDto()
+		internal OtherCertificationsDto ToDto()
 		{
-			var dto = new UserCertificateDto();
+			var dto = new OtherCertificationsDto();
 			return ToDto(dto);
 		}
-		internal UserCertificateDto ToDto(UserCertificateDto dto)
+		internal OtherCertificationsDto ToDto(OtherCertificationsDto dto)
 		{
             base.ToDto(dto);
             
-			dto.CertificateId = this.CertificateId;
+			dto.Id = this.Id;
 			dto.UserId = this.UserId;
-			dto.DocumentId = this.DocumentId;
 			dto.CertificateTypeId = this.CertificateTypeId;
-			dto.CertificateType = this.CertificateType;
+			dto.CertificateTypeName = this.CertificateTypeName;
 			dto.IssueDate = this.IssueDate;
 			dto.CertificateNumber = this.CertificateNumber;
 
 			return dto;
 		}
 
-        public void LoadDocument(Stream file)
-        {
-            var document = _documentFactory.Create();
-            document.UserId = IdentityHelper.UserId;
-            document.DocumentTypeId = (int)DocumentTypes.Certificate;
-            document.DocumentName = $"Certificate-{Enum.GetName(typeof(CertificateTypes), CertificateTypeId)}-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}";
-            document.InternalViewOnly = false;
-            document.UploadedBy = IdentityHelper.UserName;
-            document.File = file;
-            LoadProperty(DocumentProperty, document);
-        }
+
     }
 }

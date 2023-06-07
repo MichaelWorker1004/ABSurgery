@@ -8,15 +8,15 @@ namespace SurgeonPortal.Library.MedicalTraining
 {
     public class UserCertificateFactory : IUserCertificateFactory
     {
-        public async Task<IUserCertificate> GetByIdAsync(int id)
+        public async Task<IUserCertificate> GetByIdAsync(int certificateId)
         {
-            if (id <= 0)
+            if (certificateId <= 0)
             {
-                throw new FactoryInvalidCriteriaException("id is a required field.");
+                throw new FactoryInvalidCriteriaException("certificateId is a required field.");
             }
             
             return await DataPortal.FetchAsync<UserCertificate>(
-                new GetByIdCriteria(id));
+                new GetByIdCriteria(certificateId));
             
         }
 
@@ -30,11 +30,11 @@ namespace SurgeonPortal.Library.MedicalTraining
             [Serializable]
             internal class GetByIdCriteria
             {
-                public int Id { get; set; }
+                public int CertificateId { get; set; }
             
-                public GetByIdCriteria(int id)
+                public GetByIdCriteria(int certificateId)
              {
-                    Id = id;
+                    CertificateId = certificateId;
               }
             }
             

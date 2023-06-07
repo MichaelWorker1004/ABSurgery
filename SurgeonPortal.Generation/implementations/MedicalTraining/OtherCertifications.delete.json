@@ -1,0 +1,55 @@
+{
+  "name": "OtherCertifications",
+  "implementationName": "MedicalTraining\\OtherCertifications.delete",
+  "template": "ytg-framework/editable-delete",
+  "parameters": {
+    "Adapter": "dbo.del_user_certificates_other_byid",
+    "ControllerName": "MedicalTraining\\OtherCertificationsController",
+    "ControllerRoute": "api/medical-training/other-certifications",
+    "ControllerVersion": "1",
+    "FetchImplementation": "MedicalTraining\\OtherCertifications.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\OtherCertifications",
+    "ModelGroup": "OtherCertifications",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.del_user_certificates_other_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[del_user_certificates_other_byid]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\OtherCertifications.delete OtherCertifications -t=ytg-framework/editable-delete -p:Model=MedicalTraining\\OtherCertifications -p:Adapter=sp:ABSSP-[dbo].[del_user_certificates_other_byid] -p:FetchImplementation=MedicalTraining\\OtherCertifications.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OtherCertifications -p:Route= -p:ControllerName=MedicalTraining\\OtherCertificationsController -p:ControllerRoute=api/medical-training/other-certifications -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\OtherCertifications.delete OtherCertifications -t=ytg-framework/editable-delete -p:Model=MedicalTraining\\OtherCertifications -p:Adapter=sp:ABSSP-[dbo].[del_user_certificates_other_byid] -p:FetchImplementation=MedicalTraining\\OtherCertifications.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OtherCertifications -p:Route= -p:ControllerName=MedicalTraining\\OtherCertificationsController -p:ControllerRoute=api/medical-training/other-certifications -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-07T17:09:11.8761787Z"
+  },
+  "version": 1
+}

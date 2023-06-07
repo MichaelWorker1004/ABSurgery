@@ -57,9 +57,10 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
   isEdit!: boolean;
 
   otherCertificatesForm = new FormGroup({
-    certificationType: new FormControl(''),
-    certificateNumner: new FormControl(''),
-    issueDate: new FormControl(''),
+    id: new FormControl(0),
+    certificateTypeId: new FormControl(''),
+    certificateNumber: new FormControl(''),
+    issueDate: new FormControl(new Date()),
   });
 
   ngOnInit(): void {
@@ -76,7 +77,15 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
 
   subscribeToRowData() {
     this.otherCertificate$.subscribe((res) => {
-      console.log(res);
+      if (Object.keys(res.length > 0)) {
+        for (const [key, value] of Object.entries(res)) {
+          this.otherCertificatesForm.get(key)?.setValue(value);
+          this.otherCertificateId = res.id;
+        }
+        this.otherCertificatesForm
+          .get('issueDate')
+          ?.setValue(new Date(res.issueDate));
+      }
     });
   }
 
@@ -88,8 +97,8 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
     this.saveDialog.emit({
       edit: this.isEdit,
       show: false,
-      fellowshipForm: this.otherCertificatesForm.value,
-      fellowshipId: this.otherCertificateId,
+      otherCertificateForm: this.otherCertificatesForm.value,
+      otherCertificateId: this.otherCertificateId,
     });
   }
 }

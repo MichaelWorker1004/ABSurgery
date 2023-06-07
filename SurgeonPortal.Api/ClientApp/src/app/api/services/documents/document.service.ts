@@ -13,7 +13,7 @@ export class DocumentService {
     constructor(private apiService: ApiService) {}
 
  
-        public deleteCertificate(id: number,
+        public deleteDocument(id: number,
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims

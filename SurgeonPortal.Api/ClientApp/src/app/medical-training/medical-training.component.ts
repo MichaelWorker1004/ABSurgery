@@ -14,11 +14,7 @@ import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-trainin
 
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { ModalComponent } from '../shared/components/modal/modal.component';
-import {
-  MedicalTrainingSelectors,
-  UploadDocument,
-  UserProfileSelectors,
-} from '../state';
+import { MedicalTrainingSelectors, UserProfileSelectors } from '../state';
 import { Select, Store } from '@ngxs/store';
 import { AdvancedTrainingService } from '../api/services/medicaltraining/advanced-training.service';
 import { IAdvancedTrainingReadOnlyModel } from '../api/models/medicaltraining/advanced-training-read-only.model';
@@ -31,7 +27,10 @@ import {
   CreateMedicalTraining,
   GetMedicalTraining,
   GetUserCertificates,
+  GetOtherCertifications,
   UpdateMedicalTraining,
+  CreateOtherCertification,
+  UpdateOtherCertifications,
 } from '../state/medical-training/medical-training.actions';
 import {
   GetCertificateTypes,
@@ -55,11 +54,12 @@ import { IMedicalTrainingModel } from '../api/models/medicaltraining/medical-tra
 import { IResidencyProgramReadOnlyModel } from '../api/models/picklists/residency-program-read-only.model';
 import { DocumentsUploadComponent } from '../shared/components/documents-upload/documents-upload.component';
 import { DOCUMENTS_COLS } from './documents-col';
-import { OTHER_CERTIFICATIONS_COLS } from './other-certifications-cols';
+import { OTHER_CERTIFICATIONS_COLS } from './other-certificates-add-edit-modal/other-certifications-cols';
 import { OtherCertificatesAddEditModalComponent } from './other-certificates-add-edit-modal/other-certificates-add-edit-modal.component';
 import { ICertificateTypeReadOnlyModel } from '../api/models/picklists/certificate-type-read-only.model';
 import { IDocumentTypeReadOnlyModel } from '../api/models/picklists/document-type-read-only.model';
 import { IUserCertificateReadOnlyModel } from '../api/models/medicaltraining/user-certificate-read-only.model';
+import { IOtherCertificationsModel } from '../api/models/medicaltraining/other-certifications.model';
 
 @Component({
   selector: 'abs-medical-training',
@@ -126,6 +126,9 @@ export class MedicalTrainingComponent implements OnInit {
     | Observable<IUserCertificateReadOnlyModel[]>
     | undefined;
 
+  @Select(MedicalTrainingSelectors.slices.otherCertifications)
+  otherCertifications$: Observable<IOtherCertificationsModel[]> | undefined;
+
   advancedTraining$: BehaviorSubject<IAdvancedTrainingReadOnlyModel[]> =
     new BehaviorSubject<IAdvancedTrainingReadOnlyModel[]>([]);
 
@@ -144,7 +147,8 @@ export class MedicalTrainingComponent implements OnInit {
 
   documentsData$: BehaviorSubject<any> = new BehaviorSubject([]);
   documentTypeOptions!: any;
-  otherCertifications$: BehaviorSubject<any> = new BehaviorSubject([]);
+  userOtherCertifications$: BehaviorSubject<IOtherCertificationsModel[]> =
+    new BehaviorSubject([] as unknown as IOtherCertificationsModel[]);
 
   tempData$: BehaviorSubject<any> = new BehaviorSubject({});
   countries!: IPickListItem[];
@@ -197,6 +201,7 @@ export class MedicalTrainingComponent implements OnInit {
     this._store.dispatch(new GetMedicalTraining());
     this._store.dispatch(new GetCertificateTypes());
     this._store.dispatch(new GetGraduateProfiles());
+    this._store.dispatch(new GetOtherCertifications());
   }
 
   ngOnInit(): void {
@@ -313,18 +318,11 @@ export class MedicalTrainingComponent implements OnInit {
   }
 
   getOtherCertificationsData() {
-    this.otherCertifications$.next([
-      {
-        certificateType: 'RVPI',
-        certificateNumber: '13456',
-        issueDate: new Date('11/23/2017'),
-      },
-      {
-        certificateType: 'RVPI',
-        certificateNumber: '789456',
-        issueDate: new Date('05/23/2023'),
-      },
-    ]);
+    this.otherCertifications$?.subscribe(
+      (otherCertifications: IOtherCertificationsModel[]) => {
+        this.userOtherCertifications$.next(otherCertifications);
+      }
+    );
   }
 
   handleDocumentUpload(event: any) {
@@ -457,7 +455,25 @@ export class MedicalTrainingComponent implements OnInit {
   }
 
   saveOtherCertificates($event: any) {
-    console.log($event);
+    const form = $event.otherCertificateForm;
+
+    const model: IOtherCertificationsModel = {
+      id: form.id ?? null,
+      certificateNumber: form.certificateNumber?.toString(),
+      certificateTypeId: form.certificateTypeId,
+      issueDate: new Date(form.issueDate ?? '').toISOString() ?? null,
+      userId: this.userId,
+    } as IOtherCertificationsModel;
+
+    if ($event.edit === true && $event.otherCertificateId) {
+      this._store.dispatch(new UpdateOtherCertifications(model));
+    }
+
+    if ($event.edit === false) {
+      this._store.dispatch(new CreateOtherCertification(model));
+    }
+
+    this.showOtherCertificatesAddEdit = $event.show;
   }
 
   cancelAddEditTraining($event: any) {

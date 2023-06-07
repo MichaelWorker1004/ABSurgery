@@ -4,7 +4,7 @@ namespace SurgeonPortal.Library.Contracts.MedicalTraining
 {
     public interface IUserCertificateFactory
     {
-        Task<IUserCertificate> GetByIdAsync(int id);
+        Task<IUserCertificate> GetByIdAsync(int certificateId);
         IUserCertificate Create();
     }
 }
