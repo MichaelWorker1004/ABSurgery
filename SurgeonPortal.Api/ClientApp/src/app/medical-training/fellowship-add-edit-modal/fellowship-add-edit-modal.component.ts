@@ -61,9 +61,9 @@ export class FellowshipAddEditModalComponent implements OnInit {
   isEdit = false;
 
   fellowshipForm = new FormGroup({
-    programName: new FormControl('', Validators.required),
+    programName: new FormControl(''),
     programOther: new FormControl(''),
-    completionYear: new FormControl('', Validators.required),
+    completionYear: new FormControl(''),
   });
 
   ngOnInit(): void {

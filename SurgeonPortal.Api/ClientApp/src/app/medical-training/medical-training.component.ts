@@ -215,6 +215,7 @@ export class MedicalTrainingComponent implements OnInit {
     this.getAdvancedTrainingGridData();
     this.getFellowshipGridData();
     this.getMedicalTraining();
+    this.setStates();
   }
 
   setPicklists() {
@@ -297,8 +298,8 @@ export class MedicalTrainingComponent implements OnInit {
     this.setStates(countryId);
   }
 
-  setStates(countryId: string) {
-    this._store.dispatch(new GetStateList(countryId));
+  setStates(countryId?: string) {
+    this._store.dispatch(new GetStateList(countryId ?? '500'));
     this.states$?.subscribe((states: IStateReadOnlyModel[]) => {
       this.states = states;
       if (states.length > 0) {

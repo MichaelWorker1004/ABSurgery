@@ -11,6 +11,7 @@
         [options]="fellowshipPrograms"
         [disabled]="fellowshipForm.get('programOther')?.value ? true : false"
         [showClear]="true"
+        [required]="!fellowshipForm.get('programOther')?.value"
         appendTo="body"
         optionLabel="programName"
         optionValue="programName"
@@ -22,6 +23,7 @@
       <label htmlFor="other">Other</label>
       <input
         [attr.disabled]="fellowshipForm.get('programName')?.value"
+        [required]="!fellowshipForm.get('programName')?.value"
         pInputText
         id="other"
         placeholder="If you do not see your Program in the list, type it in here..."
