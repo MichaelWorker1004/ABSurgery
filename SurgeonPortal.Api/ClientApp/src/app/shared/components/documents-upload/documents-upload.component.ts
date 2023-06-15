@@ -22,11 +22,18 @@ import {
 import { GetDocumentTypes } from 'src/app/state/picklists';
 import { IUserCertificateModel } from 'src/app/api/models/medicaltraining/user-certificate.model';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-documents-upload',
   standalone: true,
-  imports: [CommonModule, GridComponent, DropdownModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    GridComponent,
+    DropdownModule,
+    ReactiveFormsModule,
+    ButtonModule,
+  ],
   templateUrl: './documents-upload.component.html',
   styleUrls: ['./documents-upload.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -111,7 +118,9 @@ export class DocumentsUploadComponent implements OnInit {
       formData.set(key, model[key]);
     });
 
-    this._store.dispatch(new UploadDocument({ model: formData }));
+    if (this.uploadedFile) {
+      this._store.dispatch(new UploadDocument({ model: formData }));
+    }
 
     this.documentsAction.emit({
       fieldKey: 'upload',

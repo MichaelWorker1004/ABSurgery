@@ -28,14 +28,13 @@
           <h5 class="mt-0 mb-2" panel-header>State Medical License</h5>
           <div class="grid">
             <div class="col-12">
-              <sl-button
-                variant="default"
+              <p-button
                 class="btn-add mt-4 mb-5"
                 (click)="showLicenseModal(null)"
               >
                 <i slot="prefix" class="fa-solid fa-plus"></i>
                 ADD RECORD
-              </sl-button>
+              </p-button>
               <abs-grid
                 [columns]="licensesCols"
                 [data]="profile.medicalLicenses"
@@ -179,14 +178,13 @@
 
               <div class="grid">
                 <div class="col-12">
-                  <sl-button
-                    variant="default"
+                  <p-button
                     class="btn-add mt-4 mb-5"
                     (click)="showAppointmentModal(null)"
                   >
                     <i slot="prefix" class="fa-solid fa-plus"></i>
                     ADD RECORD
-                  </sl-button>
+                  </p-button>
                   <abs-grid
                     [columns]="appointmentsPrivilegesCols"
                     [data]="profile.appointmentsAndPrivileges.list"
@@ -203,34 +201,34 @@
                     (editHospitalAppointmentsAndPrivileges$ | async) === false
                   "
                 >
-                  <sl-button
+                  <p-button
                     variant="primary"
-                    style="width: 200px"
+                    [style]="{ width: '200px' }"
                     (click)="
                       toggleEdit(editHospitalAppointmentsAndPrivileges$, true)
                     "
-                    >Edit</sl-button
+                    >Edit</p-button
                   >
                 </div>
                 <div
                   class="col-12 flex justify-content-end"
                   *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
                 >
-                  <sl-button
-                    variant="text"
+                  <p-button
+                    styleClass="p-button-link p-button-primary"
                     (click)="
                       toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
                     "
-                    >Cancel</sl-button
+                    >Cancel</p-button
                   >
-                  <sl-button
+                  <p-button
                     type="submit"
-                    style="width: 337px"
+                    [style]="{ width: '337px' }"
                     variant="primary"
                     (click)="
                       toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
                     "
-                    >Save</sl-button
+                    >Save</p-button
                   >
                 </div>
               </div>
@@ -492,28 +490,27 @@
                   class="col-12 flex justify-content-end"
                   *ngIf="(editSanctionsAndEthics$ | async) === false"
                 >
-                  <sl-button
+                  <p-button
                     variant="primary"
-                    style="width: 200px"
+                    [style]="{ width: '200px' }"
                     (click)="toggleEdit(editSanctionsAndEthics$, true)"
-                    >Edit</sl-button
+                    >Edit</p-button
                   >
                 </div>
                 <div
                   class="col-12 flex justify-content-end"
                   *ngIf="editSanctionsAndEthics$ | async"
                 >
-                  <sl-button
-                    variant="text"
+                  <p-button
+                    styleClass="p-button-link p-button-primary"
                     (click)="toggleEdit(editSanctionsAndEthics$, false)"
-                    >Cancel</sl-button
+                    >Cancel</p-button
                   >
-                  <sl-button
+                  <p-button
                     type="submit"
-                    style="width: 337px"
-                    variant="primary"
+                    [style]="{ width: '337px' }"
                     (click)="toggleEdit(editSanctionsAndEthics$, false)"
-                    >Save</sl-button
+                    >Save</p-button
                   >
                 </div>
               </div>

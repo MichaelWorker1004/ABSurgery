@@ -3,10 +3,11 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { AlertComponent } from '../shared/components/alert/alert.component';
 import { PAYMENT_HISTORY_COLS } from './payment-histroy-grid';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-payment-history',
-  imports: [CommonModule, GridComponent, AlertComponent],
+  imports: [CommonModule, GridComponent, AlertComponent, ButtonModule],
   templateUrl: './payment-history.component.html',
   styleUrls: ['./payment-history.component.scss'],
   standalone: true,

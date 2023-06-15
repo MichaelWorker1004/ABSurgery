@@ -8,6 +8,7 @@ import { IFormErrors } from '../../shared/common';
 import { IUserCredentialModel } from '../../api';
 import { UserCredentialsService } from '../../api';
 import { Logout } from '../auth';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 export interface IUserCredential extends IUserCredentialModel {
   errors?: IFormErrors | null;
@@ -26,7 +27,8 @@ const USER_ACCOUNT_STATE_TOKEN = new StateToken<IUserCredential>('userAccount');
 export class MyAccountState {
   constructor(
     private authStore: Store,
-    private userCredentialsService: UserCredentialsService
+    private userCredentialsService: UserCredentialsService,
+    private globalDialogService: GlobalDialogService
   ) {}
 
   @Action(SaveMyAccountChanges)
@@ -34,6 +36,7 @@ export class MyAccountState {
     ctx: StateContext<IUserCredential>,
     { payload }: SaveMyAccountChanges
   ) {
+    this.globalDialogService.showLoading();
     return this.userCredentialsService.updateUserCredential(payload).pipe(
       tap((result: IUserCredentialModel) => {
         // Succeeded in changing the user's credentials so logout
@@ -43,10 +46,20 @@ export class MyAccountState {
           errors: null,
         });
         this.authStore.dispatch(new Logout());
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Saved successfully',
+          true
+        );
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
         ctx.patchState({ errors });
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'Save failed',
+          false
+        );
         return of(errors);
       })
     );

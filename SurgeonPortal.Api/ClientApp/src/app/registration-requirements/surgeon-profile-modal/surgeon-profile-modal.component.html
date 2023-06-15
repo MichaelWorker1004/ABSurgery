@@ -308,12 +308,14 @@
   </sl-tab-group>
 </div>
 <div class="flex justify-content-end" slot="footer">
-  <sl-button type="button" variant="text" (click)="close()">Cancel</sl-button>
-  <sl-button
+  <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+    >Cancel</p-button
+  >
+  <p-button
     type="button"
-    style="width: 337px"
+    [style]="{ width: '337px' }"
     variant="primary"
     (click)="save()"
     >Save
-  </sl-button>
+  </p-button>
 </div>

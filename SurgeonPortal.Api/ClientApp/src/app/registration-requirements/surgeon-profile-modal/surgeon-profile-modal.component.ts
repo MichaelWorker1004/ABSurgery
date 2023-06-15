@@ -14,6 +14,7 @@ import { provideNgxMask } from 'ngx-mask';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-surgeon-profile-modal',
@@ -25,6 +26,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     InputTextModule,
     DropdownModule,
     InputMaskModule,
+    ButtonModule,
   ],
   templateUrl: './surgeon-profile-modal.component.html',
   styleUrls: ['./surgeon-profile-modal.component.scss'],

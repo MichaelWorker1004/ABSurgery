@@ -47,11 +47,11 @@
             <label for="mailingList">Receive ABS Emails / Newsletters?</label>
           </div>
           <div class="col-12 flex justify-content-end">
-            <sl-button
+            <p-button
               variant="primary"
-              style="width: 200px"
+              [style]="{ width: '200px' }"
               (click)="isEdit = true"
-              >Edit</sl-button
+              >Edit</p-button
             >
           </div>
         </div>
@@ -111,15 +111,16 @@
               <label for="mailingList">Receive ABS Emails / Newsletters?</label>
             </div>
             <div class="col-12 flex justify-content-end">
-              <sl-button type="reset" variant="text" (click)="resetForm($event)"
-                >Cancel</sl-button
+              <p-button
+                styleClass="p-button-link p-button-primary"
+                (click)="resetForm($event)"
+                >Cancel</p-button
               >
-              <sl-button
+              <p-button
                 type="submit"
-                style="width: 337px"
-                variant="primary"
+                [style]="{ width: '337px' }"
                 [disabled]="myAccountForm.invalid"
-                >Save</sl-button
+                >Save</p-button
               >
             </div>
           </div>

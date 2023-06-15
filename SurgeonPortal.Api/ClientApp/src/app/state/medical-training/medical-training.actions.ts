@@ -1,4 +1,5 @@
 import { IAdvancedTrainingModel } from 'src/app/api/models/medicaltraining/advanced-training.model';
+import { IFellowshipModel } from 'src/app/api/models/medicaltraining/fellowship.model';
 import { IMedicalTrainingModel } from 'src/app/api/models/medicaltraining/medical-training.model';
 import { IOtherCertificationsModel } from 'src/app/api/models/medicaltraining/other-certifications.model';
 
@@ -48,4 +49,28 @@ export class UpdateOtherCertifications {
   static readonly type = '[Medical Training] Update user other certifications';
 
   constructor(public model: IOtherCertificationsModel) {}
+}
+
+export class GetFellowships {
+  static readonly type = '[Medical Training] Get fellowships';
+
+  constructor(public isUpdate?: boolean) {}
+}
+
+export class CreateFellowship {
+  static readonly type = '[Medical Training] Create fellowships';
+
+  constructor(public model: IFellowshipModel) {}
+}
+
+export class UpdateFellowship {
+  static readonly type = '[Medical Training] Update fellowships';
+
+  constructor(public model: IFellowshipModel) {}
+}
+
+export class DeleteFellowship {
+  static readonly type = '[Medical Training] Delete fellowships';
+
+  constructor(public id: number) {}
 }

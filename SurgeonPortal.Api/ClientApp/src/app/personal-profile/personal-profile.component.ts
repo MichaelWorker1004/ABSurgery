@@ -1,14 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { debounceTime, Observable, of, take } from 'rxjs';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { debounceTime, Observable, take } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-
 import { NgxMaskDirective } from 'ngx-mask';
 import { NgxMaskPipe } from 'ngx-mask';
 import { provideNgxMask } from 'ngx-mask';
-
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
@@ -16,14 +13,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-
 import { UpdateUserProfile, UserProfileSelectors } from '../state';
 import { IUserProfile } from '../state';
 import {
   GetStateList,
   IPickListItem,
   PicklistsSelectors,
-  PicklistsState,
 } from '../state/picklists';
 import {
   IEthnicityReadOnlyModel,
@@ -41,6 +36,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 
 @UntilDestroy()
 @Component({
@@ -57,7 +53,6 @@ import { CheckboxModule } from 'primeng/checkbox';
     SuccessFailModalComponent,
     NgxMaskDirective,
     NgxMaskPipe,
-
     InputTextModule,
     DropdownModule,
     InputMaskModule,
@@ -66,7 +61,7 @@ import { CheckboxModule } from 'primeng/checkbox';
   ],
   providers: [provideNgxMask()],
 })
-export class PersonalProfileComponent {
+export class PersonalProfileComponent implements OnInit {
   // TODO: [Joe] set up national provider identifier (NPI) report button
 
   @Select(UserProfileSelectors.user) user$:
@@ -109,7 +104,7 @@ export class PersonalProfileComponent {
     birthCity: new FormControl('', [Validators.required]),
     birthCountry: new FormControl('', [Validators.required]),
     birthDate: new FormControl('', [Validators.required]),
-    birthState: new FormControl('', [Validators.required]),
+    birthState: new FormControl('', []),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     countryCitizenship: new FormControl('', [Validators.required]),
@@ -138,7 +133,13 @@ export class PersonalProfileComponent {
     zipCode: new FormControl('', [Validators.required]),
   });
 
-  constructor(private _store: Store, private formBuilder: FormBuilder) {
+  hasUnsavedChanges = false;
+  isSubmiited = false;
+
+  constructor(
+    private _store: Store,
+    public globalDialogService: GlobalDialogService
+  ) {
     this.user$
       ?.pipe(debounceTime(300), untilDestroyed(this))
       .subscribe((user: IUserProfile) => {
@@ -182,7 +183,19 @@ export class PersonalProfileComponent {
       });
   }
 
+  ngOnInit(): void {
+    this.userProfileForm.valueChanges.subscribe(() => {
+      const isDirty = this.userProfileForm.dirty;
+      if (isDirty && !this.isSubmiited) {
+        this.hasUnsavedChanges = true;
+      } else {
+        this.hasUnsavedChanges = false;
+      }
+    });
+  }
+
   save() {
+    this.hasUnsavedChanges = true;
     this.call = {
       title: 'Success',
       message: 'Your profile has been updated.',
@@ -195,11 +208,17 @@ export class PersonalProfileComponent {
   }
 
   toggleDialog($event: any) {
+    this.hasUnsavedChanges = false;
     this.call.showDialog = $event.show;
+    this.userProfileForm.reset();
   }
 
   onSubmit() {
-    // console.log('onSubmit');
-    this._store.dispatch(new UpdateUserProfile(this.userProfileForm.value));
+    this.isSubmiited = true;
+
+    const model = this.userProfileForm.value;
+    model.birthDate = new Date(model.birthDate).toISOString();
+
+    this._store.dispatch(new UpdateUserProfile(model));
   }
 }

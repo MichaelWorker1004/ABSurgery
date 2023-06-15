@@ -8,11 +8,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { GRADUATE_MEDICAL_EDUCATION_GRID_COLS } from './graduate-medical-education-cols';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-graduate-medical-education-modal',
   standalone: true,
-  imports: [CommonModule, GridComponent],
+  imports: [CommonModule, GridComponent, ButtonModule],
   templateUrl: './graduate-medical-education-modal.component.html',
   styleUrls: ['./graduate-medical-education-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

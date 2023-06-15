@@ -6,11 +6,12 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-file-upload-button',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonModule],
   templateUrl: './file-upload-button.component.html',
   styleUrls: ['./file-upload-button.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

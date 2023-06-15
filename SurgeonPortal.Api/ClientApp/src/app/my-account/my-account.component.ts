@@ -25,6 +25,8 @@ import { FormErrorsComponent } from '../shared/components/form-errors/form-error
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 
 @Component({
   selector: 'abs-my-account',
@@ -41,6 +43,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     InputTextModule,
     PasswordModule,
     CheckboxModule,
+    ButtonModule,
   ],
 })
 export class MyAccountComponent implements OnDestroy {
@@ -58,6 +61,9 @@ export class MyAccountComponent implements OnDestroy {
   profilePicture =
     'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU';
 
+  hasUnsavedChanges = false;
+  isSubmitted = false;
+
   myAccountForm: FormGroup = new FormGroup(
     {
       emailAddress: new FormControl('', [Validators.email]),
@@ -73,7 +79,10 @@ export class MyAccountComponent implements OnDestroy {
       ],
     }
   );
-  constructor(private store: Store) {
+  constructor(
+    private store: Store,
+    public globalDialogService: GlobalDialogService
+  ) {
     this.userSub = this.user$?.subscribe((user) => {
       if (user) {
         this.user = user;
@@ -81,6 +90,15 @@ export class MyAccountComponent implements OnDestroy {
           emailAddress: this.user?.emailAddress,
           confirmEmailAddress: this.user?.emailAddress,
         });
+      }
+    });
+
+    this.myAccountForm.valueChanges.subscribe(() => {
+      const isDirty = this.myAccountForm.dirty;
+      if (isDirty && !this.isSubmitted) {
+        this.hasUnsavedChanges = true;
+      } else {
+        this.hasUnsavedChanges = false;
       }
     });
   }
@@ -118,5 +136,6 @@ export class MyAccountComponent implements OnDestroy {
       password,
     };
     this.store.dispatch(new SaveMyAccountChanges(userCreds));
+    this.isSubmitted = true;
   }
 }

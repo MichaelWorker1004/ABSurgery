@@ -31,6 +31,10 @@ import {
   UpdateMedicalTraining,
   CreateOtherCertification,
   UpdateOtherCertifications,
+  GetFellowships,
+  DeleteFellowship,
+  UpdateFellowship,
+  CreateFellowship,
 } from '../state/medical-training/medical-training.actions';
 import {
   GetCertificateTypes,
@@ -46,7 +50,6 @@ import { IStateReadOnlyModel } from '../api';
 import { IGraduateProfileReadOnlyModel } from '../api/models/picklists/graduate-profile-read-only.model';
 import { IDegreeReadOnlyModel } from '../api/models/picklists/degree-read-only.model';
 import { FELLOWSHIP_COLS } from './fellowship-cols';
-import { FellowshipService } from '../api/services/medicaltraining/fellowship.service';
 import { FellowshipAddEditModalComponent } from './fellowship-add-edit-modal/fellowship-add-edit-modal.component';
 import { IFellowshipReadOnlyModel } from '../api/models/medicaltraining/fellowship-read-only.model';
 import { MedicalTrainingActions } from './medical-training-models';
@@ -60,6 +63,7 @@ import { ICertificateTypeReadOnlyModel } from '../api/models/picklists/certifica
 import { IDocumentTypeReadOnlyModel } from '../api/models/picklists/document-type-read-only.model';
 import { IUserCertificateReadOnlyModel } from '../api/models/medicaltraining/user-certificate-read-only.model';
 import { IOtherCertificationsModel } from '../api/models/medicaltraining/other-certifications.model';
+import { IFellowshipModel } from '../api/models/medicaltraining/fellowship.model';
 
 @Component({
   selector: 'abs-medical-training',
@@ -129,10 +133,14 @@ export class MedicalTrainingComponent implements OnInit {
   @Select(MedicalTrainingSelectors.slices.otherCertifications)
   otherCertifications$: Observable<IOtherCertificationsModel[]> | undefined;
 
+  @Select(MedicalTrainingSelectors.slices.fellowships) fellowships$:
+    | Observable<IFellowshipReadOnlyModel[]>
+    | undefined;
+
   advancedTraining$: BehaviorSubject<IAdvancedTrainingReadOnlyModel[]> =
     new BehaviorSubject<IAdvancedTrainingReadOnlyModel[]>([]);
 
-  fellowships$: BehaviorSubject<IFellowshipReadOnlyModel[]> =
+  userFellowships$: BehaviorSubject<IFellowshipReadOnlyModel[]> =
     new BehaviorSubject<IFellowshipReadOnlyModel[]>([]);
 
   isAdditionalAdvancedEdit$: BehaviorSubject<boolean> = new BehaviorSubject(
@@ -188,11 +196,13 @@ export class MedicalTrainingComponent implements OnInit {
     residencyProgramOther: new FormControl(''),
   });
 
+  hasUnsavedChanges = false;
+  isSubmitted = false;
+
   constructor(
     private _store: Store,
-    private globalDialogService: GlobalDialogService,
     private advancedTrainingService: AdvancedTrainingService,
-    private fellowshipService: FellowshipService
+    public globalDialogService: GlobalDialogService
   ) {
     this._store.dispatch(new GetFellowshipPrograms());
     this._store.dispatch(new GetResidencyPrograms());
@@ -202,6 +212,7 @@ export class MedicalTrainingComponent implements OnInit {
     this._store.dispatch(new GetCertificateTypes());
     this._store.dispatch(new GetGraduateProfiles());
     this._store.dispatch(new GetOtherCertifications());
+    this._store.dispatch(new GetFellowships());
   }
 
   ngOnInit(): void {
@@ -211,10 +222,17 @@ export class MedicalTrainingComponent implements OnInit {
     });
     this.setPicklists();
     this.getDocumentsData();
-    this.getOtherCertificationsData();
     this.getAdvancedTrainingGridData();
-    this.getFellowshipGridData();
     this.getMedicalTraining();
+
+    this.medicalTrainingForm.valueChanges.subscribe(() => {
+      const isDirty = this.medicalTrainingForm.dirty;
+      if (isDirty && !this.isSubmitted) {
+        this.hasUnsavedChanges = true;
+      } else {
+        this.hasUnsavedChanges = false;
+      }
+    });
     this.setStates();
   }
 
@@ -252,14 +270,6 @@ export class MedicalTrainingComponent implements OnInit {
       .retrieveAdvancedTrainingReadOnly_GetByUserId()
       .subscribe((res: IAdvancedTrainingReadOnlyModel[]) => {
         this.advancedTraining$.next(res);
-      });
-  }
-
-  getFellowshipGridData() {
-    this.fellowshipService
-      .retrieveFellowshipReadOnly_GetByUserId()
-      .subscribe((res: IFellowshipReadOnlyModel[]) => {
-        this.fellowships$.next(res);
       });
   }
 
@@ -318,14 +328,6 @@ export class MedicalTrainingComponent implements OnInit {
     );
   }
 
-  getOtherCertificationsData() {
-    this.otherCertifications$?.subscribe(
-      (otherCertifications: IOtherCertificationsModel[]) => {
-        this.userOtherCertifications$.next(otherCertifications);
-      }
-    );
-  }
-
   handleDocumentUpload(event: any) {
     console.log(event);
   }
@@ -353,9 +355,7 @@ export class MedicalTrainingComponent implements OnInit {
       },
       delete: {
         fellowship: () => {
-          this.fellowshipService.deleteFellowship(data.id).subscribe(() => {
-            this.getFellowshipGridData();
-          });
+          this._store.dispatch(new DeleteFellowship(data.id));
         },
         certificates: () => {
           this.getDocumentsData();
@@ -428,27 +428,21 @@ export class MedicalTrainingComponent implements OnInit {
 
   saveFellowship($event: any) {
     this.showFellowshipAddEdit = $event.show;
-
     const model = {
+      id: $event.fellowshipId ?? null,
       programName: $event.fellowshipForm.programName,
       completionYear:
         new Date($event.fellowshipForm.completionYear ?? '').toISOString() ??
         null,
       programOther: $event.fellowshipForm.programOther,
-    };
+    } as unknown as IFellowshipModel;
 
     if ($event.edit === true && $event.fellowshipId) {
-      this.fellowshipService
-        .updateFellowship($event.fellowshipId, model)
-        .subscribe(() => {
-          this.getFellowshipGridData();
-        });
+      this._store.dispatch(new UpdateFellowship(model));
     }
 
     if ($event.edit === false) {
-      this.fellowshipService.createFellowship(model).subscribe(() => {
-        this.getFellowshipGridData();
-      });
+      this._store.dispatch(new CreateFellowship(model));
     }
 
     this.showTrainingAddEdit = $event.show;
@@ -498,7 +492,6 @@ export class MedicalTrainingComponent implements OnInit {
 
   save() {
     const formValues = this.medicalTrainingForm.value;
-
     const medicalSchoolCompletionYear = formValues.medicalSchoolCompletionYear
       ? new Date(formValues.medicalSchoolCompletionYear ?? '')
           .getFullYear()
@@ -539,23 +532,13 @@ export class MedicalTrainingComponent implements OnInit {
       .showConfirmation('Confirmation', 'Are you sure?')
       .then((result) => {
         if (result) {
+          this.isSubmitted = true;
           if (this.createMode === true) {
             this._store.dispatch(new CreateMedicalTraining(model));
           } else {
             model['id'] = this.medicalTrainingId;
             this._store.dispatch(new UpdateMedicalTraining(model));
           }
-          this.globalDialogService.showSuccessError(
-            'Success',
-            'Medical Training Saved',
-            true
-          );
-        } else {
-          this.globalDialogService.showSuccessError(
-            'Error',
-            'Medical Training not Saved',
-            false
-          );
         }
       });
   }

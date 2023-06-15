@@ -5,10 +5,11 @@
 >
   <div class="grid">
     <div class="flex flex-column gap-2 col-12">
-      <label htmlFor="trainingType">Certification</label>
+      <label htmlFor="trainingType">Certification *</label>
       <p-dropdown
         [options]="certificateTypes"
         [showClear]="true"
+        [required]="true"
         appendTo="body"
         optionLabel="name"
         optionValue="id"
@@ -17,8 +18,9 @@
       ></p-dropdown>
     </div>
     <div class="flex flex-column gap-2 col-12">
-      <label htmlFor="other">Certification Number</label>
+      <label htmlFor="other">Certification Number *</label>
       <input
+        [required]="true"
         pInputText
         type="number"
         placeholder="Enter a Certificate Number"
@@ -26,11 +28,10 @@
       />
     </div>
     <div class="flex flex-column gap-2 col-12">
-      <label htmlFor="other">Issue Date</label>
+      <label htmlFor="other">Issue Date *</label>
       <p-calendar
         [required]="true"
         [showIcon]="true"
-        [panelStyle]="{ maxWidth: '300px' }"
         formControlName="issueDate"
         placeholder="MM/DD/YYYY"
         appendTo="body"
@@ -48,15 +49,15 @@
     </div>
   </div>
   <div class="flex justify-content-end mt-4" slot="footer">
-    <sl-button type="button" variant="text" (click)="cancel()"
-      >Cancel</sl-button
+    <p-button styleClass="p-button-link p-button-primary" (click)="cancel()"
+      >Cancel</p-button
     >
-    <sl-button
+    <p-button
       type="submit"
-      style="width: 337px"
+      [style]="{ width: '337px' }"
       variant="primary"
       [disabled]="otherCertificatesForm.invalid"
       >Save
-    </sl-button>
+    </p-button>
   </div>
 </form>

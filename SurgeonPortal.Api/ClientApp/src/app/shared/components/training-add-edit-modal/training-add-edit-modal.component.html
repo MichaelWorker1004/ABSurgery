@@ -130,15 +130,14 @@
     </div>
   </div>
   <div class="flex justify-content-end mt-4" slot="footer">
-    <sl-button type="button" variant="text" (click)="cancel()"
-      >Cancel</sl-button
+    <p-button styleClass="p-button-link p-button-primary" (click)="cancel()"
+      >Cancel</p-button
     >
-    <sl-button
+    <p-button
       type="submit"
-      style="width: 337px"
-      variant="primary"
+      [style]="{ width: '337px' }"
       [disabled]="additionalTrainingForm.invalid"
       >Save
-    </sl-button>
+    </p-button>
   </div>
 </form>

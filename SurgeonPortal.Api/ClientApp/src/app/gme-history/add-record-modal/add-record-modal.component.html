@@ -118,16 +118,14 @@
   </div>
   <div class="grid">
     <div class="col-12 mt-5 flex justify-content-end btn-container">
-      <sl-button variant="default" size="large" (click)="close()">
+      <p-button styleClass="p-button-link p-button-primary" (click)="close()">
         Cancel
-      </sl-button>
-      <sl-button
-        class="wide"
-        size="large"
-        variant="warning"
+      </p-button>
+      <p-button
+        [style]="{ width: '337px' }"
         type="submit"
         [disabled]="addEditRecordsForm.invalid"
-        >Save</sl-button
+        >Save</p-button
       >
     </div>
   </div>

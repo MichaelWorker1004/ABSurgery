@@ -13,12 +13,10 @@ import { Observable } from 'rxjs';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProfileHeaderComponent {
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+
   @Input() profilePicture: string | undefined;
   // TODO: [Joe] this will need to be more strongly typed once the model is defined
-
-  user: IUserProfile | undefined;
-
-  constructor(private _store: Store) {
-    this.user = this._store.selectSnapshot(UserProfileSelectors.user);
-  }
 }

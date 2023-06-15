@@ -7,11 +7,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-attestation-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, CheckboxModule],
+  imports: [CommonModule, FormsModule, CheckboxModule, ButtonModule],
   templateUrl: './attestation-modal.component.html',
   styleUrls: ['./attestation-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

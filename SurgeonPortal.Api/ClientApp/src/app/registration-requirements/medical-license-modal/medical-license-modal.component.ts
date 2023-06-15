@@ -9,11 +9,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { MEDICAL_LICENSE_GRID_COLS } from './medical-license-grid-cols';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-medical-license-modal',
   standalone: true,
-  imports: [CommonModule, GridComponent],
+  imports: [CommonModule, GridComponent, ButtonModule],
   templateUrl: './medical-license-modal.component.html',
   styleUrls: ['./medical-license-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-professional-standing',
@@ -35,6 +36,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     DropdownModule,
     InputTextareaModule,
     RadioButtonModule,
+    ButtonModule,
   ],
 })
 export class ProfessionalStandingComponent implements OnInit {

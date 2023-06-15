@@ -259,9 +259,37 @@ export class GlobalDialogService {
     this._dialog.show();
   }
 
+  showLoading() {
+    if (document.body.contains(this._dialog)) {
+      this.hide();
+    }
+
+    // create the dialog content
+    this._dialog.innerHTML = `<div class="global-dialog flex flex-column justify-content-center align-items-center">
+    <sl-spinner style="font-size: 150px; --track-width: 10px;"></sl-spinner>
+    </div>`;
+
+    // add click event listener to the dialog overlay so that the close cleans up the DOM
+    this._dialog.addEventListener('sl-request-close', () => {
+      this.hide();
+    });
+
+    // set modal specific attributes (this can be done with param options)
+    this._dialog.setAttribute('style', '--width: unset');
+    this._dialog.setAttribute('no-header', 'true');
+    this._dialog.setAttribute('class', 'loading');
+
+    // add the dialog to the DOM and show
+    document.body.appendChild(this._dialog);
+
+    this._dialog.show();
+  }
+
   // can be used to trigger a close from outside of dialog service
   closeOpenDialog() {
-    this.hide();
+    if (document.body.contains(this._dialog)) {
+      this.hide();
+    }
   }
 
   private hide() {

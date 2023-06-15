@@ -7,11 +7,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { GridComponent } from '../../shared/components/grid/grid.component';
 import { CONFLICT_RESOLUTION_GRID_COLS } from './conflict-resolution-cols';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-conflict-resolution-modal',
   standalone: true,
-  imports: [CommonModule, GridComponent],
+  imports: [CommonModule, GridComponent, ButtonModule],
   templateUrl: './conflict-resolution-modal.component.html',
   styleUrls: ['./conflict-resolution-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

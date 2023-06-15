@@ -531,9 +531,60 @@ sl-dialog.hide-close::part(header-actions) {
   display: block;
   .p-button {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  }
+}
+
+.p-button-primary.p-button-primary.p-button-primary {
+  color: var(--global-primary) !important;
+}
+
+.p-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+p-button {
+  display: inline-block;
+}
+
+.btn-add.btn-add.btn-add {
+  button {
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 50px;
+    position: relative;
+    background: linear-gradient(to right, var(--global-warning) 50%, white 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all 0.5s ease-out;
+    i {
+      width: 40px;
+      display: inline-flex;
+      justify-content: center;
+      background: var(--global-warning);
+      font-size: 1.5rem;
+      position: absolute;
+      align-items: center;
+      left: 0;
+      right: 0;
+      height: 100%;
+    }
+    &:hover {
+      background-position: left bottom;
+    }
+  }
+}
+
+.p-button-link.p-button-link.p-button-link {
+  color: white;
+  transition: 250ms ease-in-out;
+  &::hover {
+    color: var(--global-primary);
   }
 }
 

@@ -51,18 +51,16 @@
       >
     </div>
     <div class="col-12 md:col-6 align-right">
-      <sl-button variant="default" size="large" (click)="close()"
-        >Cancel</sl-button
+      <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+        >Cancel</p-button
       >
-      <sl-button
-        class="wide"
-        size="large"
-        variant="warning"
+      <p-button
+        [style]="{ width: '337px' }"
         type="submit"
         [disabled]="
           outcomeRegistriesForm.untouched && !outcomeRegistriesForm.valid
         "
-        >Save</sl-button
+        >Save</p-button
       >
     </div>
   </div>

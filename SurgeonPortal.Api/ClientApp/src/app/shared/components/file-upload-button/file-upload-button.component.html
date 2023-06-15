@@ -1,12 +1,8 @@
 <ng-container>
-  <sl-button
-    variant="default"
-    class="btn-add mt-2 mb-2"
-    (click)="triggerFileUpload(inputId)"
-  >
+  <p-button class="btn-add mt-2 mb-2" (click)="triggerFileUpload(inputId)">
     <i slot="prefix" class="fa-solid fa-plus"></i>
     {{ buttonText }}
-  </sl-button>
+  </p-button>
   <input
     type="file"
     [name]="inputName"

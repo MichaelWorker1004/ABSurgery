@@ -6,6 +6,7 @@ import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component'
 
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-exam-registration',
@@ -17,6 +18,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     PayFeeComponent,
     RadioButtonModule,
     CheckboxModule,
+    ButtonModule,
   ],
   templateUrl: './exam-registration.component.html',
   styleUrls: ['./exam-registration.component.scss'],

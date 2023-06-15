@@ -2,6 +2,23 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FileNotFoundComponent } from './file-not-found/file-not-found.component';
 import { AuthGuard } from './state';
+import { PersonalProfileComponent } from './personal-profile/personal-profile.component';
+import { MedicalTrainingComponent } from './medical-training/medical-training.component';
+import { ProfessionalStandingComponent } from './professional-standing/professional-standing.component';
+import { MyAccountComponent } from './my-account/my-account.component';
+
+const canDeactivate = async (component: any) => {
+  if (component?.hasUnsavedChanges) {
+    const result = await component.globalDialogService?.showConfirmation(
+      'Unsaved Changes',
+      'Do you want to navigate away'
+    );
+
+    return result;
+  }
+
+  return true;
+};
 
 const routes: Routes = [
   {
@@ -36,6 +53,9 @@ const routes: Routes = [
         (m) => m.PersonalProfileComponent
       ),
     canActivate: [AuthGuard],
+    canDeactivate: [
+      (component: PersonalProfileComponent) => canDeactivate(component),
+    ],
   },
   {
     path: 'medical-training',
@@ -44,6 +64,9 @@ const routes: Routes = [
         (m) => m.MedicalTrainingComponent
       ),
     canActivate: [AuthGuard],
+    canDeactivate: [
+      (component: MedicalTrainingComponent) => canDeactivate(component),
+    ],
   },
   {
     path: 'professional-standing',
@@ -52,6 +75,9 @@ const routes: Routes = [
         (m) => m.ProfessionalStandingComponent
       ),
     canActivate: [AuthGuard],
+    canDeactivate: [
+      (component: ProfessionalStandingComponent) => canDeactivate(component),
+    ],
   },
   {
     path: 'exam-process',
@@ -124,6 +150,9 @@ const routes: Routes = [
         (m) => m.MyAccountComponent
       ),
     canActivate: [AuthGuard],
+    canDeactivate: [
+      (component: MyAccountComponent) => canDeactivate(component),
+    ],
   },
   {
     path: 'gme-history',

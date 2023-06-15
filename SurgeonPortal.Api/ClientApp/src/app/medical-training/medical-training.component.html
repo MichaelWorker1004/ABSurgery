@@ -28,36 +28,36 @@
                   medical school)
                 </label>
                 <div>
-                  {{ medicalTrainingReadOnly.graduateProfileDescription }}
+                  {{ medicalTrainingReadOnly?.graduateProfileDescription }}
                 </div>
               </div>
               <div class="col-12 flex flex-column">
                 <label>Medical School</label>
                 <div>
-                  {{ medicalTrainingReadOnly.medicalSchoolName }}
+                  {{ medicalTrainingReadOnly?.medicalSchoolName }}
                 </div>
               </div>
               <div class="col-12 md:col-4 flex flex-column">
                 <label>Country</label>
-                {{ medicalTrainingReadOnly.medicalSchoolCountryId }}
+                {{ medicalTrainingReadOnly?.medicalSchoolCountryId }}
               </div>
               <div class="col-12 md:col-4 flex flex-column">
                 <label>State / Province / Territory</label>
-                {{ medicalTrainingReadOnly.medicalSchoolStateId }}
+                {{ medicalTrainingReadOnly?.medicalSchoolStateId }}
               </div>
               <div class="col-12 md:col-4 flex flex-column">
                 <label>City or Town</label>
                 <div>
-                  {{ medicalTrainingReadOnly.medicalSchoolCity }}
+                  {{ medicalTrainingReadOnly?.medicalSchoolCity }}
                 </div>
               </div>
               <div class="col-12 md:col-4 flex flex-column">
                 <label>Degree</label>
-                {{ medicalTrainingReadOnly.degreeName }}
+                {{ medicalTrainingReadOnly?.degreeName }}
               </div>
               <div class="col-12 md:col-6 flex flex-column">
                 <label>Year of Completion</label>
-                {{ medicalTrainingReadOnly.medicalSchoolCompletionYear }}
+                {{ medicalTrainingReadOnly?.medicalSchoolCompletionYear }}
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
@@ -185,13 +185,13 @@
                   <div class="col-12">
                     <label>Program Name</label>
                     <div>
-                      {{ medicalTrainingReadOnly.residencyProgramName }}
+                      {{ medicalTrainingReadOnly?.residencyProgramName }}
                     </div>
                   </div>
                   <div class="col-12">
                     <label>Year of Completion</label>
                     <div>
-                      {{ medicalTrainingReadOnly.residencyCompletionYear }}
+                      {{ medicalTrainingReadOnly?.residencyCompletionYear }}
                     </div>
                   </div>
                 </div>
@@ -201,7 +201,7 @@
                   <div class="col-12">
                     <label>My program is not listed</label>
                     <div>
-                      {{ medicalTrainingReadOnly.residencyProgramOther }}
+                      {{ medicalTrainingReadOnly?.residencyProgramOther }}
                     </div>
                   </div>
                 </div>
@@ -280,14 +280,13 @@
             </p>
             <div class="grid">
               <div class="col-12">
-                <sl-button
-                  variant="default"
+                <p-button
                   class="btn-add mt-4 mb-1"
                   (click)="showFellowshipModal()"
                 >
                   <i slot="prefix" class="fa-solid fa-plus"></i>
                   ADD FELLOWSHIP
-                </sl-button>
+                </p-button>
                 <abs-grid
                   [columns]="fellowshipCols"
                   [data]="fellowships$"
@@ -321,14 +320,13 @@
             <hr />
             <div class="grid">
               <div class="col-12">
-                <sl-button
-                  variant="default"
+                <p-button
                   class="btn-add mt-4 mb-1"
                   (click)="showOtherCertificaions()"
                 >
                   <i slot="prefix" class="fa-solid fa-plus"></i>
                   ADD CERTIFICATION
-                </sl-button>
+                </p-button>
                 <abs-grid
                   [columns]="otherCertificationCols"
                   [data]="otherCertifications$"
@@ -348,14 +346,13 @@
             <hr />
             <div class="grid">
               <div class="col-12">
-                <sl-button
-                  variant="default"
+                <p-button
                   class="btn-add mt-4 mb-1"
                   (click)="showTrainingModal()"
                 >
                   <i slot="prefix" class="fa-solid fa-plus"></i>
                   ADD TRAINING
-                </sl-button>
+                </p-button>
                 <abs-grid
                   [columns]="trainingCols"
                   [data]="advancedTraining$"
@@ -370,23 +367,23 @@
 
           <div class="col-12">
             <div class="flex justify-content-end" *ngIf="!isEdit">
-              <sl-button
-                variant="primary"
-                style="width: 200px"
+              <p-button
+                [style]="{ width: '200px' }"
                 (click)="toggleFormEdit(true)"
-                >Edit</sl-button
+                >Edit</p-button
               >
             </div>
             <div class="flex justify-content-end" *ngIf="isEdit">
-              <sl-button variant="text" (click)="toggleFormEdit(false)"
-                >Cancel</sl-button
+              <p-button
+                styleClass="p-button-link p-button-primary"
+                (click)="toggleFormEdit(false)"
+                >Cancel</p-button
               >
-              <sl-button
+              <p-button
                 type="submit"
-                style="width: 337px"
-                variant="primary"
+                [style]="{ width: '337px' }"
                 (click)="save()"
-                >Save</sl-button
+                >Save</p-button
               >
             </div>
           </div>
@@ -398,6 +395,8 @@
 
 <abs-modal
   [open]="showTrainingAddEdit"
+  [preventOverlayClose]="true"
+  [hideClose]="true"
   (closeDialog)="cancelAddEditTraining($event)"
   title="{{
     (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add'
@@ -415,6 +414,8 @@
 
 <abs-modal
   [open]="showFellowshipAddEdit"
+  [preventOverlayClose]="true"
+  [hideClose]="true"
   (closeDialog)="cancelAddEditFellowship($event)"
   title="{{ (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add' }} Fellowship"
 >
@@ -430,6 +431,8 @@
 
 <abs-modal
   [open]="showOtherCertificatesAddEdit"
+  [preventOverlayClose]="true"
+  [hideClose]="true"
   (closeDialog)="cancelOtherCertificatesAddEditModal($event)"
   title="{{
     (isOtherCertificatesEdit$ | async) ? 'Edit' : 'Add'

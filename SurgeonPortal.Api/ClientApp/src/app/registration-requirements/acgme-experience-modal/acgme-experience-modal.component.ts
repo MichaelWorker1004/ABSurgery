@@ -8,11 +8,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { ACGME_EXPERIENCE_GRID_COLS } from './acgme-experience-cols';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-acgme-experience-modal',
   standalone: true,
-  imports: [CommonModule, GridComponent],
+  imports: [CommonModule, GridComponent, ButtonModule],
   templateUrl: './acgme-experience-modal.component.html',
   styleUrls: ['./acgme-experience-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

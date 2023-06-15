@@ -14,6 +14,10 @@ import {
   UpdateMedicalTraining,
   CreateOtherCertification,
   UpdateOtherCertifications,
+  GetFellowships,
+  UpdateFellowship,
+  CreateFellowship,
+  DeleteFellowship,
 } from './medical-training.actions';
 import { AdvancedTrainingService } from 'src/app/api/services/medicaltraining/advanced-training.service';
 import { IAdvancedTrainingReadOnlyModel } from 'src/app/api/models/medicaltraining/advanced-training-read-only.model';
@@ -22,12 +26,15 @@ import { UserCertificateService } from 'src/app/api/services/medicaltraining/use
 import { OtherCertificationsService } from 'src/app/api/services/medicaltraining/other-certifications.service';
 import { IOtherCertificationsReadOnlyModel } from 'src/app/api/models/medicaltraining/other-certifications-read-only.model';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { FellowshipService } from 'src/app/api/services/medicaltraining/fellowship.service';
+import { IFellowshipReadOnlyModel } from 'src/app/api/models/medicaltraining/fellowship-read-only.model';
 
 export interface IMedicalTraining {
   medicalTraining: IMedicalTrainingModel | undefined;
   additionalTraining: IAdvancedTrainingReadOnlyModel[] | undefined;
   userCertificates: IUserCertificateReadOnlyModel[] | undefined;
   otherCertifications: IOtherCertificationsReadOnlyModel[] | undefined;
+  fellowships: IFellowshipReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -42,6 +49,7 @@ export const MEDICALSTATE_STATE_TOKEN = new StateToken<IMedicalTraining>(
     additionalTraining: undefined,
     userCertificates: undefined,
     otherCertifications: undefined,
+    fellowships: undefined,
   },
 })
 @Injectable()
@@ -51,6 +59,7 @@ export class MedicalTrainingState {
     private advancedTrainingService: AdvancedTrainingService,
     private userCertificateService: UserCertificateService,
     private otherCertificationsService: OtherCertificationsService,
+    private fellowshipService: FellowshipService,
     private globalDialogService: GlobalDialogService
   ) {}
 
@@ -58,7 +67,9 @@ export class MedicalTrainingState {
   getMedicalTraining(
     ctx: StateContext<IMedicalTraining>
   ): Observable<IMedicalTrainingModel | undefined> {
+    this.globalDialogService.showLoading();
     if (ctx.getState()?.medicalTraining) {
+      this.globalDialogService.closeOpenDialog();
       return of(ctx.getState()?.medicalTraining);
     }
 
@@ -69,6 +80,7 @@ export class MedicalTrainingState {
           ctx.patchState({
             medicalTraining,
           });
+          this.globalDialogService.closeOpenDialog();
         }),
         catchError((error) => {
           console.error('------- In Medical Training Store', error);
@@ -83,6 +95,7 @@ export class MedicalTrainingState {
     ctx: StateContext<IMedicalTraining>,
     action: CreateMedicalTraining
   ): Observable<IMedicalTrainingModel | undefined> {
+    this.globalDialogService.showLoading();
     return this.medicalTrainingService
       .createMedicalTraining(action.payload)
       .pipe(
@@ -99,6 +112,11 @@ export class MedicalTrainingState {
         catchError((error) => {
           console.error('------- In Medical Training Store', error);
           console.error(error);
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Create failed',
+            false
+          );
           return of(error);
         })
       );
@@ -109,6 +127,7 @@ export class MedicalTrainingState {
     ctx: StateContext<IMedicalTraining>,
     action: CreateMedicalTraining
   ): Observable<IMedicalTrainingModel | undefined> {
+    this.globalDialogService.showLoading();
     return this.medicalTrainingService
       .updateMedicalTraining(action.payload)
       .pipe(
@@ -124,6 +143,11 @@ export class MedicalTrainingState {
         }),
         catchError((error) => {
           console.error('------- In Medical Training Store', error);
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Update failed',
+            false
+          );
           console.error(error);
           return of(error);
         })
@@ -208,6 +232,7 @@ export class MedicalTrainingState {
     ctx: StateContext<IMedicalTraining>,
     payload: CreateOtherCertification
   ): Observable<void> {
+    this.globalDialogService.showLoading();
     return this.otherCertificationsService
       .createOtherCertifications(payload.model)
       .pipe(
@@ -237,6 +262,7 @@ export class MedicalTrainingState {
     ctx: StateContext<IMedicalTraining>,
     payload: UpdateOtherCertifications
   ): Observable<void> {
+    this.globalDialogService.showLoading();
     return this.otherCertificationsService
       .updateOtherCertifications(payload.model.id, payload.model)
       .pipe(
@@ -259,5 +285,111 @@ export class MedicalTrainingState {
           return of(error);
         })
       );
+  }
+
+  @Action(GetFellowships)
+  getFellowships(ctx: StateContext<IMedicalTraining>, payload: GetFellowships) {
+    if (ctx.getState()?.fellowships && !payload?.isUpdate) {
+      return of(ctx.getState()?.fellowships);
+    }
+
+    return this.fellowshipService.retrieveFellowshipReadOnly_GetByUserId().pipe(
+      tap((fellowships: IFellowshipReadOnlyModel[]) => {
+        ctx.patchState({
+          fellowships,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Medical Training Store', error);
+        console.error(error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(CreateFellowship)
+  createFellowship(
+    ctx: StateContext<IMedicalTraining>,
+    payload: CreateFellowship
+  ): Observable<void> {
+    this.globalDialogService.showLoading();
+    return this.fellowshipService.createFellowship(payload.model).pipe(
+      tap(() => {
+        ctx.dispatch(new GetFellowships(true));
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Created successfully',
+          true
+        );
+      }),
+      catchError((error) => {
+        console.error('------- In Medical Training Store', error);
+        console.error(error);
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'Create failed',
+          false
+        );
+        return of(error);
+      })
+    );
+  }
+
+  @Action(UpdateFellowship)
+  updateFellowship(
+    ctx: StateContext<IMedicalTraining>,
+    payload: UpdateFellowship
+  ): Observable<void> {
+    this.globalDialogService.showLoading();
+    return this.fellowshipService
+      .updateFellowship(payload.model.id, payload.model)
+      .pipe(
+        tap(() => {
+          ctx.dispatch(new GetFellowships(true));
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Saved successfully',
+            true
+          );
+        }),
+        catchError((error) => {
+          console.error('------- In Medical Training Store', error);
+          console.error(error);
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Save failed',
+            false
+          );
+          return of(error);
+        })
+      );
+  }
+
+  @Action(DeleteFellowship)
+  deleteFellowship(
+    ctx: StateContext<IMedicalTraining>,
+    payload: DeleteFellowship
+  ): Observable<void> {
+    this.globalDialogService.showLoading();
+    return this.fellowshipService.deleteFellowship(payload.id).pipe(
+      tap(() => {
+        ctx.dispatch(new GetFellowships(true));
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Deleted successfully',
+          true
+        );
+      }),
+      catchError((error) => {
+        console.error('------- In Medical Training Store', error);
+        console.error(error);
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'Delete failed',
+          false
+        );
+        return of(error);
+      })
+    );
   }
 }

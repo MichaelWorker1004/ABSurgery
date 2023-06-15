@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 import { IStateReadOnlyModel } from 'src/app/api';
 import { Select, Store } from '@ngxs/store';
 import { IFormFields } from '../../models/form-fields/form-fields';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-pay-fee',
@@ -27,6 +28,7 @@ import { IFormFields } from '../../models/form-fields/form-fields';
     FormsModule,
     InputTextModule,
     DropdownModule,
+    ButtonModule,
   ],
   templateUrl: './pay-fee.component.html',
   styleUrls: ['./pay-fee.component.scss'],
@@ -38,7 +40,6 @@ export class PayFeeComponent implements OnInit {
     | undefined;
 
   @Output() cancelAction: EventEmitter<any> = new EventEmitter();
-
   @Input() payFeeData: any;
   @Input() paymentGridData: any;
 

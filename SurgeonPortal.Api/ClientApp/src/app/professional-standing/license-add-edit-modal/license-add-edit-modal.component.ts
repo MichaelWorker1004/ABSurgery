@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-license-add-edit-modal',
@@ -23,6 +24,7 @@ import { CalendarModule } from 'primeng/calendar';
     InputTextModule,
     DropdownModule,
     CalendarModule,
+    ButtonModule,
   ],
   templateUrl: './license-add-edit-modal.component.html',
   styleUrls: ['./license-add-edit-modal.component.scss'],

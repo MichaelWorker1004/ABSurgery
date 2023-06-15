@@ -53,7 +53,7 @@
             </div>
             <div class="grid" *ngIf="isEdit">
               <div class="col-12 sm:col-8 md:col-3">
-                <label class="block" for="firstName">First Name</label>
+                <label class="block" for="firstName">First Name *</label>
                 <input
                   id="firstName"
                   pInputText
@@ -71,7 +71,7 @@
                 />
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="lastName">Last Name</label>
+                <label class="block" for="lastName">Last Name *</label>
                 <input
                   id="lastName"
                   pInputText
@@ -90,7 +90,7 @@
               </div>
               <div class="col-12">
                 <label class="block" for="displayName"
-                  >Name as it should appear on your printed certificate</label
+                  >Name as it should appear on your printed certificate *</label
                 >
                 <input pInputText type="text" formControlName="displayName" />
               </div>
@@ -110,6 +110,10 @@
                 <div>{{ user.street2 }}</div>
               </div>
               <div class="col-12 md:col-3">
+                <label>Country</label>
+                <div>{{ user?.country }}</div>
+              </div>
+              <div class="col-12 md:col-3">
                 <label>City</label>
                 <div>{{ user.city }}</div>
               </div>
@@ -121,14 +125,10 @@
                 <label>Zipcode</label>
                 <div>{{ user.zipCode }}</div>
               </div>
-              <div class="col-12 md:col-3">
-                <label>Country</label>
-                <div>{{ user?.country }}</div>
-              </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <div class="col-12 md:col-9 flex flex-column gap-1">
-                <label class="block" for="street1">Street Address</label>
+                <label class="block" for="street1">Street Address *</label>
                 <input
                   id="street1"
                   pInputText
@@ -152,7 +152,20 @@
                 >
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="city">City</label>
+                <label class="block" for="country">Country *</label>
+                <p-dropdown
+                  inputId="country"
+                  *ngIf="countries$ | async as countries"
+                  [options]="countries"
+                  formControlName="country"
+                  placeholder="Select a Country"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-3">
+                <label class="block" for="city">City *</label>
                 <input
                   id="city"
                   pInputText
@@ -161,7 +174,7 @@
                 />
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="state">State / Province</label>
+                <label class="block" for="state">State / Province *</label>
                 <p-dropdown
                   inputId="state"
                   [options]="mailingStates"
@@ -173,26 +186,13 @@
                 ></p-dropdown>
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="zipCode">Zipcode</label>
+                <label class="block" for="zipCode">Zipcode *</label>
                 <input
                   id="zipCode"
                   pInputText
                   type="text"
                   formControlName="zipCode"
                 />
-              </div>
-              <div class="col-12 md:col-3">
-                <label class="block" for="country">Country</label>
-                <p-dropdown
-                  inputId="country"
-                  *ngIf="countries$ | async as countries"
-                  [options]="countries"
-                  formControlName="country"
-                  placeholder="Select a Country"
-                  optionLabel="itemDescription"
-                  optionValue="itemValue"
-                  appendTo="body"
-                ></p-dropdown>
               </div>
             </div>
           </div>
@@ -235,6 +235,7 @@
                   type="text"
                   formControlName="emailAddress"
                   [disabled]="true"
+                  readonly
                 />
                 <small id="emailAddressHelp" class="form-helper-text text-muted"
                   >Go to your My Account page to change your email</small
@@ -242,7 +243,7 @@
               </div>
               <div class="col-12 md:col-6">
                 <label class="block" for="officePhoneNumber"
-                  >Daytime Phone Number</label
+                  >Daytime Phone Number *</label
                 >
                 <p-inputMask
                   inputId="officePhoneNumber"
@@ -270,6 +271,10 @@
             <hr />
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-6">
+                <label>Country of Birth</label>
+                <div>{{ user?.birthCountry }}</div>
+              </div>
+              <div class="col-12 md:col-6">
                 <label>Town or City of Birth</label>
                 <div>{{ user.birthCity }}</div>
               </div>
@@ -278,18 +283,29 @@
                 <div>{{ user?.birthState }}</div>
               </div>
               <div class="col-12 md:col-6">
-                <label>Country of Birth</label>
-                <div>{{ user?.birthCountry }}</div>
-              </div>
-              <div class="col-12 md:col-6">
                 <label>Country of Citizenship</label>
                 <div>{{ user?.countryCitizenship }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
               <div class="col-12 md:col-6">
+                <label class="block" for="birthCountry"
+                  >Country of Birth *</label
+                >
+                <p-dropdown
+                  inputId="birthCountry"
+                  *ngIf="countries$ | async as countries"
+                  [options]="countries"
+                  formControlName="birthCountry"
+                  placeholder="Select a Birth Country"
+                  optionLabel="itemDescription"
+                  optionValue="itemValue"
+                  appendTo="body"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 md:col-6">
                 <label class="block" for="birthCity"
-                  >Town or City of Birth</label
+                  >Town or City of Birth *</label
                 >
                 <input
                   id="birthCity"
@@ -312,22 +328,10 @@
                   appendTo="body"
                 ></p-dropdown>
               </div>
-              <div class="col-12 md:col-6">
-                <label class="block" for="birthCountry">Country of Birth</label>
-                <p-dropdown
-                  inputId="birthCountry"
-                  *ngIf="countries$ | async as countries"
-                  [options]="countries"
-                  formControlName="birthCountry"
-                  placeholder="Select a Birth Country"
-                  optionLabel="itemDescription"
-                  optionValue="itemValue"
-                  appendTo="body"
-                ></p-dropdown>
-              </div>
+
               <div class="col-12 md:col-6">
                 <label class="block" for="countryCitizenship"
-                  >Country of Citizenship</label
+                  >Country of Citizenship *</label
                 >
                 <p-dropdown
                   inputId="countryCitizenship"
@@ -404,7 +408,7 @@
                 />
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="gender">Gender</label>
+                <label class="block" for="gender">Gender *</label>
                 <p-dropdown
                   inputId="gender"
                   *ngIf="genders$ | async as genders"
@@ -417,16 +421,17 @@
                 ></p-dropdown>
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="birthDate">Date of Birth</label>
+                <label class="block" for="birthDate">Date of Birth *</label>
                 <p-calendar
                   id="birthDate"
                   [showIcon]="true"
+                  placeholder="DD/MM/YYYY"
                   formControlName="birthDate"
                   appendTo="body"
                 ></p-calendar>
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="race">Race</label>
+                <label class="block" for="race">Race *</label>
                 <p-dropdown
                   inputId="race"
                   *ngIf="races$ | async as races"
@@ -439,7 +444,7 @@
                 ></p-dropdown>
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="ethnicity">Ethnicity</label>
+                <label class="block" for="ethnicity">Ethnicity *</label>
                 <p-dropdown
                   inputId="ethnicity"
                   *ngIf="ethnicities$ | async as ethnicities"
@@ -453,7 +458,7 @@
               </div>
               <div class="col-12 md:col-3">
                 <label class="block" for="firstLanguageId"
-                  >First Language</label
+                  >First Language *</label
                 >
                 <p-dropdown
                   inputId="firstLanguageId"
@@ -467,7 +472,9 @@
                 ></p-dropdown>
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="bestLanguageId">Best Language</label>
+                <label class="block" for="bestLanguageId"
+                  >Best Language *</label
+                >
                 <p-dropdown
                   inputId="bestLanguageId"
                   *ngIf="languages$ | async as languages"
@@ -503,24 +510,24 @@
 
           <div class="col-12">
             <div class="flex justify-content-end" *ngIf="!isEdit">
-              <sl-button
-                variant="primary"
-                style="width: 200px"
-                (click)="isEdit = true"
-                >Edit</sl-button
-              >
+              <p-button [style]="{ width: '200px' }" (click)="isEdit = true">
+                Edit
+              </p-button>
             </div>
             <div class="flex justify-content-end" *ngIf="isEdit">
-              <sl-button variant="text" (click)="isEdit = false"
-                >Cancel</sl-button
+              <p-button
+                variant="text"
+                (click)="isEdit = false"
+                styleClass="p-button-link p-button-primary"
+                >Cancel</p-button
               >
-              <sl-button
+              <p-button
                 type="submit"
-                style="width: 337px"
-                variant="primary"
+                [style]="{ width: '337px' }"
                 [disabled]="userProfileForm.invalid"
-                >Save</sl-button
               >
+                Save
+              </p-button>
             </div>
           </div>
         </form>

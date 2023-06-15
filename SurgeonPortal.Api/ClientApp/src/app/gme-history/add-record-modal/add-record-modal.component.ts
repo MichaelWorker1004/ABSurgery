@@ -48,6 +48,7 @@ import {
 } from '../../api';
 import { validateStartAndEndDates } from 'src/app/shared/validators/validators';
 import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-add-record-modal',
@@ -64,6 +65,7 @@ import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/p
     CalendarModule,
     AutoCompleteModule,
     FormErrorsComponent,
+    ButtonModule,
   ],
   templateUrl: './add-record-modal.component.html',
   styleUrls: ['./add-record-modal.component.scss'],

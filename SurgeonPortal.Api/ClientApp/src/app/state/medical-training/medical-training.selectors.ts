@@ -18,6 +18,7 @@ export class MedicalTrainingSelectors {
         additionalTraining: state.additionalTraining,
         userCertificates: state.userCertificates,
         otherCertifications: state.otherCertifications,
+        fellowships: state.fellowships,
       };
     }
 

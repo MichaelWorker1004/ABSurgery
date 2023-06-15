@@ -10,11 +10,12 @@ import { provideNgxMask } from 'ngx-mask';
 import { HOSPOITAL_APPOINTMENTS_COLS } from './hospital-appointments-cols';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-professional-activities-and-privileges-modal',
   standalone: true,
-  imports: [CommonModule, GridComponent, InputTextareaModule],
+  imports: [CommonModule, GridComponent, InputTextareaModule, ButtonModule],
   templateUrl: './professional-activities-and-privileges-modal.component.html',
   styleUrls: ['./professional-activities-and-privileges-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

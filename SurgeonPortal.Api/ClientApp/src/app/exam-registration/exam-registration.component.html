@@ -65,14 +65,14 @@
                   ></p-radioButton>
                 </div>
               </div>
-              <div class="col-12 align-right">
-                <sl-button variant="default" size="large">Cancel</sl-button>
-                <sl-button
-                  class="wide"
-                  size="large"
-                  variant="warning"
+              <div class="col-12 align-right mt-3">
+                <p-button styleClass="p-button-link p-button-primary"
+                  >Cancel</p-button
+                >
+                <p-button
+                  [style]="{ width: '337px' }"
                   (click)="handleSiteSelectionSubmit()"
-                  >Save</sl-button
+                  >Save</p-button
                 >
               </div>
             </div>
@@ -95,10 +95,10 @@
           erat, egestas sit amet tortor at, condimentum tempor erat. All fields
           are required.
         </div>
-        <sl-button (click)="handleDownloadForm()" class="btn-add">
+        <p-button (click)="handleDownloadForm()" class="btn-add">
           <i slot="prefix" class="fa-solid fa-download"></i>
           <span>Download Form</span>
-        </sl-button>
+        </p-button>
       </abs-collapse-panel>
     </sl-card>
 
@@ -163,7 +163,7 @@
             quo voluptas nulla pariatur?
           </li>
         </ul>
-        <div class="col-12 flex align-items-center gap-2">
+        <div class="col-12 flex align-items-center gap-2 mb-3">
           <p-checkbox
             inputId="acknowlegement"
             name="acknowlegement"
@@ -176,10 +176,10 @@
           >
         </div>
 
-        <sl-button (click)="handleDownloadForm()" class="btn-add">
+        <p-button (click)="handleDownloadForm()" class="btn-add">
           <i slot="prefix" class="fa-solid fa-download"></i>
           <span>Download Form</span>
-        </sl-button>
+        </p-button>
       </abs-collapse-panel>
     </sl-card>
 
@@ -199,10 +199,10 @@
           erat, egestas sit amet tortor at, condimentum tempor erat. All fields
           are required.
         </div>
-        <sl-button (click)="handleDownloadForm()" class="btn-add">
+        <p-button (click)="handleDownloadForm()" class="btn-add">
           <i slot="prefix" class="fa-solid fa-download"></i>
           <span>Download Exam Admission Card</span>
-        </sl-button>
+        </p-button>
       </abs-collapse-panel>
     </sl-card>
   </div>

@@ -18,10 +18,10 @@
       <label [for]="formField.name">{{ formField.label }}</label>
     </div>
     <div class="col-12 flex justify-content-end btn-container mt-3">
-      <sl-button variant="default" size="large" (click)="close()"
-        >Cancel</sl-button
+      <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+        >Cancel</p-button
       >
-      <sl-button class="wide" size="large" variant="warning">Save</sl-button>
+      <p-button [style]="{ width: '337px' }">Save</p-button>
     </div>
   </div>
 </form>

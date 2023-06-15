@@ -8,6 +8,7 @@ import { IFormErrors } from '../../shared/common';
 import { UserProfilesService } from '../../api';
 import { GetUserProfile, UpdateUserProfile } from './user-profile.actions';
 import { GetPicklists, GetStateList } from '../picklists';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 export interface IUserProfile {
   userProfileId: number;
@@ -107,7 +108,8 @@ export const USER_PROFILE_STATE_TOKEN = new StateToken<IUserProfile>(
 export class UserProfileState {
   constructor(
     private store: Store,
-    private userProfilesService: UserProfilesService
+    private userProfilesService: UserProfilesService,
+    private globalDialogService: GlobalDialogService
   ) {}
 
   @Action(GetUserProfile)
@@ -115,6 +117,7 @@ export class UserProfileState {
     ctx: StateContext<IUserProfile>,
     { loginUser, claims }: GetUserProfile
   ) {
+    this.globalDialogService.showLoading();
     const state = ctx.getState();
     const userId = loginUser?.userId;
     return this.userProfilesService
@@ -138,6 +141,7 @@ export class UserProfileState {
           });
           this.store.dispatch(new GetStateList(ctx.getState().birthCountry));
           this.store.dispatch(new GetPicklists(ctx.getState().country));
+          this.globalDialogService.closeOpenDialog();
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
@@ -152,6 +156,7 @@ export class UserProfileState {
     ctx: StateContext<IUserProfile>,
     { payload }: UpdateUserProfile
   ) {
+    this.globalDialogService.showLoading();
     const model = {} as unknown as IUserProfileModel;
 
     ctx.setState({
@@ -169,6 +174,8 @@ export class UserProfileState {
     userProfile.bestLanguageId = +userProfile.bestLanguageId;
     userProfile.lastUpdatedByUserId = ctx.getState().userId;
 
+    this.globalDialogService.showLoading();
+
     return this.userProfilesService
       .updateUserProfile(ctx.getState().userId, userProfile)
       .pipe(
@@ -181,6 +188,11 @@ export class UserProfileState {
             ...userProfile,
             errors: null,
           });
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Saved successfully',
+            true
+          );
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
@@ -188,6 +200,11 @@ export class UserProfileState {
             ...ctx.getState(),
             errors,
           });
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Save failed',
+            false
+          );
           return of(errors);
         })
       );

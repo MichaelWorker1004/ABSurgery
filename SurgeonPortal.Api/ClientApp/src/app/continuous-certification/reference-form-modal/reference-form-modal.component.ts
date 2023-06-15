@@ -17,6 +17,7 @@ import { Select } from '@ngxs/store';
 import { PicklistsSelectors } from 'src/app/state/picklists';
 import { Observable } from 'rxjs';
 import { IStateReadOnlyModel } from 'src/app/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-reference-form-modal',
@@ -28,6 +29,7 @@ import { IStateReadOnlyModel } from 'src/app/api';
     InputTextModule,
     DropdownModule,
     CheckboxModule,
+    ButtonModule,
   ],
   templateUrl: './reference-form-modal.component.html',
   styleUrls: ['./reference-form-modal.component.scss'],

@@ -28,14 +28,14 @@
         ></span>
       </label>
     </div>
-    <sl-button
+    <p-button
       (click)="onDocumentUpload()"
       [disabled]="documentType === '' || !uploadedFile"
       class="btn-add"
     >
       <i slot="prefix" class="fa-solid fa-plus"></i>
       <span>UPLOAD DOCUMENT</span>
-    </sl-button>
+    </p-button>
   </div>
 </div>
 
@@ -46,8 +46,10 @@
 >
 </abs-grid>
 <div class="flex justify-content-end mt-5" slot="footer">
-  <sl-button type="button" variant="text" (click)="close()">Cancel</sl-button>
-  <sl-button type="button" style="width: 337px" variant="primary"
+  <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+    >Cancel</p-button
+  >
+  <p-button type="button" [style]="{ width: '337px' }" variant="primary"
     >Save
-  </sl-button>
+  </p-button>
 </div>

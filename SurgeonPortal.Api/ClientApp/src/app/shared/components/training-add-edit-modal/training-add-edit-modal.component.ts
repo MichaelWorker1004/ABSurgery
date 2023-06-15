@@ -32,6 +32,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ITrainingTypeReadOnlyModel } from 'src/app/api/models/picklists/training-type-read-only.model';
 import { IAdvancedTrainingModel } from 'src/app/api/models/medicaltraining/advanced-training.model';
 import { validateStartAndEndDates } from '../../validators/validators';
+import { GlobalDialogService } from '../../services/global-dialog.service';
 
 @Component({
   selector: 'abs-training-add-edit-modal',
@@ -70,6 +71,8 @@ export class TrainingAddEditModalComponent implements OnInit {
     | Observable<ITrainingTypeReadOnlyModel[]>
     | undefined;
 
+  hasUnsavedChanges = false;
+
   additionalTrainingForm = new FormGroup(
     {
       trainingType: new FormControl(0, Validators.required),
@@ -93,7 +96,10 @@ export class TrainingAddEditModalComponent implements OnInit {
   trainingId!: number | undefined;
   isEdit!: boolean;
 
-  constructor(private _store: Store) {
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {
     this._store.dispatch(new GetStateList('500'));
     this._store.dispatch(new GetAccreditedProgramInstitutionsList());
     this.states$?.subscribe((value) => {
@@ -106,6 +112,16 @@ export class TrainingAddEditModalComponent implements OnInit {
     this.isEdit$.subscribe((isEdit) => {
       this.isEdit = isEdit;
     });
+    this.additionalTrainingForm.valueChanges.subscribe(() => {
+      const isDirty = this.additionalTrainingForm.dirty;
+      if (isDirty && !this.hasUnsavedChanges) {
+        this.hasUnsavedChanges = true;
+      }
+    });
+    this.subscribeToTraining();
+  }
+
+  subscribeToTraining() {
     this.training$.subscribe((formData) => {
       if (Object.keys(formData).length > 0) {
         this.trainingId = formData.id;
@@ -198,10 +214,21 @@ export class TrainingAddEditModalComponent implements OnInit {
   }
 
   cancel() {
-    this.cancelDialog.emit({ show: false });
+    if (this.hasUnsavedChanges) {
+      this.globalDialogService
+        .showConfirmation('Unsaved Changes', 'Do you want to navigate away')
+        .then((result) => {
+          if (result) {
+            this.cancelDialog.emit({ show: false });
+          }
+        });
+    } else {
+      this.cancelDialog.emit({ show: false });
+    }
   }
 
   save() {
+    this.hasUnsavedChanges = false;
     this.saveDialog.emit({
       edit: this.isEdit,
       show: false,

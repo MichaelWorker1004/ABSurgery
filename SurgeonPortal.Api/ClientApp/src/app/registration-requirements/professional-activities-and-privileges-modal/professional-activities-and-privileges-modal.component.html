@@ -38,10 +38,10 @@
         section
       </p>
 
-      <sl-button class="btn-add">
+      <p-button class="btn-add">
         <i slot="prefix" class="fa-solid fa-plus"></i>
         <span>Add a Record</span>
-      </sl-button>
+      </p-button>
       <abs-grid
         [columns]="hospitalAppointmentsCols"
         [data]="hospitalAppointmentsData"
@@ -83,13 +83,11 @@
     </sl-tab-panel>
   </sl-tab-group>
 </div>
-<div class="flex justify-content-end" slot="footer">
-  <sl-button type="button" variant="text" (click)="close()">Cancel</sl-button>
-  <sl-button
-    type="button"
-    style="width: 337px"
-    variant="primary"
-    (click)="save()"
+<div class="flex justify-content-end mt-3" slot="footer">
+  <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+    >Cancel</p-button
+  >
+  <p-button type="button" [style]="{ width: '337px' }" (click)="save()"
     >Save
-  </sl-button>
+  </p-button>
 </div>

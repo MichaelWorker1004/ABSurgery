@@ -35,6 +35,7 @@ import {
 } from '../state';
 import { Select, Store } from '@ngxs/store';
 import { IRotationReadOnlyModel, IGmeSummaryReadOnlyModel } from 'src/app/api';
+import { ButtonModule } from 'primeng/button';
 
 export interface ICalendarFilterValue {
   value: string;
@@ -68,6 +69,7 @@ export interface ICalendarFilterOptions {
     AddRecordModalComponent,
     ModalComponent,
     DropdownModule,
+    ButtonModule,
   ],
 })
 export class GmeHistoryComponent implements OnInit, OnDestroy {

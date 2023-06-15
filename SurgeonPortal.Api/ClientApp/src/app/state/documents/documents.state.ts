@@ -85,6 +85,7 @@ export class DocumentsState {
     action: { payload: number }
   ): Observable<void> {
     const id = action.payload;
+    this.globalDialogService.showLoading();
     return this.userCertificateService.deleteUserCertificate(id).pipe(
       tap(() => {
         this._store.dispatch(new GetUserCertificates(true));
@@ -109,6 +110,7 @@ export class DocumentsState {
     action: { payload: number }
   ): Observable<void> {
     const id = action.payload;
+    this.globalDialogService.showLoading();
     return this.documentService.deleteDocument(id).pipe(
       tap(() => {
         this._store.dispatch(new GetUserCertificates(true));
@@ -132,6 +134,7 @@ export class DocumentsState {
     ctx: StateContext<IDocuments>,
     action: { payload: { model: FormData } }
   ): Observable<void> {
+    this.globalDialogService.showLoading();
     return this.userCertificateService
       .createUserCertificate(action.payload.model)
       .pipe(

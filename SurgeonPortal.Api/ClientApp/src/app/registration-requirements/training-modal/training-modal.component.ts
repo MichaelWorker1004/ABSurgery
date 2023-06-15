@@ -35,6 +35,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ButtonModule } from 'primeng/button';
 
 interface MedicalTrainingData {
   medicalSchool: any;
@@ -57,6 +58,7 @@ interface MedicalTrainingData {
     DropdownModule,
     CheckboxModule,
     RadioButtonModule,
+    ButtonModule,
   ],
   templateUrl: './training-modal.component.html',
   styleUrls: ['./training-modal.component.scss'],

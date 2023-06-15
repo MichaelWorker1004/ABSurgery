@@ -24,6 +24,7 @@ import { IFellowshipReadOnlyModel } from 'src/app/api/models/medicaltraining/fel
 import { Select } from '@ngxs/store';
 import { PicklistsSelectors } from 'src/app/state/picklists';
 import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fellowship-program-read-only.model';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 @Component({
   selector: 'abs-fellowship-add-edit-modal',
@@ -60,11 +61,15 @@ export class FellowshipAddEditModalComponent implements OnInit {
   fellowshipId!: number;
   isEdit = false;
 
+  hasUnsavedChanges = false;
+
   fellowshipForm = new FormGroup({
     programName: new FormControl(''),
     programOther: new FormControl(''),
     completionYear: new FormControl(''),
   });
+
+  constructor(private globalDialogService: GlobalDialogService) {}
 
   ngOnInit(): void {
     this.maxYear.setFullYear(this.year);
@@ -73,6 +78,13 @@ export class FellowshipAddEditModalComponent implements OnInit {
     });
     this.setPicklistData();
     this.subscribeToRowData();
+
+    this.fellowshipForm.valueChanges.subscribe(() => {
+      const isDirty = this.fellowshipForm.dirty;
+      if (isDirty && !this.hasUnsavedChanges) {
+        this.hasUnsavedChanges = true;
+      }
+    });
   }
 
   subscribeToRowData() {
@@ -99,7 +111,17 @@ export class FellowshipAddEditModalComponent implements OnInit {
   }
 
   cancel() {
-    this.cancelDialog.emit({ show: false });
+    if (this.hasUnsavedChanges) {
+      this.globalDialogService
+        .showConfirmation('Unsaved Changes', 'Do you want to navigate away')
+        .then((result) => {
+          if (result) {
+            this.cancelDialog.emit({ show: false });
+          }
+        });
+    } else {
+      this.cancelDialog.emit({ show: false });
+    }
   }
 
   save() {
@@ -109,5 +131,6 @@ export class FellowshipAddEditModalComponent implements OnInit {
       fellowshipForm: this.fellowshipForm.value,
       fellowshipId: this.fellowshipId,
     });
+    this.hasUnsavedChanges = false;
   }
 }

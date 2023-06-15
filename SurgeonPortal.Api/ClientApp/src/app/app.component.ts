@@ -44,6 +44,8 @@ export class AppComponent implements OnDestroy {
   isSurgeon = false;
   isSideNavOpen = false;
 
+  currentYear = new Date().getFullYear();
+
   constructor(private _store: Store) {
     this.authSub = this.isAuthenticated$?.subscribe((isAuthed) => {
       const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);

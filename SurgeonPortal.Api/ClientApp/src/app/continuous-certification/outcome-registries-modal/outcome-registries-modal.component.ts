@@ -27,6 +27,7 @@ import { SuccessFailModalComponent } from 'src/app/shared/components/success-fai
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'abs-outcome-registries-modal',
@@ -39,6 +40,7 @@ import { CheckboxModule } from 'primeng/checkbox';
     RadioButtonModule,
     InputTextareaModule,
     CheckboxModule,
+    ButtonModule,
   ],
   templateUrl: './outcome-registries-modal.component.html',
   styleUrls: ['./outcome-registries-modal.component.scss'],

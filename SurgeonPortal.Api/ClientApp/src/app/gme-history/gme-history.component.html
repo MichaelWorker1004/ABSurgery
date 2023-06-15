@@ -14,7 +14,7 @@
           >
         </div>
         <div class="grid">
-          <div class="col-12 flex align-items-center">
+          <div class="col-12 flex align-items-center gap-3">
             <div class="calendar-filter-container">
               <p-dropdown
                 placeholder="View All Rotations"
@@ -31,14 +31,14 @@
               </p-dropdown>
             </div>
 
-            <sl-button
+            <p-button
               variant="default"
               class="btn-add mt-2 mb-2"
               (click)="handleAddEditGmeRotation()"
             >
               <i slot="prefix" class="fa-solid fa-plus"></i>
               add a record
-            </sl-button>
+            </p-button>
 
             <div class="legend inline-flex justify-content-end flex-wrap">
               <div class="l flex align-items-center clinical">
@@ -130,14 +130,14 @@
                 to request an attestation from your PD upon completion of this
                 section.
               </p>
-              <sl-button
+              <p-button
                 variant="default"
                 class="btn-add mb-5 absolute"
                 (click)="handleAddEditGmeRotation()"
               >
                 <i slot="prefix" class="fa-solid fa-plus"></i>
                 ADD A RECORD
-              </sl-button>
+              </p-button>
               <abs-grid
                 class="margin-bottom-2"
                 [columns]="itemizedGmeCols"

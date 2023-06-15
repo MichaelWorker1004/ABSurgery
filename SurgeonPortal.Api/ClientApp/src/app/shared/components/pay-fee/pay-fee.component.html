@@ -61,15 +61,13 @@
       <span>{{ formField.subLabel }}</span>
     </div>
     <div class="col-12 md:col-12 align-right mt-5">
-      <sl-button variant="default" size="large" (click)="handleCancelAction()"
-        >Cancel</sl-button
+      <p-button
+        styleClass="p-button-link p-button-primary"
+        (click)="handleCancelAction()"
+        >Cancel</p-button
       >
-      <sl-button
-        class="wide"
-        size="large"
-        variant="warning"
-        (click)="handleSubmitAction()"
-        >Proceed to Pay</sl-button
+      <p-button [style]="{ width: '337px' }" (click)="handleSubmitAction()"
+        >Proceed to Pay</p-button
       >
     </div>
   </div>
