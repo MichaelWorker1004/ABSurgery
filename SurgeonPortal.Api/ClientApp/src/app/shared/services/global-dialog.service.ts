@@ -299,7 +299,9 @@ export class GlobalDialogService {
     }
 
     // hide and remove the dialog
-    this._dialog.hide();
-    document.body.removeChild(this._dialog);
+    if (document.body.contains(this._dialog)) {
+      this._dialog.hide();
+      document.body.removeChild(this._dialog);
+    }
   }
 }

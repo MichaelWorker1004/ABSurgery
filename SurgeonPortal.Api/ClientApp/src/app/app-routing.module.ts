@@ -163,6 +163,38 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'ce-scoring',
+    loadComponent: () =>
+      import('./ce-scoring/ce-scoring.component').then(
+        (m) => m.CeScoringAppComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ce-scoring/examination-rosters',
+    loadComponent: () =>
+      import('./examination-rosters/examination-rosters.component').then(
+        (m) => m.ExaminationRostersComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ce-scoring/oral-examinations',
+    loadComponent: () =>
+      import('./oral-examinations/oral-examinations.component').then(
+        (m) => m.OralExaminationsComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ce-scoring/examination-scores',
+    loadComponent: () =>
+      import('./examination-scores/examination-scores.component').then(
+        (m) => m.ExaminationScoresComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: '**',
     component: FileNotFoundComponent,
   },

@@ -88,8 +88,22 @@ export const CERTIFIED_NAV_ITEMS = [
     icon: 'fa-solid fa-file-lines',
   },
   {
-    display: 'Committees',
-    action: 'committees',
-    icon: 'fa-solid fa-users',
+    display: 'CE Scoring',
+    action: 'ce-scoring',
+    icon: 'fa-solid fa-clock',
+    children: [
+      {
+        display: 'Examination Rosters',
+        action: 'examination-rosters',
+      },
+      {
+        display: 'Oral Examinations',
+        action: 'oral-examinations',
+      },
+      {
+        display: 'Examination Scores',
+        action: 'examination-scores',
+      },
+    ],
   },
 ];

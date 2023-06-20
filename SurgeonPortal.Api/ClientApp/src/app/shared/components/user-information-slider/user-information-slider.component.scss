@@ -1,0 +1,89 @@
+.user-information-card {
+  background-color: var(--global-primary);
+  color: white;
+  padding: 2rem 2rem 4rem;
+  border-radius: 6px;
+  width: 100%;
+  position: relative;
+  .status-container {
+    font-size: 1.25rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid #51657e;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    .status-indicators {
+      display: flex;
+      margin-right: 0.5rem;
+      .status {
+        width: 12px;
+        height: 12px;
+        background: #51657e;
+        border-radius: 50%;
+        margin-right: 3px;
+        &.active {
+          &.one {
+            background-color: var(--global-danger);
+          }
+          &.two {
+            background-color: var(--global-warning);
+          }
+          &.three {
+            background-color: var(--global-secondary);
+          }
+        }
+      }
+    }
+  }
+  .info-container {
+    display: flex;
+    column-gap: 5rem;
+    row-gap: 2rem;
+    flex-wrap: wrap;
+    .info {
+      display: flex;
+      line-height: 25px;
+      max-width: 18rem;
+      span,
+      .certified-title {
+        margin-right: 0.5rem;
+        font-weight: bold;
+      }
+      &.certified {
+        display: block;
+        .certified-title {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+.info-data {
+  line-height: 18px;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.link a {
+  cursor: pointer;
+  color: var(--global-warning);
+  display: inline-block;
+  font-weight: bold;
+  transition: 250ms ease-in-out;
+  border-bottom: 1px solid transparent;
+  &:hover {
+    border-bottom: 1px solid var(--global-warning);
+  }
+}
+
+p-carousel.p-element {
+  width: 100%;
+}
+
+.item {
+  margin-left: 2rem;
+}

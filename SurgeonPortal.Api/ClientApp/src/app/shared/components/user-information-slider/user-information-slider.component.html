@@ -1,0 +1,28 @@
+<div class="user-information-card">
+  <div class="status-container">
+    <strong>Oral Examinations for {{ examinationWeek }}</strong>
+  </div>
+
+  <div class="info-container">
+    <p-carousel
+      [value]="sliderData"
+      [numVisible]="4"
+      [numScroll]="4"
+      [circular]="true"
+      [responsiveOptions]="responsiveOptions"
+    >
+      <ng-template let-data pTemplate="item">
+        <div class="item">
+          <div class="name mb-2">{{ data?.examineeName }}</div>
+          <div class="session mb-2">Session {{ data?.sessionNumber }}</div>
+          <div class="times mb-2">{{ data.times }}</div>
+          <div class="link">
+            <a (click)="routeToExam(data.examinationId)">
+              Begin Oral Examination</a
+            >
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</div>
