@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject, map, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
-import { AppointmentsAddEditModalComponent } from './appointments-add-edit-modal/appointments-add-edit-modal.component';
-import { LicenseAddEditModalComponent } from './license-add-edit-modal/license-add-edit-modal.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { APPOINTMENTS_PRIVILEGES_COLS } from './appointments-privileges-cols';
 import { LICENSES_COLS } from './licenses-cols';
@@ -16,7 +14,67 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
+import {
+  ProfessionalStandingSelectors,
+  GetPSMedicalLicenseList,
+  GetPSMedicalLicenseDetails,
+  CreatePSMedicalLicense,
+  UpdatePSMedicalLicense,
+  GetUserProfessionalStandingDetails,
+  UpdateUserProfessionalStandingDetails,
+  CreateUserProfessionalStandingDetails,
+  GetPSAppointmentsAndPrivilegesList,
+  GetProfessionalStandingSanctionsDetails,
+  CreateProfessionalStandingSanctionsDetails,
+  UpdateProfessionalStandingSanctionsDetails,
+  UpdatePSAppointmentAndPrivilege,
+  CreatePSAppointmentAndPrivilege,
+  GetPSAppointmentAndPrivilegeDetails,
+  DeletePSAppointmentAndPrivilege,
+  ClearProfessionalStandingErrors,
+} from '../state';
+import {
+  GetLicenseTypeList,
+  GetPicklists,
+  GetStateList,
+  IPickListItemNumber,
+  PicklistsSelectors,
+} from '../state/picklists';
+import { Select, Store } from '@ngxs/store';
+import {
+  IMedicalLicenseReadOnlyModel,
+  IMedicalLicenseModel,
+  IStateReadOnlyModel,
+  IUserProfessionalStandingModel,
+  ISanctionsModel,
+  IUserAppointmentModel,
+  IUserAppointmentReadOnlyModel,
+} from '../api';
+import { LicenseFormComponent } from './license-form/license-form.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { SanctionsFormComponent } from './sanctions-form/sanctions-form.component';
+import { AppointmentsFormComponent } from './appointments-form/appointments-form.component';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { CurrentAppointmentFormComponent } from './current-appointment-form/current-appointment-form.component';
+interface IMedicalLicensePickLists {
+  licenseStateOptions: IStateReadOnlyModel[] | undefined;
+  licenseTypeOptions: IPickListItemNumber[] | undefined;
+}
 
+interface IProfessionalStandingPickLists {
+  organizationTypeOptions: IPickListItemNumber[] | undefined;
+  primaryPracticeOptions: IPickListItemNumber[] | undefined;
+}
+
+interface IAppointementsPrivilegesPickLists {
+  stateCodeOptions: IStateReadOnlyModel[] | undefined;
+  practiceTypeOptions: IPickListItemNumber[] | undefined;
+  organizationTypeOptions: IPickListItemNumber[] | undefined;
+  organizationOptions: IPickListItemNumber[] | undefined;
+  appointmentTypeOptions: IPickListItemNumber[] | undefined;
+}
+
+@UntilDestroy()
 @Component({
   selector: 'abs-professional-standing',
   templateUrl: './professional-standing.component.html',
@@ -27,8 +85,6 @@ import { ButtonModule } from 'primeng/button';
     CommonModule,
     CollapsePanelComponent,
     ProfileHeaderComponent,
-    AppointmentsAddEditModalComponent,
-    LicenseAddEditModalComponent,
     GridComponent,
     FormsModule,
     ModalComponent,
@@ -37,144 +93,234 @@ import { ButtonModule } from 'primeng/button';
     InputTextareaModule,
     RadioButtonModule,
     ButtonModule,
+    LicenseFormComponent,
+    SanctionsFormComponent,
+    AppointmentsFormComponent,
+    CurrentAppointmentFormComponent,
   ],
 })
 export class ProfessionalStandingComponent implements OnInit {
-  fakeOptions = [
-    { itemDescription: 'Option 1', itemValue: 'option-1' },
-    { itemDescription: 'Option 2', itemValue: 'option-2' },
-    { itemDescription: 'Option 3', itemValue: 'option-3' },
-  ];
+  /* error variables */
+  clearErrors = new ClearProfessionalStandingErrors(); // may need to break this into dividual error clearing actions
+  @Select(ProfessionalStandingSelectors.slices.medicalLicenseErrors)
+  medicalLicenseErrors$: Observable<any> | undefined;
+  @Select(ProfessionalStandingSelectors.slices.appointmentErrors)
+  appointmentErrors$: Observable<any> | undefined;
+  @Select(ProfessionalStandingSelectors.slices.professionalStandingErrors)
+  currentAppointmentErrors$: Observable<any> | undefined;
+  @Select(ProfessionalStandingSelectors.slices.sanctionsErrors)
+  sanctionsErrors$: Observable<any> | undefined;
+
+  /* Medical License variables */
+  @Select(ProfessionalStandingSelectors.slices.medicalLiscenseList)
+  medicalLicenses$: Observable<IMedicalLicenseReadOnlyModel[]> | undefined;
+  @Select(ProfessionalStandingSelectors.slices.selectedMedicalLicense)
+  selectedMedicalLicense$: Observable<IMedicalLicenseModel> | undefined;
+  editStateMedicalLiscense$: Subject<boolean> = new BehaviorSubject(true);
+
+  licensesCols = LICENSES_COLS;
+  selectedMedicalLicense: IMedicalLicenseModel | undefined;
+  stateMedicalLicenseTitle: string | undefined;
+  showLicensesAddEdit = false;
+  medicalLicensePickLists: IMedicalLicensePickLists = {
+    licenseStateOptions: [],
+    licenseTypeOptions: [],
+  };
+
+  /* Sanctions and Ethics variables */
+  @Select(ProfessionalStandingSelectors.slices.sanctions)
+  sanctionsAndEthics$: Observable<ISanctionsModel> | undefined;
+  editSanctionsAndEthics$: Subject<boolean> = new BehaviorSubject(false);
+
+  sanctionsAndEthics: ISanctionsModel | undefined;
+
+  /* Current Appointments and Privileges variables */
+  @Select(ProfessionalStandingSelectors.slices.userProfessionalStandingDetails)
+  currentAppointments$: Observable<IUserProfessionalStandingModel> | undefined;
+  currentAppointments: any;
+  currentAppointmentPickLists: IProfessionalStandingPickLists = {
+    organizationTypeOptions: [],
+    primaryPracticeOptions: [],
+  };
+
+  hospitalAppointmentsHeightChange$: BehaviorSubject<boolean> =
+    new BehaviorSubject(true);
+
+  /* Appointments and Privileges variables */
+  @Select(ProfessionalStandingSelectors.slices.allAppointments)
+  allAppointments$: Observable<IUserAppointmentReadOnlyModel[]> | undefined;
+  @Select(ProfessionalStandingSelectors.slices.selectedAppointment)
+  selectedAppointment$: Observable<IUserAppointmentModel> | undefined;
+  editHospitalAppointmentsAndPrivileges$: Subject<boolean> =
+    new BehaviorSubject(false);
 
   appointmentsPrivilegesCols = APPOINTMENTS_PRIVILEGES_COLS;
-  licensesCols = LICENSES_COLS;
-
-  disableDescribe = true;
-  editSanctionsAndEthics$: Subject<boolean> = new BehaviorSubject(true);
-  editStateMedicalLiscense$: Subject<boolean> = new BehaviorSubject(true);
-  editHospitalAppointmentsAndPrivileges$: Subject<boolean> =
-    new BehaviorSubject(true);
-  stateMedicalLicenseTitle: string | undefined;
   appointmentsTitle: string | undefined;
-  // TODO: [Joe] faked user data, replace with real data
-  user = {
-    profilePicture:
-      'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU',
-    fullName: 'John Doe',
-    givenName: 'John',
-    surName: 'Doe',
-    title: 'M.D',
-    emailAddress: 'email@test.io',
-    status: 'Trainee',
+  selectedAppointment: IUserAppointmentModel | undefined;
+  showAppointmentsAddEdit = false;
+  appointmentsPrivilegesPickLists: IAppointementsPrivilegesPickLists = {
+    stateCodeOptions: [],
+    practiceTypeOptions: [],
+    organizationTypeOptions: [],
+    organizationOptions: [],
+    appointmentTypeOptions: [],
   };
 
-  showAppointmentsAddEdit = false;
-  showLicensesAddEdit = false;
-  tempAppointment$: Subject<any> = new BehaviorSubject({});
-  tempLicense$: Subject<any> = new BehaviorSubject({});
-  profile = {
-    medicalLicenses: [
-      {
-        id: 1,
-        state: 'Pennsylvania',
-        number: '123456',
-        type: 'Full',
-        issueDate: new Date('10/24/1986'),
-        expireDate: new Date('10/24/2024'),
-        reportingOrg: 'ABS',
-      },
-      {
-        id: 2,
-        state: 'California',
-        number: '098765',
-        type: 'Full',
-        issueDate: new Date('10/24/1986'),
-        expireDate: new Date('10/24/2024'),
-        reportingOrg: 'Self',
-      },
-      {
-        id: 3,
-        state: 'Maryland',
-        number: '111222',
-        type: 'Full',
-        issueDate: new Date('10/24/1986'),
-        expireDate: new Date('10/24/2024'),
-        reportingOrg: 'ABS',
-      },
-      {
-        id: 4,
-        state: 'Pennsylvania',
-        number: '333444',
-        type: 'Full',
-        issueDate: new Date('10/24/1986'),
-        expireDate: new Date('10/24/2024'),
-        reportingOrg: 'Self',
-      },
-    ],
-    appointmentsAndPrivileges: {
-      primaryPractice: '',
-      primaryPracticeOrg: '',
-      lackOfHospitalPrivilegesReason: '',
-      nonClinicalActivities: '',
-      list: [
-        {
-          id: 1,
-          practiceType: 'Practice_1',
-          appointmentType: 'Appointment_1',
-          oranizationType: 'Organization_1',
-          state: 'PA',
-          institution: 'LVHN',
-          other: '-',
-          official: 'ABE',
-        },
-        {
-          id: 2,
-          practiceType: 'Practice_2',
-          appointmentType: 'Appointment_2',
-          oranizationType: 'Organization_2',
-          state: 'PA',
-          institution: 'LVHN',
-          other: '-',
-          official: 'ABE',
-        },
-        {
-          id: 3,
-          practiceType: 'Practice_3',
-          appointmentType: 'Appointment_3',
-          oranizationType: 'Organization_3',
-          state: 'PA',
-          institution: 'LVHN',
-          other: '-',
-          official: 'ABE',
-        },
-      ],
-    },
-    sanctionsEthics: {
-      drugOrAlchohol: true,
-      hospitalPrivilegesRevoked: false,
-      liscensureRevoked: null,
-      hospitalStaffPrivilegesRevoked: null,
-      felony: null,
-      censured: null,
-      describe: '',
-    },
-  };
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {
+    this.initProfileData();
+  }
 
   ngOnInit() {
-    this.checkSantionsAndEthics();
+    this.initPicklistValues();
+
+    //handle resize on edit for appointments panel
+    this.editHospitalAppointmentsAndPrivileges$
+      .pipe(untilDestroyed(this))
+      .subscribe((edit) => {
+        this.hospitalAppointmentsHeightChange$.next(
+          !this.hospitalAppointmentsHeightChange$.getValue()
+        );
+      });
   }
 
-  toggleEdit(observable$: Subject<boolean>, value: boolean) {
-    observable$.next(value);
+  initPicklistValues() {
+    // defaulting country code to 500 for US states
+    this._store
+      .dispatch(new GetPicklists('500'))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        //create new objects to trigger change detection
+        const newMedicalLicensePickLists: IMedicalLicensePickLists = {
+          licenseStateOptions: [],
+          licenseTypeOptions: [],
+        };
+        const newAppointmentsPrivilegesPickLists: IAppointementsPrivilegesPickLists =
+          {
+            stateCodeOptions: [],
+            practiceTypeOptions: [],
+            organizationTypeOptions: [],
+            organizationOptions: [],
+            appointmentTypeOptions: [],
+          };
+        const newProfessionalStandingPickLists: IProfessionalStandingPickLists =
+          {
+            organizationTypeOptions: [],
+            primaryPracticeOptions: [],
+          };
+
+        //medical license picklists
+        newMedicalLicensePickLists.licenseStateOptions =
+          this._store.selectSnapshot(PicklistsSelectors.slices.states);
+        newMedicalLicensePickLists.licenseTypeOptions =
+          this._store.selectSnapshot(PicklistsSelectors.slices.licenseTypes);
+
+        this.medicalLicensePickLists = newMedicalLicensePickLists;
+
+        //appointments and privileges picklists
+        newAppointmentsPrivilegesPickLists.stateCodeOptions =
+          this._store.selectSnapshot(PicklistsSelectors.slices.states);
+        newAppointmentsPrivilegesPickLists.practiceTypeOptions =
+          this._store.selectSnapshot(PicklistsSelectors.slices.practiceTypes);
+        newAppointmentsPrivilegesPickLists.organizationTypeOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.organizationTypes
+          );
+        newAppointmentsPrivilegesPickLists.organizationOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.jcahoOrganizations
+          );
+        newAppointmentsPrivilegesPickLists.appointmentTypeOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.appointmentTypes
+          );
+        this.appointmentsPrivilegesPickLists =
+          newAppointmentsPrivilegesPickLists;
+
+        //professional standing picklists
+        newProfessionalStandingPickLists.organizationTypeOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.organizationTypes
+          );
+        newProfessionalStandingPickLists.primaryPracticeOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.primaryPractices
+          );
+        this.currentAppointmentPickLists = newProfessionalStandingPickLists;
+      });
   }
 
-  checkSantionsAndEthics() {
-    // TODO: [Joe] figure out why sl-radio-group is not updating the value on change
-    this.disableDescribe = !Object.values(this.profile.sanctionsEthics).some(
-      (value) => value === true
-    );
+  initProfileData() {
+    this.getMedicalLicenses();
+    this.getCurrentAppointmentDetails();
+    this.getPreviousAppointmentsAndPrivileges();
+    this.getSanctionsAndEthicsDetails();
+  }
+  getCurrentAppointmentDetails() {
+    this._store
+      .dispatch(new GetUserProfessionalStandingDetails())
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.currentAppointments$?.subscribe((res) => {
+          this.currentAppointments = res;
+          if (!res) {
+            this.editHospitalAppointmentsAndPrivileges$.next(true);
+          }
+        });
+      });
+  }
+  getSanctionsAndEthicsDetails() {
+    this._store
+      .dispatch(new GetProfessionalStandingSanctionsDetails())
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.sanctionsAndEthics$?.subscribe((res) => {
+          this.sanctionsAndEthics = res;
+          if (!res) {
+            this.editSanctionsAndEthics$.next(true);
+          }
+        });
+      });
+  }
+  getPreviousAppointmentsAndPrivileges() {
+    this._store.dispatch(new GetPSAppointmentsAndPrivilegesList());
+    this.allAppointments$?.pipe(untilDestroyed(this)).subscribe(() => {
+      this.hospitalAppointmentsHeightChange$.next(
+        !this.hospitalAppointmentsHeightChange$.getValue()
+      );
+    });
+  }
+  getAppointmentDetails(appointment: IUserAppointmentModel) {
+    if (appointment.apptId) {
+      this._store
+        .dispatch(new GetPSAppointmentAndPrivilegeDetails(appointment.apptId))
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.selectedAppointment = this._store.selectSnapshot(
+            ProfessionalStandingSelectors.slices.selectedAppointment
+          );
+        });
+    }
+  }
+  getMedicalLicenses() {
+    this._store.dispatch(new GetPSMedicalLicenseList());
+  }
+  getMedicalLicenseDetails(license: IMedicalLicenseReadOnlyModel) {
+    if (license.licenseId) {
+      this._store
+        .dispatch(new GetPSMedicalLicenseDetails(license.licenseId))
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.selectedMedicalLicense = this._store.selectSnapshot(
+            ProfessionalStandingSelectors.slices.selectedMedicalLicense
+          );
+        });
+    }
   }
 
+  /* Medical License Functions */
   handleLicensesGridAction($event: any) {
     if ($event.fieldKey === 'edit') {
       this.showLicenseModal($event.data);
@@ -183,73 +329,200 @@ export class ProfessionalStandingComponent implements OnInit {
     }
   }
 
-  showLicenseModal(license: any) {
+  showLicenseModal(license: IMedicalLicenseReadOnlyModel | null | undefined) {
     if (license) {
-      this.tempLicense$.next(license);
-      this.stateMedicalLicenseTitle = 'Edit License';
+      this.getMedicalLicenseDetails(license);
+      this.stateMedicalLicenseTitle = 'Edit Medical License';
     } else {
-      this.tempLicense$.next({
-        state: null,
-        number: null,
-        type: null,
-        issueDate: null,
-        expireDate: null,
-        reportingOrg: null,
-      });
-      this.stateMedicalLicenseTitle = 'Add License';
+      this.selectedMedicalLicense = undefined;
+      this.stateMedicalLicenseTitle = 'Add Medical License';
     }
     this.showLicensesAddEdit = true;
   }
   saveLicense($event: any) {
-    // TODO: [Joe] handle the save call
-    // TODO: [Joe] handle the update call
-    // TODO: [Joe] show the universal success/error message
-    this.showLicensesAddEdit = $event.show;
-    this.tempLicense$.next({});
+    let issueDate = '';
+    let expireDate = '';
+    if ($event.data.issueDate) {
+      issueDate = new Date($event.data.issueDate).toISOString();
+    }
+    if ($event.data.expireDate) {
+      expireDate = new Date($event.data.expireDate).toISOString();
+    }
+    const newLicense = {
+      licenseId: this.selectedMedicalLicense?.licenseId ?? 0,
+      issuingStateId: $event.data.issuingStateId ?? '',
+      licenseNumber: $event.data.licenseNumber ?? '',
+      licenseTypeId: $event.data.licenseTypeId ?? 0,
+      issueDate: issueDate,
+      expireDate: expireDate,
+      reportingOrganization:
+        this.selectedMedicalLicense?.reportingOrganization ?? 'Self',
+    } as unknown as IMedicalLicenseModel;
+
+    if ($event.isEdit) {
+      this._store
+        .dispatch(new UpdatePSMedicalLicense(newLicense))
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.professionalStanding?.medicalLicenseErrors) {
+            this.showLicensesAddEdit = $event.show;
+            this.selectedMedicalLicense = undefined;
+          }
+        });
+    } else {
+      this._store
+        .dispatch(new CreatePSMedicalLicense(newLicense))
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.professionalStanding?.medicalLicenseErrors) {
+            this.showLicensesAddEdit = $event.show;
+            this.selectedMedicalLicense = undefined;
+          }
+        });
+    }
   }
   cancelAddEditLicense($event: any) {
     this.showLicensesAddEdit = $event.show;
-    this.tempLicense$.next({});
   }
 
+  /* Sanctions and Ethics Functions */
+  saveSanctionsAndEthics($event: any) {
+    const newSanctionsAndEthics = {
+      ...$event.data,
+    } as unknown as ISanctionsModel;
+
+    if (this.sanctionsAndEthics) {
+      this._store
+        .dispatch(
+          new UpdateProfessionalStandingSanctionsDetails(newSanctionsAndEthics)
+        )
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.professionalStanding?.sanctionsErrors) {
+            this.toggleEdit(this.editSanctionsAndEthics$, false);
+          }
+        });
+    } else {
+      this._store
+        .dispatch(
+          new CreateProfessionalStandingSanctionsDetails(newSanctionsAndEthics)
+        )
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.professionalStanding?.sanctionsErrors) {
+            this.toggleEdit(this.editSanctionsAndEthics$, false);
+          }
+        });
+    }
+  }
+
+  /* Current Appointments Functions */
+  saveCurrentAppointments($event: any) {
+    const newCurrentAppointments = {
+      ...$event.data,
+    } as unknown as IUserProfessionalStandingModel;
+
+    if (this.currentAppointments) {
+      this._store
+        .dispatch(
+          new UpdateUserProfessionalStandingDetails(newCurrentAppointments)
+        )
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.professionalStanding?.professionalStandingErrors) {
+            this.toggleEdit(this.editHospitalAppointmentsAndPrivileges$, false);
+          }
+        });
+    } else {
+      // create
+      this._store
+        .dispatch(
+          new CreateUserProfessionalStandingDetails(newCurrentAppointments)
+        )
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.professionalStanding?.professionalStandingErrors) {
+            this.toggleEdit(this.editHospitalAppointmentsAndPrivileges$, false);
+          }
+        });
+    }
+  }
+
+  /* Appointments List Functions */
   handleAppointementsGridAction($event: any) {
     if ($event.fieldKey === 'edit') {
       this.showAppointmentModal($event.data);
     } else if ($event.fieldKey === 'delete') {
-      // TODO: [Joe] show confirmation modal
-      // TODO: [Joe] handle the delete call
-      console.log('delete', $event.data);
+      this.globalDialogService
+        .showConfirmation(
+          'Confirm Delete',
+          'Are you sure you want to delete this record?'
+        )
+        .then((result) => {
+          if (result) {
+            this.deleteAppointment($event.data.apptId);
+          }
+        });
     } else {
       console.log('unhandled action', $event);
     }
   }
   showAppointmentModal(appointment: any) {
     if (appointment) {
-      this.tempAppointment$.next(appointment);
+      this.getAppointmentDetails(appointment);
       this.appointmentsTitle = 'Edit Appointment';
     } else {
-      this.tempAppointment$.next({
-        practiceType: null,
-        appointmentType: null,
-        oranizationType: null,
-        state: null,
-        institution: null,
-        other: null,
-        official: null,
-      });
+      this.selectedAppointment = undefined;
       this.appointmentsTitle = 'Add Appointment';
     }
     this.showAppointmentsAddEdit = true;
   }
+
   saveAppointment($event: any) {
-    // TODO: [Joe] handle the save call
-    // TODO: [Joe] handle the update call
-    // TODO: [Joe] show the universal success/error message
-    this.showAppointmentsAddEdit = $event.show;
-    this.tempAppointment$.next({});
+    // get orgId from autocomplete object
+    const orgId = $event.data.organizationId?.itemValue ?? 0;
+    const newAppointment = {
+      apptId: this.selectedAppointment?.apptId ?? 0,
+      practiceTypeId: $event.data.practiceTypeId ?? 0,
+      appointmentTypeId: $event.data.appointmentTypeId ?? 0,
+      organizationTypeId: $event.data.organizationTypeId ?? 0,
+      authorizingOfficial: $event.data.authorizingOfficial ?? '',
+      organizationId: orgId,
+      stateCode: $event.data.stateCode ?? '',
+      other: $event.data.other ?? '',
+    } as unknown as IUserAppointmentModel;
+    if ($event.isEdit) {
+      this._store
+        .dispatch(new UpdatePSAppointmentAndPrivilege(newAppointment))
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.professionalStanding?.appointmentErrors) {
+            this.showAppointmentsAddEdit = $event.show;
+            this.selectedAppointment = undefined;
+          }
+        });
+    } else {
+      this._store
+        .dispatch(new CreatePSAppointmentAndPrivilege(newAppointment))
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.professionalStanding?.appointmentErrors) {
+            this.showAppointmentsAddEdit = $event.show;
+            this.selectedAppointment = undefined;
+          }
+        });
+    }
+  }
+  deleteAppointment(apptId: number) {
+    this._store.dispatch(new DeletePSAppointmentAndPrivilege(apptId));
   }
   cancelAddEditAppointment($event: any) {
     this.showAppointmentsAddEdit = $event.show;
-    this.tempAppointment$.next({});
+    this.selectedAppointment = undefined;
+  }
+
+  /* on page form helper functions */
+  toggleEdit(observable$: Subject<boolean>, value: boolean) {
+    observable$.next(value);
   }
 }

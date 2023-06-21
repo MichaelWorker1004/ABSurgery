@@ -89,7 +89,7 @@ namespace SurgeonPortal.Api.Controllers.Examinations.GQ
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AdditionalTrainingReadOnlyModel>))]

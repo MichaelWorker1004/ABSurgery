@@ -1,6 +1,9 @@
 sl-dialog::part(header-actions) {
   padding: 0;
 }
+sl-dialog::part(close-button) {
+  padding-right: 1rem;
+}
 sl-dialog.hide-close::part(close-button) {
   display: none;
 }

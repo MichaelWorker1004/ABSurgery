@@ -1,0 +1,52 @@
+{
+  "formGroup": "currentAppointment",
+  "formName": "",
+  "formDesc": "",
+  "specialValidators": [],
+  "fields": [
+    {
+      "label": "Primary Current Practice or Training",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "primaryPracticeId",
+      "placeholder": "Select a practice or training...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "primaryPracticeOptions",
+      "options": []
+    },
+    {
+      "label": "Type of Organization of Primary Practice or Training",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "organizationTypeId",
+      "placeholder": "Select an organization type...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "organizationTypeOptions",
+      "options": []
+    },
+    {
+      "label": "Lack of Hospital Privileges",
+      "subLabel": "",
+      "required": false,
+      "name": "explanationOfNonPrivileges",
+      "value": "''",
+      "placeholder": "Explain any lack of hospital privileges...",
+      "type": "textarea",
+      "size": "col-6"
+    },
+    {
+      "label": "Non-Clinical Activities",
+      "subLabel": "",
+      "required": false,
+      "name": "explanationOfNonClinicalActivities",
+      "value": "''",
+      "placeholder": "Explain any non-clinical activities...",
+      "type": "textarea",
+      "size": "col-6"
+    }
+  ]
+}

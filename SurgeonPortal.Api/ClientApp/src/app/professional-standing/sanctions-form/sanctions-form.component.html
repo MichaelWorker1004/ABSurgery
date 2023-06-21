@@ -1,0 +1,189 @@
+<ng-container *ngIf="clearErrors && errors$ | async as error">
+  <div class="mb-3">
+    <abs-form-errors
+      [errors]="error"
+      [clearErrors]="clearErrors"
+    ></abs-form-errors>
+  </div>
+</ng-container>
+<form [formGroup]="sanctionsEthicsForm" (ngSubmit)="onSubmit()">
+  <div class="grid">
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label htmlFor="hadDrugAlchoholTreatment"
+        >Have you had treatment for drug or alcohol abuse?*</label
+      >
+
+      <div class="flex flex-wrap gap-3">
+        <div
+          class="flex align-items-center"
+          *ngFor="let option of optionLists.yesNoOptions"
+        >
+          <p-radioButton
+            name="hadDrugAlchoholTreatment"
+            [value]="option.value"
+            formControlName="hadDrugAlchoholTreatment"
+            [inputId]="'hadDrugAlchoholTreatment' + option.value"
+          ></p-radioButton>
+          <label [for]="'hadDrugAlchoholTreatment' + option.value" class="ml-2">
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label htmlFor="hadHospitalPrivilegesDenied"
+        >Have you been denied hospital privileges?*</label
+      >
+
+      <div class="flex flex-wrap gap-3">
+        <div
+          class="flex align-items-center"
+          *ngFor="let option of optionLists.yesNoOptions"
+        >
+          <p-radioButton
+            name="hadHospitalPrivilegesDenied"
+            [value]="option.value"
+            formControlName="hadHospitalPrivilegesDenied"
+            [inputId]="'hadHospitalPrivilegesDenied' + option.value"
+          ></p-radioButton>
+          <label
+            [for]="'hadHospitalPrivilegesDenied' + option.value"
+            class="ml-2"
+          >
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label htmlFor="hadLicenseRestricted"
+        >Have you been reprimanded by any licensing authority or had your
+        license to practice medicine restricted, denied, suspended or revoked,
+        or has it been voluntarily surrendered in any jurisdiction while under
+        investigation?*</label
+      >
+
+      <div class="flex flex-wrap gap-3">
+        <div
+          class="flex align-items-center"
+          *ngFor="let option of optionLists.yesNoOptions"
+        >
+          <p-radioButton
+            name="hadLicenseRestricted"
+            [value]="option.value"
+            formControlName="hadLicenseRestricted"
+            [inputId]="'hadLicenseRestricted' + option.value"
+          ></p-radioButton>
+          <label [for]="'hadLicenseRestricted' + option.value" class="ml-2">
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label htmlFor="hadHospitalPrivilegesRestricted"
+        >Have you had hospital staff privileges (or any portion thereof)
+        restricted, suspended, or revoked, or otherwise subject to disciplinary
+        action?*</label
+      >
+
+      <div class="flex flex-wrap gap-3">
+        <div
+          class="flex align-items-center"
+          *ngFor="let option of optionLists.yesNoOptions"
+        >
+          <p-radioButton
+            name="hadHospitalPrivilegesRestricted"
+            [value]="option.value"
+            formControlName="hadHospitalPrivilegesRestricted"
+            [inputId]="'hadHospitalPrivilegesRestricted' + option.value"
+          ></p-radioButton>
+          <label
+            [for]="'hadHospitalPrivilegesRestricted' + option.value"
+            class="ml-2"
+          >
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label htmlFor="hadFelonyConviction"
+        >Have you been convicted of a felony?*</label
+      >
+
+      <div class="flex flex-wrap gap-3">
+        <div
+          class="flex align-items-center"
+          *ngFor="let option of optionLists.yesNoOptions"
+        >
+          <p-radioButton
+            name="hadFelonyConviction"
+            [value]="option.value"
+            formControlName="hadFelonyConviction"
+            [inputId]="'hadFelonyConviction' + option.value"
+          ></p-radioButton>
+          <label [for]="'hadFelonyConviction' + option.value" class="ml-2">
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label htmlFor="hadCensure"
+        >Have you been censured by the American College of Surgeons, a hospital
+        or other national or state society?*</label
+      >
+
+      <div class="flex flex-wrap gap-3">
+        <div
+          class="flex align-items-center"
+          *ngFor="let option of optionLists.yesNoOptions"
+        >
+          <p-radioButton
+            name="hadCensure"
+            [value]="option.value"
+            formControlName="hadCensure"
+            [inputId]="'hadCensure' + option.value"
+          ></p-radioButton>
+          <label [for]="'hadCensure' + option.value" class="ml-2">
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label class="mb-0" htmlFor="explanation">Explain</label>
+      <small class="form-helper-text text-muted mt-0 mb-2"
+        >Only if you answered YES to any of the above questions.</small
+      >
+      <textarea
+        pInputTextarea
+        id="explanation"
+        name="explanation"
+        placeholder="Explain any 'yes' answers here..."
+        rows="5"
+        formControlName="explanation"
+      ></textarea>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12 mt-5 flex justify-content-end btn-container">
+      <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+        >Cancel</p-button
+      >
+      <p-button
+        type="submit"
+        [style]="{ width: '337px' }"
+        [disabled]="sanctionsEthicsForm.invalid"
+        >Save</p-button
+      >
+    </div>
+  </div>
+</form>

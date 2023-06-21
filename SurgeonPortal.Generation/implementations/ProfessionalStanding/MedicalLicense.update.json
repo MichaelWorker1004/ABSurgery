@@ -1,0 +1,254 @@
+{
+  "name": "MedicalLicense",
+  "implementationName": "ProfessionalStanding\\MedicalLicense.update",
+  "template": "ytg-framework/editable-edit",
+  "parameters": {
+    "Adapter": "dbo.update_userlicenses",
+    "ControllerName": "ProfessionalStanding\\MedicalLicenseController",
+    "ControllerRoute": "api/professional-standing/medical-license",
+    "ControllerVersion": "1",
+    "FetchImplementation": "ProfessionalStanding\\MedicalLicense.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ProfessionalStanding\\MedicalLicense",
+    "ModelGroup": "MedicalLicense",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_userlicenses",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_userlicenses]",
+        "parameters": [
+          {
+            "name": "LicenseId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LicenseId"
+          },
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "IssuingStateId",
+            "dataType": "string",
+            "maxLength": 2,
+            "precision": 2,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "IssuingStateId"
+          },
+          {
+            "name": "LicenseNumber",
+            "dataType": "string",
+            "maxLength": 20,
+            "precision": 20,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LicenseNumber"
+          },
+          {
+            "name": "LicenseTypeId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LicenseTypeId"
+          },
+          {
+            "name": "ReportingOrganization",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ReportingOrganization"
+          },
+          {
+            "name": "IssueDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "IssueDate"
+          },
+          {
+            "name": "ExpireDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "ExpireDate"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ProfessionalStanding\\MedicalLicense",
+            "fields": [
+              {
+                "name": "LicenseId",
+                "dataType": "decimal",
+                "maxLength": 9,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.LicenseId"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "IssuingStateId",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IssuingStateId"
+              },
+              {
+                "name": "IssuingState",
+                "dataType": "string",
+                "maxLength": 40,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IssuingState"
+              },
+              {
+                "name": "LicenseNumber",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LicenseNumber"
+              },
+              {
+                "name": "LicenseTypeId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LicenseTypeId"
+              },
+              {
+                "name": "LicenseType",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LicenseType"
+              },
+              {
+                "name": "IssueDate",
+                "dataType": "datetime?",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IssueDate"
+              },
+              {
+                "name": "ExpireDate",
+                "dataType": "datetime?",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExpireDate"
+              },
+              {
+                "name": "ReportingOrganization",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ReportingOrganization"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "LicenseId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "IssuingStateId",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "LicenseNumber",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "LicenseTypeId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ReportingOrganization",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "IssueDate",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "ExpireDate",
+      "dataType": "datetime",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ProfessionalStanding\\MedicalLicense.update MedicalLicense -t=ytg-framework/editable-edit -p:Model=ProfessionalStanding\\MedicalLicense -p:Adapter=sp:ABSSP-[dbo].[update_userlicenses] -p:FetchImplementation=ProfessionalStanding\\MedicalLicense.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=MedicalLicense -p:Route= -p:ControllerName=ProfessionalStanding\\MedicalLicenseController -p:ControllerRoute=api/medical-license -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ProfessionalStanding\\MedicalLicense.update MedicalLicense -t=ytg-framework/editable-edit -p:Model=ProfessionalStanding\\MedicalLicense -p:Adapter=sp:ABSSP-[dbo].[update_userlicenses] -p:FetchImplementation=ProfessionalStanding\\MedicalLicense.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=MedicalLicense -p:Route= -p:ControllerName=ProfessionalStanding\\MedicalLicenseController -p:ControllerRoute=api/medical-license -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-05T16:47:10.1482069Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\OrganizationTypeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Type",
+      "dataType": "string",
+      "maxLength": 200,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\OrganizationTypeReadOnly -sp [dbo].[get_organization_type] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-05T17:07:32.804965Z"
+  },
+  "version": 1
+}

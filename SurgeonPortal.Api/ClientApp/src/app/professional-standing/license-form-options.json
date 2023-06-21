@@ -1,0 +1,66 @@
+{
+  "formGroup": "medicalLicense",
+  "formName": "Medical License",
+  "formDesc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit amet tortor at, condimentum tempor erat.",
+  "specialValidators": [],
+  "fields": [
+    {
+      "label": "License State",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "issuingStateId",
+      "placeholder": "Select license state...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "licenseStateOptions",
+      "options": []
+    },
+    {
+      "label": "License Number",
+      "subLabel": "",
+      "required": true,
+      "value": "''",
+      "name": "licenseNumber",
+      "placeholder": "Enter License Number...",
+      "type": "text",
+      "size": "col-6"
+    },
+    {
+      "label": "License Type",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "licenseTypeId",
+      "placeholder": "Select license type...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "licenseTypeOptions",
+      "options": []
+    },
+    {
+      "label": "Issue Date",
+      "subLabel": "",
+      "value": "''",
+      "required": true,
+      "minDate": null,
+      "maxDate": null,
+      "name": "issueDate",
+      "placeholder": "MM/DD/YYYY",
+      "type": "date",
+      "size": "col-6"
+    },
+    {
+      "label": "Expire Date",
+      "subLabel": "",
+      "value": "''",
+      "required": true,
+      "minDate": null,
+      "maxDate": null,
+      "name": "expireDate",
+      "placeholder": "MM/DD/YYYY",
+      "type": "date",
+      "size": "col-6"
+    }
+  ]
+}

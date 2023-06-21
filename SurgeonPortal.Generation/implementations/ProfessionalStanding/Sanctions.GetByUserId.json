@@ -1,0 +1,185 @@
+{
+  "name": "Sanctions",
+  "implementationName": "ProfessionalStanding\\Sanctions.GetByUserId",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_user_sanctions_byuserid",
+    "ControllerName": "ProfessionalStanding\\SanctionsController",
+    "ControllerRoute": "api/professional-standing/sanctions",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ProfessionalStanding\\Sanctions",
+    "ModelGroup": "Sanctions",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_sanctions_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_sanctions_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ProfessionalStanding\\Sanctions",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "HadDrugAlchoholTreatment",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadDrugAlchoholTreatment"
+              },
+              {
+                "name": "HadHospitalPrivilegesDenied",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadHospitalPrivilegesDenied"
+              },
+              {
+                "name": "HadLicenseRestricted",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadLicenseRestricted"
+              },
+              {
+                "name": "HadHospitalPrivilegesRestricted",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadHospitalPrivilegesRestricted"
+              },
+              {
+                "name": "HadFelonyConviction",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadFelonyConviction"
+              },
+              {
+                "name": "HadCensure",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadCensure"
+              },
+              {
+                "name": "Explanation",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Explanation"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [ ],
+  "metadata": {
+    "command": "ytgim g i s ProfessionalStanding\\Sanctions.GetByUserId Sanctions -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ProfessionalStanding\\Sanctions.GetByUserId Sanctions -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-05T19:04:44.10028Z"
+  },
+  "version": 1
+}

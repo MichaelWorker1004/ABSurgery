@@ -1,0 +1,90 @@
+{
+  "formGroup": "hospitalAppointment",
+  "formName": "Hospital Appointment",
+  "formDesc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit amet tortor at, condimentum tempor erat.",
+  "specialValidators": [],
+  "fields": [
+    {
+      "label": "Practice Type",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "practiceTypeId",
+      "placeholder": "Select practice type...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "practiceTypeOptions",
+      "options": []
+    },
+    {
+      "label": "Appointment Type",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "appointmentTypeId",
+      "placeholder": "Select appointment type...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "appointmentTypeOptions",
+      "options": []
+    },
+    {
+      "label": "Organization Type",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "organizationTypeId",
+      "placeholder": "Select organization type...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "organizationTypeOptions",
+      "options": []
+    },
+    {
+      "label": "State",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "stateCode",
+      "placeholder": "Select a state...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "stateCodeOptions",
+      "options": []
+    },
+    {
+      "label": "Institution",
+      "subLabel": "",
+      "required": true,
+      "value": "''",
+      "name": "organizationId",
+      "placeholder": "Select an institution...",
+      "type": "autocomplete",
+      "size": "col-6",
+      "optionsSource": "organizationOptions",
+      "filteredOptionsSource": "filteredOrganizationOptions",
+      "options": [],
+      "filteredOptions": []
+    },
+    {
+      "label": "Other",
+      "subLabel": "",
+      "required": true,
+      "value": "''",
+      "name": "other",
+      "placeholder": "Enter an institution name...",
+      "type": "text",
+      "size": "col-6"
+    },
+    {
+      "label": "Official",
+      "subLabel": "",
+      "required": true,
+      "value": "''",
+      "name": "authorizingOfficial",
+      "placeholder": "Enter the authorizing official...",
+      "type": "text",
+      "size": "col-6"
+    }
+  ]
+}

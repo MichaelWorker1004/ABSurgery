@@ -5,10 +5,7 @@
   <section>
     <div class="grid">
       <div class="col-12 flex">
-        <abs-profile-header
-          [profilePicture]="user.profilePicture"
-          [user]="user"
-        ></abs-profile-header>
+        <abs-profile-header></abs-profile-header>
       </div>
     </div>
   </section>
@@ -28,16 +25,13 @@
           <h5 class="mt-0 mb-2" panel-header>State Medical License</h5>
           <div class="grid">
             <div class="col-12">
-              <p-button
-                class="btn-add mt-4 mb-5"
-                (click)="showLicenseModal(null)"
-              >
+              <p-button class="btn-add my-2" (click)="showLicenseModal(null)">
                 <i slot="prefix" class="fa-solid fa-plus"></i>
                 ADD RECORD
               </p-button>
               <abs-grid
                 [columns]="licensesCols"
-                [data]="profile.medicalLicenses"
+                [data]="medicalLicenses$"
                 (action)="handleLicensesGridAction($event)"
                 class="margin-bottom-2"
               ></abs-grid>
@@ -50,189 +44,159 @@
           <abs-collapse-panel
             [panelId]="2"
             [startExpanded]="true"
-            [heightToggle]="editHospitalAppointmentsAndPrivileges$"
+            [heightToggle]="hospitalAppointmentsHeightChange$"
           >
             <h5 class="mt-0 mb-2" panel-header>
               Current Hospital Appointments / Privileges
             </h5>
-            <form id="appointmentsAndPrivileges">
-              <p class="mt-1">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                sed neque nec dolor lacinia interdum quis nec nisi. Pellentesque
-                dolor erat, egestas sit amet tortor at, condimentum tempor erat.
-              </p>
-              <h6 class="section__sub-header">
-                Primary Appointments/Privileges
-              </h6>
-              <div
-                class="grid"
-                *ngIf="
-                  (editHospitalAppointmentsAndPrivileges$ | async) === false
+            <p class="mt-1">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+              neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
+              erat, egestas sit amet tortor at, condimentum tempor erat.
+            </p>
+            <h6 class="section__sub-header">Primary Appointments/Privileges</h6>
+            <div
+              class="grid"
+              *ngIf="(editHospitalAppointmentsAndPrivileges$ | async) === false"
+            >
+              <div class="col-12 md:col-6">
+                <label>Primary Current Practice or Training</label>
+                <div>
+                  <span
+                    *ngIf="
+                      currentAppointments && currentAppointments.primaryPractice
+                    "
+                    >{{ currentAppointments.primaryPractice }}</span
+                  >
+                  <span
+                    class="text-muted font-italic"
+                    *ngIf="
+                      !currentAppointments ||
+                      !currentAppointments.primaryPractice
+                    "
+                    >not specified</span
+                  >
+                </div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label
+                  >Type of Organization of Primary Practice or Training</label
+                >
+                <div>
+                  <span
+                    *ngIf="
+                      currentAppointments &&
+                      currentAppointments.organizationType
+                    "
+                    >{{ currentAppointments.organizationType }}</span
+                  >
+                  <span
+                    class="text-muted font-italic"
+                    *ngIf="
+                      !currentAppointments ||
+                      !currentAppointments.organizationType
+                    "
+                    >not specified</span
+                  >
+                </div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Lack of Hospital Privileges</label>
+                <div class="white-space-break-spaces">
+                  <span
+                    *ngIf="
+                      currentAppointments &&
+                      currentAppointments.explanationOfNonPrivileges
+                    "
+                    >{{ currentAppointments.explanationOfNonPrivileges }}</span
+                  >
+                  <span
+                    class="text-muted font-italic"
+                    *ngIf="
+                      !currentAppointments ||
+                      !currentAppointments.explanationOfNonPrivileges
+                    "
+                    >none</span
+                  >
+                </div>
+              </div>
+              <div class="col-12 md:col-6">
+                <label>Non-Clinical Activities</label>
+                <div class="white-space-break-spaces">
+                  <span
+                    *ngIf="
+                      currentAppointments &&
+                      currentAppointments.explanationOfNonClinicalActivities
+                    "
+                    >{{
+                      currentAppointments.explanationOfNonClinicalActivities
+                    }}</span
+                  >
+                  <span
+                    class="text-muted font-italic"
+                    *ngIf="
+                      !currentAppointments ||
+                      !currentAppointments.explanationOfNonClinicalActivities
+                    "
+                    >none</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="grid"
+              *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
+            >
+              <abs-current-appointment-form
+                [formData]="currentAppointments"
+                [isEdit]="false"
+                [picklists]="currentAppointmentPickLists"
+                [errors$]="currentAppointmentErrors$"
+                [clearErrors]="clearErrors"
+                (cancelForm)="
+                  toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
                 "
-              >
-                <div class="col-12 md:col-6">
-                  <label>Primary Current Practice or Training</label>
-                  <div>
-                    {{ profile.appointmentsAndPrivileges.primaryPractice }}
-                  </div>
-                </div>
-                <div class="col-12 md:col-6">
-                  <label
-                    >Type of Organization of Primary Practice or Training</label
-                  >
-                  <div>
-                    {{ profile.appointmentsAndPrivileges.primaryPracticeOrg }}
-                  </div>
-                </div>
-                <div class="col-12 md:col-6">
-                  <label>Lack of Hospital Privileges</label>
-                  <div class="white-space-break-spaces">
-                    {{
-                      profile.appointmentsAndPrivileges
-                        .lackOfHospitalPrivilegesReason
-                    }}
-                  </div>
-                </div>
-                <div class="col-12 md:col-6">
-                  <label>Non-Clinical Activities</label>
-                  <div class="white-space-break-spaces">
-                    {{
-                      profile.appointmentsAndPrivileges.nonClinicalActivities
-                    }}
-                  </div>
-                </div>
-              </div>
-              <div
-                class="grid"
-                *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
-              >
-                <div class="col-12 md:col-6">
-                  <label class="block" for="primaryPractice"
-                    >Primary Current Practice or Training</label
-                  >
-                  <p-dropdown
-                    inputId="primaryPractice"
-                    [options]="fakeOptions"
-                    name="primaryPractice"
-                    [(ngModel)]="
-                      profile.appointmentsAndPrivileges.primaryPractice
-                    "
-                    placeholder="Choose a practice or training"
-                    optionLabel="itemDescription"
-                    optionValue="itemValue"
-                    appendTo="body"
-                  ></p-dropdown>
-                </div>
-                <div class="col-12 md:col-6">
-                  <label class="block" for="primaryPracticeOrg"
-                    >Type of Organization of Primary Practice or Training</label
-                  >
-                  <input
-                    id="primaryPracticeOrg"
-                    pInputText
-                    type="text"
-                    placeholder="Enter an organization type"
-                    name="primaryPracticeOrg"
-                    [(ngModel)]="
-                      profile.appointmentsAndPrivileges.primaryPracticeOrg
-                    "
-                    required
-                  />
-                </div>
-                <div class="col-12 md:col-6">
-                  <label class="block" for="lackOfHospitalPrivilegesReason"
-                    >Lack of Hospital Privileges</label
-                  >
-                  <textarea
-                    rows="5"
-                    pInputTextarea
-                    id="lackOfHospitalPrivilegesReason"
-                    placeholder="Explain any lack of hospital privileges"
-                    name="lackOfHospitalPrivilegesReason"
-                    [(ngModel)]="
-                      profile.appointmentsAndPrivileges
-                        .lackOfHospitalPrivilegesReason
-                    "
-                  ></textarea>
-                </div>
-                <div class="col-12 md:col-6">
-                  <label class="block" for="nonClinicalActivities"
-                    >Lack of Hospital Privileges</label
-                  >
-                  <textarea
-                    rows="5"
-                    pInputTextarea
-                    id="nonClinicalActivities"
-                    placeholder="Explain any non-clinical activities"
-                    name="nonClinicalActivities"
-                    [(ngModel)]="
-                      profile.appointmentsAndPrivileges.nonClinicalActivities
-                    "
-                  ></textarea>
-                </div>
-              </div>
+                (saveForm)="saveCurrentAppointments($event)"
+              ></abs-current-appointment-form>
+            </div>
 
-              <h6 class="section__sub-header">
-                All Hospital Appointments/Privileges
-              </h6>
-
-              <div class="grid">
-                <div class="col-12">
-                  <p-button
-                    class="btn-add mt-4 mb-5"
-                    (click)="showAppointmentModal(null)"
-                  >
-                    <i slot="prefix" class="fa-solid fa-plus"></i>
-                    ADD RECORD
-                  </p-button>
-                  <abs-grid
-                    [columns]="appointmentsPrivilegesCols"
-                    [data]="profile.appointmentsAndPrivileges.list"
-                    (action)="handleAppointementsGridAction($event)"
-                    class="margin-bottom-2"
-                  ></abs-grid>
-                </div>
-              </div>
-
-              <div class="grid mt-3">
-                <div
-                  class="col-12 flex justify-content-end"
-                  *ngIf="
-                    (editHospitalAppointmentsAndPrivileges$ | async) === false
+            <div
+              class="grid mt-3"
+              *ngIf="(editHospitalAppointmentsAndPrivileges$ | async) === false"
+            >
+              <div class="col-12 flex justify-content-end">
+                <p-button
+                  [style]="{ width: '200px' }"
+                  (click)="
+                    toggleEdit(editHospitalAppointmentsAndPrivileges$, true)
                   "
+                  >Edit</p-button
                 >
-                  <p-button
-                    variant="primary"
-                    [style]="{ width: '200px' }"
-                    (click)="
-                      toggleEdit(editHospitalAppointmentsAndPrivileges$, true)
-                    "
-                    >Edit</p-button
-                  >
-                </div>
-                <div
-                  class="col-12 flex justify-content-end"
-                  *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
-                >
-                  <p-button
-                    styleClass="p-button-link p-button-primary"
-                    (click)="
-                      toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
-                    "
-                    >Cancel</p-button
-                  >
-                  <p-button
-                    type="submit"
-                    [style]="{ width: '337px' }"
-                    variant="primary"
-                    (click)="
-                      toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
-                    "
-                    >Save</p-button
-                  >
-                </div>
               </div>
-            </form>
+            </div>
+
+            <h6 class="section__sub-header">
+              All Hospital Appointments/Privileges
+            </h6>
+
+            <div class="grid">
+              <div class="col-12">
+                <p-button
+                  class="btn-add my-2"
+                  (click)="showAppointmentModal(null)"
+                >
+                  <i slot="prefix" class="fa-solid fa-plus"></i>
+                  ADD RECORD
+                </p-button>
+                <abs-grid
+                  [columns]="appointmentsPrivilegesCols"
+                  [data]="allAppointments$"
+                  (action)="handleAppointementsGridAction($event)"
+                  class="margin-bottom-2"
+                ></abs-grid>
+              </div>
+            </div>
           </abs-collapse-panel>
         </div>
       </sl-card>
@@ -244,277 +208,98 @@
             [heightToggle]="editSanctionsAndEthics$"
           >
             <h5 class="mt-0 mb-2" panel-header>Sanctions and Ethics</h5>
-            <form id="sanctionsEthics">
-              <div
-                class="grid"
-                *ngIf="(editSanctionsAndEthics$ | async) === false"
-              >
-                <div class="col-12">
-                  <label
-                    >Have you had treatment for drug or alcohol abuse?</label
-                  >
-                  <div>
-                    {{ profile.sanctionsEthics.drugOrAlchohol ? 'Yes' : 'No' }}
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label>Have you been denied hospital privileges</label>
-                  <div>
-                    {{
-                      profile.sanctionsEthics.hospitalPrivilegesRevoked
-                        ? 'Yes'
-                        : 'No'
-                    }}
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label
-                    >Have you been reprimanded by any licensing authority or had
-                    your license to practice medicine restricted, denied,
-                    suspended or revoked, or has it been voluntarily surrendered
-                    in any jurisdiction while under investigation?</label
-                  >
-                  <div>
-                    {{
-                      profile.sanctionsEthics.liscensureRevoked ? 'Yes' : 'No'
-                    }}
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label
-                    >Have you had hospital staff privileges (or any portion
-                    thereof) restricted, suspended, or revoked, or otherwise
-                    subject to disciplinary action?</label
-                  >
-                  <div>
-                    {{
-                      profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
-                        ? 'Yes'
-                        : 'No'
-                    }}
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label>Have you been convicted of a felony?</label>
-                  <div>{{ profile.sanctionsEthics.felony ? 'Yes' : 'No' }}</div>
-                </div>
-                <div class="col-12">
-                  <label
-                    >Have you been censured by the American College of Surgeons,
-                    a hospital or other national or state society?</label
-                  >
-                  <div>
-                    {{ profile.sanctionsEthics.censured ? 'Yes' : 'No' }}
-                  </div>
-                </div>
-                <!-- TODO: [Joe] we may need to tie this ng-if to the disable for the describe field if we are not clearing that out when disabled -->
-                <div class="col-12" *ngIf="profile.sanctionsEthics.describe">
-                  <!-- TODO: [JOE] is this the correct label for this? -->
-                  <label>Describe</label>
-                  <div class="white-space-break-spaces">
-                    {{ profile.sanctionsEthics.describe }}
-                  </div>
+            <div
+              class="grid"
+              *ngIf="(editSanctionsAndEthics$ | async) === false"
+            >
+              <div class="col-12">
+                <label>Have you had treatment for drug or alcohol abuse?</label>
+                <div>
+                  {{
+                    sanctionsAndEthics?.hadDrugAlchoholTreatment ? 'Yes' : 'No'
+                  }}
                 </div>
               </div>
-              <div class="grid" *ngIf="editSanctionsAndEthics$ | async">
-                <div class="col-12 mb-3">
-                  <label class="block"
-                    >Have you had treatment for drug or alcohol abuse?</label
-                  >
-                  <div class="flex gap-5">
-                    <p-radioButton
-                      name="drugOrAlchohol"
-                      [value]="true"
-                      [(ngModel)]="profile.sanctionsEthics.drugOrAlchohol"
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="drugOrAlchoholYes"
-                      label="Yes"
-                    ></p-radioButton>
-                    <p-radioButton
-                      name="drugOrAlchohol"
-                      [value]="false"
-                      [(ngModel)]="profile.sanctionsEthics.drugOrAlchohol"
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="drugOrAlchoholYes"
-                      label="No"
-                    ></p-radioButton>
-                  </div>
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="block"
-                    >Have you been denied hospital privileges?</label
-                  >
-                  <div class="flex gap-5">
-                    <p-radioButton
-                      name="hospitalPrivilegesRevoked"
-                      [value]="true"
-                      [(ngModel)]="
-                        profile.sanctionsEthics.hospitalPrivilegesRevoked
-                      "
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="hospitalPrivilegesRevokedYes"
-                      label="Yes"
-                    ></p-radioButton>
-                    <p-radioButton
-                      name="hospitalPrivilegesRevoked"
-                      [value]="false"
-                      [(ngModel)]="
-                        profile.sanctionsEthics.hospitalPrivilegesRevoked
-                      "
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="hospitalPrivilegesRevokedNo"
-                      label="No"
-                    ></p-radioButton>
-                  </div>
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="block"
-                    >Have you been reprimanded by any licensing authority or had
-                    your license to practice medicine restricted, denied,
-                    suspended or revoked, or has it been voluntarily surrendered
-                    in any jurisdiction while under investigation?</label
-                  >
-                  <div class="flex gap-5">
-                    <p-radioButton
-                      name="liscensureRevoked"
-                      [value]="true"
-                      [(ngModel)]="profile.sanctionsEthics.liscensureRevoked"
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="liscensureRevokedYes"
-                      label="Yes"
-                    ></p-radioButton>
-                    <p-radioButton
-                      name="liscensureRevoked"
-                      [value]="false"
-                      [(ngModel)]="profile.sanctionsEthics.liscensureRevoked"
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="liscensureRevokedNo"
-                      label="No"
-                    ></p-radioButton>
-                  </div>
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="block"
-                    >Have you had hospital staff privileges (or any portion
-                    thereof) restricted, suspended, or revoked, or otherwise
-                    subject to disciplinary action?</label
-                  >
-                  <div class="flex gap-5">
-                    <p-radioButton
-                      name="hospitalStaffPrivilegesRevoked"
-                      [value]="true"
-                      [(ngModel)]="
-                        profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
-                      "
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="hospitalStaffPrivilegesRevokedYes"
-                      label="Yes"
-                    ></p-radioButton>
-                    <p-radioButton
-                      name="hospitalStaffPrivilegesRevoked"
-                      [value]="false"
-                      [(ngModel)]="
-                        profile.sanctionsEthics.hospitalStaffPrivilegesRevoked
-                      "
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="hospitalStaffPrivilegesRevokedNo"
-                      label="No"
-                    ></p-radioButton>
-                  </div>
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="block"
-                    >Have you been convicted of a felony?</label
-                  >
-                  <div class="flex gap-5">
-                    <p-radioButton
-                      name="felony"
-                      [value]="true"
-                      [(ngModel)]="profile.sanctionsEthics.felony"
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="felonyYes"
-                      label="Yes"
-                    ></p-radioButton>
-                    <p-radioButton
-                      name="felony"
-                      [value]="false"
-                      [(ngModel)]="profile.sanctionsEthics.felony"
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="felonyNo"
-                      label="No"
-                    ></p-radioButton>
-                  </div>
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="block"
-                    >Have you been censured by the American College of Surgeons,
-                    a hospital or other national or state society?</label
-                  >
-                  <div class="flex gap-5">
-                    <p-radioButton
-                      name="censured"
-                      [value]="true"
-                      [(ngModel)]="profile.sanctionsEthics.censured"
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="censuredYes"
-                      label="Yes"
-                    ></p-radioButton>
-                    <p-radioButton
-                      name="censured"
-                      [value]="false"
-                      [(ngModel)]="profile.sanctionsEthics.censured"
-                      (ngModelChange)="checkSantionsAndEthics()"
-                      inputId="censuredNo"
-                      label="No"
-                    ></p-radioButton>
-                  </div>
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="block" for="describe">Describe</label>
-                  <small class="block form-helper-text text-muted"
-                    >Only if you answered YES to any of the above
-                    questions.</small
-                  >
-                  <textarea
-                    rows="5"
-                    pInputTextarea
-                    id="describe"
-                    placeholder="Explain..."
-                    name="describe"
-                    [(ngModel)]="profile.sanctionsEthics.describe"
-                  ></textarea>
+              <div class="col-12">
+                <label>Have you been denied hospital privileges</label>
+                <div>
+                  {{
+                    sanctionsAndEthics?.hadHospitalPrivilegesDenied
+                      ? 'Yes'
+                      : 'No'
+                  }}
                 </div>
               </div>
-              <div class="grid">
-                <div
-                  class="col-12 flex justify-content-end"
-                  *ngIf="(editSanctionsAndEthics$ | async) === false"
+              <div class="col-12">
+                <label
+                  >Have you been reprimanded by any licensing authority or had
+                  your license to practice medicine restricted, denied,
+                  suspended or revoked, or has it been voluntarily surrendered
+                  in any jurisdiction while under investigation?</label
                 >
-                  <p-button
-                    variant="primary"
-                    [style]="{ width: '200px' }"
-                    (click)="toggleEdit(editSanctionsAndEthics$, true)"
-                    >Edit</p-button
-                  >
-                </div>
-                <div
-                  class="col-12 flex justify-content-end"
-                  *ngIf="editSanctionsAndEthics$ | async"
-                >
-                  <p-button
-                    styleClass="p-button-link p-button-primary"
-                    (click)="toggleEdit(editSanctionsAndEthics$, false)"
-                    >Cancel</p-button
-                  >
-                  <p-button
-                    type="submit"
-                    [style]="{ width: '337px' }"
-                    (click)="toggleEdit(editSanctionsAndEthics$, false)"
-                    >Save</p-button
-                  >
+                <div>
+                  {{ sanctionsAndEthics?.hadLicenseRestricted ? 'Yes' : 'No' }}
                 </div>
               </div>
-            </form>
+              <div class="col-12">
+                <label
+                  >Have you had hospital staff privileges (or any portion
+                  thereof) restricted, suspended, or revoked, or otherwise
+                  subject to disciplinary action?</label
+                >
+                <div>
+                  {{
+                    sanctionsAndEthics?.hadHospitalPrivilegesRestricted
+                      ? 'Yes'
+                      : 'No'
+                  }}
+                </div>
+              </div>
+              <div class="col-12">
+                <label>Have you been convicted of a felony?</label>
+                <div>
+                  {{ sanctionsAndEthics?.hadFelonyConviction ? 'Yes' : 'No' }}
+                </div>
+              </div>
+              <div class="col-12">
+                <label
+                  >Have you been censured by the American College of Surgeons, a
+                  hospital or other national or state society?</label
+                >
+                <div>
+                  {{ sanctionsAndEthics?.hadCensure ? 'Yes' : 'No' }}
+                </div>
+              </div>
+              <div class="col-12" *ngIf="sanctionsAndEthics?.explanation">
+                <label>Explain</label>
+                <div class="white-space-break-spaces">
+                  {{ sanctionsAndEthics?.explanation }}
+                </div>
+              </div>
+            </div>
+            <div *ngIf="editSanctionsAndEthics$ | async">
+              <abs-sanctions-form
+                [formData]="sanctionsAndEthics"
+                [isEdit]="false"
+                [errors$]="sanctionsErrors$"
+                [clearErrors]="clearErrors"
+                (cancelForm)="toggleEdit(editSanctionsAndEthics$, false)"
+                (saveForm)="saveSanctionsAndEthics($event)"
+              ></abs-sanctions-form>
+            </div>
+
+            <div
+              class="grid"
+              *ngIf="(editSanctionsAndEthics$ | async) === false"
+            >
+              <div class="col-12 flex justify-content-end">
+                <p-button
+                  [style]="{ width: '200px' }"
+                  (click)="toggleEdit(editSanctionsAndEthics$, true)"
+                  >Edit</p-button
+                >
+              </div>
+            </div>
           </abs-collapse-panel>
         </div>
       </sl-card>
@@ -525,11 +310,15 @@
       [title]="appointmentsTitle"
       modalName="appointmentAddEditModal"
     >
-      <abs-appointments-add-edit-modal
-        [appointment]="tempAppointment$"
-        (cancelDialog)="cancelAddEditAppointment($event)"
-        (saveDialog)="saveAppointment($event)"
-      ></abs-appointments-add-edit-modal>
+      <abs-appointments-form
+        [formData]="selectedAppointment"
+        [isEdit]="selectedAppointment !== undefined"
+        [picklists]="appointmentsPrivilegesPickLists"
+        [errors$]="appointmentErrors$"
+        [clearErrors]="clearErrors"
+        (cancelForm)="cancelAddEditAppointment($event)"
+        (saveForm)="saveAppointment($event)"
+      ></abs-appointments-form>
     </abs-modal>
 
     <abs-modal
@@ -537,12 +326,17 @@
       (closeDialog)="cancelAddEditLicense($event)"
       [title]="stateMedicalLicenseTitle"
       modalName="licenseAddEditModal"
+      [hideClose]="true"
     >
-      <abs-license-add-edit-modal
-        [license]="tempLicense$"
-        (cancelDialog)="cancelAddEditLicense($event)"
+      <abs-license-form
+        [formData]="selectedMedicalLicense"
+        [isEdit]="selectedMedicalLicense !== undefined"
+        [picklists]="medicalLicensePickLists"
+        [errors$]="medicalLicenseErrors$"
+        [clearErrors]="clearErrors"
+        (closeDialog)="cancelAddEditLicense($event)"
         (saveDialog)="saveLicense($event)"
-      ></abs-license-add-edit-modal>
+      ></abs-license-form>
     </abs-modal>
   </section>
 </ng-container>

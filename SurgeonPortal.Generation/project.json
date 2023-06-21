@@ -13,6 +13,7 @@
         ]
     },
     "mappings": {
-        "regex:ABSI[dD]": "AbsId"
+        "regex:ABSI[dD]": "AbsId",
+        "PrimaryPracticeID": "PrimaryPracticeId"
     }
 }

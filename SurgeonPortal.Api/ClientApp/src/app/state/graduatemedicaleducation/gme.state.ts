@@ -19,6 +19,7 @@ import {
   ClearGraduateMedicalEducationErrors,
   GetGraduateMedicalEducationSummary,
 } from './gme.actions';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 export interface IGraduateMedicalEducation {
   gmeRotations: IRotationReadOnlyModel[];
@@ -45,7 +46,8 @@ export const GRADUATE_MEDICAL_EDUCATION_STATE_TOKEN =
 export class GraduateMedicalEducationState {
   constructor(
     private rotationService: RotationService,
-    private gmeSummaryService: GmeSummaryService
+    private gmeSummaryService: GmeSummaryService,
+    private globalDialogService: GlobalDialogService
   ) {}
 
   @Action(GetGraduateMedicalEducationSummary)
@@ -55,98 +57,9 @@ export class GraduateMedicalEducationState {
     const state = ctx.getState();
     return this.gmeSummaryService.retrieveGmeSummaryReadOnly_GetByUserId().pipe(
       tap((result: any) => {
-        const level4AndChief = {
-          clinicalLevel: 'Clinical Level 4 Totals',
-          minStartDate: '',
-          maxStartDate: '',
-          programName: '',
-          clinicalWeeks: this.getTotals(
-            result,
-            'clinicalWeeks',
-            'Clinical Level 4'
-          ),
-          nonClinicalWeeks: this.getTotals(
-            result,
-            'nonClinicalWeeks',
-            'Clinical Level 4'
-          ),
-          essentialsWeeks: this.getTotals(
-            result,
-            'essentialsWeeks',
-            'Clinical Level 4'
-          ),
-          rowStyle: {
-            'font-weight': 'bold',
-            'background-color': '#335b92',
-            color: '#FFF',
-          },
-        };
-        const level5AndChief = {
-          clinicalLevel: 'Clinical Level 5 Totals',
-          minStartDate: '',
-          maxStartDate: '',
-          programName: '',
-          clinicalWeeks: this.getTotals(
-            result,
-            'clinicalWeeks',
-            'Clinical Level 5'
-          ),
-          nonClinicalWeeks: this.getTotals(
-            result,
-            'nonClinicalWeeks',
-            'Clinical Level 5'
-          ),
-          essentialsWeeks: this.getTotals(
-            result,
-            'essentialsWeeks',
-            'Clinical Level 5'
-          ),
-          rowStyle: {
-            'font-weight': 'bold',
-            'background-color': '#335b92',
-            color: '#FFF',
-          },
-        };
-
-        const summaryTotals = {
-          clinicalLevel: 'Total Weeks',
-          minStartDate: '',
-          maxStartDate: '',
-          programName: '',
-          clinicalWeeks: this.getTotals(result, 'clinicalWeeks'),
-          nonClinicalWeeks: this.getTotals(result, 'nonClinicalWeeks'),
-          essentialsWeeks: this.getTotals(result, 'essentialsWeeks'),
-          rowStyle: {
-            'font-weight': 'bold',
-            'background-color': '#1F3758',
-            color: '#FFF',
-          },
-        };
-        const summaryAverages = {
-          clinicalLevel: 'Avg Weeks',
-          minStartDate: '',
-          maxStartDate: '',
-          programName: '',
-          clinicalWeeks: this.getAverages(result, 'clinicalWeeks'),
-          nonClinicalWeeks: this.getAverages(result, 'nonClinicalWeeks'),
-          essentialsWeeks: this.getAverages(result, 'essentialsWeeks'),
-          rowStyle: {
-            'font-weight': 'bold',
-            'background-color': '#1F3758',
-            color: '#FFF',
-          },
-        };
-        result.push(level4AndChief);
-        result.push(level5AndChief);
-        result.sort((a: any, b: any) =>
-          a.clinicalLevel > b.clinicalLevel ? 1 : -1
-        );
-        result.push(summaryTotals);
-        result.push(summaryAverages);
-
         ctx.setState({
           ...state,
-          gmeSummary: result,
+          gmeSummary: this.buildSummaryRows(result),
           errors: null,
         });
       }),
@@ -231,6 +144,11 @@ export class GraduateMedicalEducationState {
         const gmeRotations = state.gmeRotations.map((item) =>
           item.id === readOnlyResult.id ? readOnlyResult : item
         );
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Rotation Updated Successfully',
+          true
+        );
         ctx.setState({
           ...state,
           gmeRotations: gmeRotations.sort((a, b) =>
@@ -275,6 +193,11 @@ export class GraduateMedicalEducationState {
           isCredit: result.isCredit,
           isEssential: result.isEssential,
         };
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Rotation Created Successfully',
+          true
+        );
         ctx.setState({
           ...state,
           gmeRotations: [readOnlyResult, ...state.gmeRotations].sort((a, b) =>
@@ -333,6 +256,91 @@ export class GraduateMedicalEducationState {
     ctx: StateContext<IGraduateMedicalEducation>
   ) {
     ctx.patchState({ errors: null });
+  }
+
+  buildSummaryRows(items: any[]) {
+    let allRows = [];
+    const level4AndChief = {
+      clinicalLevel: 'Clinical Level 4 Totals',
+      minStartDate: '',
+      maxStartDate: '',
+      programName: '',
+      clinicalWeeks: this.getTotals(items, 'clinicalWeeks', 'Clinical Level 4'),
+      nonClinicalWeeks: this.getTotals(
+        items,
+        'nonClinicalWeeks',
+        'Clinical Level 4'
+      ),
+      essentialsWeeks: this.getTotals(
+        items,
+        'essentialsWeeks',
+        'Clinical Level 4'
+      ),
+      rowStyle: {
+        'font-weight': 'bold',
+        'background-color': '#335b92',
+        color: '#FFF',
+      },
+    };
+    const level5AndChief = {
+      clinicalLevel: 'Clinical Level 5 Totals',
+      minStartDate: '',
+      maxStartDate: '',
+      programName: '',
+      clinicalWeeks: this.getTotals(items, 'clinicalWeeks', 'Clinical Level 5'),
+      nonClinicalWeeks: this.getTotals(
+        items,
+        'nonClinicalWeeks',
+        'Clinical Level 5'
+      ),
+      essentialsWeeks: this.getTotals(
+        items,
+        'essentialsWeeks',
+        'Clinical Level 5'
+      ),
+      rowStyle: {
+        'font-weight': 'bold',
+        'background-color': '#335b92',
+        color: '#FFF',
+      },
+    };
+
+    const summaryTotals = {
+      clinicalLevel: 'Total Weeks',
+      minStartDate: '',
+      maxStartDate: '',
+      programName: '',
+      clinicalWeeks: this.getTotals(items, 'clinicalWeeks'),
+      nonClinicalWeeks: this.getTotals(items, 'nonClinicalWeeks'),
+      essentialsWeeks: this.getTotals(items, 'essentialsWeeks'),
+      rowStyle: {
+        'font-weight': 'bold',
+        'background-color': '#1F3758',
+        color: '#FFF',
+      },
+    };
+    const summaryAverages = {
+      clinicalLevel: 'Avg Weeks',
+      minStartDate: '',
+      maxStartDate: '',
+      programName: '',
+      clinicalWeeks: this.getAverages(items, 'clinicalWeeks'),
+      nonClinicalWeeks: this.getAverages(items, 'nonClinicalWeeks'),
+      essentialsWeeks: this.getAverages(items, 'essentialsWeeks'),
+      rowStyle: {
+        'font-weight': 'bold',
+        'background-color': '#1F3758',
+        color: '#FFF',
+      },
+    };
+    allRows = [...items, level4AndChief, level5AndChief];
+    allRows.sort((a: any, b: any) =>
+      a.clinicalLevel > b.clinicalLevel ? 1 : -1
+    );
+    allRows.push(summaryTotals);
+    allRows.push(summaryAverages);
+
+    return allRows;
   }
 
   getTotals(items: any[], prop: string, filter?: string) {

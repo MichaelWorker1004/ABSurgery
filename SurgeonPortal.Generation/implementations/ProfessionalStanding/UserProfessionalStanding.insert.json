@@ -1,0 +1,251 @@
+{
+  "name": "UserProfessionalStanding",
+  "implementationName": "ProfessionalStanding\\UserProfessionalStanding.insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.ins_user_sanctions",
+    "ControllerName": "ProfessionalStanding\\UserProfessionalStandingController",
+    "ControllerRoute": "api/professional-standing",
+    "ControllerVersion": "1",
+    "FetchImplementation": "ProfessionalStanding\\UserProfessionalStanding.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ProfessionalStanding\\UserProfessionalStanding",
+    "ModelGroup": "UserProfessionalStanding",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.ins_user_sanctions",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[ins_user_sanctions]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "PrimaryPracticeID",
+            "nameOverride": "PrimaryPracticeId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "PrimaryPracticeId"
+          },
+          {
+            "name": "OrganizationTypeId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "OrganizationTypeId"
+          },
+          {
+            "name": "ExplanationOfNonPrivileges",
+            "dataType": "string",
+            "maxLength": -1,
+            "precision": 0,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExplanationOfNonPrivileges"
+          },
+          {
+            "name": "ExplanationOfNonClinicalActivities",
+            "dataType": "string",
+            "maxLength": -1,
+            "precision": 0,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExplanationOfNonClinicalActivities"
+          },
+          {
+            "name": "CreatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ProfessionalStanding\\UserProfessionalStanding",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "PrimaryPracticeId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PrimaryPracticeId"
+              },
+              {
+                "name": "PrimaryPractice",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PrimaryPractice"
+              },
+              {
+                "name": "OrganizationTypeId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.OrganizationTypeId"
+              },
+              {
+                "name": "OrganizationType",
+                "dataType": "string",
+                "maxLength": 200,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.OrganizationType"
+              },
+              {
+                "name": "ExplanationOfNonPrivileges",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExplanationOfNonPrivileges"
+              },
+              {
+                "name": "ExplanationOfNonClinicalActivities",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExplanationOfNonClinicalActivities"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "PrimaryPracticeId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "OrganizationTypeId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ExplanationOfNonPrivileges",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ExplanationOfNonClinicalActivities",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ProfessionalStanding\\UserProfessionalStanding.insert UserProfessionalStanding -t=ytg-framework/editable-create -p:Model=ProfessionalStanding\\UserProfessionalStanding -p:Adapter=sp:ABSSP-[dbo].[ins_user_professional_standing] -p:FetchImplementation=ProfessionalStanding\\UserProfessionalStanding.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfessionalStanding -p:Route= -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ProfessionalStanding\\UserProfessionalStanding.insert UserProfessionalStanding -t=ytg-framework/editable-create -p:Model=ProfessionalStanding\\UserProfessionalStanding -p:Adapter=sp:ABSSP-[dbo].[ins_user_professional_standing] -p:FetchImplementation=ProfessionalStanding\\UserProfessionalStanding.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfessionalStanding -p:Route= -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-05T19:16:50.2784429Z"
+  },
+  "version": 1
+}

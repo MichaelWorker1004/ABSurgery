@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\PrimaryPracticeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Practice",
+      "dataType": "string",
+      "maxLength": 100,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\PrimaryPracticeReadOnly -sp [dbo].[get_primary_practice] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-05T17:21:59.4057823Z"
+  },
+  "version": 1
+}

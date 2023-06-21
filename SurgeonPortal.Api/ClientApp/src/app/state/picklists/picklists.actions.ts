@@ -69,3 +69,27 @@ export class GetClinicalLevelList {
 export class GetClinicalActivityList {
   static readonly type = '[Picklists] Get the Clinical Activity list';
 }
+
+export class GetLicenseTypeList {
+  static readonly type = '[Picklists] Get the License Type list';
+}
+
+export class GetPracticeTypeList {
+  static readonly type = '[Picklists] Get the Practice Type list';
+}
+
+export class GetOrganizationTypeList {
+  static readonly type = '[Picklists] Get the Organization Type list';
+}
+
+export class GetAppointmentTypeList {
+  static readonly type = '[Picklists] Get the Appointment Type list';
+}
+
+export class GetJcahoOrganizationList {
+  static readonly type = '[Picklists] Get the Jcaho Organization list';
+}
+
+export class GetPrimaryPracticeList {
+  static readonly type = '[Picklists] Get the Primary Practice list';
+}

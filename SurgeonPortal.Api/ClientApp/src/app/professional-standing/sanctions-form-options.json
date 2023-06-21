@@ -1,0 +1,89 @@
+{
+  "formGroup": "santionsEthics",
+  "formName": "",
+  "formDesc": "",
+  "specialValidators": [],
+  "fields": [
+    {
+      "label": "Have you had treatment for drug or alcohol abuse?",
+      "subLabel": "",
+      "value": false,
+      "required": true,
+      "name": "hadDrugAlchoholTreatment",
+      "type": "radio-group",
+      "size": "col-12",
+      "optionsSource": "yesNoOptions",
+      "options": [
+        {
+          "label": "Yes",
+          "value": true
+        },
+        {
+          "label": "No",
+          "value": false
+        }
+      ]
+    },
+    {
+      "label": "Have you been denied hospital privileges?",
+      "subLabel": "",
+      "value": false,
+      "required": true,
+      "name": "hadHospitalPrivilegesDenied",
+      "type": "radio-group",
+      "size": "col-12",
+      "optionsSource": "yesNoOptions"
+    },
+    {
+      "label": "Have you been reprimanded by any licensing authority or had your license to practice medicine restricted, denied, suspended or revoked, or has it been voluntarily surrendered in any jurisdiction while under investigation?",
+      "subLabel": "",
+      "value": false,
+      "required": true,
+      "name": "hadLicenseRestricted",
+      "type": "radio-group",
+      "size": "col-12",
+      "optionsSource": "yesNoOptions"
+    },
+    {
+      "label": "Have you had hospital staff privileges (or any portion thereof) restricted, suspended, or revoked, or otherwise subject to disciplinary action?",
+      "subLabel": "",
+      "value": false,
+      "required": true,
+      "name": "hadHospitalPrivilegesRestricted",
+      "type": "radio-group",
+      "size": "col-12",
+      "optionsSource": "yesNoOptions"
+    },
+    {
+      "label": "Have you been convicted of a felony?",
+      "subLabel": "",
+      "value": false,
+      "required": true,
+      "name": "hadFelonyConviction",
+      "type": "radio-group",
+      "size": "col-12",
+      "optionsSource": "yesNoOptions"
+    },
+    {
+      "label": "Have you been censured by the American College of Surgeons, a hospital or other national or state society?",
+      "subLabel": "",
+      "value": false,
+      "required": true,
+      "name": "hadCensure",
+      "type": "radio-group",
+      "size": "col-12",
+      "optionsSource": "yesNoOptions"
+    },
+    {
+      "label": "Explain",
+      "subLabel": "",
+      "required": false,
+      "name": "explanation",
+      "value": "''",
+      "helpText": "Only if you answered YES to any of the above questions.",
+      "placeholder": "Explain any 'yes' answers...",
+      "type": "textarea",
+      "size": "col-12"
+    }
+  ]
+}

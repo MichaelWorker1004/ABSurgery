@@ -722,6 +722,9 @@ sl-dialog.hide-close::part(header-actions) {
 .text-danger {
   color: var(--global-danger);
 }
+.text-muted {
+  color: var(--global-gray);
+}
 
 /* Global Styles */
 html {

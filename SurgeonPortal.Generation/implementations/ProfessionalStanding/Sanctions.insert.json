@@ -1,0 +1,302 @@
+{
+  "name": "Sanctions",
+  "implementationName": "ProfessionalStanding\\Sanctions.insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.ins_user_sanctions",
+    "ControllerName": "ProfessionalStanding\\SanctionsController",
+    "ControllerRoute": "api/professional-standing/sanctions",
+    "ControllerVersion": "1",
+    "FetchImplementation": "ProfessionalStanding\\Sanctions.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ProfessionalStanding\\Sanctions",
+    "ModelGroup": "Sanctions",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.ins_user_sanctions",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[ins_user_sanctions]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "HadDrugAlchoholTreatment",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadDrugAlchoholTreatment"
+          },
+          {
+            "name": "HadHospitalPrivilegesDenied",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadHospitalPrivilegesDenied"
+          },
+          {
+            "name": "HadLicenseRestricted",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadLicenseRestricted"
+          },
+          {
+            "name": "HadHospitalPrivilegesRestricted",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadHospitalPrivilegesRestricted"
+          },
+          {
+            "name": "HadFelonyConviction",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadFelonyConviction"
+          },
+          {
+            "name": "HadCensure",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadCensure"
+          },
+          {
+            "name": "Explanation",
+            "dataType": "string",
+            "maxLength": -1,
+            "precision": 0,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Explanation"
+          },
+          {
+            "name": "CreatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ProfessionalStanding\\Sanctions",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "HadDrugAlchoholTreatment",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadDrugAlchoholTreatment"
+              },
+              {
+                "name": "HadHospitalPrivilegesDenied",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadHospitalPrivilegesDenied"
+              },
+              {
+                "name": "HadLicenseRestricted",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadLicenseRestricted"
+              },
+              {
+                "name": "HadHospitalPrivilegesRestricted",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadHospitalPrivilegesRestricted"
+              },
+              {
+                "name": "HadFelonyConviction",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadFelonyConviction"
+              },
+              {
+                "name": "HadCensure",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.HadCensure"
+              },
+              {
+                "name": "Explanation",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Explanation"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "HadDrugAlchoholTreatment",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadHospitalPrivilegesDenied",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadLicenseRestricted",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadHospitalPrivilegesRestricted",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadFelonyConviction",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadCensure",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "Explanation",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ProfessionalStanding\\Sanctions.insert Sanctions -t=ytg-framework/editable-create -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[ins_user_professional_standing] -p:FetchImplementation=ProfessionalStanding\\Sanctions.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route= -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ProfessionalStanding\\Sanctions.insert Sanctions -t=ytg-framework/editable-create -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[ins_user_professional_standing] -p:FetchImplementation=ProfessionalStanding\\Sanctions.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route= -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-05T19:16:50.2784429Z"
+  },
+  "version": 1
+}

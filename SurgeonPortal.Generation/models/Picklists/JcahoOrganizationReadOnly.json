@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\JcahoOrganizationReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "OrganizationId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "OrganizationName",
+      "dataType": "string",
+      "maxLength": 510,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\JcahoOrganizationReadOnly -sp [dbo].[get_jcaho] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-14T20:08:06.5137551Z"
+  },
+  "version": 1
+}

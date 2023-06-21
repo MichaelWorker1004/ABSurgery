@@ -30,7 +30,7 @@ namespace SurgeonPortal.Api.Controllers.Surgeons
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CertificationReadOnlyModel>))]

@@ -1,0 +1,159 @@
+<div slot="label">
+  {{ originalFormValues?.id ? 'Edit' : 'Add' }} Hospital Appointment
+</div>
+<ng-container *ngIf="clearErrors && errors$ | async as error">
+  <div class="mb-3">
+    <abs-form-errors
+      [errors]="error"
+      [clearErrors]="clearErrors"
+    ></abs-form-errors>
+  </div>
+</ng-container>
+<form [formGroup]="hospitalAppointmentForm" (ngSubmit)="onSubmit()">
+  <div class="grid">
+    <div class="col-12">
+      <p class="m-0">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+        nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat,
+        egestas sit amet tortor at, condimentum tempor erat.
+      </p>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="practiceTypeId">Practice Type*</label>
+
+      <p-dropdown
+        placeholder="Select practice type..."
+        [options]="optionLists.practiceTypeOptions"
+        name="practiceTypeId"
+        inputId="practiceTypeId"
+        [editable]="false"
+        formControlName="practiceTypeId"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="appointmentTypeId">Appointment Type*</label>
+
+      <p-dropdown
+        placeholder="Select appointment type..."
+        [options]="optionLists.appointmentTypeOptions"
+        name="appointmentTypeId"
+        inputId="appointmentTypeId"
+        [editable]="false"
+        formControlName="appointmentTypeId"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="organizationTypeId">Organization Type*</label>
+
+      <p-dropdown
+        placeholder="Select organization type..."
+        [options]="optionLists.organizationTypeOptions"
+        name="organizationTypeId"
+        inputId="organizationTypeId"
+        [editable]="false"
+        formControlName="organizationTypeId"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="stateCode">State*</label>
+
+      <p-dropdown
+        placeholder="Select a state..."
+        [options]="optionLists.stateCodeOptions"
+        name="stateCode"
+        inputId="stateCode"
+        [editable]="false"
+        formControlName="stateCode"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="organizationId"
+        >Institution<span *ngIf="!hospitalAppointmentForm.get('other')?.value"
+          >*</span
+        ></label
+      >
+
+      <p-autoComplete
+        inputId="organizationId"
+        formControlName="organizationId"
+        placeholder="Select an institution..."
+        [suggestions]="optionLists.filteredOrganizationOptions"
+        (completeMethod)="
+          filterItems(
+            $event,
+            'organizationOptions',
+            'filteredOrganizationOptions'
+          )
+        "
+        [forceSelection]="true"
+        appendTo="body"
+        field="itemDescription"
+        [minLength]="3"
+      ></p-autoComplete>
+      <small class="form-helper-text text-muted"
+        >please enter at least 3 characters</small
+      >
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="other"
+        >Other<span
+          *ngIf="!hospitalAppointmentForm.get('organizationId')?.value"
+          >*</span
+        ></label
+      >
+
+      <input
+        placeholder="Enter an institution name..."
+        name="other"
+        id="other"
+        [required]="true"
+        formControlName="other"
+        pInputText
+      />
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="authorizingOfficial">Official*</label>
+
+      <input
+        placeholder="Enter the authorizing official..."
+        name="authorizingOfficial"
+        id="authorizingOfficial"
+        [required]="true"
+        formControlName="authorizingOfficial"
+        pInputText
+      />
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12 mt-5 flex justify-content-end btn-container">
+      <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+        >Cancel</p-button
+      >
+      <p-button
+        type="submit"
+        [style]="{ width: '337px' }"
+        [disabled]="hospitalAppointmentForm.invalid"
+        >Save</p-button
+      >
+    </div>
+  </div>
+</form>

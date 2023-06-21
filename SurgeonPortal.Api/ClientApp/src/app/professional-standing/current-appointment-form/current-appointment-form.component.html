@@ -1,0 +1,90 @@
+<ng-container *ngIf="clearErrors && errors$ | async as error">
+  <div class="mb-3">
+    <abs-form-errors
+      [errors]="error"
+      [clearErrors]="clearErrors"
+    ></abs-form-errors>
+  </div>
+</ng-container>
+<form [formGroup]="currentAppointmentForm" (ngSubmit)="onSubmit()">
+  <div class="grid">
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="primaryPracticeId"
+        >Primary Current Practice or Training*</label
+      >
+
+      <p-dropdown
+        placeholder="Select a practice or training..."
+        [options]="optionLists.primaryPracticeOptions"
+        name="primaryPracticeId"
+        inputId="primaryPracticeId"
+        [editable]="false"
+        formControlName="primaryPracticeId"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="organizationTypeId"
+        >Type of Organization of Primary Practice or Training*</label
+      >
+
+      <p-dropdown
+        placeholder="Select an organization type..."
+        [options]="optionLists.organizationTypeOptions"
+        name="organizationTypeId"
+        inputId="organizationTypeId"
+        [editable]="false"
+        formControlName="organizationTypeId"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="explanationOfNonPrivileges"
+        >Lack of Hospital Privileges</label
+      >
+
+      <textarea
+        pInputTextarea
+        id="explanationOfNonPrivileges"
+        name="explanationOfNonPrivileges"
+        placeholder="Explain any lack of hospital privileges..."
+        rows="5"
+        formControlName="explanationOfNonPrivileges"
+      ></textarea>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="explanationOfNonClinicalActivities"
+        >Non-Clinical Activities</label
+      >
+
+      <textarea
+        pInputTextarea
+        id="explanationOfNonClinicalActivities"
+        name="explanationOfNonClinicalActivities"
+        placeholder="Explain any non-clinical activities..."
+        rows="5"
+        formControlName="explanationOfNonClinicalActivities"
+      ></textarea>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12 mt-5 flex justify-content-end btn-container">
+      <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+        >Cancel</p-button
+      >
+      <p-button
+        type="submit"
+        [style]="{ width: '337px' }"
+        [disabled]="currentAppointmentForm.invalid"
+        >Save</p-button
+      >
+    </div>
+  </div>
+</form>

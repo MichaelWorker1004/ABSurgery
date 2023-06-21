@@ -1,0 +1,157 @@
+{
+  "name": "Sanctions",
+  "implementationName": "ProfessionalStanding\\Sanctions.update",
+  "template": "ytg-framework/editable-edit",
+  "parameters": {
+    "Adapter": "dbo.update_user_sanctions_byuserid",
+    "ControllerName": "ProfessionalStanding\\SanctionsController",
+    "ControllerRoute": "api/professional-standing/sanctions",
+    "ControllerVersion": "1",
+    "FetchImplementation": "ProfessionalStanding\\Sanctions.GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ProfessionalStanding\\Sanctions",
+    "ModelGroup": "Sanctions",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_user_sanctions_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_user_sanctions_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "HadDrugAlchoholTreatment",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadDrugAlchoholTreatment"
+          },
+          {
+            "name": "HadHospitalPrivilegesDenied",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadHospitalPrivilegesDenied"
+          },
+          {
+            "name": "HadLicenseRestricted",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadLicenseRestricted"
+          },
+          {
+            "name": "HadHospitalPrivilegesRestricted",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadHospitalPrivilegesRestricted"
+          },
+          {
+            "name": "HadFelonyConviction",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadFelonyConviction"
+          },
+          {
+            "name": "HadCensure",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "HadCensure"
+          },
+          {
+            "name": "Explanation",
+            "dataType": "string",
+            "maxLength": -1,
+            "precision": 0,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Explanation"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "HadDrugAlchoholTreatment",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadHospitalPrivilegesDenied",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadLicenseRestricted",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadHospitalPrivilegesRestricted",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadFelonyConviction",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "HadCensure",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "Explanation",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ProfessionalStanding\\Sanctions.update Sanctions -t=ytg-framework/editable-edit -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[update_user_professional_standing_byuserid] -p:FetchImplementation=ProfessionalStanding\\Sanctions.GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route= -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ProfessionalStanding\\Sanctions.update Sanctions -t=ytg-framework/editable-edit -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[update_user_professional_standing_byuserid] -p:FetchImplementation=ProfessionalStanding\\Sanctions.GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route= -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-05T19:17:39.8314834Z"
+  },
+  "version": 1
+}

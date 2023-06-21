@@ -30,7 +30,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AccreditedProgramInstitutionReadOnlyModel>))]
@@ -46,7 +46,23 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AppointmentTypeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("appointment-types")]
+        public async Task<ActionResult<IEnumerable<AppointmentTypeReadOnlyModel>>> GetAppointmentTypeReadOnly_GetAllAsync(
+            [FromServices] IAppointmentTypeReadOnlyListFactory appointmentTypeReadOnlyListFactory)
+        {
+            var items = await appointmentTypeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<AppointmentTypeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CertificateTypeReadOnlyModel>))]
@@ -62,7 +78,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClinicalActivityReadOnlyModel>))]
@@ -78,7 +94,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClinicalLevelReadOnlyModel>))]
@@ -94,7 +110,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CountryReadOnlyModel>))]
@@ -110,7 +126,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DegreeReadOnlyModel>))]
@@ -126,7 +142,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DocumentTypeReadOnlyModel>))]
@@ -142,7 +158,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EthnicityReadOnlyModel>))]
@@ -158,7 +174,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<FellowshipProgramReadOnlyModel>))]
@@ -174,7 +190,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GenderReadOnlyModel>))]
@@ -190,7 +206,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GraduateProfileReadOnlyModel>))]
@@ -206,7 +222,23 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<JcahoOrganizationReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("jcaho-organizations")]
+        public async Task<ActionResult<IEnumerable<JcahoOrganizationReadOnlyModel>>> GetJcahoOrganizationReadOnly_GetAllAsync(
+            [FromServices] IJcahoOrganizationReadOnlyListFactory jcahoOrganizationReadOnlyListFactory)
+        {
+            var items = await jcahoOrganizationReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<JcahoOrganizationReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LanguageReadOnlyModel>))]
@@ -222,7 +254,71 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LicenseTypeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("license-types")]
+        public async Task<ActionResult<IEnumerable<LicenseTypeReadOnlyModel>>> GetLicenseTypeReadOnly_GetAllAsync(
+            [FromServices] ILicenseTypeReadOnlyListFactory licenseTypeReadOnlyListFactory)
+        {
+            var items = await licenseTypeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<LicenseTypeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<OrganizationTypeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("organization-types")]
+        public async Task<ActionResult<IEnumerable<OrganizationTypeReadOnlyModel>>> GetOrganizationTypeReadOnly_GetAllAsync(
+            [FromServices] IOrganizationTypeReadOnlyListFactory organizationTypeReadOnlyListFactory)
+        {
+            var items = await organizationTypeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<OrganizationTypeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PracticeTypeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("practice-types")]
+        public async Task<ActionResult<IEnumerable<PracticeTypeReadOnlyModel>>> GetPracticeTypeReadOnly_GetAllAsync(
+            [FromServices] IPracticeTypeReadOnlyListFactory practiceTypeReadOnlyListFactory)
+        {
+            var items = await practiceTypeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<PracticeTypeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PrimaryPracticeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("primary-practices")]
+        public async Task<ActionResult<IEnumerable<PrimaryPracticeReadOnlyModel>>> GetPrimaryPracticeReadOnly_GetAllAsync(
+            [FromServices] IPrimaryPracticeReadOnlyListFactory primaryPracticeReadOnlyListFactory)
+        {
+            var items = await primaryPracticeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<PrimaryPracticeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RaceReadOnlyModel>))]
@@ -238,7 +334,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ResidencyProgramReadOnlyModel>))]
@@ -254,7 +350,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StateReadOnlyModel>))]
@@ -271,7 +367,7 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TrainingTypeReadOnlyModel>))]

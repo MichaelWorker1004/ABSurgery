@@ -1,0 +1,103 @@
+<ng-container *ngIf="clearErrors && errors$ | async as error">
+  <div class="mb-3">
+    <abs-form-errors
+      [errors]="error"
+      [clearErrors]="clearErrors"
+    ></abs-form-errors>
+  </div>
+</ng-container>
+<form [formGroup]="medicalLicenseForm" (ngSubmit)="onSubmit()">
+  <div class="grid">
+    <div class="col-12">
+      <p class="m-0">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+        nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat,
+        egestas sit amet tortor at, condimentum tempor erat.
+      </p>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="issuingStateId"> License State* </label>
+
+      <p-dropdown
+        placeholder="Select license state..."
+        [options]="optionLists.licenseStateOptions"
+        name="issuingStateId"
+        inputId="issuingStateId"
+        [editable]="false"
+        formControlName="issuingStateId"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="licenseNumber"> License Number* </label>
+
+      <input
+        placeholder="Enter License Number..."
+        name="licenseNumber"
+        id="licenseNumber"
+        [required]="true"
+        formControlName="licenseNumber"
+        pInputText
+      />
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="licenseTypeId"> License Type* </label>
+
+      <p-dropdown
+        placeholder="Select license type..."
+        [options]="optionLists.licenseTypeOptions"
+        name="licenseTypeId"
+        inputId="licenseTypeId"
+        [editable]="false"
+        formControlName="licenseTypeId"
+        appendTo="body"
+        optionLabel="itemDescription"
+        optionValue="itemValue"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="issueDate"> Issue Date* </label>
+
+      <p-calendar
+        formControlName="issueDate"
+        [showIcon]="true"
+        inputId="issueDate"
+        placeholder="MM/DD/YYYY"
+        [required]="true"
+        appendTo="body"
+      ></p-calendar>
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="expireDate"> Expire Date* </label>
+
+      <p-calendar
+        formControlName="expireDate"
+        [showIcon]="true"
+        inputId="expireDate"
+        placeholder="MM/DD/YYYY"
+        [required]="true"
+        appendTo="body"
+      ></p-calendar>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12 mt-5 flex justify-content-end btn-container">
+      <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+        >Cancel</p-button
+      >
+      <p-button
+        type="submit"
+        [style]="{ width: '337px' }"
+        [disabled]="medicalLicenseForm.invalid"
+        >Save</p-button
+      >
+    </div>
+  </div>
+</form>

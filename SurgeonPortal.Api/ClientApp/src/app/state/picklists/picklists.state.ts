@@ -13,6 +13,12 @@ import {
   IClinicalLevelReadOnlyModel,
   IClinicalActivityReadOnlyModel,
   PicklistsService,
+  ILicenseTypeReadOnlyModel,
+  IPracticeTypeReadOnlyModel,
+  IOrganizationTypeReadOnlyModel,
+  IAppointmentTypeReadOnlyModel,
+  IJcahoOrganizationReadOnlyModel,
+  IPrimaryPracticeReadOnlyModel,
 } from '../../api';
 import {
   GetAccreditedProgramInstitutionsList,
@@ -32,6 +38,12 @@ import {
   GetClinicalActivityList,
   GetCertificateTypes,
   GetDocumentTypes,
+  GetLicenseTypeList,
+  GetPracticeTypeList,
+  GetOrganizationTypeList,
+  GetAppointmentTypeList,
+  GetJcahoOrganizationList,
+  GetPrimaryPracticeList,
 } from './picklists.actions';
 import { IFormErrors } from '../../shared/common';
 import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
@@ -63,11 +75,24 @@ export interface IPicklist {
   clinicalActivities: IClinicalActivityReadOnlyModel[] | undefined;
   certificateTypes: ICertificateTypeReadOnlyModel[] | undefined;
   documentTypes: IDocumentTypeReadOnlyModel[] | undefined;
+  licenseTypes: IPickListItemNumber[] | undefined;
+  practiceTypes: IPickListItemNumber[] | undefined;
+  organizationTypes: IPickListItemNumber[] | undefined;
+  appointmentTypes: IPickListItemNumber[] | undefined;
+  jcahoOrganizations: IPickListItemNumber[] | undefined;
+  primaryPractices: IPickListItemNumber[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
 export interface IPickListItem {
   itemValue: string | null | undefined;
+  itemDescription: string | null | undefined;
+  modifier?: string | null | undefined;
+  isCredit?: boolean | null | undefined;
+  isEssential?: boolean | null | undefined;
+}
+export interface IPickListItemNumber {
+  itemValue: number | null | undefined;
   itemDescription: string | null | undefined;
   modifier?: string | null | undefined;
   isCredit?: boolean | null | undefined;
@@ -118,6 +143,12 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     clinicalActivities: undefined,
     certificateTypes: undefined,
     documentTypes: undefined,
+    licenseTypes: undefined,
+    practiceTypes: undefined,
+    organizationTypes: undefined,
+    appointmentTypes: undefined,
+    jcahoOrganizations: undefined,
+    primaryPractices: undefined,
   },
 })
 @Injectable()
@@ -473,21 +504,171 @@ export class PicklistsState {
     );
   }
 
-  @Action(GetDocumentTypes)
-  getDocumentTypes(
+  @Action(GetLicenseTypeList)
+  getLicenseTypeList(
     ctx: StateContext<IPicklist>
-  ): Observable<IDocumentTypeReadOnlyModel[] | undefined> {
-    if (ctx.getState()?.documentTypes) {
-      return of(ctx.getState()?.documentTypes);
+  ): Observable<IPickListItemNumber[] | undefined> {
+    if (ctx.getState()?.licenseTypes) {
+      return of(ctx.getState()?.licenseTypes);
     }
-    return this.picklistsService.retrieveDocumentTypeReadOnly_GetAll().pipe(
-      tap((documentTypes: IDocumentTypeReadOnlyModel[]) => {
+    return this.picklistsService.retrieveLicenseTypeReadOnly_GetAll().pipe(
+      tap((licenseTypes: ILicenseTypeReadOnlyModel[]) => {
+        const licenseTypesList = [] as IPickListItemNumber[];
+        licenseTypes.forEach((type) => {
+          licenseTypesList.push({
+            itemValue: type.id,
+            itemDescription: type.name,
+          });
+        });
+
         ctx.patchState({
-          documentTypes,
+          licenseTypes: licenseTypesList,
         });
       }),
       catchError((error) => {
-        console.error('------- In Picklists Store: Document Types', error);
+        console.error('------- In Picklists Store: License Types', error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetPracticeTypeList)
+  getPracticeTypeList(
+    ctx: StateContext<IPicklist>
+  ): Observable<IPickListItemNumber[] | undefined> {
+    if (ctx.getState()?.practiceTypes) {
+      return of(ctx.getState()?.practiceTypes);
+    }
+    return this.picklistsService.retrievePracticeTypeReadOnly_GetAll().pipe(
+      tap((practiceTypes: IPracticeTypeReadOnlyModel[]) => {
+        const practiceTypesList = [] as IPickListItemNumber[];
+        practiceTypes.forEach((type) => {
+          practiceTypesList.push({
+            itemValue: type.id,
+            itemDescription: type.name,
+          });
+        });
+
+        ctx.patchState({
+          practiceTypes: practiceTypesList,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Practice Types', error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetOrganizationTypeList)
+  getOrganizationTypeList(
+    ctx: StateContext<IPicklist>
+  ): Observable<IPickListItemNumber[] | undefined> {
+    if (ctx.getState()?.organizationTypes) {
+      return of(ctx.getState()?.organizationTypes);
+    }
+    return this.picklistsService.retrieveOrganizationTypeReadOnly_GetAll().pipe(
+      tap((orgTypes: IOrganizationTypeReadOnlyModel[]) => {
+        const orgTypesList = [] as IPickListItemNumber[];
+        orgTypes.forEach((type) => {
+          orgTypesList.push({
+            itemValue: type.id,
+            itemDescription: type.type,
+          });
+        });
+
+        ctx.patchState({
+          organizationTypes: orgTypesList,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Organization Types', error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetAppointmentTypeList)
+  getAppointmentTypeList(
+    ctx: StateContext<IPicklist>
+  ): Observable<IPickListItemNumber[] | undefined> {
+    if (ctx.getState()?.appointmentTypes) {
+      return of(ctx.getState()?.appointmentTypes);
+    }
+    return this.picklistsService.retrieveAppointmentTypeReadOnly_GetAll().pipe(
+      tap((appointmentTypes: IAppointmentTypeReadOnlyModel[]) => {
+        const appointmentTypesList = [] as IPickListItemNumber[];
+        appointmentTypes.forEach((type) => {
+          appointmentTypesList.push({
+            itemValue: type.id,
+            itemDescription: type.name,
+          });
+        });
+
+        ctx.patchState({
+          appointmentTypes: appointmentTypesList,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Appointment Types', error);
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetJcahoOrganizationList)
+  getJcahoOrganizationList(
+    ctx: StateContext<IPicklist>
+  ): Observable<IPickListItemNumber[] | undefined> {
+    if (ctx.getState()?.jcahoOrganizations) {
+      return of(ctx.getState()?.jcahoOrganizations);
+    }
+    return this.picklistsService
+      .retrieveJcahoOrganizationReadOnly_GetAll()
+      .pipe(
+        tap((jcahoOrganizations: IJcahoOrganizationReadOnlyModel[]) => {
+          const jcahoOrganizationList = [] as IPickListItemNumber[];
+          jcahoOrganizations.forEach((type) => {
+            jcahoOrganizationList.push({
+              itemValue: type.organizationId,
+              itemDescription: type.organizationName,
+            });
+          });
+
+          ctx.patchState({
+            jcahoOrganizations: jcahoOrganizationList,
+          });
+        }),
+        catchError((error) => {
+          console.error('------- In Picklists Store: Appointment Types', error);
+          return of(error);
+        })
+      );
+  }
+
+  @Action(GetPrimaryPracticeList)
+  getPrimaryPracticeList(
+    ctx: StateContext<IPicklist>
+  ): Observable<IPickListItemNumber[] | undefined> {
+    if (ctx.getState()?.primaryPractices) {
+      return of(ctx.getState()?.primaryPractices);
+    }
+    return this.picklistsService.retrievePrimaryPracticeReadOnly_GetAll().pipe(
+      tap((primaryPractices: IPrimaryPracticeReadOnlyModel[]) => {
+        const primaryPracticeList = [] as IPickListItemNumber[];
+        primaryPractices.forEach((type) => {
+          primaryPracticeList.push({
+            itemValue: type.id,
+            itemDescription: type.practice,
+          });
+        });
+
+        ctx.patchState({
+          primaryPractices: primaryPracticeList,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Primary Practices', error);
         return of(error);
       })
     );
@@ -512,6 +693,12 @@ export class PicklistsState {
       this.getFellowshipPrograms(ctx).pipe(catchError((error) => of(error))),
       this.getResidencyPrograms(ctx).pipe(catchError((error) => of(error))),
       this.getCertificateTypes(ctx).pipe(catchError((error) => of(error))),
+      this.getLicenseTypeList(ctx).pipe(catchError((error) => of(error))),
+      this.getPracticeTypeList(ctx).pipe(catchError((error) => of(error))),
+      this.getOrganizationTypeList(ctx).pipe(catchError((error) => of(error))),
+      this.getAppointmentTypeList(ctx).pipe(catchError((error) => of(error))),
+      this.getJcahoOrganizationList(ctx).pipe(catchError((error) => of(error))),
+      this.getPrimaryPracticeList(ctx).pipe(catchError((error) => of(error))),
     ];
 
     if (payload?.countryCode) {

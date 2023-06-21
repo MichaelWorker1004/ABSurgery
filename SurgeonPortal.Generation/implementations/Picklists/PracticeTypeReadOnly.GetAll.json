@@ -1,0 +1,66 @@
+{
+  "name": "PracticeTypeReadOnly",
+  "implementationName": "Picklists\\PracticeTypeReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_practice_types",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\PracticeTypeReadOnly",
+    "ModelGroup": "PracticeTypeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "practice-types",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_practice_types",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_practice_types]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\PracticeTypeReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Name",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Name"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\PracticeTypeReadOnly.GetAll PracticeTypeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\PracticeTypeReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_practice_types] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=PracticeTypeReadOnly -p:Route=practice-types -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Picklists\\PracticeTypeReadOnly.GetAll PracticeTypeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\PracticeTypeReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_practice_types] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=PracticeTypeReadOnly -p:Route=practice-types -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-05T19:11:34.1767509Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,64 @@
+{
+  "name": "UserAppointment",
+  "implementationName": "ProfessionalStanding\\UserAppointment.delete",
+  "template": "ytg-framework/editable-delete",
+  "parameters": {
+    "Adapter": "dbo.del_userhospappt",
+    "ControllerName": "ProfessionalStanding\\UserAppointmentController",
+    "ControllerRoute": "api/professional-standing/user-appointment",
+    "ControllerVersion": "1",
+    "FetchImplementation": "ProfessionalStanding\\UserAppointment.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ProfessionalStanding\\UserAppointment",
+    "ModelGroup": "UserAppointment",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.del_userhospappt",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[del_userhospappt]",
+        "parameters": [
+          {
+            "name": "ApptId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ApptId"
+          },
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ApptId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ProfessionalStanding\\UserAppointment.delete UserAppointment -t=ytg-framework/editable-delete -p:Model=ProfessionalStanding\\UserAppointment -p:Adapter=sp:ABSSP-[dbo].[del_userhospappt] -p:FetchImplementation=ProfessionalStanding\\UserAppointment.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserAppointment -p:Route= -p:ControllerName=ProfessionalStanding\\UserAppointmentController -p:ControllerRoute=api/professional-standing/user-appointment -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ProfessionalStanding\\UserAppointment.delete UserAppointment -t=ytg-framework/editable-delete -p:Model=ProfessionalStanding\\UserAppointment -p:Adapter=sp:ABSSP-[dbo].[del_userhospappt] -p:FetchImplementation=ProfessionalStanding\\UserAppointment.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserAppointment -p:Route= -p:ControllerName=ProfessionalStanding\\UserAppointmentController -p:ControllerRoute=api/professional-standing/user-appointment -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-06T19:57:14.0704328Z"
+  },
+  "version": 1
+}

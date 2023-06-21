@@ -17,10 +17,24 @@ export * from './models/picklists/race-read-only.model';
 export * from './models/picklists/state-read-only.model';
 export * from './models/picklists/clinical-activity-read-only.model';
 export * from './models/picklists/clinical-level-read-only.model';
+export * from './models/picklists/license-type-read-only.model';
+export * from './models/picklists/organization-type-read-only.model';
+export * from './models/picklists/practice-type-read-only.model';
+export * from './models/picklists/accredited-program-institution-read-only.model';
+export * from './models/picklists/appointment-type-read-only.model';
+export * from './models/picklists/jcaho-organization-read-only.model';
+export * from './models/picklists/primary-practice-read-only.model';
 
 export * from './models/graduatemedicaleducation/rotation-read-only.model';
 export * from './models/graduatemedicaleducation/rotation.model';
 export * from './models/graduatemedicaleducation/gme-summary-read-only.model';
+
+export * from './models/professionalstanding/medical-license-read-only.model';
+export * from './models/professionalstanding/medical-license.model';
+export * from './models/professionalstanding/user-professional-standing.model';
+export * from './models/professionalstanding/sanctions.model';
+export * from './models/professionalstanding/user-appointment.model';
+export * from './models/professionalstanding/user-appointment-read-only.model';
 
 // Services
 export * from './services/auth/auth.service';
@@ -31,3 +45,7 @@ export * from './services/users/users.service';
 export * from './services/examinations/gq/additional-trainings.service';
 export * from './services/graduatemedicaleducation/rotation.service';
 export * from './services/graduatemedicaleducation/gme-summary.service';
+export * from './services/professionalstanding/medical-license.service';
+export * from './services/professionalstanding/user-professional-standing.service';
+export * from './services/professionalstanding/user-appointment.service';
+export * from './services/professionalstanding/sanctions.service';

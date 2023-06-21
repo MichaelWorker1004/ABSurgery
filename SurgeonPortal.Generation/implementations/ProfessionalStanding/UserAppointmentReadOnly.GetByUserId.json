@@ -1,0 +1,186 @@
+{
+  "name": "UserAppointmentReadOnly",
+  "implementationName": "ProfessionalStanding\\UserAppointmentReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_userhospappts_byuserid",
+    "ControllerName": "ProfessionalStanding\\UserAppointmentController",
+    "ControllerRoute": "api/professional-standing/user-appointment",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ProfessionalStanding\\UserAppointmentReadOnly",
+    "ModelGroup": "UserAppointmentReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_userhospappts_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_userhospappts_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ProfessionalStanding\\UserAppointmentReadOnly",
+            "fields": [
+              {
+                "name": "ApptId",
+                "dataType": "decimal",
+                "maxLength": 5,
+                "precision": 9,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ApptId"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "PracticeTypeId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PracticeTypeId"
+              },
+              {
+                "name": "PracticeType",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PracticeType"
+              },
+              {
+                "name": "AppointmentTypeId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AppointmentTypeId"
+              },
+              {
+                "name": "AppointmentType",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AppointmentType"
+              },
+              {
+                "name": "OrganizationTypeId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.OrganizationTypeId"
+              },
+              {
+                "name": "AuthorizingOfficial",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AuthorizingOfficial"
+              },
+              {
+                "name": "OrganizationType",
+                "dataType": "string",
+                "maxLength": 200,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.OrganizationType"
+              },
+              {
+                "name": "OrganizationId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.OrganizationId"
+              },
+              {
+                "name": "StateCode",
+                "dataType": "string",
+                "maxLength": 2,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StateCode"
+              },
+              {
+                "name": "Other",
+                "dataType": "string",
+                "maxLength": 255,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Other"
+              },
+              {
+                "name": "OrganizationName",
+                "dataType": "string",
+                "maxLength": 510,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.OrganizationName"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s ProfessionalStanding\\UserAppointmentReadOnly.GetByUserId UserAppointmentReadOnly -t=ytg-framework/readonly-getlist -p:Model=ProfessionalStanding\\UserAppointmentReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_userhospappts_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=UserAppointmentReadOnly -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserAppointmentController -p:ControllerRoute=api/professional-standing/user-appointment -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ProfessionalStanding\\UserAppointmentReadOnly.GetByUserId UserAppointmentReadOnly -t=ytg-framework/readonly-getlist -p:Model=ProfessionalStanding\\UserAppointmentReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_userhospappts_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=UserAppointmentReadOnly -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserAppointmentController -p:ControllerRoute=api/professional-standing/user-appointment -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-06T19:57:24.5169112Z"
+  },
+  "version": 1
+}

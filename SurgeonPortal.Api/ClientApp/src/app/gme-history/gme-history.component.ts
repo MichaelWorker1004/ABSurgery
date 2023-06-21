@@ -222,6 +222,8 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
           // set filter options for grid
           const clinicalFilterOptions: { value: string; label: string }[] = [];
           const yearFilterOptions: ICalendarFilter[] = [];
+          this.maxEndDate = undefined;
+          this.minStartDate = undefined;
           gmeRotations.forEach((item) => {
             //get min start date
             if (this.minStartDate) {
