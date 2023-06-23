@@ -1400,8 +1400,6 @@
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\documents\\document.service.ts": {
     "lastGeneratedHash": "A9DB65DE45E8A6A3A09E78966B90CB3A",
     "lastMergedHash": "55E8463851C8C2385B6A8F08BD62FCF3"
-    "lastGeneratedHash": "A9DB65DE45E8A6A3A09E78966B90CB3A",
-    "lastMergedHash": "55E8463851C8C2385B6A8F08BD62FCF3"
   },
   "\\SurgeonPortal.Api\\Controllers\\Documents\\DocumentController.cs": {
     "lastGeneratedHash": "E3F3A76A59E3CAD3B9C134604204E635",
@@ -1409,7 +1407,6 @@
   },
   "\\SurgeonPortal.Library\\Documents\\Document.cs": {
     "lastGeneratedHash": "E92F419B50F4151D911519FDFEF11B6D",
-    "lastMergedHash": "C9C8FA50FF0A1D0CDBE0F3B09CA1409B"
     "lastMergedHash": "C9C8FA50FF0A1D0CDBE0F3B09CA1409B"
   },
   "\\SurgeonPortal.DataAccess\\Documents\\DocumentDal.cs": {
