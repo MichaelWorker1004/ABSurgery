@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
 import { Select, Store } from '@ngxs/store';
 import { AuthSelectors, Login } from '../state';
 import { IError, IAuthCredentials } from '../api';
-import { ClearAuthErrors } from '../state/auth/auth.actions';
+import { ClearAuthErrors } from '../state';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';

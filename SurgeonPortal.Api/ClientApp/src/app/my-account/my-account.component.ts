@@ -18,7 +18,7 @@ import {
   UserProfileSelectors,
   IUserProfile,
 } from '../state';
-import { ClearErrors } from '../state/my-account/my-account.actions';
+import { ClearErrors } from '../state';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
 

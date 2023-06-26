@@ -158,16 +158,19 @@ export class PersonalProfileComponent implements OnInit {
           ?.setValue(new Date(user.birthDate));
       });
 
-    this.userProfileForm.get('country')?.valueChanges.subscribe((value) => {
-      this._store
-        .dispatch(new GetStateList(value))
-        .pipe(take(1))
-        .subscribe(() => {
-          this.mailingStates = this._store.selectSnapshot(
-            PicklistsSelectors.slices.states
-          ) as IStateReadOnlyModel[];
-        });
-    });
+    this.userProfileForm
+      .get('country')
+      ?.valueChanges.pipe(debounceTime(300), untilDestroyed(this))
+      .subscribe((value) => {
+        this._store
+          .dispatch(new GetStateList(value))
+          .pipe(take(1))
+          .subscribe(() => {
+            this.mailingStates = this._store.selectSnapshot(
+              PicklistsSelectors.slices.states
+            ) as IStateReadOnlyModel[];
+          });
+      });
 
     this.userProfileForm
       .get('birthCountry')

@@ -7,12 +7,7 @@ import {
 } from '@angular/common/http';
 
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import {
-  LOCAL_STORAGE_ENGINE,
-  NgxsStoragePluginModule,
-  SESSION_STORAGE_ENGINE,
-  StorageOption,
-} from '@ngxs/storage-plugin';
+import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -53,22 +48,6 @@ bootstrapApplication(AppComponent, {
           PICKLISTS_STATE_TOKEN,
         ],
       }),
-      // NgxsStoragePluginModule.forRoot({
-      //   key: [
-      //     {
-      //       key: AUTH_STATE_TOKEN,
-      //       engine: SESSION_STORAGE_ENGINE,
-      //     },
-      //     {
-      //       key: USER_PROFILE_STATE_TOKEN,
-      //       engine: SESSION_STORAGE_ENGINE,
-      //     },
-      //     {
-      //       key: PICKLISTS_STATE_TOKEN,
-      //       engine: SESSION_STORAGE_ENGINE,
-      //     },
-      //   ],
-      // }),
       NgxsLoggerPluginModule.forRoot(),
       NgxsReduxDevtoolsPluginModule.forRoot(),
       NgxsFormPluginModule.forRoot()
