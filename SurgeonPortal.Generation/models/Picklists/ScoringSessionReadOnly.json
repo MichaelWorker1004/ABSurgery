@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "Picklists\\ScoringSessionReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamSchedule",
+      "dataType": "string",
+      "maxLength": 115,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Session1Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Session2Id",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ScoringSessionReadOnly -sp [dbo].[get_day_session_picklist] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-21T17:34:39.8935203Z"
+  },
+  "version": 1
+}

@@ -353,6 +353,23 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ScoringSessionReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("examiner-sessions")]
+        public async Task<ActionResult<IEnumerable<ScoringSessionReadOnlyModel>>> GetScoringSessionReadOnly_GetByExaminerIdAsync(
+            [FromServices] IScoringSessionReadOnlyListFactory scoringSessionReadOnlyListFactory,
+            int examHeaderId)
+        {
+            var items = await scoringSessionReadOnlyListFactory.GetByExaminerIdAsync(examHeaderId);
+        
+            return Ok(_mapper.Map<IEnumerable<ScoringSessionReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<StateReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

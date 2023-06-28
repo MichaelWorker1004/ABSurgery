@@ -1,0 +1,141 @@
+{
+  "name": "CaseDetailReadOnly",
+  "implementationName": "Scoring\\CaseDetailReadOnly.GetByCaseHeaderId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_case_details_by_id",
+    "ControllerName": "Scoring\\CaseContentsController",
+    "ControllerRoute": "api/exam-headers/cases/{caseHeaderId}/case-contents",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByCaseHeaderId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseDetailReadOnly",
+    "ModelGroup": "CaseDetailReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "detail",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_case_details_by_id",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_case_details_by_id]",
+        "parameters": [
+          {
+            "name": "CaseHeaderId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CaseHeaderId"
+          },
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CaseDetailReadOnly",
+            "fields": [
+              {
+                "name": "CaseNumber",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CaseNumber"
+              },
+              {
+                "name": "Description",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Description"
+              },
+              {
+                "name": "Heading",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Heading"
+              },
+              {
+                "name": "content",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.content"
+              },
+              {
+                "name": "Comments",
+                "dataType": "string",
+                "maxLength": 5000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Comments"
+              },
+              {
+                "name": "CaseCommentId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": "model.CaseCommentId"
+              },
+              {
+                "name": "SectionNumber",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SectionNumber"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "CaseHeaderId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseDetailReadOnly.GetByCaseHeaderId CaseDetailReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseDetailReadOnly -p:Adapter=sp:abssp-[dbo].[get_case_details_by_id] -p:FetchMethodName=GetByCaseHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseDetailReadOnly -p:Route=detail -p:ControllerName=Scoring\\CaseContentsController -p:ControllerRoute=api/exam-headers/cases/{caseHeaderId}/case-contents -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseDetailReadOnly.GetByCaseHeaderId CaseDetailReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseDetailReadOnly -p:Adapter=sp:abssp-[dbo].[get_case_details_by_id] -p:FetchMethodName=GetByCaseHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseDetailReadOnly -p:Route=detail -p:ControllerName=Scoring\\CaseContentsController -p:ControllerRoute=api/exam-headers/cases/{caseHeaderId}/case-contents -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-26T16:41:41.269216Z"
+  },
+  "version": 1
+}

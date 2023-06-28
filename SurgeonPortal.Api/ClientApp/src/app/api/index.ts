@@ -49,3 +49,4 @@ export * from './services/professionalstanding/medical-license.service';
 export * from './services/professionalstanding/user-professional-standing.service';
 export * from './services/professionalstanding/user-appointment.service';
 export * from './services/professionalstanding/sanctions.service';
+export * from './services/scoring/cases.service';

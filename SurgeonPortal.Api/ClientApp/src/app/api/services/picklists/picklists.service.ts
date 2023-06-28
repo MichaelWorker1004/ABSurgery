@@ -20,6 +20,7 @@ import { IPracticeTypeReadOnlyModel } from '../../models/picklists/practice-type
 import { IPrimaryPracticeReadOnlyModel } from '../../models/picklists/primary-practice-read-only.model';
 import { IRaceReadOnlyModel } from '../../models/picklists/race-read-only.model';
 import { IResidencyProgramReadOnlyModel } from '../../models/picklists/residency-program-read-only.model';
+import { IScoringSessionReadOnlyModel } from '../../models/picklists/scoring-session-read-only.model';
 import { IStateReadOnlyModel } from '../../models/picklists/state-read-only.model';
 import { ITrainingTypeReadOnlyModel } from '../../models/picklists/training-type-read-only.model';
 import { ApiService } from 'ytg-angular';
@@ -157,12 +158,12 @@ export class PicklistsService {
             /**
             * Claims
             */
-
+            
             /**
             * Business Rules
             * No business rules exist for this model
             */
-
+            
             /**
             * Required Parameters
             * apiVersion
@@ -511,6 +512,32 @@ export class PicklistsService {
             
             
             return this.apiService.get<IResidencyProgramReadOnlyModel[]>(`${this.baseEndpoint}/residency-programs?api-version=${apiVersion}`);
+        }
+ 
+        public retrieveScoringSessionReadOnly_GetByExaminerId(examHeaderId: number,
+        apiVersion = '1.0'): Observable<IScoringSessionReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * examHeaderId:Number
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_day_session_picklist]
+            */
+            
+            
+            return this.apiService.get<IScoringSessionReadOnlyModel[]>(`${this.baseEndpoint}/examiner-sessions?api-version=${apiVersion}&examHeaderId=${examHeaderId}`);
         }
  
         public retrieveStateReadOnly_GetByCountry(countryCode: string,

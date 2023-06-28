@@ -1,0 +1,90 @@
+{
+  "refs": {},
+  "name": "Scoring\\CaseDetailReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "CaseNumber",
+      "dataType": "string",
+      "maxLength": 20,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Description",
+      "dataType": "string",
+      "maxLength": -1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Heading",
+      "dataType": "string",
+      "maxLength": -1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "content",
+      "dataType": "string",
+      "maxLength": -1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Comments",
+      "dataType": "string",
+      "maxLength": 5000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CaseCommentId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "SectionNumber",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Scoring\\CaseDetailReadOnly -sp [dbo].[get_case_details_by_id] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-26T16:38:34.2773728Z"
+  },
+  "version": 1
+}

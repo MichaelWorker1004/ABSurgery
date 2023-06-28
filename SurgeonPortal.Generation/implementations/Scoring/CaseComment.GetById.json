@@ -1,0 +1,121 @@
+{
+  "name": "CaseComment",
+  "implementationName": "Scoring\\CaseComment.GetById",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_case_comments_byid",
+    "ControllerName": "Scoring\\CaseNotesController",
+    "ControllerRoute": "api/exam-headers/cases/case-contents/case-comments",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseComment",
+    "ModelGroup": "CaseComment",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-id"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_case_comments_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_case_comments_byid]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CaseComment",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "CaseContentId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CaseContentId"
+              },
+              {
+                "name": "Comments",
+                "dataType": "string",
+                "maxLength": 5000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Comments"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseComment.GetById CaseComment -t=ytg-framework/editable-get -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[get_case_comments_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route=by-id -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/exam-headers/cases/case-contents/case-comments -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseComment.GetById CaseComment -t=ytg-framework/editable-get -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[get_case_comments_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route=by-id -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/exam-headers/cases/case-contents/case-comments -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-26T16:57:06.4036017Z"
+  },
+  "version": 1
+}

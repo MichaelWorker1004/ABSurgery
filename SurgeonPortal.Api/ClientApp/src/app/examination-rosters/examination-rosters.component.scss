@@ -1,0 +1,19 @@
+.case-header {
+  border-bottom: 1px solid var(--global-gray-light);
+}
+
+p-dropdown {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.selected-case {
+  color: var(--global-success);
+  font-weight: 700;
+}
+
+// .section-details {
+//     p {
+//         margin-top: .25rem;
+//     }
+// }

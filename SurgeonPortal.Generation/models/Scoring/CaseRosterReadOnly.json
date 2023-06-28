@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "Scoring\\CaseRosterReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "CaseNumber",
+      "dataType": "string",
+      "maxLength": 20,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Description",
+      "dataType": "string",
+      "maxLength": -1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Scoring\\CaseRosterReadOnly -sp [dbo].[get_toc_case_list] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-26T15:17:58.3754573Z"
+  },
+  "version": 1
+}

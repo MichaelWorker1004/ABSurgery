@@ -1,0 +1,106 @@
+{
+  "name": "CaseRosterReadOnly",
+  "implementationName": "Scoring\\CaseRosterReadOnly.GetByScheduleId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_toc_case_list",
+    "ControllerName": "Scoring\\CasesController",
+    "ControllerRoute": "api/exam-headers/cases",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByScheduleId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseRosterReadOnly",
+    "ModelGroup": "CaseRosterReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "case-roster",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_toc_case_list",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_toc_case_list]",
+        "parameters": [
+          {
+            "name": "ScheduleId1",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "scheduleId1"
+          },
+          {
+            "name": "ScheduleId2",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "scheduleId2"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CaseRosterReadOnly",
+            "fields": [
+              {
+                "name": "CaseNumber",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CaseNumber"
+              },
+              {
+                "name": "Description",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Description"
+              },
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ScheduleId1",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ScheduleId2",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseRosterReadOnly.GetByScheduleId CaseRosterReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseRosterReadOnly -p:Adapter=sp:abssp-[dbo].[get_toc_case_list] -p:FetchMethodName=GetByScheduleId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseRosterReadOnly -p:Route=case-roster -p:ControllerName=Scoring\\CasesController -p:ControllerRoute=api/exam-headers/cases -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseRosterReadOnly.GetByScheduleId CaseRosterReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseRosterReadOnly -p:Adapter=sp:abssp-[dbo].[get_toc_case_list] -p:FetchMethodName=GetByScheduleId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseRosterReadOnly -p:Route=case-roster -p:ControllerName=Scoring\\CasesController -p:ControllerRoute=api/exam-headers/cases -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-26T15:20:11.3521837Z"
+  },
+  "version": 1
+}

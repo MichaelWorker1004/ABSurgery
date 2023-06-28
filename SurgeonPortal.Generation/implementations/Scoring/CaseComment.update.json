@@ -1,0 +1,158 @@
+{
+  "name": "CaseComment",
+  "implementationName": "Scoring\\CaseComment.update",
+  "template": "ytg-framework/editable-edit",
+  "parameters": {
+    "Adapter": "dbo.update_case_comments",
+    "ControllerName": "Scoring\\CaseNotesController",
+    "ControllerRoute": "api/exam-headers/cases/case-contents/case-comments",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Scoring\\CaseComment.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseComment",
+    "ModelGroup": "CaseComment",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_case_comments",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_case_comments]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          },
+          {
+            "name": "CaseContentId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CaseContentId"
+          },
+          {
+            "name": "Comments",
+            "dataType": "string",
+            "maxLength": 5000,
+            "precision": 5000,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Comments"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CaseComment",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "CaseContentId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CaseContentId"
+              },
+              {
+                "name": "Comments",
+                "dataType": "string",
+                "maxLength": 5000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Comments"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "CaseContentId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "Comments",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseComment.update CaseComment -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[update_case_comments] -p:FetchImplementation=Scoring\\CaseComment.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route= -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/exam-headers/cases/case-contents/case-comments -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseComment.update CaseComment -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[update_case_comments] -p:FetchImplementation=Scoring\\CaseComment.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route= -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/exam-headers/cases/case-contents/case-comments -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-26T16:57:21.5283256Z"
+  },
+  "version": 1
+}

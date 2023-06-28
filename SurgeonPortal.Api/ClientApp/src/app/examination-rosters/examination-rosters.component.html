@@ -1,1 +1,112 @@
-<p>examination-rosters works!</p>
+<header>
+  <h1>2023GO3 ABS Oral Examination</h1>
+</header>
+<ng-container>
+  <section>
+    <sl-card class="col-12">
+      <div slot="header">
+        <span class="text-3xl">Examination Rosters</span>
+      </div>
+      <div class="grid">
+        <div class="col-12 lg:col-4 md:col-5">
+          <h5 class="pb-3 mb-0">Table of Contents</h5>
+          <div class="flex flex-column">
+            <!-- <p-dropdown
+              [options]="rosters"
+              [(ngModel)]="selectedRoster"
+              optionLabel="displayName"
+              placeholder="Select a roster to view..."
+              (onChange)="selectRoster($event)"
+            ></p-dropdown> -->
+            <ng-container *ngIf="cases?.length > 0">
+              <p-button
+                *ngFor="let case of cases"
+                class="mb-1"
+                styleClass="p-button-secondary p-button-text py-1"
+                (click)="selectCase(case.caseId)"
+              >
+                <span
+                  [ngClass]="{
+                    'selected-case': selectedCaseId === case.caseId
+                  }"
+                >
+                  {{ case.caseId }}: Description of case {{ case.caseId }}
+                  {{ case.modifier }}
+                </span>
+              </p-button>
+            </ng-container>
+            <ng-container *ngIf="!(cases?.length > 0)">
+              <p class="pl-3 mt-0 font-italic text-muted">No cases available</p>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-12 lg:col-8 md:col-7">
+          <h5 class="pb-3 case-header">
+            <span *ngIf="selectedCaseDetails"
+              >Case {{ selectedCaseDetails.caseId }}: Description of Case
+              {{ selectedCaseDetails.caseId }}
+              {{ selectedCaseDetails.modifier }}</span
+            >
+            <span *ngIf="!selectedCaseDetails">Case Details</span>
+          </h5>
+          <form name="caseDetailsForm" (ngSubmit)="saveCaseComments()">
+            <p
+              *ngIf="!selectedCaseDetails"
+              class="font-italic text-muted mt-0 pl-3"
+            >
+              No Case Selected
+            </p>
+            <div *ngIf="selectedCaseDetails" class="grid">
+              <div
+                class="col-12"
+                *ngFor="let section of selectedCaseDetails.sections"
+              >
+                <p class="font-bold m-0">{{ section.title }}:</p>
+                <div
+                  class="section-details"
+                  [innerHTML]="section.htmlContent"
+                ></div>
+
+                <div *ngIf="section.comment || section.editComment">
+                  <label [for]="section.title + '-comment'">Comment:</label>
+                  <p class="my-1" *ngIf="!section.editComment">
+                    {{ section.comment }}
+                  </p>
+                  <textarea
+                    [name]="section.title + '-comment'"
+                    rows="5"
+                    pInputTextarea
+                    [(ngModel)]="section.comment"
+                    *ngIf="section.editComment"
+                  ></textarea>
+                </div>
+                <p-button
+                  *ngIf="!section.editComment"
+                  styleClass="p-button-success p-button-text"
+                  (click)="section.editComment = true"
+                >
+                  {{ section.comment ? 'Edit Comment' : 'Add Comment' }}
+                </p-button>
+              </div>
+              <div class="col-12 mt-3">
+                <p-button [style]="{ width: '337px' }" type="submit"
+                  >Save</p-button
+                >
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </sl-card>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <div class="my-5 flex flex-column justify-content-center align-items-center">
+    <sl-spinner
+      class="block"
+      style="font-size: 3rem; --indicator-color: var(--global-primary)"
+    ></sl-spinner>
+    <p>loading exam rosters...</p>
+  </div>
+</ng-template>
