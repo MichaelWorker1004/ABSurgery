@@ -4,7 +4,6 @@
 .abs-grid-container {
   overflow-x: auto;
   padding: 0 0.5rem;
-  margin-top: 1.5rem;
   background-color: var(--global-table-background);
 
   &::-webkit-scrollbar {
@@ -126,12 +125,14 @@ sl-input {
   color: var(--global-warning);
   font-weight: bold;
 }
-.approved {
+.approved,
+.completed {
   color: var(--global-success);
   font-weight: bold;
 }
 
-.failed {
+.failed,
+.incomplete {
   color: var(--global-danger);
   font-weight: bold;
 }

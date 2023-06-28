@@ -1,1 +1,49 @@
-<p>examination-scores works!</p>
+<h1>{{ currentYear }}G03 ABS Oral Examination</h1>
+<sl-card>
+  <div slot="header">Examination Scores</div>
+  <div class="mt-2 mb-5">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
+    dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
+    amet tortor at, condimentum tempor erat.
+  </div>
+
+  <form [formGroup]="filterForm" class="dropdown-container flex gap-2 absolute">
+    <p-dropdown
+      placeholder="Filter by Day"
+      [showClear]="true"
+      [style]="{ minWidth: '250px' }"
+      [options]="dayOptions"
+      formControlName="day"
+    >
+    </p-dropdown>
+
+    <p-dropdown
+      placeholder="Filter by Status"
+      [showClear]="true"
+      [style]="{ minWidth: '250px' }"
+      [options]="statusOptions"
+      formControlName="status"
+    >
+    </p-dropdown>
+  </form>
+
+  <abs-grid
+    [columns]="examinationScoresCols"
+    [gridOptions]="gridOptions"
+    [data]="filteredExaminationScoresData$"
+    (action)="handleView($event)"
+  ></abs-grid>
+</sl-card>
+
+<abs-modal
+  [open]="showViewModal"
+  [preventOverlayClose]="true"
+  [hideClose]="true"
+  (closeDialog)="closeDialog()"
+  title="Examination Scores"
+>
+  <abs-examination-score-modal
+    [candidateData]="candidateData"
+    (closeDialog)="closeDialog()"
+  ></abs-examination-score-modal>
+</abs-modal>

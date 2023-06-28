@@ -121,8 +121,8 @@ const AbsGrid = {
   setCellCustomClass(
     headerName: string,
     fieldName: string,
-    className?: string,
     sortable?: boolean,
+    className?: string,
     width?: number
   ) {
     const colDef = {
