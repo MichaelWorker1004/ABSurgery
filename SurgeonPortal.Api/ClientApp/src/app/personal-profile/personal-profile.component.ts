@@ -103,7 +103,7 @@ export class PersonalProfileComponent implements OnInit {
     bestLanguageId: new FormControl('', [Validators.required]),
     birthCity: new FormControl('', [Validators.required]),
     birthCountry: new FormControl('', [Validators.required]),
-    birthDate: new FormControl('', [Validators.required]),
+    birthDate: new FormControl(new Date(), [Validators.required]),
     birthState: new FormControl('', []),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
@@ -140,6 +140,8 @@ export class PersonalProfileComponent implements OnInit {
     private _store: Store,
     public globalDialogService: GlobalDialogService
   ) {
+    this.userProfileForm.controls['state'].disable();
+    this.userProfileForm.controls['birthState'].disable();
     this.user$
       ?.pipe(debounceTime(300), untilDestroyed(this))
       .subscribe((user: IUserProfile) => {
@@ -169,6 +171,11 @@ export class PersonalProfileComponent implements OnInit {
             this.mailingStates = this._store.selectSnapshot(
               PicklistsSelectors.slices.states
             ) as IStateReadOnlyModel[];
+            if (this.mailingStates.length > 0) {
+              this.userProfileForm.controls['state'].enable();
+            } else {
+              this.userProfileForm.controls['state'].disable();
+            }
           });
       });
 
@@ -182,6 +189,11 @@ export class PersonalProfileComponent implements OnInit {
             this.birthStates = this._store.selectSnapshot(
               PicklistsSelectors.slices.states
             ) as IStateReadOnlyModel[];
+            if (this.birthStates.length > 0) {
+              this.userProfileForm.controls['birthState'].enable();
+            } else {
+              this.userProfileForm.controls['birthState'].disable();
+            }
           });
       });
   }

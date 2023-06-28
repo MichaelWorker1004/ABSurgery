@@ -125,7 +125,6 @@ export class UserProfileState {
       .pipe(
         tap((result: IUserProfileModel) => {
           const res = result as unknown as IUserProfile;
-          res.birthDate = res.birthDate?.split('T')[0];
           res.firstLanguageId = res.firstLanguageId?.toString();
           res.bestLanguageId = res.bestLanguageId?.toString();
           res.genderId = res.genderId?.toString();
