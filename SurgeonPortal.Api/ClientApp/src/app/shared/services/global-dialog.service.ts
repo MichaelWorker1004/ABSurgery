@@ -135,6 +135,67 @@ export class GlobalDialogService {
     });
   }
 
+  // handle the Confirmation dialog
+  showConfirmationWithWarning(
+    title: string,
+    message: string,
+    warning: string
+  ): Promise<boolean> {
+    // If another global dialog is open, close it
+    if (document.body.contains(this._dialog)) {
+      this.hide();
+    }
+
+    // create dialog content inside of a promise so that click events can use a .then() after the promise resolves
+    return new Promise((resolve) => {
+      const dialogLabel = `<div class="flex justify-content-between align-items-center" slot="label">
+      <span class="text-2xl">${title}</span></div>`;
+      const dialogContent = `<div class="global-dialog flex flex-column">
+        <p class="mt-0 mb-2">${message}</p>
+        <p class="mt-0 mb-2 text-warning"><i class="fa-solid fa-triangle-exclamation mr-2"></i>${warning}</p>
+        <div class="mt-5 flex justify-content-end" slot="footer">
+        <sl-button id="declineButton" variant="text" outline style="width: 100px">
+        Cancel
+        </sl-button>
+        <sl-button id="confirmButton" variant="primary" style="margin-left: .5rem; width: 337px">
+        Confirm
+        </sl-button>
+        </div>
+      </div>`;
+
+      // create the dialog content
+      this._dialog.innerHTML = dialogLabel + dialogContent;
+
+      // add the click event listener to the decline button and set initial focus
+      const declineButton = this._dialog.querySelector('#declineButton');
+      declineButton.setAttribute('autofocus', '');
+      declineButton.addEventListener('click', () => {
+        this.hide();
+        resolve(false);
+      });
+
+      // add the click event listener to the confirm button
+      const confirmButton = this._dialog.querySelector('#confirmButton');
+      confirmButton.addEventListener('click', () => {
+        this.hide();
+        resolve(true);
+      });
+
+      // add click event listener to the dialog overlay to prevent default close
+      this._dialog.addEventListener('sl-request-close', (event: any) => {
+        event.preventDefault();
+      });
+
+      // set modal specific attributes (this can be done with param options)
+      this._dialog.setAttribute('style', '--width: 50%');
+      this._dialog.removeAttribute('no-header');
+
+      // add the dialog to the DOM and show
+      document.body.appendChild(this._dialog);
+      this._dialog.show();
+    });
+  }
+
   // this is a proof of concept, if this works it should be broken out into specific modal types
   // currently replicating surgeon profile dialog from registration requirements page
   showComponentModal(

@@ -1,0 +1,151 @@
+{
+  "name": "ExamSessionReadOnly",
+  "implementationName": "Scoring\\ExamSessionReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_examinee_sessions",
+    "ControllerName": "Scoring\\ExamSessionsController",
+    "ControllerRoute": "api/exam-sessions",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\ExamSessionReadOnly",
+    "ModelGroup": "ExamSessionReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-date",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examinee_sessions",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examinee_sessions]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "ExamDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "ExamDate"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\ExamSessionReadOnly",
+            "fields": [
+              {
+                "name": "FirstName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FirstName"
+              },
+              {
+                "name": "LastName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastName"
+              },
+              {
+                "name": "StartTime",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StartTime"
+              },
+              {
+                "name": "EndTime",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.EndTime"
+              },
+              {
+                "name": "MeetingLink",
+                "dataType": "string",
+                "maxLength": 250,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MeetingLink"
+              },
+              {
+                "name": "IsSubmitted",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsSubmitted"
+              },
+              {
+                "name": "IsCurrentSession",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsCurrentSession"
+              },
+              {
+                "name": "SessionNumber",
+                "dataType": "int?",
+                "maxLength": 2,
+                "precision": 5,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SessionNumber"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamDate",
+      "dataType": "datetime",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\ExamSessionReadOnly.GetByUserId ExamSessionReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\ExamSessionReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinee_sessions] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamSessionReadOnly -p:Route=exam-sessions -p:ControllerName=Scoring\\ExamSessionsController -p:ControllerRoute=api/exam-sessions -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Scoring\\ExamSessionReadOnly.GetByUserId ExamSessionReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\ExamSessionReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinee_sessions] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamSessionReadOnly -p:Route=exam-sessions -p:ControllerName=Scoring\\ExamSessionsController -p:ControllerRoute=api/exam-sessions -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-26T17:10:51.6108323Z"
+  },
+  "version": 1
+}

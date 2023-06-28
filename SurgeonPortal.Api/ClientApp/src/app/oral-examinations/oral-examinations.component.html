@@ -1,1 +1,65 @@
-<p>oral-examinations works!</p>
+<header>
+  <h1>2023GO3 ABS Oral Examination</h1>
+</header>
+<ng-container>
+  <section>
+    <div class="grid">
+      <sl-card class="col-12">
+        <div slot="header">Oral Examination</div>
+        <div class="grid">
+          <div class="col-12 flex justify-content-between">
+            <p>
+              <span class="font-bold">Date:</span>
+              {{ examDate | date : 'MM/dd/yyyy' }}
+            </p>
+            <div
+              class="flex align-items-center justify-content-end flex-grow-1"
+            >
+              <p-button
+                label="Zoom Link"
+                icon="fa fa-video-camera"
+                class="zoom-link"
+                styleClass="p-button-success p-button-text"
+              ></p-button>
+              <div class="p-inputgroup" style="max-width: 450px">
+                <input
+                  pInputText
+                  type="text"
+                  placeholder="Zoom Link"
+                  [value]="zoomLink"
+                  #zoomLinkInput
+                />
+                <button
+                  pButton
+                  icon="pi pi-copy"
+                  styleClass="p-button-primary"
+                  (onClick)="copyFromTextInput(zoomLinkInput)"
+                ></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <abs-grid
+              class="margin-bottom-2 exam-grid"
+              [columns]="oralExaminationCols"
+              [data]="oralExaminations$"
+              (action)="handleGridAction($event)"
+              [pagination]="true"
+              [itemsPerPage]="5"
+            ></abs-grid>
+          </div>
+        </div>
+      </sl-card>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <div class="my-5 flex flex-column justify-content-center align-items-center">
+    <sl-spinner
+      class="block"
+      style="font-size: 3rem; --indicator-color: var(--global-primary)"
+    ></sl-spinner>
+    <p>loading examinations...</p>
+  </div>
+</ng-template>

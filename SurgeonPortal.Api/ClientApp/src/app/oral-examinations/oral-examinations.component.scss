@@ -1,0 +1,29 @@
+.exam-grid {
+  ::ng-deep {
+    .action {
+      display: none;
+    }
+
+    .submitted-session {
+      color: var(--global-success);
+    }
+    .current-session {
+      color: var(--global-warning);
+      font-weight: bold;
+      .action {
+        display: block;
+      }
+    }
+    .not-started {
+      color: var(--global-gray);
+    }
+  }
+}
+
+.zoom-link {
+  ::ng-deep {
+    .p-button-label {
+      white-space: nowrap;
+    }
+  }
+}

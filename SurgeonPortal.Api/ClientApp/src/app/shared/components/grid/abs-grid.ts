@@ -56,6 +56,32 @@ const AbsGrid = {
     return colDef;
   },
 
+  setCustomPrimeButtonCol(
+    headerName: string,
+    fieldName: string,
+    icon?: string,
+    buttonClass?: string,
+    onClick?: (data: any) => void,
+    sortable?: boolean,
+    width?: number
+  ) {
+    const colDef = {
+      headerName: headerName,
+      field: fieldName,
+      icon: icon,
+      buttonClass: buttonClass,
+      cellRenderer: 'primeButton',
+      cellRendererParams: {
+        fieldKey: fieldName,
+        onClick,
+      },
+      sortable,
+      width,
+    };
+
+    return colDef;
+  },
+
   setFileLinkCol(
     headerName: string,
     fieldName: string,

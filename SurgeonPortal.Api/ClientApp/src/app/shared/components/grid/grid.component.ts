@@ -11,6 +11,8 @@ import { AbsFilterType, AbsGridCellRendererType } from './abs-grid.enum';
 import { IGridOptions } from './grid-options.model';
 import { isObservable } from 'rxjs';
 
+import { ButtonModule } from 'primeng/button';
+
 interface GridAction {
   data: any;
   fieldKey: string;
@@ -20,7 +22,7 @@ interface GridAction {
 @Component({
   selector: 'abs-grid',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonModule],
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

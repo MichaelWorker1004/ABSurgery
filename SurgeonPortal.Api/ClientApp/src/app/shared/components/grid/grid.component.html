@@ -45,6 +45,7 @@
               class="flex justify-content-between"
               *ngIf="
                 c.cellRenderer !== AbsGridCellRendererType.Button &&
+                c.cellRenderer !== AbsGridCellRendererType.PrimeButton &&
                 c.cellRenderer !== AbsGridCellRendererType.ExpandToggle
               "
             >
@@ -92,6 +93,21 @@
                   {{ c.headerName }}
                 </button>
               </div>
+
+              <div
+                *ngIf="c.cellRenderer === AbsGridCellRendererType.PrimeButton"
+                class="action"
+              >
+                <p-button
+                  [label]="c.headerName"
+                  [icon]="c.icon"
+                  [styleClass]="c.buttonClass"
+                  class="prime-button"
+                  [style]="{ width: c.width + 'px' }"
+                  (onClick)="handleAction(c.cellRendererParams, r)"
+                ></p-button>
+              </div>
+
               <div *ngIf="c.cellRenderer === AbsGridCellRendererType.FileLink">
                 <button
                   class="file-link"
