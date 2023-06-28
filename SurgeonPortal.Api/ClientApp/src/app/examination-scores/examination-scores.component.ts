@@ -71,6 +71,7 @@ export class ExaminationScoresComponent implements OnInit {
   getExaminationScoresDate() {
     this.examinationScoresData = [
       {
+        candidateId: '1',
         day: 'Day 1',
         session: 'Early Morning',
         roster: 'D',
@@ -78,9 +79,27 @@ export class ExaminationScoresComponent implements OnInit {
         score: 'Pass',
         criticalFail: 'N',
         status: 'Incomplete',
-        view: 'View',
+        cases: [
+          {
+            caseId: '1',
+            caseName: 'Case 1',
+          },
+          {
+            caseId: '2',
+            caseName: 'Case 2',
+          },
+          {
+            caseId: '3',
+            caseName: 'Case 3',
+          },
+          {
+            caseId: '4',
+            caseName: 'Case 4',
+          },
+        ],
       },
       {
+        candidateId: '1',
         day: 'Day 1',
         session: 'Late Afternoon',
         roster: 'D',
@@ -88,9 +107,9 @@ export class ExaminationScoresComponent implements OnInit {
         score: 'Fail',
         criticalFail: 'Y',
         status: 'Incomplete',
-        view: 'View',
       },
       {
+        candidateId: '1',
         day: 'Day 1',
         session: 'Late Morning',
         roster: 'D',
@@ -98,9 +117,9 @@ export class ExaminationScoresComponent implements OnInit {
         score: 'Pass',
         criticalFail: 'N',
         status: 'Complete',
-        view: 'View',
       },
       {
+        candidateId: '1',
         day: 'Day 2',
         session: 'Late Morning',
         roster: 'D',
@@ -108,7 +127,6 @@ export class ExaminationScoresComponent implements OnInit {
         score: 'Fail',
         criticalFail: 'N',
         status: 'Complete',
-        view: 'View',
       },
     ];
 

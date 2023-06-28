@@ -1,0 +1,45 @@
+<div class="score-card mt-4">
+  <form [formGroup]="scoringForm">
+    <div class="flex">
+      <div class="col-12 md:col-3">
+        <div class="title mb-2">{{ case?.caseName }}</div>
+
+        <div class="flex flex-column gap-1 radios">
+          <div
+            class="flex align-items-center"
+            *ngFor="let score of scoreOptions"
+          >
+            <p-radioButton
+              [value]="score.value"
+              [inputId]="score.label"
+              formControlName="score"
+            ></p-radioButton>
+            <label [for]="score.label" class="ml-2">{{ score.label }}</label>
+          </div>
+
+          <div class="flex align-items-center gap-2">
+            <p-checkbox
+              formControlName="criticalFail"
+              [value]="true"
+              inputId="criticalFail"
+            ></p-checkbox>
+            <label for="criticalFail">Mark only if critical fail</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 md:col-9">
+        <label for="textarea" class="mb-2">
+          Please record any remarks about this candidate for
+          {{ case?.caseName }}
+        </label>
+        <textarea
+          pKeyFilter="int"
+          rows="5"
+          cols="30"
+          pInputTextarea
+          formControlName="comment"
+        ></textarea>
+      </div>
+    </div>
+  </form>
+</div>
