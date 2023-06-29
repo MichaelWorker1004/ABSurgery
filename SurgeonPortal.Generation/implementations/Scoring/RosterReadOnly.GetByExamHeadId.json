@@ -1,0 +1,132 @@
+{
+  "name": "RosterReadOnly",
+  "implementationName": "Scoring\\RosterReadOnly.GetByExamHeadId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_examination_scores",
+    "ControllerName": "Scoring\\RostersController",
+    "ControllerRoute": "api/exam-header/{examHeaderId}/rosters",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExaminationHeaderId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\RosterReadOnly",
+    "ModelGroup": "RosterReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "roster-schedule",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examination_scores",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examination_scores]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\RosterReadOnly",
+            "fields": [
+              {
+                "name": "DayNumber",
+                "dataType": "int?",
+                "maxLength": 2,
+                "precision": 5,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DayNumber"
+              },
+              {
+                "name": "SessionNumber",
+                "dataType": "int?",
+                "maxLength": 2,
+                "precision": 5,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SessionNumber"
+              },
+              {
+                "name": "Roster",
+                "dataType": "string",
+                "maxLength": 1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Roster"
+              },
+              {
+                "name": "DisplayName",
+                "dataType": "string",
+                "maxLength": 71,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DisplayName"
+              },
+              {
+                "name": "Score",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Score"
+              },
+              {
+                "name": "CriticalFail",
+                "dataType": "string",
+                "maxLength": 1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CriticalFail"
+              },
+              {
+                "name": "Submitted",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Submitted"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamHeaderId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\RosterReadOnly.GetByExamHeadId RosterReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\RosterReadOnly -p:Adapter=sp:abssp-[dbo].[get_examination_scores] -p:FetchMethodName=GetByExaminationHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RosterReadOnly -p:Route=roster-schedule -p:ControllerName=Scoring\\RostersController -p:ControllerRoute=api/exam-header/{examHeaderId}/rosters -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Scoring\\RosterReadOnly.GetByExamHeadId RosterReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\RosterReadOnly -p:Adapter=sp:abssp-[dbo].[get_examination_scores] -p:FetchMethodName=GetByExaminationHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RosterReadOnly -p:Route=roster-schedule -p:ControllerName=Scoring\\RostersController -p:ControllerRoute=api/exam-header/{examHeaderId}/rosters -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-23T18:55:40.6628781Z"
+  },
+  "version": 1
+}
