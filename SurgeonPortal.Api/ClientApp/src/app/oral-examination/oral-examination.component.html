@@ -1,0 +1,94 @@
+<h1>{{ currentYear }}G03 ABS Oral Examination</h1>
+<div class="text-xl">Please read carefully the instructions below.</div>
+<sl-card class="w-full mt-5">
+  <h3 class="mt-0 mb-2" header>Oral Examinations</h3>
+  <hr />
+  <div class="grid">
+    <p class="col-12">
+      Begin the oral examination process by first selecting the desired exam day
+      from the first dropdown. You can then select the specific candidate times
+      lot from the next dropdown. Finally, confirm your examiner user ID and you
+      may begin the exam process.
+    </p>
+
+    <div class="flex gap-5 view-header col-12">
+      <div><strong>Candidate Name:</strong> {{ candidateName }}</div>
+      <div><strong>Day/Time:</strong> {{ dayTime }}</div>
+    </div>
+
+    <abs-expandable
+      class="col-12"
+      *ngFor="let case of cases | async; index as i"
+      [caseId]="case.caseId"
+      [index]="i"
+      [checked]="i === activeCase"
+      [completed]="case.completed"
+    >
+      <div class="grid">
+        <div class="col-12" *ngFor="let section of case.sections">
+          <p class="font-bold m-0">{{ section.title }}:</p>
+          <div class="section-details" [innerHTML]="section.htmlContent"></div>
+
+          <div *ngIf="section.comment || section.editComment">
+            <label [for]="section.title + '-comment'">Comment:</label>
+            <p class="my-1" *ngIf="!section.editComment">
+              {{ section.comment }}
+            </p>
+            <textarea
+              [name]="section.title + '-comment'"
+              rows="5"
+              pInputTextarea
+              *ngIf="section.editComment"
+            ></textarea>
+          </div>
+          <p-button
+            *ngIf="!section.editComment && section.showEdit"
+            styleClass="p-button-success p-button-text"
+            (click)="section.editComment = true"
+          >
+            {{ section.comment ? 'Edit Comment' : 'Add Comment' }}
+          </p-button>
+        </div>
+        <abs-examination-score-card
+          class="col-12"
+          [case]="case"
+          (handleChange)="handleChange($event, i)"
+        ></abs-examination-score-card>
+        <div class="col-12 flex justify-content-end mt-3">
+          <p-button [style]="{ width: '337px' }" (onClick)="handleSave(i)"
+            >Save & Continue</p-button
+          >
+        </div>
+      </div>
+    </abs-expandable>
+
+    <abs-expandable
+      [customTitle]="'Review & Submit Scores'"
+      [checked]="false"
+      class="w-full"
+    >
+      <div class="grid w-full">
+        <ng-template ngFor [ngForOf]="cases | async" let-case let-i="index">
+          <abs-examination-score-card
+            class="col-12"
+            [case]="case"
+            (handleChange)="handleChange($event, i)"
+          ></abs-examination-score-card>
+        </ng-template>
+      </div>
+
+      <div class="flex justify-content-end mt-5">
+        <p-button variant="text" styleClass="p-button-link p-button-primary"
+          >Save & Submit Later</p-button
+        >
+        <p-button
+          type="submit"
+          [style]="{ width: '337px' }"
+          (onClick)="handleSubmit()"
+        >
+          Submit Scores
+        </p-button>
+      </div>
+    </abs-expandable>
+  </div>
+</sl-card>

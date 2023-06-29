@@ -187,6 +187,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'ce-scoring/oral-examinations/exam/:examinationId',
+    loadComponent: () =>
+      import('./oral-examination/oral-examination.component').then(
+        (m) => m.OralExaminationsComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'ce-scoring/examination-scores',
     loadComponent: () =>
       import('./examination-scores/examination-scores.component').then(

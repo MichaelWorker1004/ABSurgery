@@ -1,0 +1,16 @@
+<section class="accordion {{ completed ? 'completed' : '' }}">
+  <input type="checkbox" name="collapse" [id]="caseId" [checked]="checked" />
+  <h2 class="handle">
+    <label [for]="caseId">
+      <div *ngIf="!customTitle; else title">
+        {{ decimalToRoman(index + 1) }}. Case {{ caseId }}
+      </div>
+      <ng-template #title>
+        {{ customTitle }}
+      </ng-template>
+    </label>
+  </h2>
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+</section>

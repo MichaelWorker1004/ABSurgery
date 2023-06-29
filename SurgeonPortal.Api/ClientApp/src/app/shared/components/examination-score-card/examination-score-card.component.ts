@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -9,6 +17,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { isObservable } from 'rxjs';
 
 @Component({
   selector: 'abs-examination-score-card',
@@ -24,9 +33,11 @@ import {
   templateUrl: './examination-score-card.component.html',
   styleUrls: ['./examination-score-card.component.scss'],
 })
-export class ExaminationScoreCardComponent implements OnInit {
+export class ExaminationScoreCardComponent implements OnInit, OnChanges {
   @Input() case: any;
   @Output() handleChange: EventEmitter<any> = new EventEmitter();
+
+  localData!: any;
 
   scoreOptions = [
     { label: 'Pass', value: '1' },
@@ -44,6 +55,27 @@ export class ExaminationScoreCardComponent implements OnInit {
     this.scoringForm.valueChanges.subscribe((value: any) => {
       this.handleFormChange();
     });
+
+    if (isObservable(this.case)) {
+      this.case.subscribe((data) => {
+        this.localData = data;
+      });
+    } else {
+      this.localData = this.case;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['case']) {
+      console.log(this.case.scores);
+      const scores = this.case.scores;
+      if (scores) {
+        for (const [key, value] of Object.entries(scores)) {
+          console.log(key, value);
+          this.scoringForm.get(key)?.setValue(value);
+        }
+      }
+    }
   }
 
   handleFormChange() {

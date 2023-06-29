@@ -38,9 +38,8 @@ export class UserInformationSliderComponent {
 
   constructor(private _router: Router, private route: ActivatedRoute) {}
 
-  routeToExam(exminationId: string) {
-    this._router.navigate([`oral-examinations`], {
-      queryParams: { exminationId },
+  routeToExam(examinationId: string) {
+    this._router.navigate([`oral-examinations/exam/${examinationId}`], {
       relativeTo: this.route,
     });
   }

@@ -82,19 +82,15 @@ export class ExaminationScoresComponent implements OnInit {
         cases: [
           {
             caseId: '1',
-            caseName: 'Case 1',
           },
           {
             caseId: '2',
-            caseName: 'Case 2',
           },
           {
             caseId: '3',
-            caseName: 'Case 3',
           },
           {
             caseId: '4',
-            caseName: 'Case 4',
           },
         ],
       },
