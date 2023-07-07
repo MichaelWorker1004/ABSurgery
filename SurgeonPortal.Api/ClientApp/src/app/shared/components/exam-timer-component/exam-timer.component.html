@@ -1,0 +1,18 @@
+<div class="timer-container">
+  <div class="total-timer-container">
+    <div class="timer-label">{{ timerLabel }}</div>
+    <div class="timer-value">
+      {{ totalTimer.minutes }}:{{ totalTimer.seconds | number : '2.0' }}
+    </div>
+  </div>
+  <div class="increment-timer-container">
+    <div class="timer-label">
+      {{ incrementLabel }} {{ localCurrentIncrement }}
+    </div>
+    <div class="timer-value">
+      <span *ngIf="incrementNegative">-</span>{{ incrementTimer.minutes }}:{{
+        incrementTimer.seconds | number : '2.0'
+      }}
+    </div>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import {
   Output,
   OnInit,
   SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -38,7 +39,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./sanctions-form.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class SanctionsFormComponent implements OnInit {
+export class SanctionsFormComponent implements OnInit, OnChanges {
   @Output() cancelForm: EventEmitter<any> = new EventEmitter();
   @Output() saveForm: EventEmitter<any> = new EventEmitter();
   @Input() formData: any;

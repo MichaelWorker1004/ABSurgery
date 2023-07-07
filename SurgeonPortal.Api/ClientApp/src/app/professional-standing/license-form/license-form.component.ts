@@ -6,6 +6,7 @@ import {
   Output,
   OnInit,
   SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -39,7 +40,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./license-form.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class LicenseFormComponent implements OnInit {
+export class LicenseFormComponent implements OnInit, OnChanges {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
   @Input() formData: any;

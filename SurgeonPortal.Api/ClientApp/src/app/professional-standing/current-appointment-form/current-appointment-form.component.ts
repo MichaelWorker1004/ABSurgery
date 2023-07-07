@@ -6,6 +6,7 @@ import {
   Output,
   OnInit,
   SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -46,7 +47,7 @@ interface OptionList {
   styleUrls: ['./current-appointment-form.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class CurrentAppointmentFormComponent implements OnInit {
+export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
   @Output() cancelForm: EventEmitter<any> = new EventEmitter();
   @Output() saveForm: EventEmitter<any> = new EventEmitter();
   @Input() formData: any;

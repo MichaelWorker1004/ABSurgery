@@ -1,0 +1,33 @@
+.timer-container {
+  min-width: 7rem;
+  padding: 0.6rem;
+  font-size: 1.25rem;
+  background-color: var(--global-danger);
+  color: #fff;
+  position: fixed;
+  top: 150px;
+  right: 0;
+  border-radius: 0.5rem 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.total-timer-container {
+  padding: 0.25rem 0.65rem 0.5rem;
+  border-bottom: 1px solid #fff;
+  text-align: center;
+}
+.increment-timer-container {
+  padding: 0.5rem 0.65rem 0.25rem;
+  text-align: center;
+  .timer-value {
+    font-size: 1.875rem;
+  }
+}
+.timer-label {
+  font-size: 0.925rem;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
