@@ -50,6 +50,16 @@
             "model": "Scoring\\ExamSessionReadOnly",
             "fields": [
               {
+                "name": "ExamScheduleId",
+                "dataType": "int",
+                "maxLength": 2,
+                "precision": 5,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamScheduleId"
+              },
+              {
                 "name": "FirstName",
                 "dataType": "string",
                 "maxLength": 35,

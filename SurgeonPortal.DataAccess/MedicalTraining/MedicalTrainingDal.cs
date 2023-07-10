@@ -30,26 +30,40 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
 
         public async Task<MedicalTrainingDto> InsertAsync(MedicalTrainingDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<MedicalTrainingDto>(
-                    "[dbo].[ins_medical_training]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            GraduateProfileId = dto.GraduateProfileId,
-                            MedicalSchoolName = dto.MedicalSchoolName,
-                            MedicalSchoolCity = dto.MedicalSchoolCity,
-                            MedicalSchoolStateId = dto.MedicalSchoolStateId,
-                            MedicalSchoolCountryId = dto.MedicalSchoolCountryId,
-                            DegreeId = dto.DegreeId,
-                            MedicalSchoolCompletionYear = dto.MedicalSchoolCompletionYear,
-                            ResidencyProgramName = dto.ResidencyProgramName,
-                            ResidencyCompletionYear = dto.ResidencyCompletionYear,
-                            ResidencyProgramOther = dto.ResidencyProgramOther,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<MedicalTrainingDto>(
+                        "[dbo].[ins_medical_training]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                GraduateProfileId = dto.GraduateProfileId,
+                                MedicalSchoolName = dto.MedicalSchoolName,
+                                MedicalSchoolCity = dto.MedicalSchoolCity,
+                                MedicalSchoolStateId = dto.MedicalSchoolStateId,
+                                MedicalSchoolCountryId = dto.MedicalSchoolCountryId,
+                                DegreeId = dto.DegreeId,
+                                MedicalSchoolCompletionYear = dto.MedicalSchoolCompletionYear,
+                                ResidencyProgramName = dto.ResidencyProgramName,
+                                ResidencyCompletionYear = dto.ResidencyCompletionYear,
+                                ResidencyProgramOther = dto.ResidencyProgramOther,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("MedicalTraining");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

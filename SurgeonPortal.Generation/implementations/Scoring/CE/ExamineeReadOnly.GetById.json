@@ -1,0 +1,91 @@
+{
+  "name": "ExamineeReadOnly",
+  "implementationName": "Scoring\\CE\\ExamineeReadOnly.GetById",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_examinee_session_byid",
+    "ControllerName": "Scoring\\CE\\SessionController",
+    "ControllerRoute": "api/scoring/ce/session",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CE\\ExamineeReadOnly",
+    "ModelGroup": "ExamineeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "examinee"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examinee_session_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examinee_session_byid]",
+        "parameters": [
+          {
+            "name": "ExamScheduleId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamScheduleId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CE\\ExamineeReadOnly",
+            "fields": [
+              {
+                "name": "ExamScheduleId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamScheduleId"
+              },
+              {
+                "name": "FullName",
+                "dataType": "string",
+                "maxLength": 71,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FullName"
+              },
+              {
+                "name": "ExamDate",
+                "dataType": "string",
+                "maxLength": 30,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamDate"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CE\\ExamineeReadOnly.GetById ExamineeReadOnly -t=ytg-framework/readonly-get -p:Model=Scoring\\CE\\ExamineeReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinee_session_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamineeReadOnly -p:Route=examinee -p:ControllerName=Scoring\\CE\\SessionController -p:ControllerRoute=api/scoring/ce/session -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-07-05T17:45:19.1919907Z"
+  },
+  "version": 1
+}

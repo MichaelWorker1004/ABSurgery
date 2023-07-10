@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "Scoring\\CE\\TitleReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Title",
+      "dataType": "string",
+      "maxLength": -1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CaseHeaderId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "ExamCaseId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Scoring\\CE\\TitleReadOnly -sp [dbo].[get_examinee_case_titles] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-07-05T17:27:53.9733955Z"
+  },
+  "version": 1
+}

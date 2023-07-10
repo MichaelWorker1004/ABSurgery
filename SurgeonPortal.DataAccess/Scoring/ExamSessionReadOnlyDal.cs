@@ -17,6 +17,8 @@ namespace SurgeonPortal.DataAccess.Scoring
 
         public async Task<IEnumerable<ExamSessionReadOnlyDto>> GetByUserIdAsync(System.DateTime examDate)
         {
+            var date = examDate.ToString("yyyy-MM-dd");
+
             using (var connection = CreateConnection())
             {
                 return await connection.ExecAsync<ExamSessionReadOnlyDto>(
@@ -24,7 +26,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                         new
                         {
                             ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            ExamDate = examDate,
+                            ExamDate = date,
                         });
                         
             }

@@ -3,7 +3,18 @@
   "name": "Scoring\\ExamSessionReadOnly",
   "description": "",
   "properties": [
-    {
+      {
+        "name": "ExamScheduleId",
+        "dataType": "int",
+        "maxLength": 2,
+        "precision": 5,
+        "scale": 0,
+        "isAlwaysReadOnly": false,
+        "isNullable": true,
+        "isIdentityColumn": false,
+        "rules": {}
+      },
+      {
       "name": "FirstName",
       "dataType": "string",
       "maxLength": 35,
@@ -64,10 +75,9 @@
       "maxLength": 1,
       "precision": 1,
       "scale": 0,
-      "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {}
+      "mapsTo": "model.IsSubmitted"
     },
     {
       "name": "IsCurrentSession",

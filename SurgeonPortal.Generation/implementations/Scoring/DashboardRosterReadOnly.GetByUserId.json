@@ -1,0 +1,131 @@
+{
+  "name": "DashboardRosterReadOnly",
+  "implementationName": "Scoring\\DashboardRosterReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_examinerschedule_byuserid",
+    "ControllerName": "Scoring\\DashboardController",
+    "ControllerRoute": "api/scoring/dashboard",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\DashboardRosterReadOnly",
+    "ModelGroup": "DashboardRosterReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "dashboard-roster",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examinerschedule_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examinerschedule_byuserid]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "ExamDate",
+            "dataType": "datetime",
+            "maxLength": 3,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamDate"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\DashboardRosterReadOnly",
+            "fields": [
+              {
+                "name": "FirstName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FirstName"
+              },
+              {
+                "name": "MiddleName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MiddleName"
+              },
+              {
+                "name": "LastName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastName"
+              },
+              {
+                "name": "SessionNumber",
+                "dataType": "int?",
+                "maxLength": 2,
+                "precision": 5,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SessionNumber"
+              },
+              {
+                "name": "StartTime",
+                "dataType": "time",
+                "maxLength": 5,
+                "precision": 16,
+                "scale": 7,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StartTime"
+              },
+              {
+                "name": "EndTime",
+                "dataType": "time",
+                "maxLength": 5,
+                "precision": 16,
+                "scale": 7,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.EndTime"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamDate",
+      "dataType": "datetime",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\DashboardRosterReadOnly.GetByUserId DashboardRosterReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\DashboardRosterReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinerschedule_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=DashboardRosterReadOnly -p:Route=dashboard-roster -p:ControllerName=Scoring\\DashboardController -p:ControllerRoute=api/scoring/dashboard -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-30T14:53:45.6657739Z"
+  },
+  "version": 1
+}

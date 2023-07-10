@@ -4,6 +4,14 @@ import { ActionCardComponent } from '../shared/components/action-card/action-car
 import { ACTION_CARDS } from './user-action-cards';
 import { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';
 import { UserInformationSliderComponent } from '../shared/components/user-information-slider/user-information-slider.component';
+import { Select, Store } from '@ngxs/store';
+import {
+  ExamScoringSelectors,
+  GetRoster,
+  UserProfileSelectors,
+} from '../state';
+import { IRosterReadOnlyModel } from '../api/models/scoring/roster-read-only.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'abs-ce-scoring',
@@ -18,13 +26,27 @@ import { UserInformationSliderComponent } from '../shared/components/user-inform
   styleUrls: ['./ce-scoring.component.scss'],
 })
 export class CeScoringAppComponent implements OnInit {
+  @Select(ExamScoringSelectors.slices.dashboardRoster) dashboardRoster$:
+    | Observable<IRosterReadOnlyModel[]>
+    | undefined;
+
+  @Select(UserProfileSelectors.userId) userId$: Observable<string> | undefined;
+
   currentYear = new Date().getFullYear();
   userActionCards = ACTION_CARDS;
   alertsAndNotices: any[] | undefined;
-  oralExaminations!: any[];
+  dashboardRoster!: IRosterReadOnlyModel[];
   examinationWeek!: string;
 
+  examinationDate = new Date().toISOString().split('T')[0];
+
+  constructor(private _store: Store) {}
+
   ngOnInit(): void {
+    this.userId$?.subscribe((userId) => {
+      this._store.dispatch(new GetRoster(+userId, this.examinationDate));
+    });
+
     this.fetchCEDashboardDate();
   }
 
@@ -40,71 +62,10 @@ export class CeScoringAppComponent implements OnInit {
       },
     ];
 
-    this.oralExaminations = [
-      {
-        examineeName: 'Karla Africa',
-        examinationId: '123456',
-        sessionNumber: 1,
-        times: '10:00–10:30AM EST',
-      },
-      {
-        examineeName: 'Nkiruka Iseigas',
-        examinationId: '456',
-        sessionNumber: 1,
-        times: '10:35–11:05AM EST',
-      },
-      {
-        examineeName: 'Daniel Fuentes',
-        examinationId: '666441',
-        sessionNumber: 1,
-        times: '11:10–11:40AM EST',
-      },
-      {
-        examineeName: 'John Ayala',
-        examinationId: '444564',
-        sessionNumber: 1,
-        times: '12:15–12:45PM EST',
-      },
-      {
-        examineeName: 'John Doe',
-        examinationId: '444564',
-        sessionNumber: 1,
-        times: '1:15–1:45PM EST',
-      },
-      {
-        examineeName: 'John Ayala',
-        examinationId: '444564',
-        sessionNumber: 1,
-        times: '12:15–12:45PM EST',
-      },
+    this.dashboardRoster$?.subscribe((dashboardRoster) => {
+      this.dashboardRoster = dashboardRoster;
+    });
 
-      {
-        examineeName: 'John Doe',
-        examinationId: '444564',
-        sessionNumber: 1,
-        times: '1:15–1:45PM EST',
-      },
-      {
-        examineeName: 'John Doe',
-        examinationId: '444564',
-        sessionNumber: 1,
-        times: '1:15–1:45PM EST',
-      },
-      {
-        examineeName: 'John Ayala',
-        examinationId: '444564',
-        sessionNumber: 1,
-        times: '12:15–12:45PM EST',
-      },
-
-      {
-        examineeName: 'John Doe',
-        examinationId: '444564',
-        sessionNumber: 1,
-        times: '1:15–1:45PM EST',
-      },
-    ];
-
-    this.examinationWeek = '03/08/2023';
+    this.examinationWeek = new Date().toLocaleDateString();
   }
 }

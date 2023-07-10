@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Scoring
 
         public async Task<IEnumerable<CaseRosterReadOnlyDto>> GetByScheduleIdAsync(
             int scheduleId1,
-            int scheduleId2)
+            int? scheduleId2)
         {
             using (var connection = CreateConnection())
             {

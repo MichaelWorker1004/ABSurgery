@@ -31,7 +31,7 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [HttpDelete("")]
@@ -46,7 +46,7 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserCertificateModel))]
@@ -63,7 +63,7 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(201)]

@@ -14,6 +14,11 @@ namespace SurgeonPortal.Library.Scoring
     public class RosterReadOnly : ReadOnlyBase<RosterReadOnly>, IRosterReadOnly
     {
         [DataMember]
+		[DisplayName(nameof(ExamScheduleId))]
+        public int ExamScheduleId => ReadProperty(ExamScheduleIdProperty);
+		public static readonly PropertyInfo<int> ExamScheduleIdProperty = RegisterProperty<int>(c => c.ExamScheduleId);
+
+        [DataMember]
 		[DisplayName(nameof(DayNumber))]
         public int? DayNumber => ReadProperty(DayNumberProperty);
 		public static readonly PropertyInfo<int?> DayNumberProperty = RegisterProperty<int?>(c => c.DayNumber);
@@ -34,19 +39,9 @@ namespace SurgeonPortal.Library.Scoring
 		public static readonly PropertyInfo<string> DisplayNameProperty = RegisterProperty<string>(c => c.DisplayName);
 
         [DataMember]
-		[DisplayName(nameof(Score))]
-        public string Score => ReadProperty(ScoreProperty);
-		public static readonly PropertyInfo<string> ScoreProperty = RegisterProperty<string>(c => c.Score);
-
-        [DataMember]
-		[DisplayName(nameof(CriticalFail))]
-        public string CriticalFail => ReadProperty(CriticalFailProperty);
-		public static readonly PropertyInfo<string> CriticalFailProperty = RegisterProperty<string>(c => c.CriticalFail);
-
-        [DataMember]
-		[DisplayName(nameof(Submitted))]
-        public string Submitted => ReadProperty(SubmittedProperty);
-		public static readonly PropertyInfo<string> SubmittedProperty = RegisterProperty<string>(c => c.Submitted);
+		[DisplayName(nameof(IsSubmitted))]
+        public bool? IsSubmitted => ReadProperty(IsSubmittedProperty);
+		public static readonly PropertyInfo<bool?> IsSubmittedProperty = RegisterProperty<bool?>(c => c.IsSubmitted);
 
 
         [FetchChild]
@@ -60,13 +55,12 @@ namespace SurgeonPortal.Library.Scoring
         
 		private void FetchData(RosterReadOnlyDto dto)
 		{
+            LoadProperty(ExamScheduleIdProperty, dto.ExamScheduleId);
             LoadProperty(DayNumberProperty, dto.DayNumber);
             LoadProperty(SessionNumberProperty, dto.SessionNumber);
             LoadProperty(RosterProperty, dto.Roster);
             LoadProperty(DisplayNameProperty, dto.DisplayName);
-            LoadProperty(ScoreProperty, dto.Score);
-            LoadProperty(CriticalFailProperty, dto.CriticalFail);
-            LoadProperty(SubmittedProperty, dto.Submitted);
+            LoadProperty(IsSubmittedProperty, dto.IsSubmitted);
 		} 
         
     }

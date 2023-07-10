@@ -31,7 +31,7 @@ namespace SurgeonPortal.Api.Controllers.Examinations.GQ
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AdditionalTrainingModel))]
@@ -48,7 +48,7 @@ namespace SurgeonPortal.Api.Controllers.Examinations.GQ
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(201)]
@@ -70,7 +70,7 @@ namespace SurgeonPortal.Api.Controllers.Examinations.GQ
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(200)]

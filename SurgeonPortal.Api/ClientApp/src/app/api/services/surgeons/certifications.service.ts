@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class CertificationsService {
-  private readonly baseEndpoint = 'api/surgeons/certifications';
 
   constructor(private apiService: ApiService) {}
 
@@ -35,7 +34,7 @@ export class CertificationsService {
      */
 
             
-            return this.apiService.get<ICertificationReadOnlyModel[]>(`${this.baseEndpoint}?api-version=${apiVersion}&absId=${absId}`);
+            return this.apiService.get<ICertificationReadOnlyModel[]>(`api/surgeons/certifications?api-version=${apiVersion}&absId=${absId}`);
   }
 
 

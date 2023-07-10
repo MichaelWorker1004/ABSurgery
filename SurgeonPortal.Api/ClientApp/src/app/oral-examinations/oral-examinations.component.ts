@@ -9,7 +9,12 @@ import { ORAL_EXAMINATION_COLS } from './oral-examination-cols';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-read-only.model';
+import { ExamScoringSelectors, GetExamineeList } from '../state';
+import { Select, Store } from '@ngxs/store';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-oral-examinations',
   standalone: true,
@@ -25,14 +30,19 @@ import { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-re
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class OralExaminationsComponent implements OnInit {
-  examDate: Date = new Date();
-  zoomLink = 'https://zoom.us/j/1234567890';
-  oralExaminations$: any[] = []; //eventually load from datastore with selector
+  @Select(ExamScoringSelectors.slices.examineeList)
+  examineeList$: Observable<IExamSessionReadOnlyModel[]> | undefined;
+
+  examDate: Date = new Date('06/20/23');
+  zoomLink: string | undefined = '';
+  oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =
+    new BehaviorSubject<IExamSessionReadOnlyModel[]>([]);
   oralExaminationCols = ORAL_EXAMINATION_COLS;
 
   constructor(
     private _route: Router,
-    private _globalDialogService: GlobalDialogService
+    private _globalDialogService: GlobalDialogService,
+    private _store: Store
   ) {}
 
   ngOnInit(): void {
@@ -40,67 +50,42 @@ export class OralExaminationsComponent implements OnInit {
   }
 
   getOralExaminations() {
-    const examList = [
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        startTime: '9:00 AM',
-        endTime: '9:30 AM',
-        meetingLink: 'https://zoom.us/j/1234567890',
-        isSubmitted: true,
-        isCurrentSession: false,
-        sessionNumber: 1,
-      },
-      {
-        firstName: 'Jane',
-        lastName: 'Doe',
-        startTime: '9:30 AM',
-        endTime: '10:00 AM',
-        meetingLink: 'https://zoom.us/j/1234567890',
-        isSubmitted: true,
-        isCurrentSession: false,
-        sessionNumber: 2,
-      },
-      {
-        firstName: 'Bruce',
-        lastName: 'Wayne',
-        startTime: '10:00 AM',
-        endTime: '10:30 AM',
-        meetingLink: 'https://zoom.us/j/1234567890',
-        isSubmitted: false,
-        isCurrentSession: true,
-        sessionNumber: 3,
-      },
-      {
-        firstName: 'Clark',
-        lastName: 'Kent',
-        startTime: '10:30 AM',
-        endTime: '11:00 AM',
-        meetingLink: 'https://zoom.us/j/1234567890',
-        isSubmitted: false,
-        isCurrentSession: false,
-        sessionNumber: 4,
-      },
-      {
-        firstName: 'Tony',
-        lastName: 'Stark',
-        startTime: '11:00 AM',
-        endTime: '11:30 AM',
-        meetingLink: 'https://zoom.us/j/1234567890',
-        isSubmitted: false,
-        isCurrentSession: false,
-        sessionNumber: 5,
-      },
-    ];
+    this._store.dispatch(new GetExamineeList(this.examDate.toISOString()));
 
-    this.oralExaminations$ = examList.map((exam) => {
-      return {
-        ...exam,
-        fullName: `${exam.firstName} ${exam.lastName}`,
-        examTime: `${exam.startTime} - ${exam.endTime}`,
-        rowClass: this.setExaminationStatus(exam),
-      };
-    });
+    this.examineeList$
+      ?.pipe(
+        untilDestroyed(this),
+        map((examineeList) => {
+          if (examineeList?.length > 0) {
+            return examineeList.map((examinee) => {
+              let examTime = 'not scheduled';
+              if (examinee.startTime) {
+                examTime = `${examinee.startTime}`;
+                if (examinee.endTime) {
+                  examTime = `${examTime} - ${examinee.endTime}`;
+                }
+              } else if (examinee.endTime) {
+                examTime = `${examinee.endTime}`;
+              }
+              return {
+                ...examinee,
+                fullName: `${examinee.firstName} ${examinee.lastName}`,
+                examTime: `${examTime}`,
+                rowClass: this.setExaminationStatus(examinee),
+              };
+            });
+          }
+          return [];
+        })
+      )
+      .subscribe((examineeList) => {
+        this.oralExaminations$.next(examineeList);
+        if (examineeList?.length > 0) {
+          this.zoomLink = examineeList[0].meetingLink;
+        } else {
+          this.zoomLink = '';
+        }
+      });
   }
 
   setExaminationStatus(exam: IExamSessionReadOnlyModel) {
@@ -116,10 +101,8 @@ export class OralExaminationsComponent implements OnInit {
   handleGridAction($event: any) {
     const { data } = $event;
     if ($event.fieldKey === 'startExam') {
-      console.log('start exam', data);
       // add any store logic required to start the exam here
       // add any checks to prevent the exam from being started incorrectly here
-      // add new global dialog to confirm exam start
       this._globalDialogService
         .showConfirmationWithWarning(
           'Examination Confirmation',
@@ -130,7 +113,7 @@ export class OralExaminationsComponent implements OnInit {
           if (result) {
             this._route.navigate([
               'ce-scoring/oral-examinations/exam',
-              data.sessionNumber,
+              data.examScheduleId,
             ]);
           }
           // take any actions required on cancel of confirmation here
@@ -148,6 +131,12 @@ export class OralExaminationsComponent implements OnInit {
       element.select();
       document.execCommand('copy');
       element.setSelectionRange(0, 0);
+    }
+  }
+
+  openZoomLink() {
+    if (this.zoomLink) {
+      window.open(this.zoomLink, '_blank');
     }
   }
 }

@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
         {
             var expectedSprocName = "[dbo].[get_toc_case_list]";
             var expectedScheduleId1 = Create<int>();
-            var expectedScheduleId2 = Create<int>();
+            var expectedScheduleId2 = Create<int?>();
             var expectedParams =
                 new
                 {
@@ -48,7 +48,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var sut = new CaseRosterReadOnlyDal(sqlManager);
             var result = await sut.GetByScheduleIdAsync(
                 Create<int>(),
-                Create<int>());
+                Create<int?>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

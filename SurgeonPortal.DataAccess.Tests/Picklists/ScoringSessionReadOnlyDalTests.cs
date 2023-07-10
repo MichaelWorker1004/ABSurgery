@@ -10,10 +10,10 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
 {
 	public class ScoringSessionReadOnlyDalTests : TestBase<string>
     {
-        #region GetByExaminerIdAsync
+        #region GetByKeysAsync
         
         [Test]
-        public async Task GetByExaminerIdAsync_ExecutesSprocCorrectly()
+        public async Task GetByKeysAsync_ExecutesSprocCorrectly()
         {
             var expectedSprocName = "[dbo].[get_day_session_picklist]";
             var expectedExaminerUserId = Create<int>();
@@ -29,14 +29,14 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
             sqlManager.AddRecords(CreateMany<ScoringSessionReadOnlyDto>());
         
             var sut = new ScoringSessionReadOnlyDal(sqlManager);
-            await sut.GetByExaminerIdAsync(expectedExamHeaderId);
+            await sut.GetByKeysAsync(expectedExamHeaderId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
         }
         
         [Test]
-        public async Task GetByExaminerIdAsync_YieldsCorrectResult()
+        public async Task GetByKeysAsync_YieldsCorrectResult()
         {
             var expectedDtos = CreateMany<ScoringSessionReadOnlyDto>();
         
@@ -44,7 +44,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new ScoringSessionReadOnlyDal(sqlManager);
-            var result = await sut.GetByExaminerIdAsync(Create<int>());
+            var result = await sut.GetByKeysAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

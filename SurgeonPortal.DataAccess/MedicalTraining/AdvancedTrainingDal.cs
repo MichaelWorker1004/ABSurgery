@@ -30,21 +30,35 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
 
         public async Task<AdvancedTrainingDto> InsertAsync(AdvancedTrainingDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<AdvancedTrainingDto>(
-                    "[dbo].[ins_advanced_training]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            TrainingTypeId = dto.TrainingTypeId,
-                            ProgramId = dto.ProgramId,
-                            Other = dto.Other,
-                            StartDate = dto.StartDate,
-                            EndDate = dto.EndDate,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<AdvancedTrainingDto>(
+                        "[dbo].[ins_advanced_training]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                TrainingTypeId = dto.TrainingTypeId,
+                                ProgramId = dto.ProgramId,
+                                Other = dto.Other,
+                                StartDate = dto.StartDate,
+                                EndDate = dto.EndDate,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("AdvancedTraining");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

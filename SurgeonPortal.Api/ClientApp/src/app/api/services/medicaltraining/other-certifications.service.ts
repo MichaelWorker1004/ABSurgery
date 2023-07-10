@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class OtherCertificationsService {
-    private readonly baseEndpoint = 'api/medical-training/other-certifications';
 
     constructor(private apiService: ApiService) {}
 
@@ -36,7 +35,7 @@ export class OtherCertificationsService {
             */
             
             
-            return this.apiService.delete<IOtherCertificationsModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.delete<IOtherCertificationsModel>(`api/medical-training/other-certifications?api-version=${apiVersion}&id=${id}`);
         }
  
         public retrieveOtherCertifications_GetById(id: number,
@@ -62,7 +61,7 @@ export class OtherCertificationsService {
             */
             
             
-            return this.apiService.get<IOtherCertificationsModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.get<IOtherCertificationsModel>(`api/medical-training/other-certifications/by-id?api-version=${apiVersion}&id=${id}`);
         }
  
         public createOtherCertifications(model: IOtherCertificationsModel, 
@@ -90,7 +89,7 @@ export class OtherCertificationsService {
             */
             
             
-            return this.apiService.post<IOtherCertificationsModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IOtherCertificationsModel>(`api/medical-training/other-certifications?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -122,7 +121,7 @@ export class OtherCertificationsService {
             
             
             
-            return this.apiService.put<IOtherCertificationsModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`,
+            return this.apiService.put<IOtherCertificationsModel>(`api/medical-training/other-certifications?api-version=${apiVersion}&id=${id}`,
             model);
         }
  
@@ -147,7 +146,7 @@ export class OtherCertificationsService {
             */
             
             
-            return this.apiService.get<IOtherCertificationsReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IOtherCertificationsReadOnlyModel[]>(`api/medical-training/other-certifications/by-userid?api-version=${apiVersion}`);
         }
 
 

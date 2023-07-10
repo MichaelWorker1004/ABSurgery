@@ -1,0 +1,184 @@
+{
+  "name": "ExamScore",
+  "implementationName": "CE\\ExamScore.update",
+  "template": "ytg-framework/editable-edit",
+  "parameters": {
+    "Adapter": "dbo.update_exam_schedule_scores",
+    "ControllerName": "CE\\ExamScoreController",
+    "ControllerRoute": "api/exam-scores",
+    "ControllerVersion": "1",
+    "FetchImplementation": "CE\\ExamScore.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "CE\\ExamScore",
+    "ModelGroup": "ExamScore",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_exam_schedule_scores",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_exam_schedule_scores]",
+        "parameters": [
+          {
+            "name": "ExamScheduleScoreId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamScheduleScoreId"
+          },
+          {
+            "name": "ExaminerScore",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExaminerScore"
+          },
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "CE\\ExamScore",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "ExamScheduleId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamScheduleId"
+              },
+              {
+                "name": "ExaminerUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExaminerUserId"
+              },
+              {
+                "name": "ExaminerScore",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExaminerScore"
+              },
+              {
+                "name": "Submitted",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Submitted"
+              },
+              {
+                "name": "SubmittedDateTimeUTC",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SubmittedDateTimeUTC"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScheduleScoreId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ExaminerScore",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s CE\\ExamScore.update ExamScore -t=ytg-framework/editable-edit -p:Model=CE\\ExamScore -p:Adapter=sp:abssp-[dbo].[update_exam_schedule_scores] -p:FetchImplementation=CE\\ExamScore.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamScore -p:Route= -p:ControllerName=CE\\ExamScoreController -p:ControllerRoute=api/exam-scores -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  CE\\ExamScore.update ExamScore -t=ytg-framework/editable-edit -p:Model=CE\\ExamScore -p:Adapter=sp:abssp-[dbo].[update_exam_schedule_scores] -p:FetchImplementation=CE\\ExamScore.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamScore -p:Route= -p:ControllerName=CE\\ExamScoreController -p:ControllerRoute=api/exam-scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-07-06T14:53:09.5864527Z"
+  },
+  "version": 1
+}

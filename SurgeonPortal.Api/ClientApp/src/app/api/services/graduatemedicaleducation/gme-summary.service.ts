@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class GmeSummaryService {
-    private readonly baseEndpoint = 'api/gme-summary';
 
     constructor(private apiService: ApiService) {}
 
@@ -33,7 +32,7 @@ export class GmeSummaryService {
             */
             
             
-            return this.apiService.get<IGmeSummaryReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IGmeSummaryReadOnlyModel[]>(`api/gme-summary/by-userid?api-version=${apiVersion}`);
         }
 
 

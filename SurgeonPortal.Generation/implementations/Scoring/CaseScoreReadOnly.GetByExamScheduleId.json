@@ -1,0 +1,211 @@
+{
+  "name": "CaseScoreReadOnly",
+  "implementationName": "Scoring\\CaseScoreReadOnly.GetByExamScheduleId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_examinerscores_byexamscheduleid",
+    "ControllerName": "Scoring\\CaseScoresController",
+    "ControllerRoute": "api/cases/scores",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamScheduleId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseScoreReadOnly",
+    "ModelGroup": "CaseScoreReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "all-by-examschedule-id",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examinerscores_byexamscheduleid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examinerscores_byexamscheduleId]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "ExamScheduleId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamScheduleId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CaseScoreReadOnly",
+            "fields": [
+              {
+                "name": "ExamScoringId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ExamScoringId"
+              },
+              {
+                "name": "ExamCaseId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamCaseId"
+              },
+              {
+                "name": "ExaminerUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExaminerUserId"
+              },
+              {
+                "name": "ExamineeUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeUserId"
+              },
+              {
+                "name": "ExamineeFirstName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeFirstName"
+              },
+              {
+                "name": "ExamineeMiddleName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeMiddleName"
+              },
+              {
+                "name": "ExamineeLastName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeLastName"
+              },
+              {
+                "name": "ExamineeSuffix",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeSuffix"
+              },
+              {
+                "name": "ExamDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamDate"
+              },
+              {
+                "name": "StartTime",
+                "dataType": "time",
+                "maxLength": 5,
+                "precision": 16,
+                "scale": 7,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StartTime"
+              },
+              {
+                "name": "EndTime",
+                "dataType": "time",
+                "maxLength": 5,
+                "precision": 16,
+                "scale": 7,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.EndTime"
+              },
+              {
+                "name": "Score",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Score"
+              },
+              {
+                "name": "CriticalFail",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CriticalFail"
+              },
+              {
+                "name": "Remarks",
+                "dataType": "string",
+                "maxLength": 2000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Remarks"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseScoreReadOnly.GetByExamScheduleId CaseScoreReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseScoreReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinerscores_byexamscheduleId] -p:FetchMethodName=GetByExamScheduleId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScoreReadOnly -p:Route=all-by-examschedule-id -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseScoreReadOnly.GetByExamScheduleId CaseScoreReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseScoreReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinerscores_byexamscheduleId] -p:FetchMethodName=GetByExamScheduleId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScoreReadOnly -p:Route=all-by-examschedule-id -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:UsePaginatedList=false",
+    "generatedDateUtc": "2023-06-30T13:19:06.2497454Z"
+  },
+  "version": 1
+}

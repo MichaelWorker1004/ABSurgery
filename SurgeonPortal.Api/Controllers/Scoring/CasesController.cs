@@ -16,7 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Scoring
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-	[Route("api/exam-headers/cases")]
+	[Route("api/case-rosters")]
 	public class CasesController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -36,11 +36,11 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CaseRosterReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [HttpGet("case-roster")]
+        [HttpGet("")]
         public async Task<ActionResult<IEnumerable<CaseRosterReadOnlyModel>>> GetCaseRosterReadOnly_GetByScheduleIdAsync(
             [FromServices] ICaseRosterReadOnlyListFactory caseRosterReadOnlyListFactory,
             int scheduleId1,
-            int scheduleId2)
+            int? scheduleId2 = null)
         {
             var items = await caseRosterReadOnlyListFactory.GetByScheduleIdAsync(
                 scheduleId1,

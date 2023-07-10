@@ -1,5 +1,6 @@
 
 export interface IExamSessionReadOnlyModel {
+    examScheduleId: number;
     firstName: string;
     lastName: string;
     startTime: string;

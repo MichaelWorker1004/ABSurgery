@@ -14,12 +14,12 @@ namespace SurgeonPortal.Library.Tests.Picklists
     {
 
         [Test]
-        public async Task GetByExaminerIdAsync_CallsDalCorrectly()
+        public async Task GetByKeysAsync_CallsDalCorrectly()
         {
             var expectedExamHeaderId = Create<int>();
             
             var mockDal = new Mock<IScoringSessionReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExaminerIdAsync(expectedExamHeaderId))
+            mockDal.Setup(m => m.GetByKeysAsync(expectedExamHeaderId))
                 .ReturnsAsync(CreateMany<ScoringSessionReadOnlyDto>());
         
             UseMockServiceProvider()
@@ -30,18 +30,18 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new ScoringSessionReadOnlyListFactory();
-            var sut = await factory.GetByExaminerIdAsync(expectedExamHeaderId);
+            var sut = await factory.GetByKeysAsync(expectedExamHeaderId);
         
             mockDal.VerifyAll();
         }
         
         [Test]
-        public async Task GetByExaminerIdAsync_LoadsChildrenCorrectly()
+        public async Task GetByKeysAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<ScoringSessionReadOnlyDto>();
         
             var mockDal = new Mock<IScoringSessionReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExaminerIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByKeysAsync(It.IsAny<int>()))
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
@@ -52,7 +52,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new ScoringSessionReadOnlyListFactory();
-            var sut = await factory.GetByExaminerIdAsync(Create<int>());
+            var sut = await factory.GetByKeysAsync(Create<int>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

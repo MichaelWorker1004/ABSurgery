@@ -4,6 +4,7 @@ namespace SurgeonPortal.Library.Contracts.Scoring
 {
     public interface IExamSessionReadOnly : IYtgReadOnlyBase
     {
+        int ExamScheduleId { get; }
         string FirstName { get; }
         string LastName { get; }
         string StartTime { get; }

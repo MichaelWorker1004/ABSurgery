@@ -29,7 +29,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class PicklistsService {
-    private readonly baseEndpoint = 'api/picklists';
 
     constructor(private apiService: ApiService) {}
 
@@ -55,7 +54,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IAccreditedProgramInstitutionReadOnlyModel[]>(`${this.baseEndpoint}/accredited-program-institutions?api-version=${apiVersion}`);
+            return this.apiService.get<IAccreditedProgramInstitutionReadOnlyModel[]>(`api/picklists/accredited-program-institutions?api-version=${apiVersion}`);
         }
  
         public retrieveAppointmentTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<IAppointmentTypeReadOnlyModel[]> {
@@ -79,7 +78,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IAppointmentTypeReadOnlyModel[]>(`${this.baseEndpoint}/appointment-types?api-version=${apiVersion}`);
+            return this.apiService.get<IAppointmentTypeReadOnlyModel[]>(`api/picklists/appointment-types?api-version=${apiVersion}`);
         }
  
         public retrieveCertificateTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<ICertificateTypeReadOnlyModel[]> {
@@ -103,7 +102,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<ICertificateTypeReadOnlyModel[]>(`${this.baseEndpoint}/certificate-types?api-version=${apiVersion}`);
+            return this.apiService.get<ICertificateTypeReadOnlyModel[]>(`api/picklists/certificate-types?api-version=${apiVersion}`);
         }
  
         public retrieveClinicalActivityReadOnly_GetAll(apiVersion = '1.0'): Observable<IClinicalActivityReadOnlyModel[]> {
@@ -127,7 +126,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IClinicalActivityReadOnlyModel[]>(`${this.baseEndpoint}/clinical-activities?api-version=${apiVersion}`);
+            return this.apiService.get<IClinicalActivityReadOnlyModel[]>(`api/picklists/clinical-activities?api-version=${apiVersion}`);
         }
  
         public retrieveClinicalLevelReadOnly_GetAll(apiVersion = '1.0'): Observable<IClinicalLevelReadOnlyModel[]> {
@@ -151,7 +150,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IClinicalLevelReadOnlyModel[]>(`${this.baseEndpoint}/clinical-levels?api-version=${apiVersion}`);
+            return this.apiService.get<IClinicalLevelReadOnlyModel[]>(`api/picklists/clinical-levels?api-version=${apiVersion}`);
         }
  
         public retrieveCountryReadOnly_GetAll(apiVersion = '1.0'): Observable<ICountryReadOnlyModel[]> {
@@ -175,7 +174,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<ICountryReadOnlyModel[]>(`${this.baseEndpoint}/countries?api-version=${apiVersion}`);
+            return this.apiService.get<ICountryReadOnlyModel[]>(`api/picklists/countries?api-version=${apiVersion}`);
         }
 
         public retrieveDegreeReadOnly_GetAll(apiVersion = '1.0'): Observable<IDegreeReadOnlyModel[]> {
@@ -199,7 +198,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IDegreeReadOnlyModel[]>(`${this.baseEndpoint}/degrees?api-version=${apiVersion}`);
+            return this.apiService.get<IDegreeReadOnlyModel[]>(`api/picklists/degrees?api-version=${apiVersion}`);
         }
  
         public retrieveDocumentTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<IDocumentTypeReadOnlyModel[]> {
@@ -223,7 +222,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IDocumentTypeReadOnlyModel[]>(`${this.baseEndpoint}/document-types?api-version=${apiVersion}`);
+            return this.apiService.get<IDocumentTypeReadOnlyModel[]>(`api/picklists/document-types?api-version=${apiVersion}`);
         }
  
         public retrieveEthnicityReadOnly_GetAll(apiVersion = '1.0'): Observable<IEthnicityReadOnlyModel[]> {
@@ -247,7 +246,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IEthnicityReadOnlyModel[]>(`${this.baseEndpoint}/ethnicities?api-version=${apiVersion}`);
+            return this.apiService.get<IEthnicityReadOnlyModel[]>(`api/picklists/ethnicities?api-version=${apiVersion}`);
         }
 
         public retrieveFellowshipProgramReadOnly_GetAll(apiVersion = '1.0'): Observable<IFellowshipProgramReadOnlyModel[]> {
@@ -271,7 +270,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IFellowshipProgramReadOnlyModel[]>(`${this.baseEndpoint}/fellowship-programs?api-version=${apiVersion}`);
+            return this.apiService.get<IFellowshipProgramReadOnlyModel[]>(`api/picklists/fellowship-programs?api-version=${apiVersion}`);
         }
  
         public retrieveGenderReadOnly_GetAll(apiVersion = '1.0'): Observable<IGenderReadOnlyModel[]> {
@@ -295,7 +294,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IGenderReadOnlyModel[]>(`${this.baseEndpoint}/genders?api-version=${apiVersion}`);
+            return this.apiService.get<IGenderReadOnlyModel[]>(`api/picklists/genders?api-version=${apiVersion}`);
         }
  
         public retrieveGraduateProfileReadOnly_GetAll(apiVersion = '1.0'): Observable<IGraduateProfileReadOnlyModel[]> {
@@ -319,7 +318,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IGraduateProfileReadOnlyModel[]>(`${this.baseEndpoint}/graduate-profile?api-version=${apiVersion}`);
+            return this.apiService.get<IGraduateProfileReadOnlyModel[]>(`api/picklists/graduate-profile?api-version=${apiVersion}`);
         }
 
         public retrieveJcahoOrganizationReadOnly_GetAll(apiVersion = '1.0'): Observable<IJcahoOrganizationReadOnlyModel[]> {
@@ -343,7 +342,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IJcahoOrganizationReadOnlyModel[]>(`${this.baseEndpoint}/jcaho-organizations?api-version=${apiVersion}`);
+            return this.apiService.get<IJcahoOrganizationReadOnlyModel[]>(`api/picklists/jcaho-organizations?api-version=${apiVersion}`);
         }
  
         public retrieveLanguageReadOnly_GetAll(apiVersion = '1.0'): Observable<ILanguageReadOnlyModel[]> {
@@ -367,7 +366,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<ILanguageReadOnlyModel[]>(`${this.baseEndpoint}/languages?api-version=${apiVersion}`);
+            return this.apiService.get<ILanguageReadOnlyModel[]>(`api/picklists/languages?api-version=${apiVersion}`);
         }
 
         public retrieveLicenseTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<ILicenseTypeReadOnlyModel[]> {
@@ -391,7 +390,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<ILicenseTypeReadOnlyModel[]>(`${this.baseEndpoint}/license-types?api-version=${apiVersion}`);
+            return this.apiService.get<ILicenseTypeReadOnlyModel[]>(`api/picklists/license-types?api-version=${apiVersion}`);
         }
  
         public retrieveOrganizationTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<IOrganizationTypeReadOnlyModel[]> {
@@ -415,7 +414,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IOrganizationTypeReadOnlyModel[]>(`${this.baseEndpoint}/organization-types?api-version=${apiVersion}`);
+            return this.apiService.get<IOrganizationTypeReadOnlyModel[]>(`api/picklists/organization-types?api-version=${apiVersion}`);
         }
  
         public retrievePracticeTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<IPracticeTypeReadOnlyModel[]> {
@@ -439,7 +438,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IPracticeTypeReadOnlyModel[]>(`${this.baseEndpoint}/practice-types?api-version=${apiVersion}`);
+            return this.apiService.get<IPracticeTypeReadOnlyModel[]>(`api/picklists/practice-types?api-version=${apiVersion}`);
         }
  
         public retrievePrimaryPracticeReadOnly_GetAll(apiVersion = '1.0'): Observable<IPrimaryPracticeReadOnlyModel[]> {
@@ -463,7 +462,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IPrimaryPracticeReadOnlyModel[]>(`${this.baseEndpoint}/primary-practices?api-version=${apiVersion}`);
+            return this.apiService.get<IPrimaryPracticeReadOnlyModel[]>(`api/picklists/primary-practices?api-version=${apiVersion}`);
         }
  
         public retrieveRaceReadOnly_GetAll(apiVersion = '1.0'): Observable<IRaceReadOnlyModel[]> {
@@ -487,7 +486,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IRaceReadOnlyModel[]>(`${this.baseEndpoint}/races?api-version=${apiVersion}`);
+            return this.apiService.get<IRaceReadOnlyModel[]>(`api/picklists/races?api-version=${apiVersion}`);
         }
 
         public retrieveResidencyProgramReadOnly_GetAll(apiVersion = '1.0'): Observable<IResidencyProgramReadOnlyModel[]> {
@@ -511,10 +510,10 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IResidencyProgramReadOnlyModel[]>(`${this.baseEndpoint}/residency-programs?api-version=${apiVersion}`);
+            return this.apiService.get<IResidencyProgramReadOnlyModel[]>(`api/picklists/residency-programs?api-version=${apiVersion}`);
         }
  
-        public retrieveScoringSessionReadOnly_GetByExaminerId(examHeaderId: number,
+        public retrieveScoringSessionReadOnly_GetByKeys(examHeaderId: number,
         apiVersion = '1.0'): Observable<IScoringSessionReadOnlyModel[]> {
             /**
             * Claims
@@ -537,7 +536,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IScoringSessionReadOnlyModel[]>(`${this.baseEndpoint}/examiner-sessions?api-version=${apiVersion}&examHeaderId=${examHeaderId}`);
+            return this.apiService.get<IScoringSessionReadOnlyModel[]>(`api/picklists/examiner-sessions?api-version=${apiVersion}&examHeaderId=${examHeaderId}`);
         }
  
         public retrieveStateReadOnly_GetByCountry(countryCode: string,
@@ -563,7 +562,7 @@ export class PicklistsService {
             */
 
 
-            return this.apiService.get<IStateReadOnlyModel[]>(`${this.baseEndpoint}/states?api-version=${apiVersion}&countryCode=${countryCode}`);
+            return this.apiService.get<IStateReadOnlyModel[]>(`api/picklists/states?api-version=${apiVersion}&countryCode=${countryCode}`);
         }
  
         public retrieveTrainingTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<ITrainingTypeReadOnlyModel[]> {
@@ -587,7 +586,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<ITrainingTypeReadOnlyModel[]>(`${this.baseEndpoint}/training-types?api-version=${apiVersion}`);
+            return this.apiService.get<ITrainingTypeReadOnlyModel[]>(`api/picklists/training-types?api-version=${apiVersion}`);
         }
 
 

@@ -31,7 +31,7 @@ namespace SurgeonPortal.Api.Controllers.ProfessionalStanding
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserProfessionalStandingModel))]
@@ -47,7 +47,7 @@ namespace SurgeonPortal.Api.Controllers.ProfessionalStanding
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(201)]
@@ -69,7 +69,7 @@ namespace SurgeonPortal.Api.Controllers.ProfessionalStanding
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(200)]

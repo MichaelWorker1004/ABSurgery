@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class UserProfessionalStandingService {
-    private readonly baseEndpoint = 'api/professional-standing';
 
     constructor(private apiService: ApiService) {}
 
@@ -33,7 +32,7 @@ export class UserProfessionalStandingService {
             */
             
             
-            return this.apiService.get<IUserProfessionalStandingModel>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IUserProfessionalStandingModel>(`api/professional-standing/by-userid?api-version=${apiVersion}`);
         }
  
         public createUserProfessionalStanding(model: IUserProfessionalStandingModel, 
@@ -62,7 +61,7 @@ export class UserProfessionalStandingService {
             */
             
             
-            return this.apiService.post<IUserProfessionalStandingModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IUserProfessionalStandingModel>(`api/professional-standing?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -93,7 +92,7 @@ export class UserProfessionalStandingService {
             
             
             
-            return this.apiService.put<IUserProfessionalStandingModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
+            return this.apiService.put<IUserProfessionalStandingModel>(`api/professional-standing?api-version=${apiVersion}`,
             model);
         }
 

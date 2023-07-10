@@ -2,6 +2,7 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
 {
     public class ExamSessionReadOnlyDto
     {
+        public int ExamScheduleId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string StartTime { get; set; }

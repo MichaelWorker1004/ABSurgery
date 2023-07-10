@@ -7,8 +7,8 @@
   <ItemGroup>
 	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
 	<PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
-	<PackageReference Include="Ytg.Framework" Version="6.0.11" />
-	<PackageReference Include="Ytg.Framework.Sql" Version="6.0.8" />
+	<PackageReference Include="Ytg.Framework" Version="6.0.13" />
+	<PackageReference Include="Ytg.Framework.Sql" Version="6.0.10" />
 	<PackageReference Include="Ytg.UnitTest" Version="6.0.2" />
   </ItemGroup>
 

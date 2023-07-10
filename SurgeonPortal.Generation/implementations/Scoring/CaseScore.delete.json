@@ -1,0 +1,55 @@
+{
+  "name": "CaseScore",
+  "implementationName": "Scoring\\CaseScore.delete",
+  "template": "ytg-framework/editable-delete",
+  "parameters": {
+    "Adapter": "dbo.delete_examinerscore_byid",
+    "ControllerName": "Scoring\\CaseScoresController",
+    "ControllerRoute": "api/cases/scores",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Scoring\\CaseScore.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseScore",
+    "ModelGroup": "CaseScore",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.delete_examinerscore_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[delete_examinerscore_byid]",
+        "parameters": [
+          {
+            "name": "ExamScoringId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamScoringId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScoringId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseScore.delete CaseScore -t=ytg-framework/editable-delete -p:Model=Scoring\\CaseScore -p:Adapter=sp:abssp-[dbo].[delete_examinerscore_byid] -p:FetchImplementation=Scoring\\CaseScore.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScore -p:Route={examScoringId} -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-30T13:38:45.2629917Z"
+  },
+  "version": 1
+}

@@ -31,7 +31,7 @@ namespace SurgeonPortal.Api.Controllers.Users
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserProfileModel))]
@@ -48,7 +48,7 @@ namespace SurgeonPortal.Api.Controllers.Users
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(201)]
@@ -70,7 +70,7 @@ namespace SurgeonPortal.Api.Controllers.Users
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(200)]

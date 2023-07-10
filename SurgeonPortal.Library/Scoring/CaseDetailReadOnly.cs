@@ -19,6 +19,11 @@ namespace SurgeonPortal.Library.Scoring
 		public static readonly PropertyInfo<string> CaseNumberProperty = RegisterProperty<string>(c => c.CaseNumber);
 
         [DataMember]
+		[DisplayName(nameof(CaseContentId))]
+        public int? CaseContentId => ReadProperty(CaseContentIdProperty);
+		public static readonly PropertyInfo<int?> CaseContentIdProperty = RegisterProperty<int?>(c => c.CaseContentId);
+
+        [DataMember]
 		[DisplayName(nameof(Description))]
         public string Description => ReadProperty(DescriptionProperty);
 		public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(c => c.Description);
@@ -29,9 +34,9 @@ namespace SurgeonPortal.Library.Scoring
 		public static readonly PropertyInfo<string> HeadingProperty = RegisterProperty<string>(c => c.Heading);
 
         [DataMember]
-		[DisplayName(nameof(content))]
-        public string content => ReadProperty(contentProperty);
-		public static readonly PropertyInfo<string> contentProperty = RegisterProperty<string>(c => c.content);
+		[DisplayName(nameof(Content))]
+        public string Content => ReadProperty(ContentProperty);
+		public static readonly PropertyInfo<string> ContentProperty = RegisterProperty<string>(c => c.Content);
 
         [DataMember]
 		[DisplayName(nameof(Comments))]
@@ -61,9 +66,10 @@ namespace SurgeonPortal.Library.Scoring
 		private void FetchData(CaseDetailReadOnlyDto dto)
 		{
             LoadProperty(CaseNumberProperty, dto.CaseNumber);
+            LoadProperty(CaseContentIdProperty, dto.CaseContentId);
             LoadProperty(DescriptionProperty, dto.Description);
             LoadProperty(HeadingProperty, dto.Heading);
-            LoadProperty(contentProperty, dto.Content);
+            LoadProperty(ContentProperty, dto.Content);
             LoadProperty(CommentsProperty, dto.Comments);
             LoadProperty(CaseCommentIdProperty, dto.CaseCommentId);
             LoadProperty(SectionNumberProperty, dto.SectionNumber);

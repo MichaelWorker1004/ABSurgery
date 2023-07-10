@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class MedicalTrainingService {
-    private readonly baseEndpoint = 'api/medical-training';
 
     constructor(private apiService: ApiService) {}
 
@@ -38,7 +37,7 @@ export class MedicalTrainingService {
             */
             
             
-            return this.apiService.get<IMedicalTrainingModel>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IMedicalTrainingModel>(`api/medical-training/by-userid?api-version=${apiVersion}`);
         }
  
         public createMedicalTraining(model: IMedicalTrainingModel, 
@@ -78,7 +77,7 @@ export class MedicalTrainingService {
             */
             
             
-            return this.apiService.post<IMedicalTrainingModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IMedicalTrainingModel>(`api/medical-training?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -122,7 +121,7 @@ export class MedicalTrainingService {
             
             
             
-            return this.apiService.put<IMedicalTrainingModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
+            return this.apiService.put<IMedicalTrainingModel>(`api/medical-training?api-version=${apiVersion}`,
             model);
         }
 

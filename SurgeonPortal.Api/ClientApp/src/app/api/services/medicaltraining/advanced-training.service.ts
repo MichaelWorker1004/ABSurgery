@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class AdvancedTrainingService {
-    private readonly baseEndpoint = 'api/advanced-training';
 
     constructor(private apiService: ApiService) {}
 
@@ -47,7 +46,7 @@ export class AdvancedTrainingService {
             */
             
             
-            return this.apiService.get<IAdvancedTrainingModel>(`${this.baseEndpoint}/by-trainingid?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.get<IAdvancedTrainingModel>(`api/advanced-training/by-trainingid?api-version=${apiVersion}&id=${id}`);
         }
  
         public createAdvancedTraining(model: IAdvancedTrainingModel, 
@@ -88,7 +87,7 @@ export class AdvancedTrainingService {
             */
             
             
-            return this.apiService.post<IAdvancedTrainingModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IAdvancedTrainingModel>(`api/advanced-training?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -133,7 +132,7 @@ export class AdvancedTrainingService {
             
             
             
-            return this.apiService.put<IAdvancedTrainingModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`,
+            return this.apiService.put<IAdvancedTrainingModel>(`api/advanced-training?api-version=${apiVersion}&id=${id}`,
             model);
         }
  
@@ -158,7 +157,7 @@ export class AdvancedTrainingService {
             */
             
             
-            return this.apiService.get<IAdvancedTrainingReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IAdvancedTrainingReadOnlyModel[]>(`api/advanced-training/by-userid?api-version=${apiVersion}`);
         }
 
 

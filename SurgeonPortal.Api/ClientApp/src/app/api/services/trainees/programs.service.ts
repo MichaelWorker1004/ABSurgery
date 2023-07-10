@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class ProgramsService {
-    private readonly baseEndpoint = 'api/trainees/programs';
 
     constructor(private apiService: ApiService) {}
 
@@ -33,7 +32,7 @@ export class ProgramsService {
             */
             
             
-            return this.apiService.get<IProgramReadOnlyModel>(`${this.baseEndpoint}?api-version=${apiVersion}`);
+            return this.apiService.get<IProgramReadOnlyModel>(`api/trainees/programs?api-version=${apiVersion}`);
         }
 
 

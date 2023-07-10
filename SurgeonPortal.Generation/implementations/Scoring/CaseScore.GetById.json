@@ -1,0 +1,220 @@
+{
+  "name": "CaseScore",
+  "implementationName": "Scoring\\CaseScore.GetById",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_examcasescore_byid",
+    "ControllerName": "Scoring\\CaseScoresController",
+    "ControllerRoute": "api/cases/scores",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseScore",
+    "ModelGroup": "CaseScore",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examcasescore_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examcasescore_byid]",
+        "parameters": [
+          {
+            "name": "ExamScoringId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamCaseId"
+          },
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CaseScore",
+            "fields": [
+              {
+                "name": "ExamScoringId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ExamScoringId"
+              },
+              {
+                "name": "ExamCaseId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamCaseId"
+              },
+              {
+                "name": "ExaminerUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExaminerUserId"
+              },
+              {
+                "name": "ExamineeUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeUserId"
+              },
+              {
+                "name": "ExamineeFirstName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeFirstName"
+              },
+              {
+                "name": "ExamineeMiddleName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeMiddleName"
+              },
+              {
+                "name": "ExamineeLastName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeLastName"
+              },
+              {
+                "name": "ExamineeSuffix",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeSuffix"
+              },
+              {
+                "name": "Score",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Score"
+              },
+              {
+                "name": "CriticalFail",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CriticalFail"
+              },
+              {
+                "name": "Remarks",
+                "dataType": "string",
+                "maxLength": 2000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Remarks"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScoringId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseScore.GetById CaseScore -t=ytg-framework/editable-get -p:Model=Scoring\\CaseScore -p:Adapter=sp:abssp-[dbo].[get_examcasescore_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScore -p:Route=by-id -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-30T13:24:03.4279916Z"
+  },
+  "version": 1
+}

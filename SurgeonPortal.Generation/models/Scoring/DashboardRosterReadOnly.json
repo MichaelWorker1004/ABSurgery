@@ -1,0 +1,79 @@
+{
+  "refs": {},
+  "name": "Scoring\\DashboardRosterReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "FirstName",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "MiddleName",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "LastName",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "SessionNumber",
+      "dataType": "int?",
+      "maxLength": 2,
+      "precision": 5,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "StartTime",
+      "dataType": "time",
+      "maxLength": 5,
+      "precision": 16,
+      "scale": 7,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "EndTime",
+      "dataType": "time",
+      "maxLength": 5,
+      "precision": 16,
+      "scale": 7,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Scoring\\DashboardRosterReadOnly -sp [dbo].[get_examinerschedule_byuserid] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-30T14:50:02.4039844Z"
+  },
+  "version": 1
+}

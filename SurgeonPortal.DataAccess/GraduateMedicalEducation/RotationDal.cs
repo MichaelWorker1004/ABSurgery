@@ -44,25 +44,39 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
 
         public async Task<RotationDto> InsertAsync(RotationDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<RotationDto>(
-                    "[dbo].[ins_gmerotations]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            StartDate = dto.StartDate,
-                            EndDate = dto.EndDate,
-                            ClinicalLevelId = dto.ClinicalLevelId,
-                            ClinicalActivityId = dto.ClinicalActivityId,
-                            ProgramName = dto.ProgramName,
-                            NonSurgicalActivity = dto.NonSurgicalActivity,
-                            AlternateInstitutionName = dto.AlternateInstitutionName,
-                            IsInternationalRotation = dto.IsInternationalRotation,
-                            Other = dto.Other,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<RotationDto>(
+                        "[dbo].[ins_gmerotations]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                StartDate = dto.StartDate,
+                                EndDate = dto.EndDate,
+                                ClinicalLevelId = dto.ClinicalLevelId,
+                                ClinicalActivityId = dto.ClinicalActivityId,
+                                ProgramName = dto.ProgramName,
+                                NonSurgicalActivity = dto.NonSurgicalActivity,
+                                AlternateInstitutionName = dto.AlternateInstitutionName,
+                                IsInternationalRotation = dto.IsInternationalRotation,
+                                Other = dto.Other,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("Rotation");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

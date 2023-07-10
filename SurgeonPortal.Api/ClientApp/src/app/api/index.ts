@@ -24,6 +24,7 @@ export * from './models/picklists/accredited-program-institution-read-only.model
 export * from './models/picklists/appointment-type-read-only.model';
 export * from './models/picklists/jcaho-organization-read-only.model';
 export * from './models/picklists/primary-practice-read-only.model';
+export * from './models/picklists/scoring-session-read-only.model';
 
 export * from './models/graduatemedicaleducation/rotation-read-only.model';
 export * from './models/graduatemedicaleducation/rotation.model';
@@ -35,6 +36,15 @@ export * from './models/professionalstanding/user-professional-standing.model';
 export * from './models/professionalstanding/sanctions.model';
 export * from './models/professionalstanding/user-appointment.model';
 export * from './models/professionalstanding/user-appointment-read-only.model';
+
+export * from './models/scoring/case-comment.model';
+export * from './models/scoring/case-detail-read-only.model';
+export * from './models/scoring/case-roster-read-only.model';
+//export * from './models/scoring/exam-score-read-only.model';
+export * from './models/scoring/exam-session-read-only.model';
+export * from './models/scoring/roster-read-only.model';
+export * from './models/scoring/case-score.model';
+export * from './models/scoring/case-score-read-only.model';
 
 // Services
 export * from './services/auth/auth.service';
@@ -50,3 +60,10 @@ export * from './services/professionalstanding/user-professional-standing.servic
 export * from './services/professionalstanding/user-appointment.service';
 export * from './services/professionalstanding/sanctions.service';
 export * from './services/scoring/cases.service';
+//export * from './services/scoring/exam-scores.service';
+export * from './services/scoring/exam-sessions.service';
+export * from './services/scoring/case-contents.service';
+export * from './services/scoring/case-notes.service';
+export * from './services/scoring/rosters.service';
+export * from './services/scoring/case-scores.service';
+

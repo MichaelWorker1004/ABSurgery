@@ -7,13 +7,12 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class CasesService {
-    private readonly baseEndpoint = 'api/exam-headers/cases';
 
     constructor(private apiService: ApiService) {}
 
  
         public retrieveCaseRosterReadOnly_GetByScheduleId(scheduleId1: number,
-        scheduleId2: number,
+        scheduleId2?: number,
         apiVersion = '1.0'): Observable<ICaseRosterReadOnlyModel[]> {
             /**
             * Claims
@@ -27,7 +26,6 @@ export class CasesService {
             /**
             * Required Parameters
             * scheduleId1:Number
-            * scheduleId2:Number
             * apiVersion
             */
             
@@ -35,9 +33,13 @@ export class CasesService {
             * Calls Sp(s)
             * [get_toc_case_list]
             */
+          //Tim - made this change because we need to support optional parameters
+          let apiURL = `api/case-rosters?api-version=${apiVersion}&scheduleId1=${scheduleId1}`;
+            if (scheduleId2) {
+              apiURL += `&scheduleId2=${scheduleId2}`;
+            }
             
-            
-            return this.apiService.get<ICaseRosterReadOnlyModel[]>(`${this.baseEndpoint}/case-roster?api-version=${apiVersion}&scheduleId1=${scheduleId1}&scheduleId2=${scheduleId2}`);
+            return this.apiService.get<ICaseRosterReadOnlyModel[]>(apiURL);
         }
 
 

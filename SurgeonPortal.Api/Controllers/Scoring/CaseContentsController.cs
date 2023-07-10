@@ -16,7 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Scoring
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-	[Route("api/exam-headers/cases/{caseHeaderId}/case-contents")]
+	[Route("api/case-contents")]
 	public class CaseContentsController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -36,7 +36,7 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CaseDetailReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [HttpGet("detail")]
+        [HttpGet("by-case-header-id")]
         public async Task<ActionResult<IEnumerable<CaseDetailReadOnlyModel>>> GetCaseDetailReadOnly_GetByCaseHeaderIdAsync(
             [FromServices] ICaseDetailReadOnlyListFactory caseDetailReadOnlyListFactory,
             int caseHeaderId)

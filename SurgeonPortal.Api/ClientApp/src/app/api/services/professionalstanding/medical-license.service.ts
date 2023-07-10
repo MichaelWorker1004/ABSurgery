@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class MedicalLicenseService {
-    private readonly baseEndpoint = 'api/professional-standing/medical-license';
 
     constructor(private apiService: ApiService) {}
 
@@ -36,7 +35,7 @@ export class MedicalLicenseService {
             */
             
             
-            return this.apiService.delete<IMedicalLicenseModel>(`${this.baseEndpoint}?api-version=${apiVersion}&licenseId=${licenseId}`);
+            return this.apiService.delete<IMedicalLicenseModel>(`api/professional-standing/medical-license?api-version=${apiVersion}&licenseId=${licenseId}`);
         }
  
         public retrieveMedicalLicense_GetById(licenseId: number,
@@ -62,7 +61,7 @@ export class MedicalLicenseService {
             */
             
             
-            return this.apiService.get<IMedicalLicenseModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&licenseId=${licenseId}`);
+            return this.apiService.get<IMedicalLicenseModel>(`api/professional-standing/medical-license/by-id?api-version=${apiVersion}&licenseId=${licenseId}`);
         }
  
         public createMedicalLicense(model: IMedicalLicenseModel, 
@@ -93,7 +92,7 @@ export class MedicalLicenseService {
             */
             
             
-            return this.apiService.post<IMedicalLicenseModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IMedicalLicenseModel>(`api/professional-standing/medical-license?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -128,7 +127,7 @@ export class MedicalLicenseService {
             
             
             
-            return this.apiService.put<IMedicalLicenseModel>(`${this.baseEndpoint}?api-version=${apiVersion}&licenseId=${licenseId}`,
+            return this.apiService.put<IMedicalLicenseModel>(`api/professional-standing/medical-license?api-version=${apiVersion}&licenseId=${licenseId}`,
             model);
         }
  
@@ -153,7 +152,7 @@ export class MedicalLicenseService {
             */
             
             
-            return this.apiService.get<IMedicalLicenseReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IMedicalLicenseReadOnlyModel[]>(`api/professional-standing/medical-license/by-userid?api-version=${apiVersion}`);
         }
 
 

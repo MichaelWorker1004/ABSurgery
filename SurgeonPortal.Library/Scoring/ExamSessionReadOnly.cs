@@ -14,6 +14,11 @@ namespace SurgeonPortal.Library.Scoring
     public class ExamSessionReadOnly : ReadOnlyBase<ExamSessionReadOnly>, IExamSessionReadOnly
     {
         [DataMember]
+		[DisplayName(nameof(ExamScheduleId))]
+        public int ExamScheduleId => ReadProperty(ExamScheduleIdProperty);
+		public static readonly PropertyInfo<int> ExamScheduleIdProperty = RegisterProperty<int>(c => c.ExamScheduleId);
+
+        [DataMember]
 		[DisplayName(nameof(FirstName))]
         public string FirstName => ReadProperty(FirstNameProperty);
 		public static readonly PropertyInfo<string> FirstNameProperty = RegisterProperty<string>(c => c.FirstName);
@@ -65,6 +70,7 @@ namespace SurgeonPortal.Library.Scoring
         
 		private void FetchData(ExamSessionReadOnlyDto dto)
 		{
+            LoadProperty(ExamScheduleIdProperty, dto.ExamScheduleId);
             LoadProperty(FirstNameProperty, dto.FirstName);
             LoadProperty(LastNameProperty, dto.LastName);
             LoadProperty(StartTimeProperty, dto.StartTime);

@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class FellowshipService {
-    private readonly baseEndpoint = 'api/fellowships';
 
     constructor(private apiService: ApiService) {}
 
@@ -36,7 +35,7 @@ export class FellowshipService {
             */
             
             
-            return this.apiService.delete<IFellowshipModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.delete<IFellowshipModel>(`api/fellowships?api-version=${apiVersion}&id=${id}`);
         }
  
         public retrieveFellowship_GetById(id: number,
@@ -62,7 +61,7 @@ export class FellowshipService {
             */
             
             
-            return this.apiService.get<IFellowshipModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.get<IFellowshipModel>(`api/fellowships/by-id?api-version=${apiVersion}&id=${id}`);
         }
  
         public createFellowship(model: IFellowshipModel, 
@@ -90,7 +89,7 @@ export class FellowshipService {
             */
             
             
-            return this.apiService.post<IFellowshipModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IFellowshipModel>(`api/fellowships?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -122,7 +121,7 @@ export class FellowshipService {
             
             
             
-            return this.apiService.put<IFellowshipModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`,
+            return this.apiService.put<IFellowshipModel>(`api/fellowships?api-version=${apiVersion}&id=${id}`,
             model);
         }
  
@@ -147,7 +146,7 @@ export class FellowshipService {
             */
             
             
-            return this.apiService.get<IFellowshipReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IFellowshipReadOnlyModel[]>(`api/fellowships/by-userid?api-version=${apiVersion}`);
         }
 
 

@@ -5,7 +5,10 @@ import { ExpandableComponent } from '../shared/components/expandable/expandable.
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ExaminationScoreCardComponent } from '../shared/components/examination-score-card/examination-score-card.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { ExamScoringSelectors, GetExaminee } from '../state';
+import { IPickListItem } from '../state/picklists';
 
 @Component({
   selector: 'abs-oral-examination',
@@ -22,6 +25,10 @@ import { BehaviorSubject } from 'rxjs';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class OralExaminationsComponent implements OnInit {
+  @Select(ExamScoringSelectors.slices.examinee) examinee$:
+    | Observable<IPickListItem[]>
+    | undefined;
+
   currentYear = new Date().getFullYear();
   examinationId!: string | null;
 
@@ -37,17 +44,21 @@ export class OralExaminationsComponent implements OnInit {
 
   candidateScores: any[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private _store: Store) {}
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.examinationId = params['examinationId'];
+    this.activatedRoute.params.subscribe((params) => {
+      this._store.dispatch(new GetExaminee(params['examinationId']));
     });
 
     this.getExaminationData();
   }
 
   getExaminationData() {
+    this.examinee$?.subscribe((examinee) => {
+      console.log(examinee);
+    });
+
     this.candidateName = 'John Doe';
     this.dayTime = '03/08/2023, 10:00–10:30AM EST';
     this.cases.next([

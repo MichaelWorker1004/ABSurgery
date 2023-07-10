@@ -1,12 +1,20 @@
 <div class="flex gap-5 view-header col-12">
-  <div><strong>Candidate Name:</strong> {{ candidateData?.candidateName }}</div>
-  <div><strong>Day/Time:</strong></div>
-  <div><strong>Score:</strong> {{ candidateData?.score }}</div>
+  <div>
+    <strong>Candidate Name:</strong> {{ localCandidateData?.candidateName }}
+  </div>
+  <div>
+    <strong>Day/Time:</strong>
+    {{ localCandidateData?.startTime | date : 'short' }} -
+    {{ localCandidateData?.endTime | date : 'shortTime' }}
+  </div>
+  <div *ngIf="localCandidateData?.score">
+    <strong>Score:</strong> {{ localCandidateData.score }}
+  </div>
 </div>
 
 <div class="flex flex-column">
   <abs-examination-score-card
-    *ngFor="let case of candidateData?.cases; let i = index"
+    *ngFor="let case of localCandidateData?.cases; let i = index"
     [case]="case"
     (handleChange)="handleChange($event)"
   ></abs-examination-score-card>

@@ -46,20 +46,34 @@ namespace SurgeonPortal.DataAccess.Documents
 
         public async Task<DocumentDto> InsertAsync(DocumentDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<DocumentDto>(
-                    "[dbo].[ins_userdocument]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            StreamId = dto.StreamId,
-                            DocumentName = dto.DocumentName,
-                            DocumentTypeId = dto.DocumentTypeId,
-                            InternalViewOnly = dto.InternalViewOnly,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<DocumentDto>(
+                        "[dbo].[ins_userdocument]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                StreamId = dto.StreamId,
+                                DocumentName = dto.DocumentName,
+                                DocumentTypeId = dto.DocumentTypeId,
+                                InternalViewOnly = dto.InternalViewOnly,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("Document");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

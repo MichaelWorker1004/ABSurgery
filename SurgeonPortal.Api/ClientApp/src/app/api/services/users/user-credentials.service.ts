@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class UserCredentialsService {
-    private readonly baseEndpoint = 'api/users/credentials';
 
     constructor(private apiService: ApiService) {}
 
@@ -38,7 +37,7 @@ export class UserCredentialsService {
             */
             
             
-            return this.apiService.get<IUserCredentialModel>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IUserCredentialModel>(`api/users/credentials/by-userid?api-version=${apiVersion}`);
         }
 
         public updateUserCredential(model: IUserCredentialModel,
@@ -71,7 +70,7 @@ export class UserCredentialsService {
             
             
             
-            return this.apiService.put<IUserCredentialModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
+            return this.apiService.put<IUserCredentialModel>(`api/users/credentials?api-version=${apiVersion}`,
             model);
         }
 

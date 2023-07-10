@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class CaseContentsService {
-    private readonly baseEndpoint = 'api/exam-headers/cases/{caseHeaderId}/case-contents';
 
     constructor(private apiService: ApiService) {}
 
@@ -35,7 +34,7 @@ export class CaseContentsService {
             */
             
             
-            return this.apiService.get<ICaseDetailReadOnlyModel[]>(`${this.baseEndpoint}/detail?api-version=${apiVersion}&caseHeaderId=${caseHeaderId}`);
+            return this.apiService.get<ICaseDetailReadOnlyModel[]>(`api/case-contents/by-case-header-id?api-version=${apiVersion}&caseHeaderId=${caseHeaderId}`);
         }
 
 

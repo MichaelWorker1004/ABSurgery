@@ -6,6 +6,6 @@ namespace SurgeonPortal.Library.Contracts.Scoring
     {
         Task<ICaseRosterReadOnlyList> GetByScheduleIdAsync(
             int scheduleId1,
-            int scheduleId2);
+            int? scheduleId2);
     }
 }

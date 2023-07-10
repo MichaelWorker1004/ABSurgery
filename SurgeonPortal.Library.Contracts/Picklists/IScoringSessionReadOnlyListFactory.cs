@@ -4,6 +4,6 @@ namespace SurgeonPortal.Library.Contracts.Picklists
 {
     public interface IScoringSessionReadOnlyListFactory
     {
-        Task<IScoringSessionReadOnlyList> GetByExaminerIdAsync(int examHeaderId);
+        Task<IScoringSessionReadOnlyList> GetByKeysAsync(int examHeaderId);
     }
 }

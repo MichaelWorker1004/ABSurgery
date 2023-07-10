@@ -4,6 +4,17 @@
   "description": "",
   "properties": [
     {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "maxLength": 2,
+      "precision": 5,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
       "name": "DayNumber",
       "dataType": "int?",
       "maxLength": 2,
@@ -48,37 +59,14 @@
       "rules": {}
     },
     {
-      "name": "Score",
-      "dataType": "string",
-      "maxLength": 20,
-      "precision": 0,
+      "name": "IsSubmitted",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": false,
-      "rules": {}
-    },
-    {
-      "name": "CriticalFail",
-      "dataType": "string",
-      "maxLength": 1,
-      "precision": 0,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": false,
-      "isIdentityColumn": false,
-      "rules": {}
-    },
-    {
-      "name": "Submitted",
-      "dataType": "string",
-      "maxLength": 10,
-      "precision": 0,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": false,
-      "isIdentityColumn": false,
-      "rules": {}
+      "isIdentityColumn": false
     }
   ],
   "metadata": {

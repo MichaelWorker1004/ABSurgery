@@ -5,7 +5,7 @@
   "parameters": {
     "Adapter": "dbo.get_case_comments_byid",
     "ControllerName": "Scoring\\CaseNotesController",
-    "ControllerRoute": "api/exam-headers/cases/case-contents/case-comments",
+    "ControllerRoute": "api/case-comments",
     "ControllerVersion": "1",
     "FetchMethodName": "GetById",
     "IncludeControllerInGeneration": "true",
@@ -113,8 +113,8 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Scoring\\CaseComment.GetById CaseComment -t=ytg-framework/editable-get -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[get_case_comments_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route=by-id -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/exam-headers/cases/case-contents/case-comments -p:ControllerVersion=1 -f ",
-    "inferredCommand": "ytgim generate i  Scoring\\CaseComment.GetById CaseComment -t=ytg-framework/editable-get -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[get_case_comments_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route=by-id -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/exam-headers/cases/case-contents/case-comments -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "command": "ytgim g i s Scoring\\CaseComment.GetById CaseComment -t=ytg-framework/editable-get -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[get_case_comments_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route=by-id -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/case-comments -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseComment.GetById CaseComment -t=ytg-framework/editable-get -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[get_case_comments_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route=by-id -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/case-comments -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-06-26T16:57:06.4036017Z"
   },
   "version": 1

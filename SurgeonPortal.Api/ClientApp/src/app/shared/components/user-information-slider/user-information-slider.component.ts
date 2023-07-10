@@ -1,12 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
-import {
-  RouterLink,
-  RouterLinkActive,
-  Router,
-  ActivatedRoute,
-} from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { IRosterReadOnlyModel } from 'src/app/api/models/scoring/roster-read-only.model';
 
 @Component({
   selector: 'abs-user-information-slider',
@@ -16,7 +12,7 @@ import {
   styleUrls: ['./user-information-slider.component.scss'],
 })
 export class UserInformationSliderComponent {
-  @Input() sliderData!: any[];
+  @Input() sliderData: IRosterReadOnlyModel[] = [];
   @Input() examinationWeek!: string;
   responsiveOptions = [
     {
@@ -35,16 +31,4 @@ export class UserInformationSliderComponent {
       numScroll: 1,
     },
   ];
-
-  constructor(private _router: Router, private route: ActivatedRoute) {}
-
-  routeToExam(examinationId: string) {
-    this._router.navigate([`oral-examinations/exam/${examinationId}`], {
-      relativeTo: this.route,
-    });
-  }
-
-  get router(): Router {
-    return this._router;
-  }
 }

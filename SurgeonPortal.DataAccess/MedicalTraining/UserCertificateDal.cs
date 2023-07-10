@@ -45,20 +45,34 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
 
         public async Task<UserCertificateDto> InsertAsync(UserCertificateDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<UserCertificateDto>(
-                    "[dbo].[insert_usercertificates]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            DocumentId = dto.DocumentId,
-                            CertificateTypeId = dto.CertificateTypeId,
-                            IssueDate = dto.IssueDate,
-                            CertificateNumber = dto.CertificateNumber,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<UserCertificateDto>(
+                        "[dbo].[insert_usercertificates]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                DocumentId = dto.DocumentId,
+                                CertificateTypeId = dto.CertificateTypeId,
+                                IssueDate = dto.IssueDate,
+                                CertificateNumber = dto.CertificateNumber,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("UserCertificate");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

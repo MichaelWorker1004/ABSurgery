@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class RotationService {
-    private readonly baseEndpoint = 'api/graduate-medical-education';
 
     constructor(private apiService: ApiService) {}
 
@@ -36,7 +35,7 @@ export class RotationService {
             */
             
             
-            return this.apiService.delete<IRotationModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.delete<IRotationModel>(`api/graduate-medical-education?api-version=${apiVersion}&id=${id}`);
         }
  
         public retrieveRotation_GetById(id: number,
@@ -62,7 +61,7 @@ export class RotationService {
             */
             
             
-            return this.apiService.get<IRotationModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.get<IRotationModel>(`api/graduate-medical-education/by-id?api-version=${apiVersion}&id=${id}`);
         }
  
         public createRotation(model: IRotationModel, 
@@ -96,7 +95,7 @@ export class RotationService {
             */
             
             
-            return this.apiService.post<IRotationModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IRotationModel>(`api/graduate-medical-education?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -134,7 +133,7 @@ export class RotationService {
             
             
             
-            return this.apiService.put<IRotationModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`,
+            return this.apiService.put<IRotationModel>(`api/graduate-medical-education?api-version=${apiVersion}&id=${id}`,
             model);
         }
  
@@ -159,7 +158,7 @@ export class RotationService {
             */
             
             
-            return this.apiService.get<IRotationReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IRotationReadOnlyModel[]>(`api/graduate-medical-education/by-userid?api-version=${apiVersion}`);
         }
 
 

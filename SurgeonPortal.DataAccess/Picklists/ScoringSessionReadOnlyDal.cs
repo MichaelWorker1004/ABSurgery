@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Picklists
 
 
 
-        public async Task<IEnumerable<ScoringSessionReadOnlyDto>> GetByExaminerIdAsync(int examHeaderId)
+        public async Task<IEnumerable<ScoringSessionReadOnlyDto>> GetByKeysAsync(int examHeaderId)
         {
             using (var connection = CreateConnection())
             {

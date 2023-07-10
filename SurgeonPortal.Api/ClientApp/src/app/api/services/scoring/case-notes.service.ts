@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class CaseNotesService {
-    private readonly baseEndpoint = 'api/exam-headers/cases/case-contents/case-comments';
 
     constructor(private apiService: ApiService) {}
 
@@ -35,7 +34,7 @@ export class CaseNotesService {
             */
             
             
-            return this.apiService.get<ICaseCommentModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.get<ICaseCommentModel>(`api/case-comments/by-id?api-version=${apiVersion}&id=${id}`);
         }
  
         public createCaseComment(model: ICaseCommentModel, 
@@ -62,7 +61,7 @@ export class CaseNotesService {
             */
             
             
-            return this.apiService.post<ICaseCommentModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<ICaseCommentModel>(`api/case-comments?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -93,7 +92,7 @@ export class CaseNotesService {
             
             
             
-            return this.apiService.put<ICaseCommentModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`,
+            return this.apiService.put<ICaseCommentModel>(`api/case-comments?api-version=${apiVersion}&id=${id}`,
             model);
         }
 

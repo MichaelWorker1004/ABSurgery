@@ -15,6 +15,17 @@
       "rules": {}
     },
     {
+      "name": "CaseContentId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
       "name": "Description",
       "dataType": "string",
       "maxLength": -1,
@@ -37,7 +48,7 @@
       "rules": {}
     },
     {
-      "name": "content",
+      "name": "Content",
       "dataType": "string",
       "maxLength": -1,
       "precision": 0,

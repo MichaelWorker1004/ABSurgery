@@ -45,21 +45,35 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
 
         public async Task<MedicalLicenseDto> InsertAsync(MedicalLicenseDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<MedicalLicenseDto>(
-                    "[dbo].[insert_userlicenses]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            IssuingStateId = dto.IssuingStateId,
-                            LicenseNumber = dto.LicenseNumber,
-                            LicenseTypeId = dto.LicenseTypeId,
-                            ReportingOrganization = dto.ReportingOrganization,
-                            IssueDate = dto.IssueDate,
-                            ExpireDate = dto.ExpireDate,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<MedicalLicenseDto>(
+                        "[dbo].[insert_userlicenses]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                IssuingStateId = dto.IssuingStateId,
+                                LicenseNumber = dto.LicenseNumber,
+                                LicenseTypeId = dto.LicenseTypeId,
+                                ReportingOrganization = dto.ReportingOrganization,
+                                IssueDate = dto.IssueDate,
+                                ExpireDate = dto.ExpireDate,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("MedicalLicense");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

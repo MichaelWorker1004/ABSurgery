@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "Scoring\\CE\\ExamineeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "FullName",
+      "dataType": "string",
+      "maxLength": 71,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamDate",
+      "dataType": "string",
+      "maxLength": 30,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Scoring\\CE\\ExamineeReadOnly -sp [dbo].[get_examinee_session_byid] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-07-05T17:28:58.898313Z"
+  },
+  "version": 1
+}

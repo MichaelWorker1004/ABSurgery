@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class DocumentService {
-    private readonly baseEndpoint = 'api/documents';
 
     constructor(private apiService: ApiService) {}
 
@@ -41,7 +40,7 @@ export class DocumentService {
             */
             
             
-            return this.apiService.delete<IDocumentModel>(`${this.baseEndpoint}?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.delete<IDocumentModel>(`api/documents?api-version=${apiVersion}&id=${id}`);
         }
  
         public retrieveDocument_GetById(id: number,
@@ -72,7 +71,7 @@ export class DocumentService {
             */
             
             
-            return this.apiService.get<IDocumentModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.get<IDocumentModel>(`api/documents/by-id?api-version=${apiVersion}&id=${id}`);
         }
  
         public retrieveDocumentReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IDocumentReadOnlyModel[]> {
@@ -96,15 +95,13 @@ export class DocumentService {
             */
             
             
-            return this.apiService.get<IDocumentReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IDocumentReadOnlyModel[]>(`api/documents/by-userid?api-version=${apiVersion}`);
         }
 
         public downloadDocument_GetById(id: number, apiVersion = '1.0'): Observable<File> {
 
-            return this.apiService.get<File>(`${this.baseEndpoint}/${id}?api-version=${apiVersion}`, {
-                responseType: 'blob' as 'json'
-            });
+          return this.apiService.get<File>(`api/documents/${id}?api-version=${apiVersion}`, {
+            responseType: 'blob' as 'json'
+          });
         }
-            
-
 }

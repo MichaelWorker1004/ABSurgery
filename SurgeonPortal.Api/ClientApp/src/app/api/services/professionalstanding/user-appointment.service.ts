@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class UserAppointmentService {
-    private readonly baseEndpoint = 'api/professional-standing/user-appointment';
 
     constructor(private apiService: ApiService) {}
 
@@ -36,7 +35,7 @@ export class UserAppointmentService {
             */
             
             
-            return this.apiService.delete<IUserAppointmentModel>(`${this.baseEndpoint}?api-version=${apiVersion}&apptId=${apptId}`);
+            return this.apiService.delete<IUserAppointmentModel>(`api/professional-standing/user-appointment?api-version=${apiVersion}&apptId=${apptId}`);
         }
  
         public retrieveUserAppointment_GetById(apptId: number,
@@ -62,7 +61,7 @@ export class UserAppointmentService {
             */
             
             
-            return this.apiService.get<IUserAppointmentModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&apptId=${apptId}`);
+            return this.apiService.get<IUserAppointmentModel>(`api/professional-standing/user-appointment/by-id?api-version=${apiVersion}&apptId=${apptId}`);
         }
  
         public createUserAppointment(model: IUserAppointmentModel, 
@@ -94,7 +93,7 @@ export class UserAppointmentService {
             */
             
             
-            return this.apiService.post<IUserAppointmentModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IUserAppointmentModel>(`api/professional-standing/user-appointment?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -130,7 +129,7 @@ export class UserAppointmentService {
             
             
             
-            return this.apiService.put<IUserAppointmentModel>(`${this.baseEndpoint}?api-version=${apiVersion}&apptId=${apptId}`,
+            return this.apiService.put<IUserAppointmentModel>(`api/professional-standing/user-appointment?api-version=${apiVersion}&apptId=${apptId}`,
             model);
         }
  
@@ -155,7 +154,7 @@ export class UserAppointmentService {
             */
             
             
-            return this.apiService.get<IUserAppointmentReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IUserAppointmentReadOnlyModel[]>(`api/professional-standing/user-appointment/by-userid?api-version=${apiVersion}`);
         }
 
 

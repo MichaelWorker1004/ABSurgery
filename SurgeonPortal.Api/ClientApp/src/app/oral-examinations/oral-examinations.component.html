@@ -20,6 +20,7 @@
                 icon="fa fa-video-camera"
                 class="zoom-link"
                 styleClass="p-button-success p-button-text"
+                (onClick)="openZoomLink()"
               ></p-button>
               <div class="p-inputgroup" style="max-width: 450px">
                 <input
@@ -27,6 +28,8 @@
                   type="text"
                   placeholder="Zoom Link"
                   [value]="zoomLink"
+                  [disabled]="true"
+                  placeholder="No Zoom Link Available"
                   #zoomLinkInput
                 />
                 <button

@@ -1,0 +1,88 @@
+{
+  "name": "TitleReadOnly",
+  "implementationName": "Scoring\\CE\\TitleReadOnly.GetById",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_examinee_case_titles",
+    "FetchMethodName": "GetById",
+    "IncludeControllerInGeneration": "false",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CE\\TitleReadOnly",
+    "ModelGroup": "TitleReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examinee_case_titles",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examinee_case_titles]",
+        "parameters": [
+          {
+            "name": "ExamScheduleId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamScheduleId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CE\\TitleReadOnly",
+            "fields": [
+              {
+                "name": "Title",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Title"
+              },
+              {
+                "name": "CaseHeaderId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": ""
+              },
+              {
+                "name": "ExamCaseId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ExamCaseId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CE\\TitleReadOnly.GetById TitleReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CE\\TitleReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinee_case_titles] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=TitleReadOnly -p:Route=titles -p:ControllerName=Scoring\\CE\\SessionController -p:ControllerRoute=api/scoring/ce/session -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "inferredCommand": "ytgim generate i  Scoring\\CE\\TitleReadOnly.GetById TitleReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CE\\TitleReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinee_case_titles] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=TitleReadOnly -p:Route=titles -p:ControllerName=Scoring\\CE\\SessionController -p:ControllerRoute=api/scoring/ce/session -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:UsePaginatedList=false",
+    "generatedDateUtc": "2023-07-05T17:46:40.4206257Z"
+  },
+  "version": 1
+}

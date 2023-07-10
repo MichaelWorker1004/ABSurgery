@@ -5,7 +5,7 @@
   "parameters": {
     "Adapter": "dbo.get_case_details_by_id",
     "ControllerName": "Scoring\\CaseContentsController",
-    "ControllerRoute": "api/exam-headers/cases/{caseHeaderId}/case-contents",
+    "ControllerRoute": "api/case-contents",
     "ControllerVersion": "1",
     "FetchMethodName": "GetByCaseHeaderId",
     "IncludeControllerInGeneration": "true",
@@ -14,7 +14,7 @@
     "Model": "Scoring\\CaseDetailReadOnly",
     "ModelGroup": "CaseDetailReadOnly",
     "RootNamespace": "$project.RootNamespace",
-    "Route": "detail",
+    "Route": "by-case-header-id",
     "UsePaginatedList": "false"
   },
   "projectClaims": {},
@@ -60,6 +60,17 @@
                 "mapsTo": "model.CaseNumber"
               },
               {
+                "name": "CaseContentId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isAlwaysReadOnly": false,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "rules": {}
+              },
+              {
                 "name": "Description",
                 "dataType": "string",
                 "maxLength": -1,
@@ -80,14 +91,14 @@
                 "mapsTo": "model.Heading"
               },
               {
-                "name": "content",
+                "name": "Content",
                 "dataType": "string",
                 "maxLength": -1,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.content"
+                "mapsTo": "model.Content"
               },
               {
                 "name": "Comments",

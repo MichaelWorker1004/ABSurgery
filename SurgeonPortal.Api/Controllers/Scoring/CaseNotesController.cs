@@ -17,7 +17,7 @@ namespace SurgeonPortal.Api.Controllers.Scoring
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-	[Route("api/exam-headers/cases/case-contents/case-comments")]
+	[Route("api/case-comments")]
 	public class CaseNotesController : YtgControllerBase
 	{
         private readonly IMapper _mapper;
@@ -31,7 +31,7 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CaseCommentModel))]
@@ -48,7 +48,7 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(201)]
@@ -66,11 +66,11 @@ namespace SurgeonPortal.Api.Controllers.Scoring
             return await CreateAsync<CaseCommentModel>(
                 _mapper,
                 item,
-                absoluteUriProvider.GetAbsoluteUri($"/api/exam-headers/cases/case-contents/case-comments/{item.Id}"));
+                absoluteUriProvider.GetAbsoluteUri($"/api/case-comments/{item.Id}"));
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(200)]

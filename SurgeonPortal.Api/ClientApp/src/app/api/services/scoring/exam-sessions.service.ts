@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class ExamSessionsService {
-    private readonly baseEndpoint = 'api/exam-sessions';
 
     constructor(private apiService: ApiService) {}
 
@@ -35,7 +34,7 @@ export class ExamSessionsService {
             */
             
             
-            return this.apiService.get<IExamSessionReadOnlyModel[]>(`${this.baseEndpoint}/by-date?api-version=${apiVersion}&examDate=${examDate}`);
+            return this.apiService.get<IExamSessionReadOnlyModel[]>(`api/exam-sessions/by-date?api-version=${apiVersion}&examDate=${examDate}`);
         }
 
 

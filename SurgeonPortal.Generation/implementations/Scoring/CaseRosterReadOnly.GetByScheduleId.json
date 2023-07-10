@@ -5,7 +5,7 @@
   "parameters": {
     "Adapter": "dbo.get_toc_case_list",
     "ControllerName": "Scoring\\CasesController",
-    "ControllerRoute": "api/exam-headers/cases",
+    "ControllerRoute": "api/case-rosters",
     "ControllerVersion": "1",
     "FetchMethodName": "GetByScheduleId",
     "IncludeControllerInGeneration": "true",
@@ -14,7 +14,7 @@
     "Model": "Scoring\\CaseRosterReadOnly",
     "ModelGroup": "CaseRosterReadOnly",
     "RootNamespace": "$project.RootNamespace",
-    "Route": "case-roster",
+    "Route": "",
     "UsePaginatedList": "false"
   },
   "projectClaims": {},
@@ -37,11 +37,11 @@
           },
           {
             "name": "ScheduleId2",
-            "dataType": "int",
+            "dataType": "int?",
             "maxLength": 4,
             "precision": 10,
             "scale": 0,
-            "required": true,
+            "required": false,
             "mapsTo": "scheduleId2"
           }
         ],
@@ -93,8 +93,8 @@
     },
     {
       "name": "ScheduleId2",
-      "dataType": "int",
-      "required": true
+      "dataType": "int?",
+      "required": false
     }
   ],
   "metadata": {

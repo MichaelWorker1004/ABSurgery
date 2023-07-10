@@ -24,6 +24,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                         new
                         {
                             ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExamHeaderId = examHeaderId,
                         });
                         
             }

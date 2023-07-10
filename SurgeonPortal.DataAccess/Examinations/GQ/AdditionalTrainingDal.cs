@@ -30,21 +30,35 @@ namespace SurgeonPortal.DataAccess.Examinations.GQ
 
         public async Task<AdditionalTrainingDto> InsertAsync(AdditionalTrainingDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<AdditionalTrainingDto>(
-                    "[dbo].[ins_additionaltraining_bytrainingid]",
-                        new
-                        {
-                            DateEnded = dto.DateEnded,
-                            DateStarted = dto.DateStarted,
-                            Other = dto.Other,
-                            InstitutionId = dto.InstitutionId,
-                            City = dto.City,
-                            StateId = dto.StateId,
-                            TypeOfTraining = dto.TypeOfTraining,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<AdditionalTrainingDto>(
+                        "[dbo].[ins_additionaltraining_bytrainingid]",
+                            new
+                            {
+                                DateEnded = dto.DateEnded,
+                                DateStarted = dto.DateStarted,
+                                Other = dto.Other,
+                                InstitutionId = dto.InstitutionId,
+                                City = dto.City,
+                                StateId = dto.StateId,
+                                TypeOfTraining = dto.TypeOfTraining,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("AdditionalTraining");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

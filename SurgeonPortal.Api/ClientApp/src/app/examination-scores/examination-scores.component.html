@@ -32,6 +32,8 @@
     [gridOptions]="gridOptions"
     [data]="filteredExaminationScoresData$"
     (action)="handleView($event)"
+    [pagination]="true"
+    [itemsPerPage]="25"
   ></abs-grid>
 </sl-card>
 
@@ -43,7 +45,7 @@
   title="Examination Scores"
 >
   <abs-examination-score-modal
-    [candidateData]="candidateData"
+    [candidateData]="candidateData$"
     (closeDialog)="closeDialog()"
   ></abs-examination-score-modal>
 </abs-modal>

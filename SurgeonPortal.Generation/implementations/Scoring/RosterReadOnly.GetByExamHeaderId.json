@@ -1,0 +1,131 @@
+{
+  "name": "RosterReadOnly",
+  "implementationName": "Scoring\\RosterReadOnly.GetByExamHeaderId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_examination_scores",
+    "ControllerName": "Scoring\\RostersController",
+    "ControllerRoute": "api/rosters",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExaminationHeaderId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\RosterReadOnly",
+    "ModelGroup": "RosterReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "roster-schedule",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examination_scores",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examination_scores]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "ExamHeaderId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamHeaderId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\RosterReadOnly",
+            "fields": [
+              {
+                "name": "ExamScheduleId",
+                "dataType": "int",
+                "maxLength": 2,
+                "precision": 5,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ExamScheduleId"
+              },
+              {
+                "name": "DayNumber",
+                "dataType": "int?",
+                "maxLength": 2,
+                "precision": 5,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DayNumber"
+              },
+              {
+                "name": "SessionNumber",
+                "dataType": "int?",
+                "maxLength": 2,
+                "precision": 5,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SessionNumber"
+              },
+              {
+                "name": "Roster",
+                "dataType": "string",
+                "maxLength": 1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Roster"
+              },
+              {
+                "name": "DisplayName",
+                "dataType": "string",
+                "maxLength": 71,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DisplayName"
+              },
+              {
+                "name": "IsSubmitted",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsSubmitted"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamHeaderId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\RosterReadOnly.GetByExamHeaderId RosterReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\RosterReadOnly -p:Adapter=sp:abssp-[dbo].[get_examination_scores] -p:FetchMethodName=GetByExaminationHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RosterReadOnly -p:Route=roster-schedule -p:ControllerName=Scoring\\RostersController -p:ControllerRoute=api/rosters -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-30T13:57:06.5395181Z"
+  },
+  "version": 1
+}

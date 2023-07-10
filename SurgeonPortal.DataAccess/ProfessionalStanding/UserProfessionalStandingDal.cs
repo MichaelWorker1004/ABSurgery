@@ -30,21 +30,35 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
 
         public async Task<UserProfessionalStandingDto> InsertAsync(UserProfessionalStandingDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<UserProfessionalStandingDto>(
-                    "[dbo].[ins_user_sanctions]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            PrimaryPracticeID = dto.PrimaryPracticeId,
-                            OrganizationTypeId = dto.OrganizationTypeId,
-                            ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges,
-                            ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<UserProfessionalStandingDto>(
+                        "[dbo].[ins_user_sanctions]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                PrimaryPracticeID = dto.PrimaryPracticeId,
+                                OrganizationTypeId = dto.OrganizationTypeId,
+                                ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges,
+                                ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("UserProfessionalStanding");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

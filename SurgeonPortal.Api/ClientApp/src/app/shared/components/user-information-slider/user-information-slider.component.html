@@ -5,6 +5,7 @@
 
   <div class="info-container">
     <p-carousel
+      *ngIf="sliderData?.length; else noResults"
       [value]="sliderData"
       [numVisible]="4"
       [numScroll]="4"
@@ -13,11 +14,18 @@
     >
       <ng-template let-data pTemplate="item">
         <div class="item">
-          <div class="name mb-2">{{ data?.examineeName }}</div>
+          <div class="name mb-2">
+            {{ data?.firstName }} {{ data?.lastName }}
+          </div>
           <div class="session mb-2">Session {{ data?.sessionNumber }}</div>
-          <div class="times mb-2">{{ data.times }}</div>
+          <div class="times mb-2">
+            {{ data?.startTime }} - {{ data?.endTime }}
+          </div>
         </div>
       </ng-template>
     </p-carousel>
+    <ng-template #noResults>
+      <div class="no-results">No oral examinations scheduled.</div>
+    </ng-template>
   </div>
 </div>

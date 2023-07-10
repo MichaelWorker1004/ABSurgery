@@ -2,6 +2,7 @@ namespace SurgeonPortal.Models.Scoring
 {
     public class ExamSessionReadOnlyModel
     {
+        public int ExamScheduleId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string StartTime { get; set; }

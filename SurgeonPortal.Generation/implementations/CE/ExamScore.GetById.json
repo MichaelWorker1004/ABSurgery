@@ -1,0 +1,170 @@
+{
+  "name": "ExamScore",
+  "implementationName": "CE\\ExamScore.GetById",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_exam_schedule_scores",
+    "ControllerName": "CE\\ExamScoreController",
+    "ControllerRoute": "api/exam-scores",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "CE\\ExamScore",
+    "ModelGroup": "ExamScore",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-id"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_exam_schedule_scores",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_exam_schedule_scores]",
+        "parameters": [
+          {
+            "name": "ExamScheduleScoreId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamScheduleScoreId"
+          },
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "CE\\ExamScore",
+            "fields": [
+              {
+                "name": "ExamScheduleScoreId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ExamScheduleScoreId"
+              },
+              {
+                "name": "ExamScheduleId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamScheduleId"
+              },
+              {
+                "name": "ExaminerUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExaminerUserId"
+              },
+              {
+                "name": "ExaminerScore",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExaminerScore"
+              },
+              {
+                "name": "Submitted",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Submitted"
+              },
+              {
+                "name": "SubmittedDateTimeUTC",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SubmittedDateTimeUTC"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScheduleScoreId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s CE\\ExamScore.GetById ExamScore -t=ytg-framework/editable-get -p:Model=CE\\ExamScore -p:Adapter=sp:abssp-[dbo].[get_exam_schedule_scores] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamScore -p:Route=by-id -p:ControllerName=CE\\ExamScoreController -p:ControllerRoute=api/exam-scores -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  CE\\ExamScore.GetById ExamScore -t=ytg-framework/editable-get -p:Model=CE\\ExamScore -p:Adapter=sp:abssp-[dbo].[get_exam_schedule_scores] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamScore -p:Route=by-id -p:ControllerName=CE\\ExamScoreController -p:ControllerRoute=api/exam-scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-07-06T14:52:52.7935864Z"
+  },
+  "version": 1
+}

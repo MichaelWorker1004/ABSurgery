@@ -19,6 +19,7 @@ import {
   IAppointmentTypeReadOnlyModel,
   IJcahoOrganizationReadOnlyModel,
   IPrimaryPracticeReadOnlyModel,
+  IScoringSessionReadOnlyModel,
 } from '../../api';
 import {
   GetAccreditedProgramInstitutionsList,
@@ -44,6 +45,7 @@ import {
   GetAppointmentTypeList,
   GetJcahoOrganizationList,
   GetPrimaryPracticeList,
+  GetScoringSessionList,
 } from './picklists.actions';
 import { IFormErrors } from '../../shared/common';
 import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
@@ -81,6 +83,7 @@ export interface IPicklist {
   appointmentTypes: IPickListItemNumber[] | undefined;
   jcahoOrganizations: IPickListItemNumber[] | undefined;
   primaryPractices: IPickListItemNumber[] | undefined;
+  scoringSessions: IScoringSessionReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -149,6 +152,7 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     appointmentTypes: undefined,
     jcahoOrganizations: undefined,
     primaryPractices: undefined,
+    scoringSessions: undefined,
   },
 })
 @Injectable()
@@ -672,6 +676,31 @@ export class PicklistsState {
         return of(error);
       })
     );
+  }
+
+  @Action(GetScoringSessionList)
+  getScoringSessionList(
+    ctx: StateContext<IPicklist>,
+    payload: { id: number }
+  ): Observable<IPickListItemNumber[] | undefined> {
+    const examHeaderId = payload.id;
+    // removed because we don't want to save this value in the store because it will change based on passed in id
+    // if (ctx.getState()?.primaryPractices) {
+    //   return of(ctx.getState()?.primaryPractices);
+    // }
+    return this.picklistsService
+      .retrieveScoringSessionReadOnly_GetByKeys(examHeaderId)
+      .pipe(
+        tap((scoringSessions: IScoringSessionReadOnlyModel[]) => {
+          ctx.patchState({
+            scoringSessions: scoringSessions,
+          });
+        }),
+        catchError((error) => {
+          console.error('------- In Picklists Store: Scoring Sessions', error);
+          return of(error);
+        })
+      );
   }
 
   @Action(GetPicklists)

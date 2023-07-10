@@ -30,24 +30,38 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
 
         public async Task<SanctionsDto> InsertAsync(SanctionsDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<SanctionsDto>(
-                    "[dbo].[ins_user_sanctions]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            HadDrugAlchoholTreatment = dto.HadDrugAlchoholTreatment,
-                            HadHospitalPrivilegesDenied = dto.HadHospitalPrivilegesDenied,
-                            HadLicenseRestricted = dto.HadLicenseRestricted,
-                            HadHospitalPrivilegesRestricted = dto.HadHospitalPrivilegesRestricted,
-                            HadFelonyConviction = dto.HadFelonyConviction,
-                            HadCensure = dto.HadCensure,
-                            Explanation = dto.Explanation,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<SanctionsDto>(
+                        "[dbo].[ins_user_sanctions]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                HadDrugAlchoholTreatment = dto.HadDrugAlchoholTreatment,
+                                HadHospitalPrivilegesDenied = dto.HadHospitalPrivilegesDenied,
+                                HadLicenseRestricted = dto.HadLicenseRestricted,
+                                HadHospitalPrivilegesRestricted = dto.HadHospitalPrivilegesRestricted,
+                                HadFelonyConviction = dto.HadFelonyConviction,
+                                HadCensure = dto.HadCensure,
+                                Explanation = dto.Explanation,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("Sanctions");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

@@ -30,18 +30,32 @@ namespace SurgeonPortal.DataAccess.Scoring
 
         public async Task<CaseCommentDto> InsertAsync(CaseCommentDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<CaseCommentDto>(
-                    "[dbo].[ins_user_case_comments]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            CaseContentId = dto.CaseContentId,
-                            Comments = dto.Comments,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<CaseCommentDto>(
+                        "[dbo].[ins_user_case_comments]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CaseContentId = dto.CaseContentId,
+                                Comments = dto.Comments,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("CaseComment");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

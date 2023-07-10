@@ -16,7 +16,7 @@ namespace SurgeonPortal.Api.Controllers.Scoring
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-	[Route("api/exam-header/{examHeaderId}/rosters")]
+	[Route("api/rosters")]
 	public class RostersController : YtgControllerBase
 	{
         private readonly IMapper _mapper;

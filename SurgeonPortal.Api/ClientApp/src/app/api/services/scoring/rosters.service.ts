@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class RostersService {
-    private readonly baseEndpoint = 'api/exam-header/{examHeaderId}/rosters';
 
     constructor(private apiService: ApiService) {}
 
@@ -35,7 +34,7 @@ export class RostersService {
             */
             
             
-            return this.apiService.get<IRosterReadOnlyModel[]>(`${this.baseEndpoint}/roster-schedule?api-version=${apiVersion}&examHeaderId=${examHeaderId}`);
+            return this.apiService.get<IRosterReadOnlyModel[]>(`api/rosters/roster-schedule?api-version=${apiVersion}&examHeaderId=${examHeaderId}`);
         }
 
 

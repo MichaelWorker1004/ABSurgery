@@ -5,7 +5,7 @@ import { EXAMINATION_SCORES_COLS } from './examination-scores-cols';
 import { IGridOptions } from '../shared/components/grid/grid-options.model';
 import { AbsFilterType } from '../shared/components/grid/abs-grid.enum';
 import { DropdownModule } from 'primeng/dropdown';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import {
   FormGroup,
   FormControl,
@@ -14,7 +14,16 @@ import {
 } from '@angular/forms';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { ExaminationScoreModalComponent } from './examination-score-modal/examination-score-modal.component';
+import {
+  ExamScoringSelectors,
+  GetExamScoresList,
+  GetSelectedExamScores,
+} from '../state';
+import { Select, Store } from '@ngxs/store';
+import { ICaseScoreReadOnlyModel, IRosterReadOnlyModel } from '../api';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-examination-scores',
   standalone: true,
@@ -33,6 +42,12 @@ import { ExaminationScoreModalComponent } from './examination-score-modal/examin
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExaminationScoresComponent implements OnInit {
+  @Select(ExamScoringSelectors.slices.examScoresList)
+  examScores$: Observable<IRosterReadOnlyModel[]> | undefined;
+
+  @Select(ExamScoringSelectors.slices.selectedExamScores)
+  selectedExamScores$: Observable<ICaseScoreReadOnlyModel[]> | undefined;
+
   currentYear = new Date().getFullYear();
 
   examinationScoresCols = EXAMINATION_SCORES_COLS;
@@ -44,7 +59,7 @@ export class ExaminationScoresComponent implements OnInit {
 
   gridOptions: IGridOptions = {
     showFilter: true,
-    filterOn: 'candidateName',
+    filterOn: 'displayName',
     placeholder: 'Search Candidates',
     filterType: AbsFilterType.Text,
   };
@@ -60,73 +75,73 @@ export class ExaminationScoresComponent implements OnInit {
   });
 
   showViewModal = false;
-  candidateData!: any;
+  candidateData$: BehaviorSubject<any> = new BehaviorSubject({});
+
+  constructor(private _store: Store) {}
 
   ngOnInit(): void {
     this.getExaminationScoresDate();
-    this.setFilterOptions();
-    this.handleFilter();
+
+    this.examSelected();
+  }
+
+  examSelected() {
+    this.selectedExamScores$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((selectedExamScores) => {
+        if (selectedExamScores?.length > 0) {
+          let startTime = new Date(selectedExamScores[0].examDate);
+          startTime = new Date(
+            startTime.toLocaleDateString() +
+              ', ' +
+              selectedExamScores[0].startTime
+          );
+          let endTime = new Date(selectedExamScores[0].examDate);
+          endTime = new Date(
+            endTime.toLocaleDateString() + ', ' + selectedExamScores[0].endTime
+          );
+
+          const newCandidateData = {
+            candidateName:
+              selectedExamScores[0].examineeFirstName +
+              ' ' +
+              selectedExamScores[0].examineeLastName,
+            startTime: startTime,
+            endTime: endTime,
+            cases: selectedExamScores,
+          };
+          this.candidateData$.next(newCandidateData);
+        }
+      });
   }
 
   getExaminationScoresDate() {
-    this.examinationScoresData = [
-      {
-        candidateId: '1',
-        day: 'Day 1',
-        session: 'Early Morning',
-        roster: 'D',
-        candidateName: 'Karla Africa',
-        score: 'Pass',
-        criticalFail: 'N',
-        status: 'Incomplete',
-        cases: [
-          {
-            caseId: '1',
-          },
-          {
-            caseId: '2',
-          },
-          {
-            caseId: '3',
-          },
-          {
-            caseId: '4',
-          },
-        ],
-      },
-      {
-        candidateId: '1',
-        day: 'Day 1',
-        session: 'Late Afternoon',
-        roster: 'D',
-        candidateName: 'Nkiruka Iseigas',
-        score: 'Fail',
-        criticalFail: 'Y',
-        status: 'Incomplete',
-      },
-      {
-        candidateId: '1',
-        day: 'Day 1',
-        session: 'Late Morning',
-        roster: 'D',
-        candidateName: 'Daniel Fuentes',
-        score: 'Pass',
-        criticalFail: 'N',
-        status: 'Complete',
-      },
-      {
-        candidateId: '1',
-        day: 'Day 2',
-        session: 'Late Morning',
-        roster: 'D',
-        candidateName: 'John Ayala',
-        score: 'Fail',
-        criticalFail: 'N',
-        status: 'Complete',
-      },
-    ];
+    this._store.dispatch(new GetExamScoresList(492));
 
-    this.filteredExaminationScoresData$.next(this.examinationScoresData);
+    this.examScores$
+      ?.pipe(
+        untilDestroyed(this),
+        map((scoreList) => {
+          if (scoreList?.length > 0) {
+            return scoreList.map((score) => {
+              return {
+                ...score,
+                day: 'Day ' + score.dayNumber,
+                session: 'Session ' + score.sessionNumber,
+                status: score.isSubmitted ? 'Complete' : 'Incomplete',
+                //cases: score.cases,
+              };
+            });
+          }
+          return [];
+        })
+      )
+      .subscribe((scoreList) => {
+        this.examinationScoresData = scoreList;
+        this.filteredExaminationScoresData$.next(this.examinationScoresData);
+        this.setFilterOptions();
+        this.handleFilter();
+      });
   }
 
   setFilterOptions() {
@@ -162,7 +177,7 @@ export class ExaminationScoresComponent implements OnInit {
   }
 
   handleView(event: any) {
-    this.candidateData = event.data;
+    this._store.dispatch(new GetSelectedExamScores(event.data.examScheduleId));
     this.showViewModal = true;
   }
 

@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class OutcomeRegistriesService {
-    private readonly baseEndpoint = 'api/continuous-certification/outcome-registries';
 
   constructor(private apiService: ApiService) {}
 
@@ -33,7 +32,7 @@ export class OutcomeRegistriesService {
      */
 
             
-            return this.apiService.get<IOutcomeRegistryModel>(`${this.baseEndpoint}?api-version=${apiVersion}`);
+            return this.apiService.get<IOutcomeRegistryModel>(`api/continuous-certification/outcome-registries?api-version=${apiVersion}`);
   }
 
         public createOutcomeRegistry(model: IOutcomeRegistryModel, 
@@ -79,7 +78,7 @@ export class OutcomeRegistriesService {
      */
 
             
-            return this.apiService.post<IOutcomeRegistryModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IOutcomeRegistryModel>(`api/continuous-certification/outcome-registries?api-version=${apiVersion}`, 
                 model);
   }
 
@@ -127,7 +126,7 @@ export class OutcomeRegistriesService {
 
             
             
-            return this.apiService.put<IOutcomeRegistryModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
+            return this.apiService.put<IOutcomeRegistryModel>(`api/continuous-certification/outcome-registries?api-version=${apiVersion}`,
             model);
   }
 

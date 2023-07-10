@@ -15,21 +15,21 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
     [Test]
     public async Task GetByExaminationHeaderIdAsync_ExecutesSprocCorrectly()
     {
-      var expectedExamHeaderId = Create<int>();
-
       var expectedSprocName = "[dbo].[get_examination_scores]";
       var expectedExaminerUserId = Create<int>();
+            var expectedExamHeaderId = Create<int>();
       var expectedParams =
           new
           {
             ExaminerUserId = expectedExaminerUserId,
+                    ExamHeaderId = expectedExamHeaderId,
           };
 
       var sqlManager = new MockSqlConnectionManager();
       sqlManager.AddRecords(CreateMany<RosterReadOnlyDto>());
 
       var sut = new RosterReadOnlyDal(sqlManager);
-      await sut.GetByExaminationHeaderIdAsync(expectedExamHeaderId);
+            await sut.GetByExaminationHeaderIdAsync(expectedExamHeaderId);
 
       Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
       Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +44,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
       sqlManager.AddRecords(expectedDtos);
 
       var sut = new RosterReadOnlyDal(sqlManager);
-      var result = await sut.GetByExaminationHeaderIdAsync(Create<int>());
+            var result = await sut.GetByExaminationHeaderIdAsync(Create<int>());
 
       expectedDtos.Should().BeEquivalentTo(
           result,

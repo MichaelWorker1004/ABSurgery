@@ -3,24 +3,64 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
-import { CasesService } from '../../api';
+import {
+  CaseContentsService,
+  CaseNotesService,
+  CasesService,
+  //ExamScoresService,
+  ExamSessionsService,
+  ICaseCommentModel,
+  ICaseDetailReadOnlyModel,
+  ICaseRosterReadOnlyModel,
+  //IExamScoreReadOnlyModel,
+  IExamSessionReadOnlyModel,
+  CaseScoresService,
+  ICaseScoreReadOnlyModel,
+  ICaseScoreModel,
+} from '../../api';
 import { IFormErrors } from '../../shared/common';
 import {
-  GetExamRosters,
-  GetExamCases,
-  GetExamScores,
+  GetCaseRoster,
   GetCaseContents,
-  GetCaseComments,
+  GetCaseComment,
+  CreateCaseComment,
+  UpdateCaseComment,
+  GetExamineeList,
+  GetActiveExamination,
+  GetExamScoresList,
+  GetSelectedExamScores, // if no api call is needed create a custom selector for this
   ClearExamScoringErrors,
+  GetRoster,
+  CreateCaseScore,
+  UpdateCaseScore,
+  DeleteCaseScore,
+  GetExaminee,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { RostersService } from 'src/app/api/services/scoring/rosters.service';
+import { IRosterReadOnlyModel } from 'src/app/api/models/scoring/roster-read-only.model';
+import { DashboardService } from 'src/app/api/services/scoring/dashboard.service';
+import { IDashboardRosterReadOnlyModel } from 'src/app/api/models/scoring/dashboard-roster-read-only.model';
+import { IExamineeReadOnlyModel } from 'src/app/api/models/scoring/ce/examinee-read-only.model';
+import { SessionService } from 'src/app/api/services/scoring/ce/session.service';
 
 export interface IExamScoring {
-  rosters: any[] | undefined;
-  cases: any[] | undefined;
-  scores: any[] | undefined;
-  selectedCase: any | undefined;
-  caseComments: any[] | undefined;
+  // examination rosters page values
+  caseRoster: ICaseRosterReadOnlyModel[] | undefined; // examination rosters page list values
+  selectedCaseContents: ICaseDetailReadOnlyModel[] | undefined; // examination rosters page details values
+  selectedCaseComment: ICaseCommentModel | undefined; // examination rosters page selected comment value
+  // oral-examinations list page values
+  examineeList: IExamSessionReadOnlyModel[] | undefined; // oral-examinations list page grid values
+  // oral-examination actual exam page values
+  activeExamination: any[] | undefined; // oral-examination actual exam (includes all cases for selected exam) (no api call)
+  //examination scores page values
+  examScoresList: IRosterReadOnlyModel[] | undefined; // examination scores page grid values
+  selectedExamScores: ICaseScoreReadOnlyModel[] | undefined; // examination scores page details values (no api call)
+  // misc values
+
+  roster: IRosterReadOnlyModel[] | undefined;
+  dashboardRoster: IDashboardRosterReadOnlyModel[] | undefined;
+  examinee: IExamineeReadOnlyModel | undefined;
   errors: IFormErrors | null;
 }
 
@@ -31,38 +71,363 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
 @State<IExamScoring>({
   name: EXAM_SCORING_STATE_TOKEN,
   defaults: {
-    rosters: undefined,
-    cases: undefined,
-    scores: undefined,
-    selectedCase: undefined,
-    caseComments: undefined,
+    caseRoster: undefined,
+    selectedCaseContents: undefined,
+    selectedCaseComment: undefined,
+    examScoresList: undefined,
+    selectedExamScores: undefined,
+    examineeList: undefined,
+    activeExamination: undefined,
+    roster: undefined,
+    dashboardRoster: undefined,
+    examinee: undefined,
     errors: null,
   },
 })
 @Injectable()
 export class ExamScoringState {
-  constructor(private casesService: CasesService) {}
+  constructor(
+    private casesService: CasesService,
+    private caseContentsService: CaseContentsService,
+    private caseCommentsService: CaseNotesService,
+    //private examScoresService: ExamScoresService,
+    private rostersService: RostersService,
+    private examSessionsService: ExamSessionsService,
+    private dashboardService: DashboardService,
+    private caseScoresService: CaseScoresService,
+    private sessionService: SessionService,
+    private globalDialogService: GlobalDialogService
+  ) {}
 
-  @Action(GetExamCases)
+  @Action(GetCaseRoster)
   getExamCases(
     ctx: StateContext<IExamScoring>,
-    payload: { id1: number; id2: number }
+    payload: { id1: number; id2?: number }
   ) {
     // const state = ctx.getState();
     const sessionId1 = payload.id1;
-    const sessionId2 = payload.id2;
+    const sessionId2 = payload.id2 || undefined;
     return this.casesService
       .retrieveCaseRosterReadOnly_GetByScheduleId(sessionId1, sessionId2)
       .pipe(
-        tap((result: any) => {
+        tap((result: ICaseRosterReadOnlyModel[]) => {
           ctx.patchState({
-            cases: result,
+            caseRoster: result,
             errors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
           ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetCaseContents)
+  getCaseContents(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+    // const state = ctx.getState();
+    const caseId = payload.id;
+    return this.caseContentsService
+      .retrieveCaseDetailReadOnly_GetByCaseHeaderId(caseId)
+      .pipe(
+        tap((result: ICaseDetailReadOnlyModel[]) => {
+          ctx.patchState({
+            selectedCaseContents: result,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetCaseComment)
+  getCaseComment(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+    // const state = ctx.getState();
+    const commentId = payload.id;
+    return this.caseCommentsService.retrieveCaseComment_GetById(commentId).pipe(
+      tap((result: ICaseCommentModel) => {
+        ctx.patchState({
+          selectedCaseComment: result,
+          errors: null,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(CreateCaseComment)
+  createCaseComment(
+    ctx: StateContext<IExamScoring>,
+    payload: { comment: ICaseCommentModel }
+  ) {
+    const comment = payload.comment;
+    return this.caseCommentsService.createCaseComment(comment).pipe(
+      tap((result: ICaseCommentModel) => {
+        // action does not currently update value of selectedCaseConents, relying on UI to refresh as needed
+        ctx.patchState({
+          selectedCaseComment: result,
+          errors: null,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(UpdateCaseComment)
+  updateCaseComment(
+    ctx: StateContext<IExamScoring>,
+    payload: { comment: ICaseCommentModel }
+  ) {
+    const comment = payload.comment;
+    return this.caseCommentsService.updateCaseComment(comment.id, comment).pipe(
+      tap((result: ICaseCommentModel) => {
+        // action does not currently update value of selectedCaseConents, relying on UI to refresh as needed
+        ctx.patchState({
+          selectedCaseComment: result,
+          errors: null,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(GetExamineeList)
+  getExamineeList(ctx: StateContext<IExamScoring>, payload: { date: string }) {
+    // const state = ctx.getState();
+    const date = payload.date;
+    return this.examSessionsService
+      .retrieveExamSessionReadOnly_GetByUserId(date)
+      .pipe(
+        tap((result: IExamSessionReadOnlyModel[]) => {
+          const currentSessionCheck = result.some((x) => x.isCurrentSession);
+          if (!currentSessionCheck) {
+            result[0].isCurrentSession = true;
+          }
+          ctx.patchState({
+            examineeList: result,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetExaminee)
+  getExaminee(
+    ctx: StateContext<IExamScoring>,
+    payload: { examScheduleId: number }
+  ) {
+    const examScheduleId = payload.examScheduleId;
+    return this.sessionService
+      .retrieveExamineeReadOnly_GetById(examScheduleId)
+      .pipe(
+        tap((examinee: IExamineeReadOnlyModel) => {
+          ctx.patchState({
+            examinee,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
+  }
+
+  //TODO - create action for getting active examination once that API exists
+  // @Action(GetActiveExamination)
+  // getActiveExamination(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+  //   // const state = ctx.getState();
+  //   const examId = payload.id;
+  //   return this.examSessionsService
+  //     .retrieveExamSessionReadOnly_GetByUserId(examId)
+  //     .pipe(
+  //       tap((result: IExamSessionReadOnlyModel) => {
+  //         ctx.patchState({
+  //           activeExamination: result,
+  //           errors: null,
+  //         });
+  //       }),
+  //       catchError((httpError: HttpErrorResponse) => {
+  //         const errors = httpError.error;
+  //         ctx.patchState({ errors });
+  //         return of(errors);
+  //       })
+  //     );
+  // }
+
+  @Action(GetExamScoresList)
+  getExamScoresList(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+    // const state = ctx.getState();
+    const examHeaderId = payload.id;
+    return this.rostersService
+      .retrieveRosterReadOnly_GetByExaminationHeaderId(examHeaderId)
+      .pipe(
+        tap((result: IRosterReadOnlyModel[]) => {
+          ctx.patchState({
+            examScoresList: result,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(CreateCaseScore)
+  createCaseScore(
+    ctx: StateContext<IExamScoring>,
+    payload: { score: ICaseScoreModel }
+  ) {
+    const score = payload.score;
+    return this.caseScoresService.createCaseScore(score).pipe(
+      tap((result: ICaseScoreModel) => {
+        // figure out how to update the store here
+        console.log(result);
+        ctx.patchState({
+          // selectedCaseComment: result,
+          errors: null,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(UpdateCaseScore)
+  updateCaseScore(
+    ctx: StateContext<IExamScoring>,
+    payload: { score: ICaseScoreModel }
+  ) {
+    this.globalDialogService.showLoading();
+    const score = payload.score;
+    return this.caseScoresService
+      .updateCaseScore(score.examScoringId, score)
+      .pipe(
+        tap((result: ICaseScoreModel) => {
+          console.log(result);
+          // figure out how to update the store here
+          ctx.patchState({
+            // selectedCaseComment: result,
+            errors: null,
+          });
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Score Successfully Updated',
+            true
+          );
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Score update failed',
+            false
+          );
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(DeleteCaseScore)
+  deleteCaseScore(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+    const examScoringId = payload.id;
+    return this.caseScoresService.deleteCaseScore(examScoringId).pipe(
+      tap((result: ICaseScoreModel) => {
+        console.log(result);
+        // figure out how to update the store here
+        ctx.patchState({
+          // selectedCaseComment: result,
+          errors: null,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        return of(errors);
+      })
+    );
+  }
+
+  // TODO - update if a new api call is added for this
+  @Action(GetSelectedExamScores)
+  getSelectedExamScores(
+    ctx: StateContext<IExamScoring>,
+    payload: { id: number }
+  ) {
+    // const state = ctx.getState();
+    this.globalDialogService.showLoading();
+    const examId = payload.id;
+    return this.caseScoresService
+      .retrieveCaseScoreReadOnly_GetByExamScheduleId(examId)
+      .pipe(
+        tap((result: ICaseScoreReadOnlyModel[]) => {
+          ctx.patchState({
+            selectedExamScores: result,
+            errors: null,
+          });
+          this.globalDialogService.closeOpenDialog();
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          this.globalDialogService.closeOpenDialog();
+          return of(errors);
+        })
+      );
+  }
+
+  // TODO - add update and create actions for exam scores once those APIs exist
+
+  @Action(GetRoster)
+  getRoster(
+    ctx: StateContext<IExamScoring>,
+    payload: { examinerUserId: number; examDate: string }
+  ) {
+    this.globalDialogService.showLoading();
+    return this.dashboardService
+      .retrieveDashboardRosterReadOnly_GetByUserId(payload.examDate)
+      .pipe(
+        tap((dashboardRoster: IDashboardRosterReadOnlyModel[]) => {
+          ctx.patchState({
+            dashboardRoster: dashboardRoster,
+            errors: null,
+          });
+          this.globalDialogService.closeOpenDialog();
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          this.globalDialogService.closeOpenDialog();
           return of(errors);
         })
       );

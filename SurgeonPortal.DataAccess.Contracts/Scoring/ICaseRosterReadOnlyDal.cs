@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
 {
     public interface ICaseRosterReadOnlyDal
     {
-        Task<IEnumerable<CaseRosterReadOnlyDto>> GetByScheduleIdAsync(int scheduleId1, int scheduleId2);
+        Task<IEnumerable<CaseRosterReadOnlyDto>> GetByScheduleIdAsync(int scheduleId1, int? scheduleId2);
     }
 }

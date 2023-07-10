@@ -1,0 +1,120 @@
+{
+  "name": "CaseScore",
+  "implementationName": "Scoring\\CaseScore.insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.upsert_examinerscore",
+    "ControllerName": "Scoring\\CaseScoresController",
+    "ControllerRoute": "api/cases/scores",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Scoring\\CaseScore.GetByExamScheduleId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseScore",
+    "ModelGroup": "CaseScore",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.upsert_examinerscore",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[upsert_examinerscore]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "ExamineeUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamineeUserId"
+          },
+          {
+            "name": "ExamCaseId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamCaseId"
+          },
+          {
+            "name": "Score",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Score"
+          },
+          {
+            "name": "Remarks",
+            "dataType": "string",
+            "maxLength": 2000,
+            "precision": 2000,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Remarks"
+          },
+          {
+            "name": "CriticalFail",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CriticalFail"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamineeUserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ExamCaseId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "Score",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "Remarks",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "CriticalFail",
+      "dataType": "bool",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseScore.insert CaseScore -t=ytg-framework/editable-create -p:Model=Scoring\\CaseScore -p:Adapter=sp:abssp-[dbo].[upsert_examinerscore] -p:FetchImplementation=Scoring\\CaseScore.GetByExamScheduleId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScore -p:Route= -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseScore.insert CaseScore -t=ytg-framework/editable-create -p:Model=Scoring\\CaseScore -p:Adapter=sp:abssp-[dbo].[upsert_examinerscore] -p:FetchImplementation=Scoring\\CaseScore.GetByExamScheduleId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScore -p:Route= -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-29T19:20:03.5579148Z"
+  },
+  "version": 1
+}

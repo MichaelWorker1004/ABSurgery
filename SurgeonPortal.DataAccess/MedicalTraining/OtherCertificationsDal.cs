@@ -44,19 +44,33 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
 
         public async Task<OtherCertificationsDto> InsertAsync(OtherCertificationsDto dto)
         {
-            using (var connection = CreateConnection())
+            try
             {
-                return await connection.ExecFirstOrDefaultAsync<OtherCertificationsDto>(
-                    "[dbo].[ins_user_certificates_other]",
-                        new
-                        {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            CertificateTypeId = dto.CertificateTypeId,
-                            IssueDate = dto.IssueDate,
-                            CertificateNumber = dto.CertificateNumber,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                        });
-                        
+                using (var connection = CreateConnection())
+                {
+                    return await connection.ExecFirstOrDefaultAsync<OtherCertificationsDto>(
+                        "[dbo].[ins_user_certificates_other]",
+                            new
+                            {
+                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CertificateTypeId = dto.CertificateTypeId,
+                                IssueDate = dto.IssueDate,
+                                CertificateNumber = dto.CertificateNumber,
+                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            });
+                            
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if(ex.Message.Contains("Cannot insert duplicate key"))
+                {
+                    throw new Ytg.Framework.Exceptions.ObjectExistsException("OtherCertifications");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

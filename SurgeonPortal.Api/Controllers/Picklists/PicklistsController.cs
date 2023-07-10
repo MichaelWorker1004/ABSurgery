@@ -357,11 +357,11 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("examiner-sessions")]
-        public async Task<ActionResult<IEnumerable<ScoringSessionReadOnlyModel>>> GetScoringSessionReadOnly_GetByExaminerIdAsync(
+        public async Task<ActionResult<IEnumerable<ScoringSessionReadOnlyModel>>> GetScoringSessionReadOnly_GetByKeysAsync(
             [FromServices] IScoringSessionReadOnlyListFactory scoringSessionReadOnlyListFactory,
             int examHeaderId)
         {
-            var items = await scoringSessionReadOnlyListFactory.GetByExaminerIdAsync(examHeaderId);
+            var items = await scoringSessionReadOnlyListFactory.GetByKeysAsync(examHeaderId);
         
             return Ok(_mapper.Map<IEnumerable<ScoringSessionReadOnlyModel>>(items));
         } 

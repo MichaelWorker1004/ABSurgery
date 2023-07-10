@@ -47,41 +47,57 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
 
   scoringForm = new FormGroup({
     score: new FormControl(''),
-    comment: new FormControl(''),
-    criticalFail: new FormControl(''),
+    remarks: new FormControl(''),
+    criticalFail: new FormControl(false),
   });
 
   ngOnInit() {
     this.scoringForm.valueChanges.subscribe((value: any) => {
-      this.handleFormChange();
+      const caseData = { ...this.localData };
+
+      if (caseData) {
+        caseData.score = value?.score;
+        caseData.remarks = value?.remarks;
+        caseData.criticalFail = value?.criticalFail;
+
+        this.handleFormChange(caseData);
+      }
     });
 
     if (isObservable(this.case)) {
       this.case.subscribe((data) => {
         this.localData = data;
+        this.setLocalData();
       });
     } else {
       this.localData = this.case;
+      this.setLocalData();
     }
+  }
+
+  setLocalData() {
+    this.scoringForm.get('score')?.setValue(this.localData?.score);
+    this.scoringForm.get('remarks')?.setValue(this.localData?.remarks);
+    this.scoringForm
+      .get('criticalFail')
+      ?.setValue(this.localData?.criticalFail);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['case']) {
-      console.log(this.case.scores);
-      const scores = this.case.scores;
+      console.log(this.case?.scores);
+      const scores = this.case?.scores;
       if (scores) {
         for (const [key, value] of Object.entries(scores)) {
-          console.log(key, value);
           this.scoringForm.get(key)?.setValue(value);
         }
       }
     }
   }
 
-  handleFormChange() {
+  handleFormChange(caseData: any) {
     this.handleChange.emit({
-      scoreValues: this.scoringForm.value,
-      case: this.case,
+      case: caseData,
     });
   }
 }

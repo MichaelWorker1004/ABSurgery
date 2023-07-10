@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class UserProfilesService {
-    private readonly baseEndpoint = 'api/users/profiles';
 
     constructor(private apiService: ApiService) {}
 
@@ -94,7 +93,7 @@ export class UserProfilesService {
             */
             
             
-            return this.apiService.get<IUserProfileModel>(`${this.baseEndpoint}/by-userId?api-version=${apiVersion}&userId=${userId}`);
+            return this.apiService.get<IUserProfileModel>(`api/users/profiles/by-userId?api-version=${apiVersion}&userId=${userId}`);
         }
  
         public createUserProfile(model: IUserProfileModel, 
@@ -208,7 +207,7 @@ export class UserProfilesService {
             */
             
             
-            return this.apiService.post<IUserProfileModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IUserProfileModel>(`api/users/profiles?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -326,7 +325,7 @@ export class UserProfilesService {
             
             
             
-            return this.apiService.put<IUserProfileModel>(`${this.baseEndpoint}?api-version=${apiVersion}&userId=${userId}`,
+            return this.apiService.put<IUserProfileModel>(`api/users/profiles?api-version=${apiVersion}&userId=${userId}`,
             model);
         }
 

@@ -8,7 +8,7 @@ namespace SurgeonPortal.Library.Picklists
 {
     public class ScoringSessionReadOnlyListFactory : IScoringSessionReadOnlyListFactory
     {
-        public async Task<IScoringSessionReadOnlyList> GetByExaminerIdAsync(int examHeaderId)
+        public async Task<IScoringSessionReadOnlyList> GetByKeysAsync(int examHeaderId)
         {
             if (examHeaderId <= 0)
             {
@@ -16,16 +16,16 @@ namespace SurgeonPortal.Library.Picklists
             }
             
             return await DataPortal.FetchAsync<ScoringSessionReadOnlyList>(
-                new GetByExaminerIdCriteria(examHeaderId));
+                new GetByKeysCriteria(examHeaderId));
             
         }
 
             [Serializable]
-            internal class GetByExaminerIdCriteria
+            internal class GetByKeysCriteria
             {
                 public int ExamHeaderId { get; set; }
             
-                public GetByExaminerIdCriteria(int examHeaderId)
+                public GetByKeysCriteria(int examHeaderId)
              {
                     ExamHeaderId = examHeaderId;
               }

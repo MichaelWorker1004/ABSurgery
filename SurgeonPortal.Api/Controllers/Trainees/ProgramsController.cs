@@ -30,7 +30,7 @@ namespace SurgeonPortal.Api.Controllers.Trainees
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProgramReadOnlyModel))]

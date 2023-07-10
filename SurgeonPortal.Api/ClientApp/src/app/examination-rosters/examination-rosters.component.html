@@ -11,27 +11,30 @@
         <div class="col-12 lg:col-4 md:col-5">
           <h5 class="pb-3 mb-0">Table of Contents</h5>
           <div class="flex flex-column">
-            <!-- <p-dropdown
-              [options]="rosters"
+            <p-dropdown
+              [options]="scoringSessionsList"
               [(ngModel)]="selectedRoster"
-              optionLabel="displayName"
+              optionLabel="examSchedule"
               placeholder="Select a roster to view..."
               (onChange)="selectRoster($event)"
-            ></p-dropdown> -->
+            ></p-dropdown>
             <ng-container *ngIf="cases?.length > 0">
               <p-button
                 *ngFor="let case of cases"
                 class="mb-1"
                 styleClass="p-button-secondary p-button-text py-1"
-                (click)="selectCase(case.caseId)"
+                (click)="selectCase(case)"
               >
                 <span
                   [ngClass]="{
-                    'selected-case': selectedCaseId === case.caseId
+                    'selected-case': selectedCaseId === case.id
                   }"
                 >
-                  {{ case.caseId }}: Description of case {{ case.caseId }}
-                  {{ case.modifier }}
+                  {{ case.caseNumber }}:
+                  <span *ngIf="case.description">{{ case.description }}</span>
+                  <span *ngIf="!case.description"
+                    >Description of case {{ case.caseNumber }}</span
+                  >
                 </span>
               </p-button>
             </ng-container>
@@ -43,58 +46,63 @@
         <div class="col-12 lg:col-8 md:col-7">
           <h5 class="pb-3 case-header">
             <span *ngIf="selectedCaseDetails"
-              >Case {{ selectedCaseDetails.caseId }}: Description of Case
-              {{ selectedCaseDetails.caseId }}
-              {{ selectedCaseDetails.modifier }}</span
-            >
+              >Case {{ selectedCaseDetails.caseNumber }}:
+              <span *ngIf="selectedCaseDetails.description">{{
+                selectedCaseDetails.description
+              }}</span>
+              <span *ngIf="!selectedCaseDetails.description"
+                >Description of case {{ selectedCaseDetails.caseNumber }}</span
+              >
+            </span>
             <span *ngIf="!selectedCaseDetails">Case Details</span>
           </h5>
-          <form name="caseDetailsForm" (ngSubmit)="saveCaseComments()">
-            <p
-              *ngIf="!selectedCaseDetails"
-              class="font-italic text-muted mt-0 pl-3"
+          <p
+            *ngIf="!selectedCaseDetails"
+            class="font-italic text-muted mt-0 pl-3"
+          >
+            No Case Selected
+          </p>
+          <div *ngIf="selectedCaseDetails" class="grid">
+            <div
+              class="col-12"
+              *ngFor="let section of selectedCaseDetails.sections"
             >
-              No Case Selected
-            </p>
-            <div *ngIf="selectedCaseDetails" class="grid">
-              <div
-                class="col-12"
-                *ngFor="let section of selectedCaseDetails.sections"
-              >
-                <p class="font-bold m-0">{{ section.title }}:</p>
-                <div
-                  class="section-details"
-                  [innerHTML]="section.htmlContent"
-                ></div>
+              <p class="font-bold m-0">{{ section.heading }}:</p>
+              <div class="section-details" [innerHTML]="section.content"></div>
 
-                <div *ngIf="section.comment || section.editComment">
-                  <label [for]="section.title + '-comment'">Comment:</label>
-                  <p class="my-1" *ngIf="!section.editComment">
-                    {{ section.comment }}
-                  </p>
-                  <textarea
-                    [name]="section.title + '-comment'"
-                    rows="5"
-                    pInputTextarea
-                    [(ngModel)]="section.comment"
-                    *ngIf="section.editComment"
-                  ></textarea>
-                </div>
-                <p-button
-                  *ngIf="!section.editComment"
-                  styleClass="p-button-success p-button-text"
-                  (click)="section.editComment = true"
-                >
-                  {{ section.comment ? 'Edit Comment' : 'Add Comment' }}
-                </p-button>
+              <div *ngIf="section.comments || section.editComment">
+                <label [for]="section.heading + '-comment'">Comment:</label>
+                <p class="my-1" *ngIf="!section.editComment">
+                  {{ section.comments }}
+                </p>
+                <textarea
+                  [name]="section.heading + '-comment'"
+                  rows="5"
+                  pInputTextarea
+                  [(ngModel)]="section.comments"
+                  *ngIf="section.editComment"
+                ></textarea>
               </div>
-              <div class="col-12 mt-3">
-                <p-button [style]="{ width: '337px' }" type="submit"
-                  >Save</p-button
-                >
-              </div>
+              <p-button
+                *ngIf="!section.editComment"
+                styleClass="p-button-success p-button-text"
+                (click)="section.editComment = true"
+              >
+                {{ section.comments ? 'Edit Comment' : 'Add Comment' }}
+              </p-button>
+              <p-button
+                *ngIf="section.editComment"
+                type="button"
+                (onClick)="saveSectionComment(section)"
+                >Save Comment</p-button
+              >
             </div>
-          </form>
+            <div *ngIf="!(selectedCaseDetails.sections?.length > 0)">
+              <p class="font-italic text-muted mt-0 pl-3">
+                This case currently has no content
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </sl-card>

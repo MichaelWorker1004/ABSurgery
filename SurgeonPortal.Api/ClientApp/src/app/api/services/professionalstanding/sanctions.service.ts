@@ -7,7 +7,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class SanctionsService {
-    private readonly baseEndpoint = 'api/professional-standing/sanctions';
 
     constructor(private apiService: ApiService) {}
 
@@ -33,7 +32,7 @@ export class SanctionsService {
             */
             
             
-            return this.apiService.get<ISanctionsModel>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<ISanctionsModel>(`api/professional-standing/sanctions/by-userid?api-version=${apiVersion}`);
         }
  
         public createSanctions(model: ISanctionsModel, 
@@ -65,7 +64,7 @@ export class SanctionsService {
             */
             
             
-            return this.apiService.post<ISanctionsModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<ISanctionsModel>(`api/professional-standing/sanctions?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -99,7 +98,7 @@ export class SanctionsService {
             
             
             
-            return this.apiService.put<ISanctionsModel>(`${this.baseEndpoint}?api-version=${apiVersion}`,
+            return this.apiService.put<ISanctionsModel>(`api/professional-standing/sanctions?api-version=${apiVersion}`,
             model);
         }
 

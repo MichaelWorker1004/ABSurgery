@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class UserCertificateService {
-    private readonly baseEndpoint = 'api/user-certificates';
 
     constructor(private apiService: ApiService) {}
 
@@ -36,7 +35,7 @@ export class UserCertificateService {
             */
             
             
-            return this.apiService.delete<IUserCertificateModel>(`${this.baseEndpoint}?api-version=${apiVersion}&certificateId=${certificateId}`);
+            return this.apiService.delete<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}&certificateId=${certificateId}`);
         }
  
         public retrieveUserCertificate_GetById(certificateId: number,
@@ -62,7 +61,7 @@ export class UserCertificateService {
             */
             
             
-            return this.apiService.get<IUserCertificateModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&certificateId=${certificateId}`);
+            return this.apiService.get<IUserCertificateModel>(`api/user-certificates/by-id?api-version=${apiVersion}&certificateId=${certificateId}`);
         }
  
         public createUserCertificate(model: FormData, 
@@ -91,7 +90,7 @@ export class UserCertificateService {
             */
             
             
-            return this.apiService.post<IUserCertificateModel>(`${this.baseEndpoint}?api-version=${apiVersion}`, 
+            return this.apiService.post<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}`, 
                 model);
         }
  
@@ -116,7 +115,7 @@ export class UserCertificateService {
             */
             
             
-            return this.apiService.get<IUserCertificateReadOnlyModel[]>(`${this.baseEndpoint}/by-userid?api-version=${apiVersion}`);
+            return this.apiService.get<IUserCertificateReadOnlyModel[]>(`api/user-certificates/by-userid?api-version=${apiVersion}`);
         }
 
 

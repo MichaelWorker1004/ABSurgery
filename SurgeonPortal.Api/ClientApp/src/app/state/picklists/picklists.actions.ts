@@ -93,3 +93,9 @@ export class GetJcahoOrganizationList {
 export class GetPrimaryPracticeList {
   static readonly type = '[Picklists] Get the Primary Practice list';
 }
+
+export class GetScoringSessionList {
+  static readonly type = '[Picklists] Get the Scoring Session list';
+
+  constructor(public id: number) {}
+}
