@@ -5,6 +5,8 @@ using SurgeonPortal.Library.Contracts.Scoring.CE;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
+using static SurgeonPortal.Library.Scoring.CaseDetailReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring.CE
 {
@@ -40,18 +42,18 @@ namespace SurgeonPortal.Library.Scoring.CE
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
-        private void Child_Fetch(TitleReadOnlyDto dto)
+        private async Task Child_Fetch(TitleReadOnlyDto dto)
         {
-            FetchData(dto);
+            await FetchDataAsync(dto);
         }
 
         
-		private void FetchData(TitleReadOnlyDto dto)
+		private async Task FetchDataAsync(TitleReadOnlyDto dto)
 		{
             LoadProperty(TitleProperty, dto.Title);
             LoadProperty(CaseHeaderIdProperty, dto.CaseHeaderId);
             LoadProperty(ExamCaseIdProperty, dto.ExamCaseId);
-            LoadProperty(SectionsProperty, DataPortal.Fetch<CaseDetailReadOnlyList>(dto.CaseHeaderId));
+            LoadProperty(SectionsProperty, await DataPortal.FetchAsync<CaseDetailReadOnlyList>(new GetByCaseHeaderIdCriteria(dto.CaseHeaderId)));
 		} 
         
     }

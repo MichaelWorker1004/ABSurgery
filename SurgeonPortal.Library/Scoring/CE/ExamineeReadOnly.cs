@@ -70,15 +70,15 @@ namespace SurgeonPortal.Library.Scoring.CE
                 throw new DataNotFoundException("ExamineeReadOnly not found based on criteria.");
             }
             
-            FetchData(dto);
+            await FetchDataAsync(dto);
         }
         
-		private void FetchData(ExamineeReadOnlyDto dto)
+		private async Task FetchDataAsync(ExamineeReadOnlyDto dto)
 		{
             LoadProperty(ExamScheduleIdProperty, dto.ExamScheduleId);
             LoadProperty(FullNameProperty, dto.FullName);
             LoadProperty(ExamDateProperty, dto.ExamDate);
-            LoadProperty(CasesProperty, DataPortal.Fetch<TitleReadOnlyList>(dto.ExamScheduleId));
+            LoadProperty(CasesProperty, await DataPortal.FetchAsync<TitleReadOnlyList>(new TitleReadOnlyListFactory.GetByIdCriteria(dto.ExamScheduleId)));
 		} 
         
     }
