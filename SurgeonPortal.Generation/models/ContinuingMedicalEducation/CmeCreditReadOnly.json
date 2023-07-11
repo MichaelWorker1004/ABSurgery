@@ -1,0 +1,90 @@
+{
+  "refs": {},
+  "name": "ContinuingMedicalEducation\\CmeCreditReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "CmeId",
+      "dataType": "decimal",
+      "maxLength": 9,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "UserId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Date",
+      "dataType": "string",
+      "maxLength": 10,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Description",
+      "dataType": "string",
+      "maxLength": 1000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CreditsTotal",
+      "dataType": "decimal",
+      "maxLength": 5,
+      "precision": 9,
+      "scale": 2,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CreditsSA",
+      "dataType": "decimal?",
+      "maxLength": 5,
+      "precision": 9,
+      "scale": 2,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CMEDirect",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s ContinuingMedicalEducation\\CmeCreditReadOnly -sp [dbo].[get_usercme_byuserid] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-12T16:34:43.8053685Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,126 @@
+{
+  "name": "CmeAdjustmentReadOnly",
+  "implementationName": "ContinuingMedicalEducation\\CmeAdjustmentReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_usercme_waivers_byuserid",
+    "ControllerName": "ContinuingMedicalEducation\\CmeController",
+    "ControllerRoute": "api/cme",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ContinuingMedicalEducation\\CmeAdjustmentReadOnly",
+    "ModelGroup": "CmeAdjustmentReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "adjustments",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_usercme_waivers_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_usercme_waivers_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ContinuingMedicalEducation\\CmeAdjustmentReadOnly",
+            "fields": [
+              {
+                "name": "CmeId",
+                "dataType": "decimal",
+                "maxLength": 9,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.CmeId"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "Date",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Date"
+              },
+              {
+                "name": "Description",
+                "dataType": "string",
+                "maxLength": 1000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Description"
+              },
+              {
+                "name": "CreditsTotal",
+                "dataType": "decimal",
+                "maxLength": 5,
+                "precision": 9,
+                "scale": 2,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreditsTotal"
+              },
+              {
+                "name": "CreditsSA",
+                "dataType": "decimal?",
+                "maxLength": 5,
+                "precision": 9,
+                "scale": 2,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreditsSA"
+              },
+              {
+                "name": "IssuedBy",
+                "dataType": "string",
+                "maxLength": 300,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IssuedBy"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s ContinuingMedicalEducation\\CmeAdjustmentReadOnly.GetByUserId CmeAdjustmentReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuingMedicalEducation\\CmeAdjustmentReadOnly -p:Adapter=sp:abssp-[dbo].[get_usercme_waivers_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CmeAdjustmentReadOnly -p:Route=by-userid -p:ControllerName=ContinuingMedicalEducation\\CmeController -p:ControllerRoute=api/cme -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ContinuingMedicalEducation\\CmeAdjustmentReadOnly.GetByUserId CmeAdjustmentReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuingMedicalEducation\\CmeAdjustmentReadOnly -p:Adapter=sp:abssp-[dbo].[get_usercme_waivers_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CmeAdjustmentReadOnly -p:Route=by-userid -p:ControllerName=ContinuingMedicalEducation\\CmeController -p:ControllerRoute=api/cme -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-12T16:23:40.1452041Z"
+  },
+  "version": 1
+}

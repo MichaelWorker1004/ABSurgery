@@ -1,0 +1,131 @@
+{
+  "name": "CmeCreditReadOnly",
+  "implementationName": "ContinuingMedicalEducation\\CmeCreditReadOnly.GetById",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_usercme_byid",
+    "ControllerName": "ContinuingMedicalEducation\\CmeController",
+    "ControllerRoute": "api/cme",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ContinuingMedicalEducation\\CmeCreditReadOnly",
+    "ModelGroup": "CmeCreditReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-id"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_usercme_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_usercme_byid]",
+        "parameters": [
+          {
+            "name": "CmeId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CmeId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ContinuingMedicalEducation\\CmeCreditReadOnly",
+            "fields": [
+              {
+                "name": "CmeId",
+                "dataType": "decimal",
+                "maxLength": 9,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.CmeId"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "Date",
+                "dataType": "string",
+                "maxLength": 10,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Date"
+              },
+              {
+                "name": "Description",
+                "dataType": "string",
+                "maxLength": 1000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Description"
+              },
+              {
+                "name": "CreditsTotal",
+                "dataType": "decimal",
+                "maxLength": 5,
+                "precision": 9,
+                "scale": 2,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreditsTotal"
+              },
+              {
+                "name": "CreditsSA",
+                "dataType": "decimal?",
+                "maxLength": 5,
+                "precision": 9,
+                "scale": 2,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreditsSA"
+              },
+              {
+                "name": "CMEDirect",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CMEDirect"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "CmeId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ContinuingMedicalEducation\\CmeCreditReadOnly.GetById CmeCreditReadOnly -t=ytg-framework/readonly-get -p:Model=ContinuingMedicalEducation\\CmeCreditReadOnly -p:Adapter=sp:abssp-[dbo].[get_usercme_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CmeCreditReadOnly -p:Route=by-id -p:ControllerName=ContinuingMedicalEducation\\CmeController -p:ControllerRoute=api/cme -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ContinuingMedicalEducation\\CmeCreditReadOnly.GetById CmeCreditReadOnly -t=ytg-framework/readonly-get -p:Model=ContinuingMedicalEducation\\CmeCreditReadOnly -p:Adapter=sp:abssp-[dbo].[get_usercme_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CmeCreditReadOnly -p:Route=by-id -p:ControllerName=ContinuingMedicalEducation\\CmeController -p:ControllerRoute=api/cme -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-12T16:38:32.9546032Z"
+  },
+  "version": 1
+}
