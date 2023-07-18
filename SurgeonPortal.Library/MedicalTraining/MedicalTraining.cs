@@ -29,6 +29,7 @@ namespace SurgeonPortal.Library.MedicalTraining
             _medicalTrainingDal = medicalTrainingDal;
         }
 
+        [Key] 
         [DisplayName(nameof(Id))]
 		public int Id
 		{
@@ -82,7 +83,7 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public string MedicalSchoolStateId
 		{
 			get { return GetProperty(MedicalSchoolStateIdProperty); }
-			set { SetProperty(MedicalSchoolStateIdProperty, value); }
+			set { LoadProperty(MedicalSchoolStateIdProperty, value); }
 		}
 		public static readonly PropertyInfo<string> MedicalSchoolStateIdProperty = RegisterProperty<string>(c => c.MedicalSchoolStateId);
 
@@ -181,8 +182,21 @@ namespace SurgeonPortal.Library.MedicalTraining
             // Only process priority 5 and higher if all 4 and lower completed first
             BusinessRules.ProcessThroughPriority = 4;
 
+            BusinessRules.AddRule(new Required(IdProperty, "Id is required"));
+            BusinessRules.AddRule(new Required(UserIdProperty, "UserId is required"));
+            BusinessRules.AddRule(new Required(GraduateProfileIdProperty, "GraduateProfileId is required"));
+            BusinessRules.AddRule(new Required(MedicalSchoolNameProperty, "MedicalSchoolName is required"));
+            BusinessRules.AddRule(new MaxLength(MedicalSchoolNameProperty, 30, @"The MedicalSchoolName cannot be more than 30 characters"));
+            BusinessRules.AddRule(new Required(MedicalSchoolCityProperty, "MedicalSchoolCity is required"));
+            BusinessRules.AddRule(new MaxLength(MedicalSchoolCityProperty, 30, @"The MedicalSchoolCity cannot be more than 30 characters"));
+            BusinessRules.AddRule(new Required(MedicalSchoolCountryIdProperty, "MedicalSchoolCountryId is required"));
+            BusinessRules.AddRule(new Required(DegreeIdProperty, "DegreeId is required"));
+            BusinessRules.AddRule(new Required(MedicalSchoolCompletionYearProperty, "MedicalSchoolCompletionYear is required"));
             BusinessRules.AddRule(new RegExMatch(MedicalSchoolCompletionYearProperty, @"^\d{4}$", @"The medical school completion year doesn't match the required pattern (YYYY)"));
+            BusinessRules.AddRule(new Required(ResidencyProgramNameProperty, "ResidencyProgramName is required"));
+            BusinessRules.AddRule(new Required(ResidencyCompletionYearProperty, "ResidencyCompletionYear is required"));
             BusinessRules.AddRule(new RegExMatch(ResidencyCompletionYearProperty, @"^\d{4}$", @"The residency completion year doesn't match the required pattern (YYYY)"));
+            BusinessRules.AddRule(new Required(ResidencyProgramOtherProperty, "ResidencyProgramOther is required"));
         }
 
 

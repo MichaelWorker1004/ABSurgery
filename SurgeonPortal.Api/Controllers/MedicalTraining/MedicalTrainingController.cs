@@ -65,7 +65,7 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
             return await CreateAsync<MedicalTrainingModel>(
                 _mapper,
                 item,
-                absoluteUriProvider.GetAbsoluteUri($"/api/medical-training/{item.UserId}"));
+                absoluteUriProvider.GetAbsoluteUri($"/api/medical-training/{item.Id}"));
         } 
 
         ///<summary>
@@ -102,7 +102,6 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
 
         private void AssignEditProperties(IMedicalTraining entity, MedicalTrainingModel model)
         {
-            entity.Id = model.Id;
             entity.GraduateProfileId = model.GraduateProfileId;
             entity.MedicalSchoolName = model.MedicalSchoolName;
             entity.MedicalSchoolCity = model.MedicalSchoolCity;

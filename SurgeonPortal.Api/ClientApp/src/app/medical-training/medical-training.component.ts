@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
@@ -185,14 +186,17 @@ export class MedicalTrainingComponent implements OnInit {
 
   medicalTrainingForm = new FormGroup({
     graduateProfileId: new FormControl(''),
-    medicalSchoolName: new FormControl(''),
-    medicalSchoolCity: new FormControl(''),
-    medicalSchoolStateId: new FormControl({ value: '', disabled: true }),
-    medicalSchoolCountryId: new FormControl(''),
-    degreeId: new FormControl(''),
-    medicalSchoolCompletionYear: new FormControl(''),
+    graduateProfileDescription: new FormControl(''),
+    medicalSchoolName: new FormControl('', Validators.required),
+    medicalSchoolCity: new FormControl('', Validators.required),
+    medicalSchoolStateId: new FormControl({ value: null, disabled: true }),
+    medicalSchoolCountryId: new FormControl('', Validators.required),
+    medicalSchoolCountryName: new FormControl(''),
+    degreeId: new FormControl('', Validators.required),
+    degreeName: new FormControl(''),
+    medicalSchoolCompletionYear: new FormControl('', Validators.required),
     residencyProgramName: new FormControl(0),
-    residencyCompletionYear: new FormControl(''),
+    residencyCompletionYear: new FormControl('', Validators.required),
     residencyProgramOther: new FormControl(''),
   });
 
@@ -306,6 +310,34 @@ export class MedicalTrainingComponent implements OnInit {
   onCountryChange(event: any) {
     const countryId = event.value;
     this.setStates(countryId);
+    const countryName =
+      this.countries.filter((country) => country.itemValue === countryId)[0]
+        .itemDescription ?? '';
+
+    this.medicalTrainingForm
+      .get('medicalSchoolCountryName')
+      ?.patchValue(countryName);
+  }
+
+  onDegreeChange(event: any) {
+    const degreeId = event.value;
+    const degreeName = this.degrees.filter(
+      (degree) => degree.itemValue === degreeId
+    )[0].itemDisplay;
+    this.medicalTrainingForm.get('degreeName')?.patchValue(degreeName);
+  }
+
+  onGraduateProfileChange(event: any) {
+    const graduateProfileId = event.value;
+
+    const graduateProfileDescription =
+      this.graduateProfiles.filter(
+        (graduateProfile) => graduateProfile.type === graduateProfileId
+      )[0].description ?? '';
+
+    this.medicalTrainingForm
+      .get('graduateProfileDescription')
+      ?.patchValue(graduateProfileDescription);
   }
 
   setStates(countryId?: string) {
@@ -520,8 +552,11 @@ export class MedicalTrainingComponent implements OnInit {
       medicalSchoolCity: formValues.medicalSchoolCity,
       medicalSchoolStateId: formValues.medicalSchoolStateId,
       medicalSchoolCountryId: formValues.medicalSchoolCountryId,
+      medicalSchoolCountryName: formValues.medicalSchoolCountryName,
       medicalSchoolCompletionYear,
+      graduateProfileDescription: formValues.graduateProfileDescription,
       degreeId: formValues.degreeId,
+      degreeName: formValues.degreeName,
       residencyProgramName: residencyProgramName[0].programName,
       residencyCompletionYear,
       residencyProgramOther: formValues.residencyProgramOther,

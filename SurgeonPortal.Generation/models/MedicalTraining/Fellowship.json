@@ -34,7 +34,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "ProgramName is required"
+        }
+      }
     },
     {
       "name": "CompletionYear",
@@ -50,13 +55,18 @@
     {
       "name": "ProgramOther",
       "dataType": "string",
-      "maxLength": 500,
+      "maxLength": 8000,
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "maxLength": {
+          "value": 8000,
+          "message": "The ProgramOther cannot be more than 8000 characters"
+        }
+      }
     },
     {
       "name": "CreatedByUserId",

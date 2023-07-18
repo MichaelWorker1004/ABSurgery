@@ -8,7 +8,6 @@ import { ApiService } from 'ytg-angular';
   providedIn: 'root',
 })
 export class CmeService {
-    private readonly baseEndpoint = 'api/cme';
 
     constructor(private apiService: ApiService) {}
 
@@ -34,7 +33,7 @@ export class CmeService {
             */
             
             
-            return this.apiService.get<ICmeAdjustmentReadOnlyModel[]>(`${this.baseEndpoint}/adjustments?api-version=${apiVersion}`);
+            return this.apiService.get<ICmeAdjustmentReadOnlyModel[]>(`api/cme/adjustments?api-version=${apiVersion}`);
         }
  
         public retrieveCmeCreditReadOnly_GetById(cmeId: number,
@@ -60,7 +59,7 @@ export class CmeService {
             */
             
             
-            return this.apiService.get<ICmeCreditReadOnlyModel>(`${this.baseEndpoint}/by-id?api-version=${apiVersion}&cmeId=${cmeId}`);
+            return this.apiService.get<ICmeCreditReadOnlyModel>(`api/cme/by-id?api-version=${apiVersion}&cmeId=${cmeId}`);
         }
  
         public retrieveCmeCreditReadOnly_GetByUserId(apiVersion = '1.0'): Observable<ICmeCreditReadOnlyModel[]> {
@@ -84,7 +83,7 @@ export class CmeService {
             */
             
             
-            return this.apiService.get<ICmeCreditReadOnlyModel[]>(`${this.baseEndpoint}/itemized-cme?api-version=${apiVersion}`);
+            return this.apiService.get<ICmeCreditReadOnlyModel[]>(`api/cme/itemized-cme?api-version=${apiVersion}`);
         }
 
 

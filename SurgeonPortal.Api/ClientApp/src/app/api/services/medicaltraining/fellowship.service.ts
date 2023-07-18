@@ -20,7 +20,12 @@ export class FellowshipService {
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: ProgramName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ProgramOther
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**
@@ -46,7 +51,12 @@ export class FellowshipService {
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: ProgramName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ProgramOther
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**
@@ -72,7 +82,12 @@ export class FellowshipService {
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: ProgramName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ProgramOther
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**
@@ -102,7 +117,12 @@ export class FellowshipService {
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: ProgramName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ProgramOther
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**

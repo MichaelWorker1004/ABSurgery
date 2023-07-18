@@ -85,6 +85,7 @@ export class MedicalTrainingState {
         catchError((error) => {
           console.error('------- In Medical Training Store', error);
           console.error(error);
+          this.globalDialogService.closeOpenDialog();
           return of(error);
         })
       );

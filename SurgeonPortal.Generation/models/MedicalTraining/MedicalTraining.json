@@ -11,8 +11,13 @@
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false,
-      "rules": {}
+      "isIdentityColumn": true,
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "Id is required"
+        }
+      }
     },
     {
       "name": "UserId",
@@ -23,7 +28,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": false,
       "isIdentityColumn": true,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "UserId is required"
+        }
+      }
     },
     {
       "name": "GraduateProfileId",
@@ -34,7 +44,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": false,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "GraduateProfileId is required"
+        }
+      }
     },
     {
       "name": "GraduateProfileDescription",
@@ -50,24 +65,42 @@
     {
       "name": "MedicalSchoolName",
       "dataType": "string",
-      "maxLength": 100,
+      "maxLength": 30,
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": false,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "MedicalSchoolName is required"
+        },
+        "maxLength": {
+          "value": 30,
+          "message": "The MedicalSchoolName cannot be more than 30 characters"
+        }
+      }
     },
     {
       "name": "MedicalSchoolCity",
       "dataType": "string",
-      "maxLength": 50,
+      "maxLength": 30,
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": false,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "MedicalSchoolCity is required"
+        },
+        "maxLength": {
+          "value": 30,
+          "message": "The MedicalSchoolCity cannot be more than 30 characters"
+        }
+      }
     },
     {
       "name": "MedicalSchoolStateId",
@@ -100,7 +133,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": false,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "MedicalSchoolCountryId is required"
+        }
+      }
     },
     {
       "name": "MedicalSchoolCountryName",
@@ -122,7 +160,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": false,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "DegreeId is required"
+        }
+      }
     },
     {
       "name": "DegreeName",
@@ -145,6 +188,10 @@
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {
+        "required": {
+          "value": true,
+          "message": "MedicalSchoolCompletionYear is required"
+        },
         "regEx": {
           "value": "^\\d{4}$",
           "message": "The medical school completion year doesn\u0027t match the required pattern (YYYY)"
@@ -160,7 +207,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "ResidencyProgramName is required"
+        }
+      }
     },
     {
       "name": "ResidencyCompletionYear",
@@ -172,6 +224,10 @@
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {
+        "required": {
+          "value": true,
+          "message": "ResidencyCompletionYear is required"
+        },
         "regEx": {
           "value": "^\\d{4}$",
           "message": "The residency completion year doesn\u0027t match the required pattern (YYYY)"
@@ -187,7 +243,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "ResidencyProgramOther is required"
+        }
+      }
     },
     {
       "name": "CreatedAtUtc",

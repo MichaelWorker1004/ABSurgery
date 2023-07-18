@@ -64,10 +64,11 @@
               <div class="col-12">
                 <label class="block" for="graduateProfileId"
                   >Select the statement that best describes you (Country of
-                  medical school)</label
+                  medical school) *</label
                 >
                 <p-dropdown
                   [options]="graduateProfiles"
+                  (onChange)="onGraduateProfileChange($event)"
                   formControlName="graduateProfileId"
                   inputId="graduateProfileId"
                   placeholder="Select one"
@@ -82,16 +83,16 @@
                 >
                 <input
                   pInputText
-                  required
                   formControlName="medicalSchoolName"
                   type="text"
                   placeholder="Enter school name"
                   name="medicalSchool"
+                  maxlength="30"
                 />
               </div>
               <div class="col-12 md:col-4">
                 <label class="block" for="medicalSchoolCountryId">
-                  Country
+                  Country *
                 </label>
                 <p-dropdown
                   inputId="country"
@@ -124,17 +125,17 @@
                 >
                 <input
                   pInputText
-                  required
                   type="text"
                   placeholder="Enter city name"
                   formControlName="medicalSchoolCity"
+                  maxlength="30"
                 />
               </div>
               <div class="col-12 md:col-6">
                 <label class="block" for="degreeId">Degree *</label>
                 <p-dropdown
-                  [required]="true"
                   [options]="degrees"
+                  (onChange)="onDegreeChange($event)"
                   formControlName="degreeId"
                   inputId="degreeId"
                   placeholder="Select a degree"
@@ -146,7 +147,6 @@
               <div class="flex flex-column col-12 md:col-6">
                 <label htmlFor="other">Year of Completion *</label>
                 <p-calendar
-                  [required]="true"
                   [maxDate]="maxYear"
                   view="year"
                   dateFormat="yy"
@@ -212,10 +212,11 @@
                 <div class="grid">
                   <div class="col-12">
                     <label class="block" for="residencyProgramName"
-                      >Enter program name</label
+                      >Enter program name *</label
                     >
                     <p-dropdown
                       [options]="residencyPrograms"
+                      [showClear]="true"
                       formControlName="residencyProgramName"
                       inputId="residencyProgramName"
                       placeholder="Select a program"
@@ -227,7 +228,6 @@
                   <div class="flex flex-column col-12">
                     <label htmlFor="other">Year of Completion *</label>
                     <p-calendar
-                      [required]="true"
                       [maxDate]="maxYear"
                       view="year"
                       dateFormat="yy"
@@ -255,12 +255,12 @@
                 <div class="grid">
                   <div class="col-12">
                     <label class="block" for="residencyProgramOther"
-                      >My program is not listed</label
+                      >My program is not listed *</label
                     >
                     <textarea
-                      required
                       pInputTextarea
                       rows="5"
+                      maxlength="8000"
                       formControlName="residencyProgramOther"
                       placeholder="Explain..."
                     ></textarea>
@@ -383,6 +383,7 @@
                 type="submit"
                 [style]="{ width: '337px' }"
                 (click)="save()"
+                [disabled]="!medicalTrainingForm.valid"
                 >Save</p-button
               >
             </div>

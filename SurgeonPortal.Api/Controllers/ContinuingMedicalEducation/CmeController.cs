@@ -30,7 +30,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuingMedicalEducation
         }
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CmeAdjustmentReadOnlyModel>))]
@@ -46,7 +46,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuingMedicalEducation
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CmeCreditReadOnlyModel))]
@@ -63,7 +63,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuingMedicalEducation
         } 
 
         ///<summary>
-        /// YtgIm 
+        /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CmeCreditReadOnlyModel>))]

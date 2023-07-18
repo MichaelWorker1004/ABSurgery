@@ -1,4 +1,5 @@
 using Csla;
+using Csla.Rules.CommonRules;
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
 using System;
@@ -82,6 +83,20 @@ namespace SurgeonPortal.Library.MedicalTraining
         }
 
 
+
+        /// <summary>
+        /// This method is used to add business rules to the Csla 
+        /// business rule engine
+        /// </summary>
+        protected override void AddBusinessRules()
+        {
+            // Only process priority 5 and higher if all 4 and lower completed first
+            BusinessRules.ProcessThroughPriority = 4;
+
+            BusinessRules.AddRule(new Required(ProgramNameProperty, "ProgramName is required"));
+            BusinessRules.AddRule(new MaxLength(ProgramOtherProperty, 8000, @"The ProgramOther cannot be more than 8000 characters"));
+            BusinessRules.AddRule(new Ytg.Framework.Rules.YearIsValidAndLessThanCurrentYearRule(CompletionYearProperty));
+        }
 
 
         [RunLocal]

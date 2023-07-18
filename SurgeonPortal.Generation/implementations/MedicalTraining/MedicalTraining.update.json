@@ -76,7 +76,7 @@
             "maxLength": 2,
             "precision": 2,
             "scale": 0,
-            "required": true,
+            "required": false,
             "mapsTo": "MedicalSchoolStateId"
           },
           {
@@ -382,7 +382,7 @@
     {
       "name": "MedicalSchoolStateId",
       "dataType": "string",
-      "required": true
+      "required": false
     },
     {
       "name": "MedicalSchoolCountryId",

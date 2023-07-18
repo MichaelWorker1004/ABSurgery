@@ -29,7 +29,65 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             return dto;
         }
 
+            #region Fellowship Business Rules
+            [Test]
+            public async Task IsRequired_GetById_ProgramName_Fails()
+            {
+                var dto = CreateValidDto();
             
+                var expectedId = Create<int>();
+            
+                var mockDal = new Mock<IFellowshipDal>(MockBehavior.Strict);
+                mockDal.Setup(m => m.GetByIdAsync(expectedId))
+                    .ReturnsAsync(dto);
+            
+                UseMockServiceProvider()
+                    .WithMockedIdentity()
+                    .WithRegisteredInstance(mockDal)
+                    .WithBusinessObject<IFellowship, Fellowship>()
+                    .Build();
+            
+                var factory = new FellowshipFactory();
+                var sut = await factory.GetByIdAsync(expectedId);
+                
+                sut.ProgramName = default;
+            
+                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            
+                //Ensure that the save fails...
+                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+                Assert.That(sut.GetBrokenRules()[0].Description == "ProgramName is required", $"Expected the rule description to be 'ProgramName is required', have {sut.GetBrokenRules()[0].Description}");
+                Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
+                Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
+            }
+            
+            [Test]
+            public async Task IsRequired_GetById_ProgramName_Passes()
+            {
+                var dto = CreateValidDto();
+            
+                var expectedId = Create<int>();
+            
+                var mockDal = new Mock<IFellowshipDal>(MockBehavior.Strict);
+                mockDal.Setup(m => m.GetByIdAsync(expectedId))
+                    .ReturnsAsync(dto);
+            
+                UseMockServiceProvider()
+                    .WithMockedIdentity()
+                    .WithRegisteredInstance(mockDal)
+                    .WithBusinessObject<IFellowship, Fellowship>()
+                    .Build();
+            
+                var factory = new FellowshipFactory();
+                var sut = await factory.GetByIdAsync(expectedId);
+                
+                sut.ProgramName = Create<string>();
+            
+                Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
+            
+            }
+            #endregion
 
         #region DeleteAsync
         

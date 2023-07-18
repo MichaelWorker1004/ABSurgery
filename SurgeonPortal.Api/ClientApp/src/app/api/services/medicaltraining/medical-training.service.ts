@@ -18,11 +18,50 @@ export class MedicalTrainingService {
             
             /**
             * Business Rules
+            * Business rules for property: Id
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: UserId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: GraduateProfileId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolName
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCity
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCity
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCountryId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: DegreeId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCompletionYear
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: MedicalSchoolCompletionYear
             *   Rule Name: RegEx
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyProgramName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyCompletionYear
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: RegEx
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyProgramOther
+            *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
@@ -48,11 +87,50 @@ export class MedicalTrainingService {
             
             /**
             * Business Rules
+            * Business rules for property: Id
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: UserId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: GraduateProfileId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolName
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCity
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCity
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCountryId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: DegreeId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCompletionYear
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: MedicalSchoolCompletionYear
             *   Rule Name: RegEx
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyProgramName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyCompletionYear
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: RegEx
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyProgramOther
+            *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
@@ -61,7 +139,6 @@ export class MedicalTrainingService {
             * graduateProfileId:Number
             * medicalSchoolName:String
             * medicalSchoolCity:String
-            * medicalSchoolStateId:String
             * medicalSchoolCountryId:String
             * degreeId:Number
             * medicalSchoolCompletionYear:String
@@ -89,11 +166,50 @@ export class MedicalTrainingService {
             
             /**
             * Business Rules
+            * Business rules for property: Id
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: UserId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: GraduateProfileId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolName
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCity
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCity
+            *   Rule Name: MaxLength
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCountryId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: DegreeId
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: MedicalSchoolCompletionYear
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: MedicalSchoolCompletionYear
             *   Rule Name: RegEx
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyProgramName
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyCompletionYear
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: RegEx
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: ResidencyProgramOther
+            *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
@@ -104,7 +220,6 @@ export class MedicalTrainingService {
             * graduateProfileId:Number
             * medicalSchoolName:String
             * medicalSchoolCity:String
-            * medicalSchoolStateId:String
             * medicalSchoolCountryId:String
             * degreeId:Number
             * medicalSchoolCompletionYear:String
