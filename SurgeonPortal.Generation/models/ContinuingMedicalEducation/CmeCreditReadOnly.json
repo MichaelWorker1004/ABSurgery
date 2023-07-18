@@ -79,6 +79,16 @@
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "CreditExpDate",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false
     }
   ],
   "metadata": {

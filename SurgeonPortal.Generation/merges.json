@@ -1007,18 +1007,17 @@
     "lastGeneratedHash": "0F74E16ADFC78268652C67531FC741E6"
   },
   "\\SurgeonPortal.Models\\MedicalTraining\\MedicalTrainingModel.cs": {
-    "lastGeneratedHash": "9E96C94777D2C284F8C15AB99222E63B"
+    "lastGeneratedHash": "B8133581841686CE233518517FB568F2"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\medicaltraining\\medical-training.service.ts": {
-    "lastGeneratedHash": "C5FC79D659F09818A74A5DD783595561"
+    "lastGeneratedHash": "7800135A683F2F3C160B45141C6C7AF7"
   },
   "\\SurgeonPortal.Api\\Controllers\\MedicalTraining\\MedicalTrainingController.cs": {
-    "lastGeneratedHash": "8236A11FBF6315220807586C32B4FE73",
+    "lastGeneratedHash": "752D02480FA27E817DCAEDDB3F03BC7D",
     "lastMergedHash": "9D26A2298FC3B44521CFA0CE756D36A4"
   },
   "\\SurgeonPortal.Library\\MedicalTraining\\MedicalTraining.cs": {
-    "lastGeneratedHash": "63BD8CE4AD612C357D7487A0AF84E675",
-    "lastMergedHash": "63BD8CE4AD612C357D7487A0AF84E675"
+    "lastGeneratedHash": "3A4FD141528110C45477D62C34834A7C"
   },
   "\\SurgeonPortal.DataAccess\\MedicalTraining\\MedicalTrainingDal.cs": {
     "lastGeneratedHash": "F42D7D739FF8198986642E6793FEE4A0",
@@ -1037,8 +1036,8 @@
     "lastGeneratedHash": "AE023ABE8E441327B2233729763BDC04"
   },
   "\\SurgeonPortal.Library.Tests\\MedicalTraining\\MedicalTrainingTests.cs": {
-    "lastGeneratedHash": "B80FDF84C59FADF41AB1F84877959B4C",
-    "lastMergedHash": "F67D32B61A00858B9356BEC8654BD65C"
+    "lastGeneratedHash": "A048C1306DBE524B2C8681B9A7DDBC01",
+    "lastMergedHash": "9A8897B70470CCFF9E37C8AA9255CADB"
   },
   "\\SurgeonPortal.DataAccess.Tests\\MedicalTraining\\MedicalTrainingDalTests.cs": {
     "lastGeneratedHash": "A962439055BBF20146DC166CB9DB73D2"
@@ -1138,18 +1137,17 @@
     "lastGeneratedHash": "6124EE35BBD09FF0BD5085816BD8CA8B"
   },
   "\\SurgeonPortal.Models\\MedicalTraining\\FellowshipModel.cs": {
-    "lastGeneratedHash": "EC5CE79505258873C5C392C3C62E6E17"
+    "lastGeneratedHash": "AAA44995A43895450ECA1801FA6901E7"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\medicaltraining\\fellowship.service.ts": {
-    "lastGeneratedHash": "724BEB6FB2AF586C97ECBCC4A642AF18"
+    "lastGeneratedHash": "51D3ADAAF8CF0FFAD591400CD07E25EB"
   },
   "\\SurgeonPortal.Api\\Controllers\\MedicalTraining\\FellowshipController.cs": {
     "lastGeneratedHash": "5475D3F27DB7DBD0E9939EB4FE8CCBE7",
     "lastMergedHash": "D5FB3DD801391D32959354FA188502E2"
   },
   "\\SurgeonPortal.Library\\MedicalTraining\\Fellowship.cs": {
-    "lastGeneratedHash": "74D62B009AC6E657B5A1DCB930D0EE3D",
-    "lastMergedHash": "BBB90E752B4BDCFACB92594FB46E7198"
+    "lastGeneratedHash": "998F07A5693DF0FDFDAE87E4F5431174"
   },
   "\\SurgeonPortal.DataAccess\\MedicalTraining\\FellowshipDal.cs": {
     "lastGeneratedHash": "BAB7866B67D9494BAF9EE148F231A0DC",
@@ -1162,7 +1160,7 @@
     "lastGeneratedHash": "BD8E9BCDC004B6EF8632F0779301E6D9"
   },
   "\\SurgeonPortal.Library.Tests\\MedicalTraining\\FellowshipTests.cs": {
-    "lastGeneratedHash": "2B862EA28730B72C65416E18AFFC3488"
+    "lastGeneratedHash": "3717F9EFB22B84FBAA3C664E14E60235"
   },
   "\\SurgeonPortal.DataAccess.Tests\\MedicalTraining\\FellowshipDalTests.cs": {
     "lastGeneratedHash": "EC60AA75B2FD49CA43BBF7F4842D1C0C"
@@ -2892,31 +2890,39 @@
     "lastGeneratedHash": "80BD7A5DF409EDBCC42186B4A15A5108"
   },
   "\\SurgeonPortal.Library.Contracts\\ContinuingMedicalEducation\\ICmeAdjustmentReadOnly.cs": {
-    "lastGeneratedHash": "2ADF6A7AF6BB805F9573BE2D852A8F56"
+    "lastGeneratedHash": "956BEA5D13D28C24AD7E67991D937010",
+    "lastMergedHash": "956BEA5D13D28C24AD7E67991D937010"
   },
   "\\SurgeonPortal.Library.Contracts\\ContinuingMedicalEducation\\ICmeAdjustmentReadOnlyList.cs": {
     "lastGeneratedHash": "2B6100793A6D0723E65C11B4642E9396"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\continuingmedicaleducation\\cme-adjustment-read-only.model.ts": {
-    "lastGeneratedHash": "2527CBCF942CD695EE2734BBFD109D9B"
+    "lastGeneratedHash": "A675D6EDB3163E0996A05EDB05960DC3",
+    "lastMergedHash": "A675D6EDB3163E0996A05EDB05960DC3"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\ContinuingMedicalEducation\\CmeAdjustmentReadOnlyDto.cs": {
-    "lastGeneratedHash": "E2601179C59A56713BB4BB7AADAB7853"
+    "lastGeneratedHash": "4A93B1CACF2154A1F7A5CDC9652B91ED",
+    "lastMergedHash": "4A93B1CACF2154A1F7A5CDC9652B91ED"
   },
   "\\SurgeonPortal.Models\\ContinuingMedicalEducation\\CmeAdjustmentReadOnlyModel.cs": {
-    "lastGeneratedHash": "C63FCCA03755A7B20F5D7F95F0F24F10"
+    "lastGeneratedHash": "26609F2BAE74EDC06A57ED9E12902AE6",
+    "lastMergedHash": "26609F2BAE74EDC06A57ED9E12902AE6"
   },
   "\\SurgeonPortal.Library.Contracts\\ContinuingMedicalEducation\\ICmeCreditReadOnly.cs": {
-    "lastGeneratedHash": "DA615F8A0C69B58AE305F2AE2945BF7B"
+    "lastGeneratedHash": "639A3F509F541C27BF7501B8A7BA169E",
+    "lastMergedHash": "639A3F509F541C27BF7501B8A7BA169E"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\continuingmedicaleducation\\cme-credit-read-only.model.ts": {
-    "lastGeneratedHash": "FACFC9F160C3342838224B669346942B"
+    "lastGeneratedHash": "90209ABC0CB95D80EDE4FFCC41DF6613",
+    "lastMergedHash": "90209ABC0CB95D80EDE4FFCC41DF6613"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\ContinuingMedicalEducation\\CmeCreditReadOnlyDto.cs": {
-    "lastGeneratedHash": "1F4379192F2A531C60EEA3C0038F9D83"
+    "lastGeneratedHash": "8F575FB585891DF2DB98DDCFC659930B",
+    "lastMergedHash": "8F575FB585891DF2DB98DDCFC659930B"
   },
   "\\SurgeonPortal.Models\\ContinuingMedicalEducation\\CmeCreditReadOnlyModel.cs": {
-    "lastGeneratedHash": "BEC57AC14EF7371B8290CF81D4F190D8"
+    "lastGeneratedHash": "DBADFEE7CF012C9974C30B020B85F82A",
+    "lastMergedHash": "DBADFEE7CF012C9974C30B020B85F82A"
   },
   "\\SurgeonPortal.Library.Contracts\\ContinuingMedicalEducation\\ICmeCreditReadOnlyList.cs": {
     "lastGeneratedHash": "8D1EDE10676C836104D3DE45C122D9A5"
@@ -2925,12 +2931,9 @@
     "lastGeneratedHash": "8479E271C195413606EB5874E3D45C06",
     "lastMergedHash": "8479E271C195413606EB5874E3D45C06"
   },
-  "\\SurgeonPortal.Api\\Controllers\\ContinuingMedicalEducation\\CmeController.cs": {
-    "lastGeneratedHash": "DCFCF3E46E3C36BA6E52DDCF7B4795D6",
-    "lastMergedHash": "DCFCF3E46E3C36BA6E52DDCF7B4795D6"
-  },
   "\\SurgeonPortal.Library\\ContinuingMedicalEducation\\CmeAdjustmentReadOnly.cs": {
-    "lastGeneratedHash": "2E71D16D737DDF2EB823E13ED4C0BA4B"
+    "lastGeneratedHash": "FA8A1781F4E4A6AA3322B7069DA55FE8",
+    "lastMergedHash": "FA8A1781F4E4A6AA3322B7069DA55FE8"
   },
   "\\SurgeonPortal.Library\\ContinuingMedicalEducation\\CmeAdjustmentReadOnlyList.cs": {
     "lastGeneratedHash": "7E7F807580A2AF11E05F074D7B69E4BE"
@@ -2954,7 +2957,8 @@
     "lastGeneratedHash": "D74064831C563CB6003302C7B265AC61"
   },
   "\\SurgeonPortal.Library\\ContinuingMedicalEducation\\CmeCreditReadOnly.cs": {
-    "lastGeneratedHash": "1484B0DF036D97470572AD4D6254D2AF"
+    "lastGeneratedHash": "55EB20F10D72394F02EDC04D595F7066",
+    "lastMergedHash": "55EB20F10D72394F02EDC04D595F7066"
   },
   "\\SurgeonPortal.DataAccess\\ContinuingMedicalEducation\\CmeCreditReadOnlyDal.cs": {
     "lastGeneratedHash": "13386D13774171277F2A0E7CA73A88B9"

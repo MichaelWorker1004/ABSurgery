@@ -59,6 +59,11 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
         public int CMEDirect => ReadProperty(CMEDirectProperty);
 		public static readonly PropertyInfo<int> CMEDirectProperty = RegisterProperty<int>(c => c.CMEDirect);
 
+        [DataMember]
+		[DisplayName(nameof(CreditExpDate))]
+        public DateTime CreditExpDate => ReadProperty(CreditExpDateProperty);
+		public static readonly PropertyInfo<DateTime> CreditExpDateProperty = RegisterProperty<DateTime>(c => c.CreditExpDate);
+
 
         /// <summary>
         /// This method is used to apply authorization rules on the object
@@ -104,6 +109,7 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
             LoadProperty(CreditsTotalProperty, dto.CreditsTotal);
             LoadProperty(CreditsSAProperty, dto.CreditsSA);
             LoadProperty(CMEDirectProperty, dto.CMEDirect);
+            LoadProperty(CreditExpDateProperty, dto.CreditExpDate);
 		} 
         
     }

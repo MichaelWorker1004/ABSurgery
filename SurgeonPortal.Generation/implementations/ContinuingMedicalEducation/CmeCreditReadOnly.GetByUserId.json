@@ -109,6 +109,16 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.CMEDirect"
+              },
+              {
+                "name": "CreditExpDate",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreditExpDate"
               }
             ]
           }

@@ -1,3 +1,4 @@
+using System;
 using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.ContinuingMedicalEducation
@@ -11,5 +12,6 @@ namespace SurgeonPortal.Library.Contracts.ContinuingMedicalEducation
         decimal CreditsTotal { get; }
         decimal? CreditsSA { get; }
         int CMEDirect { get; }
+        DateTime CreditExpDate { get; }
     }
 }

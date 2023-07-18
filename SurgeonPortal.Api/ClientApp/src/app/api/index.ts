@@ -46,6 +46,9 @@ export * from './models/scoring/roster-read-only.model';
 export * from './models/scoring/case-score.model';
 export * from './models/scoring/case-score-read-only.model';
 
+export * from './models/continuingmedicaleducation/cme-credit-read-only.model';
+export * from './models/continuingmedicaleducation/cme-adjustment-read-only.model';
+
 // Services
 export * from './services/auth/auth.service';
 export * from './services/picklists/picklists.service';
@@ -66,4 +69,5 @@ export * from './services/scoring/case-contents.service';
 export * from './services/scoring/case-notes.service';
 export * from './services/scoring/rosters.service';
 export * from './services/scoring/case-scores.service';
+export * from './services/continuingmedicaleducation/cme.service';
 

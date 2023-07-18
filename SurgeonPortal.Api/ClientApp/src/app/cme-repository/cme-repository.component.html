@@ -1,5 +1,19 @@
 <header>
-  <h1>CME Repository</h1>
+  <h1 class="mb-3">CME Repository</h1>
+  <sl-card class="mb-3">
+    <p class="my-0">
+      CME requirements for the <i>Continuous Certification (CC) Program</i> are
+      <b>150 category 1 CME credits</b> earned over the last five calendar
+      years, <b>50 of which must be self-assesment credits</b>. Note that ABS
+      will waive 25 category 1 credits and 50 self-assessment credits for each
+      successfully completed Continuous Certification Assessment (CCA). If you
+      are current with your CCA's, you will meet the self-assessment requirement
+      for the entire five-year period, and, depending upon your CCA cycle, you
+      will reduce the category 1 requirement by 50 to 75 credits. If you are not
+      yet enrolled in the CC program, averaging 30 CME credits per year will
+      help you stay on track with this requirement.
+    </p>
+  </sl-card>
 </header>
 
 <section>
@@ -7,60 +21,87 @@
     <sl-card class="col-12">
       <div class="grid flex flex-wrap">
         <div class="col-12">
-          <h5 class="mt-0 mb-2" panel-header>My CME Credits</h5>
+          <h5 class="mt-0 mb-2" panel-header>
+            Current Five-Year Cycle:
+            <span class="font-normal"
+              >{{ cycleStartDate | date : 'longDate' }} -
+              {{ cycleEndDate | date : 'longDate' }}</span
+            >
+          </h5>
           <hr />
         </div>
-        <div class="col-12 md:col-6">
-          <abs-progress-bar
-            [currentNumber]="124"
-            [totalNumber]="150"
-            [barColor]="'#DBAD6A'"
-            [statusLabel]="'Category 1 Credits'"
-            [toolTipText]="'this is a tooltip that is longer'"
-          ></abs-progress-bar>
-        </div>
-        <div class="col-12 md:col-6">
-          <abs-progress-bar
-            [currentNumber]="23"
-            [totalNumber]="50"
-            [barColor]="'#1C827D'"
-            [statusLabel]="'Self Assessment Credits'"
-          ></abs-progress-bar>
-        </div>
-        <div class="grid-container col-12">
-          <p-chart
-            type="bar"
-            [data]="cmeCreditsChartData"
-            [options]="cmeCreditsChartOptions"
-          ></p-chart>
+        <div class="col-12">
+          <abs-grid [columns]="summaryCmeCols" [data]="cmeSummary$"> </abs-grid>
         </div>
         <div class="col-12">
-          <abs-alert alertType="danger"
-            >You have a total of 28 credits expiring on 2023-01-01, 20 of which
-            are self assessment credits</abs-alert
+          <p class="font-lg font-bold">
+            Credits and Adjustments Dropping Off* by
+            {{ cycleEndDate | date : 'longDate' }}
+          </p>
+          <p
+            class="ml-5 mb-1 flex justify-content-between"
+            style="width: 200px; display: inline-block"
           >
+            Category 1:<span class="font-bold">{{
+              droppingCredits ? droppingCredits.credits : '0'
+            }}</span>
+          </p>
+          <p
+            class="ml-5 mb-1 flex justify-content-between"
+            style="width: 200px; display: inline-block"
+          >
+            Self-Assessment:<span class="font-bold">{{
+              droppingCredits ? droppingCredits.saCredits : '0'
+            }}</span>
+          </p>
+          <p class="text-muted">
+            * Credits and Adjustments dropping off are those that were earned
+            more than five years ago from today. You may see an increase in the
+            number of credits needed the next time you login if you have CME
+            that is expiring between now and the end of the year. Refer to the
+            itemized CME section for specific CME activities that may drop off
+            soon.
+          </p>
         </div>
       </div>
     </sl-card>
 
     <sl-card class="col-12">
-      <abs-collapse-panel [panelId]="2" [startExpanded]="true">
+      <abs-collapse-panel
+        [panelId]="2"
+        [startExpanded]="true"
+        [heightToggle]="cmeCreditsHeightChange$"
+      >
         <h5 class="mt-0 mb-2" panel-header>Itemized CME</h5>
-        <abs-grid [columns]="itemizedCmeCols" [data]="itemizedCmeData">
+        <abs-grid
+          [columns]="itemizedCmeCols"
+          [data]="cmeCredits$"
+          [pagination]="true"
+          [itemsPerPage]="10"
+        >
         </abs-grid>
       </abs-collapse-panel>
     </sl-card>
 
     <sl-card class="col-12">
-      <abs-collapse-panel [panelId]="3" [startExpanded]="true">
-        <h5 class="mt-0 mb-2" panel-header>Requirements and Adjustments</h5>
+      <abs-collapse-panel
+        [panelId]="3"
+        [startExpanded]="true"
+        [heightToggle]="cmeAdjustmentsHeightChange$"
+      >
+        <h5 class="mt-0 mb-2" panel-header>
+          Itemized Adjustments to Requirements
+        </h5>
         <p class="text-xl mt-0">
-          For Completing certain tasks will result in a lower amount of required
-          credits. Your waivers of required credit reduction are listed below.
+          Listed below are activities you completed (e.g., a CCA module) during
+          the current five-year period that have reduced your overall CME
+          requirements.
         </p>
         <abs-grid
           [columns]="requirementsAndAdjustmentsCols"
-          [data]="requirementsAndAdjustmentsData"
+          [data]="cmeAdjustments$"
+          [pagination]="true"
+          [itemsPerPage]="10"
         >
         </abs-grid>
       </abs-collapse-panel>

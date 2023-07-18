@@ -7,4 +7,5 @@ export interface ICmeCreditReadOnlyModel {
     creditsTotal: number;
     creditsSA: number;
     cMEDirect: number;
+    creditExpDate: string;
 }

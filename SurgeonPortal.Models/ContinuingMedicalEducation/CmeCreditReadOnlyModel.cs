@@ -1,3 +1,5 @@
+using System;
+
 namespace SurgeonPortal.Models.ContinuingMedicalEducation
 {
     public class CmeCreditReadOnlyModel
@@ -9,5 +11,6 @@ namespace SurgeonPortal.Models.ContinuingMedicalEducation
         public decimal CreditsTotal { get; set; }
         public decimal? CreditsSA { get; set; }
         public int CMEDirect { get; set; }
+        public DateTime CreditExpDate { get; set; }
     }
 }

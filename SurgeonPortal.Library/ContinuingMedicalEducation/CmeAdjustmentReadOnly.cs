@@ -48,6 +48,11 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
         public string IssuedBy => ReadProperty(IssuedByProperty);
 		public static readonly PropertyInfo<string> IssuedByProperty = RegisterProperty<string>(c => c.IssuedBy);
 
+        [DataMember]
+		[DisplayName(nameof(CreditExpDate))]
+        public DateTime CreditExpDate => ReadProperty(CreditExpDateProperty);
+		public static readonly PropertyInfo<DateTime> CreditExpDateProperty = RegisterProperty<DateTime>(c => c.CreditExpDate);
+
 
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -67,6 +72,7 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
             LoadProperty(CreditsTotalProperty, dto.CreditsTotal);
             LoadProperty(CreditsSAProperty, dto.CreditsSA);
             LoadProperty(IssuedByProperty, dto.IssuedBy);
+            LoadProperty(CreditExpDateProperty, dto.CreditExpDate);
 		} 
         
     }

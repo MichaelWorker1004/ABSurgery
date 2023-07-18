@@ -7,4 +7,5 @@ export interface ICmeAdjustmentReadOnlyModel {
     creditsTotal: number;
     creditsSA: number;
     issuedBy: string;
+    creditExpDate: string;
 }

@@ -8,7 +8,20 @@ import { ChartModule } from 'primeng/chart';
 import { ProgressBarComponent } from '../shared/components/progress-bar/progress-bar.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { AlertComponent } from '../shared/components/alert/alert.component';
+import { SUMMARY_CME_COLS } from './summary-cme-cols';
+import { Select, Store } from '@ngxs/store';
+import {
+  ContinuingMedicalEducationSelectors,
+  GetCmeSummary,
+  ICmeAdjustment,
+  ICmeCredit,
+  ICmeSummaryRow,
+  IDroppingCmeCredits,
+} from '../state';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-cme-repository',
   templateUrl: './cme-repository.component.html',
@@ -26,115 +39,68 @@ import { AlertComponent } from '../shared/components/alert/alert.component';
   standalone: true,
 })
 export class CmeRepositoryComponent implements OnInit {
+  @Select(ContinuingMedicalEducationSelectors.continuingMedicalEducationCredits)
+  cmeCredits$: Observable<ICmeCredit[]> | undefined;
+
+  @Select(
+    ContinuingMedicalEducationSelectors.continuingMedicalEducationAdjustments
+  )
+  cmeAdjustments$: Observable<ICmeAdjustment[]> | undefined;
+
+  @Select(ContinuingMedicalEducationSelectors.slices.cmeSummary)
+  cmeSummary$: Observable<ICmeSummaryRow[]> | undefined;
+
+  cmeAdjustmentsHeightChange$: BehaviorSubject<boolean> = new BehaviorSubject(
+    true
+  );
+  cmeCreditsHeightChange$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
+  droppingCredits?: IDroppingCmeCredits;
+
+  cycleStartDate = new Date();
+  cycleEndDate = new Date();
+
+  summaryCmeCols = SUMMARY_CME_COLS;
   requirementsAndAdjustmentsCols = REQIUREMENTS_AND_ADJUSTMENTS_COLS;
-  requirementsAndAdjustmentsData!: Array<any>;
-
   itemizedCmeCols = ITEMIZED_CME_COLS;
-  itemizedCmeData!: Array<any>;
 
-  cmeCreditsChartData!: any;
-
-  cmeCreditsChartOptions = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          font: {
-            size: 15,
-            color: 'black',
-            weight: 700,
-          },
-        },
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        ticks: {
-          font: {
-            size: 15,
-            color: 'black',
-            weight: 700,
-          },
-        },
-      },
-    },
-  };
+  constructor(private _store: Store) {
+    this.initCmeData();
+  }
 
   ngOnInit(): void {
-    this.getRequirementsAndAdjustmentsData();
+    const today = new Date();
+    this.cycleStartDate = new Date(today.getFullYear() - 5, 0, 1);
+    this.cycleEndDate = new Date(today.getFullYear(), 11, 31);
+  }
+
+  initCmeData() {
+    this._store
+      .dispatch(new GetCmeSummary())
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.droppingCredits = this._store.selectSnapshot(
+          ContinuingMedicalEducationSelectors.slices.cmeDroppingCredits
+        );
+      });
+
     this.getItemizedCmeData();
-    this.initbarGraph();
+    this.getRequirementsAndAdjustmentsData();
   }
 
   getRequirementsAndAdjustmentsData() {
-    this.requirementsAndAdjustmentsData = [
-      {
-        date: new Date('10/27/2022'),
-        description: 'Waiver',
-        category1: '8',
-        saCredits: '8',
-        issuedBy: 'ABS',
-      },
-      {
-        date: new Date('10/27/2022'),
-        description: 'Waiver',
-        category1: '10',
-        saCredits: '10',
-        issuedBy: 'ABS',
-      },
-    ];
+    this.cmeAdjustments$?.pipe(untilDestroyed(this)).subscribe((data) => {
+      this.cmeAdjustmentsHeightChange$.next(
+        !this.cmeAdjustmentsHeightChange$.getValue()
+      );
+    });
   }
 
   getItemizedCmeData() {
-    this.itemizedCmeData = [
-      {
-        date: new Date('10/27/2022'),
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        credits: '24',
-        cmeDirect: 'XXXXX',
-      },
-      {
-        date: new Date('10/25/2022'),
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        credits: '36',
-        cmeDirect: 'XXXXX',
-      },
-      {
-        date: new Date('9/10/2022'),
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        credits: '12',
-        cmeDirect: 'XXXXX',
-      },
-      {
-        date: new Date('8/17/2022'),
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        credits: '78',
-        cmeDirect: 'XXXXX',
-      },
-    ];
-  }
-
-  initbarGraph() {
-    this.cmeCreditsChartData = {
-      labels: ['2018', '2019', '2020', '2021', '2022'],
-
-      datasets: [
-        {
-          label: 'Category 1 Credits',
-          backgroundColor: '#dbad6a',
-          data: [40, 20, 30, 40, 20],
-        },
-        {
-          label: 'Self Assessment Credits',
-          backgroundColor: '#1c827d',
-          data: [5, 15, 10, 5, 15],
-        },
-      ],
-    };
+    this.cmeCredits$?.pipe(untilDestroyed(this)).subscribe((data) => {
+      this.cmeCreditsHeightChange$.next(
+        !this.cmeCreditsHeightChange$.getValue()
+      );
+    });
   }
 }
