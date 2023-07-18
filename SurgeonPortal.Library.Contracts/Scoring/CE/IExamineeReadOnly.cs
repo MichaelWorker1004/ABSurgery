@@ -8,5 +8,7 @@ namespace SurgeonPortal.Library.Contracts.Scoring.CE
         string FullName { get; }
         string ExamDate { get; }
         ITitleReadOnlyList Cases { get; }
+        int ExamineeUserId { get; }
+        int ExamScoringId { get; }
     }
 }

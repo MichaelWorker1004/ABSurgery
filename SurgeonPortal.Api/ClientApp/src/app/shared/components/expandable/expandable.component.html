@@ -1,9 +1,15 @@
 <section class="accordion {{ completed ? 'completed' : '' }}">
-  <input type="checkbox" name="collapse" [id]="caseId" [checked]="checked" />
+  <input
+    type="checkbox"
+    name="collapse"
+    [id]="caseId"
+    [checked]="checked"
+    disabled
+  />
   <h2 class="handle">
     <label [for]="caseId">
       <div *ngIf="!customTitle; else title">
-        {{ decimalToRoman(index + 1) }}. Case {{ caseId }}
+        {{ decimalToRoman(index + 1) }}. {{ caseTitle }}
       </div>
       <ng-template #title>
         {{ customTitle }}

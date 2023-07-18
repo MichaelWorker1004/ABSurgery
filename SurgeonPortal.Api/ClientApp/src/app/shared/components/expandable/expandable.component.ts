@@ -10,7 +10,8 @@ import { AccordionModule } from 'primeng/accordion';
   styleUrls: ['./expandable.component.scss'],
 })
 export class ExpandableComponent {
-  @Input() caseId!: string;
+  @Input() caseTitle!: string;
+  @Input() caseId!: number;
   @Input() index!: number;
   @Input() checked!: boolean;
   @Input() customTitle!: string;

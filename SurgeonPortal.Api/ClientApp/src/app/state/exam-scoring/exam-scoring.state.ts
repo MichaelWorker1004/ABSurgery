@@ -35,6 +35,7 @@ import {
   UpdateCaseScore,
   DeleteCaseScore,
   GetExaminee,
+  CreateExamScore,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -43,6 +44,8 @@ import { DashboardService } from 'src/app/api/services/scoring/dashboard.service
 import { IDashboardRosterReadOnlyModel } from 'src/app/api/models/scoring/dashboard-roster-read-only.model';
 import { IExamineeReadOnlyModel } from 'src/app/api/models/scoring/ce/examinee-read-only.model';
 import { SessionService } from 'src/app/api/services/scoring/ce/session.service';
+import { ExamScoreService } from 'src/app/api/services/ce/exam-score.service';
+import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
 
 export interface IExamScoring {
   // examination rosters page values
@@ -90,7 +93,7 @@ export class ExamScoringState {
     private casesService: CasesService,
     private caseContentsService: CaseContentsService,
     private caseCommentsService: CaseNotesService,
-    //private examScoresService: ExamScoresService,
+    private examScoreService: ExamScoreService,
     private rostersService: RostersService,
     private examSessionsService: ExamSessionsService,
     private dashboardService: DashboardService,
@@ -239,6 +242,7 @@ export class ExamScoringState {
     payload: { examScheduleId: number }
   ) {
     const examScheduleId = payload.examScheduleId;
+    this.globalDialogService.showLoading();
     return this.sessionService
       .retrieveExamineeReadOnly_GetById(examScheduleId)
       .pipe(
@@ -247,10 +251,12 @@ export class ExamScoringState {
             examinee,
             errors: null,
           });
+          this.globalDialogService.closeOpenDialog();
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
           ctx.patchState({ errors });
+          this.globalDialogService.closeOpenDialog();
           return of(errors);
         })
       );
@@ -325,34 +331,38 @@ export class ExamScoringState {
   @Action(UpdateCaseScore)
   updateCaseScore(
     ctx: StateContext<IExamScoring>,
-    payload: { score: ICaseScoreModel }
+    payload: { score: ICaseScoreModel; showLoading: boolean }
   ) {
-    this.globalDialogService.showLoading();
+    if (payload.showLoading) {
+      this.globalDialogService.showLoading();
+    }
     const score = payload.score;
     return this.caseScoresService
       .updateCaseScore(score.examScoringId, score)
       .pipe(
-        tap((result: ICaseScoreModel) => {
-          console.log(result);
-          // figure out how to update the store here
+        tap(() => {
           ctx.patchState({
-            // selectedCaseComment: result,
             errors: null,
           });
-          this.globalDialogService.showSuccessError(
-            'Success',
-            'Score Successfully Updated',
-            true
-          );
+          if (payload.showLoading) {
+            this.globalDialogService.showSuccessError(
+              'Success',
+              'Score Successfully Updated',
+              true
+            );
+          }
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
           ctx.patchState({ errors });
-          this.globalDialogService.showSuccessError(
-            'Error',
-            'Score update failed',
-            false
-          );
+          if (payload.showLoading) {
+            this.globalDialogService.showSuccessError(
+              'Error',
+              'Score update failed',
+              false
+            );
+          }
+
           return of(errors);
         })
       );
@@ -406,7 +416,35 @@ export class ExamScoringState {
       );
   }
 
-  // TODO - add update and create actions for exam scores once those APIs exist
+  @Action(CreateExamScore)
+  createExamScore(
+    ctx: StateContext<IExamScoring>,
+    payload: { model: IExamScoreModel }
+  ) {
+    this.globalDialogService.showLoading();
+    return this.examScoreService.createExamScore(payload.model).pipe(
+      tap((result: IExamScoreModel) => {
+        ctx.patchState({
+          errors: null,
+        });
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Exam Submitted Successfully',
+          true
+        );
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'Exam Submission Failed',
+          false
+        );
+        return of(errors);
+      })
+    );
+  }
 
   @Action(GetRoster)
   getRoster(

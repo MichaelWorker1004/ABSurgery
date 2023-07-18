@@ -1,5 +1,6 @@
 import { s } from '@fullcalendar/core/internal-common';
 import { ICaseCommentModel, ICaseScoreModel } from 'src/app/api';
+import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
 
 export class GetCaseRoster {
   static readonly type =
@@ -51,6 +52,12 @@ export class GetActiveExamination {
   constructor(public id: number) {}
 }
 
+export class CreateExamScore {
+  static readonly type = '[Exam-Scoring] create score for exam';
+
+  constructor(public model: IExamScoreModel) {}
+}
+
 export class GetExamScoresList {
   static readonly type = '[Exam-Scoring] get list of exam scores';
 
@@ -73,7 +80,7 @@ export class CreateCaseScore {
 export class UpdateCaseScore {
   static readonly type = '[Exam-Scoring] update score of exam case by id';
 
-  constructor(public score: ICaseScoreModel) {}
+  constructor(public score: ICaseScoreModel, public showLoading = true) {}
 }
 
 export class DeleteCaseScore {

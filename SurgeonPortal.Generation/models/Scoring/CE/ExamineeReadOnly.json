@@ -35,6 +35,27 @@
       "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "ExamineeUserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamScoringId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false
     }
   ],
   "metadata": {

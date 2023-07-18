@@ -38,8 +38,6 @@ export class ExaminationScoreModalComponent implements OnInit {
   }
 
   saveScores() {
-    console.log(this.candidateCaseScores);
-
     Object.entries(this.candidateCaseScores).forEach(([key, value]) => {
       const data = value as ICaseScoreModel;
       const model = {

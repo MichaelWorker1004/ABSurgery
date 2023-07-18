@@ -39,13 +39,23 @@ namespace SurgeonPortal.Library.Scoring.CE
         public string ExamDate => ReadProperty(ExamDateProperty);
 		public static readonly PropertyInfo<string> ExamDateProperty = RegisterProperty<string>(c => c.ExamDate);
 
-        public static readonly PropertyInfo<TitleReadOnlyList> CasesProperty =
+		public static readonly PropertyInfo<TitleReadOnlyList> CasesProperty =
             RegisterProperty<TitleReadOnlyList>(c => c.Cases);
         public ITitleReadOnlyList Cases
         {
             get => GetProperty(CasesProperty);
             private set => LoadProperty(CasesProperty, value);
         }
+
+        [DataMember]
+		[DisplayName(nameof(ExamineeUserId))]
+        public int ExamineeUserId => ReadProperty(ExamineeUserIdProperty);
+		public static readonly PropertyInfo<int> ExamineeUserIdProperty = RegisterProperty<int>(c => c.ExamineeUserId);
+
+        [DataMember]
+		[DisplayName(nameof(ExamScoringId))]
+        public int ExamScoringId => ReadProperty(ExamScoringIdProperty);
+		public static readonly PropertyInfo<int> ExamScoringIdProperty = RegisterProperty<int>(c => c.ExamScoringId);
 
         /// <summary>
         /// This method is used to apply authorization rules on the object
@@ -69,16 +79,18 @@ namespace SurgeonPortal.Library.Scoring.CE
             {
                 throw new DataNotFoundException("ExamineeReadOnly not found based on criteria.");
             }
-            
-            await FetchDataAsync(dto);
+
+			await FetchDataAsync(dto);
         }
-        
+
 		private async Task FetchDataAsync(ExamineeReadOnlyDto dto)
 		{
             LoadProperty(ExamScheduleIdProperty, dto.ExamScheduleId);
             LoadProperty(FullNameProperty, dto.FullName);
             LoadProperty(ExamDateProperty, dto.ExamDate);
-            LoadProperty(CasesProperty, await DataPortal.FetchAsync<TitleReadOnlyList>(new TitleReadOnlyListFactory.GetByIdCriteria(dto.ExamScheduleId)));
+			LoadProperty(CasesProperty, await DataPortal.FetchAsync<TitleReadOnlyList>(new TitleReadOnlyListFactory.GetByIdCriteria(dto.ExamScheduleId)));
+			LoadProperty(ExamineeUserIdProperty, dto.ExamineeUserId);
+            LoadProperty(ExamScoringIdProperty, dto.ExamScoringId);
 		} 
         
     }

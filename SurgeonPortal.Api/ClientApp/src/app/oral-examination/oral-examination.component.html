@@ -1,6 +1,11 @@
 <h1>{{ currentYear }}G03 ABS Oral Examination</h1>
 <div class="text-xl">Please read carefully the instructions below.</div>
-<sl-card class="w-full mt-5">
+<abs-exam-timer
+  *ngIf="showTimer"
+  [totalIncrements]="casesLenth"
+  [currentIncrement]="currentIncrement"
+></abs-exam-timer>
+<sl-card class="w-11 mt-5">
   <h3 class="mt-0 mb-2" header>Oral Examinations</h3>
   <hr />
   <div class="grid">
@@ -18,24 +23,25 @@
 
     <abs-expandable
       class="col-12"
-      *ngFor="let case of cases | async; index as i"
-      [caseId]="case.caseId"
+      *ngFor="let case of cases$ | async; index as i"
+      [caseId]="case.examCaseId"
+      [caseTitle]="case.title"
       [index]="i"
       [checked]="i === activeCase"
       [completed]="case.completed"
     >
       <div class="grid">
         <div class="col-12" *ngFor="let section of case.sections">
-          <p class="font-bold m-0">{{ section.title }}:</p>
-          <div class="section-details" [innerHTML]="section.htmlContent"></div>
+          <p class="font-bold m-0">{{ section.heading }}:</p>
+          <div class="section-details" [innerHTML]="section?.content"></div>
 
-          <div *ngIf="section.comment || section.editComment">
-            <label [for]="section.title + '-comment'">Comment:</label>
+          <div *ngIf="section.comments || section.editComment">
+            <label [for]="section?.caseCommentId">Comment:</label>
             <p class="my-1" *ngIf="!section.editComment">
-              {{ section.comment }}
+              {{ section?.comments }}
             </p>
             <textarea
-              [name]="section.title + '-comment'"
+              [name]="section?.caseCommentId"
               rows="5"
               pInputTextarea
               *ngIf="section.editComment"
@@ -52,10 +58,13 @@
         <abs-examination-score-card
           class="col-12"
           [case]="case"
-          (handleChange)="handleChange($event, i)"
+          (handleChange)="handleChange($event)"
         ></abs-examination-score-card>
         <div class="col-12 flex justify-content-end mt-3">
-          <p-button [style]="{ width: '337px' }" (onClick)="handleSave(i)"
+          <p-button
+            [style]="{ width: '337px' }"
+            (onClick)="handleSave(case.examCaseId)"
+            [disabled]="disable"
             >Save & Continue</p-button
           >
         </div>
@@ -64,21 +73,31 @@
 
     <abs-expandable
       [customTitle]="'Review & Submit Scores'"
-      [checked]="false"
+      [index]="casesLenth"
+      [checked]="casesLenth === activeCase"
       class="w-full"
     >
       <div class="grid w-full">
-        <ng-template ngFor [ngForOf]="cases | async" let-case let-i="index">
+        <ng-template
+          ngFor
+          [ngForOf]="gradedScores$ | async"
+          let-case
+          let-i="index"
+        >
           <abs-examination-score-card
             class="col-12"
             [case]="case"
-            (handleChange)="handleChange($event, i)"
+            (handleChange)="handleGradedChange($event)"
           ></abs-examination-score-card>
         </ng-template>
       </div>
 
       <div class="flex justify-content-end mt-5">
-        <p-button variant="text" styleClass="p-button-link p-button-primary"
+        <p-button
+          variant="text"
+          styleClass="p-button-link p-button-primary"
+          [disabled]="submitDisable"
+          (onClick)="handleSaveAndSubmitLater()"
           >Save & Submit Later</p-button
         >
         <p-button

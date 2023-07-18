@@ -68,6 +68,26 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.ExamDate"
+              },
+              {
+                "name": "ExamineeUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamineeUserId"
+              },
+              {
+                "name": "ExamScoringId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamScoringId"
               }
             ]
           }

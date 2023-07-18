@@ -1,4 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ExpandableComponent } from '../shared/components/expandable/expandable.component';
@@ -7,8 +12,19 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ExaminationScoreCardComponent } from '../shared/components/examination-score-card/examination-score-card.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
-import { ExamScoringSelectors, GetExaminee } from '../state';
-import { IPickListItem } from '../state/picklists';
+import {
+  CreateCaseScore,
+  CreateExamScore,
+  ExamScoringSelectors,
+  GetExaminee,
+  GetSelectedExamScores,
+  UpdateCaseScore,
+  UserProfileSelectors,
+} from '../state';
+import { IExamineeReadOnlyModel } from '../api/models/scoring/ce/examinee-read-only.model';
+import { ExamTimerComponent } from '../shared/components/exam-timer-component/exam-timer.component';
+import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
+import { IExamScoreModel } from '../api/models/ce/exam-score.model';
 
 @Component({
   selector: 'abs-oral-examination',
@@ -19,6 +35,7 @@ import { IPickListItem } from '../state/picklists';
     ButtonModule,
     InputTextareaModule,
     ExaminationScoreCardComponent,
+    ExamTimerComponent,
   ],
   templateUrl: './oral-examination.component.html',
   styleUrls: ['./oral-examination.component.scss'],
@@ -26,218 +43,132 @@ import { IPickListItem } from '../state/picklists';
 })
 export class OralExaminationsComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.examinee) examinee$:
-    | Observable<IPickListItem[]>
+    | Observable<IExamineeReadOnlyModel>
     | undefined;
 
+  @Select(UserProfileSelectors.slices.userId) userId$:
+    | Observable<number>
+    | undefined;
+
+  @Select(ExamScoringSelectors.slices.selectedExamScores) gradedScores$:
+    | Observable<ICaseScoreReadOnlyModel[]>
+    | undefined;
+
+  @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
+
+  cases$: BehaviorSubject<any> = new BehaviorSubject([]);
+  userId!: number;
+  casesLenth!: number;
   currentYear = new Date().getFullYear();
   examinationId!: string | null;
-
   candidateName!: string;
+  examScoringId!: number;
+  examineeUserId!: number;
+  examScheduleId!: number;
   dayTime!: string;
-  cases: BehaviorSubject<any> = new BehaviorSubject([]);
-
   activeCase = 0;
-
+  currentIncrement = 1;
   scores!: any[];
-
   candidateCaseScores = {} as any;
-
+  gradedCandidateCaseCores = {} as any;
   candidateScores: any[] = [];
+  showTimer = false;
+  disable = true;
+  submitDisable = true;
 
   constructor(private activatedRoute: ActivatedRoute, private _store: Store) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
+      this.examScheduleId = params['examinationId'];
       this._store.dispatch(new GetExaminee(params['examinationId']));
+    });
+
+    this.userId$?.subscribe((userId: number) => {
+      this.userId = userId;
     });
 
     this.getExaminationData();
   }
 
   getExaminationData() {
-    this.examinee$?.subscribe((examinee) => {
-      console.log(examinee);
+    this.examinee$?.subscribe((examinee: IExamineeReadOnlyModel) => {
+      if (examinee) {
+        this.candidateName = examinee?.fullName;
+        this.dayTime = examinee?.examDate;
+        this.cases$.next(examinee.cases);
+        this.casesLenth = examinee.cases?.length;
+        this.examScoringId = examinee?.examScoringId;
+        this.examineeUserId = examinee?.examineeUserId;
+        this.showTimer = true;
+      }
     });
-
-    this.candidateName = 'John Doe';
-    this.dayTime = '03/08/2023, 10:00–10:30AM EST';
-    this.cases.next([
-      {
-        caseId: '38623',
-        sections: [
-          {
-            title: 'Testing Points',
-            htmlContent: `<ol><li>Lorem Ipsum</li><li>adipiscing elit</li><li>vitae mauris consequat</li></ol>`,
-            showEdit: true,
-            comment: undefined,
-            editComment: false,
-          },
-          {
-            title: 'Stem',
-            htmlContent: `<p>Donec blandit feugiat ligula. Done hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat. Etiam get dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique. Proin nec augue. Quisque aliquam tempor magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>`,
-          },
-          {
-            title: 'Pertinent Diagnostics',
-            htmlContent: `<ul><li>Lorem ipsum dolor sit amet</li><li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li><li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li></ul>`,
-          },
-          {
-            title: 'Management Points',
-            htmlContent: `<b>Medical/Preoperative</b>
-                          <ul>
-                          <li>Lorem ipsum dolor sit amet</li>
-                          <li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          <li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          </ul>
-                          <b>Operative Technical Details</b>
-                          <ul>
-                          <li>Lorem ipsum dolor sit amet</li>
-                          <li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          <li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          </ul>`,
-          },
-        ],
-      },
-      {
-        caseId: '58471',
-        sections: [
-          {
-            title: 'Testing Points',
-            htmlContent: `<ol><li>Lorem Ipsum</li><li>adipiscing elit</li><li>vitae mauris consequat</li></ol>`,
-            comment: undefined,
-            editComment: false,
-          },
-          {
-            title: 'Stem',
-            htmlContent: `<p>Donec blandit feugiat ligula. Done hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat. Etiam get dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique. Proin nec augue. Quisque aliquam tempor magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>`,
-            comment: undefined,
-            editComment: false,
-          },
-          {
-            title: 'Pertinent Diagnostics',
-            htmlContent: `<ul><li>Lorem ipsum dolor sit amet</li><li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li><li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li></ul>`,
-            comment: 'this is an existing comment',
-            editComment: false,
-          },
-          {
-            title: 'Management Points',
-            htmlContent: `<b>Medical/Preoperative</b>
-                          <ul>
-                          <li>Lorem ipsum dolor sit amet</li>
-                          <li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          <li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          </ul>
-                          <b>Operative Technical Details</b>
-                          <ul>
-                          <li>Lorem ipsum dolor sit amet</li>
-                          <li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          <li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          </ul>`,
-            comment: undefined,
-            editComment: false,
-          },
-        ],
-      },
-      {
-        caseId: '38022',
-        sections: [
-          {
-            title: 'Testing Points',
-            htmlContent: `<ol><li>Lorem Ipsum</li><li>adipiscing elit</li><li>vitae mauris consequat</li></ol>`,
-            comment: undefined,
-            editComment: false,
-          },
-          {
-            title: 'Stem',
-            htmlContent: `<p>Donec blandit feugiat ligula. Done hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat. Etiam get dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique. Proin nec augue. Quisque aliquam tempor magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>`,
-            comment: undefined,
-            editComment: false,
-          },
-          {
-            title: 'Pertinent Diagnostics',
-            htmlContent: `<ul><li>Lorem ipsum dolor sit amet</li><li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li><li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li></ul>`,
-            comment: 'this is an existing comment',
-            editComment: false,
-          },
-          {
-            title: 'Management Points',
-            htmlContent: `<b>Medical/Preoperative</b>
-                          <ul>
-                          <li>Lorem ipsum dolor sit amet</li>
-                          <li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          <li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          </ul>
-                          <b>Operative Technical Details</b>
-                          <ul>
-                          <li>Lorem ipsum dolor sit amet</li>
-                          <li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          <li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          </ul>`,
-            comment: undefined,
-            editComment: false,
-          },
-        ],
-      },
-      {
-        caseId: '10110',
-        sections: [
-          {
-            title: 'Testing Points',
-            htmlContent: `<ol><li>Lorem Ipsum</li><li>adipiscing elit</li><li>vitae mauris consequat</li></ol>`,
-            comment: undefined,
-            editComment: false,
-          },
-          {
-            title: 'Stem',
-            htmlContent: `<p>Donec blandit feugiat ligula. Done hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat. Etiam get dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique. Proin nec augue. Quisque aliquam tempor magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>`,
-            comment: undefined,
-            editComment: false,
-          },
-          {
-            title: 'Pertinent Diagnostics',
-            htmlContent: `<ul><li>Lorem ipsum dolor sit amet</li><li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li><li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li></ul>`,
-            comment: 'this is an existing comment',
-            editComment: false,
-          },
-          {
-            title: 'Management Points',
-            htmlContent: `<b>Medical/Preoperative</b>
-                          <ul>
-                          <li>Lorem ipsum dolor sit amet</li>
-                          <li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          <li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          </ul>
-                          <b>Operative Technical Details</b>
-                          <ul>
-                          <li>Lorem ipsum dolor sit amet</li>
-                          <li>Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          <li>Done laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc</li>
-                          </ul>`,
-            comment: undefined,
-            editComment: false,
-          },
-        ],
-      },
-    ]);
   }
 
-  handleChange(event: any, caseIndex: number) {
-    let candidateCases = [] as any;
-    this.cases.subscribe((cases) => {
-      candidateCases = cases;
-    });
-
-    candidateCases[caseIndex]['scores'] = event.scoreValues;
-
-    this.cases.next(candidateCases);
-
-    // this.cases[caseIndex]['scores'] = event.scoreValues;
+  handleChange(event: any) {
+    if (event.case.score) {
+      this.candidateCaseScores[event.case.examCaseId] = event.case;
+      this.disable = false;
+    }
   }
 
-  handleSave(caseIndex: number) {
-    this.activeCase = this.activeCase + 1;
+  handleGradedChange(event: any) {
+    this.gradedCandidateCaseCores[event.case.examCaseId] = { ...event.case };
+    this.submitDisable = false;
+  }
+
+  handleSave(examCaseId: number) {
+    const currentCase = this.candidateCaseScores[examCaseId];
+
+    const model = {
+      examCaseId: currentCase?.examCaseId,
+      examinerUserId: this.userId,
+      examineeUserId: this.examineeUserId,
+      score: +currentCase?.score,
+      criticalFail: currentCase?.criticalFail ?? false,
+      remarks: currentCase?.remarks ?? '',
+    } as ICaseScoreModel;
+
+    this._store.dispatch(new CreateCaseScore(model));
+
+    this.activeCase += 1;
+    this.currentIncrement += 1;
+    this.disable = true;
+
+    if (this.currentIncrement > this.casesLenth) {
+      this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
+      this.ExamTimerComponent.stopTimers();
+    }
+  }
+
+  handleSaveAndSubmitLater() {
+    this.updateScores();
   }
 
   handleSubmit() {
-    // console.log(this.cases);
+    this.updateScores();
+    const model = {
+      examScheduleId: this.examScheduleId,
+    } as IExamScoreModel;
+
+    this._store.dispatch(new CreateExamScore(model));
+  }
+
+  updateScores() {
+    if (Object.entries(this.gradedCandidateCaseCores).length > 0) {
+      Object.entries(this.gradedCandidateCaseCores).forEach(([key, value]) => {
+        const data = value as ICaseScoreModel;
+        const model = {
+          examCaseId: data?.examCaseId,
+          examScoringId: data?.examScoringId,
+          examinerUserId: data?.examinerUserId,
+          examineeUserId: data?.examineeUserId,
+          score: +data?.score,
+          criticalFail: data?.criticalFail,
+          remarks: data?.remarks,
+        } as ICaseScoreModel;
+        this._store.dispatch(new UpdateCaseScore(model, false));
+      });
+    }
   }
 }
