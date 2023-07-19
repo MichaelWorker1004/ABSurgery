@@ -36,6 +36,7 @@ import {
   DeleteCaseScore,
   GetExaminee,
   CreateExamScore,
+  DeleteCaseComment,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -198,6 +199,25 @@ export class ExamScoringState {
   ) {
     const comment = payload.comment;
     return this.caseCommentsService.updateCaseComment(comment.id, comment).pipe(
+      tap((result: ICaseCommentModel) => {
+        // action does not currently update value of selectedCaseConents, relying on UI to refresh as needed
+        ctx.patchState({
+          selectedCaseComment: result,
+          errors: null,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(DeleteCaseComment)
+  deleteCaseComment(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+    const commentId = payload.id;
+    return this.caseCommentsService.deleteCaseComment(commentId).pipe(
       tap((result: ICaseCommentModel) => {
         // action does not currently update value of selectedCaseConents, relying on UI to refresh as needed
         ctx.patchState({

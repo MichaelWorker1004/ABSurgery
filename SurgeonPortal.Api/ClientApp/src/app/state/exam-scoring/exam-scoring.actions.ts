@@ -33,6 +33,12 @@ export class UpdateCaseComment {
   constructor(public comment: ICaseCommentModel) {}
 }
 
+export class DeleteCaseComment {
+  static readonly type = '[Exam-Scoring] delete comment of exam case by id';
+
+  constructor(public id: number) {}
+}
+
 export class GetExamineeList {
   static readonly type = '[Exam-Scoring] get list of examinees by day';
 

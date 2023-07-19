@@ -57,6 +57,7 @@ namespace SurgeonPortal.Library.Scoring.CE
         public int ExamScoringId => ReadProperty(ExamScoringIdProperty);
 		public static readonly PropertyInfo<int> ExamScoringIdProperty = RegisterProperty<int>(c => c.ExamScoringId);
 
+
         /// <summary>
         /// This method is used to apply authorization rules on the object
         /// </summary>

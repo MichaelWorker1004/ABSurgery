@@ -1,0 +1,54 @@
+{
+  "name": "CaseComment",
+  "implementationName": "Scoring\\CaseComment.delete",
+  "template": "ytg-framework/editable-delete",
+  "parameters": {
+    "Adapter": "dbo.delete_case_comments_byid",
+    "ControllerName": "Scoring\\CaseNotesController",
+    "ControllerRoute": "api/case-comments",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Scoring\\CaseComment.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseComment",
+    "ModelGroup": "CaseComment",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.delete_case_comments_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[delete_case_comments_byid]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "",
+    "generatedDateUtc": "2023-07-18T21:53:32.1187361Z"
+  },
+  "version": 1
+}

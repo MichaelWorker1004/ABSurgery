@@ -10,6 +10,31 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
 	public class CaseCommentDalTests : TestBase<string>
     {
+        #region DeleteAsync
+                
+        [Test]
+        public async Task DeleteAsync_ExecutesSprocCorrectly()
+        {
+            var expectedSprocName = "[dbo].[delete_case_comments_byid]";
+            var expectedDto = Create<CaseCommentDto>();
+        
+            var sqlManager = new MockSqlConnectionManager();
+            
+            var sut = new CaseCommentDal(sqlManager);
+            await sut.DeleteAsync(expectedDto);
+        
+            var p =
+                new
+                {
+                    Id = expectedDto.Id,
+                };
+        
+            Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
+            Assert.That(sqlManager.SqlConnection.ShouldPassParameters(p));
+        }
+        
+        #endregion
+
         #region GetByIdAsync
         
         [Test]

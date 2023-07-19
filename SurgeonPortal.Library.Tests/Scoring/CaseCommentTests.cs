@@ -28,6 +28,50 @@ namespace SurgeonPortal.Library.Tests.Scoring
 
             
 
+        #region DeleteAsync
+        
+        [Test]
+        public async Task Delete_CallsDalCorrectly()
+        {
+            var expectedId = Create<int>();
+            
+            var dto = CreateValidDto();
+            CaseCommentDto passedDto = null;
+        
+            var mockDal = new Mock<ICaseCommentDal>();
+            mockDal.Setup(m => m.GetByIdAsync(expectedId))
+                .ReturnsAsync(dto);
+            mockDal.Setup(m => m.DeleteAsync(It.IsAny<CaseCommentDto>()))
+                .Callback<CaseCommentDto>((p) => passedDto = p)
+                .Returns(Task.CompletedTask);
+        
+            UseMockServiceProvider()
+                .WithMockedIdentity()
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<ICaseComment, CaseComment>()
+                .Build();
+        
+            var factory = new CaseCommentFactory();
+            var sut = await factory.GetByIdAsync(expectedId);
+            sut.Delete();
+        
+            await sut.SaveAsync();
+        
+            Assert.That(passedDto, Is.Not.Null);
+        
+            dto.Should().BeEquivalentTo(sut,
+                options => options
+                    .Excluding(m => m.CreatedAtUtc)
+                    .Excluding(m => m.CreatedByUserId)
+                    .Excluding(m => m.LastUpdatedAtUtc)
+                    .Excluding(m => m.LastUpdatedByUserId)
+                    .ExcludingMissingMembers());
+        
+            mockDal.VerifyAll();
+        }
+        
+        #endregion
+
         #region GetByIdAsync CaseComment
         
         [Test]

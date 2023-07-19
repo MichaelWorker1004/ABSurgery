@@ -16,14 +16,17 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngxs/store';
 import {
   CreateCaseComment,
+  DeleteCaseComment,
   ExamScoringSelectors,
   GetCaseContents,
   GetCaseRoster,
   UpdateCaseComment,
 } from '../state';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 
 interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   editComment: boolean;
+  newComment?: string;
 }
 
 @UntilDestroy()
@@ -52,7 +55,12 @@ export class ExaminationRostersComponent implements OnInit {
 
   selectedCaseDetails: any = undefined;
 
-  constructor(private _store: Store) {}
+  editActive!: boolean;
+
+  constructor(
+    private _store: Store,
+    private _globalDialogService: GlobalDialogService
+  ) {}
 
   ngOnInit(): void {
     this.initPicklistValues();
@@ -99,6 +107,23 @@ export class ExaminationRostersComponent implements OnInit {
       });
   }
 
+  confirmRosterSelection(event: any) {
+    if (this.editActive) {
+      this._globalDialogService
+        .showConfirmation(
+          'Unsaved Changes',
+          'Are you sure you want to navigate away from this case? Any unsaved changes will be lost.'
+        )
+        .then((result) => {
+          if (result) {
+            this.editActive = false;
+            this.selectRoster(event);
+          }
+        });
+    } else {
+      this.selectRoster(event);
+    }
+  }
   selectRoster(event: any) {
     if (event.value) {
       this.selectedRoster = event.value;
@@ -110,6 +135,23 @@ export class ExaminationRostersComponent implements OnInit {
     }
   }
 
+  confirmCaseSelection(caseData: ICaseRosterReadOnlyModel) {
+    if (this.editActive) {
+      this._globalDialogService
+        .showConfirmation(
+          'Unsaved Changes',
+          'Are you sure you want to navigate away from this case? Any unsaved changes will be lost.'
+        )
+        .then((result) => {
+          if (result) {
+            this.editActive = false;
+            this.selectCase(caseData);
+          }
+        });
+    } else {
+      this.selectCase(caseData);
+    }
+  }
   selectCase(caseData: ICaseRosterReadOnlyModel) {
     if (this.selectedCaseId !== caseData.id) {
       this.selectedCaseId = caseData.id;
@@ -123,6 +165,7 @@ export class ExaminationRostersComponent implements OnInit {
               return {
                 ...val,
                 editComment: false,
+                newComment: '',
               };
             }) as ICaseDetailModel[];
 
@@ -134,10 +177,21 @@ export class ExaminationRostersComponent implements OnInit {
     }
   }
 
+  toggleCommentSectionEdit(section: ICaseDetailModel) {
+    section.editComment = !section.editComment;
+    if (section.editComment) {
+      section.newComment = section.comments;
+      this.editActive = true;
+    } else {
+      section.newComment = '';
+      this.editActive = false;
+    }
+  }
+
   saveSectionComment(section: ICaseDetailModel) {
     const newComment = {
       caseContentId: section.caseContentId,
-      comments: section.comments,
+      comments: section.newComment,
     } as unknown as ICaseCommentModel;
     if (section.caseCommentId) {
       newComment.id = section.caseCommentId;
@@ -174,5 +228,25 @@ export class ExaminationRostersComponent implements OnInit {
         });
     }
     section.editComment = false;
+    this.editActive = false;
+  }
+
+  deleteSectionComment(section: ICaseDetailModel) {
+    this._globalDialogService
+      .showConfirmation(
+        'Confirm Delete',
+        'Are you sure you want to delete this section comment?'
+      )
+      .then((result) => {
+        if (result) {
+          this._store
+            .dispatch(new DeleteCaseComment(section.caseCommentId))
+            .pipe(untilDestroyed(this))
+            .subscribe(() => {
+              this.selectedCaseId = 0;
+              this.selectCase(this.selectedCaseDetails);
+            });
+        }
+      });
   }
 }

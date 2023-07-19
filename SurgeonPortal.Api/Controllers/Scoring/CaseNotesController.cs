@@ -34,6 +34,21 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [HttpDelete("")]
+        public async Task<IActionResult> DeleteAsync(
+            [FromServices] ICaseCommentFactory caseCommentFactory,
+            int id)
+        {
+            var item = await caseCommentFactory.GetByIdAsync(id);
+            item.Delete();
+            await item.SaveAsync();
+            return NoContent();
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CaseCommentModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -14,6 +14,20 @@ namespace SurgeonPortal.DataAccess.Scoring
 
 
 
+        public async Task DeleteAsync(CaseCommentDto dto)
+        {
+            using (var connection = CreateConnection())
+            {
+                await connection.ExecAsync(
+                    "[dbo].[delete_case_comments_byid]",
+                        new
+                        {
+                            Id = dto.Id,
+                        });
+                        
+            }
+        }
+
         public async Task<CaseCommentDto> GetByIdAsync(int id)
         {
             using (var connection = CreateConnection())

@@ -11,6 +11,32 @@ export class CaseNotesService {
     constructor(private apiService: ApiService) {}
 
  
+        public deleteCaseComment(id: number,
+        apiVersion = '1.0'): Observable<any> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * id:Number
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [delete_case_comments_byid]
+            */
+            
+            
+            return this.apiService.delete<ICaseCommentModel>(`api/case-comments?api-version=${apiVersion}&id=${id}`);
+        }
+ 
         public retrieveCaseComment_GetById(id: number,
         apiVersion = '1.0'): Observable<ICaseCommentModel> {
             /**

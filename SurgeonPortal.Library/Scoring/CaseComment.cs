@@ -76,6 +76,22 @@ namespace SurgeonPortal.Library.Scoring
 
 
 
+        [RunLocal]
+        [DeleteSelf]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
+            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+        private async Task DeleteSelf()
+        {
+            using (BypassPropertyChecks)
+            {
+                base.DataPortal_DeleteSelf();
+        
+                await _caseCommentDal.DeleteAsync(ToDto());
+        
+                MarkIdle();
+            }
+        }
+
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

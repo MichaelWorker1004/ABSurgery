@@ -16,14 +16,14 @@
               [(ngModel)]="selectedRoster"
               optionLabel="examSchedule"
               placeholder="Select a roster to view..."
-              (onChange)="selectRoster($event)"
+              (onChange)="confirmRosterSelection($event)"
             ></p-dropdown>
             <ng-container *ngIf="cases?.length > 0">
               <p-button
                 *ngFor="let case of cases"
                 class="mb-1"
                 styleClass="p-button-secondary p-button-text py-1"
-                (click)="selectCase(case)"
+                (onClick)="confirmCaseSelection(case)"
               >
                 <span
                   [ngClass]="{
@@ -79,22 +79,40 @@
                   [name]="section.heading + '-comment'"
                   rows="5"
                   pInputTextarea
-                  [(ngModel)]="section.comments"
+                  [(ngModel)]="section.newComment"
                   *ngIf="section.editComment"
                 ></textarea>
               </div>
-              <p-button
-                *ngIf="!section.editComment"
-                styleClass="p-button-success p-button-text"
-                (click)="section.editComment = true"
-              >
-                {{ section.comments ? 'Edit Comment' : 'Add Comment' }}
-              </p-button>
+              <div class="flex justify-content-start">
+                <p-button
+                  *ngIf="!section.editComment"
+                  styleClass="p-button-success p-button-text pl-0"
+                  (onClick)="toggleCommentSectionEdit(section)"
+                  [disabled]="editActive"
+                >
+                  {{ section.comments ? 'Edit' : 'Add Comment' }}
+                </p-button>
+                <p-button
+                  *ngIf="!section.editComment && section.comments"
+                  styleClass="p-button-danger p-button-text ml-2"
+                  (onClick)="deleteSectionComment(section)"
+                  [disabled]="editActive"
+                >
+                  Delete
+                </p-button>
+              </div>
               <p-button
                 *ngIf="section.editComment"
                 type="button"
                 (onClick)="saveSectionComment(section)"
                 >Save Comment</p-button
+              >
+              <p-button
+                *ngIf="section.editComment"
+                styleClass="p-button-secondary p-button-text"
+                type="button"
+                (onClick)="toggleCommentSectionEdit(section)"
+                >cancel</p-button
               >
             </div>
             <div *ngIf="!(selectedCaseDetails.sections?.length > 0)">
