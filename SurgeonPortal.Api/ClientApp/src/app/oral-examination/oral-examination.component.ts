@@ -144,8 +144,11 @@ export class OralExaminationsComponent implements OnInit {
     this.disable = true;
 
     if (this.currentIncrement > this.casesLenth) {
-      this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
       this.ExamTimerComponent.stopTimers();
+      this.globalDialogService.showLoading();
+      setTimeout(() => {
+        this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
+      }, 200);
     }
   }
 
