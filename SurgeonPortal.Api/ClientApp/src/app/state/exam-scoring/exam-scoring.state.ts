@@ -241,10 +241,10 @@ export class ExamScoringState {
       .retrieveExamSessionReadOnly_GetByUserId(date)
       .pipe(
         tap((result: IExamSessionReadOnlyModel[]) => {
-          const currentSessionCheck = result.some((x) => x.isCurrentSession);
-          if (!currentSessionCheck) {
-            result[0].isCurrentSession = true;
-          }
+          // const currentSessionCheck = result.some((x) => x.isCurrentSession);
+          // if (!currentSessionCheck) {
+          //   result[0].isCurrentSession = true;
+          // }
           ctx.patchState({
             examineeList: result,
             errors: null,

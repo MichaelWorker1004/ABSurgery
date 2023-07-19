@@ -1,5 +1,6 @@
 export enum AbsGridCellRendererType {
   Button = 'button',
+  ConditionalButton = 'conditionalButton',
   PrimeButton = 'primeButton',
   YesNo = 'yesNo',
   DateFormatter = 'dateFormatter',

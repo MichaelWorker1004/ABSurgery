@@ -67,7 +67,7 @@
               class="col-12"
               *ngFor="let section of selectedCaseDetails.sections"
             >
-              <p class="font-bold m-0">{{ section.heading }}:</p>
+              <p class="font-bold m-0">{{ section.heading }}</p>
               <div class="section-details" [innerHTML]="section.content"></div>
 
               <div *ngIf="section.comments || section.editComment">
@@ -114,6 +114,7 @@
                 (onClick)="toggleCommentSectionEdit(section)"
                 >cancel</p-button
               >
+              <!-- <hr> -->
             </div>
             <div *ngIf="!(selectedCaseDetails.sections?.length > 0)">
               <p class="font-italic text-muted mt-0 pl-3">

@@ -42,6 +42,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExaminationScoresComponent implements OnInit {
+  examHeaderId = 492;
+
   @Select(ExamScoringSelectors.slices.examScoresList)
   examScores$: Observable<IRosterReadOnlyModel[]> | undefined;
 
@@ -116,12 +118,13 @@ export class ExaminationScoresComponent implements OnInit {
   }
 
   getExaminationScoresDate() {
-    this._store.dispatch(new GetExamScoresList(492));
+    this._store.dispatch(new GetExamScoresList(this.examHeaderId));
 
     this.examScores$
       ?.pipe(
         untilDestroyed(this),
         map((scoreList) => {
+          console.log(scoreList);
           if (scoreList?.length > 0) {
             return scoreList.map((score) => {
               return {

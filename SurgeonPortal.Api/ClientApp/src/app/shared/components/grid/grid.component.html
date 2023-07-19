@@ -95,6 +95,21 @@
               </div>
 
               <div
+                *ngIf="
+                  c.cellRenderer === AbsGridCellRendererType.ConditionalButton
+                "
+                class="action"
+              >
+                <button
+                  (click)="handleAction(c.cellRendererParams, r)"
+                  *ngIf="r[c.field]"
+                >
+                  <i [class]="c.icon" *ngIf="c.icon"></i>
+                  {{ c.headerName }}
+                </button>
+              </div>
+
+              <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.PrimeButton"
                 class="action"
               >

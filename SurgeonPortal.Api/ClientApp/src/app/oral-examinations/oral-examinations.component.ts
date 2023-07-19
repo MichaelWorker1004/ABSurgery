@@ -33,7 +33,7 @@ export class OralExaminationsComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.examineeList)
   examineeList$: Observable<IExamSessionReadOnlyModel[]> | undefined;
 
-  examDate: Date = new Date('06/20/23');
+  examDate: Date = new Date('01/01/24');
   zoomLink: string | undefined = '';
   oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =
     new BehaviorSubject<IExamSessionReadOnlyModel[]>([]);

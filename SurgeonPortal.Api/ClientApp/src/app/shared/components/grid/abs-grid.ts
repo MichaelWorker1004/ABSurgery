@@ -56,6 +56,30 @@ const AbsGrid = {
     return colDef;
   },
 
+  setCustomButtonConditionalCol(
+    headerName: string,
+    fieldName: string,
+    icon?: string,
+    onClick?: (data: any) => void,
+    sortable?: boolean,
+    width?: number
+  ) {
+    const colDef = {
+      headerName: headerName,
+      field: fieldName,
+      icon: icon,
+      cellRenderer: 'conditionalButton',
+      cellRendererParams: {
+        fieldKey: fieldName,
+        onClick,
+      },
+      sortable,
+      width,
+    };
+
+    return colDef;
+  },
+
   setCustomPrimeButtonCol(
     headerName: string,
     fieldName: string,
