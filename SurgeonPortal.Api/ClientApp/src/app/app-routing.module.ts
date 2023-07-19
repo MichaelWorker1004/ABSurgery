@@ -6,12 +6,13 @@ import { PersonalProfileComponent } from './personal-profile/personal-profile.co
 import { MedicalTrainingComponent } from './medical-training/medical-training.component';
 import { ProfessionalStandingComponent } from './professional-standing/professional-standing.component';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { OralExaminationsComponent } from './oral-examination/oral-examination.component';
 
-const canDeactivate = async (component: any) => {
+const canDeactivate = async (component: any, title?: string, text?: string) => {
   if (component?.hasUnsavedChanges) {
     const result = await component.globalDialogService?.showConfirmation(
-      'Unsaved Changes',
-      'Do you want to navigate away'
+      title ?? 'Unsaved Changes',
+      text ?? 'Do you want to navigate away'
     );
 
     return result;
@@ -193,6 +194,14 @@ const routes: Routes = [
         (m) => m.OralExaminationsComponent
       ),
     canActivate: [AuthGuard],
+    canDeactivate: [
+      (component: OralExaminationsComponent) =>
+        canDeactivate(
+          component,
+          'Exam in Process',
+          'Do you want to navigate away from the exam? <br/> Navigating away will result in an incomplete exam.'
+        ),
+    ],
   },
   {
     path: 'ce-scoring/examination-scores',

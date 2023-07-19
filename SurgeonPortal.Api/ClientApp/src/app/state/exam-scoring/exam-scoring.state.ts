@@ -46,6 +46,7 @@ import { IExamineeReadOnlyModel } from 'src/app/api/models/scoring/ce/examinee-r
 import { SessionService } from 'src/app/api/services/scoring/ce/session.service';
 import { ExamScoreService } from 'src/app/api/services/ce/exam-score.service';
 import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
+import { Router } from '@angular/router';
 
 export interface IExamScoring {
   // examination rosters page values
@@ -99,7 +100,8 @@ export class ExamScoringState {
     private dashboardService: DashboardService,
     private caseScoresService: CaseScoresService,
     private sessionService: SessionService,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    private router: Router
   ) {}
 
   @Action(GetCaseRoster)
@@ -423,15 +425,16 @@ export class ExamScoringState {
   ) {
     this.globalDialogService.showLoading();
     return this.examScoreService.createExamScore(payload.model).pipe(
-      tap((result: IExamScoreModel) => {
+      tap(async (result: IExamScoreModel) => {
         ctx.patchState({
           errors: null,
         });
-        this.globalDialogService.showSuccessError(
+        await this.globalDialogService.showSuccessError(
           'Success',
           'Exam Submitted Successfully',
           true
         );
+        this.router.navigate(['/ce-scoring/oral-examinations']);
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;

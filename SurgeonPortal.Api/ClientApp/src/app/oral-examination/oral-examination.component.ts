@@ -5,7 +5,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ExpandableComponent } from '../shared/components/expandable/expandable.component';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -25,6 +25,7 @@ import { IExamineeReadOnlyModel } from '../api/models/scoring/ce/examinee-read-o
 import { ExamTimerComponent } from '../shared/components/exam-timer-component/exam-timer.component';
 import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
 import { IExamScoreModel } from '../api/models/ce/exam-score.model';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 
 @Component({
   selector: 'abs-oral-examination',
@@ -76,7 +77,14 @@ export class OralExaminationsComponent implements OnInit {
   disable = true;
   submitDisable = true;
 
-  constructor(private activatedRoute: ActivatedRoute, private _store: Store) {}
+  hasUnsavedChanges = true;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private _store: Store,
+    private router: Router,
+    public globalDialogService: GlobalDialogService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -151,6 +159,7 @@ export class OralExaminationsComponent implements OnInit {
       examScheduleId: this.examScheduleId,
     } as IExamScoreModel;
 
+    this.hasUnsavedChanges = false;
     this._store.dispatch(new CreateExamScore(model));
   }
 
@@ -167,6 +176,7 @@ export class OralExaminationsComponent implements OnInit {
           criticalFail: data?.criticalFail,
           remarks: data?.remarks,
         } as ICaseScoreModel;
+        this.hasUnsavedChanges = false;
         this._store.dispatch(new UpdateCaseScore(model, false));
       });
     }
