@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Surgeons
 {
     public interface ICertificationReadOnlyDal
     {
-        Task<IEnumerable<CertificationReadOnlyDto>> GetByAbsIdAsync(string absId);
+        Task<IEnumerable<CertificationReadOnlyDto>> GetByUserIdAsync();
     }
 }

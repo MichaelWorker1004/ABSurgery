@@ -10,6 +10,7 @@ import {
   GetDashboardProgramInformation,
 } from './dashboard.actions';
 import { catchError, of, tap } from 'rxjs';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 export interface IDashboardState {
   certificates: ICertificationReadOnlyModel[];
@@ -37,7 +38,8 @@ const USER_ACCOUNT_STATE_TOKEN = new StateToken<IDashboardState>('dashboard');
 export class DashboardState {
   constructor(
     private programsService: ProgramsService,
-    private certificationsService: CertificationsService
+    private certificationsService: CertificationsService,
+    private globalDialogService: GlobalDialogService
   ) {}
   @Action(GetDashboardProgramInformation) getDashboardProgramInformation(
     ctx: StateContext<IDashboardState>
@@ -59,13 +61,11 @@ export class DashboardState {
   }
 
   @Action(GetDashboardCertificationInformation)
-  getDashboardCertificationInformation(
-    ctx: StateContext<IDashboardState>,
-    payload: { absId: string }
-  ) {
+  getDashboardCertificationInformation(ctx: StateContext<IDashboardState>) {
     const state = ctx.getState();
+    this.globalDialogService.showLoading();
     return this.certificationsService
-      .retrieveCertificationReadOnly_GetByAbsId(payload.absId)
+      .retrieveCertificationReadOnly_GetByUserId()
       .pipe(
         tap((result: ICertificationReadOnlyModel[]) => {
           const res = result as ICertificationReadOnlyModel[];
@@ -73,9 +73,11 @@ export class DashboardState {
             ...state,
             certificates: res,
           });
+          this.globalDialogService.closeOpenDialog();
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
+          this.globalDialogService.closeOpenDialog();
           return of(errors);
         })
       );

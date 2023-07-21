@@ -5,6 +5,4 @@ export class GetDashboardProgramInformation {
 export class GetDashboardCertificationInformation {
   static readonly type =
     '[Dashboard] Get the dashboard certificate information';
-
-  constructor(public absId: string) {}
 }

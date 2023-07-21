@@ -8,28 +8,13 @@ namespace SurgeonPortal.Library.Surgeons
 {
     public class CertificationReadOnlyListFactory : ICertificationReadOnlyListFactory
     {
-        public async Task<ICertificationReadOnlyList> GetByAbsIdAsync(string absId)
+        public async Task<ICertificationReadOnlyList> GetByUserIdAsync()
         {
-            if (string.IsNullOrEmpty(absId) == true)
-            {
-                throw new FactoryInvalidCriteriaException("absId is a required field.");
-            }
             
-            return await DataPortal.FetchAsync<CertificationReadOnlyList>(
-                new GetByAbsIdCriteria(absId));
+            return await DataPortal.FetchAsync<CertificationReadOnlyList>();
             
         }
 
-            [Serializable]
-            internal class GetByAbsIdCriteria
-            {
-                public string AbsId { get; set; }
-            
-                public GetByAbsIdCriteria(string absId)
-             {
-                    AbsId = absId;
-              }
-            }
             
 
 

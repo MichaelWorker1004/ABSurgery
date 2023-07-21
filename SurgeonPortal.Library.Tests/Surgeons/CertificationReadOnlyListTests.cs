@@ -14,12 +14,11 @@ namespace SurgeonPortal.Library.Tests.Surgeons
     {
 
         [Test]
-        public async Task GetByAbsIdAsync_CallsDalCorrectly()
+        public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
-            var expectedAbsId = Create<string>();
             
             var mockDal = new Mock<ICertificationReadOnlyDal>();
-            mockDal.Setup(m => m.GetByAbsIdAsync(expectedAbsId))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(CreateMany<CertificationReadOnlyDto>());
         
             UseMockServiceProvider()
@@ -30,18 +29,18 @@ namespace SurgeonPortal.Library.Tests.Surgeons
                 .Build();
         
             var factory = new CertificationReadOnlyListFactory();
-            var sut = await factory.GetByAbsIdAsync(expectedAbsId);
+            var sut = await factory.GetByUserIdAsync();
         
             mockDal.VerifyAll();
         }
         
         [Test]
-        public async Task GetByAbsIdAsync_LoadsChildrenCorrectly()
+        public async Task GetByUserIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<CertificationReadOnlyDto>();
         
             var mockDal = new Mock<ICertificationReadOnlyDal>();
-            mockDal.Setup(m => m.GetByAbsIdAsync(It.IsAny<string>()))
+            mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
@@ -52,7 +51,7 @@ namespace SurgeonPortal.Library.Tests.Surgeons
                 .Build();
         
             var factory = new CertificationReadOnlyListFactory();
-            var sut = await factory.GetByAbsIdAsync(Create<string>());
+            var sut = await factory.GetByUserIdAsync();
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

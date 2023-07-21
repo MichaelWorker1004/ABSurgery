@@ -11,8 +11,7 @@ export class CertificationsService {
   constructor(private apiService: ApiService) {}
 
  
-        public retrieveCertificationReadOnly_GetByAbsId(absId: string,
-        apiVersion = '1.0'): Observable<ICertificationReadOnlyModel[]> {
+        public retrieveCertificationReadOnly_GetByUserId(apiVersion = '1.0'): Observable<ICertificationReadOnlyModel[]> {
     /**
      * Claims
      */
@@ -24,7 +23,6 @@ export class CertificationsService {
 
     /**
      * Required Parameters
-     * absId:String
      * apiVersion
      */
 
@@ -34,7 +32,7 @@ export class CertificationsService {
      */
 
             
-            return this.apiService.get<ICertificationReadOnlyModel[]>(`api/surgeons/certifications?api-version=${apiVersion}&absId=${absId}`);
+        return this.apiService.get<ICertificationReadOnlyModel[]>(`api/surgeons/certifications?api-version=${apiVersion}`);
   }
 
 

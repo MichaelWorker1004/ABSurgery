@@ -37,19 +37,13 @@
         </div>
         <div class="info-data">
           <span>Certificate Number:</span>
-          {{
-            userInformation?.certificateId?.length > 0
-              ? info?.certificateId
-              : 'N/A'
-          }}
+          {{ info?.certificateId ? info?.certificateId : 'N/A' }}
         </div>
         <div class="info-data">
-          <span>Expiration Date:</span>
-          {{
-            userInformation?.certificateId?.length > 0
-              ? info?.endDateDisplay
-              : 'N/A'
-          }}
+          {{ info?.initialCertificationDate }}
+        </div>
+        <div class="info-data">
+          {{ info?.endDateDisplay }}
         </div>
       </div>
     </div>

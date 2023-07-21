@@ -187,17 +187,23 @@ export class MedicalTrainingComponent implements OnInit {
   medicalTrainingForm = new FormGroup({
     graduateProfileId: new FormControl(''),
     graduateProfileDescription: new FormControl(''),
-    medicalSchoolName: new FormControl('', Validators.required),
+    medicalSchoolName: new FormControl('', [
+      Validators.required,
+      Validators.max(30),
+    ]),
     medicalSchoolCity: new FormControl('', Validators.required),
     medicalSchoolStateId: new FormControl({ value: null, disabled: true }),
     medicalSchoolCountryId: new FormControl('', Validators.required),
-    medicalSchoolCountryName: new FormControl(''),
+    medicalSchoolCountryName: new FormControl('', [
+      Validators.required,
+      Validators.max(30),
+    ]),
     degreeId: new FormControl('', Validators.required),
     degreeName: new FormControl(''),
     medicalSchoolCompletionYear: new FormControl('', Validators.required),
     residencyProgramName: new FormControl(0),
     residencyCompletionYear: new FormControl('', Validators.required),
-    residencyProgramOther: new FormControl(''),
+    residencyProgramOther: new FormControl('', Validators.max(8000)),
   });
 
   hasUnsavedChanges = false;

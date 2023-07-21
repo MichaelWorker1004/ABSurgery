@@ -61,7 +61,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchUserData();
     this.setActionCardsByUserClaims();
     this.fetchAlertsAndNoticesByUserId();
   }
@@ -71,29 +70,15 @@ export class DashboardComponent implements OnInit {
       this.isSurgeon = userClaims?.includes(UserClaims.surgeon);
     });
 
-    this.user$?.subscribe((user) => {
-      if (this.isSurgeon) {
-        if (user?.absId) {
-          this._store.dispatch(
-            new GetDashboardCertificationInformation(user.absId.toString())
-          );
-        }
-      } else {
-        if (user?.userId) {
-          this._store.dispatch(new GetDashboardProgramInformation());
-        }
-      }
-    });
-  }
-
-  fetchUserData() {
     if (this.isSurgeon) {
+      this._store.dispatch(new GetDashboardCertificationInformation());
       this.certificateInformation$?.subscribe((userInformation) => {
         if (userInformation?.certificates?.length > 0) {
           this.userInformation = userInformation.certificates;
         }
       });
     } else {
+      this._store.dispatch(new GetDashboardProgramInformation());
       this.programInformation$?.subscribe((userInformation) => {
         if (userInformation?.programs?.programName.length > 0) {
           this.userInformation = userInformation.programs;

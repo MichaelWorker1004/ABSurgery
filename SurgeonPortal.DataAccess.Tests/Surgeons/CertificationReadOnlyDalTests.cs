@@ -10,31 +10,31 @@ namespace SurgeonPortal.DataAccess.Tests.Surgeons
 {
 	public class CertificationReadOnlyDalTests : TestBase<string>
     {
-        #region GetByAbsIdAsync
+        #region GetByUserIdAsync
         
         [Test]
-        public async Task GetByAbsIdAsync_ExecutesSprocCorrectly()
+        public async Task GetByUserIdAsync_ExecutesSprocCorrectly()
         {
             var expectedSprocName = "[dbo].[get_user_certifications]";
-            var expectedAbsId = Create<string>();
+            var expectedUserId = Create<int>();
             var expectedParams =
                 new
                 {
-                    AbsId = expectedAbsId,
+                    UserId = expectedUserId,
                 };
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecords(CreateMany<CertificationReadOnlyDto>());
         
             var sut = new CertificationReadOnlyDal(sqlManager);
-            await sut.GetByAbsIdAsync(expectedAbsId);
+            await sut.GetByUserIdAsync();
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
         }
         
         [Test]
-        public async Task GetByAbsIdAsync_YieldsCorrectResult()
+        public async Task GetByUserIdAsync_YieldsCorrectResult()
         {
             var expectedDtos = CreateMany<CertificationReadOnlyDto>();
         
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Surgeons
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new CertificationReadOnlyDal(sqlManager);
-            var result = await sut.GetByAbsIdAsync(Create<string>());
+            var result = await sut.GetByUserIdAsync();
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

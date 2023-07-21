@@ -37,11 +37,10 @@ namespace SurgeonPortal.Api.Controllers.Surgeons
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<CertificationReadOnlyModel>>> GetCertificationReadOnly_GetByAbsIdAsync(
-            [FromServices] ICertificationReadOnlyListFactory certificationReadOnlyListFactory,
-            string absId)
+        public async Task<ActionResult<IEnumerable<CertificationReadOnlyModel>>> GetCertificationReadOnly_GetByUserIdAsync(
+            [FromServices] ICertificationReadOnlyListFactory certificationReadOnlyListFactory)
         {
-            var items = await certificationReadOnlyListFactory.GetByAbsIdAsync(absId);
+            var items = await certificationReadOnlyListFactory.GetByUserIdAsync();
         
             return Ok(_mapper.Map<IEnumerable<CertificationReadOnlyModel>>(items));
         } 

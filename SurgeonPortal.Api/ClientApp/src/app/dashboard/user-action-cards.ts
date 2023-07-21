@@ -36,17 +36,6 @@ export const CERTIFIED_ACTION_CARDS = [
     icon: 'fa-solid fa-user-graduate',
   },
   {
-    title: 'Register for an Exam or Assessment',
-    description:
-      'This is basic information like your first and last name, title, etc.',
-    action: {
-      type: 'component',
-      action: '/exam-process',
-    },
-    actionDisplay: 'Register For an Exam Now',
-    icon: 'fa-sharp fa-solid fa-file-waveform',
-  },
-  {
     title: 'Apply for an Exam',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -56,5 +45,16 @@ export const CERTIFIED_ACTION_CARDS = [
     },
     actionDisplay: 'Apply Now',
     icon: 'fa-solid fa-list-check',
+  },
+  {
+    title: 'Register for an Exam or Assessment',
+    description:
+      'This is basic information like your first and last name, title, etc.',
+    action: {
+      type: 'component',
+      action: '/exam-process',
+    },
+    actionDisplay: 'Register For an Exam Now',
+    icon: 'fa-sharp fa-solid fa-file-waveform',
   },
 ];
