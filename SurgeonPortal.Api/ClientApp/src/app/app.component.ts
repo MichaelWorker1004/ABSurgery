@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 import { NgxsModule, Select, Store } from '@ngxs/store';
+import packageInfo from '../../package.json';
 
 import {
   AuthSelectors,
@@ -40,6 +41,8 @@ export class AppComponent implements OnDestroy {
 
   authSub: Subscription | undefined;
   userSub: Subscription | undefined;
+
+  version = packageInfo.version;
 
   isSurgeon = false;
   isSideNavOpen = false;
