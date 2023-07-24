@@ -10,3 +10,4 @@ export * from './documents';
 export * from './professional-standing';
 export * from './exam-scoring';
 export * from './continuingmedicaleducation';
+export * from './exam-history';

@@ -11,6 +11,7 @@ import { DocumentsState } from './documents';
 import { ProfessionalStandingState } from './professional-standing';
 import { ExamScoringState } from './exam-scoring';
 import { ContinuingMedicalEducationState } from './continuingmedicaleducation';
+import { ExamHistoryState } from './exam-history';
 
 export const surgeonPortalState = [
   AuthState,
@@ -26,4 +27,6 @@ export const surgeonPortalState = [
   ProfessionalStandingState,
   ExamScoringState,
   ContinuingMedicalEducationState,
+  ExamScoringState,
+  ExamHistoryState,
 ];
