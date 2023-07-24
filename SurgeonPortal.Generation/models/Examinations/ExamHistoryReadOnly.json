@@ -1,0 +1,90 @@
+{
+  "refs": {},
+  "name": "Examinations\\ExamHistoryReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExaminationId",
+      "dataType": "decimal",
+      "maxLength": 5,
+      "precision": 9,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "ExaminationName",
+      "dataType": "string",
+      "maxLength": 101,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExaminationDate",
+      "dataType": "datetime?",
+      "maxLength": 4,
+      "precision": 16,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "DocumentId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "status",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "result",
+      "dataType": "string",
+      "maxLength": 1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examinations\\ExamHistoryReadOnly -sp [dbo].[get_userexamhistory] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-21T15:30:23.5664305Z"
+  },
+  "version": 1
+}

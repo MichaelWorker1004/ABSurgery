@@ -85,7 +85,12 @@
                 {{ r[c.field] ? 'Yes' : 'No' }}
               </div>
               <div
-                *ngIf="c.cellRenderer === AbsGridCellRendererType.Button"
+                *ngIf="
+                  (c.cellRenderer === AbsGridCellRendererType.Button &&
+                    r[c.field]) ||
+                  (c.cellRenderer === AbsGridCellRendererType.Button &&
+                    c.field.toLowerCase() === c.headerName.toLowerCase())
+                "
                 class="action"
               >
                 <button (click)="handleAction(c.cellRendererParams, r)">

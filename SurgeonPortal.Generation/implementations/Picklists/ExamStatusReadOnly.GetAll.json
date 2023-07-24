@@ -1,0 +1,66 @@
+{
+  "name": "ExamStatusReadOnly",
+  "implementationName": "Picklists\\ExamStatusReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_examstatus",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\ExamStatusReadOnly",
+    "ModelGroup": "ExamStatusReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "exam-statuses",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examstatus",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examstatus]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\ExamStatusReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Name",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Name"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\ExamStatusReadOnly.GetAll ExamStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ExamStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_examstatus] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamStatusReadOnly -p:Route=exam-statuses -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Picklists\\ExamStatusReadOnly.GetAll ExamStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ExamStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_examstatus] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamStatusReadOnly -p:Route=exam-statuses -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-14T17:40:49.76881Z"
+  },
+  "version": 1
+}

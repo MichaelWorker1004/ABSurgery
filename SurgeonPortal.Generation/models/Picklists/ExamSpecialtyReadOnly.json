@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\ExamSpecialtyReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Name",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ExamSpecialtyReadOnly -sp [dbo].[get_examspecialties] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-14T17:37:33.9096523Z"
+  },
+  "version": 1
+}

@@ -4,6 +4,6 @@ export const EXAM_HISTORY_COLS = [
   AbsGrid.setCellCustomClass('Exam Name', 'examTitle', false, 'font-bold'),
   AbsGrid.setFormattedDateCol('Date', 'date'),
   AbsGrid.setTextDisplayCol('Status', 'status'),
-  AbsGrid.setCellCustomClass('Results', 'result'),
-  AbsGrid.setExpandToggle('Expand', 'expanded'),
+  AbsGrid.setTextDisplayCol('Results', 'result'),
+  AbsGrid.setCustomButtonCol('Download', 'documentId', 'fa fa-download'),
 ];

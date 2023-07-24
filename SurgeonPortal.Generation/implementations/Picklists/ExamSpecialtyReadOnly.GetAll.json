@@ -1,0 +1,66 @@
+{
+  "name": "ExamSpecialtyReadOnly",
+  "implementationName": "Picklists\\ExamSpecialtyReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_examspecialties",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\ExamSpecialtyReadOnly",
+    "ModelGroup": "ExamSpecialtyReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "exam-specialties",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examspecialties",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examspecialties]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\ExamSpecialtyReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Name",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Name"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\ExamSpecialtyReadOnly.GetAll ExamSpecialtyReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ExamSpecialtyReadOnly -p:Adapter=sp:abssp-[dbo].[get_examspecialties] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamSpecialtyReadOnly -p:Route=exam-specialties -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Picklists\\ExamSpecialtyReadOnly.GetAll ExamSpecialtyReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ExamSpecialtyReadOnly -p:Adapter=sp:abssp-[dbo].[get_examspecialties] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamSpecialtyReadOnly -p:Route=exam-specialties -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-06-14T17:37:38.1074326Z"
+  },
+  "version": 1
+}

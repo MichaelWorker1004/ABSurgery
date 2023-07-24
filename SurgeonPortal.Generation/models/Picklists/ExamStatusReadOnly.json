@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\ExamStatusReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Name",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ExamStatusReadOnly -sp [dbo].[get_examstatus] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-14T17:40:46.4788504Z"
+  },
+  "version": 1
+}

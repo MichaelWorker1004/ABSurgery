@@ -12,6 +12,6 @@ export const DOCUMENTS_COLS = [
   ),
   AbsGrid.setTextDisplayCol('Certificate Type', 'certificateType', true),
   AbsGrid.setFormattedDateCol('Upload Date', 'uploadDateUtc', true),
-  AbsGrid.setCustomButtonCol('Download', 'download', 'fa-solid fa-download'),
-  AbsGrid.setCustomButtonCol('Delete', 'delete', 'fa-solid fa-trash'),
+  AbsGrid.setCustomButtonCol('Download', 'documentId', 'fa-solid fa-download'),
+  AbsGrid.setCustomButtonCol('Delete', 'documentId', 'fa-solid fa-trash'),
 ];

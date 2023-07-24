@@ -102,33 +102,10 @@
               <!-- TODO: [Joe] create expanded row toggle button -->
               <abs-grid
                 [columns]="examHistoryCols"
-                [data]="examHistory"
+                [data]="examHistory$"
                 class="margin-bottom-2"
-                [expandTemplate]="expandedRow"
                 (action)="handleGridAction($event)"
               ></abs-grid>
-              <ng-template #expandedRow let-r>
-                <div class="pl-4">
-                  <div class="grid">
-                    <div class="col-5 md:col-4">
-                      <p class="font-bold m-0">Update</p>
-                    </div>
-                    <div class="col-5 md:col-4">
-                      <p class="font-bold m-0">Date</p>
-                    </div>
-                  </div>
-                  <div class="grid" *ngFor="let update of r?.updates">
-                    <div class="col-5 md:col-4">
-                      <p class="m-0">{{ update.updateText }}</p>
-                    </div>
-                    <div class="col-5 md:col-4">
-                      <p class="m-0">
-                        {{ update.updateDate | date : 'shortDate' }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </ng-template>
             </div>
           </div>
         </abs-collapse-panel>

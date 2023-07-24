@@ -1,0 +1,126 @@
+{
+  "name": "ExamHistoryReadOnly",
+  "implementationName": "Examinations\\ExamHistoryReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_userexamhistory",
+    "ControllerName": "Examinations\\ExaminationsController",
+    "ControllerRoute": "api/examinations",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\ExamHistoryReadOnly",
+    "ModelGroup": "ExamHistoryReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "history",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_userexamhistory",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_userexamhistory]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\ExamHistoryReadOnly",
+            "fields": [
+              {
+                "name": "UserId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "ExaminationId",
+                "dataType": "decimal",
+                "maxLength": 5,
+                "precision": 9,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ExaminationId"
+              },
+              {
+                "name": "ExaminationName",
+                "dataType": "string",
+                "maxLength": 101,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExaminationName"
+              },
+              {
+                "name": "ExaminationDate",
+                "dataType": "datetime?",
+                "maxLength": 4,
+                "precision": 16,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExaminationDate"
+              },
+              {
+                "name": "DocumentId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": "model.DocumentId"
+              },
+              {
+                "name": "status",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.status"
+              },
+              {
+                "name": "result",
+                "dataType": "string",
+                "maxLength": 1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.result"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\ExamHistoryReadOnly.GetByUserId ExamHistoryReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\ExamHistoryReadOnly -p:Adapter=sp:abssp-[dbo].[get_userexamhistory] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamHistoryReadOnly -p:Route=history -p:ControllerName=Examinations\\ExaminationsController -p:ControllerRoute=api/examinations -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-21T15:34:09.6631076Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\ExamTypeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Code",
+      "dataType": "string",
+      "maxLength": 1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ExamTypeReadOnly -sp [dbo].[get_examtypes] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-06-14T17:34:17.5363781Z"
+  },
+  "version": 1
+}

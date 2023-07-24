@@ -46,7 +46,7 @@ const AbsGrid = {
       icon: icon,
       cellRenderer: 'button',
       cellRendererParams: {
-        fieldKey: fieldName,
+        fieldKey: headerName.toLowerCase(),
         onClick,
       },
       sortable,
