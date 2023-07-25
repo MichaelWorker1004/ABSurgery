@@ -46,7 +46,7 @@ table {
 table {
   width: 100%;
   text-align: left;
-
+  border-collapse: collapse;
   border-radius: 6px;
   margin-top: 1rem;
   &.no-grid-lines {
@@ -54,15 +54,7 @@ table {
   }
   thead {
     position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background-color: var(--global-primary);
-    }
+    border-bottom: 1px solid black;
   }
   th,
   td {
@@ -71,6 +63,7 @@ table {
   }
   tr {
     //figure out how to use nth-of-type(even) to skip expanded rows
+    position: relative;
     &.alternate-row {
       background-color: #fff;
     }
