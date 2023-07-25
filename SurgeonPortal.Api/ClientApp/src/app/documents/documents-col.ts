@@ -14,5 +14,5 @@ export const DOCUMENTS_COLS = [
   AbsGrid.setFormattedDateCol('Upload Date', 'uploadedDateUtc', true),
   AbsGrid.setTextDisplayCol('Uploaded By', 'uploadedBy', true),
   AbsGrid.setCustomButtonCol('Download', 'id', 'fa-solid fa-download'),
-  AbsGrid.setCustomButtonCol('Delete', 'id', 'fa-solid fa-trash'),
+  // AbsGrid.setCustomButtonCol('Delete', 'id', 'fa-solid fa-trash'),
 ];
