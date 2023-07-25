@@ -1,0 +1,95 @@
+{
+  "name": "OverlapConflictCommand",
+  "implementationName": "GraduateMedicalEducation\\OverlapConflictCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.get_gme_overlap_conflict",
+    "CommandMethodName": "CheckOverlapConflicts",
+    "ExecuteAsynchronously": "false",
+    "IncludeControllerInGeneration": "False",
+    "Model": "GraduateMedicalEducation\\OverlapConflictCommand",
+    "ModelGroup": "OverlapConflictCommand",
+    "ReturnsPayload": "true",
+    "RootNamespace": "$project.RootNamespace"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_gme_overlap_conflict",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_gme_overlap_conflict]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "StartDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "StartDate"
+          },
+          {
+            "name": "EndDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
+            "required": true,
+            "mapsTo": "EndDate"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "GraduateMedicalEducation\\OverlapConflictCommand",
+            "fields": [
+              {
+                "name": "OverlapConflict",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.OverlapConflict"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "StartDate",
+      "dataType": "datetime",
+      "required": true
+    },
+    {
+      "name": "EndDate",
+      "dataType": "datetime",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s GraduateMedicalEducation\\OverlapConflictCommand OverlapConflictCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_gme_overlap_conflict] -p:Model=GraduateMedicalEducation\\OverlapConflictCommand -p:ModelGroup=OverlapConflictCommand -p:RootNamespace=$project.RootNamespace -p:IncludeControllerInGeneration=False -p:CommandMethodName=CheckOverlapConflicts ",
+    "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\OverlapConflictCommand OverlapConflictCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_gme_overlap_conflict] -p:Model=GraduateMedicalEducation\\OverlapConflictCommand -p:ModelGroup=OverlapConflictCommand -p:RootNamespace=$project.RootNamespace -p:IncludeControllerInGeneration=False -p:CommandMethodName=CheckOverlapConflicts -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",
+    "generatedDateUtc": "2023-07-24T17:38:42.8069512Z"
+  },
+  "version": 1
+}

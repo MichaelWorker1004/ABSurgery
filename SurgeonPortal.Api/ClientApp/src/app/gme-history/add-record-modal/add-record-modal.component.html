@@ -30,9 +30,16 @@
         [id]="formField.name"
         [required]="formField.required"
         [formControlName]="formField.name"
+        [readonly]="formField.readonly"
         ngDefaultControl
         pInputText
       />
+      <p
+        class="my-0 px-3 py-2 readonly-text"
+        *ngIf="formField.type === 'text-readonly'"
+      >
+        {{ addEditRecordsForm.get(formField.name)?.value ?? '-' }}
+      </p>
       <p-calendar
         *ngIf="formField.type === 'date'"
         [formControlName]="formField.name"
@@ -114,6 +121,25 @@
       <small class="form-helper-text text-muted" *ngIf="formField.helpText">{{
         formField.helpText
       }}</small>
+      <small
+        class="form-helper-text text-muted"
+        *ngFor="let helpText of formField.helpTextArray"
+        >{{ helpText }}</small
+      >
+      <small
+        class="form-helper-text text-danger my-0 flex align-items-center"
+        style="min-height: 37px"
+        *ngIf="formField.errorText"
+      >
+        <span>*{{ formField.errorText }}</span>
+        <p-button
+          *ngIf="formField.overlapId"
+          icon="pi pi-pencil"
+          styleClass="p-button-rounded p-button-text p-button-secondary p-button-sm"
+          title="click here to edit the overlapping record"
+          (onClick)="changeModalData(formField.overlapId)"
+        ></p-button>
+      </small>
     </div>
   </div>
   <div class="grid">
@@ -124,7 +150,13 @@
       <p-button
         [style]="{ width: '337px' }"
         type="submit"
-        [disabled]="addEditRecordsForm.invalid"
+        [disabled]="
+          addEditRecordsForm.invalid || startDateOverlap
+            ? true
+            : false || endDateOverlap
+            ? true
+            : false
+        "
         >Save</p-button
       >
     </div>

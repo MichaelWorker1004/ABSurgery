@@ -63,6 +63,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithMockedIdentity()
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
+				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -101,6 +102,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithMockedIdentity()
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
+				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -122,6 +124,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithMockedIdentity()
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
+				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -149,6 +152,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithMockedIdentity()
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
+                .WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -212,6 +216,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithMockedIdentity()
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
+				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -252,6 +257,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithMockedIdentity()
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
+				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -342,6 +348,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithMockedIdentity()
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
+				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();

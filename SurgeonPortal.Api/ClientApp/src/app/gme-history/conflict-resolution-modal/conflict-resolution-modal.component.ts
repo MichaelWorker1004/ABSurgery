@@ -2,12 +2,18 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GridComponent } from '../../shared/components/grid/grid.component';
 import { CONFLICT_RESOLUTION_GRID_COLS } from './conflict-resolution-cols';
+import { ITEMIZED_GME_COLS } from '../itemized-gme-cols';
 import { ButtonModule } from 'primeng/button';
+import { IRotationReadOnlyModel } from 'src/app/api';
 
 @Component({
   selector: 'abs-conflict-resolution-modal',
@@ -17,13 +23,22 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: ['./conflict-resolution-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ConflictResolutionModalComponent {
+export class ConflictResolutionModalComponent implements OnInit, OnChanges {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
+  @Input() conflictingRecords: IRotationReadOnlyModel[] = [];
   conflictResolutionCols = CONFLICT_RESOLUTION_GRID_COLS;
+  itemizedGMECols = ITEMIZED_GME_COLS;
   conflictResolutionData!: any[];
+  localConflictsData: IRotationReadOnlyModel[] = [];
 
   ngOnInit() {
     this.getConflicts();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['conflictingRecords']) {
+      this.localConflictsData = changes['conflictingRecords'].currentValue;
+    }
   }
 
   getConflicts() {

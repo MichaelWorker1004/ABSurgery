@@ -3,8 +3,10 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbsFilterType, AbsGridCellRendererType } from './abs-grid.enum';
@@ -27,7 +29,7 @@ interface GridAction {
   styleUrls: ['./grid.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, OnChanges {
   @Input() data!: any;
   @Input() columns!: any;
   @Input() actions!: any;
@@ -67,10 +69,21 @@ export class GridComponent implements OnInit {
         this.filteredData = data ?? [];
         this.initPagintion(this.localData);
       });
-    } else {
-      this.localData = this.data;
-      this.filteredData = this.data ?? [];
-      this.initPagintion(this.data);
+    }
+    // else {
+    // this.localData = this.data;
+    // this.filteredData = this.data ?? [];
+    // this.initPagintion(this.data);
+    // }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!isObservable(this.data)) {
+      if (changes['data']) {
+        this.localData = changes['data'].currentValue;
+        this.filteredData = changes['data'].currentValue ?? [];
+        this.initPagintion(this.localData);
+      }
     }
   }
 

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
 using Ytg.Framework.Rules;
+using Ytg.Framework.Rules.Dates;
 using static SurgeonPortal.Library.MedicalTraining.AdvancedTrainingFactory;
 
 namespace SurgeonPortal.Library.MedicalTraining

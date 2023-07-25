@@ -16,6 +16,10 @@ export class GetGraduateMedicalEducationDetails {
   constructor(public id: number) {}
 }
 
+export class ClearGraduateMedicalEducationDetails {
+  static readonly type = '[GME] clear details of gme rotation';
+}
+
 export class UpdateGraduateMedicalEducation {
   static readonly type = '[GME] Update a gme rotation record';
 

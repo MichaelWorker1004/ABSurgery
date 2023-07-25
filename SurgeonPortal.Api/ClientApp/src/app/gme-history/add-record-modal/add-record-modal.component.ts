@@ -35,7 +35,7 @@ import {
   ClearGraduateMedicalEducationErrors,
 } from '../../state';
 import { Select, Store } from '@ngxs/store';
-import { IRotationModel } from 'src/app/api';
+import { IRotationModel, IRotationReadOnlyModel } from 'src/app/api';
 import {
   GetClinicalLevelList,
   GetClinicalActivityList,
@@ -46,10 +46,16 @@ import {
   IClinicalLevelReadOnlyModel,
   IClinicalActivityReadOnlyModel,
 } from '../../api';
-import { validateStartAndEndDates } from 'src/app/shared/validators/validators';
+import {
+  validateMaxDuration,
+  validateMinDuration,
+  validateStartAndEndDates,
+} from 'src/app/shared/validators/validators';
 import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
 import { ButtonModule } from 'primeng/button';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-add-record-modal',
   standalone: true,
@@ -73,10 +79,14 @@ import { ButtonModule } from 'primeng/button';
 })
 export class AddRecordModalComponent implements OnInit, OnDestroy {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
+  @Output() relaunchDialog: EventEmitter<any> = new EventEmitter();
   @Input() isEdit$ = new BehaviorSubject<boolean>(false);
   @Input() slectedGmeRotationId$ = new BehaviorSubject<
     { id?: number; nextStart: string } | undefined
   >(undefined);
+
+  @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationList)
+  gmeRotations$: Observable<IRotationReadOnlyModel[]> | undefined;
 
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationDetails)
   selectedRotation$: Observable<IRotationModel> | undefined;
@@ -98,6 +108,8 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
 
   clearErrors = new ClearGraduateMedicalEducationErrors();
 
+  localRotationsList: IRotationReadOnlyModel[] = [];
+
   selectedRotationSubscription: Subscription | undefined;
   clinicalLevelsSubscription: Subscription | undefined;
   clinicalActivitiesSubscription: Subscription | undefined;
@@ -107,6 +119,10 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
   createActionSubscription: Subscription | undefined;
 
   nonClinicalActivities: IClinicalActivityReadOnlyModel[] = [];
+  clinicalActivitiesList: IClinicalActivityReadOnlyModel[] = [];
+
+  startDateOverlap: IRotationReadOnlyModel | undefined;
+  endDateOverlap: IRotationReadOnlyModel | undefined;
 
   addEditRecordFields: IFormFields[] = ADD_EDIT_RECORD_FIELDS;
   isEditLocal = false;
@@ -131,7 +147,11 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
       isInternationalRotation: new FormControl(false, [Validators.required]),
     },
     {
-      validators: [validateStartAndEndDates('startDate', 'endDate')],
+      validators: [
+        validateStartAndEndDates('startDate', 'endDate'),
+        validateMinDuration('startDate', 'endDate', 2),
+        validateMaxDuration('startDate', 'endDate', 364),
+      ],
     }
   );
 
@@ -149,6 +169,12 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchDropdownData();
     this.fetchFormData();
+
+    this.onChanges();
+
+    this.gmeRotations$?.pipe(untilDestroyed(this)).subscribe((gmeRotations) => {
+      this.localRotationsList = gmeRotations;
+    });
   }
 
   fetchDropdownData() {
@@ -187,6 +213,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
     );
     this.clinicalActivitiesSubscription = this.clinicalActivities$?.subscribe(
       (clinicalActivities) => {
+        this.clinicalActivitiesList = clinicalActivities;
         if (clinicalActivities) {
           this.nonClinicalActivities = clinicalActivities.filter((activity) => {
             if (activity.name.includes('Non-Clinical')) {
@@ -232,7 +259,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
   }
 
   fetchFormData() {
-    this.selectedRotation$?.subscribe((rotation) => {
+    this.selectedRotation$?.pipe(untilDestroyed(this)).subscribe((rotation) => {
       if (rotation) {
         this.rotationToEdit = rotation;
         for (const [key, value] of Object.entries(rotation)) {
@@ -242,41 +269,52 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
           }
           this.addEditRecordsForm.get(key)?.setValue(newValue);
         }
-        this.onChanges();
+        //this.onChanges();
       } else {
+        this.rotationToEdit = undefined;
         //handle if no data is returned or if there was an error
         this.addEditRecordsForm.reset();
         this.addEditRecordsForm.get('isInternationalRotation')?.setValue(false);
-        this.onChanges();
+        //this.onChanges();
       }
     });
 
-    this.isEdit$.subscribe((isEdit) => {
+    this.isEdit$.pipe(untilDestroyed(this)).subscribe((isEdit) => {
       this.isEditLocal = isEdit;
-      this.slectedGmeRotationId$.subscribe((value) => {
-        if (value?.id) {
-          this._store.dispatch(
-            new GetGraduateMedicalEducationDetails(value.id)
-          );
-        }
-        if (value?.nextStart) {
-          const startDate = new Date(value.nextStart);
-          startDate.setDate(startDate.getDate() + 1);
 
-          this.addEditRecordsForm
-            .get('startDate')
-            ?.setValue(startDate.toLocaleDateString());
-        }
-      });
-      if (!isEdit) {
+      if (!this.isEditLocal) {
         this.addEditRecordsForm.reset();
         this.addEditRecordsForm.get('isInternationalRotation')?.setValue(false);
-        this.onChanges();
+        //this.onChanges();
+      }
+    });
+
+    this.slectedGmeRotationId$.pipe(untilDestroyed(this)).subscribe((value) => {
+      if (value?.nextStart && value?.nextStart !== '') {
+        const startDate = new Date(value.nextStart);
+        startDate.setDate(startDate.getDate() + 1);
+
+        this.addEditRecordsForm
+          .get('startDate')
+          ?.setValue(startDate.toLocaleDateString());
       }
     });
   }
 
   onChanges() {
+    let durationInWeeks = 0;
+    const otherField = this.addEditRecordFields.find(
+      (field) => field.name === 'other'
+    );
+
+    const startDateField = this.addEditRecordFields.find(
+      (field) => field.name === 'startDate'
+    );
+
+    const endDateField = this.addEditRecordFields.find(
+      (field) => field.name === 'endDate'
+    );
+
     const calculateWeeks = () => {
       const startDate = this.addEditRecordsForm.get('endDate')?.value
         ? new Date(this.addEditRecordsForm.get('endDate')?.value as string)
@@ -292,6 +330,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
         const weeks = diffDays / 7;
         let weeksValue: string | undefined;
         if (weeks >= 1) {
+          durationInWeeks = weeks;
           weeksValue = Math.round(weeks).toString();
           this.addEditRecordFields.filter((field) => {
             if (field.name === 'weeks') {
@@ -299,6 +338,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
             }
           });
         } else {
+          durationInWeeks = 0;
           this.addEditRecordFields.filter((field) => {
             if (field.name === 'weeks') {
               field.label = 'Day(s)';
@@ -311,32 +351,279 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
       }
     };
 
-    this.addEditRecordsForm.get('endDate')?.valueChanges.subscribe(() => {
-      calculateWeeks();
-    });
+    const setDurationErrors = () => {
+      if (startDateField) {
+        if (this.addEditRecordsForm.errors) {
+          if (this.addEditRecordsForm.errors['minDurationValid'] === false) {
+            startDateField.errorText = 'Rotations must be at least 2 days long';
+            startDateField.overlapId = undefined;
+          } else if (
+            this.addEditRecordsForm.errors['maxDurationValid'] === false
+          ) {
+            startDateField.errorText =
+              'Rotations must be less than 364 days long';
+            startDateField.overlapId = undefined;
+          } else {
+            //startDateField.errorText = undefined;
+          }
+        } else {
+          //startDateField.errorText = undefined;
+        }
+      }
+    };
 
-    this.addEditRecordsForm.get('startDate')?.valueChanges.subscribe(() => {
-      calculateWeeks();
-    });
+    const checkForOverlap = () => {
+      const startDate = this.addEditRecordsForm.get('startDate')?.value
+        ? new Date(this.addEditRecordsForm.get('startDate')?.value as string)
+        : undefined;
+
+      const endDate = this.addEditRecordsForm.get('endDate')?.value
+        ? new Date(this.addEditRecordsForm.get('endDate')?.value as string)
+        : undefined;
+
+      if (startDate) {
+        this.startDateOverlap = this.localRotationsList.find((rotation) => {
+          // check rotation.id against this.rotationToEdit.id
+          if (
+            new Date(rotation.startDate) <= startDate &&
+            new Date(rotation.endDate) >= startDate &&
+            rotation.id !== this.rotationToEdit?.id
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        if (startDateField) {
+          if (this.startDateOverlap) {
+            startDateField.errorText =
+              'This start date overlaps with an existing rotation';
+            startDateField.overlapId = this.startDateOverlap.id;
+          } else {
+            //startDateField.errorText = undefined;
+            startDateField.overlapId = undefined;
+          }
+        }
+      } else {
+        if (startDateField) {
+          //startDateField.errorText = undefined;
+        }
+      }
+
+      if (endDate) {
+        this.endDateOverlap = this.localRotationsList.find((rotation) => {
+          if (
+            new Date(rotation.startDate) <= endDate &&
+            new Date(rotation.endDate) >= endDate &&
+            rotation.id !== this.rotationToEdit?.id
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
+        if (endDateField) {
+          if (this.endDateOverlap) {
+            endDateField.errorText =
+              'This end date overlaps with an existing rotation';
+            endDateField.overlapId = this.endDateOverlap.id;
+          } else {
+            endDateField.errorText = undefined;
+            endDateField.overlapId = undefined;
+          }
+        }
+      } else {
+        if (endDateField) {
+          endDateField.errorText = undefined;
+        }
+      }
+    };
+
+    const setClinicalActivityErrors = (
+      clinicalLevelId?: number | null,
+      clinicalActivityId?: number | null
+    ) => {
+      const otherFellowshipsText =
+        'Please specify which other clinical Fellowships.';
+      const durationText =
+        'Please explain the reason for this rotation being more than 4 months long.';
+      const nonPrimaryText =
+        'Please explain the reason for a rotation in a non-primary activity.';
+      const generalExplainText = 'Please explain the nature of this rotation.';
+
+      let index = -1;
+
+      const activity = this.clinicalActivitiesList.find(
+        (activity) => activity.id === clinicalActivityId
+      );
+      const helpTextArray: string[] = [];
+
+      // if clinical level = 9, then show other field
+      if (clinicalLevelId && clinicalLevelId === 9) {
+        if (!helpTextArray.includes(otherFellowshipsText)) {
+          helpTextArray.push(
+            'Please specify which other clinical Fellowships.'
+          );
+        }
+      } else {
+        index = helpTextArray.indexOf(otherFellowshipsText);
+        if (index > -1) {
+          helpTextArray.splice(index, 1);
+        }
+      }
+
+      //if clinicalLevelId = 4 or 6 && clinicalActivityId = 5 or 17, then show other field
+      if (
+        clinicalLevelId &&
+        (clinicalLevelId === 4 || clinicalLevelId === 6) &&
+        clinicalActivityId &&
+        (clinicalActivityId === 5 || clinicalActivityId === 17)
+      ) {
+        if (!helpTextArray.includes(generalExplainText)) {
+          helpTextArray.push(generalExplainText);
+        }
+      } else {
+        index = helpTextArray.indexOf(generalExplainText);
+        if (index > -1) {
+          helpTextArray.splice(index, 1);
+        }
+      }
+
+      //if clinicalLevelId = 5 or 7 && duration > 16 weeks, then show other field
+      if (
+        clinicalLevelId &&
+        (clinicalLevelId === 5 || clinicalLevelId === 7) &&
+        durationInWeeks >= 16
+      ) {
+        if (!helpTextArray.includes(durationText)) {
+          helpTextArray.push(durationText);
+        }
+      } else {
+        index = helpTextArray.indexOf(durationText);
+        if (index > -1) {
+          helpTextArray.splice(index, 1);
+        }
+      }
+
+      //if clinicalLevelId = 5 or 7 and clinical activity is essential === false
+      if (
+        clinicalLevelId &&
+        (clinicalLevelId === 5 || clinicalLevelId === 7) &&
+        activity &&
+        !activity.isEssential
+      ) {
+        if (!helpTextArray.includes(nonPrimaryText)) {
+          helpTextArray.push(nonPrimaryText);
+        }
+      } else {
+        index = helpTextArray.indexOf(nonPrimaryText);
+        if (index > -1) {
+          helpTextArray.splice(index, 1);
+        }
+      }
+
+      // if we found any of the above enable and require the explain field and display the help text
+      if (helpTextArray.length > 0) {
+        if (otherField) {
+          otherField.helpTextArray = helpTextArray;
+        }
+        this.addEditRecordsForm.get('other')?.enable();
+        this.addEditRecordsForm
+          .get('other')
+          ?.setValidators([Validators.required]);
+      } else {
+        if (otherField) {
+          otherField.helpTextArray = undefined;
+        }
+
+        this.addEditRecordsForm.get('other')?.setValue('');
+        this.addEditRecordsForm.get('other')?.disable();
+        this.addEditRecordsForm.get('other')?.setValidators([]);
+      }
+    };
 
     this.addEditRecordsForm
-      .get('clinicalLevelId')
-      ?.valueChanges.subscribe((val) => {
-        if (val && val === 9) {
-          this.addEditRecordsForm.get('other')?.enable();
-          this.addEditRecordsForm
-            .get('other')
-            ?.setValidators([Validators.required]);
-        } else {
-          this.addEditRecordsForm.get('other')?.setValue('');
-          this.addEditRecordsForm.get('other')?.disable();
-          this.addEditRecordsForm.get('other')?.setValidators([]);
+      .get('endDate')
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((val) => {
+        this.addEditRecordFields.filter((field) => {
+          if (field.name === 'startDate') {
+            if (val) {
+              field.validators.maxDate = new Date(val);
+            } else {
+              field.validators.maxDate = null;
+            }
+          }
+        });
+
+        if (startDateField) {
+          startDateField.errorText = undefined;
+        }
+
+        calculateWeeks();
+        checkForOverlap();
+        setDurationErrors();
+
+        const clinicalActivityId =
+          this.addEditRecordsForm.get('clinicalActivityId')?.value;
+
+        const clinicalLevelId =
+          this.addEditRecordsForm.get('clinicalLevelId')?.value;
+
+        if (clinicalActivityId || clinicalLevelId) {
+          setClinicalActivityErrors(clinicalLevelId, clinicalActivityId);
         }
       });
 
     this.addEditRecordsForm
+      .get('startDate')
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((val) => {
+        this.addEditRecordFields.filter((field) => {
+          if (field.name === 'endDate') {
+            if (val) {
+              field.validators.minDate = new Date(val);
+            } else {
+              field.validators.minDate = null;
+            }
+          }
+        });
+
+        calculateWeeks();
+        checkForOverlap();
+        setDurationErrors();
+
+        const clinicalActivityId =
+          this.addEditRecordsForm.get('clinicalActivityId')?.value;
+
+        const clinicalLevelId =
+          this.addEditRecordsForm.get('clinicalLevelId')?.value;
+
+        if (clinicalActivityId || clinicalLevelId) {
+          setClinicalActivityErrors(clinicalLevelId, clinicalActivityId);
+        }
+      });
+
+    this.addEditRecordsForm
+      .get('clinicalLevelId')
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((val) => {
+        const clinicalActivityId =
+          this.addEditRecordsForm.get('clinicalActivityId')?.value;
+
+        setClinicalActivityErrors(val, clinicalActivityId);
+      });
+
+    this.addEditRecordsForm
       .get('clinicalActivityId')
-      ?.valueChanges.subscribe((val) => {
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((val) => {
+        const clinicalLevelId =
+          this.addEditRecordsForm.get('clinicalLevelId')?.value;
+
+        setClinicalActivityErrors(clinicalLevelId, val);
+
         if (val) {
           const activity = this.nonClinicalActivities.find(
             (activity) => activity.id === val
@@ -356,32 +643,10 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.addEditRecordsForm.get('startDate')?.valueChanges.subscribe((val) => {
-      this.addEditRecordFields.filter((field) => {
-        if (field.name === 'endDate') {
-          if (val) {
-            field.validators.minDate = new Date(val);
-          } else {
-            field.validators.minDate = null;
-          }
-        }
-      });
-    });
-    this.addEditRecordsForm.get('endDate')?.valueChanges.subscribe((val) => {
-      this.addEditRecordFields.filter((field) => {
-        if (field.name === 'startDate') {
-          if (val) {
-            field.validators.maxDate = new Date(val);
-          } else {
-            field.validators.maxDate = null;
-          }
-        }
-      });
-    });
-
     this.addEditRecordsForm
       .get('programName')
-      ?.valueChanges.subscribe((val) => {
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((val) => {
         if (val) {
           this.addEditRecordsForm.get('alternateInstitutionName')?.setValue('');
           this.addEditRecordsForm.get('alternateInstitutionName')?.disable();
@@ -397,7 +662,8 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
       });
     this.addEditRecordsForm
       .get('alternateInstitutionName')
-      ?.valueChanges.subscribe((val) => {
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((val) => {
         if (val) {
           this.addEditRecordsForm.get('programName')?.setValidators([]);
         } else {
@@ -456,6 +722,10 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  changeModalData(id: number) {
+    this.relaunchDialog.emit(id);
   }
 
   close() {

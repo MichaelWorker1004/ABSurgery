@@ -32,6 +32,8 @@ import {
   GraduateMedicalEducationSelectors,
   GetGraduateMedicalEducationList,
   DeleteGraduateMedicalEducation,
+  GetGraduateMedicalEducationDetails,
+  ClearGraduateMedicalEducationDetails,
 } from '../state';
 import { Select, Store } from '@ngxs/store';
 import { IRotationReadOnlyModel, IGmeSummaryReadOnlyModel } from 'src/app/api';
@@ -352,7 +354,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
 
   initSummaryData() {
     this.gmeSummarySubscription = this.gmeSummary$?.subscribe((gmeSummary) => {
-      console.log('gmeSummary', gmeSummary);
       if (gmeSummary) {
         this.summaryGme$.next(!this.summaryGme$.getValue());
       }
@@ -422,9 +423,24 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     ];
   }
 
+  relaunchAddEditGmeRotation($event: any) {
+    this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
+    this.itemizedGme$.next(!this.itemizedGme$.getValue());
+    if ($event) {
+      this.isEditGmeRotation$.next(true);
+      this._store.dispatch(new GetGraduateMedicalEducationDetails($event));
+      this.selectedGmeRotationId$.next({
+        id: $event,
+        nextStart: '',
+      });
+      this.handleAddEditGmeRotation(true);
+    }
+  }
+
   handleAddEditGmeRotation(isEdit = false) {
     if (!isEdit) {
       this.isEditGmeRotation$.next(false);
+      this._store.dispatch(new ClearGraduateMedicalEducationDetails());
       this.selectedGmeRotationId$.next({
         nextStart: this.maxEndDate?.toISOString() ?? '',
       });
@@ -438,9 +454,11 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     const { data } = $event;
     if ($event.fieldKey === 'edit') {
       this.isEditGmeRotation$.next(true);
+      this._store.dispatch(new GetGraduateMedicalEducationDetails(data.id));
       this.selectedGmeRotationId$.next({
         id: data.id,
-        nextStart: this.maxEndDate?.toISOString() ?? '',
+        //nextStart: this.maxEndDate?.toISOString() ?? '',
+        nextStart: '',
       });
       this.handleAddEditGmeRotation(true);
     } else if ($event.fieldKey === 'delete') {
@@ -503,7 +521,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   }
 
   viewConflictsToResolve(conflictList: any[]) {
-    console.log(conflictList);
     this.toggleConflictResolutionModal();
   }
   toggleConflictResolutionModal() {

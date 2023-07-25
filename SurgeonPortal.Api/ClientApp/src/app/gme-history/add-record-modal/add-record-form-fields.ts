@@ -36,7 +36,7 @@ export const ADD_EDIT_RECORD_FIELDS = [
     name: 'weeks',
     placeholder: '',
     readonly: true,
-    type: 'text',
+    type: 'text-readonly',
     size: 'col-4',
   },
   {

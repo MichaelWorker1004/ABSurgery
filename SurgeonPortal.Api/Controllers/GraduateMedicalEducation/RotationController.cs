@@ -77,7 +77,7 @@ namespace SurgeonPortal.Api.Controllers.GraduateMedicalEducation
         {
             var item = rotationFactory.Create();
             AssignCreateProperties(item, model);
-        
+
             return await CreateAsync<RotationModel>(
                 _mapper,
                 item,

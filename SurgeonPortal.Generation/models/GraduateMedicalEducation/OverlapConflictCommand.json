@@ -1,0 +1,57 @@
+{
+  "refs": {},
+  "name": "GraduateMedicalEducation\\OverlapConflictCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "StartDate",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "EndDate",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "OverlapConflict",
+      "dataType": "bool",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s GraduateMedicalEducation\\OverlapConflictCommand -sp [dbo].[get_gme_overlap_conflict] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-07-24T17:32:10.4909515Z"
+  },
+  "version": 1
+}

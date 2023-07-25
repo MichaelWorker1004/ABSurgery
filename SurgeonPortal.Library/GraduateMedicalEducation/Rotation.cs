@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
 using Ytg.Framework.Rules;
+using Ytg.Framework.Rules.Dates;
 using static SurgeonPortal.Library.GraduateMedicalEducation.RotationFactory;
 
 namespace SurgeonPortal.Library.GraduateMedicalEducation
@@ -20,13 +21,18 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 	public class Rotation : YtgBusinessBase<Rotation>, IRotation
     {
         private readonly IRotationDal _rotationDal;
+		private readonly IOverlapConflictCommandFactory _overlapConflictCommandFactory;
 
         public Rotation(
             IIdentityProvider identityProvider,
-            IRotationDal rotationDal)
+            IRotationDal rotationDal,
+			IOverlapConflictCommandFactory overlapConflictCommandFactory)
             : base(identityProvider)
         {
             _rotationDal = rotationDal;
+			_overlapConflictCommandFactory = overlapConflictCommandFactory;
+
+			InitializeInjectionDependentRules();
         }
 
         [Key] 
@@ -171,9 +177,16 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             // Only process priority 5 and higher if all 4 and lower completed first
             BusinessRules.ProcessThroughPriority = 4;
 
-            BusinessRules.AddRule(new DateGreaterThanRule(StartDateProperty, EndDateProperty));
-            BusinessRules.AddRule(new DateLessThanRule(EndDateProperty, StartDateProperty));
-        }
+            BusinessRules.AddRule(new DateGreaterThanRule(EndDateProperty, StartDateProperty));
+            BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
+			BusinessRules.AddRule(new MaxDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 364, 1));
+			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));	
+		}
+
+		private void InitializeInjectionDependentRules()
+		{
+			BusinessRules.AddRule(new OverlapConflictRule(_overlapConflictCommandFactory, StartDateProperty, EndDateProperty, 5));
+		}
 
         [RunLocal]
         [DeleteSelf]

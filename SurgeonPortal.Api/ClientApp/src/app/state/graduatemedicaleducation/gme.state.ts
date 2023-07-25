@@ -18,6 +18,7 @@ import {
   DeleteGraduateMedicalEducation,
   ClearGraduateMedicalEducationErrors,
   GetGraduateMedicalEducationSummary,
+  ClearGraduateMedicalEducationDetails,
 } from './gme.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
@@ -100,14 +101,13 @@ export class GraduateMedicalEducationState {
     ctx: StateContext<IGraduateMedicalEducation>,
     payload: { id: number }
   ) {
-    const state = ctx.getState();
+    //const state = ctx.getState();
     const gmeId = payload.id;
     return this.rotationService.retrieveRotation_GetById(gmeId).pipe(
       tap((result: any) => {
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           selectedRotation: result,
-          errors: null,
+          //errors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -116,6 +116,15 @@ export class GraduateMedicalEducationState {
         return of(errors);
       })
     );
+  }
+
+  @Action(ClearGraduateMedicalEducationDetails)
+  clearGraduateMedicalEducationDetails(
+    ctx: StateContext<IGraduateMedicalEducation>
+  ) {
+    ctx.patchState({
+      selectedRotation: undefined,
+    });
   }
 
   @Action(UpdateGraduateMedicalEducation)

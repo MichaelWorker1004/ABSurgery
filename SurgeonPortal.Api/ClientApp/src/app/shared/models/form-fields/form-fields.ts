@@ -12,4 +12,7 @@ export interface IFormFields {
   options?: any[];
   filteredOptions?: any[];
   validators?: any;
+  errorText?: string;
+  helpTextArray?: string[];
+  overlapId?: number;
 }

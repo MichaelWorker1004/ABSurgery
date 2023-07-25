@@ -56,3 +56,49 @@ export function validateStartAndEndDates(
     return null;
   };
 }
+
+export function validateMinDuration(
+  startDate: string,
+  endDate: string,
+  minDuration: number
+): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const start = control.get(startDate)?.value;
+    const end = control.get(endDate)?.value;
+
+    if (!start || !end) return null;
+
+    const difference_in_time =
+      new Date(end).getTime() - new Date(start).getTime();
+    const difference_in_days = difference_in_time / (1000 * 3600 * 24);
+
+    if (difference_in_days < minDuration) {
+      return { minDurationValid: false };
+    }
+
+    return null;
+  };
+}
+
+export function validateMaxDuration(
+  startDate: string,
+  endDate: string,
+  maxDuration: number
+): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const start = control.get(startDate)?.value;
+    const end = control.get(endDate)?.value;
+
+    if (!start || !end) return null;
+
+    const difference_in_time =
+      new Date(end).getTime() - new Date(start).getTime();
+    const difference_in_days = difference_in_time / (1000 * 3600 * 24);
+
+    if (difference_in_days > maxDuration) {
+      return { maxDurationValid: false };
+    }
+
+    return null;
+  };
+}
