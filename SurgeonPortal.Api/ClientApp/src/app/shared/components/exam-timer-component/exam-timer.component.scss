@@ -1,6 +1,6 @@
 .timer-container {
   min-width: 7rem;
-  padding: 0.6rem;
+  //padding: 0.6rem;
   font-size: 1.25rem;
   background-color: var(--global-danger);
   color: #fff;
@@ -15,13 +15,17 @@
   z-index: 999;
 }
 .total-timer-container {
-  padding: 0.25rem 0.65rem 0.5rem;
+  padding: 0.85rem 1.25rem 0.5rem;
   border-bottom: 1px solid #fff;
   text-align: center;
+  background-color: var(--global-primary);
+  width: 100%;
+  border-top-left-radius: 0.5rem;
 }
 .increment-timer-container {
-  padding: 0.5rem 0.65rem 0.25rem;
+  padding: 0.5rem 1.25rem 0.85rem;
   text-align: center;
+  border-bottom-left-radius: 0.5rem;
   .timer-value {
     font-size: 1.875rem;
   }
