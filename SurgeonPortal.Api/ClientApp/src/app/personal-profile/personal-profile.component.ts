@@ -155,9 +155,10 @@ export class PersonalProfileComponent implements OnInit {
           PicklistsSelectors.slices.states
         ) as IStateReadOnlyModel[];
         this.userProfileForm.patchValue({ ...user });
-        this.userProfileForm
-          .get('birthDate')
-          ?.setValue(new Date(user.birthDate));
+        const date = new Date(Date.parse(user?.birthDate));
+        if (!isNaN(date as unknown as number)) {
+          this.userProfileForm.get('birthDate')?.patchValue(date);
+        }
       });
 
     this.userProfileForm
