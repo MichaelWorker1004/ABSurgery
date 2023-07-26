@@ -7,22 +7,26 @@
   <div class="grid">
     <div class="flex flex-column gap-2 col-12">
       <label htmlFor="trainingType">Program Name</label>
-      <p-dropdown
-        [options]="fellowshipPrograms"
+      <p-autoComplete
+        [dropdown]="true"
+        [suggestions]="filteredFellowshipPrograms"
+        (completeMethod)="filterItems($event)"
+        (onSelect)="onInstitutionSelect()"
+        (onClear)="clearAutoComplete()"
+        [style]="{ width: '100%' }"
+        [inputStyle]="{ width: '100%' }"
         [disabled]="fellowshipForm.get('programOther')?.value ? true : false"
         [showClear]="true"
-        [required]="!fellowshipForm.get('programOther')?.value"
         appendTo="body"
-        optionLabel="programName"
-        optionValue="programName"
+        id="programName"
+        placeholder="Select or Enter Program Name"
         formControlName="programName"
-        placeholder="Choose a Training Type"
-      ></p-dropdown>
+      >
+      </p-autoComplete>
     </div>
     <div class="flex flex-column gap-2 col-12">
       <label htmlFor="other">Other</label>
       <input
-        [attr.disabled]="fellowshipForm.get('programName')?.value"
         [required]="!fellowshipForm.get('programName')?.value"
         pInputText
         id="other"
@@ -62,7 +66,7 @@
       type="submit"
       [style]="{ width: '337px' }"
       variant="primary"
-      [disabled]="fellowshipForm.invalid"
+      [disabled]="fellowshipForm.invalid || fellowshipForm.pristine"
       >Save
     </p-button>
   </div>

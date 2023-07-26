@@ -22,7 +22,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { Observable, Subject } from 'rxjs';
 import { IFellowshipReadOnlyModel } from 'src/app/api/models/medicaltraining/fellowship-read-only.model';
 import { Select } from '@ngxs/store';
-import { PicklistsSelectors } from 'src/app/state/picklists';
+import { IPickListItem, PicklistsSelectors } from 'src/app/state/picklists';
 import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fellowship-program-read-only.model';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
@@ -54,7 +54,8 @@ export class FellowshipAddEditModalComponent implements OnInit {
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
 
-  fellowshipPrograms!: IFellowshipProgramReadOnlyModel[];
+  fellowshipPrograms: string[] = [];
+  filteredFellowshipPrograms: string[] = [];
 
   year = new Date().getFullYear();
   maxYear: Date = new Date();
@@ -90,9 +91,13 @@ export class FellowshipAddEditModalComponent implements OnInit {
   subscribeToRowData() {
     this.fellowship$.subscribe((formData) => {
       if (Object.keys(formData).length > 0) {
+        const programName = this.fellowshipPrograms.find(
+          (i) => i === formData.programName.toString()
+        );
         this.fellowshipId = formData.id;
+
         this.fellowshipForm.patchValue({
-          programName: formData.programName,
+          programName: programName,
           programOther: formData.programOther,
           completionYear: formData.completionYear.toString(),
         });
@@ -105,9 +110,28 @@ export class FellowshipAddEditModalComponent implements OnInit {
   setPicklistData() {
     this.fellowshipPrograms$?.subscribe(
       (fellowshipPrograms: IFellowshipProgramReadOnlyModel[]) => {
-        this.fellowshipPrograms = fellowshipPrograms;
+        fellowshipPrograms.forEach((fellowshipProgram) => {
+          this.fellowshipPrograms.push(fellowshipProgram.programName);
+        });
       }
     );
+  }
+
+  onInstitutionSelect() {
+    this.fellowshipForm.get('programOther')?.patchValue('');
+    this.fellowshipForm.get('programOther')?.disable();
+  }
+
+  clearAutoComplete() {
+    this.fellowshipForm.get('programName')?.patchValue('');
+    this.fellowshipForm.get('programOther')?.enable();
+  }
+
+  filterItems($event: any) {
+    const value = $event.query;
+    this.filteredFellowshipPrograms = this.fellowshipPrograms.filter((i) => {
+      return i?.toLowerCase().includes(value.toLowerCase());
+    });
   }
 
   cancel() {

@@ -467,11 +467,9 @@ export class MedicalTrainingComponent implements OnInit {
   saveFellowship($event: any) {
     this.showFellowshipAddEdit = $event.show;
     const model = {
-      id: $event.fellowshipId ?? null,
-      programName: $event.fellowshipForm.programName,
-      completionYear:
-        new Date($event.fellowshipForm.completionYear ?? '').toISOString() ??
-        null,
+      id: $event.fellowshipId,
+      programName: $event.fellowshipForm.programName ?? '',
+      completionYear: $event.fellowshipForm.completionYear,
       programOther: $event.fellowshipForm.programOther,
     } as unknown as IFellowshipModel;
 
@@ -530,18 +528,6 @@ export class MedicalTrainingComponent implements OnInit {
 
   save() {
     const formValues = this.medicalTrainingForm.value;
-    const medicalSchoolCompletionYear = formValues.medicalSchoolCompletionYear
-      ? new Date(formValues.medicalSchoolCompletionYear ?? '')
-          .getFullYear()
-          .toString()
-      : '';
-
-    const residencyCompletionYear = formValues.residencyCompletionYear
-      ? new Date(formValues.residencyCompletionYear ?? '')
-          .getFullYear()
-          .toString()
-      : '';
-
     const residencyProgramName = this.residencyPrograms.filter((program) => {
       if (
         formValues.residencyProgramName &&
@@ -559,12 +545,12 @@ export class MedicalTrainingComponent implements OnInit {
       medicalSchoolStateId: formValues.medicalSchoolStateId,
       medicalSchoolCountryId: formValues.medicalSchoolCountryId,
       medicalSchoolCountryName: formValues.medicalSchoolCountryName,
-      medicalSchoolCompletionYear,
+      medicalSchoolCompletionYear: formValues.medicalSchoolCompletionYear,
       graduateProfileDescription: formValues.graduateProfileDescription,
       degreeId: formValues.degreeId,
       degreeName: formValues.degreeName,
       residencyProgramName: residencyProgramName[0].programName,
-      residencyCompletionYear,
+      residencyCompletionYear: formValues.residencyCompletionYear,
       residencyProgramOther: formValues.residencyProgramOther,
       createdByUserId: this.userId,
     } as unknown as IMedicalTrainingModel;

@@ -7,7 +7,6 @@ namespace SurgeonPortal.Models.MedicalTraining
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        [Required(ErrorMessage = "ProgramName is required")]
         public string ProgramName { get; set; }
         public string CompletionYear { get; set; }
         [MaxLength(8000, ErrorMessage = "The ProgramOther cannot be more than 8000 characters")]

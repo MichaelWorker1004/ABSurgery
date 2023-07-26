@@ -34,12 +34,7 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "ProgramName is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "CompletionYear",
