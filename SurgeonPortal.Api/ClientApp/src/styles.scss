@@ -878,6 +878,13 @@ label {
   }
 }
 
+.no-highlight {
+  user-select: none; // chrome and Opera
+  -moz-user-select: none; // Firefox
+  -webkit-text-select: none; // IOS Safari
+  -webkit-user-select: none; // Safari
+}
+
 /* Global Breakpoints */
 @media (max-width: $breakpoint-sm) {
   .app-container {

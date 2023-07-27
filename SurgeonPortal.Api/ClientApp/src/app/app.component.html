@@ -16,6 +16,9 @@
       ></abs-side-navigation>
     </aside>
     <main>
+      <div class="screenshot-hider {{ preventScreenshot ? 'toggled' : '' }}">
+        Screenshots prohibited. Press any key to continue...
+      </div>
       <div class="app-container-fluid flex flex-column">
         <abs-dashboard-header
           (handleSideNavToggle)="handleSideNavToggle()"

@@ -1,6 +1,7 @@
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -43,6 +44,11 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class OralExaminationsComponent implements OnInit {
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event: any) {
+    event.preventDefault();
+  }
+
   @Select(ExamScoringSelectors.slices.examinee) examinee$:
     | Observable<IExamineeReadOnlyModel>
     | undefined;

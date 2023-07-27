@@ -1,4 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -45,6 +50,11 @@ interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExaminationRostersComponent implements OnInit {
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event: any) {
+    event.preventDefault();
+  }
+
   examHeaderId = 491;
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
