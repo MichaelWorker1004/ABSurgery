@@ -11,16 +11,18 @@
   </section>
   <section>
     <div class="grid">
-      <sl-card class="col-12">
+      <!-- Keeping this commented out for now, but we may want to bring it back later. -->
+
+      <!-- <sl-card class="col-12">
         <abs-collapse-panel [panelId]="1" [startExpanded]="true">
           <h5 class="mt-0 mb-2" panel-header>Active Examinations</h5>
           <div class="grid">
             <div class="col-12 active-exam__container">
               <p *ngIf="activeExams.length > 0">
                 Click on a link below to register for an active examination
-              </p>
-              <!-- TODO: [Joe] update the 'no examinations' text to include any relevant information or action items -->
-              <p *ngIf="activeExams.length === 0">
+              </p> -->
+      <!-- TODO: [Joe] update the 'no examinations' text to include any relevant information or action items -->
+      <!-- <p *ngIf="activeExams.length === 0">
                 There are no active examinations at this time. Please check back
                 later.
               </p>
@@ -84,7 +86,7 @@
             </div>
           </div>
         </abs-collapse-panel>
-      </sl-card>
+      </sl-card> -->
 
       <sl-card class="col-12">
         <abs-collapse-panel
@@ -99,7 +101,6 @@
                 Below is a history of all of the examinations that you've
                 participated in
               </p>
-              <!-- TODO: [Joe] create expanded row toggle button -->
               <abs-grid
                 [columns]="examHistoryCols"
                 [data]="examHistory$"
