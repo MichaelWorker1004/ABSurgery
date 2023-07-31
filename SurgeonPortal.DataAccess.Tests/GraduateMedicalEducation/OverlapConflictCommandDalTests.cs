@@ -20,12 +20,14 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
             var expectedUserId = Create<int>();
             var expectedStartDate = Create<DateTime>();
             var expectedEndDate = Create<DateTime>();
+            var expectedRotationId = Create<int?>();
             var expectedParams =
                 new
                 {
                     UserId = expectedUserId,
                     StartDate = expectedStartDate,
                     EndDate = expectedEndDate,
+                    RotationId = expectedRotationId,
                 };
         
             var sqlManager = new MockSqlConnectionManager();
@@ -35,7 +37,8 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
             sut.CheckOverlapConflicts(
                 expectedUserId,
                 expectedStartDate,
-                expectedEndDate);
+                expectedEndDate,
+                expectedRotationId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

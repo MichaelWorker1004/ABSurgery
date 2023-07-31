@@ -107,6 +107,22 @@ namespace SurgeonPortal.Api.Controllers.GraduateMedicalEducation
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RotationGapReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("gaps")]
+        public async Task<ActionResult<IEnumerable<RotationGapReadOnlyModel>>> GetRotationGapReadOnly_GetByUserIdAsync(
+            [FromServices] IRotationGapReadOnlyListFactory rotationGapReadOnlyListFactory)
+        {
+            var items = await rotationGapReadOnlyListFactory.GetByUserIdAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<RotationGapReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RotationReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

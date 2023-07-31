@@ -1,12 +1,20 @@
 <div class="mb-5">
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
-    dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
-    amet tortor at, condimentum tempor erat.
+    There is a gap in your current gme rotations history. Please either add a
+    new rotation or edit the existing rotations to account for this time.
   </p>
+  <p-button
+    variant="default"
+    class="btn-add mt-2 mb-2"
+    (onClick)="addNewRecord()"
+    *ngIf="gapData && gapData.startDate !== gapData.endDate"
+  >
+    <i slot="prefix" class="fa-solid fa-plus"></i>
+    ADD A RECORD
+  </p-button>
   <abs-grid
     [columns]="conflictResolutionCols"
-    [data]="conflictResolutionData"
+    [data]="localConflictsData"
     (action)="girdAction($event)"
   >
   </abs-grid>

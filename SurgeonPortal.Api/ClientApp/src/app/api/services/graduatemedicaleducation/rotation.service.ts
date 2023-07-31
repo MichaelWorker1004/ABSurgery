@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IRotationModel } from '../../models/graduatemedicaleducation/rotation.model';
+import { IRotationGapReadOnlyModel } from '../../models/graduatemedicaleducation/rotation-gap-read-only.model';
 import { IRotationReadOnlyModel } from '../../models/graduatemedicaleducation/rotation-read-only.model';
 import { ApiService } from 'ytg-angular';
 
@@ -135,6 +136,30 @@ export class RotationService {
             
             return this.apiService.put<IRotationModel>(`api/graduate-medical-education?api-version=${apiVersion}&id=${id}`,
             model);
+        }
+ 
+        public retrieveRotationGapReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IRotationGapReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_gme_conflicts]
+            */
+            
+            
+            return this.apiService.get<IRotationGapReadOnlyModel[]>(`api/graduate-medical-education/gaps?api-version=${apiVersion}`);
         }
  
         public retrieveRotationReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IRotationReadOnlyModel[]> {

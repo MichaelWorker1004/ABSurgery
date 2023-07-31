@@ -29,6 +29,7 @@ export * from './models/picklists/scoring-session-read-only.model';
 export * from './models/graduatemedicaleducation/rotation-read-only.model';
 export * from './models/graduatemedicaleducation/rotation.model';
 export * from './models/graduatemedicaleducation/gme-summary-read-only.model';
+export * from './models/graduatemedicaleducation/rotation-gap-read-only.model';
 
 export * from './models/professionalstanding/medical-license-read-only.model';
 export * from './models/professionalstanding/medical-license.model';

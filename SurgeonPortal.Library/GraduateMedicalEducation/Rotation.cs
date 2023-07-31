@@ -21,7 +21,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 	public class Rotation : YtgBusinessBase<Rotation>, IRotation
     {
         private readonly IRotationDal _rotationDal;
-		private readonly IOverlapConflictCommandFactory _overlapConflictCommandFactory;
 
         public Rotation(
             IIdentityProvider identityProvider,
@@ -30,9 +29,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             : base(identityProvider)
         {
             _rotationDal = rotationDal;
-			_overlapConflictCommandFactory = overlapConflictCommandFactory;
-
-			InitializeInjectionDependentRules();
         }
 
         [Key] 
@@ -180,12 +176,8 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             BusinessRules.AddRule(new DateGreaterThanRule(EndDateProperty, StartDateProperty));
             BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
 			BusinessRules.AddRule(new MaxDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 364, 1));
-			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));	
-		}
-
-		private void InitializeInjectionDependentRules()
-		{
-			BusinessRules.AddRule(new OverlapConflictRule(_overlapConflictCommandFactory, StartDateProperty, EndDateProperty, 5));
+			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));
+			BusinessRules.AddRule(new OverlapConflictRule(StartDateProperty, EndDateProperty, 5));
 		}
 
         [RunLocal]

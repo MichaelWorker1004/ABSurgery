@@ -13,13 +13,12 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		private IPropertyInfo SecondaryProperty { get; set; }
 
 		public OverlapConflictRule(
-			IOverlapConflictCommandFactory overlapConflictCommandFactory,
 			IPropertyInfo primaryProperty,
 			IPropertyInfo secondaryProperty,
 			int priority)
 			: base(primaryProperty)
 		{
-			_overlapConflictCommandFactory = overlapConflictCommandFactory;
+			_overlapConflictCommandFactory = new OverlapConflictCommandFactory();
 			InputProperties = new List<IPropertyInfo> { primaryProperty, secondaryProperty };
 			SecondaryProperty = secondaryProperty;
 			Priority = priority;
@@ -31,9 +30,11 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			var startDate = context.InputPropertyValues[PrimaryProperty];
 			var endDate = context.InputPropertyValues[SecondaryProperty];
 
+			var target = context.Target as Rotation;
+
 			if (startDate is DateTime parsedStartDate && endDate is DateTime parsedEndDate)
 			{
-				var command = _overlapConflictCommandFactory.CheckOverlapConflicts(IdentityHelper.UserId, parsedStartDate, parsedEndDate);
+				var command = _overlapConflictCommandFactory.CheckOverlapConflicts(IdentityHelper.UserId, parsedStartDate, parsedEndDate, target.IsNew ? null : target.Id);
 				if(command.OverlapConflict)
 				{
 					context.AddErrorResult(PrimaryProperty, "The rotation dates overlap with an already existing rotation.");

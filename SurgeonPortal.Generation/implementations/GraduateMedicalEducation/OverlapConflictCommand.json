@@ -47,6 +47,15 @@
             "scale": 3,
             "required": true,
             "mapsTo": "EndDate"
+          },
+          {
+            "name": "RotationId",
+            "dataType": "int?",
+            "maxLength": 50,
+            "precision": 0,
+            "scale": 0,
+            "required": false,
+            "mapsTo": "RotationId"
           }
         ],
         "recordsets": [
@@ -84,6 +93,11 @@
       "name": "EndDate",
       "dataType": "datetime",
       "required": true
+    },
+    {
+      "name": "RotationId",
+      "dataType": "int?",
+      "required": false
     }
   ],
   "metadata": {
@@ -91,5 +105,6 @@
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\OverlapConflictCommand OverlapConflictCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_gme_overlap_conflict] -p:Model=GraduateMedicalEducation\\OverlapConflictCommand -p:ModelGroup=OverlapConflictCommand -p:RootNamespace=$project.RootNamespace -p:IncludeControllerInGeneration=False -p:CommandMethodName=CheckOverlapConflicts -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",
     "generatedDateUtc": "2023-07-24T17:38:42.8069512Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\GraduateMedicalEducation\\OverlapConflictCommand.json",
   "version": 1
 }

@@ -70,7 +70,7 @@ export function validateMinDuration(
 
     const difference_in_time =
       new Date(end).getTime() - new Date(start).getTime();
-    const difference_in_days = difference_in_time / (1000 * 3600 * 24);
+    const difference_in_days = difference_in_time / (1000 * 3600 * 24) + 1;
 
     if (difference_in_days < minDuration) {
       return { minDurationValid: false };
@@ -93,7 +93,7 @@ export function validateMaxDuration(
 
     const difference_in_time =
       new Date(end).getTime() - new Date(start).getTime();
-    const difference_in_days = difference_in_time / (1000 * 3600 * 24);
+    const difference_in_days = difference_in_time / (1000 * 3600 * 24) + 1;
 
     if (difference_in_days > maxDuration) {
       return { maxDurationValid: false };

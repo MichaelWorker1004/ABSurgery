@@ -21,6 +21,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             dto.StartDate = Create<System.DateTime>();
             dto.EndDate = Create<System.DateTime>();
             dto.OverlapConflict = Create<bool>();
+            dto.RotationId = Create<int?>();
     
             return dto;
         }
@@ -33,6 +34,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var expectedUserId = Create<int>();
             var expectedStartDate = Create<DateTime>();
             var expectedEndDate = Create<DateTime>();
+            var expectedRotationId = Create<int?>();
             
             var dto = Create<OverlapConflictCommandDto>();
         
@@ -40,7 +42,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             mockDal.Setup(m => m.CheckOverlapConflicts(
                 expectedUserId,
                 expectedStartDate,
-                expectedEndDate))
+                expectedEndDate,
+                expectedRotationId))
                 .Returns(dto);
         
             UseMockServiceProvider()
@@ -53,7 +56,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var sut = factory.CheckOverlapConflicts(
                 expectedUserId,
                 expectedStartDate,
-                expectedEndDate);
+                expectedEndDate,
+                expectedRotationId);
         
             mockDal.VerifyAll();
         

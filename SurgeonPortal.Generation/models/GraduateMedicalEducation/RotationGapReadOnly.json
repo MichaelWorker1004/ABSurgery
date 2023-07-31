@@ -1,0 +1,57 @@
+{
+  "refs": {},
+  "name": "GraduateMedicalEducation\\RotationGapReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "StartDate",
+      "dataType": "datetime?",
+      "maxLength": 3,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "EndDate",
+      "dataType": "datetime?",
+      "maxLength": 3,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "PreviousRotationId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "NextRotationId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s GraduateMedicalEducation\\RotationGapReadOnly -sp [dbo].[get_gme_conflicts] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-07-26T14:17:23.8822585Z"
+  },
+  "version": 1
+}

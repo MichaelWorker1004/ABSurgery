@@ -37,7 +37,7 @@
               (click)="handleAddEditGmeRotation()"
             >
               <i slot="prefix" class="fa-solid fa-plus"></i>
-              add a record
+              ADD A RECORD
             </p-button>
 
             <div class="legend inline-flex justify-content-end flex-wrap">
@@ -50,10 +50,10 @@
                 Non-Clinical Activity
               </div>
               <!-- conflicts legend key -->
-              <!-- <div class="l flex align-items-center conflict">
+              <div class="l flex align-items-center conflict">
                 <div class="i"></div>
                 Conflict
-              </div> -->
+              </div>
             </div>
           </div>
 
@@ -180,7 +180,11 @@
       [width]="80"
     >
       <abs-conflict-resolution-modal
+        [conflictingRecords]="conflictingRecords"
+        [gapData]="gapData"
         (closeDialog)="toggleConflictResolutionModal()"
+        (editRecord)="relaunchAddEditGmeRotation($event)"
+        (addRecord)="handleAddGmeGapRotation($event)"
       >
       </abs-conflict-resolution-modal>
     </abs-modal>

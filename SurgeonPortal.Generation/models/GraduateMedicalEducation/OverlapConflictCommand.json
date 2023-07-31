@@ -46,6 +46,17 @@
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "RotationId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {

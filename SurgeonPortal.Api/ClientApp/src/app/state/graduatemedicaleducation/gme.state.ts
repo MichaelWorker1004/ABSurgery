@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, mergeMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, map, mergeMap, share, tap } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import {
   IRotationModel,
   IRotationReadOnlyModel,
   IGmeSummaryReadOnlyModel,
+  IRotationGapReadOnlyModel,
 } from '../../api';
 import { IFormErrors } from '../../shared/common';
 import { RotationService, GmeSummaryService } from '../../api';
@@ -19,11 +20,14 @@ import {
   ClearGraduateMedicalEducationErrors,
   GetGraduateMedicalEducationSummary,
   ClearGraduateMedicalEducationDetails,
+  GetGraduateMedicalEducationGapList,
+  GetAllGraduateMedicalEducation,
 } from './gme.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 export interface IGraduateMedicalEducation {
   gmeRotations: IRotationReadOnlyModel[];
+  gmeGaps: IRotationGapReadOnlyModel[];
   gmeSummary: IGmeSummaryReadOnlyModel[];
   selectedRotation: IRotationModel | undefined;
   claims: string[];
@@ -37,6 +41,7 @@ export const GRADUATE_MEDICAL_EDUCATION_STATE_TOKEN =
   name: GRADUATE_MEDICAL_EDUCATION_STATE_TOKEN,
   defaults: {
     gmeRotations: [],
+    gmeGaps: [],
     gmeSummary: [],
     selectedRotation: undefined,
     claims: [],
@@ -58,10 +63,9 @@ export class GraduateMedicalEducationState {
     const state = ctx.getState();
     return this.gmeSummaryService.retrieveGmeSummaryReadOnly_GetByUserId().pipe(
       tap((result: any) => {
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           gmeSummary: this.buildSummaryRows(result),
-          errors: null,
+          //errors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -79,12 +83,11 @@ export class GraduateMedicalEducationState {
     const state = ctx.getState();
     return this.rotationService.retrieveRotationReadOnly_GetByUserId().pipe(
       tap((result: any) => {
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           gmeRotations: result.sort((a: any, b: any) =>
             a.startDate > b.startDate ? 1 : -1
           ),
-          errors: null,
+          //errors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -93,6 +96,57 @@ export class GraduateMedicalEducationState {
         return of(errors);
       }),
       mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationSummary()))
+    );
+  }
+
+  @Action(GetGraduateMedicalEducationGapList)
+  getGraduateMedicalEducationGapList(
+    ctx: StateContext<IGraduateMedicalEducation>
+  ) {
+    const state = ctx.getState();
+    return this.rotationService.retrieveRotationGapReadOnly_GetByUserId().pipe(
+      tap((result: any) => {
+        console.log(result);
+        ctx.patchState({
+          gmeGaps: result.sort((a: any, b: any) =>
+            new Date(a.startDate).getTime() > new Date(b.startDate).getTime()
+              ? 1
+              : -1
+          ),
+          //errors: null,
+        });
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        return of(errors);
+      }),
+      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationSummary()))
+    );
+  }
+
+  @Action(GetAllGraduateMedicalEducation)
+  getAllGraduateMedicalEducation(
+    ctx: StateContext<IGraduateMedicalEducation>
+  ): Observable<IGraduateMedicalEducation> {
+    const joins = [
+      this.getGraduateMedicalEducationList(ctx).pipe(
+        catchError((error) => of(error))
+      ),
+      this.getGraduateMedicalEducationGapList(ctx).pipe(
+        catchError((error) => of(error))
+      ),
+    ];
+
+    return forkJoin(joins).pipe(
+      map((gmeAll: IGraduateMedicalEducation[]) => {
+        return of(ctx.getState());
+      }),
+      share(),
+      catchError((error) => {
+        console.error('------- In GME Store', error);
+        return of(error);
+      })
     );
   }
 
@@ -133,6 +187,7 @@ export class GraduateMedicalEducationState {
     { payload }: UpdateGraduateMedicalEducation
   ) {
     const state = ctx.getState();
+    this.globalDialogService.showLoading();
     return this.rotationService.updateRotation(payload.id, payload).pipe(
       tap((result: IRotationModel) => {
         const readOnlyResult = {
@@ -158,24 +213,23 @@ export class GraduateMedicalEducationState {
           'Rotation Updated Successfully',
           true
         );
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           gmeRotations: gmeRotations.sort((a, b) =>
             a.startDate > b.startDate ? 1 : -1
           ),
           selectedRotation: undefined,
           errors: null,
         });
+        //this.globalDialogService.closeOpenDialog();
       }),
       catchError((httpError: HttpErrorResponse) => {
+        this.globalDialogService.closeOpenDialog();
         const errors = httpError.error;
-        ctx.setState({
-          ...ctx.getState(),
-          errors,
-        });
+        ctx.patchState({ errors });
         return of(errors);
       }),
-      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationSummary()))
+      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationSummary())),
+      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationGapList()))
     );
   }
 
@@ -185,6 +239,7 @@ export class GraduateMedicalEducationState {
     { payload }: CreateGraduateMedicalEducation
   ) {
     const state = ctx.getState();
+    this.globalDialogService.showLoading();
     return this.rotationService.createRotation(payload).pipe(
       tap((result: IRotationModel) => {
         const readOnlyResult = {
@@ -207,24 +262,23 @@ export class GraduateMedicalEducationState {
           'Rotation Created Successfully',
           true
         );
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           gmeRotations: [readOnlyResult, ...state.gmeRotations].sort((a, b) =>
             a.startDate > b.startDate ? 1 : -1
           ),
           selectedRotation: undefined,
           errors: null,
         });
+        //this.globalDialogService.closeOpenDialog();
       }),
       catchError((httpError: HttpErrorResponse) => {
+        this.globalDialogService.closeOpenDialog();
         const errors = httpError.error;
-        ctx.setState({
-          ...ctx.getState(),
-          errors,
-        });
+        ctx.patchState({ errors });
         return of(errors);
       }),
-      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationSummary()))
+      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationSummary())),
+      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationGapList()))
     );
   }
 
@@ -234,29 +288,29 @@ export class GraduateMedicalEducationState {
     { payload }: DeleteGraduateMedicalEducation
   ) {
     const state = ctx.getState();
+    this.globalDialogService.showLoading();
     return this.rotationService.deleteRotation(payload).pipe(
       tap(() => {
         const gmeRotations = state.gmeRotations.filter(
           (item) => item.id !== payload
         );
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           gmeRotations: gmeRotations.sort((a, b) =>
             a.startDate > b.startDate ? 1 : -1
           ),
           selectedRotation: undefined,
           errors: null,
         });
+        this.globalDialogService.closeOpenDialog();
       }),
       catchError((httpError: HttpErrorResponse) => {
+        this.globalDialogService.closeOpenDialog();
         const errors = httpError.error;
-        ctx.setState({
-          ...ctx.getState(),
-          errors,
-        });
+        ctx.patchState({ errors });
         return of(errors);
       }),
-      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationSummary()))
+      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationSummary())),
+      mergeMap(() => ctx.dispatch(new GetGraduateMedicalEducationGapList()))
     );
   }
 

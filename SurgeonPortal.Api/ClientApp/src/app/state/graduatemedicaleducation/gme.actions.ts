@@ -10,6 +10,19 @@ export class GetGraduateMedicalEducationList {
 
   //constructor() {}
 }
+
+export class GetGraduateMedicalEducationGapList {
+  static readonly type = '[GME] get list of gaps in gme rotations';
+
+  //constructor() {}
+}
+
+export class GetAllGraduateMedicalEducation {
+  static readonly type = '[GME] get list of gme rotations and gaps';
+
+  //constructor() {}
+}
+
 export class GetGraduateMedicalEducationDetails {
   static readonly type = '[GME] get details of gme rotation';
 

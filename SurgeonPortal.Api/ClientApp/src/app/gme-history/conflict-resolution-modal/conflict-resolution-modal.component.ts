@@ -13,7 +13,7 @@ import { GridComponent } from '../../shared/components/grid/grid.component';
 import { CONFLICT_RESOLUTION_GRID_COLS } from './conflict-resolution-cols';
 import { ITEMIZED_GME_COLS } from '../itemized-gme-cols';
 import { ButtonModule } from 'primeng/button';
-import { IRotationReadOnlyModel } from 'src/app/api';
+import { IRotationGapReadOnlyModel, IRotationReadOnlyModel } from 'src/app/api';
 
 @Component({
   selector: 'abs-conflict-resolution-modal',
@@ -23,17 +23,14 @@ import { IRotationReadOnlyModel } from 'src/app/api';
   styleUrls: ['./conflict-resolution-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ConflictResolutionModalComponent implements OnInit, OnChanges {
+export class ConflictResolutionModalComponent implements OnChanges {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
+  @Output() editRecord: EventEmitter<any> = new EventEmitter();
+  @Output() addRecord: EventEmitter<any> = new EventEmitter();
   @Input() conflictingRecords: IRotationReadOnlyModel[] = [];
+  @Input() gapData: IRotationGapReadOnlyModel | undefined;
   conflictResolutionCols = CONFLICT_RESOLUTION_GRID_COLS;
-  itemizedGMECols = ITEMIZED_GME_COLS;
-  conflictResolutionData!: any[];
   localConflictsData: IRotationReadOnlyModel[] = [];
-
-  ngOnInit() {
-    this.getConflicts();
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['conflictingRecords']) {
@@ -41,26 +38,20 @@ export class ConflictResolutionModalComponent implements OnInit, OnChanges {
     }
   }
 
-  getConflicts() {
-    this.conflictResolutionData = [
-      {
-        from: '01/01/2021',
-        to: '01/07/2021',
-        weeks: '1',
-        programName: 'Program Name',
-        affiliatedInstitute: 'Affiliated Institute',
-        clinicalLevel: 'Clinical Level',
-        explain: 'Explain',
-        descriptionNonSurgicalOnly: 'Description (Non-Surgical Only)',
-        internationalRotation: 'International Rotation',
-        edit: 'Edit',
-        delete: 'Delete',
-      },
-    ];
+  girdAction($event: any) {
+    if ($event.fieldKey === 'edit') {
+      this.editRecord.emit($event.data.id);
+    } else {
+      console.log('unhandled action', $event);
+    }
   }
 
-  girdAction($event: any) {
-    console.log($event);
+  addNewRecord() {
+    const params = {
+      startDate: this.gapData?.startDate,
+      endDate: this.gapData?.endDate,
+    };
+    this.addRecord.emit(params);
   }
 
   close() {

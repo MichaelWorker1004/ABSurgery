@@ -9,5 +9,6 @@ namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
         DateTime StartDate { get; }
         DateTime EndDate { get; }
         bool OverlapConflict { get; }
+        int? RotationId { get; }
     }
 }

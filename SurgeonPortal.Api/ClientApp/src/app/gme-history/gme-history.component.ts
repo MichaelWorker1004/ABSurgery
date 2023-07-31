@@ -34,9 +34,16 @@ import {
   DeleteGraduateMedicalEducation,
   GetGraduateMedicalEducationDetails,
   ClearGraduateMedicalEducationDetails,
+  GetGraduateMedicalEducationGapList,
+  IGraduateMedicalEducation,
+  GetAllGraduateMedicalEducation,
 } from '../state';
 import { Select, Store } from '@ngxs/store';
-import { IRotationReadOnlyModel, IGmeSummaryReadOnlyModel } from 'src/app/api';
+import {
+  IRotationReadOnlyModel,
+  IGmeSummaryReadOnlyModel,
+  IRotationGapReadOnlyModel,
+} from 'src/app/api';
 import { ButtonModule } from 'primeng/button';
 
 export interface ICalendarFilterValue {
@@ -80,11 +87,18 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationList)
   gmeRotations$: Observable<IRotationReadOnlyModel[]> | undefined;
 
+  @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationAll)
+  gmeAll$: Observable<IGraduateMedicalEducation> | undefined;
+
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationSummary)
   gmeSummary$: Observable<IGmeSummaryReadOnlyModel[]> | undefined;
 
   gmeRotationsSubscription: Subscription | undefined;
   gmeSummarySubscription: Subscription | undefined;
+  gmeAllSubscription: Subscription | undefined;
+
+  conflictingRecords: IRotationReadOnlyModel[] = [];
+  gapData: IRotationGapReadOnlyModel | undefined;
 
   calendarReady = false;
   calendarFilterOptions: ICalendarFilterOptions[] = [];
@@ -126,9 +140,13 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
         content = document.createElement('sl-tooltip');
         let innerContent = `<div slot="content">${info.event.start?.toLocaleDateString()}${
           info.event.end ? ' - ' + realEnd?.toLocaleDateString() : ''
+        }`;
+
+        if (info.event.extendedProps['programName']) {
+          innerContent += `<br>${info.event.extendedProps['programName']}`;
         }
-          <br>${info.event.extendedProps['programName']}
-          <br>${info.event.extendedProps['eventTitle']}</div>
+
+        innerContent += `<br>${info.event.extendedProps['eventTitle']}</div>
           <div style="width: 100%; height: 100%;display:flex;">`;
 
         if (info.isStart) {
@@ -152,8 +170,27 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     },
     eventClick: (info) => {
       if (info.event.extendedProps['class'] === 'conflict') {
-        const conflicts: any[] = [];
-        this.viewConflictsToResolve(conflicts);
+        const conflict = info.event.extendedProps['rawData'];
+        const allRecords = [
+          ...this.clinicalActivity,
+          ...this.nonClinicalActivity,
+        ];
+        const conflictingRecords = {
+          nextRotation: undefined,
+          previousRotation: undefined,
+        };
+        if (conflict.nextRotationId) {
+          conflictingRecords.nextRotation = allRecords.find(
+            (x) => x.id === conflict.nextRotationId
+          );
+        }
+        if (conflict.previousRotationId) {
+          conflictingRecords.previousRotation = allRecords.find(
+            (x) => x.id === conflict.previousRotationId
+          );
+        }
+        console.log(conflict);
+        this.viewConflictsToResolve(conflictingRecords, conflict);
       }
     },
   };
@@ -176,7 +213,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   showAddEditGmeRotation = false;
   isEditGmeRotation$ = new BehaviorSubject(false);
   selectedGmeRotationId$ = new BehaviorSubject<
-    { id?: number; nextStart: string } | undefined
+    { id?: number; nextStart: string; nextEnd?: string } | undefined
   >(undefined);
 
   minStartDate: Date | undefined;
@@ -191,165 +228,204 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   }
 
   initRotationsData() {
-    this._store.dispatch(new GetGraduateMedicalEducationList());
+    // this._store.dispatch(new GetGraduateMedicalEducationList());
+    // this._store.dispatch(new GetGraduateMedicalEducationGapList());
+    this._store.dispatch(new GetAllGraduateMedicalEducation());
 
-    this.gmeRotationsSubscription = this.gmeRotations$?.subscribe(
-      (gmeRotations) => {
-        this.clinicalActivity = [];
-        this.nonClinicalActivity = [];
-        this.conflicts = [];
+    this.gmeAllSubscription = this.gmeAll$?.subscribe((gmeAll) => {
+      console.log('here');
+      this.clinicalActivity = [];
+      this.nonClinicalActivity = [];
+      this.conflicts = [];
 
-        if (gmeRotations) {
-          this.calendarFilterOptions = [
-            {
-              label: 'Activity Types',
-              items: [
-                {
-                  label: 'Clinical',
-                  value: { value: 'clinical', field: 'type' },
-                },
-                {
-                  label: 'Non-Clinical',
-                  value: { value: 'non-clinical', field: 'type' },
-                },
-                //{ label: 'Conflicts', value: { value: 'conflict', field: 'type' }, },
-              ],
-            },
-            {
-              label: 'Clinical Levels',
-              items: [],
-            },
-          ];
+      if (gmeAll && (gmeAll.gmeRotations || gmeAll.gmeGaps)) {
+        this.calendarFilterOptions = [
+          {
+            label: 'Activity Types',
+            items: [
+              {
+                label: 'Clinical',
+                value: { value: 'clinical', field: 'type' },
+              },
+              {
+                label: 'Non-Clinical',
+                value: { value: 'non-clinical', field: 'type' },
+              },
+              {
+                label: 'Conflicts',
+                value: { value: 'conflict', field: 'type' },
+              },
+            ],
+          },
+          {
+            label: 'Clinical Levels',
+            items: [],
+          },
+        ];
 
-          // set filter options for grid
-          const clinicalFilterOptions: { value: string; label: string }[] = [];
-          const yearFilterOptions: ICalendarFilter[] = [];
-          this.maxEndDate = undefined;
-          this.minStartDate = undefined;
-          gmeRotations.forEach((item) => {
-            //get min start date
-            if (this.minStartDate) {
-              if (new Date(item.startDate) < new Date(this.minStartDate)) {
-                this.minStartDate = new Date(item.startDate);
-              }
-            } else {
+        // set filter options for grid
+        const clinicalFilterOptions: { value: string; label: string }[] = [];
+        const yearFilterOptions: ICalendarFilter[] = [];
+        this.maxEndDate = undefined;
+        this.minStartDate = undefined;
+        gmeAll.gmeGaps.forEach((item, index) => {
+          // build calendar items
+          if (item.startDate !== item.endDate) {
+            // single day event
+          }
+
+          const endDate = new Date(item.endDate);
+          endDate.setDate(endDate.getDate() + 1);
+          const conflictItem: any = {
+            id: 'conflict-' + index,
+            start: item.startDate,
+            //end: undefined,
+            class: 'conflict',
+            classNames: ['clickable-event'],
+            color: 'rgba(139, 4, 10, 0.25)',
+            highlightColor: 'rgba(139, 4, 10, 1)',
+            type: 'conflict',
+            eventTitle: 'Rotation Conflict',
+            //programName: '',
+            //year: yearFilter.replaceAll(' ', '_').trim(),
+            //clinicalLevel: item.clinicalLevel?.replaceAll(' ', '_').trim(),
+            allDay: true,
+            rawData: item,
+          };
+
+          if (item.startDate !== item.endDate) {
+            conflictItem.end = endDate;
+          }
+          this.conflicts.push(conflictItem);
+          // class: 'conflict',
+          // classNames: ['clickable-event'],
+          // color: 'rgba(139, 4, 10, 0.25)',
+          // highlightColor: 'rgba(139, 4, 10, 1)',
+          // eventTitle: 'Rotation Conflict',
+          // type: 'conflict',
+        });
+        gmeAll.gmeRotations.forEach((item) => {
+          //get min start date
+          if (this.minStartDate) {
+            if (new Date(item.startDate) < new Date(this.minStartDate)) {
               this.minStartDate = new Date(item.startDate);
             }
+          } else {
+            this.minStartDate = new Date(item.startDate);
+          }
 
-            //get max end date
-            if (this.maxEndDate) {
-              if (new Date(item.endDate) > new Date(this.maxEndDate)) {
-                this.maxEndDate = new Date(item.endDate);
-              }
-            } else {
+          //get max end date
+          if (this.maxEndDate) {
+            if (new Date(item.endDate) > new Date(this.maxEndDate)) {
               this.maxEndDate = new Date(item.endDate);
             }
+          } else {
+            this.maxEndDate = new Date(item.endDate);
+          }
 
-            // build filter options for grid
-            if (
-              !clinicalFilterOptions.some(
-                (x) =>
-                  x.value === item.clinicalLevel?.replaceAll(' ', '_').trim()
-              )
-            ) {
-              clinicalFilterOptions.push({
+          // build filter options for grid
+          if (
+            !clinicalFilterOptions.some(
+              (x) => x.value === item.clinicalLevel?.replaceAll(' ', '_').trim()
+            )
+          ) {
+            clinicalFilterOptions.push({
+              value: item.clinicalLevel?.replaceAll(' ', '_').trim(),
+              label: item.clinicalLevel,
+            });
+            this.calendarFilterOptions[1].items.push({
+              label: item.clinicalLevel,
+              value: {
                 value: item.clinicalLevel?.replaceAll(' ', '_').trim(),
-                label: item.clinicalLevel,
-              });
-              this.calendarFilterOptions[1].items.push({
-                label: item.clinicalLevel,
-                value: {
-                  value: item.clinicalLevel?.replaceAll(' ', '_').trim(),
-                  field: 'clinicalLevel',
-                },
-              });
-            }
+                field: 'clinicalLevel',
+              },
+            });
+          }
 
-            const itemMonth = new Date(item.startDate).getMonth();
-            const itemYear = new Date(item.startDate).getFullYear().toString();
-            let yearFilter = '';
-            // hardcoded to 5 for June
-            if (itemMonth >= 5) {
-              yearFilter = itemYear.concat(
-                ' - ',
-                (parseInt(itemYear) + 1).toString()
-              );
-            } else {
-              yearFilter = (parseInt(itemYear) - 1)
-                .toString()
-                .concat(' - ', itemYear);
-            }
-            if (!yearFilterOptions.some((x) => x.label === yearFilter)) {
-              yearFilterOptions.push({
-                label: yearFilter,
-                value: {
-                  value: yearFilter?.replaceAll(' ', '_').trim(),
-                  field: 'year',
-                },
-              });
-            }
+          const itemMonth = new Date(item.startDate).getMonth();
+          const itemYear = new Date(item.startDate).getFullYear().toString();
+          let yearFilter = '';
+          // hardcoded to 5 for June
+          if (itemMonth >= 5) {
+            yearFilter = itemYear.concat(
+              ' - ',
+              (parseInt(itemYear) + 1).toString()
+            );
+          } else {
+            yearFilter = (parseInt(itemYear) - 1)
+              .toString()
+              .concat(' - ', itemYear);
+          }
+          if (!yearFilterOptions.some((x) => x.label === yearFilter)) {
+            yearFilterOptions.push({
+              label: yearFilter,
+              value: {
+                value: yearFilter?.replaceAll(' ', '_').trim(),
+                field: 'year',
+              },
+            });
+          }
 
-            // build calendar items
-            const endDate = new Date(item.endDate);
-            endDate.setDate(endDate.getDate() + 1);
-            const calendarItem = {
-              id: item.id,
-              start: item.startDate,
-              end: endDate,
-              class: '',
-              color: '',
-              highlightColor: '',
-              eventTitle: item.clinicalLevel,
-              programName: item.programName,
-              type: '',
-              year: yearFilter.replaceAll(' ', '_').trim(),
-              clinicalLevel: item.clinicalLevel?.replaceAll(' ', '_').trim(),
-              allDay: true,
-              rawData: item,
-            };
+          // build calendar items
+          const endDate = new Date(item.endDate);
+          endDate.setDate(endDate.getDate() + 1);
+          const calendarItem = {
+            id: item.id,
+            start: item.startDate,
+            end: endDate,
+            class: '',
+            color: '',
+            highlightColor: '',
+            eventTitle: item.clinicalLevel,
+            programName: item.programName,
+            type: '',
+            year: yearFilter.replaceAll(' ', '_').trim(),
+            clinicalLevel: item.clinicalLevel?.replaceAll(' ', '_').trim(),
+            allDay: true,
+            rawData: item,
+          };
 
-            if (item.isCredit) {
-              // clinical activity
-              calendarItem.class = 'clinical';
-              calendarItem.color = 'rgba(28, 130, 125, 0.25)';
-              calendarItem.highlightColor = 'rgba(28, 130, 125, 1)';
-              calendarItem.type = 'clinical';
-              this.clinicalActivity.push(calendarItem);
-            } else {
-              // non clinical activity
-              calendarItem.class = 'non-clinical';
-              calendarItem.color = 'rgba(219, 173, 106, 0.25)';
-              calendarItem.highlightColor = 'rgba(219, 173, 106, 1)';
-              calendarItem.type = 'non-clinical';
-              this.nonClinicalActivity.push(calendarItem);
-            }
-          });
+          if (item.isCredit) {
+            // clinical activity
+            calendarItem.class = 'clinical';
+            calendarItem.color = 'rgba(28, 130, 125, 0.25)';
+            calendarItem.highlightColor = 'rgba(28, 130, 125, 1)';
+            calendarItem.type = 'clinical';
+            this.clinicalActivity.push(calendarItem);
+          } else {
+            // non clinical activity
+            calendarItem.class = 'non-clinical';
+            calendarItem.color = 'rgba(219, 173, 106, 0.25)';
+            calendarItem.highlightColor = 'rgba(219, 173, 106, 1)';
+            calendarItem.type = 'non-clinical';
+            this.nonClinicalActivity.push(calendarItem);
+          }
+        });
 
-          clinicalFilterOptions.sort((a, b) => {
-            return a.label > b.label ? 1 : -1;
-          });
-          this.calendarFilterOptions.push({
-            label: 'Years',
-            items: yearFilterOptions,
-          });
-          this.calendarFilterOptions.forEach((filterOption) => {
-            if (filterOption.label !== 'Activity Types') {
-              filterOption.items.sort(
-                (a: ICalendarFilter, b: ICalendarFilter) => {
-                  return a.label > b.label ? 1 : -1;
-                }
-              );
-            }
-          });
+        clinicalFilterOptions.sort((a, b) => {
+          return a.label > b.label ? 1 : -1;
+        });
+        this.calendarFilterOptions.push({
+          label: 'Years',
+          items: yearFilterOptions,
+        });
+        this.calendarFilterOptions.forEach((filterOption) => {
+          if (filterOption.label !== 'Activity Types') {
+            filterOption.items.sort(
+              (a: ICalendarFilter, b: ICalendarFilter) => {
+                return a.label > b.label ? 1 : -1;
+              }
+            );
+          }
+        });
 
-          this.itemizedGridOptions.filterOptions = clinicalFilterOptions;
+        this.itemizedGridOptions.filterOptions = clinicalFilterOptions;
 
-          this.itemizedGme$.next(!this.itemizedGme$.getValue());
-        }
-
-        this.applyCalendarFilters();
+        this.itemizedGme$.next(!this.itemizedGme$.getValue());
       }
-    );
+
+      this.applyCalendarFilters();
+    });
   }
 
   initSummaryData() {
@@ -366,7 +442,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
       this.calendarOptions.eventSources = [
         this.getClinicalActivity(),
         this.getNonClinicalActivity(),
-        //this.getConflicts(),
+        this.getConflicts(),
       ];
       this.calendarReady = true;
     }, 0);
@@ -374,6 +450,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.gmeRotationsSubscription?.unsubscribe();
     this.gmeSummarySubscription?.unsubscribe();
+    this.gmeAllSubscription?.unsubscribe();
   }
 
   getClinicalActivity(filters?: ICalendarFilterValue) {
@@ -399,12 +476,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     };
   }
   getConflicts(filters?: ICalendarFilterValue) {
-    // class: 'conflict',
-    // classNames: ['clickable-event'],
-    // color: 'rgba(139, 4, 10, 0.25)',
-    // highlightColor: 'rgba(139, 4, 10, 1)',
-    // eventTitle: 'Rotation Conflict',
-    // type: 'conflict',
     return {
       events: this.conflicts.filter((event) => {
         if (filters) {
@@ -419,12 +490,16 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     return [
       this.getClinicalActivity(filters),
       this.getNonClinicalActivity(filters),
-      //this.getConflicts(filters),
+      this.getConflicts(filters),
     ];
   }
 
   relaunchAddEditGmeRotation($event: any) {
-    this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
+    this.showConflictResolutionModal = false;
+    if (this.showAddEditGmeRotation) {
+      this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
+    }
+    //this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
     this.itemizedGme$.next(!this.itemizedGme$.getValue());
     if ($event) {
       this.isEditGmeRotation$.next(true);
@@ -448,6 +523,28 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
 
     this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
     this.itemizedGme$.next(!this.itemizedGme$.getValue());
+  }
+
+  handleAddGmeGapRotation($event: any) {
+    if ($event) {
+      this.showConflictResolutionModal = false;
+      let startDateString = '';
+      if ($event.startDate) {
+        const startDate = new Date($event.startDate);
+        startDate.setDate(startDate.getDate() - 1);
+
+        startDateString = startDate.toISOString();
+      }
+      this.isEditGmeRotation$.next(false);
+      this._store.dispatch(new ClearGraduateMedicalEducationDetails());
+      this.selectedGmeRotationId$.next({
+        nextStart: startDateString,
+        nextEnd: $event.endDate ?? '',
+      });
+
+      this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
+      this.itemizedGme$.next(!this.itemizedGme$.getValue());
+    }
   }
 
   handleGridAction($event: any) {
@@ -520,7 +617,19 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     }
   }
 
-  viewConflictsToResolve(conflictList: any[]) {
+  viewConflictsToResolve(conflicts: any, gapData: IRotationGapReadOnlyModel) {
+    this.conflictingRecords = [];
+    this.gapData = undefined;
+    const conflictRecords = [];
+    if (conflicts.previousRotation) {
+      conflictRecords.push(conflicts.previousRotation.rawData);
+    }
+    if (conflicts.nextRotation) {
+      conflictRecords.push(conflicts.nextRotation.rawData);
+    }
+
+    this.conflictingRecords = conflictRecords;
+    this.gapData = gapData;
     this.toggleConflictResolutionModal();
   }
   toggleConflictResolutionModal() {

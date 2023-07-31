@@ -22,6 +22,19 @@ export class GraduateMedicalEducationSelectors {
   }
 
   @Selector([GraduateMedicalEducationState])
+  static graduateMedicalEducationAll(
+    state: IGraduateMedicalEducation
+  ): IGraduateMedicalEducation | undefined {
+    if (state?.gmeRotations?.length > 0 || state?.gmeGaps?.length > 0) {
+      return {
+        gmeRotations: state.gmeRotations,
+        gmeGaps: state.gmeGaps,
+      } as unknown as IGraduateMedicalEducation;
+    }
+    return;
+  }
+
+  @Selector([GraduateMedicalEducationState])
   static graduateMedicalEducationSummary(
     state: IGraduateMedicalEducation
   ): IGmeSummaryReadOnlyModel[] | undefined {

@@ -38,8 +38,8 @@
 	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
 	<PackageReference Include="Ytg.AspNetCore" Version="6.0.3" />
-	<PackageReference Include="Ytg.Framework" Version="6.0.18" />
-	<PackageReference Include="Ytg.Framework.Sql" Version="6.0.15" />
+	<PackageReference Include="Ytg.Framework" Version="6.0.19" />
+	<PackageReference Include="Ytg.Framework.Sql" Version="6.0.16" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -76,7 +76,7 @@
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
 			<DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
-			<ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
 				<RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
 				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>

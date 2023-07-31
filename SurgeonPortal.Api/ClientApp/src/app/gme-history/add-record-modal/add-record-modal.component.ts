@@ -82,7 +82,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
   @Output() relaunchDialog: EventEmitter<any> = new EventEmitter();
   @Input() isEdit$ = new BehaviorSubject<boolean>(false);
   @Input() slectedGmeRotationId$ = new BehaviorSubject<
-    { id?: number; nextStart: string } | undefined
+    { id?: number; nextStart: string; nextEnd?: string } | undefined
   >(undefined);
 
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationList)
@@ -298,6 +298,14 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
           .get('startDate')
           ?.setValue(startDate.toLocaleDateString());
       }
+      if (value?.nextEnd && value?.nextEnd !== '') {
+        const endDate = new Date(value.nextEnd);
+        endDate.setDate(endDate.getDate());
+
+        this.addEditRecordsForm
+          .get('endDate')
+          ?.setValue(endDate.toLocaleDateString());
+      }
     });
   }
 
@@ -326,7 +334,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
 
       if (startDate && endDate) {
         const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
         const weeks = diffDays / 7;
         let weeksValue: string | undefined;
         if (weeks >= 1) {
@@ -717,6 +725,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
       this.createActionSubscription = this._store
         .dispatch(new CreateGraduateMedicalEducation(newRotation))
         .subscribe((res) => {
+          console.log(res.graduateMedicalEducation?.errors);
           if (!res.graduateMedicalEducation?.errors) {
             this.close();
           }

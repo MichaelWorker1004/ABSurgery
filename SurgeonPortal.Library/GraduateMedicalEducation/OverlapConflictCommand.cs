@@ -56,6 +56,13 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		}
 		public static readonly PropertyInfo<bool> OverlapConflictProperty = RegisterProperty<bool>(c => c.OverlapConflict);
 
+        public int? RotationId
+		{
+			get { return ReadProperty(RotationIdProperty); }
+			internal set { LoadProperty(RotationIdProperty, value); }
+		}
+		public static readonly PropertyInfo<int?> RotationIdProperty = RegisterProperty<int?>(c => c.RotationId);
+
 
         [Execute]
         protected void ExecuteCommand()
@@ -63,12 +70,14 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
                 var dto = _overlapConflictCommandDal.CheckOverlapConflicts(
                     UserId,
                     StartDate,
-                    EndDate);
+                    EndDate,
+                    RotationId);
             
             			this.UserId = dto.UserId;
         			this.StartDate = dto.StartDate;
         			this.EndDate = dto.EndDate;
         			this.OverlapConflict = dto.OverlapConflict;
+        			this.RotationId = dto.RotationId;
         }
 
 

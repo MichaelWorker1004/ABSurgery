@@ -9,5 +9,6 @@ namespace SurgeonPortal.Models.GraduateMedicalEducation
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool OverlapConflict { get; set; }
+        public int? RotationId { get; set; }
     }
 }

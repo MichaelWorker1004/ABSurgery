@@ -11,7 +11,8 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         public IOverlapConflictCommand CheckOverlapConflicts(
             int userId,
             DateTime startDate,
-            DateTime endDate)
+            DateTime endDate,
+            int? rotationId)
         {
             if(!OverlapConflictCommand.CanExecuteCommand())
             {
@@ -24,6 +25,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
                 cmd.UserId = userId;
                 cmd.StartDate = startDate;
                 cmd.EndDate = endDate;
+                cmd.RotationId = rotationId;
         
             return DataPortal.Execute(cmd);
         }

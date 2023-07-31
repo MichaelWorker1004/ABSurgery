@@ -1461,11 +1461,11 @@
     "lastGeneratedHash": "F9F97E4D5F80D0FFB3E2FDD0FB0E79FF"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\graduatemedicaleducation\\rotation.service.ts": {
-    "lastGeneratedHash": "6E1F511AF74A3AAB2179697AF4BDEB39"
+    "lastGeneratedHash": "9EC956B6DCA925A7E2DAA52C1AFA408C"
   },
   "\\SurgeonPortal.Api\\Controllers\\GraduateMedicalEducation\\RotationController.cs": {
-    "lastGeneratedHash": "8107D4DBF9196201FD8652DD0C593837",
-    "lastMergedHash": "90791CA834B22A74ABE13C835D03C114"
+    "lastGeneratedHash": "C71532CDEADB16148457B1577A287D6E",
+    "lastMergedHash": "226169F48BD51189F8C8FAE1D626B124"
   },
   "\\SurgeonPortal.Library\\GraduateMedicalEducation\\Rotation.cs": {
     "lastGeneratedHash": "BD8DA247AFFBA055E37F6CA3C80B9578",
@@ -2997,34 +2997,34 @@
     "lastGeneratedHash": "DCFCF3E46E3C36BA6E52DDCF7B4795D6"
   },
   "\\SurgeonPortal.Library.Contracts\\GraduateMedicalEducation\\IOverlapConflictCommand.cs": {
-    "lastGeneratedHash": "1C6FE57E47132CE93C98BE5BF7CF99D4"
+    "lastGeneratedHash": "1BFB02AE1C6F2DD7504B9068D16D9E07"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\GraduateMedicalEducation\\OverlapConflictCommandDto.cs": {
-    "lastGeneratedHash": "AC03F3630C58023E5967DDFB27086422"
+    "lastGeneratedHash": "2143E6CB62C0D60AF754A618D94CD8B4"
   },
   "\\SurgeonPortal.Models\\GraduateMedicalEducation\\OverlapConflictCommandModel.cs": {
-    "lastGeneratedHash": "99AC176DF4D5A68D55A3B58065593BB7"
+    "lastGeneratedHash": "C45C671ABA397C29335F78B273353486"
   },
   "\\SurgeonPortal.Library\\GraduateMedicalEducation\\OverlapConflictCommand.cs": {
-    "lastGeneratedHash": "F95236F36E29AF8799CA7BC0EDE3A6EC"
+    "lastGeneratedHash": "56C85963ED59091E989B6DA171B27A97"
   },
   "\\SurgeonPortal.DataAccess\\GraduateMedicalEducation\\OverlapConflictCommandDal.cs": {
-    "lastGeneratedHash": "4846617DEA7F33E4EA0540856117D00A"
+    "lastGeneratedHash": "5A4C781B5E191DFF2C31394926B45E89"
   },
   "\\SurgeonPortal.Library\\GraduateMedicalEducation\\OverlapConflictCommandFactory.cs": {
-    "lastGeneratedHash": "5F965DE860BCB356562783E682D75D4B"
+    "lastGeneratedHash": "1EB7BE50E6DAF51305B500FB7FA65986"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\GraduateMedicalEducation\\IOverlapConflictCommandDal.cs": {
-    "lastGeneratedHash": "4E7335AF2118EB54B43BF3A2610D7212"
+    "lastGeneratedHash": "7C10BC0FD7E13C696915E8DAFC070762"
   },
   "\\SurgeonPortal.Library.Contracts\\GraduateMedicalEducation\\IOverlapConflictCommandFactory.cs": {
-    "lastGeneratedHash": "E7CDFE07CE026E0D5F209A92C798CC0C"
+    "lastGeneratedHash": "6E13DC302B10ACC8339514E1AAA2845B"
   },
   "\\SurgeonPortal.Library.Tests\\GraduateMedicalEducation\\OverlapConflictCommandTests.cs": {
-    "lastGeneratedHash": "83A7ACCF82E8529CB9164A816C623A4E"
+    "lastGeneratedHash": "71B607CF6EEC638A89912A52BB2135E1"
   },
   "\\SurgeonPortal.DataAccess.Tests\\GraduateMedicalEducation\\OverlapConflictCommandDalTests.cs": {
-    "lastGeneratedHash": "75924A56FD6D4A7C247A9595879B70BB"
+    "lastGeneratedHash": "1DB2842D6DAC0709A38962E28DC0F587"
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IExamHistoryReadOnly.cs": {
     "lastGeneratedHash": "BEA01706BA7572723C3EF0BC90936F73"
@@ -3188,5 +3188,44 @@
   },
   "\\SurgeonPortal.DataAccess.Tests\\Picklists\\ExamTypeReadOnlyDalTests.cs": {
     "lastGeneratedHash": "477F361FB7A026837B3D527596D12B36"
+  },
+  "\\SurgeonPortal.Library.Contracts\\GraduateMedicalEducation\\IRotationGapReadOnly.cs": {
+    "lastGeneratedHash": "3970641833C36A3AF251C62B8E2758ED"
+  },
+  "\\SurgeonPortal.Library.Contracts\\GraduateMedicalEducation\\IRotationGapReadOnlyList.cs": {
+    "lastGeneratedHash": "997C8E822D8A2176D55B3A219A9C1FFF"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\graduatemedicaleducation\\rotation-gap-read-only.model.ts": {
+    "lastGeneratedHash": "BADF19A5BAD7D59B2C344F7ADFB0ECFE"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\GraduateMedicalEducation\\RotationGapReadOnlyDto.cs": {
+    "lastGeneratedHash": "CA0008D3F960E728EE2FF2F578F2FA19"
+  },
+  "\\SurgeonPortal.Models\\GraduateMedicalEducation\\RotationGapReadOnlyModel.cs": {
+    "lastGeneratedHash": "89433C9FDD149F432BB4643E77E007EA"
+  },
+  "\\SurgeonPortal.Library\\GraduateMedicalEducation\\RotationGapReadOnly.cs": {
+    "lastGeneratedHash": "1D37C8C5EB3E04C3811A6291B0C13655"
+  },
+  "\\SurgeonPortal.Library\\GraduateMedicalEducation\\RotationGapReadOnlyList.cs": {
+    "lastGeneratedHash": "9F2D5EFAB455AD612A2AFE1ABA9A9E78"
+  },
+  "\\SurgeonPortal.DataAccess\\GraduateMedicalEducation\\RotationGapReadOnlyDal.cs": {
+    "lastGeneratedHash": "E72FDB4D80F950B281D678665E394D0D"
+  },
+  "\\SurgeonPortal.Library\\GraduateMedicalEducation\\RotationGapReadOnlyListFactory.cs": {
+    "lastGeneratedHash": "004ABEEACDFA29AB9305A7DA19C38957"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\GraduateMedicalEducation\\IRotationGapReadOnlyDal.cs": {
+    "lastGeneratedHash": "CA357DED90F27D1B75E013700C33900C"
+  },
+  "\\SurgeonPortal.Library.Contracts\\GraduateMedicalEducation\\IRotationGapReadOnlyListFactory.cs": {
+    "lastGeneratedHash": "FB832B9C5E5B92B6A9A6C72B730F19AF"
+  },
+  "\\SurgeonPortal.Library.Tests\\GraduateMedicalEducation\\RotationGapReadOnlyListTests.cs": {
+    "lastGeneratedHash": "9965C8371F3A90E13372D8FDAC3C5C94"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\GraduateMedicalEducation\\RotationGapReadOnlyDalTests.cs": {
+    "lastGeneratedHash": "B3B53C87EEABF4F77FE0163BC383C163"
   }
 }

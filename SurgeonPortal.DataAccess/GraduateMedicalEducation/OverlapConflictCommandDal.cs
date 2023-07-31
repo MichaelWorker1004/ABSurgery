@@ -18,7 +18,8 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
         public OverlapConflictCommandDto CheckOverlapConflicts(
             int userId,
             DateTime startDate,
-            DateTime endDate)
+            DateTime endDate,
+            int? rotationId)
         {
             using (var connection = CreateConnection())
             {
@@ -29,6 +30,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                             UserId = userId,
                             StartDate = startDate,
                             EndDate = endDate,
+                            RotationId = rotationId,
                         });
                         
             }
