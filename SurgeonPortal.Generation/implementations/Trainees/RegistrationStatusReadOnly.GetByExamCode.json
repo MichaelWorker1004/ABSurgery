@@ -1,0 +1,112 @@
+{
+  "name": "RegistrationStatusReadOnly",
+  "implementationName": "Trainees\\RegistrationStatusReadOnly.GetByExamCode",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_registration_open",
+    "ControllerName": "Trainees\\ExamController",
+    "ControllerRoute": "api/trainees/exams",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamCode",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Trainees\\RegistrationStatusReadOnly",
+    "ModelGroup": "RegistrationStatusReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "registration-status",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_registration_open",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_registration_open]",
+        "parameters": [
+          {
+            "name": "examCode",
+            "dataType": "string",
+            "maxLength": 50,
+            "precision": 50,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "examCode"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Trainees\\RegistrationStatusReadOnly",
+            "fields": [
+              {
+                "name": "RegOpenDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegOpenDate"
+              },
+              {
+                "name": "RegEndDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegEndDate"
+              },
+              {
+                "name": "isRegOpen",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.isRegOpen"
+              },
+              {
+                "name": "RegLateDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegLateDate"
+              },
+              {
+                "name": "isRegLate",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.isRegLate"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamCode",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Trainees\\RegistrationStatusReadOnly.GetByExamCode RegistrationStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=Trainees\\RegistrationStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_registration_open] -p:FetchMethodName=GetByExamCode -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RegistrationStatusReadOnly -p:Route=registration-status -p:ControllerName=Trainees\\ExamController -p:ControllerRoute=api/trainees/exams -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Trainees\\RegistrationStatusReadOnly.GetByExamCode RegistrationStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=Trainees\\RegistrationStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_registration_open] -p:FetchMethodName=GetByExamCode -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RegistrationStatusReadOnly -p:Route=registration-status -p:ControllerName=Trainees\\ExamController -p:ControllerRoute=api/trainees/exams -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-07-27T19:35:51.5519596Z"
+  },
+  "version": 1
+}

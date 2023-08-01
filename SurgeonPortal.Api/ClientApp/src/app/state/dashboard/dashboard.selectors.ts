@@ -13,6 +13,16 @@ export class DashboardSelectors {
   }
 
   @Selector([DashboardState])
+  static dashboardRegistrationStatus(
+    state: IDashboardState
+  ): IDashboardState | undefined {
+    if (state.registrationStatus) {
+      return state;
+    }
+    return;
+  }
+
+  @Selector([DashboardState])
   static dashboardCertificateInformation(
     state: IDashboardState
   ): IDashboardState | undefined {

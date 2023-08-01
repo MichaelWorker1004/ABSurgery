@@ -9,6 +9,7 @@ export const TRAINEE_ACTION_CARDS = [
     },
     actionDisplay: 'Coming Soon',
     icon: 'fa-solid fa-user-graduate',
+    disabled: true,
   },
   {
     title: 'Graduate Medical Education (GME)',

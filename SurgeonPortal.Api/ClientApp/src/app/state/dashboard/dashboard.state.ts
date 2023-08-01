@@ -8,12 +8,16 @@ import { CertificationsService } from 'src/app/api/services/surgeons/certificati
 import {
   GetDashboardCertificationInformation,
   GetDashboardProgramInformation,
+  GetTraineeRegistrationStatus,
 } from './dashboard.actions';
 import { catchError, of, tap } from 'rxjs';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { ExamService } from 'src/app/api/services/trainees/exam.service';
+import { IRegistrationStatusReadOnlyModel } from 'src/app/api/models/trainees/registration-status-read-only.model';
 
 export interface IDashboardState {
   certificates: ICertificationReadOnlyModel[];
+  registrationStatus: IRegistrationStatusReadOnlyModel | null;
   programs: IProgramReadOnlyModel;
 }
 
@@ -23,6 +27,7 @@ const USER_ACCOUNT_STATE_TOKEN = new StateToken<IDashboardState>('dashboard');
   name: USER_ACCOUNT_STATE_TOKEN,
   defaults: {
     certificates: [],
+    registrationStatus: null,
     programs: {
       programName: '',
       programDirector: '',
@@ -39,6 +44,7 @@ export class DashboardState {
   constructor(
     private programsService: ProgramsService,
     private certificationsService: CertificationsService,
+    private examService: ExamService,
     private globalDialogService: GlobalDialogService
   ) {}
   @Action(GetDashboardProgramInformation) getDashboardProgramInformation(
@@ -72,6 +78,30 @@ export class DashboardState {
           ctx.setState({
             ...state,
             certificates: res,
+          });
+          this.globalDialogService.closeOpenDialog();
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          this.globalDialogService.closeOpenDialog();
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetTraineeRegistrationStatus)
+  getTraineeRegistrationStatus(
+    ctx: StateContext<IDashboardState>,
+    payload: GetTraineeRegistrationStatus
+  ) {
+    const state = ctx.getState();
+    return this.examService
+      .retrieveRegistrationStatusReadOnly_GetByExamCode(payload.examCode)
+      .pipe(
+        tap((result: IRegistrationStatusReadOnlyModel) => {
+          ctx.setState({
+            ...state,
+            registrationStatus: result,
           });
           this.globalDialogService.closeOpenDialog();
         }),

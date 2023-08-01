@@ -12,6 +12,7 @@ import {
   GetDashboardCertificationInformation,
   GetDashboardProgramInformation,
   IDashboardState,
+  GetTraineeRegistrationStatus,
 } from '../state';
 import { UserClaims } from '../side-navigation/user-status.enum';
 import { IActionCardReadOnlyModel } from '../shared/components/action-card/action-card-read-only.model';
@@ -47,6 +48,10 @@ export class DashboardComponent implements OnInit {
     | Observable<IDashboardState>
     | undefined;
 
+  @Select(DashboardSelectors.dashboardRegistrationStatus) registrationStatus$:
+    | Observable<IDashboardState>
+    | undefined;
+
   @Select(DashboardSelectors.dashboardCertificateInformation)
   certificateInformation$: Observable<IDashboardState> | undefined;
   userData: IUserProfile | undefined;
@@ -79,6 +84,33 @@ export class DashboardComponent implements OnInit {
       });
     } else {
       this._store.dispatch(new GetDashboardProgramInformation());
+      this._store.dispatch(new GetTraineeRegistrationStatus('2022GO6'));
+      this.registrationStatus$?.subscribe((userInformation) => {
+        const registrationInformation = userInformation?.registrationStatus;
+        const todaysDate = new Date();
+        const regOpenDate = new Date(
+          registrationInformation?.regOpenDate ?? ''
+        );
+        const regCloseDate = new Date(
+          registrationInformation?.regEndDate ?? ''
+        );
+        const isRegisterDates = () => {
+          if (todaysDate >= regOpenDate && todaysDate <= regCloseDate) {
+            return true;
+          }
+          return false;
+        };
+
+        if (
+          (registrationInformation?.isRegOpen ||
+            registrationInformation?.isRegLate) &&
+          isRegisterDates()
+        ) {
+          TRAINEE_ACTION_CARDS[0].disabled = false;
+        } else {
+          TRAINEE_ACTION_CARDS[0].disabled = true;
+        }
+      });
       this.programInformation$?.subscribe((userInformation) => {
         if (userInformation?.programs?.programName.length > 0) {
           this.userInformation = userInformation.programs;
