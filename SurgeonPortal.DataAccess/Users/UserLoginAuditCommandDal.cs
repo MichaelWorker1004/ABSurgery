@@ -1,8 +1,6 @@
 using SurgeonPortal.DataAccess.Contracts.Users;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
-using Ytg.Framework.Identity;
 using Ytg.Framework.SqlServer;
 
 namespace SurgeonPortal.DataAccess.Users
@@ -16,7 +14,7 @@ namespace SurgeonPortal.DataAccess.Users
 
 
 
-        public async Task<UserLoginAuditCommandDto> AuditAsync(
+        public async Task AuditAsync(
             int userId,
             string emailAddress,
             int applicationId,
@@ -27,7 +25,7 @@ namespace SurgeonPortal.DataAccess.Users
         {
             using (var connection = CreateConnection())
             {
-                return await connection.ExecFirstOrDefaultAsync<UserLoginAuditCommandDto>(
+                await connection.ExecAsync(
                     "[dbo].[insert_user_login_audit]",
                         new
                         {

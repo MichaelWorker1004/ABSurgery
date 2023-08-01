@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Scoring\\ExamSessionSkipCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m p Scoring\\ExamSessionSkipCommand -sp [dbo].[update_skip_exam] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-07-31T19:21:27.702903Z"
+  },
+  "version": 1
+}

@@ -9,7 +9,7 @@ import { ORAL_EXAMINATION_COLS } from './oral-examination-cols';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-read-only.model';
-import { ExamScoringSelectors, GetExamineeList } from '../state';
+import { ExamScoringSelectors, GetExamineeList, SkipExam } from '../state';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -118,9 +118,15 @@ export class OralExaminationsComponent implements OnInit {
           }
           // take any actions required on cancel of confirmation here
         });
-    } else {
-      console.log('unhandled grid action');
     }
+
+    if ($event.fieldKey === 'skipExam') {
+      this._store.dispatch(
+        new SkipExam($event.data.examScheduleId, this.examDate.toISOString())
+      );
+    }
+
+    console.log('unhandled grid action');
   }
 
   copyFromTextInput(element: any) {

@@ -1,0 +1,64 @@
+{
+  "name": "ExamSessionSkipCommand",
+  "implementationName": "Scoring\\ExamSessionSkipCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.update_skip_exam",
+    "CommandMethodName": "SkipExamSession",
+    "ControllerName": "Scoring\\ExamSessionsController",
+    "ControllerRoute": "api/exam-sessions",
+    "ControllerVersion": "1",
+    "ExecuteAsynchronously": "true",
+    "IncludeControllerInGeneration": "true",
+    "Model": "Scoring\\ExamSessionSkipCommand",
+    "ModelGroup": "ExamSessionSkipCommand",
+    "ReturnsPayload": "false",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "skip"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_skip_exam",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_skip_exam]",
+        "parameters": [
+          {
+            "name": "ExamScheduleId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamScheduleId"
+          },
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\ExamSessionSkipCommand ExamSessionSkipCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[update_skip_exam] -p:Model=Scoring\\ExamSessionSkipCommand -p:ModelGroup=ExamSessionSkipCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=SkipExamSession -p:IncludeControllerInGeneration=True -p:Route=skip -p:ControllerName=Scoring\\ExamSessionsController -p:ControllerRoute=api/exam-sessions -p:ControllerVersion=1 --force ",
+    "inferredCommand": "ytgim generate i  Scoring\\ExamSessionSkipCommand ExamSessionSkipCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[update_skip_exam] -p:Model=Scoring\\ExamSessionSkipCommand -p:ModelGroup=ExamSessionSkipCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=SkipExamSession -p:IncludeControllerInGeneration=True -p:Route=skip -p:ControllerName=Scoring\\ExamSessionsController -p:ControllerRoute=api/exam-sessions -p:ControllerVersion=1 -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",
+    "generatedDateUtc": "2023-07-31T19:46:02.6898777Z"
+  },
+  "version": 1
+}

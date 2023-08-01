@@ -101,6 +101,12 @@ export class GetRoster {
   constructor(public examinerUserId: number, public examDate: string) {}
 }
 
+export class SkipExam {
+  static readonly type = '[Exam-Scoring] skip exam';
+
+  constructor(public examScheduleId: number, public examDate: string) {}
+}
+
 export class ClearExamScoringErrors {
   static readonly type = '[Exam-Scoring] Clear Erros';
 }

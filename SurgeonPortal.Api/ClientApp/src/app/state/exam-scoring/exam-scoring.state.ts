@@ -37,6 +37,7 @@ import {
   GetExaminee,
   CreateExamScore,
   DeleteCaseComment,
+  SkipExam,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -91,6 +92,8 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
 })
 @Injectable()
 export class ExamScoringState {
+  examDate!: string;
+
   constructor(
     private casesService: CasesService,
     private caseContentsService: CaseContentsService,
@@ -241,10 +244,6 @@ export class ExamScoringState {
       .retrieveExamSessionReadOnly_GetByUserId(date)
       .pipe(
         tap((result: IExamSessionReadOnlyModel[]) => {
-          // const currentSessionCheck = result.some((x) => x.isCurrentSession);
-          // if (!currentSessionCheck) {
-          //   result[0].isCurrentSession = true;
-          // }
           ctx.patchState({
             examineeList: result,
             errors: null,
@@ -283,28 +282,6 @@ export class ExamScoringState {
         })
       );
   }
-
-  //TODO - create action for getting active examination once that API exists
-  // @Action(GetActiveExamination)
-  // getActiveExamination(ctx: StateContext<IExamScoring>, payload: { id: number }) {
-  //   // const state = ctx.getState();
-  //   const examId = payload.id;
-  //   return this.examSessionsService
-  //     .retrieveExamSessionReadOnly_GetByUserId(examId)
-  //     .pipe(
-  //       tap((result: IExamSessionReadOnlyModel) => {
-  //         ctx.patchState({
-  //           activeExamination: result,
-  //           errors: null,
-  //         });
-  //       }),
-  //       catchError((httpError: HttpErrorResponse) => {
-  //         const errors = httpError.error;
-  //         ctx.patchState({ errors });
-  //         return of(errors);
-  //       })
-  //     );
-  // }
 
   @Action(GetExamScoresList)
   getExamScoresList(ctx: StateContext<IExamScoring>, payload: { id: number }) {
@@ -474,6 +451,7 @@ export class ExamScoringState {
     ctx: StateContext<IExamScoring>,
     payload: { examinerUserId: number; examDate: string }
   ) {
+    this.examDate = payload.examDate;
     this.globalDialogService.showLoading();
     return this.dashboardService
       .retrieveDashboardRosterReadOnly_GetByUserId(payload.examDate)
@@ -489,6 +467,32 @@ export class ExamScoringState {
           const errors = httpError.error;
           ctx.patchState({ errors });
           this.globalDialogService.closeOpenDialog();
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(SkipExam)
+  skipExam(
+    ctx: StateContext<IExamScoring>,
+    payload: { examScheduleId: number; examDate: string }
+  ) {
+    this.globalDialogService.showLoading();
+    return this.examSessionsService
+      .skipExamSessionReadOnly_SkipByExamScheduleId(payload.examScheduleId)
+      .pipe(
+        tap(() => {
+          ctx.dispatch(new GetExamineeList(payload.examDate));
+          this.globalDialogService.closeOpenDialog();
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Exam Skip Failed',
+            false
+          );
           return of(errors);
         })
       );

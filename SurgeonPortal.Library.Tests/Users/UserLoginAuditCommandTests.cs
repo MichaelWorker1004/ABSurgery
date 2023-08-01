@@ -50,8 +50,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 expectedLoginIpAddress,
                 expectedLoginUserAgent,
                 expectedLoginSuccess,
-                expectedLoginFailureReason))
-                .ReturnsAsync(dto);
+                expectedLoginFailureReason));
         
             UseMockServiceProvider()
                 
@@ -70,9 +69,6 @@ namespace SurgeonPortal.Library.Tests.Users
                 expectedLoginFailureReason);
         
             mockDal.VerifyAll();
-        
-            Assert.That(dto, Is.Not.Null);
-        	Assert.That(dto, Is.TypeOf<UserLoginAuditCommandDto>());
         }
         
         #endregion
