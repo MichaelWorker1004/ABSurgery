@@ -15,8 +15,8 @@ namespace SurgeonPortal.Library.Scoring
     {
         [DataMember]
 		[DisplayName(nameof(ExamScoringId))]
-        public int ExamScoringId => ReadProperty(ExamScoringIdProperty);
-		public static readonly PropertyInfo<int> ExamScoringIdProperty = RegisterProperty<int>(c => c.ExamScoringId);
+        public int? ExamScoringId => ReadProperty(ExamScoringIdProperty);
+		public static readonly PropertyInfo<int?> ExamScoringIdProperty = RegisterProperty<int?>(c => c.ExamScoringId);
 
         [DataMember]
 		[DisplayName(nameof(ExamCaseId))]
@@ -25,13 +25,13 @@ namespace SurgeonPortal.Library.Scoring
 
         [DataMember]
 		[DisplayName(nameof(ExaminerUserId))]
-        public int ExaminerUserId => ReadProperty(ExaminerUserIdProperty);
-		public static readonly PropertyInfo<int> ExaminerUserIdProperty = RegisterProperty<int>(c => c.ExaminerUserId);
+        public int? ExaminerUserId => ReadProperty(ExaminerUserIdProperty);
+		public static readonly PropertyInfo<int?> ExaminerUserIdProperty = RegisterProperty<int?>(c => c.ExaminerUserId);
 
         [DataMember]
 		[DisplayName(nameof(ExamineeUserId))]
-        public int ExamineeUserId => ReadProperty(ExamineeUserIdProperty);
-		public static readonly PropertyInfo<int> ExamineeUserIdProperty = RegisterProperty<int>(c => c.ExamineeUserId);
+        public int? ExamineeUserId => ReadProperty(ExamineeUserIdProperty);
+		public static readonly PropertyInfo<int?> ExamineeUserIdProperty = RegisterProperty<int?>(c => c.ExamineeUserId);
 
         [DataMember]
 		[DisplayName(nameof(ExamineeFirstName))]
@@ -70,8 +70,8 @@ namespace SurgeonPortal.Library.Scoring
 
         [DataMember]
 		[DisplayName(nameof(Score))]
-        public int Score => ReadProperty(ScoreProperty);
-		public static readonly PropertyInfo<int> ScoreProperty = RegisterProperty<int>(c => c.Score);
+        public int? Score => ReadProperty(ScoreProperty);
+		public static readonly PropertyInfo<int?> ScoreProperty = RegisterProperty<int?>(c => c.Score);
 
         [DataMember]
 		[DisplayName(nameof(CriticalFail))]

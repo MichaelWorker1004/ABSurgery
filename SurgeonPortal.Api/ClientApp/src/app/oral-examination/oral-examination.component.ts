@@ -154,6 +154,7 @@ export class OralExaminationsComponent implements OnInit {
       this.globalDialogService.showLoading();
       setTimeout(() => {
         this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
+        this.disable = true;
       }, 200);
     }
   }
@@ -187,6 +188,12 @@ export class OralExaminationsComponent implements OnInit {
         } as ICaseScoreModel;
         this.hasUnsavedChanges = false;
         this._store.dispatch(new UpdateCaseScore(model, false));
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Scores updated successfully',
+          true
+        );
+        this.router.navigate(['/ce-scoring/oral-examinations']);
       });
     }
   }

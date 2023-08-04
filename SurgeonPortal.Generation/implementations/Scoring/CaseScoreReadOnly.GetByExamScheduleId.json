@@ -51,11 +51,11 @@
             "fields": [
               {
                 "name": "ExamScoringId",
-                "dataType": "int",
+                "dataType": "int?",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isNullable": false,
+                "isNullable": true,
                 "isIdentityColumn": true,
                 "mapsTo": "model.ExamScoringId"
               },
@@ -66,26 +66,26 @@
                 "precision": 10,
                 "scale": 0,
                 "isNullable": false,
-                "isIdentityColumn": false,
+                "isIdentityColumn": true,
                 "mapsTo": "model.ExamCaseId"
               },
               {
                 "name": "ExaminerUserId",
-                "dataType": "int",
+                "dataType": "int?",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isNullable": false,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.ExaminerUserId"
               },
               {
                 "name": "ExamineeUserId",
-                "dataType": "int",
+                "dataType": "int?",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isNullable": false,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.ExamineeUserId"
               },
@@ -161,11 +161,11 @@
               },
               {
                 "name": "Score",
-                "dataType": "int",
+                "dataType": "int?",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isNullable": false,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.Score"
               },

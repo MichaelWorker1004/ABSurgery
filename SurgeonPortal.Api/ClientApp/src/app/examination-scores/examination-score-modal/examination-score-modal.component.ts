@@ -51,6 +51,7 @@ export class ExaminationScoreModalComponent implements OnInit {
       } as ICaseScoreModel;
       this._store.dispatch(new UpdateCaseScore(model));
     });
+    this.closeDialog.emit();
   }
 
   cancel() {

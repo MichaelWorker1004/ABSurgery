@@ -5,12 +5,12 @@
   "properties": [
     {
       "name": "ExamScoringId",
-      "dataType": "int",
+      "dataType": "int?",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": true,
       "rules": {}
     },
@@ -22,28 +22,28 @@
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false,
+      "isIdentityColumn": true,
       "rules": {}
     },
     {
       "name": "ExaminerUserId",
-      "dataType": "int",
+      "dataType": "int?",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
     },
     {
       "name": "ExamineeUserId",
-      "dataType": "int",
+      "dataType": "int?",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
     },
@@ -126,12 +126,12 @@
     },
     {
       "name": "Score",
-      "dataType": "int",
+      "dataType": "int?",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
     },
@@ -161,7 +161,7 @@
   "metadata": {
     "command": "ytgim g m s Scoring\\CaseScoreReadOnly -sp [dbo].[get_examinerscores_byexamscheduleId] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-06-30T13:16:58.7936883Z"
+    "generatedDateUtc": "2023-08-01T19:18:57.8767158Z"
   },
   "version": 1
 }
