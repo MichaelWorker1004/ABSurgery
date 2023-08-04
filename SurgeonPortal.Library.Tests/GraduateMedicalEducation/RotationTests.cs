@@ -31,6 +31,9 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             dto.IsEssential = Create<bool>();
             dto.IsCredit = Create<bool>();
             dto.Other = Create<string>();
+            dto.FourMonthRotationExplain = Create<string>();
+            dto.NonPrimaryExplain = Create<string>();
+            dto.NonClinicalExplain = Create<string>();
             dto.CreatedByUserId = Create<int>();
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
@@ -172,6 +175,9 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.IsEssential = dto.IsEssential;
             sut.IsCredit = dto.IsCredit;
             sut.Other = dto.Other;
+            sut.FourMonthRotationExplain = dto.FourMonthRotationExplain;
+            sut.NonPrimaryExplain = dto.NonPrimaryExplain;
+            sut.NonClinicalExplain = dto.NonClinicalExplain;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
@@ -191,8 +197,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .Excluding(m => m.Id)
                 .Excluding(m => m.UserId)
                 .Excluding(m => m.ClinicalLevel)
-                .Excluding(m => m.IsEssential)
-                .Excluding(m => m.IsCredit)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
@@ -277,6 +281,9 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.IsEssential = dto.IsEssential;
             sut.IsCredit = dto.IsCredit;
             sut.Other = dto.Other;
+            sut.FourMonthRotationExplain = dto.FourMonthRotationExplain;
+            sut.NonPrimaryExplain = dto.NonPrimaryExplain;
+            sut.NonClinicalExplain = dto.NonClinicalExplain;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
@@ -301,6 +308,9 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.IsEssential = dto.IsEssential;
             sut.IsCredit = dto.IsCredit;
             sut.Other = dto.Other;
+            sut.FourMonthRotationExplain = dto.FourMonthRotationExplain;
+            sut.NonPrimaryExplain = dto.NonPrimaryExplain;
+            sut.NonClinicalExplain = dto.NonClinicalExplain;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
@@ -319,8 +329,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                     .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.UserId)
                     .Excluding(m => m.ClinicalLevel)
-                    .Excluding(m => m.IsEssential)
-                    .Excluding(m => m.IsCredit)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)

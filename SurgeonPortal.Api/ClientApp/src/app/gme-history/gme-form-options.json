@@ -1,0 +1,174 @@
+{
+  "formGroup": "gemRotation",
+  "formName": "GME Rotation",
+  "formDesc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit amet tortor at, condimentum tempor erat.",
+  "specialValidators": [],
+  "fields": [
+    {
+      "label": "Program Name",
+      "required": false,
+      "name": "programName",
+      "value": "''",
+      "placeholder": "",
+      "readonly": true,
+      "helpText": "If you need to change your Program please refer to the Medical Training Page",
+      "type": "text",
+      "size": "col-6"
+    },
+    {
+      "label": "Clinical Level",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "clinicalLevelId",
+      "placeholder": "Select clinical level...",
+      "type": "select",
+      "size": "col-6",
+      "optionsSource": "clinicalLevelOptions",
+      "options": []
+    },
+    {
+      "label": "Start Date",
+      "subLabel": "",
+      "value": "''",
+      "required": true,
+      "minDate": null,
+      "maxDate": null,
+      "name": "startDate",
+      "placeholder": "MM/DD/YYYY",
+      "type": "date",
+      "size": "col-4",
+      "validators": {
+        "minDate": null,
+        "maxDate": null
+      }
+    },
+    {
+      "label": "End Date",
+      "subLabel": "",
+      "value": "''",
+      "required": true,
+      "minDate": null,
+      "maxDate": null,
+      "name": "endDate",
+      "placeholder": "MM/DD/YYYY",
+      "type": "date",
+      "size": "col-4",
+      "validators": {
+        "minDate": null,
+        "maxDate": null
+      }
+    },
+    {
+      "label": "Week(s)",
+      "required": false,
+      "name": "weeks",
+      "value": "''",
+      "placeholder": "",
+      "readonly": true,
+      "type": "text",
+      "size": "col-4"
+    },
+    {
+      "label": "I Attended this rotation at an Affiliate Organization",
+      "subLabel": "",
+      "required": false,
+      "name": "usingAffiliateOrganization",
+      "value": "false",
+      "type": "checkbox",
+      "size": "col-12"
+    },
+    {
+      "label": "Affiliate Organization",
+      "required": false,
+      "name": "alternateInstitutionName",
+      "value": "''",
+      "placeholder": "Enter Affiliate Organization",
+      "type": "text",
+      "size": "col-12"
+    },
+    {
+      "label": "Which type of activity did you perform?",
+      "subLabel": "",
+      "value": true,
+      "required": true,
+      "name": "isClinicalActivity",
+      "type": "radio-group",
+      "size": "col-12",
+      "optionsSource": "isClinicalActivityOptions",
+      "options": [
+        {
+          "label": "Clinical",
+          "value": true
+        },
+        {
+          "label": "Non-Clinical",
+          "value": false
+        }
+      ]
+    },
+    {
+      "label": "Clinical Activity",
+      "subLabel": "",
+      "required": true,
+      "value": "null",
+      "name": "clinicalActivityId",
+      "placeholder": "Select clinical activity...",
+      "type": "grouped-select",
+      "size": "col-12",
+      "optionsSource": "clinicalActivityOptions",
+      "options": []
+    },
+
+    {
+      "label": "Other Clinical Fellowship Description",
+      "subLabel": "",
+      "required": false,
+      "name": "other",
+      "value": "''",
+      "placeholder": "Please describe your Other Clinical Fellowship",
+      "type": "textarea",
+      "size": "col-12"
+    },
+    {
+      "label": "Please Explain why you performed a non-primary activity",
+      "subLabel": "",
+      "required": false,
+      "name": "other2",
+      "value": "''",
+      "placeholder": "Type your answer...",
+      "type": "textarea",
+      "size": "col-12"
+    },
+    {
+      "label": "Please explain why this rotation was longer than 4 months",
+      "subLabel": "",
+      "required": false,
+      "name": "other3",
+      "value": "''",
+      "placeholder": "Type your answer...",
+      "type": "textarea",
+      "size": "col-12"
+    },
+    {
+      "label": "Please explain your Clinical (Non-Surgical) or Non-Clinical Research rotation",
+      "subLabel": "",
+      "required": false,
+      "name": "other4",
+      "value": "''",
+      "placeholder": "Type your answer...",
+      "type": "textarea",
+      "size": "col-12"
+    },
+    {
+      "label": "This was an international rotation",
+      "subLabel": "",
+      "required": false,
+      "name": "isInternationalRotation",
+      "helpText": "Please upload the ABS approval letter under the training section",
+      "value": "false",
+      "type": "checkbox",
+      "size": "col-12"
+    }
+  ]
+}

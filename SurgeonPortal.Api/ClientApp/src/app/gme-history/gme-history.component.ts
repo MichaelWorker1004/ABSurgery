@@ -30,21 +30,29 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 
 import {
   GraduateMedicalEducationSelectors,
-  GetGraduateMedicalEducationList,
   DeleteGraduateMedicalEducation,
   GetGraduateMedicalEducationDetails,
   ClearGraduateMedicalEducationDetails,
-  GetGraduateMedicalEducationGapList,
   IGraduateMedicalEducation,
   GetAllGraduateMedicalEducation,
+  ClearGraduateMedicalEducationErrors,
+  UpdateGraduateMedicalEducation,
+  CreateGraduateMedicalEducation,
+  GetDashboardProgramInformation,
+  DashboardSelectors,
 } from '../state';
 import { Select, Store } from '@ngxs/store';
 import {
   IRotationReadOnlyModel,
   IGmeSummaryReadOnlyModel,
   IRotationGapReadOnlyModel,
+  IRotationModel,
 } from 'src/app/api';
 import { ButtonModule } from 'primeng/button';
+import { GmeFormComponent } from './gme-form/gme-form.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { GetPicklists, PicklistsSelectors } from '../state/picklists';
+import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.model';
 
 export interface ICalendarFilterValue {
   value: string;
@@ -59,6 +67,12 @@ export interface ICalendarFilterOptions {
   items: ICalendarFilter[];
 }
 
+interface IGmePicklistOptions {
+  clinicalLevelOptions: any[] | undefined;
+  clinicalActivityOptions: any[] | undefined;
+}
+
+@UntilDestroy()
 @Component({
   selector: 'abs-gme-history',
   templateUrl: './gme-history.component.html',
@@ -79,10 +93,13 @@ export interface ICalendarFilterOptions {
     ModalComponent,
     DropdownModule,
     ButtonModule,
+    GmeFormComponent,
   ],
 })
 export class GmeHistoryComponent implements OnInit, OnDestroy {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+
+  clearErrors = new ClearGraduateMedicalEducationErrors();
 
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationList)
   gmeRotations$: Observable<IRotationReadOnlyModel[]> | undefined;
@@ -93,12 +110,21 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationSummary)
   gmeSummary$: Observable<IGmeSummaryReadOnlyModel[]> | undefined;
 
+  @Select(GraduateMedicalEducationSelectors.graduateMedicalEducationDetails)
+  selectedRotation$: Observable<IRotationModel> | undefined;
+
+  @Select(GraduateMedicalEducationSelectors.errors)
+  gmeErrors$: Observable<any> | undefined;
+
   gmeRotationsSubscription: Subscription | undefined;
   gmeSummarySubscription: Subscription | undefined;
+  createGmeRotationSubscription: Subscription | undefined;
+  updateGmeRotationSubscription: Subscription | undefined;
   gmeAllSubscription: Subscription | undefined;
 
   conflictingRecords: IRotationReadOnlyModel[] = [];
   gapData: IRotationGapReadOnlyModel | undefined;
+  gapConflictDates: any;
 
   calendarReady = false;
   calendarFilterOptions: ICalendarFilterOptions[] = [];
@@ -189,7 +215,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
             (x) => x.id === conflict.previousRotationId
           );
         }
-        console.log(conflict);
         this.viewConflictsToResolve(conflictingRecords, conflict);
       }
     },
@@ -210,14 +235,24 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   summaryGme$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   gmeSummaryData!: any[];
 
+  selectedGmeRotation: IRotationReadOnlyModel | undefined;
+
   showAddEditGmeRotation = false;
   isEditGmeRotation$ = new BehaviorSubject(false);
-  selectedGmeRotationId$ = new BehaviorSubject<
-    { id?: number; nextStart: string; nextEnd?: string } | undefined
-  >(undefined);
 
   minStartDate: Date | undefined;
   maxEndDate: Date | undefined;
+
+  gmePicklistOptions: IGmePicklistOptions | undefined = {
+    clinicalLevelOptions: [],
+    clinicalActivityOptions: [],
+  };
+
+  userProgram: {
+    programName?: string;
+    clinicalLevel?: string;
+    clinicalLevelId?: number;
+  } = {};
 
   constructor(
     private _store: Store,
@@ -225,15 +260,116 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   ) {
     this.initRotationsData();
     this.initSummaryData();
+    this.initPicklistOptions();
+    //this.initUserData();
+
+    this.selectedRotation$?.pipe(untilDestroyed(this)).subscribe((rotation) => {
+      this.selectedGmeRotation = undefined;
+      const selectedRotation = {
+        ...rotation,
+        //programName: read this value from user object
+        //clinicalLevel: if create new read this value from user object
+        usingAffiliateOrganization: rotation?.alternateInstitutionName
+          ? true
+          : false,
+        isClinicalActivity:
+          !rotation?.clinicalActivity.includes('Non-Clinical'),
+      };
+      if (!rotation) {
+        selectedRotation.startDate = this.maxEndDate?.toISOString() ?? '';
+      }
+      this.selectedGmeRotation = selectedRotation;
+    });
+  }
+
+  initUserData() {
+    this._store
+      .dispatch(new GetDashboardProgramInformation())
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        const userInfo = this._store.selectSnapshot(
+          DashboardSelectors.dashboardProgramInformation
+        );
+        if (userInfo && userInfo.programs) {
+          if (userInfo.programs.programName !== '') {
+            this.userProgram.programName = userInfo.programs.programName;
+          }
+          if (userInfo.programs.clinicalLevel !== '') {
+            switch (userInfo.programs.clinicalLevel) {
+              case 'PGY1':
+                this.userProgram.clinicalLevel = 'Clinical Level 1';
+                break;
+              case 'PGY2':
+                this.userProgram.clinicalLevel = 'Clinical Level 2';
+                break;
+              case 'PGY3':
+                this.userProgram.clinicalLevel = 'Clinical Level 3';
+                break;
+              case 'PGY4':
+                this.userProgram.clinicalLevel = 'Clinical Level 4';
+                break;
+              case 'PGY5':
+                this.userProgram.clinicalLevel = 'Clinical Level 5';
+                break;
+              case 'Research':
+                this.userProgram.clinicalLevel = 'Research';
+                break;
+              case 'Other':
+                this.userProgram.clinicalLevel = 'Other Clinical Fellowship';
+                break;
+              default:
+                this.userProgram.clinicalLevel =
+                  userInfo.programs.clinicalLevel;
+                break;
+            }
+          }
+        }
+        if (this.userProgram.clinicalLevel) {
+          const clinicalLevel =
+            this.gmePicklistOptions?.clinicalLevelOptions?.find((level) => {
+              return level.label === this.userProgram.clinicalLevel;
+            });
+          this.userProgram.clinicalLevelId = clinicalLevel?.value;
+        }
+      });
+  }
+
+  initPicklistOptions() {
+    this.gmePicklistOptions = undefined;
+    const gmePicklistOptions: IGmePicklistOptions = {
+      clinicalLevelOptions: [],
+      clinicalActivityOptions: [],
+    };
+    this._store
+      .dispatch(new GetPicklists())
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        gmePicklistOptions.clinicalLevelOptions = this._store.selectSnapshot(
+          PicklistsSelectors.slices.clinicalLevels
+        );
+        if (gmePicklistOptions.clinicalLevelOptions) {
+          gmePicklistOptions.clinicalLevelOptions =
+            gmePicklistOptions.clinicalLevelOptions.map((level) => {
+              return {
+                label: level.name,
+                value: level.id,
+              };
+            });
+        }
+        gmePicklistOptions.clinicalActivityOptions = this._store.selectSnapshot(
+          PicklistsSelectors.slices.clinicalActivities
+        );
+
+        this.gmePicklistOptions = gmePicklistOptions;
+
+        this.initUserData();
+      });
   }
 
   initRotationsData() {
-    // this._store.dispatch(new GetGraduateMedicalEducationList());
-    // this._store.dispatch(new GetGraduateMedicalEducationGapList());
     this._store.dispatch(new GetAllGraduateMedicalEducation());
 
     this.gmeAllSubscription = this.gmeAll$?.subscribe((gmeAll) => {
-      console.log('here');
       this.clinicalActivity = [];
       this.nonClinicalActivity = [];
       this.conflicts = [];
@@ -322,6 +458,9 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
           } else {
             this.maxEndDate = new Date(item.endDate);
           }
+          this.maxEndDate = new Date(
+            this.maxEndDate.setDate(this.maxEndDate.getDate() + 1)
+          );
 
           // build filter options for grid
           if (
@@ -504,10 +643,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     if ($event) {
       this.isEditGmeRotation$.next(true);
       this._store.dispatch(new GetGraduateMedicalEducationDetails($event));
-      this.selectedGmeRotationId$.next({
-        id: $event,
-        nextStart: '',
-      });
       this.handleAddEditGmeRotation(true);
     }
   }
@@ -516,9 +651,13 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     if (!isEdit) {
       this.isEditGmeRotation$.next(false);
       this._store.dispatch(new ClearGraduateMedicalEducationDetails());
-      this.selectedGmeRotationId$.next({
-        nextStart: this.maxEndDate?.toISOString() ?? '',
-      });
+      this.selectedGmeRotation = {
+        programName: this.userProgram.programName ?? undefined,
+        clinicalLevelId: this.userProgram.clinicalLevelId ?? undefined,
+        startDate: this.maxEndDate?.toISOString() ?? '',
+        isClinicalActivity: true,
+        usingAffiliateOrganization: false,
+      } as unknown as IRotationReadOnlyModel;
     }
 
     this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
@@ -528,20 +667,17 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   handleAddGmeGapRotation($event: any) {
     if ($event) {
       this.showConflictResolutionModal = false;
-      let startDateString = '';
-      if ($event.startDate) {
-        const startDate = new Date($event.startDate);
-        startDate.setDate(startDate.getDate() - 1);
-
-        startDateString = startDate.toISOString();
-      }
       this.isEditGmeRotation$.next(false);
+      this.gapConflictDates = $event;
       this._store.dispatch(new ClearGraduateMedicalEducationDetails());
-      this.selectedGmeRotationId$.next({
-        nextStart: startDateString,
-        nextEnd: $event.endDate ?? '',
-      });
-
+      this.selectedGmeRotation = {
+        programName: this.userProgram.programName ?? undefined,
+        clinicalLevelId: this.userProgram.clinicalLevelId ?? undefined,
+        startDate: $event.startDate ?? '',
+        endDate: $event.endDate ?? '',
+        isClinicalActivity: true,
+        usingAffiliateOrganization: false,
+      } as unknown as IRotationReadOnlyModel;
       this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
       this.itemizedGme$.next(!this.itemizedGme$.getValue());
     }
@@ -552,11 +688,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     if ($event.fieldKey === 'edit') {
       this.isEditGmeRotation$.next(true);
       this._store.dispatch(new GetGraduateMedicalEducationDetails(data.id));
-      this.selectedGmeRotationId$.next({
-        id: data.id,
-        //nextStart: this.maxEndDate?.toISOString() ?? '',
-        nextStart: '',
-      });
       this.handleAddEditGmeRotation(true);
     } else if ($event.fieldKey === 'delete') {
       this.globalDialogService
@@ -569,6 +700,54 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
             this.deleteGmeRotation(data.id);
           }
         });
+    }
+  }
+
+  saveGmeRotation($event: any) {
+    if ($event.data) {
+      const formValues = $event.data;
+      let startDate = '';
+      let endDate = '';
+      if (formValues.startDate) {
+        startDate = new Date(formValues.startDate).toISOString();
+      }
+      if (formValues.endDate) {
+        endDate = new Date(formValues.endDate).toISOString();
+      }
+
+      const newRotation = {
+        id: this.selectedGmeRotation?.id ?? 0,
+        startDate: startDate,
+        endDate: endDate,
+        clinicalLevelId: formValues.clinicalLevelId ?? 0,
+        clinicalActivityId: formValues.clinicalActivityId ?? 0,
+        programName: formValues.programName ?? '',
+        nonSurgicalActivity: formValues.nonSurgicalActivity ?? '',
+        alternateInstitutionName: formValues.alternateInstitutionName ?? '',
+        isInternationalRotation: formValues.isInternationalRotation ?? false,
+        other: formValues.other ?? '',
+        isEssential: formValues.isEssential ?? false,
+      } as unknown as IRotationModel;
+
+      if ($event.isEdit) {
+        this.updateGmeRotationSubscription = this._store
+          .dispatch(new UpdateGraduateMedicalEducation(newRotation))
+          .subscribe((res) => {
+            if (!res.graduateMedicalEducation?.errors) {
+              this.handleAddEditGmeRotation();
+              this.updateGmeRotationSubscription?.unsubscribe();
+            }
+          });
+      } else {
+        this.createGmeRotationSubscription = this._store
+          .dispatch(new CreateGraduateMedicalEducation(newRotation))
+          .subscribe((res) => {
+            if (!res.graduateMedicalEducation?.errors) {
+              this.handleAddEditGmeRotation();
+              this.updateGmeRotationSubscription?.unsubscribe();
+            }
+          });
+      }
     }
   }
 

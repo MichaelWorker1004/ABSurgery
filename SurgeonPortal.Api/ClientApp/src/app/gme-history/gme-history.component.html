@@ -49,7 +49,6 @@
                 <div class="i"></div>
                 Non-Clinical Activity
               </div>
-              <!-- conflicts legend key -->
               <div class="l flex align-items-center conflict">
                 <div class="i"></div>
                 Conflict
@@ -157,12 +156,17 @@
                 [hideClose]="true"
                 [preventOverlayClose]="true"
               >
-                <abs-add-record-modal
-                  [isEdit$]="isEditGmeRotation$"
-                  [slectedGmeRotationId$]="selectedGmeRotationId$"
-                  (closeDialog)="handleAddEditGmeRotation()"
+                <abs-gme-form
+                  *ngIf="showAddEditGmeRotation"
+                  [formData]="selectedGmeRotation"
+                  [isEdit]="(isEditGmeRotation$ | async) || false"
+                  [picklists]="gmePicklistOptions"
+                  [errors$]="gmeErrors$"
+                  [clearErrors]="clearErrors"
+                  (cancelForm)="handleAddEditGmeRotation()"
+                  (saveForm)="saveGmeRotation($event)"
                   (relaunchDialog)="relaunchAddEditGmeRotation($event)"
-                ></abs-add-record-modal>
+                ></abs-gme-form>
               </abs-modal>
             </div>
           </div>

@@ -86,7 +86,12 @@ export class RotationService {
             * nonSurgicalActivity:String
             * alternateInstitutionName:String
             * isInternationalRotation:Boolean
+            * isEssential:Boolean
+            * isCredit:Boolean
             * other:String
+            * fourMonthRotationExplain:String
+            * nonPrimaryExplain:String
+            * nonClinicalExplain:String
             * apiVersion
             */
             
@@ -123,7 +128,12 @@ export class RotationService {
             * nonSurgicalActivity:String
             * alternateInstitutionName:String
             * isInternationalRotation:Boolean
+            * isEssential:Boolean
+            * isCredit:Boolean
             * other:String
+            * fourMonthRotationExplain:String
+            * nonPrimaryExplain:String
+            * nonClinicalExplain:String
             * apiVersion
             */
             

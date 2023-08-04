@@ -279,10 +279,11 @@
   },
   "\\SurgeonPortal.DataAccess\\Users\\UserLoginAuditCommandDal.cs": {
     "lastGeneratedHash": "86AE1346764F6F3349EE79074E53271E",
-    "lastMergedHash": "36DCCABF4F488D188882DDD8DB136E13"
+    "lastMergedHash": "6920F6377271B0D4CC07B0645DADC7EA"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Users\\IUserLoginAuditCommandDal.cs": {
-    "lastGeneratedHash": "C9075DC0A2F62CEB3945B23C90FF8ACB"
+    "lastGeneratedHash": "C9075DC0A2F62CEB3945B23C90FF8ACB",
+    "lastMergedHash": "FC1926B41E3A9C8F8832ABA68110E723"
   },
   "\\SurgeonPortal.DataAccess.Tests\\Users\\UserLoginAuditCommandDalTests.cs": {
     "lastGeneratedHash": "144078DCE3AF2AA0552A2165269FF87B",
@@ -1317,13 +1318,13 @@
     "lastGeneratedHash": "99434C24E7950A36E9A95525ADA0D68D"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\graduatemedicaleducation\\rotation.model.ts": {
-    "lastGeneratedHash": "7ACD6BBA5E6EB5916781287CA1ACE520"
+    "lastGeneratedHash": "BAFC2499BC81AFE6E17AC91B018F828A"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\GraduateMedicalEducation\\RotationDto.cs": {
-    "lastGeneratedHash": "F5DDF19C5C6690E0D61D9C2A9BBD3F17"
+    "lastGeneratedHash": "07531E22E5731AA5171ED37A1B94529E"
   },
   "\\SurgeonPortal.Models\\GraduateMedicalEducation\\RotationModel.cs": {
-    "lastGeneratedHash": "E628EB979053EBCEC0692CE94BFA7DC0"
+    "lastGeneratedHash": "11BE6FF3B78AF69D85F418488AB03534"
   },
   "\\SurgeonPortal.Library.Contracts\\GraduateMedicalEducation\\IRotationReadOnly.cs": {
     "lastGeneratedHash": "AC494240234027EACDCA136670997EFC"
@@ -1462,31 +1463,31 @@
     "lastGeneratedHash": "F9F97E4D5F80D0FFB3E2FDD0FB0E79FF"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\graduatemedicaleducation\\rotation.service.ts": {
-    "lastGeneratedHash": "9EC956B6DCA925A7E2DAA52C1AFA408C"
+    "lastGeneratedHash": "1C958427193ACBB586A382DDD5D5E451"
   },
   "\\SurgeonPortal.Api\\Controllers\\GraduateMedicalEducation\\RotationController.cs": {
-    "lastGeneratedHash": "C71532CDEADB16148457B1577A287D6E",
-    "lastMergedHash": "226169F48BD51189F8C8FAE1D626B124"
+    "lastGeneratedHash": "B632DF81D8C060848E9ED44D5614E3E7",
+    "lastMergedHash": "61ABB9DBA149E46E023C0D22D4398EBB"
   },
   "\\SurgeonPortal.Library\\GraduateMedicalEducation\\Rotation.cs": {
-    "lastGeneratedHash": "BD8DA247AFFBA055E37F6CA3C80B9578",
-    "lastMergedHash": "E35ECEA89E41FDDA945004EC72CB5077"
+    "lastGeneratedHash": "DC380C17868B74A053E2D6685BCD7567",
+    "lastMergedHash": "566B4F55AE2FB34816A36EF25DCFEA5A"
   },
   "\\SurgeonPortal.DataAccess\\GraduateMedicalEducation\\RotationDal.cs": {
-    "lastGeneratedHash": "0864B585D8CC33C367D527064B91F285"
+    "lastGeneratedHash": "18438454870C7D486D30DADD1D7F0C83"
   },
   "\\SurgeonPortal.Library.Contracts\\GraduateMedicalEducation\\IRotation.cs": {
-    "lastGeneratedHash": "3C46876B7B5EF8FD31BD6188977E6447"
+    "lastGeneratedHash": "9D15A7B678198F64DD628705CC0424B7"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\GraduateMedicalEducation\\IRotationDal.cs": {
     "lastGeneratedHash": "E63DFD9569172608EC16BA1665B1DC3D"
   },
   "\\SurgeonPortal.Library.Tests\\GraduateMedicalEducation\\RotationTests.cs": {
-    "lastGeneratedHash": "254C18F421807BD0692A06306A517647",
-    "lastMergedHash": "D1FC309AF4BCD24A312E685B539A9A84"
+    "lastGeneratedHash": "2539648966A0696B7981DF4D7423B0AC",
+    "lastMergedHash": "484DEB9E70228F0EB441079626A25421"
   },
   "\\SurgeonPortal.DataAccess.Tests\\GraduateMedicalEducation\\RotationDalTests.cs": {
-    "lastGeneratedHash": "441D8AB21B06760C451DA8BE97EE2615"
+    "lastGeneratedHash": "FE9AAFE41DC330683DA7397FA1F11761"
   },
   "\\SurgeonPortal.Library\\GraduateMedicalEducation\\RotationFactory.cs": {
     "lastGeneratedHash": "5B3C61CFBB9F8DAA2C445B93CB00BDE5"

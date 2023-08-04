@@ -23,6 +23,7 @@ import { DropdownModule } from 'primeng/dropdown';
 
 import { CalendarModule } from 'primeng/calendar';
 import { Observable } from 'rxjs';
+import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 
 @Component({
   selector: 'abs-license-form',
@@ -35,6 +36,7 @@ import { Observable } from 'rxjs';
     InputTextModule,
     DropdownModule,
     CalendarModule,
+    FormErrorsComponent,
   ],
   templateUrl: './license-form.component.html',
   styleUrls: ['./license-form.component.scss'],

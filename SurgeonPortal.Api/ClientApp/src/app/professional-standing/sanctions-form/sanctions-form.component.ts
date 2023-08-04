@@ -22,6 +22,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
+import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 
 @UntilDestroy()
 @Component({
@@ -34,6 +35,7 @@ import { Observable } from 'rxjs';
     ButtonModule,
     InputTextareaModule,
     RadioButtonModule,
+    FormErrorsComponent,
   ],
   templateUrl: './sanctions-form.component.html',
   styleUrls: ['./sanctions-form.component.scss'],

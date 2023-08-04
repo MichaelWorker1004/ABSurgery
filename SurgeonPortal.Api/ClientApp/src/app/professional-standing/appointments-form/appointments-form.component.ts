@@ -21,6 +21,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 
+import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
+
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
@@ -47,6 +49,7 @@ interface OptionList {
     DropdownModule,
 
     AutoCompleteModule,
+    FormErrorsComponent,
   ],
   templateUrl: './appointments-form.component.html',
   styleUrls: ['./appointments-form.component.scss'],

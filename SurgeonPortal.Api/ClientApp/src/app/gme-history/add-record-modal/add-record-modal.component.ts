@@ -725,7 +725,6 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
       this.createActionSubscription = this._store
         .dispatch(new CreateGraduateMedicalEducation(newRotation))
         .subscribe((res) => {
-          console.log(res.graduateMedicalEducation?.errors);
           if (!res.graduateMedicalEducation?.errors) {
             this.close();
           }

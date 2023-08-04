@@ -19,6 +19,9 @@ namespace SurgeonPortal.Models.GraduateMedicalEducation
         public bool IsEssential { get; set; }
         public bool IsCredit { get; set; }
         public string Other { get; set; }
+        public string FourMonthRotationExplain { get; set; }
+        public string NonPrimaryExplain { get; set; }
+        public string NonClinicalExplain { get; set; }
         public int CreatedByUserId { get; set; }
         public DateTime CreatedAtUtc { get; set; }
         public DateTime LastUpdatedAtUtc { get; set; }

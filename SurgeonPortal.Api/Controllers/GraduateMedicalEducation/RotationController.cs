@@ -145,7 +145,12 @@ namespace SurgeonPortal.Api.Controllers.GraduateMedicalEducation
             entity.NonSurgicalActivity = model.NonSurgicalActivity;
             entity.AlternateInstitutionName = model.AlternateInstitutionName;
             entity.IsInternationalRotation = model.IsInternationalRotation;
+            entity.IsEssential = model.IsEssential;
+            entity.IsCredit = model.IsCredit;
             entity.Other = model.Other;
+            entity.FourMonthRotationExplain = model.FourMonthRotationExplain;
+            entity.NonPrimaryExplain = model.NonPrimaryExplain;
+            entity.NonClinicalExplain = model.NonClinicalExplain;
         }
 
         private void AssignEditProperties(IRotation entity, RotationModel model)
@@ -158,7 +163,12 @@ namespace SurgeonPortal.Api.Controllers.GraduateMedicalEducation
             entity.NonSurgicalActivity = model.NonSurgicalActivity;
             entity.AlternateInstitutionName = model.AlternateInstitutionName;
             entity.IsInternationalRotation = model.IsInternationalRotation;
+            entity.IsEssential = model.IsEssential;
+            entity.IsCredit = model.IsCredit;
             entity.Other = model.Other;
+            entity.FourMonthRotationExplain = model.FourMonthRotationExplain;
+            entity.NonPrimaryExplain = model.NonPrimaryExplain;
+            entity.NonClinicalExplain = model.NonClinicalExplain;
         }
     }
 }

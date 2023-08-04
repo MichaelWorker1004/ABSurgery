@@ -62,6 +62,9 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                                 AlternateInstitutionName = dto.AlternateInstitutionName,
                                 IsInternationalRotation = dto.IsInternationalRotation,
                                 Other = dto.Other,
+                                FourMonthRotationExplain = dto.FourMonthRotationExplain,
+                                NonPrimaryExplain = dto.NonPrimaryExplain,
+                                NonClinicalExplain = dto.NonClinicalExplain,
                                 CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             });
                             
@@ -99,6 +102,9 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                             AlternateInstitutionName = dto.AlternateInstitutionName,
                             IsInternationalRotation = dto.IsInternationalRotation,
                             Other = dto.Other,
+                            FourMonthRotationExplain = dto.FourMonthRotationExplain,
+                            NonPrimaryExplain = dto.NonPrimaryExplain,
+                            NonClinicalExplain = dto.NonClinicalExplain,
                             LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
                         

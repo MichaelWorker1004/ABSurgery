@@ -125,6 +125,33 @@
             "mapsTo": "Other"
           },
           {
+            "name": "FourMonthRotationExplain",
+            "dataType": "string",
+            "maxLength": 8000,
+            "precision": 8000,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "FourMonthRotationExplain"
+          },
+          {
+            "name": "NonPrimaryExplain",
+            "dataType": "string",
+            "maxLength": 8000,
+            "precision": 8000,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "NonPrimaryExplain"
+          },
+          {
+            "name": "NonClinicalExplain",
+            "dataType": "string",
+            "maxLength": 8000,
+            "precision": 8000,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "NonClinicalExplain"
+          },
+          {
             "name": "LastUpdatedByUserId",
             "dataType": "int",
             "maxLength": 4,
@@ -289,6 +316,36 @@
                 "mapsTo": "model.Other"
               },
               {
+                "name": "FourMonthRotationExplain",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FourMonthRotationExplain"
+              },
+              {
+                "name": "NonPrimaryExplain",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.NonPrimaryExplain"
+              },
+              {
+                "name": "NonClinicalExplain",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.NonClinicalExplain"
+              },
+              {
                 "name": "CreatedByUserId",
                 "dataType": "int",
                 "maxLength": 4,
@@ -381,7 +438,32 @@
       "required": true
     },
     {
+      "name": "IsEssential",
+      "dataType": "bool",
+      "required": true
+    },
+    {
+      "name": "IsCredit",
+      "dataType": "bool",
+      "required": true
+    },
+    {
       "name": "Other",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "FourMonthRotationExplain",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "NonPrimaryExplain",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "NonClinicalExplain",
       "dataType": "string",
       "required": true
     }
@@ -389,7 +471,7 @@
   "metadata": {
     "command": "ytgim g i s GraduateMedicalEducation\\Rotation.update Rotation -t=ytg-framework/editable-edit -p:Model=GraduateMedicalEducation\\Rotation -p:Adapter=sp:ABSSP-[dbo].[update_gmerotations] -p:FetchImplementation=GraduateMedicalEducation\\Rotation.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Rotation -p:Route= -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\Rotation.update Rotation -t=ytg-framework/editable-edit -p:Model=GraduateMedicalEducation\\Rotation -p:Adapter=sp:ABSSP-[dbo].[update_gmerotations] -p:FetchImplementation=GraduateMedicalEducation\\Rotation.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Rotation -p:Route= -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-05-19T18:13:04.6623559Z"
+    "generatedDateUtc": "2023-08-01T19:49:11.145725Z"
   },
   "version": 1
 }

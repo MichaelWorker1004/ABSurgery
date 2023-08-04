@@ -101,6 +101,9 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                     AlternateInstitutionName = expectedDto.AlternateInstitutionName,
                     IsInternationalRotation = expectedDto.IsInternationalRotation,
                     Other = expectedDto.Other,
+                    FourMonthRotationExplain = expectedDto.FourMonthRotationExplain,
+                    NonPrimaryExplain = expectedDto.NonPrimaryExplain,
+                    NonClinicalExplain = expectedDto.NonClinicalExplain,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -151,6 +154,9 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                     AlternateInstitutionName = expectedDto.AlternateInstitutionName,
                     IsInternationalRotation = expectedDto.IsInternationalRotation,
                     Other = expectedDto.Other,
+                    FourMonthRotationExplain = expectedDto.FourMonthRotationExplain,
+                    NonPrimaryExplain = expectedDto.NonPrimaryExplain,
+                    NonClinicalExplain = expectedDto.NonClinicalExplain,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

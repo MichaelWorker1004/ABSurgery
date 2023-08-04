@@ -14,6 +14,9 @@ export interface IRotationModel {
     isEssential: boolean;
     isCredit: boolean;
     other: string;
+    fourMonthRotationExplain: string;
+    nonPrimaryExplain: string;
+    nonClinicalExplain: string;
     createdByUserId: number;
     createdAtUtc: string;
     lastUpdatedAtUtc: string;

@@ -1,0 +1,333 @@
+<ng-container *ngIf="clearErrors && errors$ | async as error">
+  <div class="mb-3">
+    <abs-form-errors
+      *ngIf="errors$ | async as error"
+      [errors]="error"
+      [clearErrors]="clearErrors"
+    ></abs-form-errors>
+  </div>
+</ng-container>
+<form [formGroup]="gemRotationForm" (ngSubmit)="onSubmit()">
+  <div class="grid">
+    <!-- <div class="col-12">
+      <p class="m-0">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+        nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat,
+        egestas sit amet tortor at, condimentum tempor erat.
+      </p>
+    </div> -->
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="programName">Program Name</label>
+
+      <p class="my-0 px-3 py-2 readonly-text">
+        {{ gemRotationForm.get('programName')?.value ?? 'No Program Listed' }}
+      </p>
+
+      <!-- <input placeholder="" name="programName" id="programName" [required]="false" formControlName="programName"
+        pInputText /> -->
+
+      <small class="form-helper-text text-muted"
+        >If you need to change your Program please refer to the Medical Training
+        Page</small
+      >
+    </div>
+
+    <div class="col-12 md:col-6 flex flex-column justify-content-start">
+      <label htmlFor="clinicalLevelId">Clinical Level*</label>
+
+      <p-dropdown
+        placeholder="Select clinical level..."
+        [options]="optionLists.clinicalLevelOptions"
+        name="clinicalLevelId"
+        inputId="clinicalLevelId"
+        [editable]="false"
+        formControlName="clinicalLevelId"
+        appendTo="body"
+        optionLabel="label"
+        optionValue="value"
+      ></p-dropdown>
+    </div>
+
+    <div class="col-12 md:col-4 flex flex-column justify-content-start">
+      <label htmlFor="startDate">Start Date*</label>
+
+      <p-calendar
+        formControlName="startDate"
+        [showIcon]="true"
+        inputId="startDate"
+        placeholder="MM/DD/YYYY"
+        [required]="true"
+        [maxDate]="startDateOptions.maxDate"
+        appendTo="body"
+      ></p-calendar>
+
+      <small
+        class="form-helper-text text-danger my-0 flex align-items-center"
+        style="min-height: 37px"
+        *ngIf="startDateOptions.errorText"
+      >
+        <span>*{{ startDateOptions.errorText }}</span>
+        <p-button
+          *ngIf="startDateOptions.overlapId"
+          icon="pi pi-pencil"
+          styleClass="p-button-rounded p-button-text p-button-secondary p-button-sm"
+          title="click here to edit the overlapping record"
+          (onClick)="changeModalData(startDateOptions.overlapId)"
+        ></p-button>
+      </small>
+    </div>
+
+    <div class="col-12 md:col-4 flex flex-column justify-content-start">
+      <label htmlFor="endDate">End Date*</label>
+
+      <p-calendar
+        formControlName="endDate"
+        [showIcon]="true"
+        inputId="endDate"
+        placeholder="MM/DD/YYYY"
+        [required]="true"
+        [minDate]="endDateOptions.minDate"
+        appendTo="body"
+      ></p-calendar>
+
+      <small
+        class="form-helper-text text-danger my-0 flex align-items-center"
+        style="min-height: 37px"
+        *ngIf="endDateOptions.errorText"
+      >
+        <span>*{{ endDateOptions.errorText }}</span>
+        <p-button
+          *ngIf="endDateOptions.overlapId"
+          icon="pi pi-pencil"
+          styleClass="p-button-rounded p-button-text p-button-secondary p-button-sm"
+          title="click here to edit the overlapping record"
+          (onClick)="changeModalData(endDateOptions.overlapId)"
+        ></p-button>
+      </small>
+    </div>
+
+    <div class="col-12 md:col-4 flex flex-column justify-content-start">
+      <label htmlFor="weeks">{{ weeksLabel }}</label>
+
+      <p class="my-0 px-3 py-2 readonly-text">
+        {{ gemRotationForm.get('weeks')?.value ?? '-' }}
+      </p>
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <div class="flex flex-wrap gap-3">
+        <p-checkbox
+          name="usingAffiliateOrganization"
+          [binary]="true"
+          formControlName="usingAffiliateOrganization"
+          inputId="usingAffiliateOrganization"
+          label="I Attended this rotation at an Affiliate Organization"
+        ></p-checkbox>
+      </div>
+    </div>
+
+    <div
+      class="col-12 md:col-12 flex flex-column justify-content-start"
+      *ngIf="gemRotationForm.get('usingAffiliateOrganization')?.value"
+    >
+      <label htmlFor="alternateInstitutionName">Affiliate Organization*</label>
+
+      <input
+        placeholder="Enter Affiliate Organization"
+        name="alternateInstitutionName"
+        id="alternateInstitutionName"
+        [required]="false"
+        formControlName="alternateInstitutionName"
+        pInputText
+      />
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label htmlFor="isClinicalActivity"
+        >Which type of activity did you perform?*</label
+      >
+
+      <div class="flex flex-wrap gap-3">
+        <div
+          class="flex align-items-center"
+          *ngFor="let option of optionLists.isClinicalActivityOptions"
+        >
+          <p-radioButton
+            name="isClinicalActivity"
+            [value]="option.value"
+            formControlName="isClinicalActivity"
+            [inputId]="'isClinicalActivity' + option.value"
+          ></p-radioButton>
+          <label [for]="'isClinicalActivity' + option.value" class="ml-2">
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-12 flex flex-column justify-content-start">
+      <label htmlFor="clinicalActivityId"
+        >{{
+          gemRotationForm.get('isClinicalActivity')?.value ? '' : 'Non-'
+        }}Clinical Activity*</label
+      >
+
+      <p-dropdown
+        placeholder="Select clinical activity..."
+        [options]="groupedClinicalActivities"
+        name="clinicalActivityId"
+        id="clinicalActivityId"
+        [group]="true"
+        formControlName="clinicalActivityId"
+        appendTo="body"
+        *ngIf="gemRotationForm.get('isClinicalActivity')?.value"
+      >
+        <ng-template let-group pTemplate="group">
+          <strong>{{ group.label }}</strong>
+        </ng-template>
+      </p-dropdown>
+
+      <p-dropdown
+        placeholder="Select non-clinical activity..."
+        [options]="nonClinicalActivities"
+        name="clinicalActivityId"
+        inputId="clinicalActivityId"
+        [editable]="false"
+        formControlName="clinicalActivityId"
+        appendTo="body"
+        optionLabel="name"
+        optionValue="id"
+        *ngIf="!gemRotationForm.get('isClinicalActivity')?.value"
+      ></p-dropdown>
+    </div>
+
+    <div
+      class="col-12 md:col-12 flex flex-column justify-content-start"
+      *ngIf="displayExplainFellowship"
+    >
+      <label htmlFor="other">Please Describe your Clinical Fellowship*</label>
+
+      <textarea
+        pInputTextarea
+        id="other"
+        name="other"
+        placeholder="Type your answer..."
+        rows="3"
+        formControlName="other"
+        maxlength="8000"
+      ></textarea>
+    </div>
+
+    <div
+      class="col-12 md:col-12 flex flex-column justify-content-start"
+      *ngIf="displayExplainNonPrimary"
+    >
+      <label htmlFor="nonPrimaryExplain"
+        >Please Explain why you performed a non-primary activity*</label
+      >
+
+      <textarea
+        pInputTextarea
+        id="nonPrimaryExplain"
+        name="nonPrimaryExplain"
+        placeholder="Type your answer..."
+        rows="3"
+        formControlName="nonPrimaryExplain"
+        maxlength="8000"
+      ></textarea>
+    </div>
+
+    <div
+      class="col-12 md:col-12 flex flex-column justify-content-start"
+      *ngIf="displayExplainDuration"
+    >
+      <label htmlFor="fourMonthRotationExplain"
+        >Please explain why this rotation was longer than 4 months*</label
+      >
+
+      <textarea
+        pInputTextarea
+        id="fourMonthRotationExplain"
+        name="fourMonthRotationExplain"
+        placeholder="Type your answer..."
+        rows="3"
+        formControlName="fourMonthRotationExplain"
+        maxlength="8000"
+      ></textarea>
+    </div>
+
+    <div
+      class="col-12 md:col-12 flex flex-column justify-content-start"
+      *ngIf="displayExplainNonSurgical"
+    >
+      <label htmlFor="nonClinicalExplain"
+        >Please explain your Clinical (Non-Surgical) or Non-Clinical Research
+        rotation*</label
+      >
+
+      <textarea
+        pInputTextarea
+        id="nonClinicalExplain"
+        name="nonClinicalExplain"
+        placeholder="Type your answer..."
+        rows="3"
+        formControlName="nonClinicalExplain"
+        maxlength="8000"
+      ></textarea>
+    </div>
+
+    <div
+      class="col-12 md:col-12 flex flex-column justify-content-start"
+      *ngIf="displaySurgicalDescription"
+    >
+      <label htmlFor="nonSurgicalActivity"
+        >Describe your Non-Surgical Rotation*</label
+      >
+
+      <textarea
+        pInputTextarea
+        id="nonSurgicalActivity"
+        name="nonSurgicalActivity"
+        placeholder="Type your answer..."
+        rows="3"
+        formControlName="nonSurgicalActivity"
+        maxlength="8000"
+      ></textarea>
+    </div>
+
+    <div class="col-12 md:col-12 flex justify-content-start">
+      <div class="flex flex-wrap gap-3">
+        <p-checkbox
+          name="isInternationalRotation"
+          [binary]="true"
+          formControlName="isInternationalRotation"
+          inputId="'isInternationalRotation'"
+          label="This was an international rotation"
+          labelStyleClass="mb-0"
+        ></p-checkbox>
+      </div>
+
+      <small
+        class="form-helper-text text-warning-dark ml-6"
+        *ngIf="gemRotationForm.get('isInternationalRotation')?.value"
+      >
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        Please upload the ABS approval letter under the training section
+      </small>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12 mt-5 flex justify-content-end btn-container">
+      <p-button styleClass="p-button-link p-button-primary" (click)="close()"
+        >Cancel</p-button
+      >
+      <p-button
+        type="submit"
+        [style]="{ width: '337px' }"
+        [disabled]="gemRotationForm.invalid"
+        >Save</p-button
+      >
+    </div>
+  </div>
+</form>

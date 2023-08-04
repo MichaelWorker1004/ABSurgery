@@ -728,6 +728,8 @@ export class PicklistsState {
       this.getAppointmentTypeList(ctx).pipe(catchError((error) => of(error))),
       this.getJcahoOrganizationList(ctx).pipe(catchError((error) => of(error))),
       this.getPrimaryPracticeList(ctx).pipe(catchError((error) => of(error))),
+      this.getClinicalLevelList(ctx).pipe(catchError((error) => of(error))),
+      this.getClinicalActivityList(ctx).pipe(catchError((error) => of(error))),
     ];
 
     if (payload?.countryCode) {

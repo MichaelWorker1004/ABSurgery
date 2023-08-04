@@ -289,94 +289,122 @@ sl-button::part(caret) {
   color: var(--sl-color-primary-500);
   width: 1.5rem;
 }
+
 sl-button::part(caret):hover {
   color: var(--sl-color-primary-400);
 }
+
 sl-select::part(form-control-label) {
   font-weight: 700;
 }
+
 sl-select.font-normal::part(form-control-label) {
   font-weight: 500;
 }
+
 sl-select::part(expand-icon) {
   color: var(--sl-color-primary-500);
 }
+
 sl-select::part(expand-icon):hover {
   color: var(--sl-color-primary-400);
 }
+
 sl-checkbox::part(checked-icon) {
   color: var(--sl-color-black);
 }
+
 sl-checkbox::part(label) {
   font-weight: 700;
 }
+
 sl-checkbox.font-normal::part(label) {
   font-weight: 500;
 }
+
 sl-radio-group.horizontal::part(form-control-input) {
   display: flex;
 }
+
 sl-radio-group.horizontal {
   sl-radio::part(base) {
     margin-right: 1.5rem;
   }
 }
+
 sl-radio::part(checked-icon) {
   color: var(--sl-color-black);
 }
+
 sl-button::part(label) {
   text-transform: uppercase;
   font-weight: 700;
 }
+
 sl-button[variant='primary']::part(label),
 sl-button[variant='primary']::part(prefix) {
   color: var(--sl-color-black);
 }
+
 sl-button[variant='default']::part(base):hover {
   background-color: var(--global-warning-lighten-20);
 }
+
 sl-button[variant='default']::part(label),
 sl-button[variant='default']::part(prefix) {
   color: var(--sl-color-black);
 }
+
 sl-button[variant='warning']::part(label) {
   color: var(--sl-color-black);
 }
+
 sl-button[variant='text']::part(base) {
   color: inherit;
 }
+
 sl-badge[variant='primary']::part(base) {
   color: var(--sl-color-black);
 }
+
 sl-badge[variant='warning']::part(base) {
   color: var(--sl-color-black);
 }
+
 sl-card::part(base) {
   box-shadow: 0px 0px 6px #24365526;
   border: none;
 }
+
 sl-card::part(header) {
   font-size: 1.25rem;
   font-weight: 700;
 }
+
 sl-avatar::part(base) {
   border: 0.125rem solid var(--global-warning);
 }
+
 sl-input::part(form-control-label) {
   font-weight: 700;
 }
+
 sl-input.font-normal::part(label) {
   font-weight: 500;
 }
+
 sl-textarea::part(form-control-label) {
   font-weight: 700;
 }
+
 sl-textarea.font-normal::part(form-control-label) {
   font-weight: 500;
 }
+
 sl-radio-group::part(form-control-label) {
   font-weight: 700;
 }
+
 sl-radio-group.font-normal::part(form-control-label) {
   font-weight: 500;
 }
@@ -385,18 +413,22 @@ sl-input[data-user-invalid]::part(base),
 sl-input.ng-touched.ng-invalid::part(base) {
   border-color: var(--global-danger);
 }
+
 sl-input[data-user-invalid]::part(form-control-label),
 sl-input.ng-touched.ng-invalid::part(form-control-label) {
   color: var(--global-danger);
 }
+
 sl-select[data-user-invalid]::part(form-control-input),
 sl-select.ng-touched.ng-invalid::part(form-control-input) {
   border-color: var(--global-danger);
 }
+
 sl-select[data-user-invalid]::part(form-control-label),
 sl-select.ng-touched.ng-invalid::part(form-control-label) {
   color: var(--global-danger);
 }
+
 // sl-input::part(base) {
 //   input[type='date']::-webkit-calendar-picker-indicator {
 //     color: var(--global-warning);
@@ -411,6 +443,7 @@ sl-select.ng-touched.ng-invalid::part(form-control-label) {
 sl-dialog::part(header) {
   position: relative;
   font-weight: bold;
+
   &::after {
     content: '';
     position: absolute;
@@ -427,15 +460,19 @@ sl-dialog::part(header) {
 sl-dialog.status-header-dialog::part(header-actions) {
   padding: 0;
 }
+
 sl-dialog.hide-close::part(close-button) {
   display: none;
 }
+
 sl-dialog.status-header-dialog::part(header)::after {
   height: 1px;
   color: var(--global-gray-lightest);
 }
+
 sl-button {
   margin-left: 5px;
+
   &.wide {
     width: 20.5rem;
   }
@@ -447,6 +484,7 @@ sl-button.btn-add::part(base) {
   padding: 0;
   font-weight: 700;
 }
+
 sl-button.btn-add::part(prefix) {
   width: 40px;
   display: inline-flex;
@@ -454,13 +492,16 @@ sl-button.btn-add::part(prefix) {
   background: var(--global-warning);
   font-size: 1.5rem;
 }
+
 sl-button.btn-add::part(base):hover {
   color: var(--global-primary-lighten-20);
   border-color: var(--global-warning-lighten-20);
+
   .button__prefix {
     background: var(--global-warning-lighten-20);
   }
 }
+
 sl-button.btn-add::part(base) {
   background: linear-gradient(
     to left,
@@ -471,9 +512,11 @@ sl-button.btn-add::part(base) {
   background-position: right bottom;
   transition: background-position 0.5s ease;
 }
+
 sl-button.btn-add::part(base):hover {
   background-position: left bottom;
 }
+
 sl-dialog.hide-close::part(header-actions) {
   display: none;
 }
@@ -490,27 +533,33 @@ sl-dialog.hide-close::part(header-actions) {
   border-color: var(--global-gray);
   background-color: var(--global-table-background);
 }
+
 .p-datepicker:not(.p-datepicker-inline) {
   max-width: 450px;
   min-width: unset !important; // !important is needed to override PrimeNG's injected stylesheet
 }
+
 .p-checkbox {
   .p-checkbox-box {
     border-color: var(--global-gray);
   }
 }
+
 .p-radiobutton {
   .p-radiobutton-box {
     border-color: var(--global-gray);
   }
 }
+
 .p-radiobutton-label {
   font-weight: 400;
   margin-bottom: 0;
 }
+
 .p-dropdown-trigger-icon {
   color: var(--global-warning);
 }
+
 .form-helper-text {
   display: block;
   font-size: 0.85rem;
@@ -518,6 +567,7 @@ sl-dialog.hide-close::part(header-actions) {
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
 }
+
 .form-error-text {
   display: block;
   font-size: 0.85rem;
@@ -525,10 +575,12 @@ sl-dialog.hide-close::part(header-actions) {
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
 }
+
 .login-button {
   width: 100%;
   font-weight: 700;
   display: block;
+
   .p-button {
     width: 100%;
   }
@@ -545,6 +597,7 @@ sl-dialog.hide-close::part(header-actions) {
   font-weight: bold;
   font-size: 14px;
   text-transform: uppercase;
+
   &.p-ripple {
     font-weight: normal;
     text-transform: inherit;
@@ -566,6 +619,7 @@ p-button {
     background-size: 200% 100%;
     background-position: right bottom;
     transition: all 0.5s ease-out;
+
     i {
       width: 40px;
       display: inline-flex;
@@ -578,6 +632,7 @@ p-button {
       right: 0;
       height: 100%;
     }
+
     &:hover {
       background-position: left bottom;
     }
@@ -587,6 +642,7 @@ p-button {
 .p-button-link.p-button-link.p-button-link {
   color: white;
   transition: 250ms ease-in-out;
+
   &::hover {
     color: var(--global-primary);
   }
@@ -600,23 +656,27 @@ sl-dialog.hide-close::part(header-actions) {
 .gme-rotations-calendar {
   width: 100%;
   position: relative;
+
   .fc-header-toolbar {
     position: absolute;
     top: 10px;
     right: 5px;
     left: 5px;
     z-index: 2;
+
     .fc-button {
       background: transparent !important;
       color: var(--global-success) !important;
       border: none !important;
       border-radius: 50% !important;
+
       .fc-icon-chevron-left,
       .fc-icon-chevron-right {
         font-size: 1.4rem !important;
       }
     }
   }
+
   .fc-col-header-cell {
     padding: 0.5rem 0;
     background-color: white !important;
@@ -624,21 +684,26 @@ sl-dialog.hide-close::part(header-actions) {
     border-left: none;
     border-right: none;
     border-color: var(--global-gray-light) !important;
+
     .fc-col-header-cell-cushion {
       color: var(--global-gray) !important;
     }
   }
+
   .fc-daygrid-day {
     border-color: #fafafa !important;
+
     &.fc-day-disabled {
       background: none;
     }
   }
+
   .fc-daygrid-day-frame {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .fc-bg-event {
     opacity: 1;
     z-index: 5 !important;
@@ -656,28 +721,34 @@ sl-dialog.hide-close::part(header-actions) {
       display: flex;
       justify-content: center;
       align-items: center;
+
       &.clinical {
         background-color: var(--global-success);
         color: white;
       }
+
       &.non-clinical {
         background-color: var(--global-warning);
         color: var(--global-text-primary);
       }
+
       &.conflict {
         background-color: var(--global-danger);
         color: white;
       }
     }
   }
+
   .fc-bg-event:hover {
     .gme-calendar-highlight {
       &.clinical {
         background-color: var(--global-success-lighten-20);
       }
+
       &.non-clinical {
         background-color: var(--global-warning-lighten-20);
       }
+
       &.conflict {
         background-color: var(--global-danger-lighten-20);
       }
@@ -690,6 +761,7 @@ sl-dialog.hide-close::part(header-actions) {
     border: 1px solid var(--global-gray-lightest);
     box-shadow: 0px 0px 6px rgba(36, 54, 85, 0.1490196078);
   }
+
   sl-tooltip::part(base__arrow) {
     background-color: white;
     border: 1px solid var(--global-gray-light);
@@ -700,12 +772,15 @@ sl-dialog.hide-close::part(header-actions) {
   .status {
     text-transform: capitalize;
   }
+
   .completed {
     color: var(--global-success);
   }
+
   .in-progress {
     color: var(--global-warning);
   }
+
   .alert {
     color: var(--global-danger);
   }
@@ -716,12 +791,19 @@ sl-dialog.hide-close::part(header-actions) {
 .text-success {
   color: var(--global-success);
 }
+
 .text-warning {
   color: var(--global-warning);
 }
+
+.text-warning-dark {
+  color: var(--global-warning-darken-20);
+}
+
 .text-danger {
   color: var(--global-danger);
 }
+
 .text-muted {
   color: var(--global-gray);
 }
@@ -730,11 +812,13 @@ sl-dialog.hide-close::part(header-actions) {
 html {
   box-sizing: border-box;
 }
+
 *,
 *:after,
 *:before {
   box-sizing: inherit;
 }
+
 body {
   padding: 0;
   margin: 0;
@@ -747,38 +831,46 @@ h1 {
   line-height: 2.6rem;
   margin: 1.75rem 0;
 }
+
 h2 {
   font-size: 2rem;
   line-height: 2.1rem;
   margin: 1.5rem 0;
 }
+
 h3 {
   font-size: 1.8rem;
   line-height: 1.9rem;
   margin: 1.5rem 0;
 }
+
 h4 {
   font-size: 1.5rem;
   line-height: 1.6rem;
   margin: 1.25rem 0;
+
   &.thin {
     font-weight: 500;
   }
 }
+
 h5 {
   font-size: 1.3rem;
   line-height: 1.4rem;
   margin: 1rem 0;
 }
+
 h6 {
   font-size: 1.1rem;
   line-height: 1.2rem;
   margin: 1rem 0;
 }
+
 p {
   font-size: 1rem;
   margin: 1rem 0;
 }
+
 label {
   font-weight: 700;
   margin-bottom: 0.25rem;
@@ -793,6 +885,7 @@ label {
   color: var(--global-text-primary);
   //overflow-x: hidden;
 }
+
 .login-content {
   width: 100vw;
   height: 100vh;
@@ -800,6 +893,7 @@ label {
   background: var(--global-primary);
   color: var(--global-text-white);
 }
+
 .app-container-fluid {
   min-height: calc(100vh - 130px);
   width: 100%;
@@ -831,10 +925,12 @@ label {
     font-size: 5rem;
     color: var(--global-success);
   }
+
   .error-icon {
     font-size: 5rem;
     color: var(--global-danger);
   }
+
   .confirmation-icon {
     font-size: 5rem;
     color: var(--global-warning);
@@ -850,20 +946,24 @@ label {
   width: 35rem;
   z-index: 9999;
   pointer-events: none;
+
   sl-alert {
     pointer-events: all;
     margin-bottom: 0.5rem;
+
     .toast__title {
       font-size: 1rem;
       font-weight: 700;
       margin: 0;
       text-transform: capitalize;
     }
+
     .toast__message {
       font-size: 0.875rem;
       margin: 0;
     }
   }
+
   sl-alert::part(base) {
     max-height: 400px;
   }
@@ -873,6 +973,7 @@ label {
       color: var(--global-secondary-darken-40);
     }
   }
+
   sl-alert[variant='primary']::part(base) {
     border-top-color: var(--global-secondary-darken-40);
   }
@@ -891,26 +992,31 @@ label {
     max-width: 100%;
   }
 }
+
 @media (min-width: $breakpoint-sm) and (min-width: $breakpoint-md) {
   .app-container {
     max-width: 540px;
   }
 }
+
 @media only screen and (min-width: $breakpoint-md) and (min-width: $breakpoint-lg) {
   .app-container {
     max-width: 720px;
   }
 }
+
 @media only screen and (min-width: $breakpoint-lg) and (min-width: $breakpoint-xl) {
   .app-container {
     max-width: 960px;
   }
 }
+
 @media only screen and (min-width: $breakpoint-xl) and (min-width: $breakpoint-xxl) {
   .app-container {
     max-width: 1140px;
   }
 }
+
 @media only screen and (min-width: $breakpoint-xxl) {
   .app-container {
     max-width: 1320px;

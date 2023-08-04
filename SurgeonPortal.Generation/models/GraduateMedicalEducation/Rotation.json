@@ -158,6 +158,39 @@
       "rules": {}
     },
     {
+      "name": "FourMonthRotationExplain",
+      "dataType": "string",
+      "maxLength": 8000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "NonPrimaryExplain",
+      "dataType": "string",
+      "maxLength": 8000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "NonClinicalExplain",
+      "dataType": "string",
+      "maxLength": 8000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
       "name": "CreatedByUserId",
       "dataType": "int",
       "maxLength": 4,
@@ -215,7 +248,7 @@
   "metadata": {
     "command": "ytgim g m s GraduateMedicalEducation\\Rotation -sp [dbo].[get_gmerotations_byid] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-05-19T18:09:37.4526549Z"
+    "generatedDateUtc": "2023-08-01T19:12:12.6828948Z"
   },
   "version": 1
 }

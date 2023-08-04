@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 
 // add error handling to this schematic
 
@@ -42,6 +43,7 @@ interface OptionList {
     ButtonModule,
     DropdownModule,
     InputTextareaModule,
+    FormErrorsComponent,
   ],
   templateUrl: './current-appointment-form.component.html',
   styleUrls: ['./current-appointment-form.component.scss'],

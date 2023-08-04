@@ -311,6 +311,7 @@
       modalName="appointmentAddEditModal"
     >
       <abs-appointments-form
+        *ngIf="showAppointmentsAddEdit"
         [formData]="selectedAppointment"
         [isEdit]="selectedAppointment !== undefined"
         [picklists]="appointmentsPrivilegesPickLists"
@@ -329,6 +330,7 @@
       [hideClose]="true"
     >
       <abs-license-form
+        *ngIf="showLicensesAddEdit"
         [formData]="selectedMedicalLicense"
         [isEdit]="selectedMedicalLicense !== undefined"
         [picklists]="medicalLicensePickLists"
