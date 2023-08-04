@@ -306,7 +306,6 @@ namespace SurgeonPortal.Library.Users
       BusinessRules.AddRule(new Required(DisplayNameProperty, "DisplayName is required"));
       BusinessRules.AddRule(new Required(OfficePhoneNumberProperty, "OfficePhoneNumber is required"));
       BusinessRules.AddRule(new Required(BirthCityProperty, "BirthCity is required"));
-      BusinessRules.AddRule(new Required(BirthStateProperty, "BirthState is required"));
       BusinessRules.AddRule(new Required(BirthCountryProperty, "BirthCountry is required"));
       BusinessRules.AddRule(new Required(CountryCitizenshipProperty, "CountryCitizenship is required"));
       BusinessRules.AddRule(new Required(GenderIdProperty, "GenderId is required"));
@@ -316,9 +315,9 @@ namespace SurgeonPortal.Library.Users
       BusinessRules.AddRule(new Required(FirstLanguageIdProperty, "FirstLanguageId is required"));
       BusinessRules.AddRule(new Required(BestLanguageIdProperty, "BestLanguageId is required"));
       BusinessRules.AddRule(new Required(ReceiveCommsProperty, "ReceiveComms is required"));
+            BusinessRules.AddRule(new Required(UserConfirmedProperty, "UserConfirmed is required"));
       BusinessRules.AddRule(new Required(Street1Property, "Street1 is required"));
       BusinessRules.AddRule(new Required(CityProperty, "City is required"));
-      BusinessRules.AddRule(new Required(StateProperty, "State is required"));
       BusinessRules.AddRule(new Required(ZipCodeProperty, "ZipCode is required"));
       BusinessRules.AddRule(new Required(CountryProperty, "Country is required"));
     }

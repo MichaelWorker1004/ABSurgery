@@ -147,12 +147,7 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "BirthState is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "BirthCountry",
@@ -340,7 +335,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "UserConfirmed is required"
+        }
+      }
     },
     {
       "name": "UserConfirmedDate",
@@ -449,12 +449,7 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "State is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "ZipCode",

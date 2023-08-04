@@ -788,6 +788,16 @@ sl-dialog.hide-close::part(header-actions) {
 
 /* Helper Classes */
 /* primarily using helper classes from PrimeFlex */
+input:read-only {
+  opacity: 0.75;
+  background-color: var(--global-gray-light);
+  border: 1px solid var(--global-gray-lightest);
+  // color: var(--global-text-primary);
+  cursor: default;
+  &:hover {
+    border: 1px solid var(--global-gray-lightest);
+  }
+}
 .text-success {
   color: var(--global-success);
 }

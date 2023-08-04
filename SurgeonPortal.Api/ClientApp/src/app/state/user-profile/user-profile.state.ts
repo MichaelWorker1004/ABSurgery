@@ -26,7 +26,7 @@ export interface IUserProfile {
   countryCitizenship: string;
   absId: string;
   certificationStatus: string;
-  nPI: string;
+  npi: string;
   genderId: string; // Need to cast as number on saves
   birthDate: string;
   race: string;
@@ -76,7 +76,7 @@ export const USER_PROFILE_STATE_TOKEN = new StateToken<IUserProfile>(
     countryCitizenship: '',
     absId: '',
     certificationStatus: '',
-    nPI: '',
+    npi: '',
     genderId: '',
     birthDate: '',
     race: '',

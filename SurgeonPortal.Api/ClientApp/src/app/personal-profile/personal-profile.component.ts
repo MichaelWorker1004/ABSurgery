@@ -93,48 +93,48 @@ export class PersonalProfileComponent implements OnInit {
 
   user: IUserProfile | undefined;
 
-  isEdit = true;
+  isEdit = false;
 
   // TODO: [Joe] this is eventually getting moved to a service for universal modals
   call!: any;
 
   userProfileForm: FormGroup = new FormGroup({
-    absId: new FormControl('', []),
+    absId: new FormControl('', []), //readonly
+    npi: new FormControl('', []), //readonly
+    emailAddress: new FormControl('', []), //readonly
+    birthState: new FormControl('', []), //sometimes no options
+    state: new FormControl('', []), //sometimes no options
+    street2: new FormControl('', []), //sometimes no valid value
+    suffix: new FormControl('', []), //sometimes no valid value
+    mobilePhoneNumber: new FormControl('', []), // typically not required in forms
+    middleName: new FormControl('', [
+      Validators.minLength(1),
+      Validators.maxLength(1),
+    ]), // typically not required in forms
+    profilePicture: new FormControl('', []), //currently no input
     bestLanguageId: new FormControl('', [Validators.required]),
     birthCity: new FormControl('', [Validators.required]),
     birthCountry: new FormControl('', [Validators.required]),
     birthDate: new FormControl(new Date(), [Validators.required]),
-    birthState: new FormControl('', []),
     city: new FormControl('', [Validators.required]),
     country: new FormControl('', [Validators.required]),
     countryCitizenship: new FormControl('', [Validators.required]),
     displayName: new FormControl('', [Validators.required]),
-    emailAddress: new FormControl('', []),
     ethnicity: new FormControl('', [Validators.required]),
     firstLanguageId: new FormControl('', [Validators.required]),
     firstName: new FormControl('', [Validators.required]),
     genderId: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    middleName: new FormControl('', [
-      Validators.minLength(1),
-      Validators.maxLength(1),
-    ]),
-    mobilePhoneNumber: new FormControl('', []),
-    nPI: new FormControl('', []),
     officePhoneNumber: new FormControl('', [Validators.required]),
-    profilePicture: new FormControl('', []),
     race: new FormControl('', [Validators.required]),
     receiveComms: new FormControl(false, [Validators.required]),
-    state: new FormControl('', [Validators.required]),
     street1: new FormControl('', [Validators.required]),
-    street2: new FormControl('', []),
-    suffix: new FormControl('', []),
     userConfirmed: new FormControl(false, [Validators.requiredTrue]),
     zipCode: new FormControl('', [Validators.required]),
   });
 
   hasUnsavedChanges = false;
-  isSubmiited = false;
+  isSubmitted = false;
 
   constructor(
     private _store: Store,
@@ -202,7 +202,7 @@ export class PersonalProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userProfileForm.valueChanges.subscribe(() => {
       const isDirty = this.userProfileForm.dirty;
-      if (isDirty && !this.isSubmiited) {
+      if (isDirty && !this.isSubmitted) {
         this.hasUnsavedChanges = true;
       } else {
         this.hasUnsavedChanges = false;
@@ -230,7 +230,7 @@ export class PersonalProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isSubmiited = true;
+    this.isSubmitted = true;
 
     const model = this.userProfileForm.value;
     model.birthDate = new Date(model.birthDate).toISOString();

@@ -34,9 +34,6 @@ export class UserProfilesService {
             * Business rules for property: BirthCity
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: BirthState
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: BirthCountry
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
@@ -64,13 +61,13 @@ export class UserProfilesService {
             * Business rules for property: ReceiveComms
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: UserConfirmed
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: Street1
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: City
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: State
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ZipCode
@@ -119,9 +116,6 @@ export class UserProfilesService {
             * Business rules for property: BirthCity
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: BirthState
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: BirthCountry
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
@@ -149,13 +143,13 @@ export class UserProfilesService {
             * Business rules for property: ReceiveComms
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: UserConfirmed
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: Street1
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: City
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: State
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ZipCode
@@ -235,9 +229,6 @@ export class UserProfilesService {
             * Business rules for property: BirthCity
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: BirthState
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: BirthCountry
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
@@ -265,13 +256,13 @@ export class UserProfilesService {
             * Business rules for property: ReceiveComms
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * Business rules for property: UserConfirmed
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: Street1
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: City
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: State
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ZipCode

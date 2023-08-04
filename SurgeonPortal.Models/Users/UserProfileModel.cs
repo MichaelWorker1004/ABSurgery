@@ -20,7 +20,6 @@ namespace SurgeonPortal.Models.Users
         public string MobilePhoneNumber { get; set; }
         [Required(ErrorMessage = "BirthCity is required")]
         public string BirthCity { get; set; }
-        [Required(ErrorMessage = "BirthState is required")]
         public string BirthState { get; set; }
         [Required(ErrorMessage = "BirthCountry is required")]
         public string BirthCountry { get; set; }
@@ -43,6 +42,7 @@ namespace SurgeonPortal.Models.Users
         public int? BestLanguageId { get; set; }
         [Required(ErrorMessage = "ReceiveComms is required")]
         public bool? ReceiveComms { get; set; }
+        [Required(ErrorMessage = "UserConfirmed is required")]
         public bool? UserConfirmed { get; set; }
         public DateTime? UserConfirmedDate { get; set; }
         public int CreatedByUserId { get; set; }
@@ -54,7 +54,6 @@ namespace SurgeonPortal.Models.Users
         public string Street2 { get; set; }
         [Required(ErrorMessage = "City is required")]
         public string City { get; set; }
-        [Required(ErrorMessage = "State is required")]
         public string State { get; set; }
         [Required(ErrorMessage = "ZipCode is required")]
         public string ZipCode { get; set; }

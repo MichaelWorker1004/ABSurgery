@@ -30,25 +30,27 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 sm:col-8 md:col-4">
                 <label>First Name</label>
-                <div>{{ user.firstName }}</div>
+                <div>{{ user.firstName === '' ? 'n/a' : user.firstName }}</div>
               </div>
               <div class="col-12 sm:col-4 md:col-2">
                 <label>M. I.</label>
-                <div>{{ user.middleName }}</div>
+                <div>{{ user.middleName === '' ? '-' : user.middleName }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Last Name</label>
-                <div>{{ user.lastName }}</div>
+                <div>{{ user.lastName === '' ? '-' : user.lastName }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Last Name</label>
-                <div>{{ user.suffix }}</div>
+                <div>{{ user.suffix === '' ? '-' : user.suffix }}</div>
               </div>
               <div class="col-12">
                 <label
                   >Name as it should appear on your printed certificate</label
                 >
-                <div>{{ user.displayName }}</div>
+                <div>
+                  {{ user.displayName === '' ? '-' : user.displayName }}
+                </div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
@@ -103,27 +105,27 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-9">
                 <label>Street Address</label>
-                <div>{{ user.street1 }}</div>
+                <div>{{ user.street1 === '' ? '-' : user.street1 }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Apt</label>
-                <div>{{ user.street2 }}</div>
+                <div>{{ user.street2 === '' ? '-' : user.street2 }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Country</label>
-                <div>{{ user?.country }}</div>
+                <div>{{ user.country === '' ? '-' : user.country }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>City</label>
-                <div>{{ user.city }}</div>
+                <div>{{ user.city === '' ? '-' : user.city }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>State / Province</label>
-                <div>{{ user?.state }}</div>
+                <div>{{ user.state === '' ? '-' : user.state }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Zipcode</label>
-                <div>{{ user.zipCode }}</div>
+                <div>{{ user.zipCode === '' ? '-' : user.zipCode }}</div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
@@ -203,13 +205,17 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-6">
                 <label>Email Address</label>
-                <div>{{ user.emailAddress }}</div>
+                <div>
+                  {{ user.emailAddress === '' ? '-' : user.emailAddress }}
+                </div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Daytime Phone Number</label>
                 <div>
                   {{
-                    user.officePhoneNumber
+                    user.officePhoneNumber === ''
+                      ? '-'
+                      : user.officePhoneNumber
                       ? user.officePhoneNumber
                       : ('' | mask : '(000) 000-0000')
                   }}
@@ -219,8 +225,10 @@
                 <label>Mobile Phone Number</label>
                 <div>
                   {{
-                    user?.mobilePhoneNumber
-                      ? user?.mobilePhoneNumber
+                    user.mobilePhoneNumber === ''
+                      ? '-'
+                      : user.mobilePhoneNumber
+                      ? user.mobilePhoneNumber
                       : ('' | mask : '(000) 000-0000')
                   }}
                 </div>
@@ -272,19 +280,27 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-6">
                 <label>Country of Birth</label>
-                <div>{{ user?.birthCountry }}</div>
+                <div>
+                  {{ user.birthCountry === '' ? '-' : user.birthCountry }}
+                </div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Town or City of Birth</label>
-                <div>{{ user.birthCity }}</div>
+                <div>{{ user.birthCity === '' ? '-' : user.birthCity }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>State, Province, or Territory of Birth</label>
-                <div>{{ user?.birthState }}</div>
+                <div>{{ user?.birthState === '' ? '-' : user.birthState }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Country of Citizenship</label>
-                <div>{{ user?.countryCitizenship }}</div>
+                <div>
+                  {{
+                    user?.countryCitizenship === ''
+                      ? '-'
+                      : user.countryCitizenship
+                  }}
+                </div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
@@ -353,35 +369,39 @@
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12 md:col-6">
                 <label>ABS ID</label>
-                <div>{{ user.absId }}</div>
+                <div>{{ user.absId === '' ? '-' : user.absId }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>National Provider Identification</label>
-                <div>{{ user.nPI }}</div>
+                <div>{{ user.npi === '' ? '-' : user.npi }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Gender</label>
-                <div>{{ user?.genderId }}</div>
+                <div>{{ user.genderId === '' ? '-' : user.genderId }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Date of Birth</label>
-                <div>{{ user.birthDate }}</div>
+                <div>{{ user.birthDate === '' ? '-' : user.birthDate }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Race</label>
-                <div>{{ user?.race }}</div>
+                <div>{{ user.race === '' ? '-' : user.race }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Ethnicity</label>
-                <div>{{ user?.ethnicity }}</div>
+                <div>{{ user.ethnicity === '' ? '-' : user.ethnicity }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>First Language</label>
-                <div>{{ user?.firstLanguageId }}</div>
+                <div>
+                  {{ user.firstLanguageId === '' ? '-' : user.firstLanguageId }}
+                </div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Best Language</label>
-                <div>{{ user?.bestLanguageId }}</div>
+                <div>
+                  {{ user.bestLanguageId === '' ? '-' : user.bestLanguageId }}
+                </div>
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
@@ -396,14 +416,14 @@
                 />
               </div>
               <div class="col-12 md:col-6">
-                <label class="block" for="nPI"
+                <label class="block" for="npi"
                   >National Provider Identification</label
                 >
                 <input
-                  id="nPI"
+                  id="npi"
                   pInputText
                   type="text"
-                  formControlName="nPI"
+                  formControlName="npi"
                   readonly
                 />
               </div>
