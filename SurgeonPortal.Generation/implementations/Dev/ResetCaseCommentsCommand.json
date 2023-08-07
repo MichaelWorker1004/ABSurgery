@@ -1,0 +1,49 @@
+{
+  "name": "ResetCaseCommentsCommand",
+  "implementationName": "Dev\\ResetCaseCommentsCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.dev_reset_case_comments_by_examinerid",
+    "CommandMethodName": "ResetCaseComments",
+    "ControllerName": "Dev\\ResetDataController",
+    "ControllerRoute": "api/dev/reset",
+    "ControllerVersion": "1",
+    "ExecuteAsynchronously": "true",
+    "IncludeControllerInGeneration": "true",
+    "Model": "Dev\\ResetCaseCommentsCommand",
+    "ModelGroup": "ResetCaseCommentsCommand",
+    "ReturnsPayload": "false",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "case-comments"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.dev_reset_case_comments_by_examinerid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[dev_reset_case_comments_by_ExaminerId]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [ ],
+  "metadata": {
+    "command": "ytgim g i s Dev\\ResetCaseCommentsCommand ResetCaseCommentsCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[dev_reset_case_comments_by_ExaminerId] -p:Model=Dev\\ResetCaseCommentsCommand -p:ModelGroup=ResetCaseCommentsCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=ResetCaseComments -p:Route=case-comments -p:ControllerName=Dev\\ResetDataController -p:ControllerRoute=api/dev/reset -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Dev\\ResetCaseCommentsCommand ResetCaseCommentsCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[dev_reset_case_comments_by_ExaminerId] -p:Model=Dev\\ResetCaseCommentsCommand -p:ModelGroup=ResetCaseCommentsCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=ResetCaseComments -p:Route=case-comments -p:ControllerName=Dev\\ResetDataController -p:ControllerRoute=api/dev/reset -p:ControllerVersion=1 -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",
+    "generatedDateUtc": "2023-08-02T22:45:51.5437928Z"
+  },
+  "version": 1
+}

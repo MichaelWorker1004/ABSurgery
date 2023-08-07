@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { ACTION_CARDS } from './user-action-cards';
@@ -8,10 +8,14 @@ import { Select, Store } from '@ngxs/store';
 import {
   ExamScoringSelectors,
   GetRoster,
+  ResetCaseCommentsData,
+  ResetExamScoringData,
   UserProfileSelectors,
 } from '../state';
 import { IRosterReadOnlyModel } from '../api/models/scoring/roster-read-only.model';
 import { Observable } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'abs-ce-scoring',
@@ -21,6 +25,7 @@ import { Observable } from 'rxjs';
     ActionCardComponent,
     HighlightCardComponent,
     UserInformationSliderComponent,
+    ButtonModule,
   ],
   templateUrl: './ce-scoring.component.html',
   styleUrls: ['./ce-scoring.component.scss'],
@@ -39,6 +44,8 @@ export class CeScoringAppComponent implements OnInit {
   examinationWeek!: string;
 
   examinationDate = new Date().toISOString().split('T')[0];
+
+  isDevelopment = isDevMode();
 
   constructor(private _store: Store) {}
 
@@ -67,5 +74,13 @@ export class CeScoringAppComponent implements OnInit {
     });
 
     this.examinationWeek = new Date().toLocaleDateString();
+  }
+
+  resetCaseCommentsData() {
+    this._store.dispatch(new ResetCaseCommentsData());
+  }
+
+  resetExamScoringData() {
+    this._store.dispatch(new ResetExamScoringData());
   }
 }

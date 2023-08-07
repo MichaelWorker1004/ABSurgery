@@ -8,6 +8,16 @@
         You can also use the tiles below to review all exam rosters, begin your
         scheduled oral examinations, and review your submitted scores.
       </div>
+      <div class="mb-5 flex gap-1" *ngIf="isDevelopment">
+        <p-button
+          label="Reset Case Comments Data"
+          (onClick)="resetCaseCommentsData()"
+        ></p-button>
+        <p-button
+          label="Reset Exam Data"
+          (onClick)="resetExamScoringData()"
+        ></p-button>
+      </div>
     </div>
   </div>
   <div class="grid">

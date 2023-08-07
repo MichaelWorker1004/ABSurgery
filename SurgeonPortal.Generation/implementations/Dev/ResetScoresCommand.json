@@ -1,0 +1,49 @@
+{
+  "name": "ResetScoresCommand",
+  "implementationName": "Dev\\ResetScoresCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.dev_reset_scoring_by_examinerid",
+    "CommandMethodName": "ResetExamScores",
+    "ControllerName": "Dev\\ResetDataController",
+    "ControllerRoute": "api/dev/reset",
+    "ControllerVersion": "1",
+    "ExecuteAsynchronously": "true",
+    "IncludeControllerInGeneration": "true",
+    "Model": "Dev\\ResetScoresCommand",
+    "ModelGroup": "ResetScoresCommand",
+    "ReturnsPayload": "false",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "exam-scores"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.dev_reset_scoring_by_examinerid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[dev_reset_scoring_by_ExaminerId]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [ ],
+  "metadata": {
+    "command": "ytgim g i s Dev\\ResetScoresCommand ResetScoresCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[dev_reset_scoring_by_ExaminerId] -p:Model=Dev\\ResetScoresCommand -p:ModelGroup=ResetScoresCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=ResetExamScores -p:Route=exam-scores -p:ControllerName=Dev\\ResetDataController -p:ControllerRoute=api/dev/reset -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Dev\\ResetScoresCommand ResetScoresCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[dev_reset_scoring_by_ExaminerId] -p:Model=Dev\\ResetScoresCommand -p:ModelGroup=ResetScoresCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=ResetExamScores -p:Route=exam-scores -p:ControllerName=Dev\\ResetDataController -p:ControllerRoute=api/dev/reset -p:ControllerVersion=1 -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",
+    "generatedDateUtc": "2023-08-02T22:44:15.2929112Z"
+  },
+  "version": 1
+}

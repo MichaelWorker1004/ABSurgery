@@ -110,3 +110,11 @@ export class SkipExam {
 export class ClearExamScoringErrors {
   static readonly type = '[Exam-Scoring] Clear Erros';
 }
+
+export class ResetCaseCommentsData {
+  static readonly type = '[Exam-Scoring] Reset case comments data';
+}
+
+export class ResetExamScoringData {
+  static readonly type = '[Exam-Scoring] Reset exam scoring data';
+}

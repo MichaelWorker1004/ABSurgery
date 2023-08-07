@@ -38,6 +38,8 @@ import {
   CreateExamScore,
   DeleteCaseComment,
   SkipExam,
+  ResetCaseCommentsData,
+  ResetExamScoringData,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -496,6 +498,52 @@ export class ExamScoringState {
           return of(errors);
         })
       );
+  }
+
+  @Action(ResetCaseCommentsData)
+  resetCaseCommentsData(ctx: StateContext<IExamScoring>) {
+    return this.examScoreService.resetCaseCommentsData().pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Case Comments Reset Successfully',
+          true
+        );
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'Case Comments Reset Failed',
+          false
+        );
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(ResetExamScoringData)
+  resetExamScoringData(ctx: StateContext<IExamScoring>) {
+    return this.examScoreService.resetExamScoring().pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Exam Data Reset Successfully',
+          true
+        );
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'Exam Data Reset Failed',
+          false
+        );
+        return of(errors);
+      })
+    );
   }
 
   @Action(ClearExamScoringErrors)
