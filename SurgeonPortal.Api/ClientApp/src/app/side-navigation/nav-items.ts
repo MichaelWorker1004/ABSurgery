@@ -53,8 +53,8 @@ export const CERTIFIED_NAV_ITEMS = [
     icon: 'fa-regular fa-folder-open',
   },
   {
-    display: 'Exam Process',
-    action: 'exam-process',
+    display: 'Apply & Register',
+    action: 'apply-and-resgister',
     icon: 'fa-solid fa-list-check',
     children: [
       {

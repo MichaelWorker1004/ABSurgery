@@ -1,0 +1,96 @@
+{
+  "name": "ExamOverviewReadOnly",
+  "implementationName": "Examinations\\ExamOverviewReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_exam_overview",
+    "ControllerName": "Examinations\\ExaminationsController",
+    "ControllerRoute": "api/examinations",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\ExamOverviewReadOnly",
+    "ModelGroup": "ExamOverviewReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "overview",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_exam_overview",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_exam_overview]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Examinations\\ExamOverviewReadOnly",
+            "fields": [
+              {
+                "name": "ExamName",
+                "dataType": "string",
+                "maxLength": 132,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamName"
+              },
+              {
+                "name": "RegOpenDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegOpenDate"
+              },
+              {
+                "name": "RegEndDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegEndDate"
+              },
+              {
+                "name": "ExamStartDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamStartDate"
+              },
+              {
+                "name": "ExamEndDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamEndDate"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\ExamOverviewReadOnly.GetAll ExamOverviewReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\ExamOverviewReadOnly -p:Adapter=sp:abssp-[dbo].[get_exam_overview] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamOverviewReadOnly -p:Route=overview -p:ControllerName=Examinations\\ExaminationsController -p:ControllerRoute=api/examinations -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Examinations\\ExamOverviewReadOnly.GetAll ExamOverviewReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\ExamOverviewReadOnly -p:Adapter=sp:abssp-[dbo].[get_exam_overview] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamOverviewReadOnly -p:Route=overview -p:ControllerName=Examinations\\ExaminationsController -p:ControllerRoute=api/examinations -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-08-07T13:58:27.2182993Z"
+  },
+  "version": 1
+}

@@ -1,0 +1,68 @@
+{
+  "refs": {},
+  "name": "Examinations\\ExamOverviewReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamName",
+      "dataType": "string",
+      "maxLength": 132,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "RegOpenDate",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "RegEndDate",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamStartDate",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamEndDate",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examinations\\ExamOverviewReadOnly -sp [dbo].[get_exam_overview] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-08-07T13:54:25.7494539Z"
+  },
+  "version": 1
+}

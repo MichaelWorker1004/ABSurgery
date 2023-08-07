@@ -7,6 +7,7 @@ export * from './examination-gq-additional-training';
 export * from './medical-training';
 export * from './graduatemedicaleducation';
 export * from './documents';
+export * from './exam-process';
 export * from './professional-standing';
 export * from './exam-scoring';
 export * from './continuingmedicaleducation';

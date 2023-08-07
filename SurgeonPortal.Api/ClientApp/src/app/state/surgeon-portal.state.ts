@@ -8,6 +8,7 @@ import { GQAdditionalTrainingState } from './examination-gq-additional-training'
 import { MedicalTrainingState } from './medical-training';
 import { GraduateMedicalEducationState } from './graduatemedicaleducation';
 import { DocumentsState } from './documents';
+import { ExamProcessState } from './exam-process';
 import { ProfessionalStandingState } from './professional-standing';
 import { ExamScoringState } from './exam-scoring';
 import { ContinuingMedicalEducationState } from './continuingmedicaleducation';
@@ -24,6 +25,7 @@ export const surgeonPortalState = [
   MedicalTrainingState,
   GraduateMedicalEducationState,
   DocumentsState,
+  ExamProcessState,
   ProfessionalStandingState,
   ExamScoringState,
   ContinuingMedicalEducationState,

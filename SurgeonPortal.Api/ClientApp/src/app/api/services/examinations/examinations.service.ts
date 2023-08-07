@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IExamHistoryReadOnlyModel } from '../../models/examinations/exam-history-read-only.model';
+import { IExamOverviewReadOnlyModel } from '../../models/examinations/exam-overview-read-only.model';
 import { ApiService } from 'ytg-angular';
+import { IExamHistoryReadOnlyModel } from '../../models/examinations/exam-history-read-only.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExaminationsService {
-    private readonly baseEndpoint = 'api/examinations';
 
     constructor(private apiService: ApiService) {}
 
  
-        public retrieveExamHistoryReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IExamHistoryReadOnlyModel[]> {
+        public retrieveExamOverviewReadOnly_GetAll(apiVersion = '1.0'): Observable<IExamOverviewReadOnlyModel[]> {
             /**
             * Claims
             */
@@ -29,12 +29,36 @@ export class ExaminationsService {
             
             /**
             * Calls Sp(s)
-            * [get_userexamhistory]
+            * [get_exam_overview]
             */
             
             
-            return this.apiService.get<IExamHistoryReadOnlyModel[]>(`${this.baseEndpoint}/history?api-version=${apiVersion}`);
+            return this.apiService.get<IExamOverviewReadOnlyModel[]>(`api/examinations/overview?api-version=${apiVersion}`);
         }
+
+        public retrieveExamHistoryReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IExamHistoryReadOnlyModel[]> {
+                /**
+                * Claims
+                */
+                
+                /**
+                * Business Rules
+                * No business rules exist for this model
+                */
+                
+                /**
+                * Required Parameters
+                * apiVersion
+                */
+                
+                /**
+                * Calls Sp(s)
+                * [get_userexamhistory]
+                */
+                
+                
+                return this.apiService.get<IExamHistoryReadOnlyModel[]>(`api/examinations/history?api-version=${apiVersion}`);
+            }
 
 
 }

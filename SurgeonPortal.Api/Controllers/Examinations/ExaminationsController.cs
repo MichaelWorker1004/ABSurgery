@@ -16,9 +16,9 @@ namespace SurgeonPortal.Api.Controllers.Examinations
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-	[Route("api/examinations")]
-	public class ExaminationsController : YtgControllerBase
-	{
+    [Route("api/examinations")]
+    public class ExaminationsController : YtgControllerBase
+    {
         private readonly IMapper _mapper;
 
         public ExaminationsController(
@@ -33,6 +33,17 @@ namespace SurgeonPortal.Api.Controllers.Examinations
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ExamOverviewReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("overview")]
+        public async Task<ActionResult<IEnumerable<ExamOverviewReadOnlyModel>>> GetExamOverviewReadOnly_GetAllAsync(
+            [FromServices] IExamOverviewReadOnlyListFactory examOverviewReadOnlyListFactory)
+        {
+            var items = await examOverviewReadOnlyListFactory.GetAllAsync();
+
+            return Ok(_mapper.Map<IEnumerable<ExamOverviewReadOnlyModel>>(items));
+        }
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ExamHistoryReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -41,9 +52,9 @@ namespace SurgeonPortal.Api.Controllers.Examinations
             [FromServices] IExamHistoryReadOnlyListFactory examHistoryReadOnlyListFactory)
         {
             var items = await examHistoryReadOnlyListFactory.GetByUserIdAsync();
-        
+
             return Ok(_mapper.Map<IEnumerable<ExamHistoryReadOnlyModel>>(items));
-        } 
+        }
     }
 }
 

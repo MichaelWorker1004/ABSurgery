@@ -81,7 +81,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'exam-process',
+    path: 'apply-and-resgister',
     loadComponent: () =>
       import('./exam-process/exam-process.component').then(
         (m) => m.ExamProcessComponent
