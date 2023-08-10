@@ -148,8 +148,8 @@ namespace SurgeonPortal.Library.MedicalTraining
             BusinessRules.AddRule(new Required(TrainingTypeIdProperty, "TrainingTypeId is required"));
             BusinessRules.AddRule(new Required(StartDateProperty, "StartDate is required"));
             BusinessRules.AddRule(new Required(EndDateProperty, "EndDate is required"));
-						BusinessRules.AddRule(new DateGreaterThanRule(StartDateProperty, EndDateProperty));
-            BusinessRules.AddRule(new DateLessThanRule(EndDateProperty, StartDateProperty));
+						BusinessRules.AddRule(new DateGreaterThanRule(EndDateProperty, StartDateProperty));
+            BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
             BusinessRules.AddRule(new EitherOrRequiredRule(ProgramIdProperty, OtherProperty, 1));
         }
 

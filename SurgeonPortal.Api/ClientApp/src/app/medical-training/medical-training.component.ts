@@ -469,7 +469,10 @@ export class MedicalTrainingComponent implements OnInit {
     const model = {
       id: $event.fellowshipId,
       programName: $event.fellowshipForm.programName ?? '',
-      completionYear: $event.fellowshipForm.completionYear,
+      completionYear:
+        $event.fellowshipForm.completionYear instanceof Date
+          ? $event.fellowshipForm.completionYear.getFullYear().toString()
+          : $event.fellowshipForm.completionYear,
       programOther: $event.fellowshipForm.programOther,
     } as unknown as IFellowshipModel;
 
