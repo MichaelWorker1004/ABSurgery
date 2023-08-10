@@ -40,6 +40,7 @@ import {
   SkipExam,
   ResetCaseCommentsData,
   ResetExamScoringData,
+  GetExamTitle,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -51,8 +52,11 @@ import { SessionService } from 'src/app/api/services/scoring/ce/session.service'
 import { ExamScoreService } from 'src/app/api/services/ce/exam-score.service';
 import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
 import { Router } from '@angular/router';
+import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
+import { IExamTitleReadOnlyModel } from 'src/app/api/models/examinations/exam-title-read-only.model';
 
 export interface IExamScoring {
+  examTitle: IExamTitleReadOnlyModel | undefined;
   // examination rosters page values
   caseRoster: ICaseRosterReadOnlyModel[] | undefined; // examination rosters page list values
   selectedCaseContents: ICaseDetailReadOnlyModel[] | undefined; // examination rosters page details values
@@ -79,6 +83,7 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
 @State<IExamScoring>({
   name: EXAM_SCORING_STATE_TOKEN,
   defaults: {
+    examTitle: undefined,
     caseRoster: undefined,
     selectedCaseContents: undefined,
     selectedCaseComment: undefined,
@@ -106,9 +111,36 @@ export class ExamScoringState {
     private dashboardService: DashboardService,
     private caseScoresService: CaseScoresService,
     private sessionService: SessionService,
+    private examinationsService: ExaminationsService,
     private globalDialogService: GlobalDialogService,
     private router: Router
   ) {}
+
+  @Action(GetExamTitle)
+  getExamTitle(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+    // const state = ctx.getState();
+    const sessionId = payload.id;
+
+    if (ctx.getState()?.examTitle) {
+      return of(ctx.getState()?.examTitle);
+    }
+    return this.examinationsService
+      .retrieveExamTitleReadOnly_GetByExamId(sessionId)
+      .pipe(
+        tap((result: IExamTitleReadOnlyModel) => {
+          console.log(result);
+          ctx.patchState({
+            examTitle: result,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
+  }
 
   @Action(GetCaseRoster)
   getExamCases(

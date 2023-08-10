@@ -1,4 +1,4 @@
-<h1>{{ currentYear }}G03 ABS Oral Examination</h1>
+<h1>{{ (examTitle$ | async)?.examName || 'Certifying Examation' }}</h1>
 <div class="text-xl">Please read carefully the instructions below.</div>
 <abs-exam-timer
   *ngIf="showTimer"
@@ -7,7 +7,7 @@
   incrementLabel="Case"
 ></abs-exam-timer>
 <sl-card class="w-11 mt-5 no-highlight">
-  <h3 class="mt-0 mb-2" header>Oral Examinations</h3>
+  <h3 class="mt-0 mb-2" header>Examination</h3>
   <hr />
   <div class="grid">
     <p class="col-12">

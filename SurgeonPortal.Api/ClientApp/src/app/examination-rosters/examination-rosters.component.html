@@ -1,5 +1,5 @@
 <header>
-  <h1>2023GO3 ABS Oral Examination</h1>
+  <h1>{{ (examTitle$ | async)?.examName || 'Certifying Examation' }}</h1>
 </header>
 <ng-container>
   <section>

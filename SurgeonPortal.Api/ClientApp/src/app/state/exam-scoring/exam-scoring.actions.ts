@@ -2,6 +2,12 @@ import { s } from '@fullcalendar/core/internal-common';
 import { ICaseCommentModel, ICaseScoreModel } from 'src/app/api';
 import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
 
+export class GetExamTitle {
+  static readonly type = '[Exam-Scoring] get title of exam by id';
+
+  constructor(public id: number) {}
+}
+
 export class GetCaseRoster {
   static readonly type =
     '[Exam-Scoring] get list of cases for examination roster';

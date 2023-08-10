@@ -7,6 +7,7 @@ import { UserInformationSliderComponent } from '../shared/components/user-inform
 import { Select, Store } from '@ngxs/store';
 import {
   ExamScoringSelectors,
+  GetExamTitle,
   GetRoster,
   ResetCaseCommentsData,
   ResetExamScoringData,
@@ -16,6 +17,7 @@ import { IRosterReadOnlyModel } from '../api/models/scoring/roster-read-only.mod
 import { Observable } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { environment } from 'src/environments/environment';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 
 @Component({
   selector: 'abs-ce-scoring',
@@ -37,6 +39,12 @@ export class CeScoringAppComponent implements OnInit {
 
   @Select(UserProfileSelectors.userId) userId$: Observable<string> | undefined;
 
+  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
+    | Observable<IExamTitleReadOnlyModel>
+    | undefined;
+
+  examHeaderId = 491; // TODO - remove hard coded value
+
   currentYear = new Date().getFullYear();
   userActionCards = ACTION_CARDS;
   alertsAndNotices: any[] | undefined;
@@ -47,7 +55,9 @@ export class CeScoringAppComponent implements OnInit {
 
   isDevelopment = isDevMode();
 
-  constructor(private _store: Store) {}
+  constructor(private _store: Store) {
+    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+  }
 
   ngOnInit(): void {
     this.userId$?.subscribe((userId) => {
@@ -60,12 +70,13 @@ export class CeScoringAppComponent implements OnInit {
   fetchCEDashboardDate() {
     this.alertsAndNotices = [
       {
-        title: 'Your Weekly Agenda is Ready to Review',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+        title: 'Your Examination Agenda',
+        content: 'Your agenda can be found here once it has been finalized.',
         alert: false,
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        // downloadLink:
+        //   'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg', //if the pdf is an external link
       },
     ];
 

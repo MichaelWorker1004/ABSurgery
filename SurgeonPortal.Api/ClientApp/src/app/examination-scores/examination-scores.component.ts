@@ -17,11 +17,13 @@ import { ExaminationScoreModalComponent } from './examination-score-modal/examin
 import {
   ExamScoringSelectors,
   GetExamScoresList,
+  GetExamTitle,
   GetSelectedExamScores,
 } from '../state';
 import { Select, Store } from '@ngxs/store';
 import { ICaseScoreReadOnlyModel, IRosterReadOnlyModel } from '../api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 
 @UntilDestroy()
 @Component({
@@ -42,13 +44,17 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExaminationScoresComponent implements OnInit {
-  examHeaderId = 492;
+  examHeaderId = 491;
 
   @Select(ExamScoringSelectors.slices.examScoresList)
   examScores$: Observable<IRosterReadOnlyModel[]> | undefined;
 
   @Select(ExamScoringSelectors.slices.selectedExamScores)
   selectedExamScores$: Observable<ICaseScoreReadOnlyModel[]> | undefined;
+
+  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
+    | Observable<IExamTitleReadOnlyModel>
+    | undefined;
 
   currentYear = new Date().getFullYear();
 
@@ -79,7 +85,9 @@ export class ExaminationScoresComponent implements OnInit {
   showViewModal = false;
   candidateData$: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(private _store: Store) {}
+  constructor(private _store: Store) {
+    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+  }
 
   ngOnInit(): void {
     this.getExaminationScoresDate();

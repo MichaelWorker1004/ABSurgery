@@ -18,16 +18,19 @@ import {
   IScoringSessionReadOnlyModel,
 } from '../api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import {
   CreateCaseComment,
   DeleteCaseComment,
   ExamScoringSelectors,
   GetCaseContents,
   GetCaseRoster,
+  GetExamTitle,
   UpdateCaseComment,
 } from '../state';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { Observable } from 'rxjs';
 
 interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   editComment: boolean;
@@ -55,6 +58,10 @@ export class ExaminationRostersComponent implements OnInit {
     event.preventDefault();
   }
 
+  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
+    | Observable<IExamTitleReadOnlyModel>
+    | undefined;
+
   examHeaderId = 491;
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
@@ -70,7 +77,9 @@ export class ExaminationRostersComponent implements OnInit {
   constructor(
     private _store: Store,
     private _globalDialogService: GlobalDialogService
-  ) {}
+  ) {
+    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+  }
 
   ngOnInit(): void {
     this.initPicklistValues();

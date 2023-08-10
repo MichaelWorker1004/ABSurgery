@@ -33,6 +33,22 @@ namespace SurgeonPortal.Api.Controllers.Examinations
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ExamHistoryReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("history")]
+        public async Task<ActionResult<IEnumerable<ExamHistoryReadOnlyModel>>> GetExamHistoryReadOnly_GetByUserIdAsync(
+            [FromServices] IExamHistoryReadOnlyListFactory examHistoryReadOnlyListFactory)
+        {
+            var items = await examHistoryReadOnlyListFactory.GetByUserIdAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<ExamHistoryReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ExamOverviewReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -44,16 +60,22 @@ namespace SurgeonPortal.Api.Controllers.Examinations
 
             return Ok(_mapper.Map<IEnumerable<ExamOverviewReadOnlyModel>>(items));
         }
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ExamHistoryReadOnlyModel>))]
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExamTitleReadOnlyModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [HttpGet("history")]
-        public async Task<ActionResult<IEnumerable<ExamHistoryReadOnlyModel>>> GetExamHistoryReadOnly_GetByUserIdAsync(
-            [FromServices] IExamHistoryReadOnlyListFactory examHistoryReadOnlyListFactory)
+        [HttpGet("title")]
+        public async Task<ActionResult<ExamTitleReadOnlyModel>> GetExamTitleReadOnly_GetByExamIdAsync(
+            [FromServices] IExamTitleReadOnlyFactory examTitleReadOnlyFactory,
+            int examId)
         {
-            var items = await examHistoryReadOnlyListFactory.GetByUserIdAsync();
+            var item = await examTitleReadOnlyFactory.GetByExamIdAsync(examId);
 
-            return Ok(_mapper.Map<IEnumerable<ExamHistoryReadOnlyModel>>(items));
+            return Ok(_mapper.Map<ExamTitleReadOnlyModel>(item));
         }
     }
 }

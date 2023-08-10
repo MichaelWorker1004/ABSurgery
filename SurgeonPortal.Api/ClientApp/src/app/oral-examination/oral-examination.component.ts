@@ -17,6 +17,7 @@ import {
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
+  GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
   UpdateCaseScore,
@@ -27,6 +28,7 @@ import { ExamTimerComponent } from '../shared/components/exam-timer-component/ex
 import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
 import { IExamScoreModel } from '../api/models/ce/exam-score.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 
 @Component({
   selector: 'abs-oral-examination',
@@ -61,7 +63,13 @@ export class OralExaminationsComponent implements OnInit {
     | Observable<ICaseScoreReadOnlyModel[]>
     | undefined;
 
+  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
+    | Observable<IExamTitleReadOnlyModel>
+    | undefined;
+
   @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
+
+  examHeaderId = 491; // TODO - remove hard coded value
 
   cases$: BehaviorSubject<any> = new BehaviorSubject([]);
   userId!: number;
@@ -90,7 +98,9 @@ export class OralExaminationsComponent implements OnInit {
     private _store: Store,
     private router: Router,
     public globalDialogService: GlobalDialogService
-  ) {}
+  ) {
+    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {

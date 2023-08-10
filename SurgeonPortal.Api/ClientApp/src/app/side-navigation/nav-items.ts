@@ -88,16 +88,16 @@ export const CERTIFIED_NAV_ITEMS = [
     icon: 'fa-solid fa-file-lines',
   },
   {
-    display: 'CE Scoring',
+    display: 'CE Dasboard',
     action: 'ce-scoring',
     icon: 'fa-solid fa-clock',
     children: [
       {
-        display: 'Examination Rosters',
+        display: 'Examination Case Rosters',
         action: 'examination-rosters',
       },
       {
-        display: 'Oral Examinations',
+        display: 'Deliver CE Exams',
         action: 'oral-examinations',
       },
       {

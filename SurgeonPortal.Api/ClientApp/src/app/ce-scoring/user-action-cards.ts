@@ -1,30 +1,30 @@
 export const ACTION_CARDS = [
   {
-    title: 'Examination Rosters',
+    title: 'Examination Case Rosters',
     description:
-      'Review the examinations rosters over the next 3 days prior to delivering the oral examinations.',
+      'Review the cases for the next certifying examination and add personal notes as needed. Your personal notes will display each time you present the case.',
     action: {
       type: 'component',
       action: '/ce-scoring/examination-rosters',
     },
-    actionDisplay: 'Review Exam Rosters',
+    actionDisplay: 'Review Exam Case Rosters',
     icon: 'fa-solid fa-clipboard-user',
   },
   {
-    title: 'Oral Examinations',
+    title: 'Deliver Certifying Examinations',
     description:
-      'This is where you will deliver the oral examinations and score the candidates.',
+      'Certifying examinations along with scoring capability can be found here on exam day.',
     action: {
       type: 'component',
       action: '/ce-scoring/oral-examinations',
     },
-    actionDisplay: 'Begin Oral Examinations',
+    actionDisplay: 'Begin Certifying Examinations',
     icon: 'fa-solid fa-person-chalkboard',
   },
   {
     title: 'Examination Scores',
     description:
-      'You can review previously submitted scores and edit if needed.',
+      'Check the status of submitted scores and edit any that remain incomplete as soon as possible.',
     action: {
       type: 'component',
       action: '/ce-scoring/examination-scores',

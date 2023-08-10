@@ -1,0 +1,24 @@
+{
+  "refs": {},
+  "name": "Examinations\\ExamTitleReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamName",
+      "dataType": "string",
+      "maxLength": 132,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examinations\\ExamTitleReadOnly -sp [dbo].[get_exam_title_byExamId] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-08-08T14:06:09.9494418Z"
+  },
+  "version": 1
+}

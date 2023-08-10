@@ -9,10 +9,16 @@ import { ORAL_EXAMINATION_COLS } from './oral-examination-cols';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-read-only.model';
-import { ExamScoringSelectors, GetExamineeList, SkipExam } from '../state';
+import {
+  ExamScoringSelectors,
+  GetExamTitle,
+  GetExamineeList,
+  SkipExam,
+} from '../state';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 
 @UntilDestroy()
 @Component({
@@ -33,6 +39,12 @@ export class OralExaminationsComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.examineeList)
   examineeList$: Observable<IExamSessionReadOnlyModel[]> | undefined;
 
+  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
+    | Observable<IExamTitleReadOnlyModel>
+    | undefined;
+
+  examHeaderId = 491; // TODO - remove hard coded value
+
   examDate: Date = new Date('01/01/24');
   zoomLink: string | undefined = '';
   oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =
@@ -43,7 +55,9 @@ export class OralExaminationsComponent implements OnInit {
     private _route: Router,
     private _globalDialogService: GlobalDialogService,
     private _store: Store
-  ) {}
+  ) {
+    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+  }
 
   ngOnInit(): void {
     this.getOralExaminations();
