@@ -524,7 +524,8 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
             rawData: item,
           };
 
-          if (item.isCredit) {
+          //if (item.isCredit) {
+          if (!item.clinicalActivity.includes('Non-Clinical')) {
             // clinical activity
             calendarItem.class = 'clinical';
             calendarItem.color = 'rgba(28, 130, 125, 0.25)';
@@ -726,6 +727,9 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
         alternateInstitutionName: formValues.alternateInstitutionName ?? '',
         isInternationalRotation: formValues.isInternationalRotation ?? false,
         other: formValues.other ?? '',
+        fourMonthRotationExplain: formValues.fourMonthRotationExplain ?? '',
+        nonPrimaryExplain: formValues.nonPrimaryExplain ?? '',
+        nonClinicalExplain: formValues.nonClinicalExplain ?? '',
         isEssential: formValues.isEssential ?? false,
       } as unknown as IRotationModel;
 

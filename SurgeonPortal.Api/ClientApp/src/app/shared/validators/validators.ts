@@ -49,8 +49,10 @@ export function validateStartAndEndDates(
     const start = control.get(startDate)?.value;
     const end = control.get(endDate)?.value;
 
-    if (start > end) {
-      return { datesValid: false };
+    if (start && end) {
+      if (new Date(start).getTime() > new Date(end).getTime()) {
+        return { datesValid: false };
+      }
     }
 
     return null;
