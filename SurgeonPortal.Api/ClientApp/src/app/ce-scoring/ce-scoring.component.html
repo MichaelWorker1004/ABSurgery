@@ -8,7 +8,7 @@
         review cases, score examinations, and access other documentation as
         applicable during the exam administration process.
       </div>
-      <div class="mb-5 flex gap-1" *ngIf="isDevelopment">
+      <div class="mb-5 flex gap-1" *ngIf="ceScoreTesting">
         <p-button
           label="Reset Case Comments Data"
           (onClick)="resetCaseCommentsData()"

@@ -36,6 +36,7 @@ using SurgeonPortal.DataAccess.Contracts.Storage;
 using SurgeonPortal.DataAccess.Storage;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using SurgeonPortal.Models.Features;
 
 namespace SurgeonPortal.Api
 {
@@ -61,6 +62,7 @@ namespace SurgeonPortal.Api
             services.Configure<SiteConfiguration>(Configuration.GetSection(ConfigurationSections.Site));
             services.Configure<TokensConfiguration>(Configuration.GetSection(ConfigurationSections.Tokens));
             services.Configure<AzureStorageConfiguration>(Configuration.GetSection(ConfigurationSections.AzureStorageConfiguration));
+            services.Configure<FeatureFlagConfiguration>(Configuration.GetSection(ConfigurationSections.FeatureFlags));
 
             services.AddCsla();
 
@@ -278,6 +280,7 @@ namespace SurgeonPortal.Api
             return new MapperConfiguration(config =>
             {
                 config.AddProfile<ConventionAutoMapperProfile<LibraryConventionProvider, ModelConventionResolver>>();
+                config.CreateMap<FeatureFlagConfiguration, FeatureFlagsModel>();
             });
         }
 

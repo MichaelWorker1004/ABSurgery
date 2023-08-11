@@ -1,6 +1,6 @@
 import { createPropertySelectors } from '@ngxs/store';
-import { ApplicationState } from './application.state';
+import { ApplicationState, IApplicationState } from './application.state';
 
 export class ApplicationSelectors {
-  static slices = createPropertySelectors(ApplicationState);
+  static slices = createPropertySelectors<IApplicationState>(ApplicationState);
 }

@@ -13,8 +13,10 @@ import { ProfessionalStandingState } from './professional-standing';
 import { ExamScoringState } from './exam-scoring';
 import { ContinuingMedicalEducationState } from './continuingmedicaleducation';
 import { ExamHistoryState } from './exam-history';
+import { ApplicationState } from './application/application.state';
 
 export const surgeonPortalState = [
+  ApplicationState,
   AuthState,
   MyAccountState,
   UserProfileState,

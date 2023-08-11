@@ -5,5 +5,6 @@
         public static string Site => "Site";
         public static string Tokens => "Tokens";
         public static string AzureStorageConfiguration => "AzureStorageConfiguration";
+        public static string FeatureFlags => "FeatureFlags";
     }
 }

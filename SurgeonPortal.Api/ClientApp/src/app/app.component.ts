@@ -18,6 +18,7 @@ import { DashboardHeaderComponent } from './shared/components/dashboard-header/d
 import { UserClaims } from './side-navigation/user-status.enum';
 import { Message } from 'primeng/api';
 import { AlertComponent } from './shared/components/alert/alert.component';
+import { LoadApplication } from './state/application/application.actions';
 
 @Component({
   selector: 'abs-root',
@@ -64,6 +65,7 @@ export class AppComponent implements OnDestroy, OnInit {
       const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);
       const claims = this._store.selectSnapshot(AuthSelectors.claims);
       if (isAuthed && loginUser && claims) {
+        this._store.dispatch(new LoadApplication());
         if (claims.includes(UserClaims.surgeon)) {
           this.isSurgeon = true;
         }

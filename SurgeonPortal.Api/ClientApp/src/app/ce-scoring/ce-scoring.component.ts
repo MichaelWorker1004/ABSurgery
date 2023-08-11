@@ -16,9 +16,12 @@ import {
 import { IRosterReadOnlyModel } from '../api/models/scoring/roster-read-only.model';
 import { Observable } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
-import { environment } from 'src/environments/environment';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { ApplicationSelectors } from '../state/application/application.selectors';
+import { IFeatureFlags } from '../state/application/application.state';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-ce-scoring',
   standalone: true,
@@ -33,6 +36,9 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
   styleUrls: ['./ce-scoring.component.scss'],
 })
 export class CeScoringAppComponent implements OnInit {
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
   @Select(ExamScoringSelectors.slices.dashboardRoster) dashboardRoster$:
     | Observable<IRosterReadOnlyModel[]>
     | undefined;
@@ -53,10 +59,15 @@ export class CeScoringAppComponent implements OnInit {
 
   examinationDate = new Date().toISOString().split('T')[0];
 
-  isDevelopment = isDevMode();
+  ceScoreTesting = false;
 
   constructor(private _store: Store) {
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this.featureFlags$?.pipe().subscribe((featureFlags) => {
+      if (featureFlags) {
+        this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
+      }
+    });
   }
 
   ngOnInit(): void {
