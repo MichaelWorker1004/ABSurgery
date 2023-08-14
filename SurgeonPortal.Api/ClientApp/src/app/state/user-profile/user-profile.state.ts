@@ -183,7 +183,7 @@ export class UserProfileState {
           userProfile.genderId = userProfile.genderId.toString();
           userProfile.firstLanguageId = userProfile.firstLanguageId.toString();
           userProfile.bestLanguageId = userProfile.bestLanguageId.toString();
-          ctx.setState({
+          ctx.patchState({
             ...userProfile,
             errors: null,
           });

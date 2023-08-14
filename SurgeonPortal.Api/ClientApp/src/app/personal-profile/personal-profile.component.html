@@ -1,7 +1,7 @@
 <header>
   <h1>Personal Profile</h1>
 </header>
-<ng-container *ngIf="user$ | async as user">
+<ng-container *ngIf="user">
   <section>
     <div class="grid">
       <div class="col-12 flex">
@@ -113,7 +113,9 @@
               </div>
               <div class="col-12 md:col-3">
                 <label>Country</label>
-                <div>{{ user.country === '' ? '-' : user.country }}</div>
+                <div>
+                  {{ user.countryDisplay === '' ? '-' : user.countryDisplay }}
+                </div>
               </div>
               <div class="col-12 md:col-3">
                 <label>City</label>
@@ -281,7 +283,11 @@
               <div class="col-12 md:col-6">
                 <label>Country of Birth</label>
                 <div>
-                  {{ user.birthCountry === '' ? '-' : user.birthCountry }}
+                  {{
+                    user.birthCountryDisplay === ''
+                      ? '-'
+                      : user.birthCountryDisplay
+                  }}
                 </div>
               </div>
               <div class="col-12 md:col-6">
@@ -290,15 +296,15 @@
               </div>
               <div class="col-12 md:col-6">
                 <label>State, Province, or Territory of Birth</label>
-                <div>{{ user?.birthState === '' ? '-' : user.birthState }}</div>
+                <div>{{ user.birthState === '' ? '-' : user.birthState }}</div>
               </div>
               <div class="col-12 md:col-6">
                 <label>Country of Citizenship</label>
                 <div>
                   {{
-                    user?.countryCitizenship === ''
+                    user.citizenshipCountryDisplay === ''
                       ? '-'
-                      : user.countryCitizenship
+                      : user.citizenshipCountryDisplay
                   }}
                 </div>
               </div>
@@ -374,33 +380,48 @@
               <div class="col-12 md:col-6">
                 <label>National Provider Identification</label>
                 <div>{{ user.npi === '' ? '-' : user.npi }}</div>
+                <small class="form-helper-text text-muted"
+                  >Please contact ABS if your NPI is incorrect.</small
+                >
               </div>
               <div class="col-12 md:col-3">
                 <label>Gender</label>
-                <div>{{ user.genderId === '' ? '-' : user.genderId }}</div>
+                <div>{{ user.gender === '' ? '-' : user.gender }}</div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Date of Birth</label>
-                <div>{{ user.birthDate === '' ? '-' : user.birthDate }}</div>
+                <div>
+                  {{
+                    user.birthDate === ''
+                      ? '-'
+                      : (user.birthDate | date : 'shortDate')
+                  }}
+                </div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Race</label>
-                <div>{{ user.race === '' ? '-' : user.race }}</div>
+                <div>
+                  {{ user.raceDisplay === '' ? '-' : user.raceDisplay }}
+                </div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Ethnicity</label>
-                <div>{{ user.ethnicity === '' ? '-' : user.ethnicity }}</div>
+                <div>
+                  {{
+                    user.ethnicityDisplay === '' ? '-' : user.ethnicityDisplay
+                  }}
+                </div>
               </div>
               <div class="col-12 md:col-3">
                 <label>First Language</label>
                 <div>
-                  {{ user.firstLanguageId === '' ? '-' : user.firstLanguageId }}
+                  {{ user.firstLanguage === '' ? '-' : user.firstLanguage }}
                 </div>
               </div>
               <div class="col-12 md:col-3">
                 <label>Best Language</label>
                 <div>
-                  {{ user.bestLanguageId === '' ? '-' : user.bestLanguageId }}
+                  {{ user.bestLanguage === '' ? '-' : user.bestLanguage }}
                 </div>
               </div>
             </div>
@@ -426,6 +447,9 @@
                   formControlName="npi"
                   readonly
                 />
+                <small class="form-helper-text text-muted"
+                  >Please contact ABS if your NPI is incorrect.</small
+                >
               </div>
               <div class="col-12 md:col-3">
                 <label class="block" for="gender">Gender *</label>
@@ -530,14 +554,14 @@
 
           <div class="col-12">
             <div class="flex justify-content-end" *ngIf="!isEdit">
-              <p-button [style]="{ width: '200px' }" (click)="isEdit = true">
+              <p-button [style]="{ width: '200px' }" (onClick)="toggleEdit()">
                 Edit
               </p-button>
             </div>
             <div class="flex justify-content-end" *ngIf="isEdit">
               <p-button
                 variant="text"
-                (click)="isEdit = false"
+                (onClick)="toggleEdit()"
                 styleClass="p-button-link p-button-primary"
                 >Cancel</p-button
               >
@@ -565,11 +589,3 @@
     <p>loading personal profile...</p>
   </div>
 </ng-template>
-
-<abs-success-fail-modal
-  [isSuccess]="call?.isSuccess"
-  [title]="call?.title"
-  [message]="call?.message"
-  [showDialog]="call?.showDialog"
-  (closeDialog)="toggleDialog($event)"
-></abs-success-fail-modal>

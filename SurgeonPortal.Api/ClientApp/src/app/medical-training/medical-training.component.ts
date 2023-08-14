@@ -306,6 +306,7 @@ export class MedicalTrainingComponent implements OnInit {
           this.medicalTrainingForm
             .get('residencyProgramName')
             ?.patchValue(residencyProgramId);
+          this.isEdit = false;
         } else {
           this.createMode = true;
         }
@@ -527,6 +528,7 @@ export class MedicalTrainingComponent implements OnInit {
 
   toggleFormEdit(toggle: boolean) {
     this.isEdit = toggle;
+    this.hasUnsavedChanges = toggle;
   }
 
   save() {

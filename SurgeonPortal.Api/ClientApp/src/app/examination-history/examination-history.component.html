@@ -104,8 +104,10 @@
               <abs-grid
                 [columns]="examHistoryCols"
                 [data]="examHistory$"
-                class="margin-bottom-2"
+                [pagination]="true"
+                [itemsPerPage]="10"
                 (action)="handleGridAction($event)"
+                class="margin-bottom-2"
               ></abs-grid>
             </div>
           </div>

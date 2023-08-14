@@ -1,6 +1,3 @@
-<div slot="label">
-  {{ originalFormValues?.id ? 'Edit' : 'Add' }} Hospital Appointment
-</div>
 <ng-container *ngIf="clearErrors && errors$ | async as error">
   <div class="mb-3">
     <abs-form-errors

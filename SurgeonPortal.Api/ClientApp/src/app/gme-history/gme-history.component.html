@@ -138,7 +138,6 @@
                 ADD A RECORD
               </p-button>
               <abs-grid
-                class="margin-bottom-2"
                 [columns]="itemizedGmeCols"
                 [data]="gmeRotations$"
                 [gridOptions]="itemizedGridOptions"
@@ -146,33 +145,34 @@
                 [pagination]="true"
                 [itemsPerPage]="5"
               ></abs-grid>
-              <abs-modal
-                [open]="showAddEditGmeRotation"
-                title="{{
-                  (isEditGmeRotation$ | async) ? 'Edit' : 'Add'
-                }} Graduate Medical Education Record"
-                modalName="addGmeRotation"
-                (closeDialog)="handleAddEditGmeRotation()"
-                [hideClose]="true"
-                [preventOverlayClose]="true"
-              >
-                <abs-gme-form
-                  *ngIf="showAddEditGmeRotation"
-                  [formData]="selectedGmeRotation"
-                  [isEdit]="(isEditGmeRotation$ | async) || false"
-                  [picklists]="gmePicklistOptions"
-                  [errors$]="gmeErrors$"
-                  [clearErrors]="clearErrors"
-                  (cancelForm)="handleAddEditGmeRotation()"
-                  (saveForm)="saveGmeRotation($event)"
-                  (relaunchDialog)="relaunchAddEditGmeRotation($event)"
-                ></abs-gme-form>
-              </abs-modal>
             </div>
           </div>
         </abs-collapse-panel>
       </sl-card>
     </div>
+
+    <abs-modal
+      [open]="showAddEditGmeRotation"
+      title="{{
+        (isEditGmeRotation$ | async) ? 'Edit' : 'Add'
+      }} Graduate Medical Education Record"
+      modalName="addGmeRotation"
+      (closeDialog)="handleAddEditGmeRotation()"
+      [hideClose]="true"
+      [preventOverlayClose]="true"
+    >
+      <abs-gme-form
+        *ngIf="showAddEditGmeRotation"
+        [formData]="selectedGmeRotation"
+        [isEdit]="(isEditGmeRotation$ | async) || false"
+        [picklists]="gmePicklistOptions"
+        [errors$]="gmeErrors$"
+        [clearErrors]="clearErrors"
+        (cancelForm)="handleAddEditGmeRotation()"
+        (saveForm)="saveGmeRotation($event)"
+        (relaunchDialog)="relaunchAddEditGmeRotation($event)"
+      ></abs-gme-form>
+    </abs-modal>
 
     <abs-modal
       [open]="showConflictResolutionModal"

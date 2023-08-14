@@ -52,7 +52,6 @@ import { ButtonModule } from 'primeng/button';
 import { GmeFormComponent } from './gme-form/gme-form.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { GetPicklists, PicklistsSelectors } from '../state/picklists';
-import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.model';
 
 export interface ICalendarFilterValue {
   value: string;
@@ -168,10 +167,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
           info.event.end ? ' - ' + realEnd?.toLocaleDateString() : ''
         }`;
 
-        if (info.event.extendedProps['programName']) {
-          innerContent += `<br>${info.event.extendedProps['programName']}`;
-        }
-
         innerContent += `<br>${info.event.extendedProps['eventTitle']}</div>
           <div style="width: 100%; height: 100%;display:flex;">`;
 
@@ -261,14 +256,11 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     this.initRotationsData();
     this.initSummaryData();
     this.initPicklistOptions();
-    //this.initUserData();
 
     this.selectedRotation$?.pipe(untilDestroyed(this)).subscribe((rotation) => {
       this.selectedGmeRotation = undefined;
       const selectedRotation = {
         ...rotation,
-        //programName: read this value from user object
-        //clinicalLevel: if create new read this value from user object
         usingAffiliateOrganization: rotation?.alternateInstitutionName
           ? true
           : false,
@@ -406,7 +398,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
         this.minStartDate = undefined;
         gmeAll.gmeGaps.forEach((item, index) => {
           // build calendar items
-          if (item.startDate !== item.endDate) {
+          if (item.startDate === item.endDate) {
             // single day event
           }
 
@@ -415,16 +407,12 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
           const conflictItem: any = {
             id: 'conflict-' + index,
             start: item.startDate,
-            //end: undefined,
             class: 'conflict',
             classNames: ['clickable-event'],
             color: 'rgba(139, 4, 10, 0.25)',
             highlightColor: 'rgba(139, 4, 10, 1)',
             type: 'conflict',
             eventTitle: 'Rotation Conflict',
-            //programName: '',
-            //year: yearFilter.replaceAll(' ', '_').trim(),
-            //clinicalLevel: item.clinicalLevel?.replaceAll(' ', '_').trim(),
             allDay: true,
             rawData: item,
           };
@@ -433,12 +421,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
             conflictItem.end = endDate;
           }
           this.conflicts.push(conflictItem);
-          // class: 'conflict',
-          // classNames: ['clickable-event'],
-          // color: 'rgba(139, 4, 10, 0.25)',
-          // highlightColor: 'rgba(139, 4, 10, 1)',
-          // eventTitle: 'Rotation Conflict',
-          // type: 'conflict',
         });
         gmeAll.gmeRotations.forEach((item) => {
           //get min start date
@@ -515,7 +497,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
             class: '',
             color: '',
             highlightColor: '',
-            eventTitle: item.clinicalLevel,
+            eventTitle: item.clinicalActivity,
             programName: item.programName,
             type: '',
             year: yearFilter.replaceAll(' ', '_').trim(),
@@ -639,7 +621,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     if (this.showAddEditGmeRotation) {
       this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
     }
-    //this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
     this.itemizedGme$.next(!this.itemizedGme$.getValue());
     if ($event) {
       this.isEditGmeRotation$.next(true);

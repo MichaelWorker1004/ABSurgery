@@ -38,6 +38,17 @@ import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 
+interface IDisplayUserProfile extends IUserProfile {
+  gender: string;
+  countryDisplay: string;
+  birthCountryDisplay: string;
+  citizenshipCountryDisplay: string;
+  firstLanguage: string;
+  bestLanguage: string;
+  ethnicityDisplay: string;
+  raceDisplay: string;
+}
+
 @UntilDestroy()
 @Component({
   selector: 'abs-personal-profile',
@@ -86,17 +97,12 @@ export class PersonalProfileComponent implements OnInit {
     | Observable<IRaceReadOnlyModel[]>
     | undefined;
 
-  // mailingStates$: Observable<IStateReadOnlyModel[] | undefined> = of([]);
   mailingStates: IStateReadOnlyModel[] = [];
-  // birthStates$: Observable<IStateReadOnlyModel[] | undefined> = of([]);
   birthStates: IStateReadOnlyModel[] = [];
 
-  user: IUserProfile | undefined;
+  user!: IDisplayUserProfile;
 
   isEdit = false;
-
-  // TODO: [Joe] this is eventually getting moved to a service for universal modals
-  call!: any;
 
   userProfileForm: FormGroup = new FormGroup({
     absId: new FormControl('', []), //readonly
@@ -145,7 +151,60 @@ export class PersonalProfileComponent implements OnInit {
     this.user$
       ?.pipe(debounceTime(300), untilDestroyed(this))
       .subscribe((user: IUserProfile) => {
-        this.user = user;
+        if (!user) {
+          this.isEdit = true;
+        }
+        const languages = this._store.selectSnapshot(
+          PicklistsSelectors.slices.languages
+        ) as IPickListItem[];
+
+        const genders = this._store.selectSnapshot(
+          PicklistsSelectors.slices.genders
+        ) as IPickListItem[];
+
+        //countries
+        const countries = this._store.selectSnapshot(
+          PicklistsSelectors.slices.countries
+        ) as IPickListItem[];
+
+        //ethnicities
+        const ethnicities = this._store.selectSnapshot(
+          PicklistsSelectors.slices.ethnicities
+        ) as IEthnicityReadOnlyModel[];
+
+        //races
+        const races = this._store.selectSnapshot(
+          PicklistsSelectors.slices.races
+        ) as IRaceReadOnlyModel[];
+
+        this.user = {
+          ...user,
+          gender:
+            genders.find((x) => x.itemValue === user?.genderId)
+              ?.itemDescription || '',
+          countryDisplay:
+            countries.find((x) => x.itemValue === user?.country)
+              ?.itemDescription || '',
+          birthCountryDisplay:
+            countries.find((x) => x.itemValue === user?.birthCountry)
+              ?.itemDescription || '',
+          citizenshipCountryDisplay:
+            countries.find((x) => x.itemValue === user?.countryCitizenship)
+              ?.itemDescription || '',
+          firstLanguage:
+            languages.find((x) => x.itemValue === user?.firstLanguageId)
+              ?.itemDescription || '',
+          bestLanguage:
+            languages.find((x) => x.itemValue === user?.bestLanguageId)
+              ?.itemDescription || '',
+          ethnicityDisplay:
+            ethnicities.find((x) => x.itemValue === user?.ethnicity)
+              ?.itemDescription || '',
+          raceDisplay:
+            races.find((x) => x.itemValue === user?.race)?.itemDescription ||
+            '',
+        } as IDisplayUserProfile;
+
         this._store.dispatch(new GetStateList(user.country)).subscribe();
         this.mailingStates = this._store.selectSnapshot(
           PicklistsSelectors.slices.states
@@ -210,27 +269,27 @@ export class PersonalProfileComponent implements OnInit {
     });
   }
 
-  save() {
-    this.hasUnsavedChanges = true;
-    this.call = {
-      title: 'Success',
-      message: 'Your profile has been updated.',
-      isSuccess: true,
-      showDialog: true,
-    };
-    this.toggleDialog(true);
-
-    this.isEdit = false;
+  resetFormDefaults() {
+    this.userProfileForm.patchValue({ ...this.user });
+    if (this.user?.birthDate) {
+      const date = new Date(Date.parse(this.user.birthDate));
+      if (!isNaN(date as unknown as number)) {
+        this.userProfileForm.get('birthDate')?.patchValue(date);
+      }
+    }
   }
 
-  toggleDialog($event: any) {
+  toggleEdit() {
+    this.isEdit = !this.isEdit;
+    this.resetFormDefaults();
     this.hasUnsavedChanges = false;
-    this.call.showDialog = $event.show;
-    this.userProfileForm.reset();
   }
 
   onSubmit() {
     this.isSubmitted = true;
+
+    this.isEdit = false;
+    this.hasUnsavedChanges = false;
 
     const model = this.userProfileForm.value;
     model.birthDate = new Date(model.birthDate).toISOString();

@@ -223,7 +223,7 @@ export class GmeFormComponent implements OnInit, OnChanges {
           }),
         },
         {
-          label: 'Other Activities',
+          label: 'Non-Essential Activities',
           items: otherActivities.map((activity) => {
             return {
               label: activity.name,

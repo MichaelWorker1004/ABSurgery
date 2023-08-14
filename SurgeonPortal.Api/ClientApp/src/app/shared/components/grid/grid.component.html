@@ -4,7 +4,7 @@
     *ngIf="title || gridOptions.showFilter"
   >
     <h4>{{ title }}</h4>
-    <div class="search-container" *ngIf="gridOptions.showFilter">
+    <div class="search-container mb-3" *ngIf="gridOptions.showFilter">
       <div class="text-search" *ngIf="gridOptions.filterType === 'text'">
         <sl-input
           [placeholder]="gridOptions.placeholder ?? 'Search'"

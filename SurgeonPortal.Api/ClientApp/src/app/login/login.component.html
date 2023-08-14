@@ -41,6 +41,7 @@
         </sl-alert>
         <form name="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <input
+            class="mt-2"
             id="userName"
             placeholder="Username"
             pInputText
@@ -55,15 +56,15 @@
           >
             The Username field is required.
           </small>
-          <p-button
-            class="mb-2"
+          <!-- <p-button
             styleClass="p-button-link p-button-sm"
             tabindex="-1"
           >
             I forgot my username
-          </p-button>
+          </p-button> -->
 
           <p-password
+            styleClass="mt-2"
             id="password"
             placeholder="Password"
             formControlName="password"
@@ -80,12 +81,12 @@
           >
             The Password field is required.
           </small>
-          <p-button styleClass="p-button-link p-button-sm" tabindex="-1">
+          <!-- <p-button styleClass="p-button-link p-button-sm" tabindex="-1">
             I forgot my password
-          </p-button>
+          </p-button> -->
 
           <p-button
-            styleClass="p-button-primary"
+            styleClass="p-button-primary mt-2"
             class="login-button"
             type="submit"
             [disabled]="loginForm.invalid"

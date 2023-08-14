@@ -1,6 +1,11 @@
 <div [class]="alertClass">
   <a class="hotspot" [routerLink]="alert?.action" *ngIf="alert?.action"></a>
-  <a class="hotspot" [href]="alert?.downloadLink" download *ngIf="alert?.downloadLink"></a>
+  <a
+    class="hotspot"
+    [href]="alert?.downloadLink"
+    download
+    *ngIf="alert?.downloadLink"
+  ></a>
   <div class="img-container" [style]="imageStyleUrl"></div>
   <div class="highlight-content">
     <div class="alert-title" *ngIf="alert?.alert">Alerts and Notices</div>

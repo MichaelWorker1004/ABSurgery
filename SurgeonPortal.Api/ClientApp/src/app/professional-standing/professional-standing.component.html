@@ -145,7 +145,7 @@
             </div>
 
             <div
-              class="grid"
+              class="grid col-12"
               *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
             >
               <abs-current-appointment-form
@@ -158,6 +158,7 @@
                   toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
                 "
                 (saveForm)="saveCurrentAppointments($event)"
+                class="w-full"
               ></abs-current-appointment-form>
             </div>
 

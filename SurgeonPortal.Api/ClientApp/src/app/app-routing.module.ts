@@ -89,7 +89,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'exam-process/registration-requirements',
+    path: 'apply-and-resgister/registration-requirements',
     loadComponent: () =>
       import(
         './registration-requirements/registration-requirements.component'
@@ -97,7 +97,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'exam-process/exam-registration',
+    path: 'apply-and-resgister/exam-registration',
     loadComponent: () =>
       import('./exam-registration/exam-registration.component').then(
         (m) => m.ExamRegistrationComponent
