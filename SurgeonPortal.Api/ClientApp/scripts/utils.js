@@ -1,12 +1,12 @@
 import {
+  constants,
+  copyFile,
   existsSync,
   readFileSync,
   writeFileSync,
   rmdirSync,
-  copyFile,
-  constants,
 } from "fs";
-import { execSync, exec } from "child_process";
+import { exec } from "child_process";
 
 export class YTGUtils {
   static async copyFileFromTo(
@@ -28,10 +28,14 @@ export class YTGUtils {
 
   static async executeCommand(command) {
     console.log(` ---------> EXECUTING COMMAND: ${command}`);
-    const commandExc = await exec(command, {}, (error, stdout, stderr) => {
-      console.log(error, stdout, stderr);
+    return await new Promise((resolve, reject) => {
+      exec(command, {}, (error, stdout, stderr) => {
+        console.log(error, stdout, stderr);
+        resolve(true);
+      });
     });
   }
+
   static deleteDirectory(directoryPath) {
     try {
       if (existsSync(directoryPath)) {
@@ -47,5 +51,31 @@ export class YTGUtils {
     } catch (e) {
       console.log(`The directory ${directoryPath} does not exist`);
     }
+  }
+
+  static async updatePackageJsonVersion(packageJsonPath, version) {
+    const packageJson = JSON.parse(
+      readFileSync(packageJsonPath, {
+        encoding: "utf8",
+      })
+    );
+    packageJson.version = version;
+    writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), {
+      encoding: "utf8",
+    });
+    return packageJson.version;
+  }
+
+  static async setBuildVersion(jsonPath, version) {
+    const configJson = JSON.parse(
+      readFileSync(jsonPath, {
+        encoding: "utf8",
+      })
+    );
+    configJson.buildId = version;
+    writeFileSync(jsonPath, JSON.stringify(configJson, null, 2), {
+      encoding: "utf8",
+    });
+    return configJson.buildId;
   }
 }

@@ -1,9 +1,15 @@
 import { YTGUtils } from "./utils.js";
 
-// YTGUtils.deleteDirectory("node_modules");
-// TODO: Make a script to copy library from dist/ytg-n to directory root and install it via npm
+// async function packLib() {
+//   const timeStamp = new Date().getTime();
+//   const updatePackage = await YTGUtils.updatePackageJsonVersion(`15.0.${timeStamp}`);
+//   console.log('step 1', updatePackage);
+//   const buildLib = await YTGUtils.executeCommand("npm run lib-build");
+//   const packLib = await YTGUtils.executeCommand("cd dist/ytg-angular-material && npm pack .");
+//   const installed = await YTGUtils.executeCommand(`npm install dist/ytg-angular-material/ytg-angular-material-${updatePackage}.tgz`);
+//   return `Library is packedz ${buildLib} AND ${packLib}, ${installed}`;
+// }
 
-YTGUtils.copyFileFromTo(
-  "dist/ytg-angular/ytg-angular-0.0.1.tgz",
-  "ytg-angular-0.0.1.tgz"
-);
+// packLib().then((message) => {
+//   console.log(message);
+// });

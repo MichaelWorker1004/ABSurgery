@@ -1,12 +1,14 @@
 {
   "name": "surgeon-portal",
   "version": "0.0.0",
+  "buildId": "Dev-1",
   "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 5001 --ssl",
     "local:start": "ng serve --ssl --port 5200 --proxy-config scripts/proxy.confg.json",
     "build": "ng build",
+    "build-config": "node scripts/build-config.js",
     "watch": "ng build --watch --configuration development",
     "run-app": "cd ../ && dotnet run",
     "restore": "cd ../ && dotnet restore",

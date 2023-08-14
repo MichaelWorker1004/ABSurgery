@@ -48,7 +48,7 @@ export class AppComponent implements OnDestroy, OnInit {
   authSub: Subscription | undefined;
   userSub: Subscription | undefined;
 
-  version = packageInfo.version;
+  version = packageInfo.buildId;
 
   isSurgeon = false;
   isSideNavOpen = false;

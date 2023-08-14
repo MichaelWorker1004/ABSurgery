@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -34,6 +39,8 @@ import { ButtonModule } from 'primeng/button';
   ],
 })
 export class LoginComponent implements OnInit {
+  @Input() version = '';
+
   loginForm = new FormGroup({
     userName: new FormControl('', [
       Validators.required,

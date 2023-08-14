@@ -4,7 +4,7 @@
   class="login-content"
   *ngIf="(isAuthenticated$ | async) === false; else site"
 >
-  <abs-login></abs-login>
+  <abs-login [version]="version"></abs-login>
 </div>
 
 <ng-template #site>
