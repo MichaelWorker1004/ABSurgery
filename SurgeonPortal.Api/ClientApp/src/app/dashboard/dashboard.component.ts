@@ -13,6 +13,7 @@ import {
   GetDashboardProgramInformation,
   IDashboardState,
   GetTraineeRegistrationStatus,
+  GetAlertsAndNotices,
 } from '../state';
 import { UserClaims } from '../side-navigation/user-status.enum';
 import { IActionCardReadOnlyModel } from '../shared/components/action-card/action-card-read-only.model';
@@ -54,6 +55,10 @@ export class DashboardComponent implements OnInit {
 
   @Select(DashboardSelectors.dashboardCertificateInformation)
   certificateInformation$: Observable<IDashboardState> | undefined;
+
+  @Select(DashboardSelectors.dashboardAlertsAndNotices)
+  alertsAndNotices$: Observable<IDashboardState> | undefined;
+
   userData: IUserProfile | undefined;
   userActionCards: IActionCardReadOnlyModel[] | undefined;
   isSurgeon: boolean | undefined;
@@ -85,6 +90,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this._store.dispatch(new GetDashboardProgramInformation());
       this._store.dispatch(new GetTraineeRegistrationStatus('2022GO6'));
+      this._store.dispatch(new GetAlertsAndNotices());
       this.registrationStatus$?.subscribe((userInformation) => {
         const registrationInformation = userInformation?.registrationStatus;
         const todaysDate = new Date();
@@ -101,14 +107,18 @@ export class DashboardComponent implements OnInit {
           return false;
         };
 
+        const applyForQECard = TRAINEE_ACTION_CARDS[1];
         if (
           (registrationInformation?.isRegOpen ||
             registrationInformation?.isRegLate) &&
           isRegisterDates()
         ) {
-          TRAINEE_ACTION_CARDS[0].disabled = false;
+          applyForQECard.disabled = false;
         } else {
-          TRAINEE_ACTION_CARDS[0].disabled = true;
+          applyForQECard.disabled = true;
+          applyForQECard.description = `QE applications are not yet available. Check back on ${new Date(
+            registrationInformation?.regOpenDate ?? ''
+          ).toLocaleDateString()}`;
         }
       });
       this.programInformation$?.subscribe((userInformation) => {
@@ -122,7 +132,6 @@ export class DashboardComponent implements OnInit {
   fetchAlertsAndNoticesByUserId() {
     const alertsAndNoticesTrainee = [
       {
-        title: 'Next General Surgery QE - 7/2024',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
         alert: true,
@@ -139,6 +148,17 @@ export class DashboardComponent implements OnInit {
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
       },
     ];
+
+    this.alertsAndNotices$?.subscribe((alertsAndNotices) => {
+      let date;
+
+      if (alertsAndNotices?.alertsAndNotices?.examStartDate) {
+        date = new Date(
+          alertsAndNotices?.alertsAndNotices?.examStartDate ?? ''
+        ).toLocaleDateString();
+        alertsAndNoticesTrainee[0].title = `Next General Surgery QE -  ${date}`;
+      }
+    });
 
     const alertsAndNoticesCertfiied = [
       {

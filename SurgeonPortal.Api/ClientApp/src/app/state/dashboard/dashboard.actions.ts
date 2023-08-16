@@ -13,3 +13,7 @@ export class GetTraineeRegistrationStatus {
 
   constructor(public examCode: string) {}
 }
+
+export class GetAlertsAndNotices {
+  static readonly type = '[Dashboard] Get the alerts and notices information';
+}

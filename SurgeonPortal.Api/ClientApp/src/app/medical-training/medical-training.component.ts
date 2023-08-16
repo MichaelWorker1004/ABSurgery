@@ -183,6 +183,7 @@ export class MedicalTrainingComponent implements OnInit {
   showOtherCertificatesAddEdit = false;
   year = new Date().getFullYear();
   maxYear: Date = new Date();
+  canAddRPVI = true;
 
   medicalTrainingForm = new FormGroup({
     graduateProfileId: new FormControl(''),
@@ -234,6 +235,7 @@ export class MedicalTrainingComponent implements OnInit {
     this.getDocumentsData();
     this.getAdvancedTrainingGridData();
     this.getMedicalTraining();
+    this.getRPVICertificates();
 
     this.medicalTrainingForm.valueChanges.subscribe(() => {
       const isDirty = this.medicalTrainingForm.dirty;
@@ -309,6 +311,16 @@ export class MedicalTrainingComponent implements OnInit {
           this.isEdit = false;
         } else {
           this.createMode = true;
+        }
+      }
+    );
+  }
+
+  getRPVICertificates() {
+    this.otherCertifications$?.subscribe(
+      (otherCertifications: IOtherCertificationsModel[]) => {
+        if (otherCertifications?.length > 0) {
+          this.canAddRPVI = false;
         }
       }
     );
@@ -495,7 +507,7 @@ export class MedicalTrainingComponent implements OnInit {
     const model: IOtherCertificationsModel = {
       id: form.id ?? null,
       certificateNumber: form.certificateNumber?.toString(),
-      certificateTypeId: form.certificateTypeId,
+      certificateTypeId: 6,
       issueDate: new Date(form.issueDate ?? '').toISOString() ?? null,
       userId: this.userId,
     } as IOtherCertificationsModel;

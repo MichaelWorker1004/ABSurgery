@@ -62,7 +62,10 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
 
   otherCertificatesForm = new FormGroup({
     id: new FormControl(0),
-    certificateTypeId: new FormControl(''),
+    certificateTypeId: new FormControl(
+      { value: 6, disabled: true },
+      Validators.required
+    ),
     certificateNumber: new FormControl(''),
     issueDate: new FormControl('', [Validators.required]),
   });

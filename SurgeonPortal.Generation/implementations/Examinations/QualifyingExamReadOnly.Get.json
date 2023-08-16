@@ -1,0 +1,95 @@
+{
+  "name": "QualifyingExamReadOnly",
+  "implementationName": "Examinations\\QualifyingExamReadOnly.Get",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_current_qualifying_exam",
+    "ControllerName": "Examinations//QualifyingExamController",
+    "ControllerRoute": "api/qualifying-exam",
+    "ControllerVersion": "1",
+    "FetchMethodName": "Get",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\QualifyingExamReadOnly",
+    "ModelGroup": "QualifyingExamReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_current_qualifying_exam",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_current_qualifying_exam]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Examinations\\QualifyingExamReadOnly",
+            "fields": [
+              {
+                "name": "ExamName",
+                "dataType": "string",
+                "maxLength": 132,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamName"
+              },
+              {
+                "name": "RegOpenDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegOpenDate"
+              },
+              {
+                "name": "RegEndDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegEndDate"
+              },
+              {
+                "name": "ExamStartDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamStartDate"
+              },
+              {
+                "name": "ExamEndDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamEndDate"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\QualifyingExamReadOnly.Get QualifyingExamReadOnly -t=ytg-framework/readonly-get -p:Model=Examinations\\QualifyingExamReadOnly -p:Adapter=sp:abssp-[dbo].[get_current_qualifying_exam] -p:FetchMethodName=Get -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=QualifyingExamReadOnly -p:Route= -p:ControllerName=QualifyingExamController -p:ControllerRoute=api/qualifying-exam -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Examinations\\QualifyingExamReadOnly.Get QualifyingExamReadOnly -t=ytg-framework/readonly-get -p:Model=Examinations\\QualifyingExamReadOnly -p:Adapter=sp:abssp-[dbo].[get_current_qualifying_exam] -p:FetchMethodName=Get -p:RootNamespace=$project.RootNamespace -p:ModelGroup=QualifyingExamReadOnly -p:Route= -p:ControllerName=QualifyingExamController -p:ControllerRoute=api/qualifying-exam -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-08-14T18:33:26.2601327Z"
+  },
+  "version": 1
+}

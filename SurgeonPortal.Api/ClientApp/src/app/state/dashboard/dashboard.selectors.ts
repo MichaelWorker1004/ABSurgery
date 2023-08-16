@@ -31,4 +31,14 @@ export class DashboardSelectors {
     }
     return;
   }
+
+  @Selector([DashboardState])
+  static dashboardAlertsAndNotices(
+    state: IDashboardState
+  ): IDashboardState | undefined {
+    if (state.alertsAndNotices) {
+      return state;
+    }
+    return;
+  }
 }

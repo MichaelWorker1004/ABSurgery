@@ -8,49 +8,49 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-  public class RosterReadOnlyDalTests : TestBase<string>
-  {
-    #region GetByExaminationHeaderIdAsync
-
-    [Test]
-    public async Task GetByExaminationHeaderIdAsync_ExecutesSprocCorrectly()
+	public class RosterReadOnlyDalTests : TestBase<string>
     {
-      var expectedSprocName = "[dbo].[get_examination_scores]";
-      var expectedExaminerUserId = Create<int>();
+        #region GetByExaminationHeaderIdAsync
+        
+        [Test]
+        public async Task GetByExaminationHeaderIdAsync_ExecutesSprocCorrectly()
+        {
+            var expectedSprocName = "[dbo].[get_examination_scores]";
+            var expectedExaminerUserId = Create<int>();
             var expectedExamHeaderId = Create<int>();
-      var expectedParams =
-          new
-          {
-            ExaminerUserId = expectedExaminerUserId,
+            var expectedParams =
+                new
+                {
+                    ExaminerUserId = expectedExaminerUserId,
                     ExamHeaderId = expectedExamHeaderId,
-          };
-
-      var sqlManager = new MockSqlConnectionManager();
-      sqlManager.AddRecords(CreateMany<RosterReadOnlyDto>());
-
-      var sut = new RosterReadOnlyDal(sqlManager);
+                };
+        
+            var sqlManager = new MockSqlConnectionManager();
+            sqlManager.AddRecords(CreateMany<RosterReadOnlyDto>());
+        
+            var sut = new RosterReadOnlyDal(sqlManager);
             await sut.GetByExaminationHeaderIdAsync(expectedExamHeaderId);
-
-      Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
-      Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
-    }
-
-    [Test]
-    public async Task GetByExaminationHeaderIdAsync_YieldsCorrectResult()
-    {
-      var expectedDtos = CreateMany<RosterReadOnlyDto>();
-
-      var sqlManager = new MockSqlConnectionManager();
-      sqlManager.AddRecords(expectedDtos);
-
-      var sut = new RosterReadOnlyDal(sqlManager);
+        
+            Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
+            Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
+        }
+        
+        [Test]
+        public async Task GetByExaminationHeaderIdAsync_YieldsCorrectResult()
+        {
+            var expectedDtos = CreateMany<RosterReadOnlyDto>();
+        
+            var sqlManager = new MockSqlConnectionManager();
+            sqlManager.AddRecords(expectedDtos);
+        
+            var sut = new RosterReadOnlyDal(sqlManager);
             var result = await sut.GetByExaminationHeaderIdAsync(Create<int>());
-
-      expectedDtos.Should().BeEquivalentTo(
-          result,
-          nameof(result));
-    }
-
-    #endregion
-  }
+        
+            expectedDtos.Should().BeEquivalentTo(
+                result,
+                nameof(result));
+        }
+        
+        #endregion
+	}
 }

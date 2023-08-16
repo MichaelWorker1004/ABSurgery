@@ -1,17 +1,5 @@
 export const TRAINEE_ACTION_CARDS = [
   {
-    title: 'Apply for a Qualified Exam',
-    description:
-      'QE applications are not yet available. Check back on April 15th.',
-    action: {
-      type: 'component',
-      action: '/exam-process/exam-registration',
-    },
-    actionDisplay: 'Coming Soon',
-    icon: 'fa-solid fa-user-graduate',
-    disabled: true,
-  },
-  {
     title: 'Graduate Medical Education (GME)',
     description:
       'Add rotations to your GME history. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -21,6 +9,17 @@ export const TRAINEE_ACTION_CARDS = [
     },
     actionDisplay: 'View Your GME',
     icon: 'fa-sharp fa-solid fa-file-waveform',
+  },
+  {
+    title: 'Apply for a Qualified Exam',
+    description: 'QE applications are not yet available. Check back on ',
+    action: {
+      type: 'component',
+      action: '/exam-process/exam-registration',
+    },
+    actionDisplay: 'Coming Soon',
+    icon: 'fa-solid fa-user-graduate',
+    disabled: true,
   },
 ];
 

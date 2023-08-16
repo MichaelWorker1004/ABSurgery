@@ -6,6 +6,7 @@ import { ICertificationReadOnlyModel } from 'src/app/api/models/surgeons/certifi
 import { ProgramsService } from 'src/app/api/services/trainees/programs.service';
 import { CertificationsService } from 'src/app/api/services/surgeons/certifications.service';
 import {
+  GetAlertsAndNotices,
   GetDashboardCertificationInformation,
   GetDashboardProgramInformation,
   GetTraineeRegistrationStatus,
@@ -14,10 +15,13 @@ import { catchError, of, tap } from 'rxjs';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { ExamService } from 'src/app/api/services/trainees/exam.service';
 import { IRegistrationStatusReadOnlyModel } from 'src/app/api/models/trainees/registration-status-read-only.model';
+import { IQualifyingExamReadOnlyModel } from 'src/app/api/models/examinations/qualifying-exam-read-only.model';
+import { QualifyingExamService } from 'src/app/api/services/examinations/qualifying-exam.service';
 
 export interface IDashboardState {
   certificates: ICertificationReadOnlyModel[];
   registrationStatus: IRegistrationStatusReadOnlyModel | null;
+  alertsAndNotices: IQualifyingExamReadOnlyModel | undefined;
   programs: IProgramReadOnlyModel;
 }
 
@@ -28,6 +32,7 @@ const USER_ACCOUNT_STATE_TOKEN = new StateToken<IDashboardState>('dashboard');
   defaults: {
     certificates: [],
     registrationStatus: null,
+    alertsAndNotices: undefined,
     programs: {
       programName: '',
       programDirector: '',
@@ -45,7 +50,8 @@ export class DashboardState {
     private programsService: ProgramsService,
     private certificationsService: CertificationsService,
     private examService: ExamService,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    private qualifyingExamService: QualifyingExamService
   ) {}
   @Action(GetDashboardProgramInformation) getDashboardProgramInformation(
     ctx: StateContext<IDashboardState>
@@ -111,5 +117,26 @@ export class DashboardState {
           return of(errors);
         })
       );
+  }
+
+  @Action(GetAlertsAndNotices)
+  getAlertsAndNotices(ctx: StateContext<IDashboardState>) {
+    const state = ctx.getState();
+    this.globalDialogService.showLoading();
+    return this.qualifyingExamService.retrieveQualifyingExamReadOnly_Get().pipe(
+      tap((result: IQualifyingExamReadOnlyModel) => {
+        const alertsAndNotices = result as IQualifyingExamReadOnlyModel;
+        ctx.setState({
+          ...state,
+          alertsAndNotices: alertsAndNotices,
+        });
+        this.globalDialogService.closeOpenDialog();
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        this.globalDialogService.closeOpenDialog();
+        return of(errors);
+      })
+    );
   }
 }
