@@ -46,6 +46,7 @@ import {
   GetJcahoOrganizationList,
   GetPrimaryPracticeList,
   GetScoringSessionList,
+  GetFellowshipTypes,
 } from './picklists.actions';
 import { IFormErrors } from '../../shared/common';
 import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
@@ -56,6 +57,8 @@ import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fe
 import { IResidencyProgramReadOnlyModel } from 'src/app/api/models/picklists/residency-program-read-only.model';
 import { ICertificateTypeReadOnlyModel } from 'src/app/api/models/picklists/certificate-type-read-only.model';
 import { IDocumentTypeReadOnlyModel } from 'src/app/api/models/picklists/document-type-read-only.model';
+import { IFellowshipTypeReadOnlyModel } from 'src/app/api/models/picklists/fellowship-type-read-only.model';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 export interface IPicklist {
   countries: ICountryReadOnlyModel[] | undefined;
   ethnicities: IEthnicityReadOnlyModel[] | undefined;
@@ -84,6 +87,7 @@ export interface IPicklist {
   jcahoOrganizations: IPickListItemNumber[] | undefined;
   primaryPractices: IPickListItemNumber[] | undefined;
   scoringSessions: IScoringSessionReadOnlyModel[] | undefined;
+  fellowshipTypes: IFellowshipTypeReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -153,13 +157,15 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     jcahoOrganizations: undefined,
     primaryPractices: undefined,
     scoringSessions: undefined,
+    fellowshipTypes: undefined,
   },
 })
 @Injectable()
 export class PicklistsState {
   constructor(
     private _store: Store,
-    private picklistsService: PicklistsService
+    private picklistsService: PicklistsService,
+    private globalDialogService: GlobalDialogService
   ) {}
 
   @Action(GetCountryList)
@@ -426,23 +432,44 @@ export class PicklistsState {
     );
   }
 
+  @Action(GetFellowshipTypes)
+  getFellowshipTypes(
+    ctx: StateContext<IPicklist>
+  ): Observable<IFellowshipTypeReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.fellowshipTypes) {
+      return of(ctx.getState()?.fellowshipTypes);
+    }
+    return this.picklistsService.retrieveFellowshipTypeReadOnly_Get().pipe(
+      tap((fellowshipTypes: IFellowshipTypeReadOnlyModel[]) => {
+        ctx.patchState({
+          fellowshipTypes,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: States', error);
+        return of(error);
+      })
+    );
+  }
+
   @Action(GetFellowshipPrograms)
   getFellowshipPrograms(
-    ctx: StateContext<IPicklist>
+    ctx: StateContext<IPicklist>,
+    payload: { fellowshipType: string }
   ): Observable<IFellowshipProgramReadOnlyModel[] | undefined> {
-    if (ctx.getState()?.fellowshipPrograms) {
-      return of(ctx.getState()?.fellowshipPrograms);
-    }
+    this.globalDialogService.showLoading();
     return this.picklistsService
-      .retrieveFellowshipProgramReadOnly_GetAll()
+      .retrieveFellowshipProgramReadOnly_GetAll(payload.fellowshipType)
       .pipe(
         tap((fellowshipPrograms: IFellowshipProgramReadOnlyModel[]) => {
           ctx.patchState({
             fellowshipPrograms,
           });
+          this.globalDialogService.closeOpenDialog();
         }),
         catchError((error) => {
           console.error('------- In Picklists Store: States', error);
+          this.globalDialogService.closeOpenDialog();
           return of(error);
         })
       );
@@ -706,7 +733,7 @@ export class PicklistsState {
   @Action(GetPicklists)
   getPicklists(
     ctx: StateContext<IPicklist>,
-    payload?: { countryCode: string }
+    payload?: { countryCode: string; fellowshipType: string }
   ): Observable<IPicklist> {
     const joins = [
       this.getCountryList(ctx).pipe(catchError((error) => of(error))),
@@ -719,7 +746,7 @@ export class PicklistsState {
       ),
       this.getDegrees(ctx).pipe(catchError((error) => of(error))),
       this.getTrainingTypeList(ctx).pipe(catchError((error) => of(error))),
-      this.getFellowshipPrograms(ctx).pipe(catchError((error) => of(error))),
+
       this.getResidencyPrograms(ctx).pipe(catchError((error) => of(error))),
       this.getCertificateTypes(ctx).pipe(catchError((error) => of(error))),
       this.getLicenseTypeList(ctx).pipe(catchError((error) => of(error))),
@@ -737,6 +764,14 @@ export class PicklistsState {
         this.getStateList(ctx, { countryCode: payload.countryCode }).pipe(
           catchError((error) => of(error))
         )
+      );
+    }
+
+    if (payload?.fellowshipType) {
+      joins.push(
+        this.getFellowshipPrograms(ctx, {
+          fellowshipType: payload.fellowshipType,
+        }).pipe(catchError((error) => of(error)))
       );
     }
 

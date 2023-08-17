@@ -588,6 +588,10 @@
     "lastGeneratedHash": "7E1BA74E7B334B3F3C236110E89F0A73",
     "lastMergedHash": "7E1BA74E7B334B3F3C236110E89F0A73"
   },
+  "\\SurgeonPortal.Api\\Controllers\\Picklists\\PicklistsController.cs": {
+    "lastGeneratedHash": "3731F8705734162BC0C2054C70FF769C",
+    "lastMergedHash": "286D8EE332E527977D72839B7B754F09"
+  },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\surgeons\\certification-read-only.model.ts": {
     "lastGeneratedHash": "B8F137A50388EE46BE6CC66FFFC30825"
   },
@@ -1248,25 +1252,25 @@
     "lastGeneratedHash": "A4AC7C8FC6E0D1A68314EEB4D639CDF8"
   },
   "\\SurgeonPortal.Library\\Picklists\\FellowshipProgramReadOnlyList.cs": {
-    "lastGeneratedHash": "F69028F083E258D126A2FD1151591E08"
+    "lastGeneratedHash": "7003CD6C2A5D72FD5DAF4A271DC477F9"
   },
   "\\SurgeonPortal.DataAccess\\Picklists\\FellowshipProgramReadOnlyDal.cs": {
-    "lastGeneratedHash": "F8FD4E4C31AB068DE445D1F24BA735D7"
+    "lastGeneratedHash": "34DAFE6C746A43859BA786FC7D9E7BAA"
   },
   "\\SurgeonPortal.Library\\Picklists\\FellowshipProgramReadOnlyListFactory.cs": {
-    "lastGeneratedHash": "D72A1BE93958B7E16E07AF8665B1DAF4"
+    "lastGeneratedHash": "92F5C33444D481A55DDE0816EB7F21FF"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Picklists\\IFellowshipProgramReadOnlyDal.cs": {
-    "lastGeneratedHash": "A4783A38B0C25CB52F061EC0A4A67E93"
+    "lastGeneratedHash": "46556E4C3A5DFE0D6ECF7629D95C8CD2"
   },
   "\\SurgeonPortal.Library.Contracts\\Picklists\\IFellowshipProgramReadOnlyListFactory.cs": {
-    "lastGeneratedHash": "6FDCB43322155206A0F6E3A3E849EA1E"
+    "lastGeneratedHash": "08539CCCA2692DD898C1DBED35E2B0FA"
   },
   "\\SurgeonPortal.Library.Tests\\Picklists\\FellowshipProgramReadOnlyListTests.cs": {
-    "lastGeneratedHash": "204DB0E30858FDE46F8F550EED313502"
+    "lastGeneratedHash": "64C2330819320782DCAE817D2CBBF184"
   },
   "\\SurgeonPortal.DataAccess.Tests\\Picklists\\FellowshipProgramReadOnlyDalTests.cs": {
-    "lastGeneratedHash": "483BE9ABE2FC6CE42056855461E7ACDB"
+    "lastGeneratedHash": "7A8696E73944FB8E3C6017875F56E8D4"
   },
   "\\SurgeonPortal.Library\\Picklists\\ResidencyProgramReadOnly.cs": {
     "lastGeneratedHash": "7D08724BC017F9A8FB415E59DE390CDA"
@@ -3317,6 +3321,7 @@
   "\\SurgeonPortal.DataAccess.Tests\\Scoring\\CE\\TitleReadOnlyDalTests.cs": {
     "lastGeneratedHash": "D45EDB0100BBCC1D1F94B5B45BBEA4A9"
   },
+<<<<<<< HEAD
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IQualifyingExamReadOnly.cs": {
     "lastGeneratedHash": "8AFE96C2AC5B3C628E6DF7FDF97DDF7C"
   },
@@ -3356,14 +3361,73 @@
   "\\SurgeonPortal.DataAccess.Tests\\Examinations\\QualifyingExamReadOnlyDalTests.cs": {
     "lastGeneratedHash": "A2AF6852DD76FEB316DF41FE0861BF97"
   },
+  "\\SurgeonPortal.Library.Contracts\\Picklists\\IFellowshipTypeReadOnly.cs": {
+    "lastGeneratedHash": "9209D576DF4EC375A5E3E0DB342285CE"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\picklists\\fellowship-type-read-only.model.ts": {
+    "lastGeneratedHash": "A89D5901B9B54FEAC95897C1A8DE6E18"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Picklists\\FellowshipTypeReadOnlyDto.cs": {
+    "lastGeneratedHash": "CE8B84F5693C4A82B8FF46295C234679"
+  },
+  "\\SurgeonPortal.Models\\Picklists\\FellowshipTypeReadOnlyModel.cs": {
+    "lastGeneratedHash": "E230DD8D2C756CA480D0A25F7F6C07AC"
+  },
+  "\\SurgeonPortal.Library\\Picklists\\FellowshipTypeReadOnly.cs": {
+    "lastGeneratedHash": "056CDB30160966921FA54D4726277EA9"
+  },
+  "\\SurgeonPortal.DataAccess\\Picklists\\FellowshipTypeReadOnlyDal.cs": {
+    "lastGeneratedHash": "CF975FC09A3BC7A8923C05CF4B909810"
+  },
+  "\\SurgeonPortal.Library\\Picklists\\FellowshipTypeReadOnlyFactory.cs": {
+    "lastGeneratedHash": "9965FEB28D3FAF5DB2532965E62912DB"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Picklists\\IFellowshipTypeReadOnlyDal.cs": {
+    "lastGeneratedHash": "17309FEB0CFD35AEA31EEFB2FD2DA90C"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Picklists\\IFellowshipTypeReadOnlyFactory.cs": {
+    "lastGeneratedHash": "E570933B3171DF7C6C6EFCED4FF80219"
+  },
+  "\\SurgeonPortal.Library.Tests\\Picklists\\FellowshipTypeReadOnlyTests.cs": {
+    "lastGeneratedHash": "6EA35A26C6FAB1F500EBB8DBE9B23BAB"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\Picklists\\FellowshipTypeReadOnlyDalTests.cs": {
+<<<<<<< HEAD
+    "lastGeneratedHash": "6231467C797E4247390478BF7351FAD0"
+>>>>>>> 24e7ed333a5cb0e5e9541856b258dbab2dba74b7
+=======
+    "lastGeneratedHash": "2E51B6CF354A3237A12B49D3F670A797"
+>>>>>>> 908f1d58baec12614282e9ec0ccc5cf93c875a27
+  },
   "\\SurgeonPortal.DataAccess.Tests\\Scoring\\RosterReadOnlyDalTests.cs": {
     "lastGeneratedHash": "C1706CD036A58E61960764F981A83446",
     "lastMergedHash": "C1706CD036A58E61960764F981A83446"
+<<<<<<< HEAD
+<<<<<<< HEAD
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\qualifying-exam.service.ts": {
     "lastGeneratedHash": "AA561D459F9353FC791CCE0638A8EB5E"
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\QualifyingExamController.cs": {
     "lastGeneratedHash": "5803272E51E19F66CA47C009C4DD0951"
+=======
+>>>>>>> 24e7ed333a5cb0e5e9541856b258dbab2dba74b7
+=======
+  },
+  "\\SurgeonPortal.Library.Contracts\\Picklists\\IFellowshipTypeReadOnlyList.cs": {
+    "lastGeneratedHash": "5004EEBDC7890E8532633FF5B0DB8DFC"
+  },
+  "\\SurgeonPortal.Library\\Picklists\\FellowshipTypeReadOnlyList.cs": {
+    "lastGeneratedHash": "EC11CDBDFF412777B42459C462019ED6"
+  },
+  "\\SurgeonPortal.Library\\Picklists\\FellowshipTypeReadOnlyListFactory.cs": {
+    "lastGeneratedHash": "C0C355961DD1E2796B438E90812F44CF"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Picklists\\IFellowshipTypeReadOnlyListFactory.cs": {
+    "lastGeneratedHash": "D2FF3DA3F32DCA307B34F78AA6E78457"
+  },
+  "\\SurgeonPortal.Library.Tests\\Picklists\\FellowshipTypeReadOnlyListTests.cs": {
+    "lastGeneratedHash": "AAF5FDF148EE8BF6EC9518445C912C26"
+>>>>>>> 908f1d58baec12614282e9ec0ccc5cf93c875a27
   }
 }

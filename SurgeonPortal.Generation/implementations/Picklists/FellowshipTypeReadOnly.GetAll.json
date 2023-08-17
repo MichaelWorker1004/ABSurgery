@@ -1,0 +1,65 @@
+{
+  "name": "FellowshipTypeReadOnly",
+  "implementationName": "Picklists\\FellowshipTypeReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_fellowship_types",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "Get",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\FellowshipTypeReadOnly",
+    "ModelGroup": "FellowshipTypeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "fellowship-types"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_fellowship_types",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_fellowship_types]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\FellowshipTypeReadOnly",
+            "fields": [
+              {
+                "name": "FellowshipType",
+                "dataType": "string",
+                "maxLength": 1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FellowshipType"
+              },
+              {
+                "name": "FellowshipTypeName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FellowshipTypeName"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\FellowshipTypeReadOnly.GetAll FellowshipTypeReadOnly -t=ytg-framework/readonly-get -p:Model=Picklists\\FellowshipTypeReadOnly -p:Adapter=sp:abssp-[dbo].[get_fellowship_types] -p:FetchMethodName=Get -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=FellowshipTypeReadOnly -p:Route=fellowship-types -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\FellowshipTypeReadOnly.GetAll FellowshipTypeReadOnly -t=ytg-framework/readonly-get -p:Model=Picklists\\FellowshipTypeReadOnly -p:Adapter=sp:abssp-[dbo].[get_fellowship_types] -p:FetchMethodName=Get -p:RootNamespace=$project.RootNamespace -p:ModelGroup=FellowshipTypeReadOnly -p:Route=fellowship-types -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-08-16T18:44:03.6869944Z"
+  },
+  "version": 1
+}

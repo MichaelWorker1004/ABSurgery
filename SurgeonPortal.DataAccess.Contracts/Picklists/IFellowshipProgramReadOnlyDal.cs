@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Picklists
 {
     public interface IFellowshipProgramReadOnlyDal
     {
-        Task<IEnumerable<FellowshipProgramReadOnlyDto>> GetAllAsync();
+        Task<IEnumerable<FellowshipProgramReadOnlyDto>> GetAllAsync(string fellowshipType);
     }
 }

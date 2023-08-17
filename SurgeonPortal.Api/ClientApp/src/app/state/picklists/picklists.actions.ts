@@ -42,6 +42,8 @@ export class GetDegrees {
 
 export class GetFellowshipPrograms {
   static readonly type = '[Picklists] Get all Fellowship Programs';
+
+  constructor(public fellowshipType: string) {}
 }
 
 export class GetResidencyPrograms {
@@ -98,4 +100,8 @@ export class GetScoringSessionList {
   static readonly type = '[Picklists] Get the Scoring Session list';
 
   constructor(public id: number) {}
+}
+
+export class GetFellowshipTypes {
+  static readonly type = '[Picklists] Get the Fellowship Types list';
 }

@@ -4,6 +4,6 @@ namespace SurgeonPortal.Library.Contracts.Picklists
 {
     public interface IFellowshipProgramReadOnlyListFactory
     {
-        Task<IFellowshipProgramReadOnlyList> GetAllAsync();
+        Task<IFellowshipProgramReadOnlyList> GetAllAsync(string fellowshipType);
     }
 }

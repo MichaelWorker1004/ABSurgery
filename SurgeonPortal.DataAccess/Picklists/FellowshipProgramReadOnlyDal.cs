@@ -15,13 +15,16 @@ namespace SurgeonPortal.DataAccess.Picklists
 
 
 
-        public async Task<IEnumerable<FellowshipProgramReadOnlyDto>> GetAllAsync()
+        public async Task<IEnumerable<FellowshipProgramReadOnlyDto>> GetAllAsync(string fellowshipType)
         {
             using (var connection = CreateConnection())
             {
                 return await connection.ExecAsync<FellowshipProgramReadOnlyDto>(
                     "[dbo].[get_fellowship_program]",
-                        param: null);
+                        new
+                        {
+                            FellowshipType = fellowshipType,
+                        });
                         
             }
         }

@@ -5,7 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
-using static SurgeonPortal.Library.Picklists.FellowshipProgramReadOnlyListFactory;
+using static SurgeonPortal.Library.Picklists.FellowshipTypeReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
 {
@@ -13,13 +13,13 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class FellowshipProgramReadOnlyList : YtgReadOnlyListBase<IFellowshipProgramReadOnlyList, IFellowshipProgramReadOnly>, IFellowshipProgramReadOnlyList
+	public class FellowshipTypeReadOnlyList : YtgReadOnlyListBase<IFellowshipTypeReadOnlyList, IFellowshipTypeReadOnly>, IFellowshipTypeReadOnlyList
     {
-        private readonly IFellowshipProgramReadOnlyDal _fellowshipProgramReadOnlyDal;
+        private readonly IFellowshipTypeReadOnlyDal _fellowshipTypeReadOnlyDal;
 
-        public FellowshipProgramReadOnlyList(IFellowshipProgramReadOnlyDal fellowshipProgramReadOnlyDal)
+        public FellowshipTypeReadOnlyList(IFellowshipTypeReadOnlyDal fellowshipTypeReadOnlyDal)
         {
-            _fellowshipProgramReadOnlyDal = fellowshipProgramReadOnlyDal;
+            _fellowshipTypeReadOnlyDal = fellowshipTypeReadOnlyDal;
         }
 
         /// <summary>
@@ -36,10 +36,10 @@ namespace SurgeonPortal.Library.Picklists
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
-        private async Task GetAll(GetAllCriteria criteria)
+        private async Task Get()
         
         {
-            var dtos = await _fellowshipProgramReadOnlyDal.GetAllAsync(criteria.FellowshipType);
+            var dtos = await _fellowshipTypeReadOnlyDal.GetAsync();
         			
             FetchChildren(dtos);
         }

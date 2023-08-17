@@ -16,9 +16,10 @@ namespace SurgeonPortal.Library.Tests.Picklists
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
+            var expectedFellowshipType = Create<string>();
             
             var mockDal = new Mock<IFellowshipProgramReadOnlyDal>();
-            mockDal.Setup(m => m.GetAllAsync())
+            mockDal.Setup(m => m.GetAllAsync(expectedFellowshipType))
                 .ReturnsAsync(CreateMany<FellowshipProgramReadOnlyDto>());
         
             UseMockServiceProvider()
@@ -29,7 +30,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new FellowshipProgramReadOnlyListFactory();
-            var sut = await factory.GetAllAsync();
+            var sut = await factory.GetAllAsync(expectedFellowshipType);
         
             mockDal.VerifyAll();
         }
@@ -40,7 +41,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
             var expectedDtos = CreateMany<FellowshipProgramReadOnlyDto>();
         
             var mockDal = new Mock<IFellowshipProgramReadOnlyDal>();
-            mockDal.Setup(m => m.GetAllAsync())
+            mockDal.Setup(m => m.GetAllAsync(It.IsAny<string>()))
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
@@ -51,7 +52,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new FellowshipProgramReadOnlyListFactory();
-            var sut = await factory.GetAllAsync();
+            var sut = await factory.GetAllAsync(Create<string>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

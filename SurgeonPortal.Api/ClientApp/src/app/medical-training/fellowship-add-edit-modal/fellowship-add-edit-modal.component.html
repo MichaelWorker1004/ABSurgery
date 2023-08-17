@@ -5,6 +5,24 @@
   *ngIf="fellowshipForm"
 >
   <div class="grid">
+    <div class="flex flex-column gap-1 col-12">
+      <label htmlFor="trainingType">Program Type *</label>
+      <div
+        class="flex align-items-center"
+        *ngFor="let fellowshipType of fellowshipTypes"
+      >
+        <p-radioButton
+          (onClick)="getFellowshipPrograms(fellowshipType.fellowshipType)"
+          [value]="fellowshipType?.fellowshipType"
+          formControlName="fellowshipType"
+          [inputId]="fellowshipType?.fellowshipType ?? ''"
+        ></p-radioButton>
+        <label [for]="fellowshipType?.fellowshipType" class="ml-2">{{
+          fellowshipType?.fellowshipTypeName
+        }}</label>
+      </div>
+    </div>
+
     <div class="flex flex-column gap-2 col-12">
       <label htmlFor="trainingType">Program Name</label>
       <p-autoComplete
@@ -19,7 +37,11 @@
         [showClear]="true"
         appendTo="body"
         id="programName"
-        placeholder="Select or Enter Program Name"
+        [placeholder]="
+          fellowshipForm.get('fellowshipType')?.value
+            ? 'Start typing to search for your Program...'
+            : 'Please select a Program Type first...'
+        "
         formControlName="programName"
       >
       </p-autoComplete>

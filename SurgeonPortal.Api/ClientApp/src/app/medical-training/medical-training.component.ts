@@ -215,7 +215,6 @@ export class MedicalTrainingComponent implements OnInit {
     private advancedTrainingService: AdvancedTrainingService,
     public globalDialogService: GlobalDialogService
   ) {
-    this._store.dispatch(new GetFellowshipPrograms());
     this._store.dispatch(new GetResidencyPrograms());
     this._store.dispatch(new GetUserCertificates());
     this._store.dispatch(new GetDegrees());

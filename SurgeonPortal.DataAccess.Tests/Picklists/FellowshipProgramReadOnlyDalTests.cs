@@ -16,15 +16,21 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         public async Task GetAllAsync_ExecutesSprocCorrectly()
         {
             var expectedSprocName = "[dbo].[get_fellowship_program]";
+            var expectedFellowshipType = Create<string>();
+            var expectedParams =
+                new
+                {
+                    FellowshipType = expectedFellowshipType,
+                };
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecords(CreateMany<FellowshipProgramReadOnlyDto>());
         
             var sut = new FellowshipProgramReadOnlyDal(sqlManager);
-            await sut.GetAllAsync();
+            await sut.GetAllAsync(expectedFellowshipType);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
-            Assert.That(sqlManager.SqlConnection.ShouldPassNoParameters());
+            Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
         }
         
         [Test]
@@ -36,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new FellowshipProgramReadOnlyDal(sqlManager);
-            var result = await sut.GetAllAsync();
+            var result = await sut.GetAllAsync(Create<string>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,
