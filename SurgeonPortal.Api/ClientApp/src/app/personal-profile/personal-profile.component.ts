@@ -73,6 +73,7 @@ interface IDisplayUserProfile extends IUserProfile {
   providers: [provideNgxMask()],
 })
 export class PersonalProfileComponent implements OnInit {
+  // TODO: [Joe] - add form-errors shared component
   // TODO: [Joe] set up national provider identifier (NPI) report button
 
   @Select(UserProfileSelectors.user) user$:

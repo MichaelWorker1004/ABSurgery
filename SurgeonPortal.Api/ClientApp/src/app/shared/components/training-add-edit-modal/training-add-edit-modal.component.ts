@@ -52,6 +52,8 @@ import { GlobalDialogService } from '../../services/global-dialog.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TrainingAddEditModalComponent implements OnInit {
+  // TODO: [Joe] - add form-errors shared component
+
   @Input() training$: Subject<IAdvancedTrainingModel> = new Subject();
   @Input() isEdit$: Subject<boolean> = new Subject();
   @Input() userId!: number;

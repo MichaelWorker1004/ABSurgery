@@ -43,6 +43,8 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class OtherCertificatesAddEditModalComponent implements OnInit {
+  //TODO: [Joe] - add form-errors shared component
+
   @Select(PicklistsSelectors.slices.certificateTypes) certificateTypes$:
     | Observable<ICertificateTypeReadOnlyModel[]>
     | undefined;

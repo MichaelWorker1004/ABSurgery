@@ -43,7 +43,6 @@ export class UserProfileSelectors {
 
   @Selector([UserProfileState])
   static profilePicture(state: IUserProfile): string | undefined {
-    console.log('profilePicture', state?.profilePicture);
     if (state?.profilePicture?.length) {
       return state.profilePicture;
     }

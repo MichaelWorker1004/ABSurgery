@@ -132,7 +132,6 @@ export class ExaminationScoresComponent implements OnInit {
       ?.pipe(
         untilDestroyed(this),
         map((scoreList) => {
-          console.log(scoreList);
           if (scoreList?.length > 0) {
             return scoreList.map((score) => {
               return {

@@ -38,7 +38,7 @@ export class AcgmeExperienceModalComponent implements OnInit {
   }
 
   girdAction($event: any) {
-    console.log($event);
+    console.log('unhandled grid action', $event);
   }
 
   close() {

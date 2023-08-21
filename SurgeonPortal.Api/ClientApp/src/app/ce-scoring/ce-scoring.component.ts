@@ -57,7 +57,7 @@ export class CeScoringAppComponent implements OnInit {
   dashboardRoster!: IRosterReadOnlyModel[];
   examinationWeek!: string;
 
-  examinationDate = new Date().toISOString().split('T')[0];
+  examinationDate = new Date('01/01/2024').toISOString().split('T')[0];
 
   ceScoreTesting = false;
 

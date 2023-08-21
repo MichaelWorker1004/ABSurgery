@@ -157,7 +157,7 @@ export class PayFeeComponent implements OnInit {
   }
 
   handleGridAction(event: any) {
-    console.log(event);
+    console.log('unhandled grid action', event);
   }
 
   handleCancelAction() {

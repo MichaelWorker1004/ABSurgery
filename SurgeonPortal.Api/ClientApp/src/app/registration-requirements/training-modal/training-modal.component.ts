@@ -258,7 +258,6 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
         $event.trainingRecord.dateStarted
       );
     }
-    console.log('save training', $event);
     // TODO: [Joe] show the universal success/error message
     if ($event.trainingRecord.trainingId > -1) {
       this._store.dispatch(new UpdateAdditionalTraining($event.trainingRecord));

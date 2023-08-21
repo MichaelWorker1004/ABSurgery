@@ -52,6 +52,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FellowshipAddEditModalComponent implements OnInit {
+  //TODO: [Joe] - add form-errors shared component
+
   @Select(PicklistsSelectors.slices.fellowshipPrograms) fellowshipPrograms$:
     | Observable<IFellowshipProgramReadOnlyModel[]>
     | undefined;
@@ -107,10 +109,7 @@ export class FellowshipAddEditModalComponent implements OnInit {
         this.hasUnsavedChanges = true;
       }
     });
-  }
 
-  getFellowshipPrograms(fellowshipType: string) {
-    this._store.dispatch(new GetFellowshipPrograms(fellowshipType));
     this.fellowshipPrograms$?.subscribe(
       (fellowshipPrograms: IFellowshipProgramReadOnlyModel[]) => {
         this.fellowshipPrograms = [];
@@ -120,6 +119,10 @@ export class FellowshipAddEditModalComponent implements OnInit {
         this.fellowshipForm.get('programName')?.enable();
       }
     );
+  }
+
+  getFellowshipPrograms(fellowshipType: string) {
+    this._store.dispatch(new GetFellowshipPrograms(fellowshipType));
   }
 
   subscribeToRowData() {

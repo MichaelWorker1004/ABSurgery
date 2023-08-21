@@ -128,7 +128,6 @@ export class ExamScoringState {
       .retrieveExamTitleReadOnly_GetByExamId(sessionId)
       .pipe(
         tap((result: IExamTitleReadOnlyModel) => {
-          console.log(result);
           ctx.patchState({
             examTitle: result,
             errors: null,
@@ -347,7 +346,6 @@ export class ExamScoringState {
     return this.caseScoresService.createCaseScore(score).pipe(
       tap((result: ICaseScoreModel) => {
         // figure out how to update the store here
-        console.log(result);
         ctx.patchState({
           // selectedCaseComment: result,
           errors: null,
@@ -406,7 +404,6 @@ export class ExamScoringState {
     const examScoringId = payload.id;
     return this.caseScoresService.deleteCaseScore(examScoringId).pipe(
       tap((result: ICaseScoreModel) => {
-        console.log(result);
         // figure out how to update the store here
         ctx.patchState({
           // selectedCaseComment: result,

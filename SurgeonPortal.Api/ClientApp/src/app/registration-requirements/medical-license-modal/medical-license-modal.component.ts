@@ -45,7 +45,7 @@ export class MedicalLicenseModalComponent implements OnInit {
   }
 
   gridAction($event: any) {
-    console.log($event);
+    console.log('unhandled grid action', $event);
   }
 
   handleDefaultCloseModal(event: any) {

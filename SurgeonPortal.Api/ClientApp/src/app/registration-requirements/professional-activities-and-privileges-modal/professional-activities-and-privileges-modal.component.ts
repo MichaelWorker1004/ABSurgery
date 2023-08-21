@@ -42,12 +42,11 @@ export class ProfessionalActivitiesAndPrivilegesModalComponent
   nonClincalActivitiesForm = '';
 
   ngOnInit() {
-    console.log('init');
     this.getProfessionalActivitiesAndPrivilegesData();
   }
 
   handleGridAction(event: any) {
-    console.log(event);
+    console.log('unhandled grid action', event);
   }
 
   getProfessionalActivitiesAndPrivilegesData() {

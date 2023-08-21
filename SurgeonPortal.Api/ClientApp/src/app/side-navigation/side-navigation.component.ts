@@ -41,7 +41,7 @@ export class SideNavigationComponent implements OnInit {
   }
 
   toggleSubNav(item: IMenuItem) {
-    console.log(item);
+    console.log('toggle side nav', item);
   }
 
   get router(): Router {

@@ -77,9 +77,6 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   }
 
   onDocumentUpload() {
-    console.log('document upload', this.uploadedFile);
-    console.log('document Name', this.fileUploadedName);
-    console.log('document Type', this.documentType);
     if (this.uploadedFile) {
       this.specialAccommodationsData.push({
         fileName: this.fileUploadedName,
@@ -101,6 +98,6 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   }
 
   gridAction($event: any) {
-    console.log($event);
+    console.log('unhandled grid action', $event);
   }
 }

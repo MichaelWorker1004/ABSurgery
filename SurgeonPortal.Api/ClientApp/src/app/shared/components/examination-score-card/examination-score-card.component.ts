@@ -34,6 +34,8 @@ import { isObservable } from 'rxjs';
   styleUrls: ['./examination-score-card.component.scss'],
 })
 export class ExaminationScoreCardComponent implements OnInit, OnChanges {
+  // TODO: [Joe] - add form-errors shared component
+
   @Input() case: any;
   @Output() handleChange: EventEmitter<any> = new EventEmitter();
 
@@ -85,7 +87,6 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['case']) {
-      console.log(this.case?.scores);
       const scores = this.case?.scores;
       if (scores) {
         for (const [key, value] of Object.entries(scores)) {

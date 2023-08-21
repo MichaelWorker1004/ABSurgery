@@ -139,15 +139,13 @@ export class OralExaminationsComponent implements OnInit {
           }
           // take any actions required on cancel of confirmation here
         });
-    }
-
-    if ($event.fieldKey === 'skipExam') {
+    } else if ($event.fieldKey === 'skipExam') {
       this._store.dispatch(
         new SkipExam($event.data.examScheduleId, this.examDate.toISOString())
       );
+    } else {
+      console.log('unhandled grid action', $event);
     }
-
-    console.log('unhandled grid action');
   }
 
   copyFromTextInput(element: any) {

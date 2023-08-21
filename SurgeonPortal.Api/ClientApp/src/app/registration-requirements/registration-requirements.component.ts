@@ -102,7 +102,6 @@ export class RegistrationRequirementsComponent implements OnInit {
   }
 
   closeModal(event: any) {
-    console.log('event', event);
     const actionFunction = this.actionMap[event.action];
     if (actionFunction) {
       actionFunction();
@@ -247,7 +246,6 @@ export class RegistrationRequirementsComponent implements OnInit {
   }
 
   handleCardAction(action: string) {
-    console.log('action', action);
     const actionFunction = this.actionMap[action];
     if (actionFunction) {
       actionFunction();

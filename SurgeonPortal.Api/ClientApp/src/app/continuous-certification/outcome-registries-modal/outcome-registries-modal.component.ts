@@ -47,6 +47,8 @@ import { ButtonModule } from 'primeng/button';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class OutcomeRegistriesModalComponent implements OnInit {
+  //TODO: [Joe] - add form-errors shared component
+
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
   userId!: number;
 

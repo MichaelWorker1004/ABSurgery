@@ -91,6 +91,8 @@ import { IFellowshipModel } from '../api/models/medicaltraining/fellowship.model
   ],
 })
 export class MedicalTrainingComponent implements OnInit {
+  //TODO: [Joe] - add form-errors shared component
+
   @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
 
   @Select(PicklistsSelectors.slices.countries) countries$:
@@ -294,7 +296,7 @@ export class MedicalTrainingComponent implements OnInit {
           const residencyProgramId = this.residencyPrograms.filter(
             (program) =>
               program.programName === medicalTraining.residencyProgramName
-          )[0].programId;
+          )[0]?.programId;
           this.setStates(medicalTraining.medicalSchoolCountryId);
           this.medicalTrainingForm.get('medicalSchoolStateId')?.enable();
 
@@ -379,7 +381,7 @@ export class MedicalTrainingComponent implements OnInit {
   }
 
   handleDocumentUpload(event: any) {
-    console.log(event);
+    console.log('unhandled upload', event);
   }
 
   handleGridAction($event: any, form: string) {

@@ -106,7 +106,6 @@ export class GraduateMedicalEducationState {
     const state = ctx.getState();
     return this.rotationService.retrieveRotationGapReadOnly_GetByUserId().pipe(
       tap((result: any) => {
-        console.log(result);
         ctx.patchState({
           gmeGaps: result.sort((a: any, b: any) =>
             new Date(a.startDate).getTime() > new Date(b.startDate).getTime()

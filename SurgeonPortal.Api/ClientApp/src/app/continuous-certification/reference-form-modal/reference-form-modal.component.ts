@@ -228,11 +228,11 @@ export class ReferenceFormModalComponent implements OnInit {
   }
 
   handleGridAction(event: any) {
-    console.log(event);
+    console.log('unhandled action', event);
   }
 
   onSubmit(formFields: any) {
-    console.log(formFields);
+    console.log('unhandled submit', formFields);
   }
 
   close() {

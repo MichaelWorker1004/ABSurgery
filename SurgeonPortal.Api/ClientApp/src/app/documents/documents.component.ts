@@ -54,7 +54,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   handleGridAction($event: any) {
-    console.log($event);
+    console.log('unhandled action', $event);
   }
 
   handleFileOnChange($event: any) {

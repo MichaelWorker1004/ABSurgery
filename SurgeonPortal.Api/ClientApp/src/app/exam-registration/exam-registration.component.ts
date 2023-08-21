@@ -71,7 +71,6 @@ export class ExamRegistrationComponent implements OnInit {
   }
 
   onSiteSelectionChange(event: any) {
-    console.log(event);
     this.siteSelectionFormData
       .filter((item) => item.name === event.target.name)
       .map((item) => {
@@ -89,13 +88,13 @@ export class ExamRegistrationComponent implements OnInit {
   }
 
   handleSiteSelectionSubmit() {
-    console.log(this.siteSelectionFormData);
+    console.log('unhandled submit', this.siteSelectionFormData);
   }
   handleDigitalSignatureChange($event: any) {
-    console.log($event);
+    console.log('unhandled signature change', $event);
   }
 
   handleDownloadForm() {
-    console.log('Download Form');
+    console.log('unhandled Download Form');
   }
 }

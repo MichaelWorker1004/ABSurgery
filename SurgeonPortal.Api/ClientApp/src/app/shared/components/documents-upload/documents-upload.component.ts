@@ -39,6 +39,8 @@ import { ButtonModule } from 'primeng/button';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DocumentsUploadComponent implements OnInit {
+  // TODO: [Joe] - add form-errors shared component
+
   @Input() allowUpload = true;
   @Input() gridCols!: any;
   @Input() documentsData$: Subject<any> = new Subject();

@@ -39,6 +39,10 @@ export class ExamHistoryState {
       .retrieveExamHistoryReadOnly_GetByUserId()
       .pipe(
         tap((examHistory: IExamHistoryReadOnlyModel[]) => {
+          examHistory.forEach((exam) => {
+            if (exam.result === 'P') exam.result = 'Pass';
+            else if (exam.result === 'F') exam.result = 'Fail';
+          });
           ctx.patchState({
             examHistory,
           });

@@ -57,7 +57,6 @@ export class CollapsePanelComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['contentToggle']) {
-      console.log('here');
       this.resetHeight();
     }
   }

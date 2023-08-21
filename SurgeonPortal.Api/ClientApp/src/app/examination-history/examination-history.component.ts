@@ -6,7 +6,7 @@ import { CollapsePanelComponent } from '../shared/components/collapse-panel/coll
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { EXAM_HISTORY_COLS } from './exam-history-cols';
 import { Select, Store } from '@ngxs/store';
-import { DownloadDocument } from '../state';
+import { DownloadDocument, IUserProfile, UserProfileSelectors } from '../state';
 import { GetExamHistory } from '../state/exam-history/exam-history.actions';
 import { IExamHistoryReadOnlyModel } from '../api/models/examinations/exam-history-read-only.model';
 import { ExamHistorySelectors } from '../state/exam-history';
@@ -24,13 +24,13 @@ export class ExaminationHistoryComponent {
     | Observable<IExamHistoryReadOnlyModel[]>
     | undefined;
 
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+
   tableHeightChanged$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   examHistoryCols = EXAM_HISTORY_COLS;
-
-  user = {
-    displayName: 'John Doe, M.D.',
-  };
 
   activeExams = [
     {
