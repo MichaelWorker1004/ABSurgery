@@ -65,10 +65,9 @@
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isAlwaysReadOnly": false,
                 "isNullable": true,
                 "isIdentityColumn": true,
-                "rules": {}
+                "mapsTo": "model.CaseContentId"
               },
               {
                 "name": "Description",
@@ -121,6 +120,26 @@
                 "mapsTo": "model.CaseCommentId"
               },
               {
+                "name": "Feedback",
+                "dataType": "string",
+                "maxLength": 5000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Feedback"
+              },
+              {
+                "name": "CaseFeedbackId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": "model.CaseFeedbackId"
+              },
+              {
                 "name": "SectionNumber",
                 "dataType": "int?",
                 "maxLength": 4,
@@ -144,9 +163,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Scoring\\CaseDetailReadOnly.GetByCaseHeaderId CaseDetailReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseDetailReadOnly -p:Adapter=sp:abssp-[dbo].[get_case_details_by_id] -p:FetchMethodName=GetByCaseHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseDetailReadOnly -p:Route=detail -p:ControllerName=Scoring\\CaseContentsController -p:ControllerRoute=api/exam-headers/cases/{caseHeaderId}/case-contents -p:ControllerVersion=1 -f ",
-    "inferredCommand": "ytgim generate i  Scoring\\CaseDetailReadOnly.GetByCaseHeaderId CaseDetailReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseDetailReadOnly -p:Adapter=sp:abssp-[dbo].[get_case_details_by_id] -p:FetchMethodName=GetByCaseHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseDetailReadOnly -p:Route=detail -p:ControllerName=Scoring\\CaseContentsController -p:ControllerRoute=api/exam-headers/cases/{caseHeaderId}/case-contents -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-06-26T16:41:41.269216Z"
+    "command": "ytgim g i s Scoring\\CaseDetailReadOnly.GetByCaseHeaderId CaseDetailReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseDetailReadOnly -p:Adapter=sp:abssp-[dbo].[get_case_details_by_id] -p:FetchMethodName=GetByCaseHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseDetailReadOnly -p:Route=by-case-header-id -p:ControllerName=Scoring\\CaseContentsController -p:ControllerRoute=api/case-contents -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseDetailReadOnly.GetByCaseHeaderId CaseDetailReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseDetailReadOnly -p:Adapter=sp:abssp-[dbo].[get_case_details_by_id] -p:FetchMethodName=GetByCaseHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseDetailReadOnly -p:Route=by-case-header-id -p:ControllerName=Scoring\\CaseContentsController -p:ControllerRoute=api/case-contents -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-08-18T12:50:24.5346351Z"
   },
   "version": 1
 }

@@ -49,6 +49,16 @@ namespace SurgeonPortal.Library.Scoring
 		public static readonly PropertyInfo<int?> CaseCommentIdProperty = RegisterProperty<int?>(c => c.CaseCommentId);
 
         [DataMember]
+		[DisplayName(nameof(Feedback))]
+        public string Feedback => ReadProperty(FeedbackProperty);
+		public static readonly PropertyInfo<string> FeedbackProperty = RegisterProperty<string>(c => c.Feedback);
+
+        [DataMember]
+		[DisplayName(nameof(CaseFeedbackId))]
+        public int? CaseFeedbackId => ReadProperty(CaseFeedbackIdProperty);
+		public static readonly PropertyInfo<int?> CaseFeedbackIdProperty = RegisterProperty<int?>(c => c.CaseFeedbackId);
+
+        [DataMember]
 		[DisplayName(nameof(SectionNumber))]
         public int? SectionNumber => ReadProperty(SectionNumberProperty);
 		public static readonly PropertyInfo<int?> SectionNumberProperty = RegisterProperty<int?>(c => c.SectionNumber);
@@ -72,6 +82,8 @@ namespace SurgeonPortal.Library.Scoring
             LoadProperty(ContentProperty, dto.Content);
             LoadProperty(CommentsProperty, dto.Comments);
             LoadProperty(CaseCommentIdProperty, dto.CaseCommentId);
+            LoadProperty(FeedbackProperty, dto.Feedback);
+            LoadProperty(CaseFeedbackIdProperty, dto.CaseFeedbackId);
             LoadProperty(SectionNumberProperty, dto.SectionNumber);
 		} 
         

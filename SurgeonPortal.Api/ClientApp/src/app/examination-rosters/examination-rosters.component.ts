@@ -21,20 +21,28 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import {
   CreateCaseComment,
+  CreateCaseFeedback,
   DeleteCaseComment,
+  DeleteCaseFeedback,
   ExamScoringSelectors,
   GetCaseContents,
+  GetCaseFeedback,
   GetCaseRoster,
   GetExamTitle,
   UpdateCaseComment,
+  UpdateCaseFeedback,
+  UserProfileSelectors,
 } from '../state';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { Observable } from 'rxjs';
+import { ICaseFeedbackModel } from '../api/models/scoring/case-feedback.model';
 
 interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   editComment: boolean;
+  editFeedback: boolean;
   newComment?: string;
+  newFeedback?: string;
 }
 
 @UntilDestroy()
@@ -58,15 +66,28 @@ export class ExaminationRostersComponent implements OnInit {
     event.preventDefault();
   }
 
+  @Select(UserProfileSelectors.userId) user$: Observable<number> | undefined;
+
   @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
+
+  @Select(ExamScoringSelectors.slices.selectedCaseFeedback)
+  selectedCaseFeedback$: Observable<ICaseFeedbackModel> | undefined;
+
+  userId!: number;
 
   examHeaderId = 491;
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
   rosters: any = [];
   cases: any = [];
+
+  caseFeedbackId!: number;
+  caseFeedback!: string;
+  caseFeedbackNewComment!: string;
+  caseFeedbackEdit = false;
+  isCaseFeedbackEditActive = false;
 
   scoringSessionsList: IScoringSessionReadOnlyModel[] = [];
 
@@ -83,6 +104,9 @@ export class ExaminationRostersComponent implements OnInit {
 
   ngOnInit(): void {
     this.initPicklistValues();
+    this.user$?.subscribe((userId) => {
+      this.userId = userId;
+    });
   }
 
   initPicklistValues() {
@@ -143,6 +167,7 @@ export class ExaminationRostersComponent implements OnInit {
       this.selectRoster(event);
     }
   }
+
   selectRoster(event: any) {
     if (event.value) {
       this.selectedRoster = event.value;
@@ -171,6 +196,7 @@ export class ExaminationRostersComponent implements OnInit {
       this.selectCase(caseData);
     }
   }
+
   selectCase(caseData: ICaseRosterReadOnlyModel) {
     if (this.selectedCaseId !== caseData.id) {
       this.selectedCaseId = caseData.id;
@@ -184,6 +210,7 @@ export class ExaminationRostersComponent implements OnInit {
               return {
                 ...val,
                 editComment: false,
+                editFeedback: false,
                 newComment: '',
               };
             }) as ICaseDetailModel[];
@@ -203,6 +230,17 @@ export class ExaminationRostersComponent implements OnInit {
       this.editActive = true;
     } else {
       section.newComment = '';
+      this.editActive = false;
+    }
+  }
+
+  toggleCaseFeedbackEdit(section: ICaseDetailModel) {
+    section.editFeedback = !section.editFeedback;
+    if (section.editFeedback) {
+      section.newFeedback = section.feedback;
+      this.editActive = true;
+    } else {
+      section.newFeedback = '';
       this.editActive = false;
     }
   }
@@ -260,6 +298,68 @@ export class ExaminationRostersComponent implements OnInit {
         if (result) {
           this._store
             .dispatch(new DeleteCaseComment(section.caseCommentId))
+            .pipe(untilDestroyed(this))
+            .subscribe(() => {
+              this.selectedCaseId = 0;
+              this.selectCase(this.selectedCaseDetails);
+            });
+        }
+      });
+  }
+
+  saveCaseFeedback(section: ICaseDetailModel) {
+    const model = {
+      userId: this.userId,
+      feedback: section.newFeedback,
+      caseContentId: section.caseContentId,
+    } as unknown as ICaseFeedbackModel;
+    if (section.caseFeedbackId) {
+      model.id = section.caseFeedbackId;
+      this._store
+        .dispatch(new UpdateCaseFeedback(model))
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          const caseFeedback = this._store.selectSnapshot(
+            ExamScoringSelectors.slices.selectedCaseFeedback
+          );
+
+          if (caseFeedback) {
+            section.caseFeedbackId = caseFeedback.id;
+            section.feedback = caseFeedback.feedback;
+          } else {
+            this.selectCase(this.selectedCaseDetails);
+          }
+        });
+    } else {
+      this._store
+        .dispatch(new CreateCaseFeedback(model))
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          const caseFeedback = this._store.selectSnapshot(
+            ExamScoringSelectors.slices.selectedCaseFeedback
+          );
+          if (caseFeedback) {
+            section.caseFeedbackId = caseFeedback.id;
+            section.feedback = caseFeedback.feedback;
+          } else {
+            this.selectCase(this.selectedCaseDetails);
+          }
+        });
+    }
+    section.editFeedback = false;
+    this.editActive = false;
+  }
+
+  deleteCaseFeedback(section: ICaseDetailModel) {
+    this._globalDialogService
+      .showConfirmation(
+        'Confirm Delete',
+        'Are you sure you want to delete this case feedback?'
+      )
+      .then((result) => {
+        if (result) {
+          this._store
+            .dispatch(new DeleteCaseFeedback(section.caseFeedbackId))
             .pipe(untilDestroyed(this))
             .subscribe(() => {
               this.selectedCaseId = 0;

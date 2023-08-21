@@ -7,5 +7,7 @@ export interface ICaseDetailReadOnlyModel {
     content: string;
     comments: string;
     caseCommentId: number;
+    feedback: string;
+    caseFeedbackId: number;
     sectionNumber: number;
 }

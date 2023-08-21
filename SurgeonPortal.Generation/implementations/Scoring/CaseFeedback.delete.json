@@ -1,0 +1,55 @@
+{
+  "name": "CaseFeedback",
+  "implementationName": "Scoring\\CaseFeedback.delete",
+  "template": "ytg-framework/editable-delete",
+  "parameters": {
+    "Adapter": "dbo.delete_case_feedback_byid",
+    "ControllerName": "Scoring\\CaseFeedbackController",
+    "ControllerRoute": "api/cases/feedback",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Scoring\\CaseFeedback.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseFeedback",
+    "ModelGroup": "CaseFeedback",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.delete_case_feedback_byid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[delete_case_feedback_byid]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseFeedback.delete CaseFeedback -t=ytg-framework/editable-delete -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[delete_case_feedback_byid] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseFeedback.delete CaseFeedback -t=ytg-framework/editable-delete -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[delete_case_feedback_byid] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-08-18T16:03:16.3493035Z"
+  },
+  "version": 1
+}

@@ -1,6 +1,7 @@
 import { s } from '@fullcalendar/core/internal-common';
 import { ICaseCommentModel, ICaseScoreModel } from 'src/app/api';
 import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
+import { ICaseFeedbackModel } from 'src/app/api/models/scoring/case-feedback.model';
 
 export class GetExamTitle {
   static readonly type = '[Exam-Scoring] get title of exam by id';
@@ -123,4 +124,27 @@ export class ResetCaseCommentsData {
 
 export class ResetExamScoringData {
   static readonly type = '[Exam-Scoring] Reset exam scoring data';
+}
+export class CreateCaseFeedback {
+  static readonly type = '[Exam-Scoring] Create case feedback';
+
+  constructor(public model: ICaseFeedbackModel) {}
+}
+
+export class GetCaseFeedback {
+  static readonly type = '[Exam-Scoring] Get case feedback';
+
+  constructor(public id: number) {}
+}
+
+export class UpdateCaseFeedback {
+  static readonly type = '[Exam-Scoring] Update case feedback';
+
+  constructor(public model: ICaseFeedbackModel) {}
+}
+
+export class DeleteCaseFeedback {
+  static readonly type = '[Exam-Scoring] Delete case feedback';
+
+  constructor(public id: number) {}
 }

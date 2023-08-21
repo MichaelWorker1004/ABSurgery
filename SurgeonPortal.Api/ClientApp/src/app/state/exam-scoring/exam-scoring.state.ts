@@ -41,6 +41,10 @@ import {
   ResetCaseCommentsData,
   ResetExamScoringData,
   GetExamTitle,
+  CreateCaseFeedback,
+  GetCaseFeedback,
+  UpdateCaseFeedback,
+  DeleteCaseFeedback,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -54,6 +58,8 @@ import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
 import { Router } from '@angular/router';
 import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
 import { IExamTitleReadOnlyModel } from 'src/app/api/models/examinations/exam-title-read-only.model';
+import { ICaseFeedbackModel } from 'src/app/api/models/scoring/case-feedback.model';
+import { CaseFeedbackService } from 'src/app/api/services/scoring/case-feedback.service';
 
 export interface IExamScoring {
   examTitle: IExamTitleReadOnlyModel | undefined;
@@ -61,6 +67,7 @@ export interface IExamScoring {
   caseRoster: ICaseRosterReadOnlyModel[] | undefined; // examination rosters page list values
   selectedCaseContents: ICaseDetailReadOnlyModel[] | undefined; // examination rosters page details values
   selectedCaseComment: ICaseCommentModel | undefined; // examination rosters page selected comment value
+  selectedCaseFeedback: ICaseFeedbackModel | undefined; // examination rosters page selected feedback value
   // oral-examinations list page values
   examineeList: IExamSessionReadOnlyModel[] | undefined; // oral-examinations list page grid values
   // oral-examination actual exam page values
@@ -94,6 +101,7 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
     roster: undefined,
     dashboardRoster: undefined,
     examinee: undefined,
+    selectedCaseFeedback: undefined,
     errors: null,
   },
 })
@@ -113,6 +121,7 @@ export class ExamScoringState {
     private sessionService: SessionService,
     private examinationsService: ExaminationsService,
     private globalDialogService: GlobalDialogService,
+    private caseFeedbackService: CaseFeedbackService,
     private router: Router
   ) {}
 
@@ -568,6 +577,120 @@ export class ExamScoringState {
         this.globalDialogService.showSuccessError(
           'Error',
           'Exam Data Reset Failed',
+          false
+        );
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(CreateCaseFeedback)
+  createCaseFeedback(
+    ctx: StateContext<IExamScoring>,
+    payload: { model: ICaseFeedbackModel }
+  ) {
+    this.globalDialogService.showLoading();
+    return this.caseFeedbackService.createCaseFeedback(payload.model).pipe(
+      tap(async (result: ICaseFeedbackModel) => {
+        ctx.patchState({
+          selectedCaseFeedback: result,
+          errors: null,
+        });
+        await this.globalDialogService.showSuccessError(
+          'Success',
+          'Case Feedback Submitted Successfully',
+          true
+        );
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'Case Feedback Submission Failed',
+          false
+        );
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(GetCaseFeedback)
+  getCaseFeedback(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+    this.globalDialogService.showLoading();
+    return this.caseFeedbackService
+      .retrieveCaseFeedback_GetById(payload.id)
+      .pipe(
+        tap((result: ICaseFeedbackModel) => {
+          ctx.patchState({
+            selectedCaseFeedback: result,
+            errors: null,
+          });
+          this.globalDialogService.closeOpenDialog();
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          this.globalDialogService.closeOpenDialog();
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(UpdateCaseFeedback)
+  updateCaseFeedback(
+    ctx: StateContext<IExamScoring>,
+    payload: { model: ICaseFeedbackModel }
+  ) {
+    this.globalDialogService.showLoading();
+    return this.caseFeedbackService
+      .updateCaseFeedback(payload.model.id, payload.model)
+      .pipe(
+        tap(async (result: ICaseFeedbackModel) => {
+          ctx.patchState({
+            selectedCaseFeedback: result,
+            errors: null,
+          });
+          await this.globalDialogService.showSuccessError(
+            'Success',
+            'Case Feedback Updated Successfully',
+            true
+          );
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Case Feedback Update Failed',
+            false
+          );
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(DeleteCaseFeedback)
+  deleteCaseFeedback(ctx: StateContext<IExamScoring>, payload: { id: number }) {
+    this.globalDialogService.showLoading();
+    return this.caseFeedbackService.deleteCaseFeedback(payload.id).pipe(
+      tap(async (result: ICaseFeedbackModel) => {
+        ctx.patchState({
+          selectedCaseFeedback: result,
+          errors: null,
+        });
+        await this.globalDialogService.showSuccessError(
+          'Success',
+          'Case Feedback Deleted Successfully',
+          true
+        );
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({ errors });
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'Case Feedback Delete Failed',
           false
         );
         return of(errors);

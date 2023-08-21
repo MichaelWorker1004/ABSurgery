@@ -9,6 +9,8 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
         public string Content { get; set; }
         public string Comments { get; set; }
         public int? CaseCommentId { get; set; }
+        public string Feedback { get; set; }
+        public int? CaseFeedbackId { get; set; }
         public int? SectionNumber { get; set; }
     }
 }

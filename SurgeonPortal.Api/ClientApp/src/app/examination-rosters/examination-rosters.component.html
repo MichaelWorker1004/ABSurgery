@@ -112,10 +112,61 @@
                 styleClass="p-button-secondary p-button-text"
                 type="button"
                 (onClick)="toggleCommentSectionEdit(section)"
-                >cancel</p-button
+                >Cancel</p-button
               >
-              <!-- <hr> -->
+
+              <div class="w-full pt-2 mt-2 section-feedback">
+                <div *ngIf="section.feedback || section.editFeedback">
+                  <label [for]="section.heading + '-feedback-comment'"
+                    >Case Feedback:</label
+                  >
+                  <p class="my-1" *ngIf="!section.editFeedback">
+                    {{ section.feedback }}
+                  </p>
+                  <textarea
+                    [name]="section.heading + '-feedback-comment'"
+                    rows="5"
+                    pInputTextarea
+                    [(ngModel)]="section.newFeedback"
+                    *ngIf="section.editFeedback"
+                  ></textarea>
+                </div>
+                <div class="flex justify-content-start">
+                  <p-button
+                    *ngIf="!section.editFeedback"
+                    styleClass="p-button-success p-button-text pl-0"
+                    (onClick)="toggleCaseFeedbackEdit(section)"
+                    [disabled]="editActive"
+                  >
+                    {{ section.feedback ? 'Edit' : 'Add Case Feedback' }}
+                  </p-button>
+                  <p-button
+                    *ngIf="!section.editFeedback && section.feedback"
+                    styleClass="p-button-danger p-button-text ml-2"
+                    (onClick)="deleteCaseFeedback(section)"
+                    [disabled]="editActive"
+                  >
+                    Delete
+                  </p-button>
+                </div>
+                <p-button
+                  *ngIf="section.editFeedback"
+                  type="button"
+                  (onClick)="saveCaseFeedback(section)"
+                >
+                  Save Case Feedback
+                </p-button>
+                <p-button
+                  *ngIf="section.editFeedback"
+                  styleClass="p-button-secondary p-button-text"
+                  type="button"
+                  (onClick)="toggleCaseFeedbackEdit(section)"
+                  >Cancel</p-button
+                >
+              </div>
+              <hr />
             </div>
+
             <div *ngIf="!(selectedCaseDetails.sections?.length > 0)">
               <p class="font-italic text-muted mt-0 pl-3">
                 This case currently has no content

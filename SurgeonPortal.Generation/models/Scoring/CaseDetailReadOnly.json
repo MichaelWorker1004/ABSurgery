@@ -81,6 +81,28 @@
       "rules": {}
     },
     {
+      "name": "Feedback",
+      "dataType": "string",
+      "maxLength": 5000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CaseFeedbackId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
       "name": "SectionNumber",
       "dataType": "int?",
       "maxLength": 4,
@@ -95,7 +117,7 @@
   "metadata": {
     "command": "ytgim g m s Scoring\\CaseDetailReadOnly -sp [dbo].[get_case_details_by_id] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-06-26T16:38:34.2773728Z"
+    "generatedDateUtc": "2023-08-18T12:47:16.84845Z"
   },
   "version": 1
 }

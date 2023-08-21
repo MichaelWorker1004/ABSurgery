@@ -11,6 +11,8 @@ namespace SurgeonPortal.Library.Contracts.Scoring
         string Content { get; }
         string Comments { get; }
         int? CaseCommentId { get; }
+        string Feedback { get; }
+        int? CaseFeedbackId { get; }
         int? SectionNumber { get; }
     }
 }

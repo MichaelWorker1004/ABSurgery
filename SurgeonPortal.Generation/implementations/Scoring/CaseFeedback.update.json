@@ -1,0 +1,158 @@
+{
+  "name": "CaseFeedback",
+  "implementationName": "Scoring\\CaseFeedback.update",
+  "template": "ytg-framework/editable-edit",
+  "parameters": {
+    "Adapter": "dbo.update_case_feedback",
+    "ControllerName": "Scoring\\CaseFeedbackController",
+    "ControllerRoute": "api/cases/feedback",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Scoring\\CaseFeedback.GetById",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseFeedback",
+    "ModelGroup": "CaseFeedback",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_case_feedback",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_case_feedback]",
+        "parameters": [
+          {
+            "name": "Id",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Id"
+          },
+          {
+            "name": "CaseContentId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CaseContentId"
+          },
+          {
+            "name": "Feedback",
+            "dataType": "string",
+            "maxLength": 5000,
+            "precision": 5000,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Feedback"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CaseFeedback",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "CaseContentId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CaseContentId"
+              },
+              {
+                "name": "Feedback",
+                "dataType": "string",
+                "maxLength": 5000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Feedback"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "CaseContentId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "Feedback",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseFeedback.update CaseFeedback -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[update_case_feedback] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseFeedback.update CaseFeedback -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[update_case_feedback] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-08-18T15:26:42.9916214Z"
+  },
+  "version": 1
+}

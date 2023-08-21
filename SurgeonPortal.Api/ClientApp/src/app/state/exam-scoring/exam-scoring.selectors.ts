@@ -10,6 +10,7 @@ export class ExamScoringSelectors {
       return {
         caseRoster: state.caseRoster,
         selectedCaseContents: state.selectedCaseContents,
+        selectedCaseFeedback: state.selectedCaseFeedback,
         examineeList: state.examineeList,
         examinee: state.examinee,
         activeExamination: state.activeExamination,
