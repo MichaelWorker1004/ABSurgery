@@ -95,7 +95,14 @@ export class OralExaminationsComponent implements OnInit {
       .subscribe((examineeList) => {
         this.oralExaminations$.next(examineeList);
         if (examineeList?.length > 0) {
-          this.zoomLink = examineeList[0].meetingLink;
+          const currentExam = examineeList.find(
+            (exam) => exam.isCurrentSession
+          );
+          if (currentExam && currentExam.meetingLink) {
+            this.zoomLink = currentExam.meetingLink;
+          } else {
+            this.zoomLink = examineeList[0].meetingLink;
+          }
         } else {
           this.zoomLink = '';
         }

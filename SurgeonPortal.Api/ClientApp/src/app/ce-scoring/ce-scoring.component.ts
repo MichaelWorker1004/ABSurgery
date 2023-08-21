@@ -86,8 +86,8 @@ export class CeScoringAppComponent implements OnInit {
         alert: false,
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        // downloadLink:
-        //   'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg', //if the pdf is an external link
+        downloadLink:
+          '../../assets/files/examiner_056246_daythree_ce_agenda_dr_barnhart.pdf', //if the pdf is an external link
       },
     ];
 

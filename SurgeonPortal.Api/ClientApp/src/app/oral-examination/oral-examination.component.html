@@ -2,7 +2,7 @@
 <div class="text-xl">Please read carefully the instructions below.</div>
 <abs-exam-timer
   *ngIf="showTimer"
-  [totalIncrements]="casesLenth"
+  [totalIncrements]="casesLength"
   [currentIncrement]="currentIncrement"
   incrementLabel="Case"
 ></abs-exam-timer>
@@ -74,8 +74,8 @@
 
     <abs-expandable
       [customTitle]="'Review & Submit Scores'"
-      [index]="casesLenth"
-      [checked]="casesLenth === activeCase"
+      [index]="casesLength"
+      [checked]="casesLength === activeCase"
       class="w-full"
     >
       <div class="grid w-full">

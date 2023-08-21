@@ -6,7 +6,7 @@
     [checked]="checked"
     disabled
   />
-  <h2 class="handle">
+  <h2 [id]="'expandableHeader' + index" class="handle">
     <label [for]="caseId">
       <div *ngIf="!customTitle; else title">
         {{ decimalToRoman(index + 1) }}. {{ caseTitle }}

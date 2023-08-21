@@ -73,7 +73,7 @@ export class OralExaminationsComponent implements OnInit {
 
   cases$: BehaviorSubject<any> = new BehaviorSubject([]);
   userId!: number;
-  casesLenth!: number;
+  casesLength!: number;
   currentYear = new Date().getFullYear();
   examinationId!: string | null;
   candidateName!: string;
@@ -121,7 +121,7 @@ export class OralExaminationsComponent implements OnInit {
         this.candidateName = examinee?.fullName;
         this.dayTime = examinee?.examDate;
         this.cases$.next(examinee.cases);
-        this.casesLenth = examinee.cases?.length;
+        this.casesLength = examinee.cases?.length;
         this.examScoringId = examinee?.examScoringId;
         this.examineeUserId = examinee?.examineeUserId;
         this.showTimer = true;
@@ -159,13 +159,28 @@ export class OralExaminationsComponent implements OnInit {
     this.currentIncrement += 1;
     this.disable = true;
 
-    if (this.currentIncrement > this.casesLenth) {
+    if (this.currentIncrement > this.casesLength) {
+      this.scrollToElementById('expandableHeader' + this.casesLength);
       this.ExamTimerComponent.stopTimers();
       this.globalDialogService.showLoading();
       setTimeout(() => {
         this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
         this.disable = true;
       }, 200);
+    } else {
+      this.scrollToElementById(
+        'expandableHeader' + (this.currentIncrement - 1)
+      );
+    }
+  }
+
+  scrollToElementById(elementId: string) {
+    const element = document.getElementById(elementId);
+    console.log(element);
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
     }
   }
 

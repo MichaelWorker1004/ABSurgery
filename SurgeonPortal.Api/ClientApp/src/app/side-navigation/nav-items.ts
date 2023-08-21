@@ -88,7 +88,7 @@ export const CERTIFIED_NAV_ITEMS = [
     icon: 'fa-solid fa-file-lines',
   },
   {
-    display: 'CE Dasboard',
+    display: 'Examiner Dashboard',
     action: 'ce-scoring',
     icon: 'fa-solid fa-clock',
     children: [
