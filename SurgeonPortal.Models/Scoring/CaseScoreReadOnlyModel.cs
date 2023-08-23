@@ -18,5 +18,6 @@ namespace SurgeonPortal.Models.Scoring
         public int? Score { get; set; }
         public bool? CriticalFail { get; set; }
         public string Remarks { get; set; }
+        public bool? isLocked { get; set; }
     }
 }

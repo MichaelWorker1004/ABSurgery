@@ -156,12 +156,23 @@
       "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "isLocked",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {
     "command": "ytgim g m s Scoring\\CaseScoreReadOnly -sp [dbo].[get_examinerscores_byexamscheduleId] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-08-01T19:18:57.8767158Z"
+    "generatedDateUtc": "2023-08-22T18:56:20.6984976Z"
   },
   "version": 1
 }

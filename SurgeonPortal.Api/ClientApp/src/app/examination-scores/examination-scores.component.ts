@@ -85,6 +85,8 @@ export class ExaminationScoresComponent implements OnInit {
   showViewModal = false;
   candidateData$: BehaviorSubject<any> = new BehaviorSubject({});
 
+  lockedCases = false;
+
   constructor(private _store: Store) {
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
   }
@@ -111,6 +113,10 @@ export class ExaminationScoresComponent implements OnInit {
             endTime.toLocaleDateString() + ', ' + selectedExamScores[0].endTime
           );
 
+          this.lockedCases = selectedExamScores.every(
+            (score) => score.isLocked === true
+          );
+
           const newCandidateData = {
             candidateName:
               selectedExamScores[0].examineeFirstName +
@@ -118,6 +124,7 @@ export class ExaminationScoresComponent implements OnInit {
               selectedExamScores[0].examineeLastName,
             startTime: startTime,
             endTime: endTime,
+            allLocked: this.lockedCases,
             cases: selectedExamScores,
           };
           this.candidateData$.next(newCandidateData);

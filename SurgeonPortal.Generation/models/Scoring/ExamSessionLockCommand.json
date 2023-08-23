@@ -1,0 +1,24 @@
+{
+  "refs": {},
+  "name": "Scoring\\ExamSessionLockCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamscheduleId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m p Scoring\\ExamSessionLockCommand -sp [dbo].[lock_exam_scoring] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-08-18T16:43:34.948216Z"
+  },
+  "version": 1
+}

@@ -13,5 +13,6 @@ namespace SurgeonPortal.Library.Contracts.Scoring
         bool? IsSubmitted { get; }
         bool? IsCurrentSession { get; }
         int? SessionNumber { get; }
+        bool? isLocked { get; }
     }
 }

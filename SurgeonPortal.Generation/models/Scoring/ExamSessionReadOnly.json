@@ -3,18 +3,18 @@
   "name": "Scoring\\ExamSessionReadOnly",
   "description": "",
   "properties": [
-      {
-        "name": "ExamScheduleId",
-        "dataType": "int",
-        "maxLength": 2,
-        "precision": 5,
-        "scale": 0,
-        "isAlwaysReadOnly": false,
-        "isNullable": true,
-        "isIdentityColumn": false,
-        "rules": {}
-      },
-      {
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
       "name": "FirstName",
       "dataType": "string",
       "maxLength": 35,
@@ -75,9 +75,10 @@
       "maxLength": 1,
       "precision": 1,
       "scale": 0,
+      "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "mapsTo": "model.IsSubmitted"
+      "rules": {}
     },
     {
       "name": "IsCurrentSession",
@@ -100,12 +101,23 @@
       "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "isLocked",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {
     "command": "ytgim g m s Scoring\\ExamSessionReadOnly -sp [dbo].[get_examinee_sessions] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-06-26T17:10:45.2539806Z"
+    "generatedDateUtc": "2023-08-18T16:37:40.7949593Z"
   },
   "version": 1
 }

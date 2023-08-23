@@ -427,7 +427,6 @@ export class ExamScoringState {
     );
   }
 
-  // TODO - update if a new api call is added for this
   @Action(GetSelectedExamScores)
   getSelectedExamScores(
     ctx: StateContext<IExamScoring>,

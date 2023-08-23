@@ -1,7 +1,10 @@
 using Csla;
+using Csla.Core;
+using Csla.Rules;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
 using SurgeonPortal.Library.Contracts.Scoring;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -129,10 +132,13 @@ namespace SurgeonPortal.Library.Scoring
 
         }
 
+		protected override void AddBusinessRules()
+		{
+			BusinessRules.AddRule(new ExamLockedRule(ExamCaseIdProperty, 1));
+		}
 
 
-
-        [RunLocal]
+		[RunLocal]
         [DeleteSelf]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
@@ -248,4 +254,30 @@ namespace SurgeonPortal.Library.Scoring
 
 
     }
+
+	public class ExamLockedRule : BusinessRule
+	{
+		private IIsExamSessionLockedCommandFactory _isExamSessionLockedCommandFactory;
+
+		public ExamLockedRule(IPropertyInfo primaryProperty,
+			int priority)
+			: base(primaryProperty)
+		{
+			_isExamSessionLockedCommandFactory = new IsExamSessionLockedCommandFactory();
+			InputProperties = new List<IPropertyInfo> { primaryProperty };
+			Priority = priority;
+		}
+
+		protected override void Execute(IRuleContext context)
+		{
+			var examCaseId = (int)context.InputPropertyValues[PrimaryProperty];
+
+			var command = _isExamSessionLockedCommandFactory.IsExamSessionLocked(examCaseId);
+
+			if(command.IsLocked.HasValue && command.IsLocked.Value)
+			{
+				context.AddErrorResult("Cannot add or update score when exam is locked.");
+			}
+		}
+	}
 }

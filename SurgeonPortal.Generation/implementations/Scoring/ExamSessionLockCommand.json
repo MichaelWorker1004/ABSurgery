@@ -1,0 +1,55 @@
+{
+  "name": "ExamSessionLockCommand",
+  "implementationName": "Scoring\\ExamSessionLockCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.lock_exam_scoring",
+    "CommandMethodName": "LockExamSession",
+    "ControllerName": "Scoring\\ExamSessionsController",
+    "ControllerRoute": "api/exam-sessions",
+    "ControllerVersion": "1",
+    "ExecuteAsynchronously": "true",
+    "IncludeControllerInGeneration": "true",
+    "Model": "Scoring\\ExamSessionLockCommand",
+    "ModelGroup": "ExamSessionLockCommand",
+    "ReturnsPayload": "false",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "lock"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.lock_exam_scoring",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[lock_exam_scoring]",
+        "parameters": [
+          {
+            "name": "ExamscheduleId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamscheduleId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamscheduleId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\ExamSessionLockCommand ExamSessionLockCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[lock_exam_scoring] -p:Model=Scoring\\ExamSessionLockCommand -p:ModelGroup=ExamSessionLockCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=LockExamSession -p:Route=lock -p:ControllerName=Scoring\\ExamSessionsController -p:ControllerRoute=api/exam-sessions -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true ",
+    "inferredCommand": "ytgim generate i  Scoring\\ExamSessionLockCommand ExamSessionLockCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[lock_exam_scoring] -p:Model=Scoring\\ExamSessionLockCommand -p:ModelGroup=ExamSessionLockCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=LockExamSession -p:Route=lock -p:ControllerName=Scoring\\ExamSessionsController -p:ControllerRoute=api/exam-sessions -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",
+    "generatedDateUtc": "2023-08-18T16:44:35.5150265Z"
+  },
+  "version": 1
+}

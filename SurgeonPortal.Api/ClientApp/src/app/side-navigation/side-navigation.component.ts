@@ -17,6 +17,7 @@ export class SideNavigationComponent implements OnInit {
   @Output() handleSideNavToggle: EventEmitter<any> = new EventEmitter();
   @Input() currentStatus: string | undefined;
   @Input() isSurgeon = false;
+  @Input() isExaminer = false;
 
   navItems: Array<IMenuItem> = TRAINEE_NAV_ITEMS;
 

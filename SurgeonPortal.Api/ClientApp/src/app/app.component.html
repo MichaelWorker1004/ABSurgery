@@ -12,6 +12,7 @@
     <aside [ngClass]="isSideNavOpen ? 'toggled' : ''">
       <abs-side-navigation
         [isSurgeon]="isSurgeon"
+        [isExaminer]="isExaminer"
         (handleSideNavToggle)="handleSideNavToggle()"
       ></abs-side-navigation>
     </aside>

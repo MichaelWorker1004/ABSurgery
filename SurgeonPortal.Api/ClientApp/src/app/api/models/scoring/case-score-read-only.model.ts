@@ -14,4 +14,5 @@ export interface ICaseScoreReadOnlyModel {
     score: number;
     criticalFail: boolean;
     remarks: string;
+    isLocked: boolean;
 }

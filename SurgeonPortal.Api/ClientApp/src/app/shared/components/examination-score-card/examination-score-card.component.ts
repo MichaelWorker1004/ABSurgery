@@ -37,8 +37,10 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
   // TODO: [Joe] - add form-errors shared component
 
   @Input() case: any;
+  @Input() locked = false;
   @Output() handleChange: EventEmitter<any> = new EventEmitter();
 
+  localLocked = false;
   localData!: any;
 
   scoreOptions = [
@@ -92,6 +94,14 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
         for (const [key, value] of Object.entries(scores)) {
           this.scoringForm.get(key)?.setValue(value);
         }
+      }
+    }
+    if (changes['locked']) {
+      this.localLocked = this.locked;
+      if (this.locked) {
+        this.scoringForm.disable();
+      } else {
+        this.scoringForm.enable();
       }
     }
   }

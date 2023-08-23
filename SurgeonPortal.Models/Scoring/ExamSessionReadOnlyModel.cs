@@ -11,5 +11,6 @@ namespace SurgeonPortal.Models.Scoring
         public bool? IsSubmitted { get; set; }
         public bool? IsCurrentSession { get; set; }
         public int? SessionNumber { get; set; }
+        public bool? isLocked { get; set; }
     }
 }

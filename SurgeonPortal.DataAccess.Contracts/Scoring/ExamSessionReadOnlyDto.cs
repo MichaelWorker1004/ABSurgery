@@ -11,5 +11,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
         public bool? IsSubmitted { get; set; }
         public bool? IsCurrentSession { get; set; }
         public int? SessionNumber { get; set; }
+        public bool? IsLocked { get; set; }
     }
 }

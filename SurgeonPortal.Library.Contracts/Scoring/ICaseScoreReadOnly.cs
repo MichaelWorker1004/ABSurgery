@@ -19,5 +19,6 @@ namespace SurgeonPortal.Library.Contracts.Scoring
         int? Score { get; }
         bool? CriticalFail { get; }
         string Remarks { get; }
+        bool? isLocked { get; }
     }
 }

@@ -188,6 +188,16 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.Remarks"
+              },
+              {
+                "name": "isLocked",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.isLocked"
               }
             ]
           }
@@ -203,9 +213,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Scoring\\CaseScoreReadOnly.GetByExamScheduleId CaseScoreReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseScoreReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinerscores_byexamscheduleId] -p:FetchMethodName=GetByExamScheduleId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScoreReadOnly -p:Route=all-by-examschedule-id -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
+    "command": "ytgim g i s Scoring\\CaseScoreReadOnly.GetByExamScheduleId CaseScoreReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseScoreReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinerscores_byexamscheduleId] -p:FetchMethodName=GetByExamScheduleId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScoreReadOnly -p:Route=all-by-examschedule-id -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -f ",
     "inferredCommand": "ytgim generate i  Scoring\\CaseScoreReadOnly.GetByExamScheduleId CaseScoreReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseScoreReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinerscores_byexamscheduleId] -p:FetchMethodName=GetByExamScheduleId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseScoreReadOnly -p:Route=all-by-examschedule-id -p:ControllerName=Scoring\\CaseScoresController -p:ControllerRoute=api/cases/scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:UsePaginatedList=false",
-    "generatedDateUtc": "2023-06-30T13:19:06.2497454Z"
+    "generatedDateUtc": "2023-08-22T18:57:03.5578259Z"
   },
   "version": 1
 }

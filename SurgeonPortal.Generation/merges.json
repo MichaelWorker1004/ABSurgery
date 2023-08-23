@@ -2548,19 +2548,19 @@
     "lastGeneratedHash": "FD55C4A4F686699B9F44B041686B0908"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\ICaseScoreReadOnly.cs": {
-    "lastGeneratedHash": "F6DB78727A703602DA89BE71AF7BA7F1"
+    "lastGeneratedHash": "51460817C8890AD2CBEC77794082B772"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\ICaseScoreReadOnlyList.cs": {
     "lastGeneratedHash": "91B8D76B19F586F73D64718981E28136"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\scoring\\case-score-read-only.model.ts": {
-    "lastGeneratedHash": "3219D3C0F99DCE4F8A8CDDFF2310970D"
+    "lastGeneratedHash": "FB749FBFC8B286E4E2DEE528DB8525BF"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Scoring\\CaseScoreReadOnlyDto.cs": {
-    "lastGeneratedHash": "CDE54445A76EAB857A6B61973A782522"
+    "lastGeneratedHash": "95F3AF61C50977689614A2DAD17276FD"
   },
   "\\SurgeonPortal.Models\\Scoring\\CaseScoreReadOnlyModel.cs": {
-    "lastGeneratedHash": "D764E43133133EB510CD8C96F1D002AF"
+    "lastGeneratedHash": "D98E44FAD486FEFF8193A5793260C9A1"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\IDashboardRosterReadOnly.cs": {
     "lastGeneratedHash": "0345CE713596F6CAB76E31012C854291"
@@ -2578,19 +2578,19 @@
     "lastGeneratedHash": "1327E52562E853D096682CDB6B730EC4"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\IExamSessionReadOnly.cs": {
-    "lastGeneratedHash": "E71F89C5C8673975A4E2D55E904684D2"
+    "lastGeneratedHash": "9B17C51B76C07E95CF3487C40F20A24C"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\IExamSessionReadOnlyList.cs": {
     "lastGeneratedHash": "A1CD6016D9E29422075F6D2DD8C9AF65"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\scoring\\exam-session-read-only.model.ts": {
-    "lastGeneratedHash": "1EA6CAD32231B9ADF558C1D35E6FD903"
+    "lastGeneratedHash": "3391E8C95E087684B3F1F68DB814FBA6"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Scoring\\ExamSessionReadOnlyDto.cs": {
-    "lastGeneratedHash": "1141C31282C56400DA67A39D672DA96F"
+    "lastGeneratedHash": "3FFC02C36DED71456892B0ED037478FF"
   },
   "\\SurgeonPortal.Models\\Scoring\\ExamSessionReadOnlyModel.cs": {
-    "lastGeneratedHash": "B0AF7A7D845A980B2E4A074CE7876B19"
+    "lastGeneratedHash": "067C0A99EC6237E9DEF489C03BD308E1"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\IExamSessionSkipCommand.cs": {
     "lastGeneratedHash": "1FAAA86C73F9B1DCC99BB5DE28BDB885"
@@ -3079,7 +3079,8 @@
     "lastGeneratedHash": "908A04193A5C1DB47EAAB5C68D9EA246"
   },
   "\\SurgeonPortal.Library\\Scoring\\CaseScore.cs": {
-    "lastGeneratedHash": "28C0568A57FCE904CF355BCED4E5425D"
+    "lastGeneratedHash": "28C0568A57FCE904CF355BCED4E5425D",
+    "lastMergedHash": "4526206B8CFC750DF0D56D32BA0D02B4"
   },
   "\\SurgeonPortal.DataAccess\\Scoring\\CaseScoreDal.cs": {
     "lastGeneratedHash": "C1C4825F3E386C24C36B1385C29FDF63"
@@ -3103,7 +3104,7 @@
     "lastGeneratedHash": "733502A1F84BC360F2583C305E203BEB"
   },
   "\\SurgeonPortal.Library\\Scoring\\CaseScoreReadOnly.cs": {
-    "lastGeneratedHash": "C34159B5BE1EF4AC309610764A882C1A"
+    "lastGeneratedHash": "BF0EC4ADDCEB2D5FD8530AC3BB4BB725"
   },
   "\\SurgeonPortal.Library\\Scoring\\CaseScoreReadOnlyList.cs": {
     "lastGeneratedHash": "DF5E70450B528B326917C0539236E9C0"
@@ -3161,10 +3162,10 @@
     "lastMergedHash": "BA70DE8880F3BA50E1062143A34F51A3"
   },
   "\\SurgeonPortal.Api\\Controllers\\Scoring\\ExamSessionsController.cs": {
-    "lastGeneratedHash": "927D3E9D5FFCD4AE17EA2329CB576A87"
+    "lastGeneratedHash": "50B81827EB919BE8844212DEEC2BE4D0"
   },
   "\\SurgeonPortal.Library\\Scoring\\ExamSessionReadOnly.cs": {
-    "lastGeneratedHash": "E90F7C7018F1CB7A2A0264F9CE999892"
+    "lastGeneratedHash": "286E1FE12B4971EBC2ED21E6A1B1EE16"
   },
   "\\SurgeonPortal.Library\\Scoring\\ExamSessionReadOnlyList.cs": {
     "lastGeneratedHash": "7CA48328109137CF6796B1E4713E2606"

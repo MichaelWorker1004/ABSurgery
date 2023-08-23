@@ -16,11 +16,16 @@
   <abs-examination-score-card
     *ngFor="let case of localCandidateData?.cases; let i = index"
     [case]="case"
+    [locked]="case.isLocked"
     (handleChange)="handleChange($event)"
   ></abs-examination-score-card>
 </div>
 
-<div class="flex justify-content-end mt-4" slot="footer">
+<div
+  class="flex justify-content-end mt-4"
+  slot="footer"
+  *ngIf="!localCandidateData.allLocked"
+>
   <p-button styleClass="p-button-link p-button-primary" (click)="cancel()"
     >Cancel</p-button
   >

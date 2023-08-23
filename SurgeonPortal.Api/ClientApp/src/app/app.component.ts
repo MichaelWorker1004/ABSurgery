@@ -51,6 +51,7 @@ export class AppComponent implements OnDestroy, OnInit {
   version = packageInfo.buildId;
 
   isSurgeon = false;
+  isExaminer = false;
   isSideNavOpen = false;
 
   currentYear = new Date().getFullYear();
@@ -71,6 +72,11 @@ export class AppComponent implements OnDestroy, OnInit {
         }
         if (claims.includes(UserClaims.trainee)) {
           this.isSurgeon = false;
+        }
+        if (claims.includes(UserClaims.examiner)) {
+          this.isExaminer = true;
+        } else {
+          this.isExaminer = false;
         }
         this._store.dispatch(new GetUserProfile(loginUser, claims));
       }

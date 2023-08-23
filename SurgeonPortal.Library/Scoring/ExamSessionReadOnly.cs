@@ -58,6 +58,11 @@ namespace SurgeonPortal.Library.Scoring
         public int? SessionNumber => ReadProperty(SessionNumberProperty);
 		public static readonly PropertyInfo<int?> SessionNumberProperty = RegisterProperty<int?>(c => c.SessionNumber);
 
+        [DataMember]
+		[DisplayName(nameof(isLocked))]
+        public bool? isLocked => ReadProperty(isLockedProperty);
+		public static readonly PropertyInfo<bool?> isLockedProperty = RegisterProperty<bool?>(c => c.isLocked);
+
 
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -79,6 +84,7 @@ namespace SurgeonPortal.Library.Scoring
             LoadProperty(IsSubmittedProperty, dto.IsSubmitted);
             LoadProperty(IsCurrentSessionProperty, dto.IsCurrentSession);
             LoadProperty(SessionNumberProperty, dto.SessionNumber);
+            LoadProperty(isLockedProperty, dto.IsLocked);
 		} 
         
     }

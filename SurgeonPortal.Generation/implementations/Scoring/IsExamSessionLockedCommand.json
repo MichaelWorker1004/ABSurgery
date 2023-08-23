@@ -1,0 +1,67 @@
+{
+  "name": "IsExamSessionLockedCommand",
+  "implementationName": "Scoring\\IsExamSessionLockedCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.get_islocked_by_examid",
+    "CommandMethodName": "IsExamSessionLocked",
+    "ExecuteAsynchronously": "false",
+    "IncludeControllerInGeneration": "false",
+    "Model": "Scoring\\IsExamSessionLockedCommand",
+    "ModelGroup": "IsExamSessionLockedCommand",
+    "ReturnsPayload": "true",
+    "RootNamespace": "$project.RootNamespace"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_islocked_by_examid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_isLocked_by_examId]",
+        "parameters": [
+          {
+            "name": "ExamCaseId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamCaseId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\IsExamSessionLockedCommand",
+            "fields": [
+              {
+                "name": "IsLocked",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsLocked"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamCaseId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\IsExamSessionLockedCommand IsExamSessionLockedCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_isLocked_by_examId] -p:Model=Scoring\\IsExamSessionLockedCommand -p:ModelGroup=IsExamSessionLockedCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=IsExamSessionLocked -p:ReturnsPayload=true ",
+    "inferredCommand": "ytgim generate i  Scoring\\IsExamSessionLockedCommand IsExamSessionLockedCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_isLocked_by_examId] -p:Model=Scoring\\IsExamSessionLockedCommand -p:ModelGroup=IsExamSessionLockedCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=IsExamSessionLocked -p:ReturnsPayload=true -p:ExecuteAsynchronously=true -p:IncludeControllerInGeneration=false",
+    "generatedDateUtc": "2023-08-22T18:06:22.5287249Z"
+  },
+  "version": 1
+}

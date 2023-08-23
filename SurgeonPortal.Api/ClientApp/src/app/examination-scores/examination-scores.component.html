@@ -40,8 +40,8 @@
 
 <abs-modal
   [open]="showViewModal"
-  [preventOverlayClose]="true"
-  [hideClose]="true"
+  [preventOverlayClose]="!lockedCases"
+  [hideClose]="!lockedCases"
   (closeDialog)="closeDialog()"
   title="Examination Scores"
 >

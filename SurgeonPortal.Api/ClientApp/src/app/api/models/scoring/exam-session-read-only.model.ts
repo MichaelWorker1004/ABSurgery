@@ -9,4 +9,5 @@ export interface IExamSessionReadOnlyModel {
     isSubmitted: boolean;
     isCurrentSession: boolean;
     sessionNumber: number;
+    isLocked: boolean;
 }

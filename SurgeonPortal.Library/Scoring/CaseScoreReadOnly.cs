@@ -83,6 +83,11 @@ namespace SurgeonPortal.Library.Scoring
         public string Remarks => ReadProperty(RemarksProperty);
 		public static readonly PropertyInfo<string> RemarksProperty = RegisterProperty<string>(c => c.Remarks);
 
+        [DataMember]
+		[DisplayName(nameof(isLocked))]
+        public bool? isLocked => ReadProperty(isLockedProperty);
+		public static readonly PropertyInfo<bool?> isLockedProperty = RegisterProperty<bool?>(c => c.isLocked);
+
 
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -109,6 +114,7 @@ namespace SurgeonPortal.Library.Scoring
             LoadProperty(ScoreProperty, dto.Score);
             LoadProperty(CriticalFailProperty, dto.CriticalFail);
             LoadProperty(RemarksProperty, dto.Remarks);
+            LoadProperty(isLockedProperty, dto.IsLocked);
 		} 
         
     }

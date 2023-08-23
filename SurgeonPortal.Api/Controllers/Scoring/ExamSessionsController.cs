@@ -34,6 +34,28 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExamSessionLockCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("lock")]
+        public async Task<IActionResult> LockCommandAsync(
+            [FromServices] IExamSessionLockCommandFactory examSessionLockCommandFactory,
+            [FromBody] ExamSessionLockCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await examSessionLockCommandFactory.LockExamSessionAsync(model.ExamscheduleId);
+        
+            return Ok();
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ExamSessionReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
