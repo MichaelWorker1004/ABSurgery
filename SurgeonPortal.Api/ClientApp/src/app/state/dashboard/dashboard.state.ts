@@ -53,6 +53,7 @@ export class DashboardState {
     private globalDialogService: GlobalDialogService,
     private qualifyingExamService: QualifyingExamService
   ) {}
+  // trainee
   @Action(GetDashboardProgramInformation) getDashboardProgramInformation(
     ctx: StateContext<IDashboardState>
   ) {
@@ -72,6 +73,7 @@ export class DashboardState {
     );
   }
 
+  // surgeon
   @Action(GetDashboardCertificationInformation)
   getDashboardCertificationInformation(ctx: StateContext<IDashboardState>) {
     const state = ctx.getState();
@@ -95,6 +97,7 @@ export class DashboardState {
       );
   }
 
+  // trainee
   @Action(GetTraineeRegistrationStatus)
   getTraineeRegistrationStatus(
     ctx: StateContext<IDashboardState>,
@@ -119,6 +122,7 @@ export class DashboardState {
       );
   }
 
+  // trainee
   @Action(GetAlertsAndNotices)
   getAlertsAndNotices(ctx: StateContext<IDashboardState>) {
     const state = ctx.getState();

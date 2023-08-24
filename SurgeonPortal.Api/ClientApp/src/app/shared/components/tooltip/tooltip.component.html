@@ -1,0 +1,7 @@
+<div class="tooltip-container" [ngClass]="localPosition">
+  <div #icon class="tooltip-icon fa-solid fa-circle-question"></div>
+  <div #tooltip class="tooltip-text" *ngIf="tooltipText">
+    <div class="tooltip-caret"></div>
+    {{ tooltipText }}
+  </div>
+</div>

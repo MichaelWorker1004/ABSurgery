@@ -4,6 +4,11 @@
     <p class="my-0">
       CME requirements for the <i>Continuous Certification (CC) Program</i> are
       <b>150 category 1 CME credits</b> earned over the last five calendar
+      years, <b>50 of which must be self-assesment credits</b>.
+    </p>
+    <!-- <p class="my-0">
+      CME requirements for the <i>Continuous Certification (CC) Program</i> are
+      <b>150 category 1 CME credits</b> earned over the last five calendar
       years, <b>50 of which must be self-assesment credits</b>. Note that ABS
       will waive 25 category 1 credits and 50 self-assessment credits for each
       successfully completed Continuous Certification Assessment (CCA). If you
@@ -12,7 +17,7 @@
       will reduce the category 1 requirement by 50 to 75 credits. If you are not
       yet enrolled in the CC program, averaging 30 CME credits per year will
       help you stay on track with this requirement.
-    </p>
+    </p> -->
   </sl-card>
 </header>
 
@@ -27,6 +32,12 @@
               >{{ cycleStartDate | date : 'longDate' }} -
               {{ cycleEndDate | date : 'longDate' }}</span
             >
+
+            <abs-tooltip
+              style="float: right"
+              position="top"
+              tooltipText="To stay on track with this requirement you should try to average 30 CME credits per year"
+            ></abs-tooltip>
           </h5>
           <hr />
         </div>
@@ -35,7 +46,7 @@
         </div>
         <div class="col-12">
           <p class="font-lg font-bold">
-            Credits and Adjustments Dropping Off* by
+            Credits and ABS Waivers Dropping Off* by
             {{ cycleEndDate | date : 'longDate' }}
           </p>
           <p
@@ -55,7 +66,7 @@
             }}</span>
           </p>
           <p class="text-muted">
-            * Credits and Adjustments dropping off are those that were earned
+            * Credits and ABS Waivers dropping off are those that were earned
             more than five years ago from today. You may see an increase in the
             number of credits needed the next time you login if you have CME
             that is expiring between now and the end of the year. Refer to the
@@ -90,7 +101,7 @@
         [heightToggle]="cmeAdjustmentsHeightChange$"
       >
         <h5 class="mt-0 mb-2" panel-header>
-          Itemized Adjustments to Requirements
+          Itemized ABS Waivers that Reduce Your CME Requirements
         </h5>
         <p class="text-xl mt-0">
           Listed below are activities you completed (e.g., a CCA module) during

@@ -256,7 +256,7 @@ export class ContinuingMedicalEducationState {
         saCredits: totalSACreditsRequired,
       },
       {
-        rowLabel: 'Your Adjustments',
+        rowLabel: 'Your ABS Waivers',
         credits: `(${creditsAdjustment})`,
         saCredits: `(${saCreditsAdjustment})`,
       },
