@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.TraineeClaim": {
+      "claimId": "8e508896-0442-443e-bff5-29edd11c7463",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.TraineeClaim",
+      "key": "SurgeonPortalClaims.TraineeClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -91,5 +99,6 @@
     "inferredCommand": "ytgim generate i  Examinations\\QualifyingExamReadOnly.Get QualifyingExamReadOnly -t=ytg-framework/readonly-get -p:Model=Examinations\\QualifyingExamReadOnly -p:Adapter=sp:abssp-[dbo].[get_current_qualifying_exam] -p:FetchMethodName=Get -p:RootNamespace=$project.RootNamespace -p:ModelGroup=QualifyingExamReadOnly -p:Route= -p:ControllerName=QualifyingExamController -p:ControllerRoute=api/qualifying-exam -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-08-14T18:33:26.2601327Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Examinations\\QualifyingExamReadOnly.Get.json",
   "version": 1
 }

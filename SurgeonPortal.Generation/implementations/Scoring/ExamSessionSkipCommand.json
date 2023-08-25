@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": "skip"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -60,5 +68,6 @@
     "inferredCommand": "ytgim generate i  Scoring\\ExamSessionSkipCommand ExamSessionSkipCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[update_skip_exam] -p:Model=Scoring\\ExamSessionSkipCommand -p:ModelGroup=ExamSessionSkipCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=SkipExamSession -p:IncludeControllerInGeneration=True -p:Route=skip -p:ControllerName=Scoring\\ExamSessionsController -p:ControllerRoute=api/exam-sessions -p:ControllerVersion=1 -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",
     "generatedDateUtc": "2023-07-31T19:46:02.6898777Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\ExamSessionSkipCommand.json",
   "version": 1
 }

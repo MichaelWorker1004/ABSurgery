@@ -4,7 +4,11 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IMenuItem } from 'src/web-components/menuItem';
 import { NgxsModule, Store } from '@ngxs/store';
 import { Logout } from '../state';
-import { CERTIFIED_NAV_ITEMS, TRAINEE_NAV_ITEMS } from './nav-items';
+import {
+  CERTIFIED_NAV_ITEMS,
+  EXAMINER_NAV_ITEMS,
+  TRAINEE_NAV_ITEMS,
+} from './nav-items';
 
 @Component({
   selector: 'abs-side-navigation',
@@ -24,12 +28,16 @@ export class SideNavigationComponent implements OnInit {
   constructor(private _router: Router, private _store: Store) {}
 
   ngOnInit(): void {
-    this.getNavItemsByUserRoll();
+    this.getNavItemsByUserRole();
   }
 
-  getNavItemsByUserRoll() {
+  getNavItemsByUserRole() {
     if (this.isSurgeon) {
       this.navItems = CERTIFIED_NAV_ITEMS;
+    }
+
+    if (this.isExaminer) {
+      this.navItems = this.navItems.concat(EXAMINER_NAV_ITEMS);
     }
   }
 

@@ -17,7 +17,15 @@
     "Route": "by-userid",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -152,5 +160,6 @@
     "inferredCommand": "ytgim generate i  ProfessionalStanding\\MedicalLicenseReadOnly.GetByUserId MedicalLicenseReadOnly -t=ytg-framework/readonly-getlist -p:Model=ProfessionalStanding\\MedicalLicenseReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_userlicenses_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=MedicalLicenseReadOnly -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\MedicalLicenseController -p:ControllerRoute=api/medical-license -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-06-05T16:47:27.8750028Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\ProfessionalStanding\\MedicalLicenseReadOnly.GetByUserId.json",
   "version": 1
 }

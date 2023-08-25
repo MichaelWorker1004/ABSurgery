@@ -17,7 +17,15 @@
     "Route": "by-case-header-id",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -167,5 +175,6 @@
     "inferredCommand": "ytgim generate i  Scoring\\CaseDetailReadOnly.GetByCaseHeaderId CaseDetailReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CaseDetailReadOnly -p:Adapter=sp:abssp-[dbo].[get_case_details_by_id] -p:FetchMethodName=GetByCaseHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CaseDetailReadOnly -p:Route=by-case-header-id -p:ControllerName=Scoring\\CaseContentsController -p:ControllerRoute=api/case-contents -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-08-18T12:50:24.5346351Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\CaseDetailReadOnly.GetByCaseHeaderId.json",
   "version": 1
 }

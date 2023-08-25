@@ -216,7 +216,8 @@ namespace SurgeonPortal.Api.Controllers.Users
             var message = "The user is missing the minimum claims to login to the Surgeon Portal";
 
             if (!UserHasClaim(claims, ApplicationClaims.Trainee) &&
-                !UserHasClaim(claims, ApplicationClaims.Surgeon))
+                !UserHasClaim(claims, ApplicationClaims.Surgeon) &&
+                !UserHasClaim(claims, ApplicationClaims.Examiner))
             {
                 throw new AuthenticationFailedException(message);
             }

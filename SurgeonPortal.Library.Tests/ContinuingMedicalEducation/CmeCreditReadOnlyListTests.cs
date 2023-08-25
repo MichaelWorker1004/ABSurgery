@@ -22,7 +22,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .ReturnsAsync(CreateMany<CmeCreditReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICmeCreditReadOnlyList, CmeCreditReadOnlyList>()
                 .WithBusinessObject<ICmeCreditReadOnly, CmeCreditReadOnly>()
@@ -44,7 +44,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICmeCreditReadOnlyList, CmeCreditReadOnlyList>()
                 .WithBusinessObject<ICmeCreditReadOnly, CmeCreditReadOnly>()

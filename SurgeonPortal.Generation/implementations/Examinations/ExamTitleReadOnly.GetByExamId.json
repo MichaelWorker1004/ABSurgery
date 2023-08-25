@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": "title"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -67,5 +75,6 @@
     "inferredCommand": "ytgim generate i  Examinations\\ExamTitleReadOnly.GetByExamId ExamTitleReadOnly -t=ytg-framework/readonly-get -p:Model=Examinations\\ExamTitleReadOnly -p:Adapter=sp:abssp-[dbo].[get_exam_title_byExamId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamTitleReadOnly -p:Route=title -p:ControllerName=Examinations\\ExaminationsController -p:ControllerRoute=api/examinations -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-08-08T14:06:17.1585006Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Examinations\\ExamTitleReadOnly.GetByExamId.json",
   "version": 1
 }

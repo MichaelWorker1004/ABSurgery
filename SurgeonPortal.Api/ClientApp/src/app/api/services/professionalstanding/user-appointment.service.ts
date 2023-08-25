@@ -16,6 +16,7 @@ export class UserAppointmentService {
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -42,6 +43,7 @@ export class UserAppointmentService {
         apiVersion = '1.0'): Observable<IUserAppointmentModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -68,6 +70,7 @@ export class UserAppointmentService {
             apiVersion = '1.0'): Observable<IUserAppointmentModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -102,6 +105,7 @@ export class UserAppointmentService {
         apiVersion = '1.0') : Observable<IUserAppointmentModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -136,6 +140,7 @@ export class UserAppointmentService {
         public retrieveUserAppointmentReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IUserAppointmentReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**

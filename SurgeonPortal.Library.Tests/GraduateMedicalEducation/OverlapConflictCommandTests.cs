@@ -47,7 +47,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .Returns(dto);
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOverlapConflictCommand, OverlapConflictCommand>()
                 .Build();

@@ -17,7 +17,15 @@
     "Route": "registration-status",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.TraineeClaim": {
+      "claimId": "8e508896-0442-443e-bff5-29edd11c7463",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.TraineeClaim",
+      "key": "SurgeonPortalClaims.TraineeClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -108,5 +116,6 @@
     "inferredCommand": "ytgim generate i  Trainees\\RegistrationStatusReadOnly.GetByExamCode RegistrationStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=Trainees\\RegistrationStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_registration_open] -p:FetchMethodName=GetByExamCode -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RegistrationStatusReadOnly -p:Route=registration-status -p:ControllerName=Trainees\\ExamController -p:ControllerRoute=api/trainees/exams -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-07-27T19:35:51.5519596Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Trainees\\RegistrationStatusReadOnly.GetByExamCode.json",
   "version": 1
 }

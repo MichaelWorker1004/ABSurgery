@@ -14,5 +14,6 @@ namespace SurgeonPortal.Shared
         public static readonly string User = "User";
         public static readonly string Surgeon = "Surgeon";
         public static readonly string Trainee = "Trainee";
+        public static readonly string Examiner = "Examiner";
     }
 }

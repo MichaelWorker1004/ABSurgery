@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -85,11 +93,12 @@
       }
     }
   ],
-  "inputParameters": [ ],
+  "inputParameters": [],
   "metadata": {
     "command": "ytgim generate i s Surgeons\\CertificationReadOnly.GetByUserId CertificationReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Surgeons\\CertificationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certifications] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CertificationReadOnly -p:ControllerName=Surgeons\\CertificationsController -p:ControllerRoute=surgeon/certifications -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false ",
     "inferredCommand": "ytgim generate i  Surgeons\\CertificationReadOnly.GetByUserId CertificationReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Surgeons\\CertificationReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_certifications] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CertificationReadOnly -p:ControllerName=Surgeons\\CertificationsController -p:ControllerRoute=surgeons/certification-read-onlies -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=",
     "generatedDateUtc": "2023-04-06T20:47:57.7727857Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Surgeons\\CertificationReadOnly.GetByUserId.json",
   "version": 1
 }

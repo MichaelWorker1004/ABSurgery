@@ -17,7 +17,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -236,5 +244,6 @@
     "inferredCommand": "ytgim generate i  Examinations\\GQ\\AdditionalTraining-update AdditionalTraining -t=ytg-framework/editable-edit -p:Adapter=sp:ABSSP-[dbo].[update_additionaltraining_bytrainingid] -p:Model=Examinations\\GQ\\AdditionalTraining -p:FetchImplementation=Examinations\\GQ\\AdditionalTraining-getbytrainingid -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdditionalTraining -p:Route= -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:ApiRoot=$project.ApiRoot -p:ControllerName=Examinations\\GQ\\AdditionalTrainingsController -p:ControllerRoute=examinations/gq/additional-trainings -p:ControllerVersion=1",
     "generatedDateUtc": "2023-04-19T17:34:37.3832005Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Examinations\\GQ\\AdditionalTraining-update.json",
   "version": 1
 }

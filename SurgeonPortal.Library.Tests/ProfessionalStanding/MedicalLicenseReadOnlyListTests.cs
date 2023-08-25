@@ -22,7 +22,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(CreateMany<MedicalLicenseReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicenseReadOnlyList, MedicalLicenseReadOnlyList>()
                 .WithBusinessObject<IMedicalLicenseReadOnly, MedicalLicenseReadOnly>()
@@ -44,7 +44,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicenseReadOnlyList, MedicalLicenseReadOnlyList>()
                 .WithBusinessObject<IMedicalLicenseReadOnly, MedicalLicenseReadOnly>()

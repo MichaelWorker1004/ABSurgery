@@ -41,6 +41,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IProgramReadOnly, ProgramReadOnly>()
                 .Build();
@@ -62,6 +63,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IProgramReadOnly, ProgramReadOnly>()
                 .Build();

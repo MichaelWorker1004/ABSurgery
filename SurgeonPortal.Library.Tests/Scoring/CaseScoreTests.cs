@@ -56,6 +56,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
@@ -94,6 +95,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
@@ -115,6 +117,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
@@ -142,6 +145,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
@@ -201,6 +205,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
@@ -241,6 +246,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
@@ -324,6 +330,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();

@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.TraineeClaim": {
+      "claimId": "8e508896-0442-443e-bff5-29edd11c7463",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.TraineeClaim",
+      "key": "SurgeonPortalClaims.TraineeClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -106,6 +114,7 @@
                 "precision": 0,
                 "scale": 0,
                 "isNullable": false,
+                "isIdentityColumn": false,
                 "mapsTo": "model.State"
               }
             ]
@@ -120,5 +129,6 @@
     "inferredCommand": "ytgim generate i  Trainees\\ProgamReadOnly-getbyuserid ProgramReadOnly -t=ytg-framework\\editable-get -p:Model=Trainees\\ProgramReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_user_programs] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ProgramReadOnly -p:ControllerName=Trainees\\ProgramsController -p:ControllerRoute=trainees/progam-read-onlies -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=",
     "generatedDateUtc": "2023-04-06T20:51:00.4136606Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Trainees\\ProgramReadOnly-getbyuserid.json",
   "version": 1
 }

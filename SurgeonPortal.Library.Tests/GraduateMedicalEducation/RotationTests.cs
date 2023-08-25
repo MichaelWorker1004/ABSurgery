@@ -64,6 +64,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
 				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
@@ -103,6 +104,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
 				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
@@ -125,6 +127,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
 				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
@@ -153,6 +156,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
                 .WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
@@ -218,6 +222,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
 				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
@@ -259,6 +264,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
 				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
@@ -354,6 +360,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
 				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()

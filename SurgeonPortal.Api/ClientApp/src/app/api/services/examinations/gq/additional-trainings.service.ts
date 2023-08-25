@@ -16,6 +16,7 @@ export class AdditionalTrainingsService {
         apiVersion = '1.0'): Observable<IAdditionalTrainingModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
 
             /**
@@ -42,6 +43,7 @@ export class AdditionalTrainingsService {
             apiVersion = '1.0'): Observable<IAdditionalTrainingModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
 
             /**
@@ -76,6 +78,7 @@ export class AdditionalTrainingsService {
         apiVersion = '1.0') : Observable<IAdditionalTrainingModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
 
             /**
@@ -110,6 +113,7 @@ export class AdditionalTrainingsService {
         public retrieveAdditionalTrainingReadOnly_GetAllByUserId(apiVersion = '1.0'): Observable<IAdditionalTrainingReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
 
             /**

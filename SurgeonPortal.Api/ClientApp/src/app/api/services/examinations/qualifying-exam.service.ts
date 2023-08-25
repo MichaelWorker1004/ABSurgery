@@ -14,6 +14,7 @@ export class QualifyingExamService {
         public retrieveQualifyingExamReadOnly_Get(apiVersion = '1.0'): Observable<IQualifyingExamReadOnlyModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**

@@ -17,7 +17,15 @@
     "Route": "by-userid",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -182,5 +190,6 @@
     "inferredCommand": "ytgim generate i  ProfessionalStanding\\UserAppointmentReadOnly.GetByUserId UserAppointmentReadOnly -t=ytg-framework/readonly-getlist -p:Model=ProfessionalStanding\\UserAppointmentReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_userhospappts_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=UserAppointmentReadOnly -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserAppointmentController -p:ControllerRoute=api/professional-standing/user-appointment -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-06-06T19:57:24.5169112Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\ProfessionalStanding\\UserAppointmentReadOnly.GetByUserId.json",
   "version": 1
 }

@@ -28,7 +28,9 @@ namespace SurgeonPortal.Library.Scoring
         [ObjectAuthorizationRules]
         public static void AddObjectAuthorizationRules()
         {
-            
+            Csla.Rules.BusinessRules.AddRule(typeof(CaseRosterReadOnlyList),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
 
         }
 

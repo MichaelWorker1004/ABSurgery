@@ -176,7 +176,6 @@ export class OralExaminationsComponent implements OnInit {
 
   scrollToElementById(elementId: string) {
     const element = document.getElementById(elementId);
-    console.log(element);
     if (element) {
       setTimeout(() => {
         element.scrollIntoView({ behavior: 'smooth' });

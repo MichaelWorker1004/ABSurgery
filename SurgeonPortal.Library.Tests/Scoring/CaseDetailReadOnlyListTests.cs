@@ -23,7 +23,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(CreateMany<CaseDetailReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseDetailReadOnlyList, CaseDetailReadOnlyList>()
                 .WithBusinessObject<ICaseDetailReadOnly, CaseDetailReadOnly>()
@@ -45,7 +45,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseDetailReadOnlyList, CaseDetailReadOnlyList>()
                 .WithBusinessObject<ICaseDetailReadOnly, CaseDetailReadOnly>()

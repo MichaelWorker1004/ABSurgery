@@ -15,6 +15,7 @@ export class ExamScoreService {
         apiVersion = '1.0'): Observable<IExamScoreModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -41,6 +42,7 @@ export class ExamScoreService {
             apiVersion = '1.0'): Observable<IExamScoreModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -69,6 +71,7 @@ export class ExamScoreService {
         apiVersion = '1.0') : Observable<IExamScoreModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

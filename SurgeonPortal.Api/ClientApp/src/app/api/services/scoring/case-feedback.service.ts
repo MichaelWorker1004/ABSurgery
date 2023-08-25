@@ -15,6 +15,7 @@ export class CaseFeedbackService {
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -41,6 +42,7 @@ export class CaseFeedbackService {
         apiVersion = '1.0'): Observable<ICaseFeedbackModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -67,6 +69,7 @@ export class CaseFeedbackService {
             apiVersion = '1.0'): Observable<ICaseFeedbackModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -97,6 +100,7 @@ export class CaseFeedbackService {
         apiVersion = '1.0') : Observable<ICaseFeedbackModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

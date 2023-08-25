@@ -47,6 +47,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
                 .Build();
@@ -68,6 +69,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
                 .Build();
@@ -95,6 +97,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
                 .Build();
@@ -148,6 +151,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
                 .Build();
@@ -187,6 +191,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
                 .Build();
@@ -261,6 +266,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
                 .Build();

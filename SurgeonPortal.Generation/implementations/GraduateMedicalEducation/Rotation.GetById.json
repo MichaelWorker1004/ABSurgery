@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": "by-id"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.TraineeClaim": {
+      "claimId": "8e508896-0442-443e-bff5-29edd11c7463",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.TraineeClaim",
+      "key": "SurgeonPortalClaims.TraineeClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -277,5 +285,6 @@
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\Rotation.GetById Rotation -t=ytg-framework/editable-get -p:Model=GraduateMedicalEducation\\Rotation -p:Adapter=sp:ABSSP-[dbo].[get_gmerotations_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Rotation -p:Route=by-id -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-08-01T19:47:32.9075606Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\GraduateMedicalEducation\\Rotation.GetById.json",
   "version": 1
 }

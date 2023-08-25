@@ -17,7 +17,15 @@
     "Route": "by-date",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -167,5 +175,6 @@
     "inferredCommand": "ytgim generate i  Scoring\\ExamSessionReadOnly.GetByUserId ExamSessionReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\ExamSessionReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinee_sessions] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamSessionReadOnly -p:Route=exam-sessions -p:ControllerName=Scoring\\ExamSessionsController -p:ControllerRoute=api/exam-sessions -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-08-18T16:39:14.2491839Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\ExamSessionReadOnly.GetByUserId.json",
   "version": 1
 }

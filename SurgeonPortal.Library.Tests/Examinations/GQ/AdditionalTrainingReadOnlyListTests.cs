@@ -22,7 +22,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .ReturnsAsync(CreateMany<AdditionalTrainingReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTrainingReadOnlyList, AdditionalTrainingReadOnlyList>()
                 .WithBusinessObject<IAdditionalTrainingReadOnly, AdditionalTrainingReadOnly>()
@@ -44,7 +44,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTrainingReadOnlyList, AdditionalTrainingReadOnlyList>()
                 .WithBusinessObject<IAdditionalTrainingReadOnly, AdditionalTrainingReadOnly>()

@@ -15,6 +15,7 @@ export class DashboardService {
         apiVersion = '1.0'): Observable<IDashboardRosterReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

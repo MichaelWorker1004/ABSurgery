@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": "by-id"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -117,5 +125,6 @@
     "inferredCommand": "ytgim generate i  Scoring\\CaseFeedback.GetById CaseFeedback -t=ytg-framework/editable-get -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[get_case_feedback_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route=by-id -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-08-18T15:20:45.9801593Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\CaseFeedback.GetById.json",
   "version": 1
 }

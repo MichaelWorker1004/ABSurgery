@@ -15,6 +15,7 @@ export class CmeService {
         public retrieveCmeAdjustmentReadOnly_GetByUserId(apiVersion = '1.0'): Observable<ICmeAdjustmentReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -40,6 +41,7 @@ export class CmeService {
         apiVersion = '1.0'): Observable<ICmeCreditReadOnlyModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -65,6 +67,7 @@ export class CmeService {
         public retrieveCmeCreditReadOnly_GetByUserId(apiVersion = '1.0'): Observable<ICmeCreditReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**

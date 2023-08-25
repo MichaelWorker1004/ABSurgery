@@ -22,7 +22,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(CreateMany<UserAppointmentReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointmentReadOnlyList, UserAppointmentReadOnlyList>()
                 .WithBusinessObject<IUserAppointmentReadOnly, UserAppointmentReadOnly>()
@@ -44,7 +44,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointmentReadOnlyList, UserAppointmentReadOnlyList>()
                 .WithBusinessObject<IUserAppointmentReadOnly, UserAppointmentReadOnly>()

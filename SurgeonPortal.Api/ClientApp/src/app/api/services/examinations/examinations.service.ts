@@ -16,6 +16,7 @@ export class ExaminationsService {
         public retrieveExamHistoryReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IExamHistoryReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -40,6 +41,7 @@ export class ExaminationsService {
         public retrieveExamOverviewReadOnly_GetAll(apiVersion = '1.0'): Observable<IExamOverviewReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -63,29 +65,30 @@ export class ExaminationsService {
 
         public retrieveExamTitleReadOnly_GetByExamId(examId: number,
         apiVersion = '1.0'): Observable<IExamTitleReadOnlyModel> {
-                /**
-                * Claims
-                */
-                
-                /**
-                * Business Rules
-                * No business rules exist for this model
-                */
-                
-                /**
-                * Required Parameters
+            /**
+            * Claims
+            * SurgeonPortalClaims.ExaminerClaim
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
             * examId:Number
-                * apiVersion
-                */
-                
-                /**
-                * Calls Sp(s)
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
             * [get_exam_title_byExamId]
-                */
-                
-                
+            */
+            
+            
             return this.apiService.get<IExamTitleReadOnlyModel>(`api/examinations/title?api-version=${apiVersion}&examId=${examId}`);
-            }
+        }
 
 
 }

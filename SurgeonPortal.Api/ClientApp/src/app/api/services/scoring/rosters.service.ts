@@ -15,6 +15,7 @@ export class RostersService {
         apiVersion = '1.0'): Observable<IRosterReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

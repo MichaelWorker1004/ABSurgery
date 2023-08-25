@@ -28,7 +28,9 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         [ObjectAuthorizationRules]
         public static void AddObjectAuthorizationRules()
         {
-            
+            Csla.Rules.BusinessRules.AddRule(typeof(RotationReadOnlyList),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
 
         }
 

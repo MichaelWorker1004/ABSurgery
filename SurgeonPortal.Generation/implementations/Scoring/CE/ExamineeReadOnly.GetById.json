@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": "examinee"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -107,5 +115,6 @@
     "inferredCommand": "",
     "generatedDateUtc": "2023-07-05T17:45:19.1919907Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\CE\\ExamineeReadOnly.GetById.json",
   "version": 1
 }

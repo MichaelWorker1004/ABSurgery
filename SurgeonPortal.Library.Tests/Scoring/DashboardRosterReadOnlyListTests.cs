@@ -24,7 +24,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(CreateMany<DashboardRosterReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDashboardRosterReadOnlyList, DashboardRosterReadOnlyList>()
                 .WithBusinessObject<IDashboardRosterReadOnly, DashboardRosterReadOnly>()
@@ -46,7 +46,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDashboardRosterReadOnlyList, DashboardRosterReadOnlyList>()
                 .WithBusinessObject<IDashboardRosterReadOnly, DashboardRosterReadOnly>()

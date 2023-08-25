@@ -84,7 +84,7 @@ export class AuthState {
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
           });
-          this.router.navigate(['/']);
+          this.router.navigate([action.payload.returnUrl ?? '/']);
         }
       })
     );
