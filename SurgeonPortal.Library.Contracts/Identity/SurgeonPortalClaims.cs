@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SurgeonPortal.Library.Contracts.Identity
 {
+    /// <summary>
+    /// Backing GUID for role claims used in BO authorization rules
+    /// </summary>
     public class SurgeonPortalClaims
     {
         public const string UserClaim = "2AA5D2F2-0AA3-4B64-B340-26900EDF7CC2";
