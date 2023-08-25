@@ -26,7 +26,7 @@
       "rules": {}
     },
     {
-      "name": "CaseContentId",
+      "name": "CaseHeaderId",
       "dataType": "int",
       "maxLength": 4,
       "precision": 10,
@@ -71,9 +71,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g m s Scoring\\CaseFeedback -sp [dbo].[get_case_feedback_byid] -cn abssp ",
+    "command": "ytgim g m s Scoring\\CaseFeedback -sp [dbo].[get_case_feedback_byid] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-08-18T15:20:38.2042431Z"
+    "generatedDateUtc": "2023-08-23T14:58:16.5884662Z"
   },
   "version": 1
 }

@@ -148,3 +148,9 @@ export class DeleteCaseFeedback {
 
   constructor(public id: number) {}
 }
+
+export class GetCaseDetailsAndFeedback {
+  static readonly type = '[Exam-Scoring] Get case details and feedback';
+
+  constructor(public id: number) {}
+}

@@ -52,6 +52,23 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CaseFeedbackModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("by-examiner-id")]
+        public async Task<ActionResult<CaseFeedbackModel>> GetCaseFeedback_GetByExaminerIdAsync(
+            [FromServices] ICaseFeedbackFactory caseFeedbackFactory,
+            int caseHeaderId)
+        {
+            var item = await caseFeedbackFactory.GetByExaminerIdAsync(caseHeaderId);
+        
+            return Ok(_mapper.Map<CaseFeedbackModel>(item));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CaseFeedbackModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("by-id")]
         public async Task<ActionResult<CaseFeedbackModel>> GetCaseFeedback_GetByIdAsync(
             [FromServices] ICaseFeedbackFactory caseFeedbackFactory,
@@ -106,13 +123,13 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         private void AssignCreateProperties(ICaseFeedback entity, CaseFeedbackModel model)
         {
             entity.UserId = model.UserId;
-            entity.CaseContentId = model.CaseContentId;
+            entity.CaseHeaderId = model.CaseHeaderId;
             entity.Feedback = model.Feedback;
         }
 
         private void AssignEditProperties(ICaseFeedback entity, CaseFeedbackModel model)
         {
-            entity.CaseContentId = model.CaseContentId;
+            entity.CaseHeaderId = model.CaseHeaderId;
             entity.Feedback = model.Feedback;
         }
     }

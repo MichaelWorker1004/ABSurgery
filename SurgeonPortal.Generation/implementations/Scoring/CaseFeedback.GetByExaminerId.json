@@ -1,46 +1,38 @@
 {
   "name": "CaseFeedback",
-  "implementationName": "Scoring\\CaseFeedback.update",
-  "template": "ytg-framework/editable-edit",
+  "implementationName": "Scoring\\CaseFeedback.GetByExaminerId",
+  "template": "ytg-framework/editable-get",
   "parameters": {
-    "Adapter": "dbo.update_case_feedback",
+    "Adapter": "dbo.get_case_feedback_by_examinerid",
     "ControllerName": "Scoring\\CaseFeedbackController",
     "ControllerRoute": "api/cases/feedback",
     "ControllerVersion": "1",
-    "FetchImplementation": "Scoring\\CaseFeedback.GetById",
+    "FetchMethodName": "GetByExaminerId",
     "IncludeControllerInGeneration": "true",
     "IsChild": "false",
     "IsRoot": "true",
     "Model": "Scoring\\CaseFeedback",
     "ModelGroup": "CaseFeedback",
     "RootNamespace": "$project.RootNamespace",
-    "Route": ""
+    "Route": "by-examiner-id"
   },
-  "projectClaims": {
-    "SurgeonPortalClaims.ExaminerClaim": {
-      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
-      "namespace": "SurgeonPortal.Library.Contracts.Identity",
-      "name": "SurgeonPortalClaims.ExaminerClaim",
-      "key": "SurgeonPortalClaims.ExaminerClaim",
-      "claimSetName": "SugeonPortal"
-    }
-  },
+  "projectClaims": {},
   "adapters": [
     {
       "type": "storedProcedure",
-      "name": "dbo.update_case_feedback",
+      "name": "dbo.get_case_feedback_by_examinerid",
       "storedProcedure": {
         "schema": "[dbo]",
-        "procedureName": "[update_case_feedback]",
+        "procedureName": "[get_case_feedback_by_examinerId]",
         "parameters": [
           {
-            "name": "Id",
+            "name": "ExaminerUserId",
             "dataType": "int",
             "maxLength": 4,
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "Id"
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           },
           {
             "name": "CaseHeaderId",
@@ -50,24 +42,6 @@
             "scale": 0,
             "required": true,
             "mapsTo": "CaseHeaderId"
-          },
-          {
-            "name": "Feedback",
-            "dataType": "string",
-            "maxLength": 5000,
-            "precision": 5000,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "Feedback"
-          },
-          {
-            "name": "LastUpdatedByUserId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           }
         ],
         "recordsets": [
@@ -142,26 +116,15 @@
   ],
   "inputParameters": [
     {
-      "name": "Id",
-      "dataType": "int",
-      "required": true
-    },
-    {
       "name": "CaseHeaderId",
       "dataType": "int",
-      "required": true
-    },
-    {
-      "name": "Feedback",
-      "dataType": "string",
       "required": true
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Scoring\\CaseFeedback.update CaseFeedback -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[update_case_feedback] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -f ",
-    "inferredCommand": "ytgim generate i  Scoring\\CaseFeedback.update CaseFeedback -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[update_case_feedback] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-08-23T15:00:48.8593986Z"
+    "command": "ytgim g i s Scoring\\CaseFeedback.GetByExaminerId CaseFeedback -t=ytg-framework/editable-get -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[get_case_feedback_by_examinerId] -p:FetchMethodName=GetByExaminerId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route=by-examiner-id -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseFeedback.GetByExaminerId CaseFeedback -t=ytg-framework/editable-get -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[get_case_feedback_by_examinerId] -p:FetchMethodName=GetByExaminerId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route=by-examiner-id -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-08-23T15:19:23.4737218Z"
   },
-  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\CaseFeedback.update.json",
   "version": 1
 }

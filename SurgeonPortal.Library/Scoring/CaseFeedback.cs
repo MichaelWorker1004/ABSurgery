@@ -45,13 +45,13 @@ namespace SurgeonPortal.Library.Scoring
 		}
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
-        [DisplayName(nameof(CaseContentId))]
-		public int CaseContentId
+        [DisplayName(nameof(CaseHeaderId))]
+		public int CaseHeaderId
 		{
-			get { return GetProperty(CaseContentIdProperty); }
-			set { SetProperty(CaseContentIdProperty, value); }
+			get { return GetProperty(CaseHeaderIdProperty); }
+			set { SetProperty(CaseHeaderIdProperty, value); }
 		}
-		public static readonly PropertyInfo<int> CaseContentIdProperty = RegisterProperty<int>(c => c.CaseContentId);
+		public static readonly PropertyInfo<int> CaseHeaderIdProperty = RegisterProperty<int>(c => c.CaseHeaderId);
 
         [DisplayName(nameof(Feedback))]
 		public string Feedback
@@ -103,6 +103,25 @@ namespace SurgeonPortal.Library.Scoring
                 await _caseFeedbackDal.DeleteAsync(ToDto());
         
                 MarkIdle();
+            }
+        }
+
+        [Fetch]
+        [RunLocal]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
+           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+        private async Task GetByExaminerId(GetByExaminerIdCriteria criteria)
+        
+        {
+            using (BypassPropertyChecks)
+            {
+                var dto = await _caseFeedbackDal.GetByExaminerIdAsync(criteria.CaseHeaderId);
+        
+                if(dto == null)
+                {
+                    throw new Ytg.Framework.Exceptions.DataNotFoundException("CaseFeedback not found based on criteria");
+                }
+                FetchData(dto);
             }
         }
 
@@ -169,7 +188,7 @@ namespace SurgeonPortal.Library.Scoring
             
 			this.Id = dto.Id;
 			this.UserId = dto.UserId;
-			this.CaseContentId = dto.CaseContentId;
+			this.CaseHeaderId = dto.CaseHeaderId;
 			this.Feedback = dto.Feedback;
 		}
 
@@ -184,7 +203,7 @@ namespace SurgeonPortal.Library.Scoring
             
 			dto.Id = this.Id;
 			dto.UserId = this.UserId;
-			dto.CaseContentId = this.CaseContentId;
+			dto.CaseHeaderId = this.CaseHeaderId;
 			dto.Feedback = this.Feedback;
 
 			return dto;

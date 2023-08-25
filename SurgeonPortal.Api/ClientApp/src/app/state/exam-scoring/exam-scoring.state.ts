@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, mergeMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, map, mergeMap, share, tap } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import {
   CaseContentsService,
@@ -45,6 +45,7 @@ import {
   GetCaseFeedback,
   UpdateCaseFeedback,
   DeleteCaseFeedback,
+  GetCaseDetailsAndFeedback,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -618,7 +619,7 @@ export class ExamScoringState {
   getCaseFeedback(ctx: StateContext<IExamScoring>, payload: { id: number }) {
     this.globalDialogService.showLoading();
     return this.caseFeedbackService
-      .retrieveCaseFeedback_GetById(payload.id)
+      .retrieveCaseFeedback_GetByExaminerId(payload.id)
       .pipe(
         tap((result: ICaseFeedbackModel) => {
           ctx.patchState({
@@ -693,6 +694,28 @@ export class ExamScoringState {
           false
         );
         return of(errors);
+      })
+    );
+  }
+
+  @Action(GetCaseDetailsAndFeedback)
+  getCaseDetailsAndFeedback(
+    ctx: StateContext<IExamScoring>,
+    payload: { id: number }
+  ): Observable<IExamScoring> {
+    const joins = [
+      this.getCaseContents(ctx, payload).pipe(catchError((error) => of(error))),
+      this.getCaseFeedback(ctx, payload).pipe(catchError((error) => of(error))),
+    ];
+
+    return forkJoin(joins).pipe(
+      map((examScoring: IExamScoring[]) => {
+        return of(ctx.getState());
+      }),
+      share(),
+      catchError((error) => {
+        console.error('------- In Exam Scoring Store', error);
+        return of(error);
       })
     );
   }

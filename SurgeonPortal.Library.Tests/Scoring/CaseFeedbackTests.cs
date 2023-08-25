@@ -18,7 +18,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
 
             dto.Id = Create<int>();
             dto.UserId = Create<int>();
-            dto.CaseContentId = Create<int>();
+            dto.CaseHeaderId = Create<int>();
             dto.Feedback = Create<string>();
             dto.CreatedByUserId = Create<int>();
             dto.LastUpdatedByUserId = Create<int>();
@@ -69,6 +69,52 @@ namespace SurgeonPortal.Library.Tests.Scoring
                     .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
+        }
+        
+        #endregion
+
+        #region GetByExaminerIdAsync CaseFeedback
+        
+        [Test]
+        public async Task GetByExaminerIdAsync_CallsDalCorrectly()
+        {
+            var expectedCaseHeaderId = Create<int>();
+            
+            var mockDal = new Mock<ICaseFeedbackDal>();
+            mockDal.Setup(m => m.GetByExaminerIdAsync(expectedCaseHeaderId))
+                .ReturnsAsync(Create<CaseFeedbackDto>());
+        
+            UseMockServiceProvider()
+                .WithMockedIdentity()
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<ICaseFeedback, CaseFeedback>()
+                .Build();
+        
+            var factory = new CaseFeedbackFactory();
+            var sut = await factory.GetByExaminerIdAsync(expectedCaseHeaderId);
+        
+            mockDal.VerifyAll();
+        }
+        
+        [Test]
+        public async Task GetByExaminerId_YieldsCorrectResult()
+        {
+            var dto = CreateValidDto();
+        
+            var mockDal = new Mock<ICaseFeedbackDal>();
+            mockDal.Setup(m => m.GetByExaminerIdAsync(It.IsAny<int>()))
+                .ReturnsAsync(dto);
+        
+            UseMockServiceProvider()
+                .WithMockedIdentity()
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<ICaseFeedback, CaseFeedback>()
+                .Build();
+        
+            var factory = new CaseFeedbackFactory();
+            var sut = await factory.GetByExaminerIdAsync(Create<int>());
+        
+            dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
         
         #endregion
@@ -146,7 +192,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
-            sut.CaseContentId = dto.CaseContentId;
+            sut.CaseHeaderId = dto.CaseHeaderId;
             sut.Feedback = dto.Feedback;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
@@ -231,7 +277,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
-            sut.CaseContentId = dto.CaseContentId;
+            sut.CaseHeaderId = dto.CaseHeaderId;
             sut.Feedback = dto.Feedback;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
@@ -242,7 +288,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
-            sut.CaseContentId = dto.CaseContentId;
+            sut.CaseHeaderId = dto.CaseHeaderId;
             sut.Feedback = dto.Feedback;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;

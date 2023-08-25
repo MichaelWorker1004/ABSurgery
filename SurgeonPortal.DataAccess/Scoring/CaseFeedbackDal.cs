@@ -28,6 +28,21 @@ namespace SurgeonPortal.DataAccess.Scoring
             }
         }
 
+        public async Task<CaseFeedbackDto> GetByExaminerIdAsync(int caseHeaderId)
+        {
+            using (var connection = CreateConnection())
+            {
+                return await connection.ExecFirstOrDefaultAsync<CaseFeedbackDto>(
+                    "[dbo].[get_case_feedback_by_examinerId]",
+                        new
+                        {
+                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            CaseHeaderId = caseHeaderId,
+                        });
+                        
+            }
+        }
+
         public async Task<CaseFeedbackDto> GetByIdAsync(int id)
         {
             using (var connection = CreateConnection())
@@ -53,7 +68,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                             new
                             {
                                 UserId = dto.UserId,
-                                CaseContentId = dto.CaseContentId,
+                                CaseHeaderId = dto.CaseHeaderId,
                                 Feedback = dto.Feedback,
                                 CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                             });
@@ -82,7 +97,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                         new
                         {
                             Id = dto.Id,
-                            CaseContentId = dto.CaseContentId,
+                            CaseHeaderId = dto.CaseHeaderId,
                             Feedback = dto.Feedback,
                             LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
                         });
