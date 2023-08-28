@@ -14,6 +14,8 @@ import {
   IDashboardState,
   GetTraineeRegistrationStatus,
   GetAlertsAndNotices,
+  GetExamDirectory,
+  ExamProcessSelectors,
 } from '../state';
 import { UserClaims } from '../side-navigation/user-status.enum';
 import { IActionCardReadOnlyModel } from '../shared/components/action-card/action-card-read-only.model';
@@ -23,7 +25,9 @@ import {
 } from './user-action-cards';
 import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.model';
 import { ICertificationReadOnlyModel } from '../api/models/surgeons/certification-read-only.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-dashboard',
   templateUrl: './dashboard.component.html',
@@ -65,6 +69,8 @@ export class DashboardComponent implements OnInit {
   userInformation!: IProgramReadOnlyModel | ICertificationReadOnlyModel[];
 
   alertsAndNotices: any | undefined;
+
+  upcomingExams: any[] | undefined;
 
   constructor(private _store: Store) {
     this.initDashboardData();
@@ -160,11 +166,11 @@ export class DashboardComponent implements OnInit {
       }
     });
 
+    //console.log(this.upcomingExams);
     const alertsAndNoticesCertfiied = [
       {
-        title: 'Issues with your GME',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+        title: 'Upcoming Exam Registration',
+        content: this.upcomingExams?.join('<br>'),
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
@@ -179,6 +185,26 @@ export class DashboardComponent implements OnInit {
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
       },
     ];
+
+    if (this.isSurgeon) {
+      this._store
+        .dispatch(new GetExamDirectory())
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.upcomingExams = this._store
+            .selectSnapshot(ExamProcessSelectors.upcomingExams)
+            ?.map((exam) => {
+              const regOpenDate = new Date(exam.regOpenDate);
+              const regCloseDate = new Date(exam.regEndDate);
+
+              return `<b>${exam.examName}:</b> 
+                <br>${regOpenDate.toLocaleDateString()} - ${regCloseDate.toLocaleDateString()}`;
+            });
+
+          alertsAndNoticesCertfiied[0].content =
+            this.upcomingExams?.join('<br><br>');
+        });
+    }
 
     this.alertsAndNotices = this.isSurgeon
       ? alertsAndNoticesCertfiied

@@ -8,8 +8,8 @@
   ></a>
   <div class="img-container" [style]="imageStyleUrl"></div>
   <div class="highlight-content">
-    <div class="alert-title" *ngIf="alert?.alert">Alerts and Notices</div>
+    <!-- <div class="alert-title" *ngIf="alert?.alert">Alerts and Notices</div> -->
     <div class="title">{{ alert?.title }}</div>
-    <div class="content">{{ alert?.content }}</div>
+    <div class="content" [innerHTML]="alert?.content"></div>
   </div>
 </div>
