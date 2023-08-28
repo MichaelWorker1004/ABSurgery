@@ -12,7 +12,8 @@
       {{ user.emailAddress }}
     </p>
     <p class="font-bold mt-0 mb-1 account-status" *ngIf="user.claims">
-      Status: {{ user.claims[1] }}
+      Status:
+      {{ user.claims.includes(userClaims.surgeon) ? 'Surgeon' : 'Trainee' }}
     </p>
   </div>
 </div>
