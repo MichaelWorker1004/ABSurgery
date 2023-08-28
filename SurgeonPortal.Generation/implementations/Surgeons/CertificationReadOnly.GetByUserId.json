@@ -86,6 +86,16 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.EndDateDisplay"
+              },
+              {
+                "name": "IsClinicallyInactive",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IsClinicallyInactive"
               }
             ]
           }
