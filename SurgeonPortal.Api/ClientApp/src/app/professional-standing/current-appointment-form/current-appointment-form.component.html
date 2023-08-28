@@ -9,11 +9,19 @@
 </ng-container>
 <form [formGroup]="currentAppointmentForm" (ngSubmit)="onSubmit()">
   <div class="grid">
+    <div class="col-12 flex gap-2 justify-content-start align-items-center">
+      <p-checkbox
+        formControlName="clinicallyActive"
+        [value]="true"
+        inputId="clinicallyActive"
+        (onChange)="onClinicalActiveChange($event)"
+      ></p-checkbox>
+      <label for="ny">Clinically Active</label>
+    </div>
     <div class="col-12 md:col-6 flex flex-column justify-content-start">
       <label htmlFor="primaryPracticeId"
         >Primary Current Practice or Training*</label
       >
-
       <p-dropdown
         placeholder="Select a practice or training..."
         [options]="optionLists.primaryPracticeOptions"
