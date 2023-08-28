@@ -6,5 +6,6 @@ namespace SurgeonPortal.Models.Surgeons
         public string CertificateId { get; set; }
         public string InitialCertificationDate { get; set; }
         public string EndDateDisplay { get; set; }
+        public int IsClinicallyInactive { get; set; }
     }
 }
