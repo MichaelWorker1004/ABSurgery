@@ -9,5 +9,4 @@ export const APPOINTMENTS_PRIVILEGES_COLS = [
   AbsGrid.setTextDisplayCol('Other', 'other'),
   AbsGrid.setTextDisplayCol('Official', 'authorizingOfficial'),
   AbsGrid.setCustomButtonCol('Edit', 'edit', 'fa-solid fa-pen-to-square'),
-  AbsGrid.setCustomButtonCol('Delete', 'delete', 'fa-solid fa-trash'),
 ];
