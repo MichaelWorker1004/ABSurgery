@@ -57,7 +57,7 @@ namespace SurgeonPortal.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
+			services.AddHttpContextAccessor();
 
             services.Configure<SiteConfiguration>(Configuration.GetSection(ConfigurationSections.Site));
             services.Configure<TokensConfiguration>(Configuration.GetSection(ConfigurationSections.Tokens));
@@ -139,10 +139,6 @@ namespace SurgeonPortal.Api
 
             services.AddAuthorization(options =>
             {
-                options.FallbackPolicy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-
                 var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
                 defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
                 options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
@@ -185,7 +181,7 @@ namespace SurgeonPortal.Api
 
             app.UseStaticFiles();
 
-            app.UseRouting();
+			app.UseRouting();
 
             app.UseAuthentication();
 
@@ -194,7 +190,7 @@ namespace SurgeonPortal.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");
                 endpoints.MapDefaultControllerRoute().RequireAuthorization();
                 endpoints.MapFallbackToFile("index.html");
             });
@@ -202,7 +198,7 @@ namespace SurgeonPortal.Api
             Configuration.ConfigureCsla();
 
             app.UseCsla();
-        }
+		}
 
         private static void ConfigureSwagger(IServiceCollection services)
         {

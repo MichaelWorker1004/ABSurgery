@@ -353,6 +353,7 @@ export class ExamScoringState {
     payload: { score: ICaseScoreModel }
   ) {
     const score = payload.score;
+    this.globalDialogService.showLoading();
     return this.caseScoresService.createCaseScore(score).pipe(
       tap((result: ICaseScoreModel) => {
         // figure out how to update the store here
@@ -360,10 +361,12 @@ export class ExamScoringState {
           // selectedCaseComment: result,
           errors: null,
         });
+        this.globalDialogService.closeOpenDialog();
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
         ctx.patchState({ errors });
+        this.globalDialogService.closeOpenDialog();
         return of(errors);
       })
     );

@@ -29,7 +29,9 @@ import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
 import { IExamScoreModel } from '../api/models/ce/exam-score.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-oral-examination',
   standalone: true,
@@ -153,25 +155,26 @@ export class OralExaminationsComponent implements OnInit {
       remarks: currentCase?.remarks ?? '',
     } as ICaseScoreModel;
 
-    this._store.dispatch(new CreateCaseScore(model));
-
-    this.activeCase += 1;
-    this.currentIncrement += 1;
-    this.disable = true;
-
-    if (this.currentIncrement > this.casesLength) {
-      this.scrollToElementById('expandableHeader' + this.casesLength);
-      this.ExamTimerComponent.stopTimers();
-      this.globalDialogService.showLoading();
-      setTimeout(() => {
-        this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
+    this._store
+      .dispatch(new CreateCaseScore(model))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.activeCase += 1;
+        this.currentIncrement += 1;
         this.disable = true;
-      }, 200);
-    } else {
-      this.scrollToElementById(
-        'expandableHeader' + (this.currentIncrement - 1)
-      );
-    }
+
+        if (this.currentIncrement > this.casesLength) {
+          this.scrollToElementById('expandableHeader' + this.casesLength);
+          this.ExamTimerComponent.stopTimers();
+          this.globalDialogService.showLoading();
+          this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
+          this.disable = true;
+        } else {
+          this.scrollToElementById(
+            'expandableHeader' + (this.currentIncrement - 1)
+          );
+        }
+      });
   }
 
   scrollToElementById(elementId: string) {
@@ -211,13 +214,17 @@ export class OralExaminationsComponent implements OnInit {
           remarks: data?.remarks,
         } as ICaseScoreModel;
         this.hasUnsavedChanges = false;
-        this._store.dispatch(new UpdateCaseScore(model, false));
-        this.globalDialogService.showSuccessError(
-          'Success',
-          'Scores updated successfully',
-          true
-        );
-        this.router.navigate(['/ce-scoring/oral-examinations']);
+        this._store
+          .dispatch(new UpdateCaseScore(model, false))
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this.globalDialogService.showSuccessError(
+              'Success',
+              'Scores updated successfully',
+              true
+            );
+            this.router.navigate(['/ce-scoring/oral-examinations']);
+          });
       });
     }
   }

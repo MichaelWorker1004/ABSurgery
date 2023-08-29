@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,8 +14,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './user-information-card.component.html',
   styleUrls: ['./user-information-card.component.scss'],
 })
-export class UserInformationCardComponent {
+export class UserInformationCardComponent implements OnInit, OnChanges {
   @Input() userInformation: any;
   @Input() currentStatus!: string;
   @Input() isSurgeon: boolean | undefined;
+
+  localIsSurgeon!: boolean;
+
+  ngOnInit(): void {
+    this.localIsSurgeon = this.isSurgeon || false;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isSurgeon']) {
+      this.localIsSurgeon = changes['isSurgeon'].currentValue;
+    }
+  }
 }
