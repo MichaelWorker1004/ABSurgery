@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
@@ -23,7 +23,9 @@ import {
 } from './user-action-cards';
 import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.model';
 import { ICertificationReadOnlyModel } from '../api/models/surgeons/certification-read-only.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-dashboard',
   templateUrl: './dashboard.component.html',
@@ -36,7 +38,7 @@ import { ICertificationReadOnlyModel } from '../api/models/surgeons/certificatio
     HighlightCardComponent,
   ],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
@@ -70,66 +72,67 @@ export class DashboardComponent implements OnInit {
     this.initDashboardData();
   }
 
-  ngOnInit(): void {
-    this.setActionCardsByUserClaims();
-    this.fetchAlertsAndNoticesByUserId();
-  }
-
   initDashboardData() {
-    this.userClaims$?.subscribe((userClaims) => {
-      this.isSurgeon = userClaims?.includes(UserClaims.surgeon);
-    });
+    this.userClaims$?.pipe(untilDestroyed(this)).subscribe((userClaims) => {
+      const isSurgeon = userClaims?.includes(UserClaims.surgeon);
+      this.isSurgeon = isSurgeon;
 
-    if (this.isSurgeon) {
-      this._store.dispatch(new GetDashboardCertificationInformation());
-      this.certificateInformation$?.subscribe((userInformation) => {
-        if (userInformation?.certificates?.length > 0) {
-          this.userInformation = userInformation.certificates;
-        }
-      });
-    } else {
-      this._store.dispatch(new GetDashboardProgramInformation());
-      this._store.dispatch(new GetTraineeRegistrationStatus('2022GO6'));
-      this._store.dispatch(new GetAlertsAndNotices());
-      this.registrationStatus$?.subscribe((userInformation) => {
-        const registrationInformation = userInformation?.registrationStatus;
-        const todaysDate = new Date();
-        const regOpenDate = new Date(
-          registrationInformation?.regOpenDate ?? ''
-        );
-        const regCloseDate = new Date(
-          registrationInformation?.regEndDate ?? ''
-        );
-        const isRegisterDates = () => {
-          if (todaysDate >= regOpenDate && todaysDate <= regCloseDate) {
-            return true;
+      console.log('initDashboardData', isSurgeon);
+      if (isSurgeon) {
+        this._store.dispatch(new GetDashboardCertificationInformation());
+        this.certificateInformation$?.subscribe((userInformation) => {
+          if (userInformation?.certificates?.length > 0) {
+            this.userInformation = userInformation.certificates;
           }
-          return false;
-        };
-
-        const applyForQECard = TRAINEE_ACTION_CARDS[1];
-        if (
-          (registrationInformation?.isRegOpen ||
-            registrationInformation?.isRegLate) &&
-          isRegisterDates()
-        ) {
-          applyForQECard.disabled = false;
-        } else {
-          applyForQECard.disabled = true;
-          applyForQECard.description = `QE applications are not yet available. Check back on ${new Date(
+        });
+      } else {
+        this._store.dispatch(new GetDashboardProgramInformation());
+        this._store.dispatch(new GetTraineeRegistrationStatus('2022GO6'));
+        this._store.dispatch(new GetAlertsAndNotices());
+        this.registrationStatus$?.subscribe((userInformation) => {
+          const registrationInformation = userInformation?.registrationStatus;
+          const todaysDate = new Date();
+          const regOpenDate = new Date(
             registrationInformation?.regOpenDate ?? ''
-          ).toLocaleDateString()}`;
-        }
-      });
-      this.programInformation$?.subscribe((userInformation) => {
-        if (userInformation?.programs?.programName.length > 0) {
-          this.userInformation = userInformation.programs;
-        }
-      });
-    }
+          );
+          const regCloseDate = new Date(
+            registrationInformation?.regEndDate ?? ''
+          );
+          const isRegisterDates = () => {
+            if (todaysDate >= regOpenDate && todaysDate <= regCloseDate) {
+              return true;
+            }
+            return false;
+          };
+
+          const applyForQECard = TRAINEE_ACTION_CARDS[1];
+          if (
+            (registrationInformation?.isRegOpen ||
+              registrationInformation?.isRegLate) &&
+            isRegisterDates()
+          ) {
+            applyForQECard.disabled = false;
+          } else {
+            applyForQECard.disabled = true;
+            applyForQECard.description = `QE applications are not yet available. Check back on ${new Date(
+              registrationInformation?.regOpenDate ?? ''
+            ).toLocaleDateString()}`;
+          }
+        });
+        this.programInformation$?.subscribe((userInformation) => {
+          if (userInformation?.programs?.programName.length > 0) {
+            this.userInformation = userInformation.programs;
+          }
+        });
+      }
+
+      this.setActionCardsByUserClaims(isSurgeon);
+      this.fetchAlertsAndNoticesByUserId(isSurgeon);
+    });
   }
 
-  fetchAlertsAndNoticesByUserId() {
+  fetchAlertsAndNoticesByUserId(isSurgeon: boolean) {
+    console.log('fetchAlertsAndNoticesByUserId', isSurgeon);
     const alertsAndNoticesTrainee = [
       {
         content:
@@ -180,13 +183,14 @@ export class DashboardComponent implements OnInit {
       },
     ];
 
-    this.alertsAndNotices = this.isSurgeon
+    this.alertsAndNotices = isSurgeon
       ? alertsAndNoticesCertfiied
       : alertsAndNoticesTrainee;
   }
 
-  setActionCardsByUserClaims() {
-    this.userActionCards = this.isSurgeon
+  setActionCardsByUserClaims(isSurgeon: boolean) {
+    console.log('setActionCardsByUserClaims', isSurgeon);
+    this.userActionCards = isSurgeon
       ? CERTIFIED_ACTION_CARDS
       : TRAINEE_ACTION_CARDS;
   }
