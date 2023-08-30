@@ -32,6 +32,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               (typeof err.error === 'string' &&
                 err.error !== 'Login failed')) &&
             err.status !== 401 &&
+            err.status !== 403 &&
             err.status !== 404
           ) {
             // TODO: [Joe] - add error specific messages here
