@@ -6,7 +6,7 @@
       <div class="status three active"></div>
     </div>
     <strong>Current Status</strong>:
-    {{ localIsSurgeon ? 'Certified' : 'Trainee' }}
+    {{ localIsSurgeon ? localCurrentStatus : 'Trainee' }}
   </div>
 
   <div class="info-container" *ngIf="!localIsSurgeon; else certified">
@@ -38,6 +38,10 @@
         <div class="info-data">
           <span>Certificate Number:</span>
           {{ info?.certificateId ? info?.certificateId : 'N/A' }}
+        </div>
+        <div class="info-data" *ngIf="info.status">
+          <span>Status:</span>
+          {{ info?.status }}
         </div>
         <div class="info-data">
           {{ info?.initialCertificationDate }}

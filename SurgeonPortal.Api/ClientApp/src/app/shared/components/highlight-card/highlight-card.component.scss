@@ -36,8 +36,18 @@
   }
   .highlight-content {
     padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
     .content {
       line-height: 23px;
+    }
+    .card-action {
+      margin-top: auto;
+      padding-top: 0.25rem;
+      color: var(--global-success);
+      font-weight: bold;
+      width: 100%;
+      font-size: 1.15rem;
     }
   }
 }

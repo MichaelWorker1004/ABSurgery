@@ -84,6 +84,7 @@ export class DashboardComponent {
       if (isSurgeon) {
         this._store.dispatch(new GetDashboardCertificationInformation());
         this.certificateInformation$?.subscribe((userInformation) => {
+          console.log('userInformation', userInformation);
           if (userInformation?.certificates?.length > 0) {
             this.userInformation = userInformation.certificates;
           }
@@ -179,6 +180,7 @@ export class DashboardComponent {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
         action: '/documents',
+        actionText: 'View Your Documents',
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',

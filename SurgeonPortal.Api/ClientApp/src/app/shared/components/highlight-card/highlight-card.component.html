@@ -11,5 +11,8 @@
     <!-- <div class="alert-title" *ngIf="alert?.alert">Alerts and Notices</div> -->
     <div class="title">{{ alert?.title }}</div>
     <div class="content" [innerHTML]="alert?.content"></div>
+    <div class="card-action" *ngIf="alert?.actionText">
+      {{ alert.actionText }}
+    </div>
   </div>
 </div>
