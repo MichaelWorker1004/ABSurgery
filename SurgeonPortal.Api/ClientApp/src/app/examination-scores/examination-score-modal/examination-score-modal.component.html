@@ -21,18 +21,47 @@
   ></abs-examination-score-card>
 </div>
 
-<div
-  class="flex justify-content-end mt-4"
-  slot="footer"
-  *ngIf="!localCandidateData.allLocked"
->
-  <p-button styleClass="p-button-link p-button-primary" (click)="cancel()"
-    >Cancel</p-button
+<div *ngIf="examStatus === Status.incomplete; else completeExam">
+  <div
+    class="flex justify-content-between mt-4"
+    slot="footer"
+    *ngIf="!localCandidateData.allLocked"
   >
-  <p-button
-    (onClick)="saveScores()"
-    [style]="{ width: '337px' }"
-    variant="primary"
-    >Save
-  </p-button>
+    <p-button styleClass="p-button-link p-button-primary" (click)="cancel()"
+      >Cancel</p-button
+    >
+
+    <div>
+      <p-button
+        styleClass="p-button-link p-button-primary"
+        (click)="saveScores(true)"
+        >Save</p-button
+      >
+      <p-button
+        (onClick)="submitScores()"
+        [style]="{ width: '337px' }"
+        variant="primary"
+        [disabled]="disableSubmitExamScore"
+        >Submit Exam
+      </p-button>
+    </div>
+  </div>
 </div>
+
+<ng-template #completeExam>
+  <div
+    class="flex justify-content-end mt-4"
+    slot="footer"
+    *ngIf="!localCandidateData.allLocked"
+  >
+    <p-button styleClass="p-button-link p-button-primary" (click)="cancel()"
+      >Cancel</p-button
+    >
+    <p-button
+      (onClick)="saveScores()"
+      [style]="{ width: '337px' }"
+      variant="primary"
+      >Save
+    </p-button>
+  </div>
+</ng-template>

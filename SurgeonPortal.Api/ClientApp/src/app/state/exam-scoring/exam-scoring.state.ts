@@ -461,7 +461,7 @@ export class ExamScoringState {
   @Action(CreateExamScore)
   createExamScore(
     ctx: StateContext<IExamScoring>,
-    payload: { model: IExamScoreModel }
+    payload: { model: IExamScoreModel; navigate: boolean }
   ) {
     this.globalDialogService.showLoading();
     return this.examScoreService.createExamScore(payload.model).pipe(
@@ -474,7 +474,9 @@ export class ExamScoringState {
           'Exam Submitted Successfully',
           true
         );
-        this.router.navigate(['/ce-scoring/oral-examinations']);
+        if (payload.navigate) {
+          this.router.navigate(['/ce-scoring/oral-examinations']);
+        }
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
