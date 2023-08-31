@@ -84,6 +84,7 @@ export class CeScoringAppComponent implements OnInit {
         title: 'Your Examination Agenda',
         content: 'Your agenda can be found here once it has been finalized.',
         alert: false,
+        actionText: 'Download Agenda',
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
         downloadLink:
