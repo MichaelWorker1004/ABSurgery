@@ -2,6 +2,22 @@
   border-bottom: 1px solid var(--global-gray-light);
 }
 
+.case-details-container + .case-details-container {
+  border-top: 1px solid var(--global-gray);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+.case-feedback-container {
+  border-top: 3px solid var(--global-gray);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+
+  label {
+    font-size: 1.5rem;
+  }
+}
+
 p-dropdown {
   width: 100%;
   margin-bottom: 1rem;
