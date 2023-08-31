@@ -141,9 +141,22 @@ export class OralExaminationsComponent implements OnInit {
           // take any actions required on cancel of confirmation here
         });
     } else if ($event.fieldKey === 'skipExam') {
-      this._store.dispatch(
-        new SkipExam($event.data.examScheduleId, this.examDate.toISOString())
-      );
+      this._globalDialogService
+        .showConfirmationWithWarning(
+          'Skip Examination',
+          'Are you sure you want to skip this examination?',
+          'clicking confirm will skip this examination '
+        )
+        .then((result) => {
+          if (result) {
+            this._store.dispatch(
+              new SkipExam(
+                $event.data.examScheduleId,
+                this.examDate.toISOString()
+              )
+            );
+          }
+        });
     } else {
       console.log('unhandled grid action', $event);
     }
