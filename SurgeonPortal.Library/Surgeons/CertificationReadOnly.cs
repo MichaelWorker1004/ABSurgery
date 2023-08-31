@@ -33,6 +33,11 @@ namespace SurgeonPortal.Library.Surgeons
         public string EndDateDisplay => ReadProperty(EndDateDisplayProperty);
 		public static readonly PropertyInfo<string> EndDateDisplayProperty = RegisterProperty<string>(c => c.EndDateDisplay);
 
+        [DataMember]
+		[DisplayName(nameof(IsClinicallyInactive))]
+        public int IsClinicallyInactive => ReadProperty(IsClinicallyInactiveProperty);
+		public static readonly PropertyInfo<int> IsClinicallyInactiveProperty = RegisterProperty<int>(c => c.IsClinicallyInactive);
+
 
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -49,6 +54,7 @@ namespace SurgeonPortal.Library.Surgeons
             LoadProperty(CertificateIdProperty, dto.CertificateId);
             LoadProperty(InitialCertificationDateProperty, dto.InitialCertificationDate);
             LoadProperty(EndDateDisplayProperty, dto.EndDateDisplay);
+            LoadProperty(IsClinicallyInactiveProperty, dto.IsClinicallyInactive);
 		} 
         
     }

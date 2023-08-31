@@ -27,7 +27,7 @@ export const CERTIFIED_ACTION_CARDS = [
   {
     title: 'Continuous Certification Requirements',
     description:
-      'This is the mailing address that we currently have on record for you. You receive any paper communications from us this way.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
     action: {
       type: 'component',
       action: '/continuous-certification',
@@ -36,25 +36,25 @@ export const CERTIFIED_ACTION_CARDS = [
     icon: 'fa-solid fa-user-graduate',
   },
   {
-    title: 'Apply for an Exam',
+    title: 'Apply and Register',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
     action: {
       type: 'component',
-      action: '/exam-process/exam-registration',
+      action: '/apply-and-resgister',
     },
     actionDisplay: 'Apply Now',
     icon: 'fa-solid fa-list-check',
   },
   {
-    title: 'Register for an Exam or Assessment',
+    title: 'Continuous Medical Education (CME)',
     description:
-      'This is basic information like your first and last name, title, etc.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
     action: {
       type: 'component',
-      action: '/exam-process',
+      action: '/cme-repository',
     },
-    actionDisplay: 'Register For an Exam Now',
+    actionDisplay: 'View CME Repository',
     icon: 'fa-sharp fa-solid fa-file-waveform',
   },
 ];

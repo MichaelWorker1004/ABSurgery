@@ -14,6 +14,8 @@ import {
   IDashboardState,
   GetTraineeRegistrationStatus,
   GetAlertsAndNotices,
+  GetExamDirectory,
+  ExamProcessSelectors,
 } from '../state';
 import { UserClaims } from '../side-navigation/user-status.enum';
 import { IActionCardReadOnlyModel } from '../shared/components/action-card/action-card-read-only.model';
@@ -68,6 +70,8 @@ export class DashboardComponent {
 
   alertsAndNotices: any | undefined;
 
+  upcomingExams: any[] | undefined;
+
   constructor(private _store: Store) {
     this.initDashboardData();
   }
@@ -77,10 +81,10 @@ export class DashboardComponent {
       const isSurgeon = userClaims?.includes(UserClaims.surgeon);
       this.isSurgeon = isSurgeon;
 
-      console.log('initDashboardData', isSurgeon);
       if (isSurgeon) {
         this._store.dispatch(new GetDashboardCertificationInformation());
         this.certificateInformation$?.subscribe((userInformation) => {
+          console.log('userInformation', userInformation);
           if (userInformation?.certificates?.length > 0) {
             this.userInformation = userInformation.certificates;
           }
@@ -132,7 +136,6 @@ export class DashboardComponent {
   }
 
   fetchAlertsAndNoticesByUserId(isSurgeon: boolean) {
-    console.log('fetchAlertsAndNoticesByUserId', isSurgeon);
     const alertsAndNoticesTrainee = [
       {
         content:
@@ -163,11 +166,11 @@ export class DashboardComponent {
       }
     });
 
+    //console.log(this.upcomingExams);
     const alertsAndNoticesCertfiied = [
       {
-        title: 'Issues with your GME',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+        title: 'Upcoming Exam Registration',
+        content: this.upcomingExams?.join('<br>'),
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
@@ -177,11 +180,32 @@ export class DashboardComponent {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
         action: '/documents',
+        actionText: 'View Your Documents',
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
       },
     ];
+
+    if (isSurgeon) {
+      this._store
+        .dispatch(new GetExamDirectory())
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.upcomingExams = this._store
+            .selectSnapshot(ExamProcessSelectors.upcomingExams)
+            ?.map((exam) => {
+              const regOpenDate = new Date(exam.regOpenDate);
+              const regCloseDate = new Date(exam.regEndDate);
+
+              return `<b>${exam.examName}:</b> 
+                <br>${regOpenDate.toLocaleDateString()} - ${regCloseDate.toLocaleDateString()}`;
+            });
+
+          alertsAndNoticesCertfiied[0].content =
+            this.upcomingExams?.join('<br><br>');
+        });
+    }
 
     this.alertsAndNotices = isSurgeon
       ? alertsAndNoticesCertfiied
