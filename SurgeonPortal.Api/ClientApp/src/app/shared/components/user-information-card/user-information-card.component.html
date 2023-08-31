@@ -30,7 +30,7 @@
   </div>
 
   <ng-template #certified>
-    <div class="info-container">
+    <div class="info-container" *ngIf="userInformation; else loading">
       <div class="info certified" *ngFor="let info of userInformation">
         <div class="certified-title">
           {{ info?.speciality }}
@@ -39,7 +39,7 @@
           <span>Certificate Number:</span>
           {{ info?.certificateId ? info?.certificateId : 'N/A' }}
         </div>
-        <div class="info-data" *ngIf="info.status">
+        <div class="info-data" *ngIf="info.status && info.isClinicallyInactive">
           <span>Status:</span>
           {{ info?.status }}
         </div>
@@ -51,5 +51,16 @@
         </div>
       </div>
     </div>
+
+    <ng-template #loading>
+      <div
+        class="my-5 flex flex-column justify-content-center align-items-center"
+      >
+        <sl-spinner
+          class="block"
+          style="font-size: 3rem; --indicator-color: var(--global-warning)"
+        ></sl-spinner>
+      </div>
+    </ng-template>
   </ng-template>
 </div>

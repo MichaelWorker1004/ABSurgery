@@ -4,6 +4,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
   selector: 'abs-user-information-card',
   standalone: true,
   imports: [CommonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './user-information-card.component.html',
   styleUrls: ['./user-information-card.component.scss'],
 })
