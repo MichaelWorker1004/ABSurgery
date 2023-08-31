@@ -633,6 +633,11 @@ export class ExamScoringState {
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
+          if (httpError.status === 404) {
+            ctx.patchState({
+              selectedCaseFeedback: undefined,
+            });
+          }
           ctx.patchState({ errors });
           this.globalDialogService.closeOpenDialog();
           return of(errors);
