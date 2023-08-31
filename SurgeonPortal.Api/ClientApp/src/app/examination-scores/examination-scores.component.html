@@ -42,11 +42,13 @@
   [open]="showViewModal"
   [preventOverlayClose]="!lockedCases"
   [hideClose]="!lockedCases"
-  (closeDialog)="closeDialog()"
+  (closeDialog)="closeDialog($event)"
   title="Examination Scores"
 >
   <abs-examination-score-modal
     [candidateData]="candidateData$"
-    (closeDialog)="closeDialog()"
+    [examScheduleId]="selectedExamScheduleId$ | async"
+    [selectedStatusOption]="selectedStatusOption$"
+    (closeDialog)="closeDialog($event)"
   ></abs-examination-score-modal>
 </abs-modal>
