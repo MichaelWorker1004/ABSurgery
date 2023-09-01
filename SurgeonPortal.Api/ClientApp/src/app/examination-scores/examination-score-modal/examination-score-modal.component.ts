@@ -100,7 +100,7 @@ export class ExaminationScoreModalComponent implements OnInit {
         examScoringId: data?.examScoringId,
         examinerUserId: data?.examinerUserId,
         examineeUserId: data?.examineeUserId,
-        score: data?.score,
+        score: data?.score ?? 0,
         criticalFail: data?.criticalFail,
         remarks: data?.remarks,
       } as ICaseScoreModel;

@@ -63,6 +63,13 @@
         ></abs-examination-score-card>
         <div class="col-12 flex justify-content-end mt-3">
           <p-button
+            variant="text"
+            styleClass="p-button-link p-button-primary"
+            (onClick)="skipCase()"
+          >
+            Skip Case
+          </p-button>
+          <p-button
             [style]="{ width: '337px' }"
             (onClick)="handleSave(case.examCaseId)"
             [disabled]="disable"
@@ -103,7 +110,7 @@
         <p-button
           type="submit"
           [style]="{ width: '337px' }"
-          [disabled]="submitDisable"
+          [disabled]="disableSubmit"
           (onClick)="handleSubmit()"
         >
           Submit Scores
