@@ -11,7 +11,7 @@ import { ExpandableComponent } from '../shared/components/expandable/expandable.
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ExaminationScoreCardComponent } from '../shared/components/examination-score-card/examination-score-card.component';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import {
   CreateCaseScore,
@@ -20,6 +20,7 @@ import {
   GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
+  SkipExam,
   UpdateCaseScore,
   UserProfileSelectors,
 } from '../state';
@@ -140,7 +141,9 @@ export class OralExaminationsComponent implements OnInit {
 
   handleGradedChange(event: any) {
     this.gradedCandidateCaseCores[event.case.examCaseId] = { ...event.case };
-    this.submitDisable = false;
+    setTimeout(() => {
+      this.submitDisable = false;
+    }, 0);
   }
 
   handleSave(examCaseId: number) {
@@ -201,8 +204,16 @@ export class OralExaminationsComponent implements OnInit {
   }
 
   updateScores() {
+    const caseCount = Object.keys(this.gradedCandidateCaseCores).length;
+
+    const dateParts = this.dayTime.replace(/\s+/g, ' ').trim().split(' ');
+    const formattedDate = `${dateParts[1]} ${dateParts[0]} ${dateParts[2]}`;
+    const examDate = new Date(formattedDate);
+
+    let currentCase = 0;
     if (Object.entries(this.gradedCandidateCaseCores).length > 0) {
       Object.entries(this.gradedCandidateCaseCores).forEach(([key, value]) => {
+        currentCase += 1;
         const data = value as ICaseScoreModel;
         const model = {
           examCaseId: data?.examCaseId,
@@ -216,14 +227,23 @@ export class OralExaminationsComponent implements OnInit {
         this.hasUnsavedChanges = false;
         this._store
           .dispatch(new UpdateCaseScore(model, false))
-          .pipe(untilDestroyed(this))
+          .pipe(take(1))
           .subscribe(() => {
-            this.globalDialogService.showSuccessError(
-              'Success',
-              'Scores updated successfully',
-              true
-            );
-            this.router.navigate(['/ce-scoring/oral-examinations']);
+            if (currentCase === caseCount) {
+              this._store
+                .dispatch(
+                  new SkipExam(this.examScheduleId, examDate.toISOString())
+                )
+                .pipe(take(1))
+                .subscribe(() => {
+                  this.globalDialogService.showSuccessError(
+                    'Success',
+                    'Scores updated successfully',
+                    true
+                  );
+                  this.router.navigate(['/ce-scoring/oral-examinations']);
+                });
+            }
           });
       });
     }
