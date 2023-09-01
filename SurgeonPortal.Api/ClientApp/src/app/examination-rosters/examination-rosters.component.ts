@@ -380,4 +380,33 @@ export class ExaminationRostersComponent implements OnInit {
         }
       });
   }
+
+  scrollToCaseFeedback() {
+    if (!this.editActive) {
+      this.selectedCaseDetails.editFeedback =
+        !this.selectedCaseDetails.editFeedback;
+
+      this.selectedCaseDetails.newFeedback = this.selectedCaseDetails.feedback
+        ? this.selectedCaseDetails.feedback
+        : '';
+      this.editActive = true;
+    }
+
+    this.scrollToElementById('case-feedback');
+    setTimeout(() => {
+      const inputElement = document.getElementById('case-feedback-comment');
+      if (inputElement) {
+        inputElement.focus();
+      }
+    }, 500);
+  }
+
+  scrollToElementById(elementId: string) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+    }
+  }
 }
