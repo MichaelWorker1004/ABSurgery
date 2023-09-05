@@ -70,7 +70,7 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
   localEdit = false;
 
   currentAppointmentForm = new FormGroup({
-    clinicallyActive: new FormControl({ value: false, disabled: false }),
+    clinicallyActive: new FormControl({ value: false, disabled: true }),
     primaryPracticeId: new FormControl({ value: null, disabled: true }, [
       Validators.required,
     ]),
@@ -112,7 +112,7 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
   }
 
   onClinicalActiveChange(event: any) {
-    const checked = event.checked[0];
+    const checked = event.checked;
 
     if (checked) {
       this.currentAppointmentForm.get('primaryPracticeId')?.enable();
@@ -138,6 +138,12 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
         if (key.includes('Date')) {
           newValue = new Date(value as any).toLocaleDateString();
         }
+
+        if (key === 'clinicallyActive') {
+          this.onClinicalActiveChange({ checked: [value] });
+          newValue = value === 1 ? true : false;
+        }
+
         this.currentAppointmentForm.get(key)?.setValue(newValue);
       }
     } else {

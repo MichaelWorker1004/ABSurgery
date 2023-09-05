@@ -13,10 +13,11 @@
       <p-checkbox
         formControlName="clinicallyActive"
         [value]="true"
+        [binary]="true"
         inputId="clinicallyActive"
         (onChange)="onClinicalActiveChange($event)"
       ></p-checkbox>
-      <label for="ny">Clinically Active</label>
+      <label for="clinicallyActive" class="disabled">Clinically Active</label>
     </div>
     <div class="col-12 md:col-6 flex flex-column justify-content-start">
       <label htmlFor="primaryPracticeId"
@@ -91,7 +92,9 @@
       <p-button
         type="submit"
         [style]="{ width: '337px' }"
-        [disabled]="currentAppointmentForm.invalid"
+        [disabled]="
+          currentAppointmentForm.invalid || !currentAppointmentForm.dirty
+        "
         >Save</p-button
       >
     </div>
