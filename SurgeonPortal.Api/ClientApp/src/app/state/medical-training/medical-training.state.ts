@@ -18,6 +18,9 @@ import {
   UpdateFellowship,
   CreateFellowship,
   DeleteFellowship,
+  ClearMedicalTrainingErrors,
+  CreateAdvancedTraining,
+  UpdateAdvancedTraining,
 } from './medical-training.actions';
 import { AdvancedTrainingService } from 'src/app/api/services/medicaltraining/advanced-training.service';
 import { IAdvancedTrainingReadOnlyModel } from 'src/app/api/models/medicaltraining/advanced-training-read-only.model';
@@ -35,7 +38,7 @@ export interface IMedicalTraining {
   userCertificates: IUserCertificateReadOnlyModel[] | undefined;
   otherCertifications: IOtherCertificationsReadOnlyModel[] | undefined;
   fellowships: IFellowshipReadOnlyModel[] | undefined;
-  errors?: IFormErrors | undefined;
+  errors?: IFormErrors | null;
 }
 
 export const MEDICALSTATE_STATE_TOKEN = new StateToken<IMedicalTraining>(
@@ -50,6 +53,7 @@ export const MEDICALSTATE_STATE_TOKEN = new StateToken<IMedicalTraining>(
     userCertificates: undefined,
     otherCertifications: undefined,
     fellowships: undefined,
+    errors: null,
   },
 })
 @Injectable()
@@ -113,6 +117,9 @@ export class MedicalTrainingState {
         catchError((error) => {
           console.error('------- In Medical Training Store', error);
           console.error(error);
+          ctx.patchState({
+            errors: error.error.errors,
+          });
           this.globalDialogService.showSuccessError(
             'Error',
             'Create failed',
@@ -143,12 +150,11 @@ export class MedicalTrainingState {
           );
         }),
         catchError((error) => {
+          this.globalDialogService.closeOpenDialog();
           console.error('------- In Medical Training Store', error);
-          this.globalDialogService.showSuccessError(
-            'Error',
-            'Update failed',
-            false
-          );
+          ctx.patchState({
+            errors: error.error.errors,
+          });
           console.error(error);
           return of(error);
         })
@@ -159,10 +165,6 @@ export class MedicalTrainingState {
   getAdvancedTrainingData(
     ctx: StateContext<IMedicalTraining>
   ): Observable<IAdvancedTrainingReadOnlyModel[] | undefined> {
-    if (ctx.getState()?.additionalTraining) {
-      return of(ctx.getState()?.additionalTraining);
-    }
-
     return this.advancedTrainingService
       .retrieveAdvancedTrainingReadOnly_GetByUserId()
       .pipe(
@@ -248,11 +250,10 @@ export class MedicalTrainingState {
         catchError((error) => {
           console.error('------- In Medical Training Store', error);
           console.error(error);
-          this.globalDialogService.showSuccessError(
-            'Error',
-            'Create failed',
-            false
-          );
+          ctx.patchState({
+            errors: error.error.errors,
+          });
+          this.globalDialogService.closeOpenDialog();
           return of(error);
         })
       );
@@ -278,11 +279,10 @@ export class MedicalTrainingState {
         catchError((error) => {
           console.error('------- In Medical Training Store', error);
           console.error(error);
-          this.globalDialogService.showSuccessError(
-            'Error',
-            'Save failed',
-            false
-          );
+          ctx.patchState({
+            errors: error.error.errors,
+          });
+          this.globalDialogService.closeOpenDialog();
           return of(error);
         })
       );
@@ -326,11 +326,10 @@ export class MedicalTrainingState {
       catchError((error) => {
         console.error('------- In Medical Training Store', error);
         console.error(error);
-        this.globalDialogService.showSuccessError(
-          'Error',
-          'Create failed',
-          false
-        );
+        ctx.patchState({
+          errors: error.error.errors,
+        });
+        this.globalDialogService.closeOpenDialog();
         return of(error);
       })
     );
@@ -356,11 +355,10 @@ export class MedicalTrainingState {
         catchError((error) => {
           console.error('------- In Medical Training Store', error);
           console.error(error);
-          this.globalDialogService.showSuccessError(
-            'Error',
-            'Save failed',
-            false
-          );
+          ctx.patchState({
+            errors: error.error.errors,
+          });
+          this.globalDialogService.closeOpenDialog();
           return of(error);
         })
       );
@@ -384,6 +382,9 @@ export class MedicalTrainingState {
       catchError((error) => {
         console.error('------- In Medical Training Store', error);
         console.error(error);
+        ctx.patchState({
+          errors: error.error.errors,
+        });
         this.globalDialogService.showSuccessError(
           'Error',
           'Delete failed',
@@ -392,5 +393,68 @@ export class MedicalTrainingState {
         return of(error);
       })
     );
+  }
+
+  @Action(ClearMedicalTrainingErrors)
+  clearGraduateMedicalEducationErrors(ctx: StateContext<IMedicalTraining>) {
+    ctx.patchState({ errors: null });
+  }
+
+  @Action(CreateAdvancedTraining)
+  createAdvancedTraining(
+    ctx: StateContext<IMedicalTraining>,
+    payload: CreateAdvancedTraining
+  ) {
+    this.globalDialogService.showLoading();
+    return this.advancedTrainingService
+      .createAdvancedTraining(payload.model)
+      .pipe(
+        tap(() => {
+          ctx.dispatch(new GetAdvancedTrainingData());
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Created successfully',
+            true
+          );
+        }),
+        catchError((error) => {
+          console.error('------- In Medical Training Store', error);
+          console.error(error);
+          ctx.patchState({
+            errors: error.error.errors,
+          });
+          this.globalDialogService.closeOpenDialog();
+          return of(error);
+        })
+      );
+  }
+
+  @Action(UpdateAdvancedTraining)
+  updateAdvancedTraining(
+    ctx: StateContext<IMedicalTraining>,
+    payload: UpdateAdvancedTraining
+  ) {
+    this.globalDialogService.showLoading();
+    return this.advancedTrainingService
+      .updateAdvancedTraining(payload.model.id, payload.model)
+      .pipe(
+        tap(() => {
+          ctx.dispatch(new GetAdvancedTrainingData());
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Updated successfully',
+            true
+          );
+        }),
+        catchError((error) => {
+          console.error('------- In Medical Training Store', error);
+          console.error(error);
+          ctx.patchState({
+            errors: error.error.errors,
+          });
+          this.globalDialogService.closeOpenDialog();
+          return of(error);
+        })
+      );
   }
 }

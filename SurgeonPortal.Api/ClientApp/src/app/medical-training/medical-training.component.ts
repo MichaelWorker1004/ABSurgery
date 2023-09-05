@@ -36,11 +36,14 @@ import {
   DeleteFellowship,
   UpdateFellowship,
   CreateFellowship,
+  ClearMedicalTrainingErrors,
+  CreateAdvancedTraining,
+  UpdateAdvancedTraining,
+  GetAdvancedTrainingData,
 } from '../state/medical-training/medical-training.actions';
 import {
   GetCertificateTypes,
   GetDegrees,
-  GetFellowshipPrograms,
   GetGraduateProfiles,
   GetResidencyPrograms,
   GetStateList,
@@ -65,7 +68,12 @@ import { IDocumentTypeReadOnlyModel } from '../api/models/picklists/document-typ
 import { IUserCertificateReadOnlyModel } from '../api/models/medicaltraining/user-certificate-read-only.model';
 import { IOtherCertificationsModel } from '../api/models/medicaltraining/other-certifications.model';
 import { IFellowshipModel } from '../api/models/medicaltraining/fellowship.model';
+import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IFormErrors } from '../shared/common';
+import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-training.model';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-medical-training',
   templateUrl: './medical-training.component.html',
@@ -88,6 +96,7 @@ import { IFellowshipModel } from '../api/models/medicaltraining/fellowship.model
     FellowshipAddEditModalComponent,
     DocumentsUploadComponent,
     OtherCertificatesAddEditModalComponent,
+    FormErrorsComponent,
   ],
 })
 export class MedicalTrainingComponent implements OnInit {
@@ -140,11 +149,11 @@ export class MedicalTrainingComponent implements OnInit {
     | Observable<IFellowshipReadOnlyModel[]>
     | undefined;
 
-  advancedTraining$: BehaviorSubject<IAdvancedTrainingReadOnlyModel[]> =
-    new BehaviorSubject<IAdvancedTrainingReadOnlyModel[]>([]);
+  @Select(MedicalTrainingSelectors.slices.errors) errors$:
+    | Observable<IFormErrors>
+    | undefined;
 
-  userFellowships$: BehaviorSubject<IFellowshipReadOnlyModel[]> =
-    new BehaviorSubject<IFellowshipReadOnlyModel[]>([]);
+  clearErrors = new ClearMedicalTrainingErrors();
 
   isAdditionalAdvancedEdit$: BehaviorSubject<boolean> = new BehaviorSubject(
     false
@@ -182,7 +191,7 @@ export class MedicalTrainingComponent implements OnInit {
   isEdit = true;
   showTrainingAddEdit = false;
   showFellowshipAddEdit = false;
-  showOtherCertificatesAddEdit = false;
+  showRPVICertificatesAddEdit = false;
   year = new Date().getFullYear();
   maxYear: Date = new Date();
   canAddRPVI = true;
@@ -219,6 +228,7 @@ export class MedicalTrainingComponent implements OnInit {
   ) {
     this._store.dispatch(new GetResidencyPrograms());
     this._store.dispatch(new GetUserCertificates());
+    this._store.dispatch(new GetAdvancedTrainingData());
     this._store.dispatch(new GetDegrees());
     this._store.dispatch(new GetMedicalTraining());
     this._store.dispatch(new GetCertificateTypes());
@@ -234,11 +244,11 @@ export class MedicalTrainingComponent implements OnInit {
     });
     this.setPicklists();
     this.getDocumentsData();
-    this.getAdvancedTrainingGridData();
     this.getMedicalTraining();
     this.getRPVICertificates();
 
     this.medicalTrainingForm.valueChanges.subscribe(() => {
+      this._store.dispatch(this.clearErrors);
       const isDirty = this.medicalTrainingForm.dirty;
       if (isDirty && !this.isSubmitted) {
         this.hasUnsavedChanges = true;
@@ -276,14 +286,6 @@ export class MedicalTrainingComponent implements OnInit {
         this.certificateTypes = certificateTypes;
       }
     );
-  }
-
-  getAdvancedTrainingGridData() {
-    this.advancedTrainingService
-      .retrieveAdvancedTrainingReadOnly_GetByUserId()
-      .subscribe((res: IAdvancedTrainingReadOnlyModel[]) => {
-        this.advancedTraining$.next(res);
-      });
   }
 
   getMedicalTraining() {
@@ -438,7 +440,7 @@ export class MedicalTrainingComponent implements OnInit {
 
   showOtherCertificaions(isEdit = false) {
     this.isOtherCertificatesEdit$.next(isEdit);
-    this.showOtherCertificatesAddEdit = !this.showOtherCertificatesAddEdit;
+    this.showRPVICertificatesAddEdit = !this.showRPVICertificatesAddEdit;
   }
 
   saveTraining($event: any) {
@@ -451,35 +453,40 @@ export class MedicalTrainingComponent implements OnInit {
     );
 
     const model = {
+      id: $event.trainingId,
       trainingTypeId: trainingTypeId ?? null,
       programId: programId ?? null,
       other: formValues.other ?? undefined,
       startDate: new Date(formValues.startDate ?? '').toISOString() ?? null,
       endDate: new Date(formValues.endDate ?? '').toISOString() ?? null,
-    };
+    } as unknown as IAdvancedTrainingModel;
 
     if ($event.edit === true && $event.trainingId) {
-      this.advancedTrainingService
-        .updateAdvancedTraining($event.trainingId, model)
-        .subscribe(() => {
-          this.getAdvancedTrainingGridData();
+      this._store
+        .dispatch(new UpdateAdvancedTraining(model))
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.medical_training.errors) {
+            this.showTrainingAddEdit = $event.show;
+            this.tempData$.next({});
+          }
         });
     }
 
     if ($event.edit === false) {
-      this.advancedTrainingService
-        .createAdvancedTraining(model)
-        .subscribe(() => {
-          this.getAdvancedTrainingGridData();
+      this._store
+        .dispatch(new CreateAdvancedTraining(model))
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.medical_training.errors) {
+            this.showTrainingAddEdit = $event.show;
+            this.tempData$.next({});
+          }
         });
     }
-
-    this.showTrainingAddEdit = $event.show;
-    this.tempData$.next({});
   }
 
   saveFellowship($event: any) {
-    this.showFellowshipAddEdit = $event.show;
     const model = {
       id: $event.fellowshipId,
       programName: $event.fellowshipForm.programName ?? '',
@@ -491,18 +498,25 @@ export class MedicalTrainingComponent implements OnInit {
     } as unknown as IFellowshipModel;
 
     if ($event.edit === true && $event.fellowshipId) {
-      this._store.dispatch(new UpdateFellowship(model));
+      this._store.dispatch(new UpdateFellowship(model)).subscribe((res) => {
+        if (!res.medical_training.errors) {
+          this.showFellowshipAddEdit = $event.show;
+          this.tempData$.next({});
+        }
+      });
     }
 
     if ($event.edit === false) {
-      this._store.dispatch(new CreateFellowship(model));
+      this._store.dispatch(new CreateFellowship(model)).subscribe((res) => {
+        if (!res.medical_training.errors) {
+          this.showFellowshipAddEdit = $event.show;
+          this.tempData$.next({});
+        }
+      });
     }
-
-    this.showTrainingAddEdit = $event.show;
-    this.tempData$.next({});
   }
 
-  saveOtherCertificates($event: any) {
+  saveRPVICertificate($event: any) {
     const form = $event.otherCertificateForm;
 
     const model: IOtherCertificationsModel = {
@@ -510,18 +524,28 @@ export class MedicalTrainingComponent implements OnInit {
       certificateNumber: form.certificateNumber?.toString(),
       certificateTypeId: 6,
       issueDate: new Date(form.issueDate ?? '').toISOString() ?? null,
-      userId: this.userId,
     } as IOtherCertificationsModel;
 
     if ($event.edit === true && $event.otherCertificateId) {
-      this._store.dispatch(new UpdateOtherCertifications(model));
+      this._store
+        .dispatch(new UpdateOtherCertifications(model))
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.medical_training.errors) {
+            this.showRPVICertificatesAddEdit = $event.show;
+          }
+        });
     }
-
     if ($event.edit === false) {
-      this._store.dispatch(new CreateOtherCertification(model));
+      this._store
+        .dispatch(new CreateOtherCertification(model))
+        .pipe(untilDestroyed(this))
+        .subscribe((res) => {
+          if (!res.medical_training.errors) {
+            this.showRPVICertificatesAddEdit = $event.show;
+          }
+        });
     }
-
-    this.showOtherCertificatesAddEdit = $event.show;
   }
 
   cancelAddEditTraining($event: any) {
@@ -535,7 +559,7 @@ export class MedicalTrainingComponent implements OnInit {
   }
 
   cancelOtherCertificatesAddEditModal($event: any) {
-    this.showOtherCertificatesAddEdit = $event.show;
+    this.showRPVICertificatesAddEdit = $event.show;
     this.tempData$.next({});
   }
 
