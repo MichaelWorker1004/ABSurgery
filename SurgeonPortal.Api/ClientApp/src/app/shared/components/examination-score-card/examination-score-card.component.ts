@@ -62,7 +62,7 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
       const caseData = { ...this.localData };
 
       if (caseData) {
-        caseData.score = value?.score ?? '0';
+        caseData.score = value?.score ?? 0;
         caseData.remarks = value?.remarks;
         caseData.criticalFail = value?.criticalFail;
 

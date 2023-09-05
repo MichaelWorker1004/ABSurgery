@@ -65,13 +65,15 @@ export class ExaminationScoreModalComponent implements OnInit {
 
     Object.entries(this.candidateCaseScores).forEach(([key, value]) => {
       const data = value as ICaseScoreModel;
-      if (data?.score) {
+      if (data?.score && data.score > 0) {
         scores.push(data?.score);
       }
     });
 
     if (scores.length === this.examLength) {
       this.disableSubmitExamScore = false;
+    } else {
+      this.disableSubmitExamScore = true;
     }
   }
 
@@ -105,14 +107,14 @@ export class ExaminationScoreModalComponent implements OnInit {
         remarks: data?.remarks,
       } as ICaseScoreModel;
 
-      if (data?.examScoringId) {
+      if (model?.examScoringId) {
         promises.push(
           this._store.dispatch(new UpdateCaseScore(model)).toPromise()
         );
 
         this.resetData();
         this.closeDialog.emit();
-      } else {
+      } else if ((model?.score && model.score > 0) || model?.remarks) {
         promises.push(
           this._store.dispatch(new CreateCaseScore(model)).toPromise()
         );
