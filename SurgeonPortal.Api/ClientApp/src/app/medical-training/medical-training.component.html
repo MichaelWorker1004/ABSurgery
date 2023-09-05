@@ -424,7 +424,7 @@
   [preventOverlayClose]="true"
   [hideClose]="true"
   (closeDialog)="cancelAddEditFellowship($event)"
-  title="{{ (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add' }} Fellowship"
+  title="{{ (isFellowshipEdit$ | async) ? 'Edit' : 'Add' }} Fellowship"
 >
   <abs-fellowship-add-edit-modal
     *ngIf="showFellowshipAddEdit"

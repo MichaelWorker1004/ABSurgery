@@ -33,7 +33,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { IFormErrors } from 'src/app/shared/common';
 import { ClearMedicalTrainingErrors } from 'src/app/state';
 import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-fellowship-add-edit-modal',
   standalone: true,
@@ -137,22 +139,23 @@ export class FellowshipAddEditModalComponent implements OnInit {
             formData.programName.length - 2
           );
 
-          this.getFellowshipPrograms(fellowshipType);
+          this._store
+            .dispatch(new GetFellowshipPrograms(fellowshipType))
+            .pipe(untilDestroyed(this))
+            .subscribe(() => {
+              const programName = this.fellowshipPrograms.find(
+                (i) => i === formData.programName.toString()
+              );
+              this.fellowshipId = formData.id;
+
+              this.fellowshipForm.patchValue({
+                fellowshipType,
+                programName: programName,
+                programOther: formData.programOther,
+                completionYear: formData.completionYear.toString(),
+              });
+            });
         }
-
-        setTimeout(() => {
-          const programName = this.fellowshipPrograms.find(
-            (i) => i === formData.programName.toString()
-          );
-          this.fellowshipId = formData.id;
-
-          this.fellowshipForm.patchValue({
-            fellowshipType,
-            programName: programName,
-            programOther: formData.programOther,
-            completionYear: formData.completionYear.toString(),
-          });
-        }, 100);
       } else {
         this.fellowshipForm.reset();
       }
