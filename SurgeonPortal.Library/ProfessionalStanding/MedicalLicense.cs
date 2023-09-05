@@ -1,4 +1,5 @@
 using Csla;
+using Csla.Rules;
 using SurgeonPortal.DataAccess.Contracts.ProfessionalStanding;
 using SurgeonPortal.Library.Contracts.ProfessionalStanding;
 using System;
@@ -135,10 +136,15 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 
         }
 
+		protected override void AddBusinessRules()
+		{
+            base.AddBusinessRules();
+
+            BusinessRules.AddRule(new UpdateOnlySelfReported(1));
+		}
 
 
-
-        [RunLocal]
+		[RunLocal]
         [DeleteSelf]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
@@ -250,6 +256,24 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			return dto;
 		}
 
+		private class UpdateOnlySelfReported : BusinessRule
+		{
+            private const string SelfReportingOrganization = "Self";
 
-    }
+            public UpdateOnlySelfReported(int priority)
+            {
+                Priority = priority;
+            }
+
+			protected override void Execute(IRuleContext context)
+			{
+                var target = context.Target as MedicalLicense;
+
+                if(!target.IsNew && !target.ReportingOrganization.Equals(SelfReportingOrganization, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    context.AddErrorResult("User cannot edit Medical Licenses that are not self reported.");
+                }
+			}
+		}
+	}
 }
