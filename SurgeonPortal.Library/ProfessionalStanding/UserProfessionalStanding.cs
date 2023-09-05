@@ -1,7 +1,10 @@
 using Csla;
+using Csla.Core;
+using Csla.Rules;
 using SurgeonPortal.DataAccess.Contracts.ProfessionalStanding;
 using SurgeonPortal.Library.Contracts.ProfessionalStanding;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -92,6 +95,14 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			set { SetProperty(ExplanationOfNonClinicalActivitiesProperty, value); }
 		}
 		public static readonly PropertyInfo<string> ExplanationOfNonClinicalActivitiesProperty = RegisterProperty<string>(c => c.ExplanationOfNonClinicalActivities);
+
+        [DisplayName(nameof(ClinicallyActive))]
+		public int ClinicallyActive
+		{
+			get { return GetProperty(ClinicallyActiveProperty); }
+			set { SetProperty(ClinicallyActiveProperty, value); }
+		}
+		public static readonly PropertyInfo<int> ClinicallyActiveProperty = RegisterProperty<int>(c => c.ClinicallyActive);
 
 
 
@@ -187,6 +198,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			this.OrganizationType = dto.OrganizationType;
 			this.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
 			this.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
+			this.ClinicallyActive = dto.ClinicallyActive;
 		}
 
 		internal UserProfessionalStandingDto ToDto()
@@ -206,10 +218,54 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			dto.OrganizationType = this.OrganizationType;
 			dto.ExplanationOfNonPrivileges = this.ExplanationOfNonPrivileges;
 			dto.ExplanationOfNonClinicalActivities = this.ExplanationOfNonClinicalActivities;
+			dto.ClinicallyActive = this.ClinicallyActive;
 
 			return dto;
 		}
 
+        private class ClinicallyActiveRequiresRule : BusinessRule
+        {
+            private IGetClinicallyActiveCommandFactory _getClinicallyActiveCommandFactory;
 
+            public ClinicallyActiveRequiresRule(IPropertyInfo primaryProperty, int priority)
+                : base(primaryProperty)
+            {
+                _getClinicallyActiveCommandFactory = new GetClinicallyActiveCommandFactory();
+                Priority = priority;
+                InputProperties = new List<IPropertyInfo> { primaryProperty };
+            }
+
+			protected override void Execute(IRuleContext context)
+			{
+                var command = _getClinicallyActiveCommandFactory.GetClinicallyActiveByUserId();
+                
+                var target = context.Target as UserProfessionalStanding;
+
+                if (command.ClinicallyActive.HasValue && command.ClinicallyActive.Value)
+                {
+                    if (!target.PrimaryPracticeId.HasValue)
+                    {
+                        context.AddErrorResult(PrimaryProperty, "Primary practice is required when clinically active is true");
+                    }
+
+                    if (!target.OrganizationTypeId.HasValue)
+                    {
+                        context.AddErrorResult(PrimaryProperty, "Organization type is required when clinically active is true");
+                    }
+                }
+                else
+                {
+                    if(string.IsNullOrEmpty(target.ExplanationOfNonPrivileges))
+                    {
+                        context.AddErrorResult(PrimaryProperty, "Explanation of non-privaleges is required when clinically active is false");
+                    }
+
+                    if(string.IsNullOrEmpty(target.ExplanationOfNonClinicalActivities))
+                    {
+						context.AddErrorResult(PrimaryProperty, "Explanation of non-clinical activities is required when clinically active is false");
+					}
+                }
+			}
+		}
     }
 }

@@ -183,6 +183,16 @@
                 "mapsTo": "model.ExplanationOfNonClinicalActivities"
               },
               {
+                "name": "ClinicallyActive",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicallyActive"
+              },
+              {
                 "name": "CreatedByUserId",
                 "dataType": "int",
                 "maxLength": 4,

@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "ProfessionalStanding\\GetClinicallyActiveCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ClinicallyActive",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s ProfessionalStanding\\GetClinicallyActiveCommand -sp [dbo].[get_user_clinically_active_byuserid] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-09-01T14:43:54.1437553Z"
+  },
+  "version": 1
+}

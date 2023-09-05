@@ -24,6 +24,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.OrganizationType = Create<string>();
             dto.ExplanationOfNonPrivileges = Create<string>();
             dto.ExplanationOfNonClinicalActivities = Create<string>();
+            dto.ClinicallyActive = Create<int>();
             dto.CreatedByUserId = Create<int>();
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
@@ -112,6 +113,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             sut.OrganizationType = dto.OrganizationType;
             sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
             sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
+            sut.ClinicallyActive = dto.ClinicallyActive;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
@@ -131,6 +133,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .Excluding(m => m.UserId)
                 .Excluding(m => m.PrimaryPractice)
                 .Excluding(m => m.OrganizationType)
+                .Excluding(m => m.ClinicallyActive)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
@@ -207,6 +210,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             sut.OrganizationType = dto.OrganizationType;
             sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
             sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
+            sut.ClinicallyActive = dto.ClinicallyActive;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
@@ -224,6 +228,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             sut.OrganizationType = dto.OrganizationType;
             sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
             sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
+            sut.ClinicallyActive = dto.ClinicallyActive;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
@@ -243,6 +248,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                     .Excluding(m => m.UserId)
                     .Excluding(m => m.PrimaryPractice)
                     .Excluding(m => m.OrganizationType)
+                    .Excluding(m => m.ClinicallyActive)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
