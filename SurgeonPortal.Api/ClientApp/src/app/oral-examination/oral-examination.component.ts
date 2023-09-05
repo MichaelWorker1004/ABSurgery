@@ -96,6 +96,8 @@ export class OralExaminationsComponent implements OnInit {
 
   hasUnsavedChanges = true;
 
+  disableSubmit = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private _store: Store,
@@ -133,49 +135,87 @@ export class OralExaminationsComponent implements OnInit {
   }
 
   handleChange(event: any) {
-    if (event.case.score) {
+    if (event.case.score || event.case.remarks) {
       this.candidateCaseScores[event.case.examCaseId] = event.case;
-      this.disable = false;
+      if (event.case.score && event.case.score > 0) {
+        this.disable = false;
+      }
     }
   }
 
   handleGradedChange(event: any) {
     this.gradedCandidateCaseCores[event.case.examCaseId] = { ...event.case };
+
+    const scores: number[] = [];
+
+    Object.entries(this.gradedCandidateCaseCores).forEach(([key, value]) => {
+      const data = value as ICaseScoreModel;
+      if (data?.score > 0) {
+        scores.push(data?.score);
+      }
+    });
+
     setTimeout(() => {
-      this.submitDisable = false;
+      if (scores.length === this.casesLength) {
+        this.disableSubmit = false;
+      }
     }, 0);
   }
 
-  handleSave(examCaseId: number) {
+  handleNextCase() {
+    this.activeCase += 1;
+    this.currentIncrement += 1;
+    this.disable = true;
+
+    if (this.currentIncrement > this.casesLength) {
+      this.scrollToElementById('expandableHeader' + this.casesLength);
+      this.ExamTimerComponent.stopTimers();
+      this.globalDialogService.showLoading();
+      this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
+      this.disable = true;
+    } else {
+      this.scrollToElementById(
+        'expandableHeader' + (this.currentIncrement - 1)
+      );
+    }
+  }
+
+  handleSave(examCaseId: number, skipped = false) {
     const currentCase = this.candidateCaseScores[examCaseId];
 
     const model = {
       examCaseId: currentCase?.examCaseId,
       examinerUserId: this.userId,
       examineeUserId: this.examineeUserId,
-      score: +currentCase?.score,
+      score: !skipped ? currentCase?.score ?? 0 : 0,
       criticalFail: currentCase?.criticalFail ?? false,
       remarks: currentCase?.remarks ?? '',
     } as ICaseScoreModel;
 
-    this._store
-      .dispatch(new CreateCaseScore(model))
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        this.activeCase += 1;
-        this.currentIncrement += 1;
-        this.disable = true;
+    if ((model?.score && model.score > 0) || model?.remarks) {
+      this._store
+        .dispatch(new CreateCaseScore(model))
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.handleNextCase();
+        });
+    } else {
+      this.handleNextCase();
+    }
+  }
 
-        if (this.currentIncrement > this.casesLength) {
-          this.scrollToElementById('expandableHeader' + this.casesLength);
-          this.ExamTimerComponent.stopTimers();
-          this.globalDialogService.showLoading();
-          this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
-          this.disable = true;
-        } else {
-          this.scrollToElementById(
-            'expandableHeader' + (this.currentIncrement - 1)
-          );
+  skipCase(examCaseId: number) {
+    let message = 'Are you sure you want to skip this case?';
+    const currentCase = this.candidateCaseScores[examCaseId];
+    if (currentCase?.score > 0) {
+      message =
+        'Are you sure you want to skip this case? This will remove the selected case score.';
+    }
+    this.globalDialogService
+      ?.showConfirmation('Skip Case', message)
+      .then((result) => {
+        if (result) {
+          this.handleSave(examCaseId, true);
         }
       });
   }
@@ -189,31 +229,71 @@ export class OralExaminationsComponent implements OnInit {
     }
   }
 
-  handleSaveAndSubmitLater() {
-    this.updateScores();
-  }
-
-  handleSubmit() {
-    this.updateScores();
-    const model = {
-      examScheduleId: this.examScheduleId,
-    } as IExamScoreModel;
+  async handleSaveAndSubmitLater() {
+    await this.updateScores();
 
     this.hasUnsavedChanges = false;
-    this._store.dispatch(new CreateExamScore(model));
-  }
-
-  updateScores() {
-    const caseCount = Object.keys(this.gradedCandidateCaseCores).length;
 
     const dateParts = this.dayTime.replace(/\s+/g, ' ').trim().split(' ');
     const formattedDate = `${dateParts[1]} ${dateParts[0]} ${dateParts[2]}`;
     const examDate = new Date(formattedDate);
 
+    this._store
+      .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
+      .pipe(take(1))
+      .subscribe(() => {
+        this.submitExamFunctionality();
+        this.router.navigate(['/ce-scoring/oral-examinations']);
+      });
+  }
+
+  async handleSubmit() {
+    await this.updateScores();
+    const model = {
+      examScheduleId: this.examScheduleId,
+    } as IExamScoreModel;
+
+    this.hasUnsavedChanges = false;
+
+    const caseCount = Object.keys(this.gradedCandidateCaseCores).length;
     let currentCase = 0;
+    const dateParts = this.dayTime.replace(/\s+/g, ' ').trim().split(' ');
+    const formattedDate = `${dateParts[1]} ${dateParts[0]} ${dateParts[2]}`;
+    const examDate = new Date(formattedDate);
+
+    if (Object.entries(this.gradedCandidateCaseCores).length > 0) {
+      Object.entries(this.gradedCandidateCaseCores).forEach(() => {
+        currentCase += 1;
+      });
+    }
+
+    this._store
+      .dispatch(new CreateExamScore(model))
+      .pipe(take(1))
+      .subscribe(() => {
+        if (currentCase === caseCount) {
+          this._store
+            .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
+            .pipe(take(1))
+            .subscribe(() => {
+              this.submitExamFunctionality();
+            });
+        }
+      });
+  }
+
+  submitExamFunctionality() {
+    this.globalDialogService.showSuccessError(
+      'Success',
+      'Scores updated successfully',
+      true
+    );
+  }
+
+  async updateScores() {
+    const promise: Promise<any>[] = [];
     if (Object.entries(this.gradedCandidateCaseCores).length > 0) {
       Object.entries(this.gradedCandidateCaseCores).forEach(([key, value]) => {
-        currentCase += 1;
         const data = value as ICaseScoreModel;
         const model = {
           examCaseId: data?.examCaseId,
@@ -225,27 +305,19 @@ export class OralExaminationsComponent implements OnInit {
           remarks: data?.remarks,
         } as ICaseScoreModel;
         this.hasUnsavedChanges = false;
-        this._store
-          .dispatch(new UpdateCaseScore(model, false))
-          .pipe(take(1))
-          .subscribe(() => {
-            if (currentCase === caseCount) {
-              this._store
-                .dispatch(
-                  new SkipExam(this.examScheduleId, examDate.toISOString())
-                )
-                .pipe(take(1))
-                .subscribe(() => {
-                  this.globalDialogService.showSuccessError(
-                    'Success',
-                    'Scores updated successfully',
-                    true
-                  );
-                  this.router.navigate(['/ce-scoring/oral-examinations']);
-                });
-            }
-          });
+
+        if (data?.examScoringId) {
+          promise.push(
+            this._store.dispatch(new UpdateCaseScore(model, false)).toPromise()
+          );
+        } else if ((model?.score && model.score > 0) || model?.remarks) {
+          promise.push(
+            this._store.dispatch(new CreateCaseScore(model)).toPromise()
+          );
+        }
       });
     }
+
+    await Promise.all(promise);
   }
 }
