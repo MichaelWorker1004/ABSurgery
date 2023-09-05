@@ -8,6 +8,7 @@ export interface IUserProfessionalStandingModel {
     organizationType: string;
     explanationOfNonPrivileges: string;
     explanationOfNonClinicalActivities: string;
+    clinicallyActive: number;
     createdByUserId: number;
     createdAtUtc: string;
     lastUpdatedAtUtc: string;

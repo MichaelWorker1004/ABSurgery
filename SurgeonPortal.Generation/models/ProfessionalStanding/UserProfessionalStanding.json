@@ -92,6 +92,17 @@
       "rules": {}
     },
     {
+      "name": "ClinicallyActive",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
       "name": "CreatedByUserId",
       "dataType": "int",
       "maxLength": 4,
@@ -139,7 +150,7 @@
   "metadata": {
     "command": "ytgim g m s ProfessionalStanding\\UserProfessionalStanding -sp [dbo].[get_user_professional_standing_byuserid] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-06-05T19:02:01.2137714Z"
+    "generatedDateUtc": "2023-09-01T14:25:18.1602138Z"
   },
   "version": 1
 }

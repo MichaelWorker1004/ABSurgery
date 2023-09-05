@@ -34,9 +34,7 @@ import {
   ClearProfessionalStandingErrors,
 } from '../state';
 import {
-  GetLicenseTypeList,
   GetPicklists,
-  GetStateList,
   IPickListItemNumber,
   PicklistsSelectors,
 } from '../state/picklists';
@@ -420,6 +418,7 @@ export class ProfessionalStandingComponent implements OnInit {
   saveCurrentAppointments($event: any) {
     const newCurrentAppointments = {
       ...$event.data,
+      clinicallyActive: $event.data.clinicallyActive ? 1 : 0,
     } as unknown as IUserProfessionalStandingModel;
 
     if (this.currentAppointments) {

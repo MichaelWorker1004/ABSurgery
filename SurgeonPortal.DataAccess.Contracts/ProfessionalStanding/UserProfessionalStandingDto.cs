@@ -12,5 +12,6 @@ namespace SurgeonPortal.DataAccess.Contracts.ProfessionalStanding
         public string OrganizationType { get; set; }
         public string ExplanationOfNonPrivileges { get; set; }
         public string ExplanationOfNonClinicalActivities { get; set; }
+        public int ClinicallyActive { get; set; }
     }
 }

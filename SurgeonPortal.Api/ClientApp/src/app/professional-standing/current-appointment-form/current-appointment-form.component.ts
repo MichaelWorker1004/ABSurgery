@@ -16,13 +16,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 // add error handling to this schematic
 
@@ -44,6 +45,7 @@ interface OptionList {
     DropdownModule,
     InputTextareaModule,
     FormErrorsComponent,
+    CheckboxModule,
   ],
   templateUrl: './current-appointment-form.component.html',
   styleUrls: ['./current-appointment-form.component.scss'],
@@ -68,11 +70,12 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
   localEdit = false;
 
   currentAppointmentForm = new FormGroup({
-    primaryPracticeId: new FormControl({ value: null, disabled: false }, [
+    clinicallyActive: new FormControl({ value: false, disabled: true }),
+    primaryPracticeId: new FormControl({ value: null, disabled: true }, [
       Validators.required,
     ]),
 
-    organizationTypeId: new FormControl({ value: null, disabled: false }, [
+    organizationTypeId: new FormControl({ value: null, disabled: true }, [
       Validators.required,
     ]),
 
@@ -108,6 +111,26 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
     }
   }
 
+  onClinicalActiveChange(event: any) {
+    const checked = event.checked;
+
+    if (checked) {
+      this.currentAppointmentForm.get('primaryPracticeId')?.enable();
+      this.currentAppointmentForm.get('organizationTypeId')?.enable();
+      this.currentAppointmentForm.get('explanationOfNonPrivileges')?.disable();
+      this.currentAppointmentForm
+        .get('explanationOfNonClinicalActivities')
+        ?.disable();
+    } else {
+      this.currentAppointmentForm.get('primaryPracticeId')?.disable();
+      this.currentAppointmentForm.get('organizationTypeId')?.disable();
+      this.currentAppointmentForm.get('explanationOfNonPrivileges')?.enable();
+      this.currentAppointmentForm
+        .get('explanationOfNonClinicalActivities')
+        ?.enable();
+    }
+  }
+
   setFormValues(data: any) {
     if (data) {
       for (const [key, value] of Object.entries(data)) {
@@ -115,6 +138,12 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
         if (key.includes('Date')) {
           newValue = new Date(value as any).toLocaleDateString();
         }
+
+        if (key === 'clinicallyActive') {
+          this.onClinicalActiveChange({ checked: [value] });
+          newValue = value === 1 ? true : false;
+        }
+
         this.currentAppointmentForm.get(key)?.setValue(newValue);
       }
     } else {

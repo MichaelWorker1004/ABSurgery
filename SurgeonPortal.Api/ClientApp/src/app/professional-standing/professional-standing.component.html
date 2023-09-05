@@ -59,6 +59,28 @@
               class="grid"
               *ngIf="(editHospitalAppointmentsAndPrivileges$ | async) === false"
             >
+              <div class="col-12">
+                <label>Clindally Active</label>
+                <div>
+                  <span
+                    *ngIf="
+                      currentAppointments &&
+                      currentAppointments.clinicallyActive
+                    "
+                    >{{
+                      currentAppointments.clinicallyActive ? 'True' : 'False'
+                    }}</span
+                  >
+                  <span
+                    class="text-muted font-italic"
+                    *ngIf="
+                      !currentAppointments ||
+                      !currentAppointments.clinicallyActive
+                    "
+                    >False</span
+                  >
+                </div>
+              </div>
               <div class="col-12 md:col-6">
                 <label>Primary Current Practice or Training</label>
                 <div>
