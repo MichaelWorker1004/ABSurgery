@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IUserProfile, UserProfileSelectors } from '../../../state';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { UserClaims } from 'src/app/side-navigation/user-status.enum';
 
 @Component({
   selector: 'abs-profile-header',
@@ -18,5 +19,8 @@ export class ProfileHeaderComponent {
     | undefined;
 
   @Input() profilePicture: string | undefined;
-  // TODO: [Joe] this will need to be more strongly typed once the model is defined
+
+  userClaims = UserClaims;
+
+  // TODO: [Joe] we need to get status from something other than the second item in the list of user claims
 }

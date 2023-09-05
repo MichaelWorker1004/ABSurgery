@@ -1,5 +1,24 @@
 .case-header {
   border-bottom: 1px solid var(--global-gray-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.case-details-container + .case-details-container {
+  border-top: 1px solid var(--global-gray);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+.case-feedback-container {
+  background-color: var(--global-table-background);
+  padding: 1.5rem 1rem;
+  margin-top: 1.5rem;
+
+  label {
+    font-size: 1.5rem;
+  }
 }
 
 p-dropdown {

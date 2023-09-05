@@ -8,5 +8,6 @@ namespace SurgeonPortal.Library.Contracts.Surgeons
         string CertificateId { get; }
         string InitialCertificationDate { get; }
         string EndDateDisplay { get; }
+        int IsClinicallyInactive { get; }
     }
 }

@@ -353,6 +353,7 @@ export class ExamScoringState {
     payload: { score: ICaseScoreModel }
   ) {
     const score = payload.score;
+    this.globalDialogService.showLoading();
     return this.caseScoresService.createCaseScore(score).pipe(
       tap((result: ICaseScoreModel) => {
         // figure out how to update the store here
@@ -360,10 +361,12 @@ export class ExamScoringState {
           // selectedCaseComment: result,
           errors: null,
         });
+        this.globalDialogService.closeOpenDialog();
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
         ctx.patchState({ errors });
+        this.globalDialogService.closeOpenDialog();
         return of(errors);
       })
     );
@@ -458,7 +461,7 @@ export class ExamScoringState {
   @Action(CreateExamScore)
   createExamScore(
     ctx: StateContext<IExamScoring>,
-    payload: { model: IExamScoreModel }
+    payload: { model: IExamScoreModel; navigate: boolean }
   ) {
     this.globalDialogService.showLoading();
     return this.examScoreService.createExamScore(payload.model).pipe(
@@ -471,7 +474,9 @@ export class ExamScoringState {
           'Exam Submitted Successfully',
           true
         );
-        this.router.navigate(['/ce-scoring/oral-examinations']);
+        if (payload.navigate) {
+          this.router.navigate(['/ce-scoring/oral-examinations']);
+        }
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
@@ -630,6 +635,11 @@ export class ExamScoringState {
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
+          if (httpError.status === 404) {
+            ctx.patchState({
+              selectedCaseFeedback: undefined,
+            });
+          }
           ctx.patchState({ errors });
           this.globalDialogService.closeOpenDialog();
           return of(errors);

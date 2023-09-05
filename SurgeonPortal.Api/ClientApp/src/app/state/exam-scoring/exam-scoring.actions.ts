@@ -68,7 +68,7 @@ export class GetActiveExamination {
 export class CreateExamScore {
   static readonly type = '[Exam-Scoring] create score for exam';
 
-  constructor(public model: IExamScoreModel) {}
+  constructor(public model: IExamScoreModel, public navigate = true) {}
 }
 
 export class GetExamScoresList {

@@ -13,6 +13,7 @@
               [value]="score.value"
               [inputId]="score.label"
               formControlName="score"
+              (onClick)="handleScoreSelect(score.value)"
             ></p-radioButton>
             <label [for]="score.label" class="ml-2">{{ score.label }}</label>
           </div>
@@ -24,7 +25,11 @@
               inputId="criticalFail"
               [binary]="true"
             ></p-checkbox>
-            <label for="criticalFail">Mark only if critical fail</label>
+            <label
+              for="criticalFail"
+              [class]="disabledCriticalFail ? 'disabled' : ''"
+              >Mark only if critical fail</label
+            >
           </div>
         </div>
       </div>

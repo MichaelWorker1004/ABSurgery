@@ -18,6 +18,10 @@ import { IRegistrationStatusReadOnlyModel } from 'src/app/api/models/trainees/re
 import { IQualifyingExamReadOnlyModel } from 'src/app/api/models/examinations/qualifying-exam-read-only.model';
 import { QualifyingExamService } from 'src/app/api/services/examinations/qualifying-exam.service';
 
+export interface ICertification extends ICertificationReadOnlyModel {
+  status?: string;
+}
+
 export interface IDashboardState {
   certificates: ICertificationReadOnlyModel[];
   registrationStatus: IRegistrationStatusReadOnlyModel | null;
@@ -60,8 +64,7 @@ export class DashboardState {
     return this.programsService.retrieveProgramReadOnly_GetByUserId().pipe(
       tap((result: IProgramReadOnlyModel) => {
         const res = result as IProgramReadOnlyModel;
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           programs: res,
         });
       }),
@@ -80,9 +83,18 @@ export class DashboardState {
       .retrieveCertificationReadOnly_GetByUserId()
       .pipe(
         tap((result: ICertificationReadOnlyModel[]) => {
-          const res = result as ICertificationReadOnlyModel[];
-          ctx.setState({
-            ...state,
+          const res = result as ICertification[];
+          res.forEach((cert) => {
+            if (
+              cert.isClinicallyInactive !== null &&
+              cert.isClinicallyInactive !== undefined
+            ) {
+              cert.status = cert.isClinicallyInactive
+                ? 'Clinically Inactive'
+                : 'Active';
+            }
+          });
+          ctx.patchState({
             certificates: res,
           });
           this.globalDialogService.closeOpenDialog();

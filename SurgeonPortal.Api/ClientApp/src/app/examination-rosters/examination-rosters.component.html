@@ -55,6 +55,12 @@
               >
             </span>
             <span *ngIf="!selectedCaseDetails">Case Details</span>
+            <p-button
+              *ngIf="selectedCaseDetails"
+              styleClass="p-button-info p-button-text pl-0"
+              (onClick)="scrollToCaseFeedback()"
+              >Provide Feedback</p-button
+            >
           </h5>
           <p
             *ngIf="!selectedCaseDetails"
@@ -64,7 +70,7 @@
           </p>
           <div *ngIf="selectedCaseDetails" class="grid">
             <div
-              class="col-12"
+              class="col-12 case-details-container"
               *ngFor="let section of selectedCaseDetails.sections"
             >
               <p class="font-bold m-0">{{ section.heading }}</p>
@@ -114,7 +120,6 @@
                 (onClick)="toggleCommentSectionEdit(section)"
                 >Cancel</p-button
               >
-              <hr />
             </div>
 
             <div *ngIf="!(selectedCaseDetails.sections?.length > 0)">
@@ -123,7 +128,7 @@
               </p>
             </div>
 
-            <div class="col-12">
+            <div class="col-12 case-feedback-container" id="case-feedback">
               <label for="case-feedback-comment">Case Feedback</label>
               <small class="text-muted block"
                 >Please provide any feedback for the exam writers here.</small
@@ -139,6 +144,7 @@
                 </p>
                 <textarea
                   name="case-feedback-comment"
+                  id="case-feedback-comment"
                   rows="5"
                   pInputTextarea
                   [(ngModel)]="selectedCaseDetails.newFeedback"
@@ -148,7 +154,7 @@
               <div class="flex justify-content-start">
                 <p-button
                   *ngIf="!selectedCaseDetails.editFeedback"
-                  styleClass="p-button-success p-button-text pl-0"
+                  styleClass="p-button-success p-button-outlined mt-2"
                   (onClick)="toggleCaseFeedbackEdit()"
                   [disabled]="editActive"
                 >

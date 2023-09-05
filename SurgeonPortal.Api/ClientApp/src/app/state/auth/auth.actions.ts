@@ -4,6 +4,11 @@ export class Login {
   constructor(public payload: any) {}
 }
 
+export class RefreshToken {
+  static readonly type = '[Auth] Refresh Token';
+  constructor(public refreshToken: string) {}
+}
+
 export class Logout {
   static readonly type = '[Auth] Logout';
 }

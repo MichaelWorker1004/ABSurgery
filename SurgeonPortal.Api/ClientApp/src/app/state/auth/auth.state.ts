@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
-import { Login, Logout, ClearAuthErrors } from './auth.actions';
+import { Login, Logout, ClearAuthErrors, RefreshToken } from './auth.actions';
 import {
   AuthStateModel,
   AuthService,
@@ -33,6 +33,7 @@ export const AUTH_STATE_TOKEN = new StateToken<IAuthState>('auth');
 })
 @Injectable()
 export class AuthState {
+  refreshTimer: any;
   constructor(
     private authService: AuthService,
     private store: Store,
@@ -84,7 +85,35 @@ export class AuthState {
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
           });
+          if (res.expires_in_minutes) {
+            this.setRefreshTimer(res.expires_in_minutes);
+          }
           this.router.navigate([action.payload.returnUrl ?? '/']);
+        }
+      })
+    );
+  }
+
+  @Action(RefreshToken)
+  refreshToken(
+    ctx: StateContext<IAuthState>,
+    payload: { refreshToken: string }
+  ) {
+    return this.authService.refreshToken(payload).pipe(
+      tap((result: AuthStateModel | IError) => {
+        // eslint-disable-next-line no-prototype-builtins
+        if (!result.hasOwnProperty('status')) {
+          const state = ctx.getState();
+          const res = result as AuthStateModel;
+          ctx.setState({
+            ...state,
+            ...result,
+            claims: AuthState.parseJwt(<string>res.access_token).claims,
+            errors: null,
+          });
+          if (res.expires_in_minutes) {
+            this.setRefreshTimer(res.expires_in_minutes);
+          }
         }
       })
     );
@@ -92,6 +121,9 @@ export class AuthState {
 
   @Action(Logout)
   logout(ctx: StateContext<IAuthState>) {
+    if (this.refreshTimer) {
+      clearTimeout(this.refreshTimer);
+    }
     sessionStorage.clear();
     this.store.reset({});
     ctx.setState({
@@ -130,5 +162,22 @@ export class AuthState {
   @Action(ClearAuthErrors)
   clearErrors(ctx: StateContext<IAuthState>) {
     ctx.patchState({ errors: null });
+  }
+
+  private setRefreshTimer(expiresInMinutes = 0) {
+    if (this.refreshTimer) {
+      clearTimeout(this.refreshTimer);
+    }
+    let expires = expiresInMinutes - 1;
+    if (expires < 0) {
+      expires = 0;
+    }
+    this.refreshTimer = setTimeout(() => {
+      this.store.dispatch(
+        new RefreshToken(
+          this.store.selectSnapshot((state) => state.auth.refresh_token)
+        )
+      );
+    }, expires * 60000);
   }
 }
