@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { NgxsModule, Select, Store } from '@ngxs/store';
 import packageInfo from '../../package.json';
 import { MessagesModule } from 'primeng/messages';
@@ -66,19 +66,23 @@ export class AppComponent implements OnDestroy, OnInit {
       const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);
       const claims = this._store.selectSnapshot(AuthSelectors.claims);
       if (isAuthed && loginUser && claims) {
-        this._store.dispatch(new LoadApplication());
-        if (claims.includes(UserClaims.surgeon)) {
-          this.isSurgeon = true;
-        }
-        if (claims.includes(UserClaims.trainee)) {
-          this.isSurgeon = false;
-        }
-        if (claims.includes(UserClaims.examiner)) {
-          this.isExaminer = true;
-        } else {
-          this.isExaminer = false;
-        }
-        this._store.dispatch(new GetUserProfile(loginUser, claims));
+        this._store
+          .dispatch(new LoadApplication())
+          .pipe(take(1))
+          .subscribe(() => {
+            if (claims.includes(UserClaims.surgeon)) {
+              this.isSurgeon = true;
+            }
+            if (claims.includes(UserClaims.trainee)) {
+              this.isSurgeon = false;
+            }
+            if (claims.includes(UserClaims.examiner)) {
+              this.isExaminer = true;
+            } else {
+              this.isExaminer = false;
+            }
+            this._store.dispatch(new GetUserProfile(loginUser, claims));
+          });
       }
     });
   }

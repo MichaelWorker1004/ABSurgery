@@ -15,6 +15,7 @@ import {
 import { Select, Store } from '@ngxs/store';
 import {
   ClearUserProfileErrors,
+  GetUserProfile,
   UpdateUserProfile,
   UserProfileSelectors,
 } from '../state';
