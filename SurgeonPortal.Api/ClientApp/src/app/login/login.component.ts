@@ -12,6 +12,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Select, Store } from '@ngxs/store';
@@ -31,6 +32,7 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     FormsModule,
     ReactiveFormsModule,
     InputTextModule,
@@ -40,6 +42,8 @@ import { ButtonModule } from 'primeng/button';
 })
 export class LoginComponent implements OnInit {
   @Input() version = '';
+
+  now = new Date();
 
   loginForm = new FormGroup({
     userName: new FormControl('', [
@@ -56,13 +60,7 @@ export class LoginComponent implements OnInit {
 
   @Select(AuthSelectors.getErrors) errors$?: Observable<IError> | undefined;
 
-  constructor(private store: Store) {
-    this.errors$?.pipe(
-      tap((errors) => {
-        // console.log('In the component', errors);
-      })
-    );
-  }
+  constructor(private store: Store) {}
   ngOnInit(): void {
     this.clearErrors();
   }

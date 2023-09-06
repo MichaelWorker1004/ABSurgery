@@ -4,8 +4,11 @@ import {
   withInterceptorsFromDi,
   provideHttpClient,
   HTTP_INTERCEPTORS,
+  HttpClient,
 } from '@angular/common/http';
 
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
@@ -29,6 +32,11 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
@@ -37,6 +45,14 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(
       BrowserModule,
       AppRoutingModule,
+      TranslateModule.forRoot({
+        defaultLanguage: 'en',
+        loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient],
+        },
+      }),
       NgxsModule.forRoot(surgeonPortalState, {
         developmentMode: true,
       }),
