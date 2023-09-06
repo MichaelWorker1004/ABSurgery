@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { NgxsModule, Select, Store } from '@ngxs/store';
 import packageInfo from '../../package.json';
@@ -29,6 +30,7 @@ import { LoadApplication } from './state/application/application.actions';
     RouterOutlet,
     LoginComponent,
     CommonModule,
+    TranslateModule,
     NgxsModule,
     SideNavigationComponent,
     DashboardHeaderComponent,
@@ -61,7 +63,7 @@ export class AppComponent implements OnDestroy, OnInit {
   preventScreenshot = false;
   messages!: Message[];
 
-  constructor(private _store: Store) {
+  constructor(private _store: Store, private translate: TranslateService) {
     this.authSub = this.isAuthenticated$?.subscribe((isAuthed) => {
       const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);
       const claims = this._store.selectSnapshot(AuthSelectors.claims);

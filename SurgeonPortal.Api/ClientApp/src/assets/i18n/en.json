@@ -1,0 +1,8 @@
+{
+  "COPYRIGHT": "@{{year}} All Rights Reserved. The American Board of Surgery",
+  "LOGIN_TITLE": "Welcome to The American Board of Surgery Surgeon's Portal",
+  "LOGIN_SUBTITLE": "Please enter your username and password to login.",
+  "LOGIN_USERNAME_ERROR": "The Username field is required.",
+  "LOGIN_PASSWORD_ERROR": "The Password field is required.",
+  "LOGIN_SUBMIT_BTN": "Login"
+}

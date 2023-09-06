@@ -12,6 +12,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Select, Store } from '@ngxs/store';
@@ -32,6 +33,7 @@ import { ActivatedRoute } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     FormsModule,
     ReactiveFormsModule,
     InputTextModule,
@@ -41,6 +43,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   @Input() version = '';
+
+  now = new Date();
 
   loginForm = new FormGroup({
     userName: new FormControl('', [
