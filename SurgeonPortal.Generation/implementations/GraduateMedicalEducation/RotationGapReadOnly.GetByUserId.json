@@ -17,7 +17,15 @@
     "Route": "gaps",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.TraineeClaim": {
+      "claimId": "8e508896-0442-443e-bff5-29edd11c7463",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.TraineeClaim",
+      "key": "SurgeonPortalClaims.TraineeClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -86,11 +94,12 @@
       }
     }
   ],
-  "inputParameters": [ ],
+  "inputParameters": [],
   "metadata": {
     "command": "ytgim g i s GraduateMedicalEducation\\RotationGapReadOnly.GetByUserId RotationGapReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\RotationGapReadOnly -p:Adapter=sp:abssp-[dbo].[get_gme_conflicts] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RotationGapReadOnly -p:Route=gaps -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\RotationGapReadOnly.GetByUserId RotationGapReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\RotationGapReadOnly -p:Adapter=sp:abssp-[dbo].[get_gme_conflicts] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RotationGapReadOnly -p:Route=gaps -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-07-26T14:23:57.2897081Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\GraduateMedicalEducation\\RotationGapReadOnly.GetByUserId.json",
   "version": 1
 }

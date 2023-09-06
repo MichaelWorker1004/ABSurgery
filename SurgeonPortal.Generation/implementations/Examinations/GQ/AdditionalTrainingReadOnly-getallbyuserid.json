@@ -18,7 +18,15 @@
     "Route": "all",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -133,5 +141,6 @@
     "inferredCommand": "ytgim generate i  Examinations\\GQ\\AdditionalTrainingReadOnly-getallbyuserid AdditionalTrainingReadOnly -t=ytg-framework\\readonly-getlist -p:Model=Examinations\\GQ\\AdditionalTrainingReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_additionaltrainingreadonly_allbyuserid] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdditionalTrainingReadOnly -p:ControllerName=Examinations\\GQ\\AdditionalTrainingController -p:ControllerRoute=examinations/gq/additional-trainings -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:Route=all -p:ApiRoot=$project.ApiRoot -p:UsePaginatedList=false",
     "generatedDateUtc": "2023-04-19T16:45:26.7771292Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Examinations\\GQ\\AdditionalTrainingReadOnly-getallbyuserid.json",
   "version": 1
 }

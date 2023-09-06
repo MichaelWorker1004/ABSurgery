@@ -74,3 +74,19 @@ export class DeleteFellowship {
 
   constructor(public id: number) {}
 }
+
+export class ClearMedicalTrainingErrors {
+  static readonly type = '[Medical Training] Clear medical training errors';
+}
+
+export class CreateAdvancedTraining {
+  static readonly type = '[Medical Training] Create advanced training data';
+
+  constructor(public model: IAdvancedTrainingModel) {}
+}
+
+export class UpdateAdvancedTraining {
+  static readonly type = '[Medical Training] Update advanced training data';
+
+  constructor(public model: IAdvancedTrainingModel) {}
+}

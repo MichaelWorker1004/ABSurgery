@@ -190,7 +190,21 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         [ObjectAuthorizationRules]
         public static void AddObjectAuthorizationRules()
         {
-            
+            Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
+
+            Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
+
+            Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
+
+            Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
 
         }
 

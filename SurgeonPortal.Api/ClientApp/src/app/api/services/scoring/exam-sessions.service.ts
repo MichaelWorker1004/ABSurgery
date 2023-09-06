@@ -15,6 +15,7 @@ export class ExamSessionsService {
         apiVersion = '1.0'): Observable<IExamSessionReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

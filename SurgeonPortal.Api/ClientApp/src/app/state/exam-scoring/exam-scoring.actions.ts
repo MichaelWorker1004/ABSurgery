@@ -68,7 +68,7 @@ export class GetActiveExamination {
 export class CreateExamScore {
   static readonly type = '[Exam-Scoring] create score for exam';
 
-  constructor(public model: IExamScoreModel) {}
+  constructor(public model: IExamScoreModel, public navigate = true) {}
 }
 
 export class GetExamScoresList {
@@ -145,6 +145,12 @@ export class UpdateCaseFeedback {
 
 export class DeleteCaseFeedback {
   static readonly type = '[Exam-Scoring] Delete case feedback';
+
+  constructor(public id: number) {}
+}
+
+export class GetCaseDetailsAndFeedback {
+  static readonly type = '[Exam-Scoring] Get case details and feedback';
 
   constructor(public id: number) {}
 }

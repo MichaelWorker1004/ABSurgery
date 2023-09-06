@@ -14,6 +14,7 @@ export class SanctionsService {
         public retrieveSanctions_GetByUserId(apiVersion = '1.0'): Observable<ISanctionsModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -39,6 +40,7 @@ export class SanctionsService {
             apiVersion = '1.0'): Observable<ISanctionsModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -72,6 +74,7 @@ export class SanctionsService {
         apiVersion = '1.0') : Observable<ISanctionsModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**

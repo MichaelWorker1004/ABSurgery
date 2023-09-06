@@ -16,6 +16,7 @@ export class CaseScoresService {
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -42,6 +43,7 @@ export class CaseScoresService {
         apiVersion = '1.0'): Observable<ICaseScoreModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -68,6 +70,7 @@ export class CaseScoresService {
             apiVersion = '1.0'): Observable<ICaseScoreModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -100,6 +103,7 @@ export class CaseScoresService {
         apiVersion = '1.0') : Observable<ICaseScoreModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -132,6 +136,7 @@ export class CaseScoresService {
         apiVersion = '1.0'): Observable<ICaseScoreReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

@@ -22,6 +22,7 @@ import { ClearAuthErrors } from '../state';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'abs-login',
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
 
   @Select(AuthSelectors.getErrors) errors$?: Observable<IError> | undefined;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private route: ActivatedRoute) {
     this.errors$?.pipe(
       tap((errors) => {
         // console.log('In the component', errors);
@@ -86,6 +87,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.store.dispatch(new Login(this.loginForm.value as IAuthCredentials));
+    const loginPayload = {
+      ...this.loginForm.value,
+      returnUrl: this.route.snapshot.queryParams['returnUrl'] || '/',
+    } as unknown as IAuthCredentials;
+    //this.store.dispatch(new Login(this.loginForm.value as IAuthCredentials));
+    this.store.dispatch(new Login(loginPayload as IAuthCredentials));
   }
 }

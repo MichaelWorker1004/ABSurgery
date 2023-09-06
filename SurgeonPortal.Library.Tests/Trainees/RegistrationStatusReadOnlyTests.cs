@@ -25,7 +25,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
                 .ReturnsAsync(Create<RegistrationStatusReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRegistrationStatusReadOnly, RegistrationStatusReadOnly>()
                 .Build();
@@ -46,7 +46,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRegistrationStatusReadOnly, RegistrationStatusReadOnly>()
                 .Build();

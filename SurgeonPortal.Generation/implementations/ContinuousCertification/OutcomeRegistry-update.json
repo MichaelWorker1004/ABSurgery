@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -566,5 +574,6 @@
     "inferredCommand": "ytgim generate i  ContinuousCertification\\OutcomeRegistry-update OutcomeRegistry -t=ytg-framework/editable-edit -p:Adapter=sp:ABSSP-[dbo].[update_outcomeregistry_getbyuserid] -p:Model=ContinuousCertification\\OutcomeRegistry -p:FetchImplementation=ContinuousCertification\\OutcomeRegistry-getgetbyuserid -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:ApiRoot=$project.ApiRoot -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=continuous-certification/outcome-registries -p:ControllerVersion=1",
     "generatedDateUtc": "2023-04-21T19:38:52.8691466Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\ContinuousCertification\\OutcomeRegistry-update.json",
   "version": 1
 }

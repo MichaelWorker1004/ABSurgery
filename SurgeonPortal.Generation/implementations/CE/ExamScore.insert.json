@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -166,5 +174,6 @@
     "inferredCommand": "ytgim generate i  CE\\ExamScore.insert ExamScore -t=ytg-framework/editable-create -p:Model=CE\\ExamScore -p:Adapter=sp:abssp-[dbo].[ins_exam_schedule_scores] -p:FetchImplementation=CE\\ExamScore.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamScore -p:Route= -p:ControllerName=CE\\ExamScoreController -p:ControllerRoute=api/exam-scores -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-07-06T14:53:01.1637611Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\CE\\ExamScore.insert.json",
   "version": 1
 }

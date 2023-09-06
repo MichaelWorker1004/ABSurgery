@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -289,5 +297,6 @@
     "inferredCommand": "ytgim generate i  ProfessionalStanding\\UserAppointment.insert UserAppointment -t=ytg-framework/editable-create -p:Model=ProfessionalStanding\\UserAppointment -p:Adapter=sp:ABSSP-[dbo].[insert_userhospappt] -p:FetchImplementation=ProfessionalStanding\\UserAppointment.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserAppointment -p:Route= -p:ControllerName=ProfessionalStanding\\UserAppointmentController -p:ControllerRoute=api/professional-standing/user-appointment -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-06-06T19:56:59.1786825Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\ProfessionalStanding\\UserAppointment.insert.json",
   "version": 1
 }

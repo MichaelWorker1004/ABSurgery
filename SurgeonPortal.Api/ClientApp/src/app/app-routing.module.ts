@@ -7,6 +7,8 @@ import { MedicalTrainingComponent } from './medical-training/medical-training.co
 import { ProfessionalStandingComponent } from './professional-standing/professional-standing.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { OralExaminationsComponent } from './oral-examination/oral-examination.component';
+import { UserClaims } from './side-navigation/user-status.enum';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 const canDeactivate = async (component: any, title?: string, text?: string) => {
   if (component?.hasUnsavedChanges) {
@@ -46,6 +48,7 @@ const routes: Routes = [
         (m) => m.CmeRepositoryComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
   },
   {
     path: 'personal-profile',
@@ -54,6 +57,7 @@ const routes: Routes = [
         (m) => m.PersonalProfileComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.user] },
     canDeactivate: [
       (component: PersonalProfileComponent) => canDeactivate(component),
     ],
@@ -65,6 +69,7 @@ const routes: Routes = [
         (m) => m.MedicalTrainingComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.user] },
     canDeactivate: [
       (component: MedicalTrainingComponent) => canDeactivate(component),
     ],
@@ -76,6 +81,7 @@ const routes: Routes = [
         (m) => m.ProfessionalStandingComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
     canDeactivate: [
       (component: ProfessionalStandingComponent) => canDeactivate(component),
     ],
@@ -87,6 +93,7 @@ const routes: Routes = [
         (m) => m.ExamProcessComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
   },
   {
     path: 'apply-and-resgister/registration-requirements',
@@ -95,6 +102,7 @@ const routes: Routes = [
         './registration-requirements/registration-requirements.component'
       ).then((m) => m.RegistrationRequirementsComponent),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
   },
   {
     path: 'apply-and-resgister/exam-registration',
@@ -103,6 +111,7 @@ const routes: Routes = [
         (m) => m.ExamRegistrationComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
   },
   {
     path: 'examination-history',
@@ -111,6 +120,7 @@ const routes: Routes = [
         (m) => m.ExaminationHistoryComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
   },
   {
     path: 'continuous-certification',
@@ -119,6 +129,7 @@ const routes: Routes = [
         './continuous-certification/continuous-certification.component'
       ).then((m) => m.ContinuousCertificationComponent),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
   },
   {
     path: 'payment-history',
@@ -127,6 +138,7 @@ const routes: Routes = [
         (m) => m.PaymentHistoryComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
   },
   {
     path: 'documents',
@@ -135,6 +147,7 @@ const routes: Routes = [
         (m) => m.DocumentsComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.user] },
   },
   {
     path: 'committees',
@@ -143,6 +156,7 @@ const routes: Routes = [
         (m) => m.CommitteesComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.surgeon] },
   },
   {
     path: 'my-account',
@@ -151,6 +165,7 @@ const routes: Routes = [
         (m) => m.MyAccountComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.user] },
     canDeactivate: [
       (component: MyAccountComponent) => canDeactivate(component),
     ],
@@ -162,6 +177,7 @@ const routes: Routes = [
         (m) => m.GmeHistoryComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.trainee] },
   },
   {
     path: 'ce-scoring',
@@ -170,6 +186,7 @@ const routes: Routes = [
         (m) => m.CeScoringAppComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.examiner] },
   },
   {
     path: 'ce-scoring/examination-rosters',
@@ -178,6 +195,7 @@ const routes: Routes = [
         (m) => m.ExaminationRostersComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.examiner] },
   },
   {
     path: 'ce-scoring/oral-examinations',
@@ -186,6 +204,7 @@ const routes: Routes = [
         (m) => m.OralExaminationsComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.examiner] },
   },
   {
     path: 'ce-scoring/oral-examinations/exam/:examinationId',
@@ -194,6 +213,7 @@ const routes: Routes = [
         (m) => m.OralExaminationsComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.examiner] },
     canDeactivate: [
       (component: OralExaminationsComponent) =>
         canDeactivate(
@@ -210,6 +230,11 @@ const routes: Routes = [
         (m) => m.ExaminationScoresComponent
       ),
     canActivate: [AuthGuard],
+    data: { requiredClaims: [UserClaims.examiner] },
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent,
   },
   {
     path: '**',

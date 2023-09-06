@@ -46,6 +46,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
                 .Build();
@@ -67,6 +68,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
                 .Build();
@@ -94,6 +96,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
                 .Build();
@@ -141,6 +144,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
                 .Build();
@@ -181,6 +185,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
                 .Build();
@@ -246,6 +251,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
                 .Build();

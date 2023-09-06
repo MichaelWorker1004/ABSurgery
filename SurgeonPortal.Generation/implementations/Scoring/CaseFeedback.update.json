@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": ""
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -35,13 +43,13 @@
             "mapsTo": "Id"
           },
           {
-            "name": "CaseContentId",
+            "name": "CaseHeaderId",
             "dataType": "int",
             "maxLength": 4,
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "CaseContentId"
+            "mapsTo": "CaseHeaderId"
           },
           {
             "name": "Feedback",
@@ -87,14 +95,14 @@
                 "mapsTo": "model.UserId"
               },
               {
-                "name": "CaseContentId",
+                "name": "CaseHeaderId",
                 "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.CaseContentId"
+                "mapsTo": "model.CaseHeaderId"
               },
               {
                 "name": "Feedback",
@@ -139,7 +147,7 @@
       "required": true
     },
     {
-      "name": "CaseContentId",
+      "name": "CaseHeaderId",
       "dataType": "int",
       "required": true
     },
@@ -150,9 +158,10 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Scoring\\CaseFeedback.update CaseFeedback -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[update_case_feedback] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 ",
+    "command": "ytgim g i s Scoring\\CaseFeedback.update CaseFeedback -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[update_case_feedback] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  Scoring\\CaseFeedback.update CaseFeedback -t=ytg-framework/editable-edit -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[update_case_feedback] -p:FetchImplementation=Scoring\\CaseFeedback.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route= -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-08-18T15:26:42.9916214Z"
+    "generatedDateUtc": "2023-08-23T15:00:48.8593986Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\CaseFeedback.update.json",
   "version": 1
 }

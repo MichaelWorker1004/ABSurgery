@@ -1,6 +1,6 @@
 export enum UserClaims {
-  user = 'User',
-  trainee = 'Trainee',
-  surgeon = 'Surgeon',
-  examiner = 'Examiner',
+  user = '2AA5D2F2-0AA3-4B64-B340-26900EDF7CC2',
+  trainee = '8E508896-0442-443E-BFF5-29EDD11C7463',
+  surgeon = '1BDACD5A-2F92-4FC3-81D6-9B292E27702C',
+  examiner = '22A5DC1E-9C24-48FE-86CE-741C25A7E21D',
 }

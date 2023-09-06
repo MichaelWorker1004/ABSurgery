@@ -56,7 +56,9 @@ namespace SurgeonPortal.Library.Trainees
         [ObjectAuthorizationRules]
         public static void AddObjectAuthorizationRules()
         {
-            
+            Csla.Rules.BusinessRules.AddRule(typeof(RegistrationStatusReadOnly),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
 
         }
         [Fetch]

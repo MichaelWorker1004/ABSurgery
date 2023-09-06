@@ -7,5 +7,5 @@ export const LICENSES_COLS = [
   AbsGrid.setFormattedDateCol('Issue Date', 'issueDate'),
   AbsGrid.setFormattedDateCol('Expire Date', 'expireDate'),
   AbsGrid.setTextDisplayCol('Reporting Org.', 'reportingOrganization'),
-  AbsGrid.setCustomButtonCol('Edit', 'edit', 'fa-solid fa-pen-to-square'),
+  AbsGrid.setCustomButtonCol('Edit', 'showEdit', 'fa-solid fa-pen-to-square'),
 ];

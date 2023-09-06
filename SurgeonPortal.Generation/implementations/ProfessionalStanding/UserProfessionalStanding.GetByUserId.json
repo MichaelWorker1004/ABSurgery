@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": "by-userid"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -120,6 +128,16 @@
                 "mapsTo": "model.ExplanationOfNonClinicalActivities"
               },
               {
+                "name": "ClinicallyActive",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ClinicallyActive"
+              },
+              {
                 "name": "CreatedByUserId",
                 "dataType": "int",
                 "maxLength": 4,
@@ -165,11 +183,11 @@
       }
     }
   ],
-  "inputParameters": [ ],
+  "inputParameters": [],
   "metadata": {
-    "command": "ytgim g i s ProfessionalStanding\\UserProfessionalStanding.GetByUserId UserProfessionalStanding -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\UserProfessionalStanding -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfessionalStanding -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -f ",
+    "command": "ytgim g i s ProfessionalStanding\\UserProfessionalStanding.GetByUserId UserProfessionalStanding -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\UserProfessionalStanding -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfessionalStanding -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim -f ",
     "inferredCommand": "ytgim generate i  ProfessionalStanding\\UserProfessionalStanding.GetByUserId UserProfessionalStanding -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\UserProfessionalStanding -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=UserProfessionalStanding -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-06-05T19:04:44.10028Z"
+    "generatedDateUtc": "2023-09-01T14:26:39.8590304Z"
   },
   "version": 1
 }

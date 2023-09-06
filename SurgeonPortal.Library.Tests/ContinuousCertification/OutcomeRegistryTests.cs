@@ -56,6 +56,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
                 .Build();
@@ -77,6 +78,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
                 .Build();
@@ -104,6 +106,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
                 .Build();
@@ -161,6 +164,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
                 .Build();
@@ -200,6 +204,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
                 .Build();
@@ -287,6 +292,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
                 .Build();

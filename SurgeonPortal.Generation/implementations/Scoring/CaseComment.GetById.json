@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": "by-id"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -117,5 +125,6 @@
     "inferredCommand": "ytgim generate i  Scoring\\CaseComment.GetById CaseComment -t=ytg-framework/editable-get -p:Model=Scoring\\CaseComment -p:Adapter=sp:abssp-[dbo].[get_case_comments_byid] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseComment -p:Route=by-id -p:ControllerName=Scoring\\CaseNotesController -p:ControllerRoute=api/case-comments -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-06-26T16:57:06.4036017Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\CaseComment.GetById.json",
   "version": 1
 }

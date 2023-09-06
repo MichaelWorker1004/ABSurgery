@@ -20,13 +20,8 @@ namespace SurgeonPortal.Library.Scoring
 
         [DataMember]
 		[DisplayName(nameof(CaseContentId))]
-        public int? CaseContentId => ReadProperty(CaseContentIdProperty);
-		public static readonly PropertyInfo<int?> CaseContentIdProperty = RegisterProperty<int?>(c => c.CaseContentId);
-
-        [DataMember]
-		[DisplayName(nameof(Description))]
-        public string Description => ReadProperty(DescriptionProperty);
-		public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(c => c.Description);
+        public int CaseContentId => ReadProperty(CaseContentIdProperty);
+		public static readonly PropertyInfo<int> CaseContentIdProperty = RegisterProperty<int>(c => c.CaseContentId);
 
         [DataMember]
 		[DisplayName(nameof(Heading))]
@@ -49,16 +44,6 @@ namespace SurgeonPortal.Library.Scoring
 		public static readonly PropertyInfo<int?> CaseCommentIdProperty = RegisterProperty<int?>(c => c.CaseCommentId);
 
         [DataMember]
-		[DisplayName(nameof(Feedback))]
-        public string Feedback => ReadProperty(FeedbackProperty);
-		public static readonly PropertyInfo<string> FeedbackProperty = RegisterProperty<string>(c => c.Feedback);
-
-        [DataMember]
-		[DisplayName(nameof(CaseFeedbackId))]
-        public int? CaseFeedbackId => ReadProperty(CaseFeedbackIdProperty);
-		public static readonly PropertyInfo<int?> CaseFeedbackIdProperty = RegisterProperty<int?>(c => c.CaseFeedbackId);
-
-        [DataMember]
 		[DisplayName(nameof(SectionNumber))]
         public int? SectionNumber => ReadProperty(SectionNumberProperty);
 		public static readonly PropertyInfo<int?> SectionNumberProperty = RegisterProperty<int?>(c => c.SectionNumber);
@@ -77,13 +62,10 @@ namespace SurgeonPortal.Library.Scoring
 		{
             LoadProperty(CaseNumberProperty, dto.CaseNumber);
             LoadProperty(CaseContentIdProperty, dto.CaseContentId);
-            LoadProperty(DescriptionProperty, dto.Description);
             LoadProperty(HeadingProperty, dto.Heading);
             LoadProperty(ContentProperty, dto.Content);
             LoadProperty(CommentsProperty, dto.Comments);
             LoadProperty(CaseCommentIdProperty, dto.CaseCommentId);
-            LoadProperty(FeedbackProperty, dto.Feedback);
-            LoadProperty(CaseFeedbackIdProperty, dto.CaseFeedbackId);
             LoadProperty(SectionNumberProperty, dto.SectionNumber);
 		} 
         

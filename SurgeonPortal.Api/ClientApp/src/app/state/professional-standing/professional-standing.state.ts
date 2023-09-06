@@ -34,6 +34,7 @@ import {
   CreateProfessionalStandingSanctionsDetails,
   UpdateProfessionalStandingSanctionsDetails,
 } from './professional-standing.actions';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 export interface IProfessionalStanding {
   medicalLiscenseList: IMedicalLicenseReadOnlyModel[];
@@ -74,7 +75,8 @@ export class ProfessionalStandingState {
     private medicalLicenseService: MedicalLicenseService,
     private userProfessionalStandingService: UserProfessionalStandingService,
     private userAppointmentService: UserAppointmentService,
-    private sanctionsService: SanctionsService
+    private sanctionsService: SanctionsService,
+    private globalDialogService: GlobalDialogService
   ) {}
 
   @Action(GetPSMedicalLicenseList)
@@ -424,6 +426,7 @@ export class ProfessionalStandingState {
     payload: { details: IUserProfessionalStandingModel }
   ) {
     // const state = ctx.getState();
+    this.globalDialogService.showLoading();
     const details = payload.details;
     return this.userProfessionalStandingService
       .updateUserProfessionalStanding(details)
@@ -433,6 +436,11 @@ export class ProfessionalStandingState {
             userProfessionalStandingDetails: response,
             professionalStandingErrors: null,
           });
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Professional Standing Details Updated Successfully',
+            true
+          );
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;

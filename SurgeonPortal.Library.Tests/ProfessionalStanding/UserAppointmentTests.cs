@@ -54,6 +54,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
                 .Build();
@@ -92,6 +93,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
                 .Build();
@@ -113,6 +115,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
                 .Build();
@@ -140,6 +143,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
                 .Build();
@@ -193,6 +197,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
                 .Build();
@@ -233,6 +238,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
                 .Build();
@@ -307,6 +313,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             UseMockServiceProvider()
                 .WithMockedIdentity()
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
                 .Build();

@@ -212,7 +212,17 @@ namespace SurgeonPortal.Library.ContinuousCertification
         [ObjectAuthorizationRules]
         public static void AddObjectAuthorizationRules()
         {
-            
+            Csla.Rules.BusinessRules.AddRule(typeof(OutcomeRegistry),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+
+            Csla.Rules.BusinessRules.AddRule(typeof(OutcomeRegistry),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+
+            Csla.Rules.BusinessRules.AddRule(typeof(OutcomeRegistry),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
 
         }
 

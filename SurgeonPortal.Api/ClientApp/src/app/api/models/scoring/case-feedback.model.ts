@@ -2,7 +2,7 @@
 export interface ICaseFeedbackModel {
     id: number;
     userId: number;
-    caseContentId: number;
+    caseHeaderId: number;
     feedback: string;
     createdByUserId: number;
     lastUpdatedByUserId: number;

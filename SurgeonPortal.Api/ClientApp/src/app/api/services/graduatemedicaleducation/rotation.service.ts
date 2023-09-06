@@ -17,6 +17,7 @@ export class RotationService {
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**
@@ -43,6 +44,7 @@ export class RotationService {
         apiVersion = '1.0'): Observable<IRotationModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**
@@ -69,6 +71,7 @@ export class RotationService {
             apiVersion = '1.0'): Observable<IRotationModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**
@@ -110,6 +113,7 @@ export class RotationService {
         apiVersion = '1.0') : Observable<IRotationModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**
@@ -151,6 +155,7 @@ export class RotationService {
         public retrieveRotationGapReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IRotationGapReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**
@@ -175,6 +180,7 @@ export class RotationService {
         public retrieveRotationReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IRotationReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**

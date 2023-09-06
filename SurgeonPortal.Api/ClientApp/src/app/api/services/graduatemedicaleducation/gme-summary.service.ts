@@ -14,6 +14,7 @@ export class GmeSummaryService {
         public retrieveGmeSummaryReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IGmeSummaryReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**

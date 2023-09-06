@@ -43,6 +43,8 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
   localLocked = false;
   localData!: any;
 
+  disabledCriticalFail = true;
+
   scoreOptions = [
     { label: 'Pass', value: '1' },
     { label: 'Equivocal', value: '2' },
@@ -52,7 +54,7 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
   scoringForm = new FormGroup({
     score: new FormControl(''),
     remarks: new FormControl(''),
-    criticalFail: new FormControl(false),
+    criticalFail: new FormControl({ value: false, disabled: true }),
   });
 
   ngOnInit() {
@@ -60,7 +62,7 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
       const caseData = { ...this.localData };
 
       if (caseData) {
-        caseData.score = value?.score;
+        caseData.score = value?.score ?? 0;
         caseData.remarks = value?.remarks;
         caseData.criticalFail = value?.criticalFail;
 
@@ -79,12 +81,25 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
     }
   }
 
+  handleScoreSelect(value: any) {
+    if (value === '3' || value === 3) {
+      this.scoringForm.get('criticalFail')?.enable();
+      this.disabledCriticalFail = false;
+    } else {
+      this.scoringForm.get('criticalFail')?.disable();
+      this.scoringForm.get('criticalFail')?.setValue(false);
+      this.disabledCriticalFail = true;
+    }
+  }
+
   setLocalData() {
     this.scoringForm.get('score')?.setValue(this.localData?.score);
     this.scoringForm.get('remarks')?.setValue(this.localData?.remarks);
     this.scoringForm
       .get('criticalFail')
       ?.setValue(this.localData?.criticalFail);
+
+    this.handleScoreSelect(this.scoringForm.get('score')?.value);
   }
 
   ngOnChanges(changes: SimpleChanges) {

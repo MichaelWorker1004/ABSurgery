@@ -12,6 +12,13 @@
   <section>
     <div class="grid">
       <sl-card class="col-12 mb-3">
+        <div class="mb-3">
+          <abs-form-errors
+            *ngIf="errors$ | async as error"
+            [errors]="error"
+            [clearErrors]="clearErrors"
+          ></abs-form-errors>
+        </div>
         <form id="medicalTrainingForm" [formGroup]="medicalTrainingForm">
           <div class="form-section mt-0">
             <h5 class="form-section__title">Medical School</h5>
@@ -261,6 +268,7 @@
                       pInputTextarea
                       rows="5"
                       maxlength="8000"
+                      id="residencyProgramOther"
                       formControlName="residencyProgramOther"
                       placeholder="Explain..."
                     ></textarea>
@@ -377,7 +385,7 @@
               </p-button>
               <abs-grid
                 [columns]="trainingCols"
-                [data]="advancedTraining$"
+                [data]="additionalTraining$"
                 (action)="handleGridAction($event, 'additionalTraining')"
                 class="margin-bottom-2"
                 [pagination]="true"
@@ -404,6 +412,7 @@
     *ngIf="showTrainingAddEdit"
     [userId]="userId"
     [training$]="tempData$"
+    [errors$]="errors$"
     [isEdit$]="isAdditionalAdvancedEdit$"
     (cancelDialog)="cancelAddEditTraining($event)"
     (saveDialog)="saveTraining($event)"
@@ -415,34 +424,36 @@
   [preventOverlayClose]="true"
   [hideClose]="true"
   (closeDialog)="cancelAddEditFellowship($event)"
-  title="{{ (isAdditionalAdvancedEdit$ | async) ? 'Edit' : 'Add' }} Fellowship"
+  title="{{ (isFellowshipEdit$ | async) ? 'Edit' : 'Add' }} Fellowship"
 >
   <abs-fellowship-add-edit-modal
     *ngIf="showFellowshipAddEdit"
     [userId]="userId"
     [fellowship$]="tempData$"
     [isEdit$]="isFellowshipEdit$"
+    [errors$]="errors$"
     (cancelDialog)="cancelAddEditFellowship($event)"
     (saveDialog)="saveFellowship($event)"
   ></abs-fellowship-add-edit-modal>
 </abs-modal>
 
 <abs-modal
-  [open]="showOtherCertificatesAddEdit"
+  [open]="showRPVICertificatesAddEdit"
   [preventOverlayClose]="true"
   [hideClose]="true"
   (closeDialog)="cancelOtherCertificatesAddEditModal($event)"
   title="{{
     (isOtherCertificatesEdit$ | async) ? 'Edit' : 'Add'
-  }} Other Certification"
+  }} RPVI Certification"
 >
   <abs-other-certificates-add-edit-modal
-    *ngIf="showOtherCertificatesAddEdit"
+    *ngIf="showRPVICertificatesAddEdit"
     [userId]="userId"
     [otherCertificate$]="tempData$"
     [isEdit$]="isOtherCertificatesEdit$"
+    [errors$]="errors$"
     (cancelDialog)="cancelOtherCertificatesAddEditModal($event)"
-    (saveDialog)="saveOtherCertificates($event)"
+    (saveDialog)="saveRPVICertificate($event)"
   ></abs-other-certificates-add-edit-modal>
 </abs-modal>
 

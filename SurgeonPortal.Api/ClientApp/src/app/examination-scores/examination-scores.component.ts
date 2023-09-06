@@ -63,7 +63,8 @@ export class ExaminationScoresComponent implements OnInit {
   dayOptions = [] as any[];
   statusOptions = [] as any[];
   selectedDayOption!: string;
-  selectedStatusOption!: string;
+  selectedStatusOption$: BehaviorSubject<string> = new BehaviorSubject('');
+  selectedExamScheduleId$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   gridOptions: IGridOptions = {
     showFilter: true,
@@ -93,7 +94,6 @@ export class ExaminationScoresComponent implements OnInit {
 
   ngOnInit(): void {
     this.getExaminationScoresDate();
-
     this.examSelected();
   }
 
@@ -194,11 +194,17 @@ export class ExaminationScoresComponent implements OnInit {
   }
 
   handleView(event: any) {
-    this._store.dispatch(new GetSelectedExamScores(event.data.examScheduleId));
+    const examScheduleId = event.data.examScheduleId;
+    this.selectedStatusOption$.next(event.data.status);
+    this.selectedExamScheduleId$.next(examScheduleId);
+    this._store.dispatch(new GetSelectedExamScores(examScheduleId));
     this.showViewModal = true;
   }
 
-  closeDialog() {
+  closeDialog($event?: any) {
+    if ($event) {
+      this._store.dispatch(new GetExamScoresList(this.examHeaderId));
+    }
     this.showViewModal = false;
   }
 }

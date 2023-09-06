@@ -26,6 +26,7 @@ import {
   DeleteCaseFeedback,
   ExamScoringSelectors,
   GetCaseContents,
+  GetCaseDetailsAndFeedback,
   GetCaseFeedback,
   GetCaseRoster,
   GetExamTitle,
@@ -40,7 +41,7 @@ import { ICaseFeedbackModel } from '../api/models/scoring/case-feedback.model';
 
 interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   editComment: boolean;
-  editFeedback: boolean;
+  //editFeedback: boolean;
   newComment?: string;
   newFeedback?: string;
 }
@@ -201,7 +202,7 @@ export class ExaminationRostersComponent implements OnInit {
     if (this.selectedCaseId !== caseData.id) {
       this.selectedCaseId = caseData.id;
       this._store
-        .dispatch(new GetCaseContents(caseData.id))
+        .dispatch(new GetCaseDetailsAndFeedback(caseData.id))
         .pipe(untilDestroyed(this))
         .subscribe(() => {
           const caseSections = this._store
@@ -210,14 +211,22 @@ export class ExaminationRostersComponent implements OnInit {
               return {
                 ...val,
                 editComment: false,
-                editFeedback: false,
+                //editFeedback: false,
                 newComment: '',
               };
             }) as ICaseDetailModel[];
 
+          const caseFeedback = this._store.selectSnapshot(
+            ExamScoringSelectors.slices.selectedCaseFeedback
+          );
+
           this.selectedCaseDetails = {
             ...caseData,
             sections: caseSections,
+            feedback: caseFeedback?.feedback,
+            newFeedback: caseFeedback?.feedback ? caseFeedback.feedback : '',
+            caseFeedbackId: caseFeedback?.id,
+            editFeedback: false,
           };
         });
     }
@@ -234,13 +243,16 @@ export class ExaminationRostersComponent implements OnInit {
     }
   }
 
-  toggleCaseFeedbackEdit(section: ICaseDetailModel) {
-    section.editFeedback = !section.editFeedback;
-    if (section.editFeedback) {
-      section.newFeedback = section.feedback;
+  toggleCaseFeedbackEdit() {
+    this.selectedCaseDetails.editFeedback =
+      !this.selectedCaseDetails.editFeedback;
+    if (this.selectedCaseDetails.editFeedback) {
+      this.selectedCaseDetails.newFeedback = this.selectedCaseDetails.feedback
+        ? this.selectedCaseDetails.feedback
+        : '';
       this.editActive = true;
     } else {
-      section.newFeedback = '';
+      this.selectedCaseDetails.newFeedback = '';
       this.editActive = false;
     }
   }
@@ -307,14 +319,14 @@ export class ExaminationRostersComponent implements OnInit {
       });
   }
 
-  saveCaseFeedback(section: ICaseDetailModel) {
+  saveCaseFeedback() {
     const model = {
       userId: this.userId,
-      feedback: section.newFeedback,
-      caseContentId: section.caseContentId,
+      feedback: this.selectedCaseDetails.newFeedback,
+      caseHeaderId: this.selectedCaseDetails.id,
     } as unknown as ICaseFeedbackModel;
-    if (section.caseFeedbackId) {
-      model.id = section.caseFeedbackId;
+    if (this.selectedCaseDetails.caseFeedbackId) {
+      model.id = this.selectedCaseDetails.caseFeedbackId;
       this._store
         .dispatch(new UpdateCaseFeedback(model))
         .pipe(untilDestroyed(this))
@@ -324,8 +336,8 @@ export class ExaminationRostersComponent implements OnInit {
           );
 
           if (caseFeedback) {
-            section.caseFeedbackId = caseFeedback.id;
-            section.feedback = caseFeedback.feedback;
+            this.selectedCaseDetails.caseFeedbackId = caseFeedback.id;
+            this.selectedCaseDetails.feedback = caseFeedback.feedback;
           } else {
             this.selectCase(this.selectedCaseDetails);
           }
@@ -339,18 +351,18 @@ export class ExaminationRostersComponent implements OnInit {
             ExamScoringSelectors.slices.selectedCaseFeedback
           );
           if (caseFeedback) {
-            section.caseFeedbackId = caseFeedback.id;
-            section.feedback = caseFeedback.feedback;
+            this.selectedCaseDetails.caseFeedbackId = caseFeedback.id;
+            this.selectedCaseDetails.feedback = caseFeedback.feedback;
           } else {
             this.selectCase(this.selectedCaseDetails);
           }
         });
     }
-    section.editFeedback = false;
+    this.selectedCaseDetails.editFeedback = false;
     this.editActive = false;
   }
 
-  deleteCaseFeedback(section: ICaseDetailModel) {
+  deleteCaseFeedback(id: number) {
     this._globalDialogService
       .showConfirmation(
         'Confirm Delete',
@@ -359,7 +371,7 @@ export class ExaminationRostersComponent implements OnInit {
       .then((result) => {
         if (result) {
           this._store
-            .dispatch(new DeleteCaseFeedback(section.caseFeedbackId))
+            .dispatch(new DeleteCaseFeedback(id))
             .pipe(untilDestroyed(this))
             .subscribe(() => {
               this.selectedCaseId = 0;
@@ -367,5 +379,34 @@ export class ExaminationRostersComponent implements OnInit {
             });
         }
       });
+  }
+
+  scrollToCaseFeedback() {
+    if (!this.editActive) {
+      this.selectedCaseDetails.editFeedback =
+        !this.selectedCaseDetails.editFeedback;
+
+      this.selectedCaseDetails.newFeedback = this.selectedCaseDetails.feedback
+        ? this.selectedCaseDetails.feedback
+        : '';
+      this.editActive = true;
+    }
+
+    this.scrollToElementById('case-feedback');
+    setTimeout(() => {
+      const inputElement = document.getElementById('case-feedback-comment');
+      if (inputElement) {
+        inputElement.focus();
+      }
+    }, 500);
+  }
+
+  scrollToElementById(elementId: string) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+    }
   }
 }

@@ -12,7 +12,6 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { InputSelectComponent } from 'src/app/shared/components/base-input/input-select.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -25,14 +24,18 @@ import { Select, Store } from '@ngxs/store';
 import {
   GetFellowshipPrograms,
   GetFellowshipTypes,
-  IPickListItem,
   PicklistsSelectors,
 } from 'src/app/state/picklists';
 import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fellowship-program-read-only.model';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { IFellowshipTypeReadOnlyModel } from 'src/app/api/models/picklists/fellowship-type-read-only.model';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { IFormErrors } from 'src/app/shared/common';
+import { ClearMedicalTrainingErrors } from 'src/app/state';
+import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-fellowship-add-edit-modal',
   standalone: true,
@@ -46,14 +49,13 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     DropdownModule,
     CalendarModule,
     RadioButtonModule,
+    FormErrorsComponent,
   ],
   templateUrl: './fellowship-add-edit-modal.component.html',
   styleUrls: ['./fellowship-add-edit-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FellowshipAddEditModalComponent implements OnInit {
-  //TODO: [Joe] - add form-errors shared component
-
   @Select(PicklistsSelectors.slices.fellowshipPrograms) fellowshipPrograms$:
     | Observable<IFellowshipProgramReadOnlyModel[]>
     | undefined;
@@ -65,10 +67,13 @@ export class FellowshipAddEditModalComponent implements OnInit {
   fellowshipTypes: IFellowshipTypeReadOnlyModel[] = [];
 
   @Input() userId!: number;
+  @Input() errors$: Observable<IFormErrors> | undefined;
   @Input() isEdit$: Subject<boolean> = new Subject();
   @Input() fellowship$: Subject<IFellowshipReadOnlyModel> = new Subject();
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
+
+  clearErrors = new ClearMedicalTrainingErrors();
 
   fellowshipPrograms: string[] = [];
   filteredFellowshipPrograms: string[] = [];
@@ -134,22 +139,23 @@ export class FellowshipAddEditModalComponent implements OnInit {
             formData.programName.length - 2
           );
 
-          this.getFellowshipPrograms(fellowshipType);
+          this._store
+            .dispatch(new GetFellowshipPrograms(fellowshipType))
+            .pipe(untilDestroyed(this))
+            .subscribe(() => {
+              const programName = this.fellowshipPrograms.find(
+                (i) => i === formData.programName.toString()
+              );
+              this.fellowshipId = formData.id;
+
+              this.fellowshipForm.patchValue({
+                fellowshipType,
+                programName: programName,
+                programOther: formData.programOther,
+                completionYear: formData.completionYear.toString(),
+              });
+            });
         }
-
-        setTimeout(() => {
-          const programName = this.fellowshipPrograms.find(
-            (i) => i === formData.programName.toString()
-          );
-          this.fellowshipId = formData.id;
-
-          this.fellowshipForm.patchValue({
-            fellowshipType,
-            programName: programName,
-            programOther: formData.programOther,
-            completionYear: formData.completionYear.toString(),
-          });
-        }, 100);
       } else {
         this.fellowshipForm.reset();
       }

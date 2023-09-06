@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace SurgeonPortal.Shared
 {
+    /// <summary>
+    /// Names of user claims used by the application
+    /// </summary>
     public static class ApplicationClaims
     {
-        public static readonly string UserId = "UserId";
-        public static readonly string FullName = "FullName";
-        public static readonly string EmailAddress = "EmailAddress";
-        public static readonly string User = "User";
-        public static readonly string Surgeon = "Surgeon";
-        public static readonly string Trainee = "Trainee";
+        public const string UserId = "UserId";
+        public const string FullName = "FullName";
+        public const string EmailAddress = "EmailAddress";
+        public const string User = "User";
+        public const string Surgeon = "Surgeon";
+        public const string Trainee = "Trainee";
+        public const string Examiner = "Examiner";
     }
 }

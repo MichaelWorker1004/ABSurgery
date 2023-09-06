@@ -17,7 +17,15 @@
     "Route": "itemized-cme",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -132,5 +140,6 @@
     "inferredCommand": "ytgim generate i  ContinuingMedicalEducation\\CmeCreditReadOnly.GetByUserId CmeCreditReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuingMedicalEducation\\CmeCreditReadOnly -p:Adapter=sp:abssp-[dbo].[get_usercme_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CmeCreditReadOnly -p:Route=itemized-cme -p:ControllerName=ContinuingMedicalEducation\\CmeController -p:ControllerRoute=api/cme -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-06-12T16:36:15.8088894Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\ContinuingMedicalEducation\\CmeCreditReadOnly.GetByUserId.json",
   "version": 1
 }

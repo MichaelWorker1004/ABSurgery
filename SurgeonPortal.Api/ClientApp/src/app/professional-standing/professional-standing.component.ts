@@ -34,9 +34,7 @@ import {
   ClearProfessionalStandingErrors,
 } from '../state';
 import {
-  GetLicenseTypeList,
   GetPicklists,
-  GetStateList,
   IPickListItemNumber,
   PicklistsSelectors,
 } from '../state/picklists';
@@ -72,6 +70,10 @@ interface IAppointementsPrivilegesPickLists {
   organizationTypeOptions: IPickListItemNumber[] | undefined;
   organizationOptions: IPickListItemNumber[] | undefined;
   appointmentTypeOptions: IPickListItemNumber[] | undefined;
+}
+
+interface IMedicalLicense extends IMedicalLicenseReadOnlyModel {
+  showEdit: boolean;
 }
 
 @UntilDestroy()
@@ -113,10 +115,13 @@ export class ProfessionalStandingComponent implements OnInit {
 
   /* Medical License variables */
   @Select(ProfessionalStandingSelectors.slices.medicalLiscenseList)
-  medicalLicenses$: Observable<IMedicalLicenseReadOnlyModel[]> | undefined;
+  medicalLicenses$: Observable<IMedicalLicense[]> | undefined;
   @Select(ProfessionalStandingSelectors.slices.selectedMedicalLicense)
   selectedMedicalLicense$: Observable<IMedicalLicenseModel> | undefined;
   editStateMedicalLiscense$: Subject<boolean> = new BehaviorSubject(true);
+
+  extendedMedicalLicenses$: Subject<IMedicalLicense[]> | undefined =
+    new BehaviorSubject([] as any);
 
   licensesCols = LICENSES_COLS;
   selectedMedicalLicense: IMedicalLicenseModel | undefined;
@@ -184,6 +189,20 @@ export class ProfessionalStandingComponent implements OnInit {
           !this.hospitalAppointmentsHeightChange$.getValue()
         );
       });
+
+    this.setStateMedicalLicenseEdit();
+  }
+
+  setStateMedicalLicenseEdit() {
+    this.medicalLicenses$?.subscribe((medicalLicenses: IMedicalLicense[]) => {
+      const extendedLicenses: IMedicalLicense[] = medicalLicenses.map(
+        (license) => ({
+          ...license,
+          showEdit: license.reportingOrganization === 'Self',
+        })
+      );
+      this.extendedMedicalLicenses$?.next(extendedLicenses);
+    });
   }
 
   initPicklistValues() {
@@ -258,6 +277,7 @@ export class ProfessionalStandingComponent implements OnInit {
     this.getPreviousAppointmentsAndPrivileges();
     this.getSanctionsAndEthicsDetails();
   }
+
   getCurrentAppointmentDetails() {
     this._store
       .dispatch(new GetUserProfessionalStandingDetails())
@@ -271,6 +291,7 @@ export class ProfessionalStandingComponent implements OnInit {
         });
       });
   }
+
   getSanctionsAndEthicsDetails() {
     this._store
       .dispatch(new GetProfessionalStandingSanctionsDetails())
@@ -284,6 +305,7 @@ export class ProfessionalStandingComponent implements OnInit {
         });
       });
   }
+
   getPreviousAppointmentsAndPrivileges() {
     this._store.dispatch(new GetPSAppointmentsAndPrivilegesList());
     this.allAppointments$?.pipe(untilDestroyed(this)).subscribe(() => {
@@ -292,6 +314,7 @@ export class ProfessionalStandingComponent implements OnInit {
       );
     });
   }
+
   getAppointmentDetails(appointment: IUserAppointmentModel) {
     if (appointment.apptId) {
       this._store
@@ -304,9 +327,11 @@ export class ProfessionalStandingComponent implements OnInit {
         });
     }
   }
+
   getMedicalLicenses() {
     this._store.dispatch(new GetPSMedicalLicenseList());
   }
+
   getMedicalLicenseDetails(license: IMedicalLicenseReadOnlyModel) {
     if (license.licenseId) {
       this._store
@@ -339,6 +364,7 @@ export class ProfessionalStandingComponent implements OnInit {
     }
     this.showLicensesAddEdit = true;
   }
+
   saveLicense($event: any) {
     let issueDate = '';
     let expireDate = '';
@@ -381,6 +407,7 @@ export class ProfessionalStandingComponent implements OnInit {
         });
     }
   }
+
   cancelAddEditLicense($event: any) {
     this.showLicensesAddEdit = $event.show;
   }
@@ -420,6 +447,7 @@ export class ProfessionalStandingComponent implements OnInit {
   saveCurrentAppointments($event: any) {
     const newCurrentAppointments = {
       ...$event.data,
+      clinicallyActive: $event.data.clinicallyActive ? 1 : 0,
     } as unknown as IUserProfessionalStandingModel;
 
     if (this.currentAppointments) {
@@ -513,9 +541,11 @@ export class ProfessionalStandingComponent implements OnInit {
         });
     }
   }
+
   deleteAppointment(apptId: number) {
     this._store.dispatch(new DeletePSAppointmentAndPrivilege(apptId));
   }
+
   cancelAddEditAppointment($event: any) {
     this.showAppointmentsAddEdit = $event.show;
     this.selectedAppointment = undefined;

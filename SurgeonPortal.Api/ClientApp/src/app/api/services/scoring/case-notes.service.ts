@@ -15,6 +15,7 @@ export class CaseNotesService {
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -41,6 +42,7 @@ export class CaseNotesService {
         apiVersion = '1.0'): Observable<ICaseCommentModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -67,6 +69,7 @@ export class CaseNotesService {
             apiVersion = '1.0'): Observable<ICaseCommentModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -96,6 +99,7 @@ export class CaseNotesService {
         apiVersion = '1.0') : Observable<ICaseCommentModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

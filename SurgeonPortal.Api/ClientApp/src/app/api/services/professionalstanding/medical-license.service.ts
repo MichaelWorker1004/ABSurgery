@@ -16,6 +16,7 @@ export class MedicalLicenseService {
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -42,6 +43,7 @@ export class MedicalLicenseService {
         apiVersion = '1.0'): Observable<IMedicalLicenseModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -68,6 +70,7 @@ export class MedicalLicenseService {
             apiVersion = '1.0'): Observable<IMedicalLicenseModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -101,6 +104,7 @@ export class MedicalLicenseService {
         apiVersion = '1.0') : Observable<IMedicalLicenseModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -134,6 +138,7 @@ export class MedicalLicenseService {
         public retrieveMedicalLicenseReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IMedicalLicenseReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**

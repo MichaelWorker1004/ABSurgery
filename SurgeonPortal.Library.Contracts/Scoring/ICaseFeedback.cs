@@ -6,7 +6,7 @@ namespace SurgeonPortal.Library.Contracts.Scoring
     {
         int Id { get; set; }
         int UserId { get; set; }
-        int CaseContentId { get; set; }
+        int CaseHeaderId { get; set; }
         string Feedback { get; set; }
     }
 }

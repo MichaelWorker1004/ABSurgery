@@ -14,6 +14,7 @@ export class UserProfessionalStandingService {
         public retrieveUserProfessionalStanding_GetByUserId(apiVersion = '1.0'): Observable<IUserProfessionalStandingModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -39,6 +40,7 @@ export class UserProfessionalStandingService {
             apiVersion = '1.0'): Observable<IUserProfessionalStandingModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**
@@ -69,6 +71,7 @@ export class UserProfessionalStandingService {
         apiVersion = '1.0') : Observable<IUserProfessionalStandingModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.SurgeonClaim
             */
             
             /**

@@ -16,24 +16,13 @@
     },
     {
       "name": "CaseContentId",
-      "dataType": "int?",
+      "dataType": "int",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": true,
+      "isNullable": false,
       "isIdentityColumn": true,
-      "rules": {}
-    },
-    {
-      "name": "Description",
-      "dataType": "string",
-      "maxLength": -1,
-      "precision": 0,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": true,
-      "isIdentityColumn": false,
       "rules": {}
     },
     {
@@ -81,28 +70,6 @@
       "rules": {}
     },
     {
-      "name": "Feedback",
-      "dataType": "string",
-      "maxLength": 5000,
-      "precision": 0,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": true,
-      "isIdentityColumn": false,
-      "rules": {}
-    },
-    {
-      "name": "CaseFeedbackId",
-      "dataType": "int?",
-      "maxLength": 4,
-      "precision": 10,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": true,
-      "isIdentityColumn": true,
-      "rules": {}
-    },
-    {
       "name": "SectionNumber",
       "dataType": "int?",
       "maxLength": 4,
@@ -117,7 +84,7 @@
   "metadata": {
     "command": "ytgim g m s Scoring\\CaseDetailReadOnly -sp [dbo].[get_case_details_by_id] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-08-18T12:47:16.84845Z"
+    "generatedDateUtc": "2023-08-23T14:54:03.546571Z"
   },
   "version": 1
 }

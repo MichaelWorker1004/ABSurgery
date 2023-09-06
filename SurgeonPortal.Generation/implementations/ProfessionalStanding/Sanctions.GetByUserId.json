@@ -16,7 +16,15 @@
     "RootNamespace": "$project.RootNamespace",
     "Route": "by-userid"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -175,11 +183,12 @@
       }
     }
   ],
-  "inputParameters": [ ],
+  "inputParameters": [],
   "metadata": {
     "command": "ytgim g i s ProfessionalStanding\\Sanctions.GetByUserId Sanctions -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  ProfessionalStanding\\Sanctions.GetByUserId Sanctions -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-06-05T19:04:44.10028Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\ProfessionalStanding\\Sanctions.GetByUserId.json",
   "version": 1
 }

@@ -22,6 +22,7 @@ using Ytg.AspNetCore.Configuration;
 using Microsoft.Extensions.Options;
 using SurgeonPortal.Library.Users;
 using SurgeonPortal.Shared;
+using SurgeonPortal.Library.Contracts.Identity;
 
 namespace SurgeonPortal.Api.Controllers.Users
 {
@@ -205,7 +206,11 @@ namespace SurgeonPortal.Api.Controllers.Users
             AddClaimIfHasValue(claims, ApplicationClaims.EmailAddress, user.EmailAddress);
             AddClaimIfHasValue(claims, ApplicationClaims.UserId, user.UserId.ToString());
 
-            claims.AddRange(user.Claims.Select(r => new Claim(ClaimTypes.Role, r.ClaimName)));
+            var translatedClaims = user.Claims.Select(c => MapRoleClaimNames(c.ClaimName))
+                .Where(c => !string.IsNullOrEmpty(c))
+                .Select(c => c!);
+
+            claims.AddRange(translatedClaims.Select(r => new Claim(ClaimTypes.Role, r)));
 
             CheckUserHasMinimumClaims(claims);
 
@@ -215,17 +220,18 @@ namespace SurgeonPortal.Api.Controllers.Users
         {
             var message = "The user is missing the minimum claims to login to the Surgeon Portal";
 
-            if (!UserHasClaim(claims, ApplicationClaims.Trainee) &&
-                !UserHasClaim(claims, ApplicationClaims.Surgeon))
+            if (!UserHasClaim(claims, SurgeonPortalClaims.TraineeClaim) &&
+                !UserHasClaim(claims, SurgeonPortalClaims.SurgeonClaim) &&
+                !UserHasClaim(claims, SurgeonPortalClaims.ExaminerClaim))
             {
                 throw new AuthenticationFailedException(message);
             }
 
-            if (!UserHasClaim(claims, ApplicationClaims.User))
+            if (!UserHasClaim(claims, SurgeonPortalClaims.UserClaim))
             {
                 throw new AuthenticationFailedException(message);
             }
-            
+
         }
         private bool UserHasClaim(List<Claim> userClaims,
             string claimName)
@@ -240,6 +246,15 @@ namespace SurgeonPortal.Api.Controllers.Users
 
             claims.Add(new Claim(type, value));
         }
+
+        private string? MapRoleClaimNames(string claimName) => claimName switch
+        {
+			ApplicationClaims.User => SurgeonPortalClaims.UserClaim,
+            ApplicationClaims.Trainee => SurgeonPortalClaims.TraineeClaim,
+            ApplicationClaims.Surgeon => SurgeonPortalClaims.SurgeonClaim,
+            ApplicationClaims.Examiner => SurgeonPortalClaims.ExaminerClaim,
+            _ => null
+        };
     }
 }
 

@@ -13,7 +13,15 @@
     "RootNamespace": "$project.RootNamespace",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -84,5 +92,6 @@
     "inferredCommand": "ytgim generate i  Scoring\\CE\\TitleReadOnly.GetById TitleReadOnly -t=ytg-framework/readonly-getlist -p:Model=Scoring\\CE\\TitleReadOnly -p:Adapter=sp:abssp-[dbo].[get_examinee_case_titles] -p:FetchMethodName=GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=TitleReadOnly -p:Route=titles -p:ControllerName=Scoring\\CE\\SessionController -p:ControllerRoute=api/scoring/ce/session -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:UsePaginatedList=false",
     "generatedDateUtc": "2023-07-05T17:46:40.4206257Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\Scoring\\CE\\TitleReadOnly.GetById.json",
   "version": 1
 }

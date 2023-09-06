@@ -15,6 +15,7 @@ export class CaseContentsService {
         apiVersion = '1.0'): Observable<ICaseDetailReadOnlyModel[]> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

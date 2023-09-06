@@ -37,7 +37,8 @@ export class ExamProcessState {
     ctx: StateContext<IExamProcess>
   ): Observable<IExamOverviewReadOnlyModel[]> {
     this.globalDialogService.showLoading();
-    if (ctx.getState().examDirectory.length > 0) {
+    const state = ctx.getState();
+    if (state && state.examDirectory.length > 0) {
       this.globalDialogService.closeOpenDialog();
       return of(ctx.getState().examDirectory);
     }

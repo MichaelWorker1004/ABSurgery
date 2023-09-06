@@ -17,7 +17,15 @@
     "Route": "by-userid",
     "UsePaginatedList": "false"
   },
-  "projectClaims": {},
+  "projectClaims": {
+    "SurgeonPortalClaims.TraineeClaim": {
+      "claimId": "8e508896-0442-443e-bff5-29edd11c7463",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.TraineeClaim",
+      "key": "SurgeonPortalClaims.TraineeClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
   "adapters": [
     {
       "type": "storedProcedure",
@@ -122,5 +130,6 @@
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\GmeSummaryReadOnly.GetByUserId GmeSummaryReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\GmeSummaryReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_gmesummary_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=GmeSummaryReadOnly -p:Route=by-userid -p:ControllerName=GraduateMedicalEducation\\GmeSummaryController -p:ControllerRoute=api/gme-summary -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-05-23T11:21:05.0731108Z"
   },
+  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\GraduateMedicalEducation\\GmeSummaryReadOnly.GetByUserId.json",
   "version": 1
 }

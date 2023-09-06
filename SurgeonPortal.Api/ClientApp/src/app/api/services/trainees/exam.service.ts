@@ -15,6 +15,7 @@ export class ExamService {
         apiVersion = '1.0'): Observable<IRegistrationStatusReadOnlyModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
             
             /**

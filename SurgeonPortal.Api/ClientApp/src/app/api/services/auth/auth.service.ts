@@ -12,6 +12,10 @@ export interface IAuthCredentials {
   password: string;
 }
 
+export interface IRefreshToken {
+  refreshToken: string;
+}
+
 export interface IError {
   type: string | null;
   title: string | null;
@@ -42,6 +46,22 @@ export class AuthService {
       .post<IAuthState>(`/api/users/authenticate`, {
         userName: payload.userName,
         password: payload.password,
+      })
+      .pipe(
+        map((resp) => {
+          sessionStorage.setItem('access_token', <string>resp.access_token);
+          return resp;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          return of(err.error as IError);
+        })
+      );
+  }
+
+  refreshToken(payload: IRefreshToken): Observable<IAuthState | IError> {
+    return this.apiService
+      .post<IAuthState>(`/api/users/refresh`, {
+        refreshToken: payload.refreshToken,
       })
       .pipe(
         map((resp) => {

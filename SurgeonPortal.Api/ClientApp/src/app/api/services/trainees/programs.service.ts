@@ -14,6 +14,7 @@ export class ProgramsService {
         public retrieveProgramReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IProgramReadOnlyModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.TraineeClaim
             */
 
             /**

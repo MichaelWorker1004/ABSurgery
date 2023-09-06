@@ -87,6 +87,9 @@ export const CERTIFIED_NAV_ITEMS = [
     action: 'documents',
     icon: 'fa-solid fa-file-lines',
   },
+];
+
+export const EXAMINER_NAV_ITEMS = [
   {
     display: 'Examiner Dashboard',
     action: 'ce-scoring',

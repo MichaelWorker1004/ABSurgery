@@ -74,7 +74,7 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
     | undefined;
 
   @Select(GQAdditionalTrainingSelectors.selectedAdditionalTrainingDetails)
-  selectedTraining$: Observable<IAdditionalTrainingModel> | undefined;
+  selectedTraining$: Observable<any> | undefined;
 
   fakeOptions = [
     { itemDescription: 'Option 1', itemValue: 'option-1' },

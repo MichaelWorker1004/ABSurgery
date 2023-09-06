@@ -1,3 +1,12 @@
+<ng-container *ngIf="clearErrors && errors$ | async as error">
+  <div class="mb-3">
+    <abs-form-errors
+      *ngIf="errors$ | async as error"
+      [errors]="error"
+      [clearErrors]="clearErrors"
+    ></abs-form-errors>
+  </div>
+</ng-container>
 <form
   name="personProfileForm"
   [formGroup]="otherCertificatesForm"
@@ -56,7 +65,7 @@
       type="submit"
       [style]="{ width: '337px' }"
       variant="primary"
-      [disabled]="otherCertificatesForm.invalid"
+      [disabled]="otherCertificatesForm.invalid || !otherCertificatesForm.dirty"
       >Save
     </p-button>
   </div>

@@ -15,6 +15,7 @@ export class CaseFeedbackService {
         apiVersion = '1.0'): Observable<any> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -37,10 +38,37 @@ export class CaseFeedbackService {
             return this.apiService.delete<ICaseFeedbackModel>(`api/cases/feedback?api-version=${apiVersion}&id=${id}`);
         }
  
+        public retrieveCaseFeedback_GetByExaminerId(caseHeaderId: number,
+        apiVersion = '1.0'): Observable<ICaseFeedbackModel> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * caseHeaderId:Number
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_case_feedback_by_examinerId]
+            */
+            
+            
+            return this.apiService.get<ICaseFeedbackModel>(`api/cases/feedback/by-examiner-id?api-version=${apiVersion}&caseHeaderId=${caseHeaderId}`);
+        }
+ 
         public retrieveCaseFeedback_GetById(id: number,
         apiVersion = '1.0'): Observable<ICaseFeedbackModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -67,6 +95,7 @@ export class CaseFeedbackService {
             apiVersion = '1.0'): Observable<ICaseFeedbackModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -77,7 +106,7 @@ export class CaseFeedbackService {
             /**
             * Required Parameters
             * userId:Number
-            * caseContentId:Number
+            * caseHeaderId:Number
             * feedback:String
             * apiVersion
             */
@@ -97,6 +126,7 @@ export class CaseFeedbackService {
         apiVersion = '1.0') : Observable<ICaseFeedbackModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**
@@ -107,7 +137,7 @@ export class CaseFeedbackService {
             /**
             * Required Parameters
             * id:Number
-            * caseContentId:Number
+            * caseHeaderId:Number
             * feedback:String
             * apiVersion
             */

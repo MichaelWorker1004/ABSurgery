@@ -33,6 +33,9 @@ import { ITrainingTypeReadOnlyModel } from 'src/app/api/models/picklists/trainin
 import { IAdvancedTrainingModel } from 'src/app/api/models/medicaltraining/advanced-training.model';
 import { validateStartAndEndDates } from '../../validators/validators';
 import { GlobalDialogService } from '../../services/global-dialog.service';
+import { ClearMedicalTrainingErrors } from 'src/app/state';
+import { IFormErrors } from '../../common';
+import { FormErrorsComponent } from '../form-errors/form-errors.component';
 
 @Component({
   selector: 'abs-training-add-edit-modal',
@@ -46,17 +49,17 @@ import { GlobalDialogService } from '../../services/global-dialog.service';
     InputTextModule,
     DropdownModule,
     CalendarModule,
+    FormErrorsComponent,
   ],
   templateUrl: './training-add-edit-modal.component.html',
   styleUrls: ['./training-add-edit-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TrainingAddEditModalComponent implements OnInit {
-  // TODO: [Joe] - add form-errors shared component
-
   @Input() training$: Subject<IAdvancedTrainingModel> = new Subject();
   @Input() isEdit$: Subject<boolean> = new Subject();
   @Input() userId!: number;
+  @Input() errors$: Observable<IFormErrors> | undefined;
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
 
@@ -72,6 +75,8 @@ export class TrainingAddEditModalComponent implements OnInit {
   @Select(PicklistsSelectors.slices.trainingTypes) trainingTypes$:
     | Observable<ITrainingTypeReadOnlyModel[]>
     | undefined;
+
+  clearErrors = new ClearMedicalTrainingErrors();
 
   hasUnsavedChanges = false;
 

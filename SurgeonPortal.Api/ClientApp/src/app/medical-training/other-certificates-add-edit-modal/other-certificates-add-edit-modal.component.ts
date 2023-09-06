@@ -20,10 +20,16 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputSelectComponent } from 'src/app/shared/components/base-input/input-select.component';
 import { Observable, Subject } from 'rxjs';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { ICertificateTypeReadOnlyModel } from 'src/app/api/models/picklists/certificate-type-read-only.model';
 import { PicklistsSelectors } from 'src/app/state/picklists';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { IFormErrors } from 'src/app/shared/common';
+import {
+  ClearMedicalTrainingErrors,
+  MedicalTrainingSelectors,
+} from 'src/app/state';
+import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 
 @Component({
   selector: 'abs-other-certificates-add-edit-modal',
@@ -37,14 +43,13 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
     InputTextModule,
     DropdownModule,
     CalendarModule,
+    FormErrorsComponent,
   ],
   templateUrl: './other-certificates-add-edit-modal.component.html',
   styleUrls: ['./other-certificates-add-edit-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class OtherCertificatesAddEditModalComponent implements OnInit {
-  //TODO: [Joe] - add form-errors shared component
-
   @Select(PicklistsSelectors.slices.certificateTypes) certificateTypes$:
     | Observable<ICertificateTypeReadOnlyModel[]>
     | undefined;
@@ -52,8 +57,11 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
   @Input() userId!: number;
   @Input() isEdit$: Subject<boolean> = new Subject();
   @Input() otherCertificate$: Subject<any> = new Subject();
+  @Input() errors$: Observable<IFormErrors> | undefined;
   @Output() cancelDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveDialog: EventEmitter<any> = new EventEmitter();
+
+  clearErrors = new ClearMedicalTrainingErrors();
 
   certificateTypes!: ICertificateTypeReadOnlyModel[];
 
@@ -72,7 +80,10 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
     issueDate: new FormControl('', [Validators.required]),
   });
 
-  constructor(private globalDialogService: GlobalDialogService) {}
+  constructor(
+    private globalDialogService: GlobalDialogService,
+    private _store: Store
+  ) {}
 
   ngOnInit(): void {
     this.isEdit$.subscribe((isEdit) => {
@@ -86,6 +97,7 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
     );
 
     this.otherCertificatesForm.valueChanges.subscribe(() => {
+      this._store.dispatch(this.clearErrors);
       const isDirty = this.otherCertificatesForm.dirty;
       if (isDirty && !this.hasUnsavedChanges) {
         this.hasUnsavedChanges = true;

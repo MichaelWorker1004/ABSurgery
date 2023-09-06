@@ -1,7 +1,12 @@
 import { IAuthCredentials } from '../../api';
 export class Login {
   static readonly type = '[Auth] Login';
-  constructor(public payload: IAuthCredentials) {}
+  constructor(public payload: any) {}
+}
+
+export class RefreshToken {
+  static readonly type = '[Auth] Refresh Token';
+  constructor(public refreshToken: string) {}
 }
 
 export class Logout {
