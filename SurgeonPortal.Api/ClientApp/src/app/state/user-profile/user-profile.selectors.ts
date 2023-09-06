@@ -1,5 +1,6 @@
 import { Selector, createPropertySelectors } from '@ngxs/store';
 import { IUserProfile, UserProfileState } from './user-profile.state';
+import { IFormErrors } from 'src/app/shared/common';
 
 export class UserProfileSelectors {
   static slices = createPropertySelectors<IUserProfile>(UserProfileState);
@@ -45,6 +46,14 @@ export class UserProfileSelectors {
   static profilePicture(state: IUserProfile): string | undefined {
     if (state?.profilePicture?.length) {
       return state.profilePicture;
+    }
+    return;
+  }
+
+  @Selector([UserProfileState])
+  static errors(state: IUserProfile): IFormErrors | undefined {
+    if (state?.errors) {
+      return state.errors;
     }
     return;
   }

@@ -1,4 +1,4 @@
-import { Selector, createPropertySelectors } from '@ngxs/store';
+import { createPropertySelectors } from '@ngxs/store';
 import {
   IProfessionalStanding,
   ProfessionalStandingState,

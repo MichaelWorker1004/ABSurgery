@@ -19,6 +19,13 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
+        <div class="mb-3">
+          <abs-form-errors
+            *ngIf="errors$ | async as error"
+            [errors]="error"
+            [clearErrors]="clearErrors"
+          ></abs-form-errors>
+        </div>
         <form
           name="personProfileForm"
           [formGroup]="userProfileForm"
@@ -532,7 +539,6 @@
               </div>
             </div>
           </div>
-
           <div class="form-section" *ngIf="isEdit">
             <div class="grid">
               <div
