@@ -30,7 +30,7 @@
 
 <h5 class="mt-5">Payment Information</h5>
 
-<form class="mt-5">
+<form class="mt-5" [formGroup]="paymentInformationForm">
   <div class="grid">
     <div
       *ngFor="let formField of paymentInformationFormFields"
@@ -45,6 +45,7 @@
         [name]="formField.name"
         [id]="formField.name"
         [required]="formField.required"
+        [formControlName]="formField.name"
         pInputText
       />
       <p-dropdown
@@ -54,6 +55,7 @@
         [name]="formField.name"
         [id]="formField.name"
         [editable]="true"
+        [formControlName]="formField.name"
         appendTo="body"
         optionLabel="itemDescription"
         optionValue="itemValue"
