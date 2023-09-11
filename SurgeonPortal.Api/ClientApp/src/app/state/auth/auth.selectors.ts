@@ -1,8 +1,10 @@
-import { Selector } from '@ngxs/store';
-import { IAppUserReadOnlyModel, IError } from '../../api';
-import { AuthState, IAuthState } from './auth.state';
+import { createPropertySelectors, Selector } from '@ngxs/store';
+import { IAppUserReadOnlyModel } from '../../api';
+import { AuthState } from './auth.state';
+import { IAuthState, IError } from './auth.interfaces';
 
 export class AuthSelectors {
+  static slices = createPropertySelectors<IAuthState>(AuthState);
   @Selector([AuthState])
   static accessToken(state: IAuthState): string | undefined {
     if (state?.access_token && state?.access_token?.length > 0) {
@@ -35,11 +37,6 @@ export class AuthSelectors {
   @Selector([AuthState])
   static getErrors(state: IAuthState): IError | null {
     return state.errors as IError;
-  }
-
-  @Selector([AuthState])
-  static isAuthenticated(state: IAuthState): boolean {
-    return !!state.access_token;
   }
 
   @Selector([AuthState])

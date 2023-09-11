@@ -1,9 +1,4 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -13,17 +8,26 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { Select, Store } from '@ngxs/store';
-import { AuthSelectors, Login } from '../state';
-import { IError, IAuthCredentials } from '../api';
+import {
+  AuthSelectors,
+  Login,
+  IError,
+  IAuthCredentials,
+  ResetPassword,
+  Logout,
+} from '../state';
 import { ClearAuthErrors } from '../state';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { DialogModule } from 'primeng/dialog';
+import { matchFields, validatePassword } from '../shared/validators/validators';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-login',
   templateUrl: './login.component.html',
@@ -37,11 +41,28 @@ import { ActivatedRoute } from '@angular/router';
     InputTextModule,
     PasswordModule,
     ButtonModule,
+    DialogModule,
   ],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  /**
+   * The version of the application
+   */
   @Input() version = '';
+  @Select(AuthSelectors.slices.errors) errors$?: Observable<IError> | undefined;
+  @Select(AuthSelectors.slices.isAuthenticated) isAuthenticated$?:
+    | Observable<boolean>
+    | undefined;
+  @Select(AuthSelectors.slices.isBusy) isBusy$?:
+    | Observable<boolean>
+    | undefined;
+  @Select(AuthSelectors.slices.passwordResetComplete) passwordResetComplete$?:
+    | Observable<boolean>
+    | undefined;
 
+  /**
+   * The login form
+   */
   loginForm = new FormGroup({
     userName: new FormControl('', [
       Validators.required,
@@ -52,25 +73,72 @@ export class LoginComponent implements OnInit {
       Validators.minLength(8),
     ]),
   });
-
+  /**
+   * The password reset form
+   */
+  passwordResetForm = new FormGroup(
+    {
+      currentPassword: new FormControl('', [
+        validatePassword(),
+        Validators.required,
+      ]),
+      newPassword: new FormControl('', [
+        validatePassword(),
+        Validators.required,
+      ]),
+      confirmPassword: new FormControl('', [
+        validatePassword(),
+        Validators.required,
+      ]),
+    },
+    {
+      validators: [matchFields('newPassword', 'confirmPassword')],
+    }
+  );
+  /**
+   * The clear errors action
+   */
   clearErrorAction = new ClearAuthErrors();
-
-  @Select(AuthSelectors.getErrors) errors$?: Observable<IError> | undefined;
-
-  constructor(private store: Store, private route: ActivatedRoute) {
-    this.errors$?.pipe(
-      tap((errors) => {
-        // console.log('In the component', errors);
-      })
-    );
-  }
-  ngOnInit(): void {
+  /**
+   * Is the component shows the busy state either for login or password reset
+   */
+  isBusy = false;
+  /**
+   * The password reset dialog open
+   */
+  isPasswordReset = false;
+  /**
+   * The password reset is complete
+   */
+  passwordResetComplete = false;
+  constructor(
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.clearErrors();
+    this.isBusy$?.pipe(untilDestroyed(this))?.subscribe((isBusy) => {
+      this.isBusy = isBusy;
+    });
+    this.isAuthenticated$?.pipe(untilDestroyed(this)).subscribe((isAuthed) => {
+      this.isPasswordReset = this.store.selectSnapshot(
+        AuthSelectors.slices.isPasswordReset
+      );
+      if (isAuthed && !this.isPasswordReset) {
+        this.router.navigate([
+          this.route.snapshot.queryParams['returnUrl'] ?? '/',
+        ]);
+      }
+    });
+    this.passwordResetComplete$?.pipe(untilDestroyed(this)).subscribe((val) => {
+      this.passwordResetComplete = val;
+    });
   }
 
   clearErrors() {
     this.store.dispatch(this.clearErrorAction);
   }
+
   getErrors(error: IError) {
     let errorArray: string[] = [];
     const errors = error.errors as {
@@ -89,9 +157,25 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const loginPayload = {
       ...this.loginForm.value,
-      returnUrl: this.route.snapshot.queryParams['returnUrl'] || '/',
     } as unknown as IAuthCredentials;
-    //this.store.dispatch(new Login(this.loginForm.value as IAuthCredentials));
     this.store.dispatch(new Login(loginPayload as IAuthCredentials));
+  }
+
+  onSubmitPasswordReset() {
+    const payload: { oldPassword: string; newPassword: string } = {
+      oldPassword: this.passwordResetForm.value.currentPassword
+        ? this.passwordResetForm.value.currentPassword
+        : '',
+      newPassword: this.passwordResetForm.value.newPassword
+        ? this.passwordResetForm.value.newPassword
+        : '',
+    };
+    this.store.dispatch(new ResetPassword(payload));
+  }
+
+  completePasswordReset() {
+    this.passwordResetForm.reset();
+    this.loginForm.reset();
+    this.store.dispatch(new Logout());
   }
 }

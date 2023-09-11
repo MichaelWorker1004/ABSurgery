@@ -1,4 +1,4 @@
-import { AuthService } from '../../../api/services/auth/auth.service';
+import { AuthService } from '../../../api';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
-import { Logout, RefreshToken } from '../../../state/auth/auth.actions';
+import { Logout, RefreshToken } from '../../../state';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

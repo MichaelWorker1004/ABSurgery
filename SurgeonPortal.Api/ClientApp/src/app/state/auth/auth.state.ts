@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
-import { Login, Logout, ClearAuthErrors, RefreshToken } from './auth.actions';
+import {
+  Login,
+  Logout,
+  ClearAuthErrors,
+  RefreshToken,
+  ResetPassword,
+} from './auth.actions';
+import { AuthService, IAppUserReadOnlyModel } from '../../api';
 import {
   AuthStateModel,
-  AuthService,
+  IAuthState,
   IError,
-  IAppUserReadOnlyModel,
+  IAuthCredentials,
   IRefreshToken,
-} from '../../api';
-import { Router } from '@angular/router';
+} from './auth.interfaces';
 
-export interface IAuthState extends AuthStateModel {
-  claims: string[] | null;
-  errors: IError | null;
-}
-
+/**
+ * The state token for the auth state
+ */
 export const AUTH_STATE_TOKEN = new StateToken<IAuthState>('auth');
 
 @State<IAuthState>({
@@ -30,71 +34,97 @@ export const AUTH_STATE_TOKEN = new StateToken<IAuthState>('auth');
     user: null,
     claims: null,
     errors: null,
+    isBusy: false,
+    isPasswordReset: false,
+    passwordResetComplete: false,
+    isAuthenticated: false,
   },
 })
 @Injectable()
 export class AuthState {
+  /**
+   * Timer for refreshing the token
+   */
   refreshTimer: any;
-  constructor(
-    private authService: AuthService,
-    private store: Store,
-    private router: Router
-  ) {}
+  /**
+   * The login parameters
+   */
+  loginParams: IAuthCredentials | null = null;
+  /**
+   * Parse the JWT token to get the claims
+   * @param token
+   */
+  static parseJwt(token: string): { claims: string[] } {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
 
+    const returnObj = JSON.parse(jsonPayload);
+    returnObj.claims =
+      returnObj['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+    return returnObj;
+  }
+
+  constructor(private authService: AuthService, private store: Store) {}
+
+  /**
+   * Login to the application
+   * @param ctx
+   * @param action
+   */
   @Action(Login)
   login(ctx: StateContext<IAuthState>, action: Login) {
+    if (
+      this.loginParams?.userName === action.payload.userName &&
+      this.loginParams?.password === action.payload.password
+    ) {
+      return;
+    }
+    this.loginParams = action.payload;
+    ctx.patchState({ isBusy: true, errors: null }); // Reset errors and set busy
     return this.authService.login(action.payload).pipe(
-      tap((result: AuthStateModel | IError) => {
-        if (typeof result === 'string' && result === 'Login failed') {
-          ctx.setState({
-            access_token: '',
-            refresh_token: '',
-            token_type: '',
-            userName: '',
-            expiration: '',
-            expires_in_minutes: 0,
-            user: {} as IAppUserReadOnlyModel,
-            claims: [],
-            errors: {
-              type: 'Login failed',
-              title: 'Login failed',
-              status: 400,
-              traceId: '',
-              errors: null,
-            },
-          });
-        }
-        // eslint-disable-next-line no-prototype-builtins
-        else if (result.hasOwnProperty('status')) {
-          ctx.setState({
-            access_token: '',
-            refresh_token: '',
-            token_type: '',
-            userName: '',
-            expiration: '',
-            expires_in_minutes: 0,
-            user: {} as IAppUserReadOnlyModel,
-            claims: [],
-            errors: <IError>result,
-          });
-        } else {
+      tap((result: AuthStateModel | IError | string) => {
+        if (this.isAuthStateModel(result as unknown as IAuthState | IError)) {
           const state = ctx.getState();
           const res = result as AuthStateModel;
           ctx.setState({
             ...state,
-            ...result,
+            ...res,
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
+            isBusy: false,
+            isPasswordReset: res.user?.resetRequired ?? false,
+            isAuthenticated: true,
           });
-          // if (res.expires_in_minutes) {
-          //   this.setRefreshTimer(res.expires_in_minutes);
-          // }
-          this.router.navigate([action.payload.returnUrl ?? '/']);
+          this.loginParams = null;
+          if (res.user?.resetRequired) {
+            this.handleResetPassword(ctx);
+            return;
+          } else {
+            this.handleAuthSuccess(res, action);
+          }
+        } else {
+          this.loginParams = null;
+          this.handleAuthError(result, ctx);
         }
       })
     );
   }
 
+  /**
+   * Refresh the token
+   * @param ctx
+   * @param payload
+   */
   @Action(RefreshToken)
   refreshToken(
     ctx: StateContext<IAuthState>,
@@ -126,6 +156,33 @@ export class AuthState {
     );
   }
 
+  /**
+   * Reset the password
+   * @param ctx
+   * @param action
+   */
+  @Action(ResetPassword)
+  resetPassword(ctx: StateContext<IAuthState>, action: ResetPassword) {
+    ctx.patchState({ isBusy: true, errors: null }); // Reset errors and set busy
+    return this.authService.resetPassword(action.payload).pipe(
+      tap((result: boolean | IError) => {
+        if (this.isLoginError(result)) {
+          this.handlePasswordResetError(result, ctx);
+        } else {
+          ctx.patchState({
+            isBusy: false,
+            passwordResetComplete: true,
+            errors: null,
+          });
+        }
+      })
+    );
+  }
+
+  /**
+   * Logout of the application
+   * @param ctx
+   */
   @Action(Logout)
   logout(ctx: StateContext<IAuthState>) {
     if (this.refreshTimer) {
@@ -143,34 +200,27 @@ export class AuthState {
       user: {} as IAppUserReadOnlyModel,
       claims: [],
       errors: null,
+      isBusy: false,
+      isPasswordReset: false,
+      passwordResetComplete: false,
+      isAuthenticated: false,
     });
   }
 
-  static parseJwt(token: string): { claims: string[] } {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-      window
-        .atob(base64)
-        .split('')
-        .map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join('')
-    );
-
-    const returnObj = JSON.parse(jsonPayload);
-    returnObj.claims =
-      returnObj['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-
-    return returnObj;
-  }
-
+  /**
+   * Clear the errors
+   * @param ctx
+   */
   @Action(ClearAuthErrors)
   clearErrors(ctx: StateContext<IAuthState>) {
     ctx.patchState({ errors: null });
   }
 
+  /**
+   * Set the refresh timer
+   * @param expiresInMinutes
+   * @private
+   */
   private setRefreshTimer(expiresInMinutes = 0) {
     if (this.refreshTimer) {
       clearTimeout(this.refreshTimer);
@@ -186,5 +236,113 @@ export class AuthState {
         )
       );
     }, expires * 60000);
+  }
+
+  /**
+   * Handle the successful login
+   * @param res
+   * @param action
+   * @private
+   */
+  private handleAuthSuccess(res: AuthStateModel, action: Login) {
+    if (res.expires_in_minutes) {
+      this.setRefreshTimer(res.expires_in_minutes);
+    }
+  }
+
+  /**
+   * Handle the reset password
+   * @private
+   */
+  private handleResetPassword(ctx: StateContext<IAuthState>) {
+    ctx.patchState({ isPasswordReset: true });
+  }
+
+  /**
+   * Handle the error from the login
+   * @param error
+   * @param ctx
+   * @private
+   */
+  private handleAuthError(
+    error: AuthStateModel | IError | string,
+    ctx: StateContext<IAuthState>
+  ) {
+    if (this.isLoginError(error)) {
+      ctx.setState({
+        access_token: '',
+        refresh_token: '',
+        token_type: '',
+        userName: '',
+        expiration: '',
+        expires_in_minutes: 0,
+        user: {} as IAppUserReadOnlyModel,
+        claims: [],
+        errors: <IError>error,
+        isBusy: false,
+        isPasswordReset: false,
+        passwordResetComplete: false,
+        isAuthenticated: false,
+      });
+    } else {
+      if (error === 'Login failed') {
+        ctx.setState({
+          access_token: '',
+          refresh_token: '',
+          token_type: '',
+          userName: '',
+          expiration: '',
+          expires_in_minutes: 0,
+          user: {} as IAppUserReadOnlyModel,
+          claims: [],
+          errors: {
+            type: 'Login failed',
+            title: 'Login failed',
+            status: 400,
+            traceId: '',
+            errors: null,
+          },
+          isBusy: false,
+          isPasswordReset: false,
+          passwordResetComplete: false,
+          isAuthenticated: false,
+        });
+      }
+    }
+  }
+
+  /**
+   * If there is an error while resetting the password
+   * Handle it differently than a login error
+   * @param error
+   * @param ctx
+   * @private
+   */
+  private handlePasswordResetError(
+    error: IError,
+    ctx: StateContext<IAuthState>
+  ) {
+    ctx.patchState({
+      errors: error,
+      isBusy: false,
+    });
+  }
+
+  /**
+   * Check the type of the object to see if it is an IError
+   * @param test
+   * @private
+   */
+  private isLoginError(test: any): test is IError {
+    return (<IError>test).type !== undefined;
+  }
+
+  /**
+   * Check the type of the object to see if it is an IAuthState
+   * @param test
+   * @private
+   */
+  private isAuthStateModel(test: IAuthState | IError): test is IAuthState {
+    return (<IAuthState>test).access_token !== undefined;
   }
 }
