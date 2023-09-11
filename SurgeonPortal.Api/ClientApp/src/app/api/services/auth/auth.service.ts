@@ -49,7 +49,7 @@ export class AuthService {
       })
       .pipe(
         map((resp) => {
-          sessionStorage.setItem('access_token', <string>resp.access_token);
+          //sessionStorage.setItem('access_token', <string>resp.access_token);
           return resp;
         }),
         catchError((err: HttpErrorResponse) => {
@@ -65,7 +65,7 @@ export class AuthService {
       })
       .pipe(
         map((resp) => {
-          sessionStorage.setItem('access_token', <string>resp.access_token);
+          //sessionStorage.setItem('access_token', <string>resp.access_token);
           return resp;
         }),
         catchError((err: HttpErrorResponse) => {

@@ -7,6 +7,7 @@ import {
   AuthService,
   IError,
   IAppUserReadOnlyModel,
+  IRefreshToken,
 } from '../../api';
 import { Router } from '@angular/router';
 
@@ -85,9 +86,9 @@ export class AuthState {
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
           });
-          if (res.expires_in_minutes) {
-            this.setRefreshTimer(res.expires_in_minutes);
-          }
+          // if (res.expires_in_minutes) {
+          //   this.setRefreshTimer(res.expires_in_minutes);
+          // }
           this.router.navigate([action.payload.returnUrl ?? '/']);
         }
       })
@@ -97,9 +98,15 @@ export class AuthState {
   @Action(RefreshToken)
   refreshToken(
     ctx: StateContext<IAuthState>,
-    payload: { refreshToken: string }
+    payload?: { refreshToken: string }
   ) {
-    return this.authService.refreshToken(payload).pipe(
+    let refreshToken: IRefreshToken = {
+      refreshToken: ctx.getState()?.refresh_token ?? '',
+    };
+    if (payload?.refreshToken) {
+      refreshToken = payload;
+    }
+    return this.authService.refreshToken(refreshToken).pipe(
       tap((result: AuthStateModel | IError) => {
         // eslint-disable-next-line no-prototype-builtins
         if (!result.hasOwnProperty('status')) {
@@ -111,9 +118,9 @@ export class AuthState {
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
           });
-          if (res.expires_in_minutes) {
-            this.setRefreshTimer(res.expires_in_minutes);
-          }
+          // if (res.expires_in_minutes) {
+          //   this.setRefreshTimer(res.expires_in_minutes);
+          // }
         }
       })
     );
@@ -168,7 +175,7 @@ export class AuthState {
     if (this.refreshTimer) {
       clearTimeout(this.refreshTimer);
     }
-    let expires = expiresInMinutes - 1;
+    let expires = expiresInMinutes;
     if (expires < 0) {
       expires = 0;
     }

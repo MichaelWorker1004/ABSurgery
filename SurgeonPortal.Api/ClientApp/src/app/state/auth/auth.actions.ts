@@ -6,7 +6,7 @@ export class Login {
 
 export class RefreshToken {
   static readonly type = '[Auth] Refresh Token';
-  constructor(public refreshToken: string) {}
+  constructor(public refreshToken?: string) {}
 }
 
 export class Logout {
