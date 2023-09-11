@@ -62,18 +62,6 @@ export class PayFeeComponent implements OnInit {
   paymentInformationFormFields: IFormFields[] = PAY_FEE_FORM_FIELDS;
   payFeeCols = PAY_FEE_COLS;
 
-  // paymentInformationForm: FormGroup = new FormGroup({
-  //   emailAddress: new FormControl('', []), //readonly
-  //   state: new FormControl('', []), //sometimes no options
-  //   street2: new FormControl('', []), //sometimes no valid value
-  //   mobilePhoneNumber: new FormControl('', []), // typically not required in forms
-  //   country: new FormControl('', [Validators.required]),
-  //   firstName: new FormControl('', [Validators.required]),
-  //   lastName: new FormControl('', [Validators.required]),
-  //   street1: new FormControl('', [Validators.required]),
-  //   zipCode: new FormControl('', [Validators.required]),
-  // });
-
   paymentInformationForm: FormGroup = new FormGroup({});
 
   constructor(private _store: Store) {
