@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { AuthSelectors } from './auth.selectors';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
 interface CanActivate {
   canActivate(
@@ -20,13 +21,18 @@ interface CanActivate {
     | UrlTree;
 }
 
+@UntilDestroy()
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  @Select(AuthSelectors.isAuthenticated) $isAuthenticated:
+  @Select(AuthSelectors.slices.isAuthenticated) $isAuthenticated:
     | Observable<boolean>
     | undefined;
+  @Select(AuthSelectors.slices.isPasswordReset) $isPasswordReset:
+    | Observable<boolean>
+    | undefined;
+  @Select(AuthSelectors.claims) $claims: Observable<string[]> | undefined;
   constructor(private store: Store, private router: Router) {}
 
   // TODO: Explore using an async way to validate routes
@@ -44,7 +50,7 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     const requiredClaims = route.data['requiredClaims'] as string[];
     const isAuthenticated = this.store.selectSnapshot(
-      AuthSelectors.isAuthenticated
+      AuthSelectors.slices.isAuthenticated
     );
     const userClaims = this.store.selectSnapshot(AuthSelectors.claims) ?? [];
 

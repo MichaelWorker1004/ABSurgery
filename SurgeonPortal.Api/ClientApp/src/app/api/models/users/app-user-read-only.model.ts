@@ -12,6 +12,8 @@ developer when the API is created. Please do not make changes to this file
 export interface IAppUserReadOnlyModel {
   userId: number;
   fullName: string;
+  userName: string;
   emailAddress: string;
+  resetRequired: boolean;
   lastLoginDateUtc: string | null;
 }

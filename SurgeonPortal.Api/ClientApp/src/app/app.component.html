@@ -1,38 +1,48 @@
 <div id="toast-container" class="toast-bottom-right"></div>
-
 <div
-  class="login-content"
-  *ngIf="(isAuthenticated$ | async) === false; else site"
+  [ngClass]="{
+    'app-content': isAuthenticated && !isPasswordReset,
+    'login-content': !isAuthenticated || isPasswordReset
+  }"
 >
-  <abs-login [version]="version"></abs-login>
-</div>
-
-<ng-template #site>
-  <div class="app-content" *ngIf="user$ | async as user">
-    <aside [ngClass]="isSideNavOpen ? 'toggled' : ''">
-      <abs-side-navigation
-        [isSurgeon]="isSurgeon"
-        [isExaminer]="isExaminer"
+  <aside
+    *ngIf="isAuthenticated && !isPasswordReset"
+    [ngClass]="isSideNavOpen ? 'toggled' : ''"
+  >
+    <abs-side-navigation
+      [isSurgeon]="isSurgeon"
+      [isExaminer]="isExaminer"
+      (handleSideNavToggle)="handleSideNavToggle()"
+    ></abs-side-navigation>
+  </aside>
+  <main>
+    <div
+      class="screenshot-hider {{ preventScreenshot ? 'toggled' : '' }}"
+      *ngIf="isAuthenticated && !isPasswordReset"
+    >
+      Screenshots prohibited. Press any key to continue...
+    </div>
+    <div
+      [ngClass]="{
+        'app-container-fluid': isAuthenticated && !isPasswordReset,
+        flex: isAuthenticated && !isPasswordReset,
+        'flex-column': isAuthenticated && !isPasswordReset
+      }"
+    >
+      <abs-dashboard-header
         (handleSideNavToggle)="handleSideNavToggle()"
-      ></abs-side-navigation>
-    </aside>
-    <main>
-      <div class="screenshot-hider {{ preventScreenshot ? 'toggled' : '' }}">
-        Screenshots prohibited. Press any key to continue...
+        *ngIf="isAuthenticated && !isPasswordReset"
+      ></abs-dashboard-header>
+      <router-outlet></router-outlet>
+      <div
+        class="text-center mt-auto"
+        *ngIf="isAuthenticated && !isPasswordReset"
+      >
+        <p class="footer-text mb-1">
+          @{{ currentYear }} All Rights Reserved. The American Board of Surgery
+        </p>
+        <p class="footer-text mb-1">{{ version }}</p>
       </div>
-      <div class="app-container-fluid flex flex-column">
-        <abs-dashboard-header
-          (handleSideNavToggle)="handleSideNavToggle()"
-        ></abs-dashboard-header>
-        <router-outlet></router-outlet>
-        <div class="text-center mt-auto">
-          <p class="footer-text mb-1">
-            @{{ currentYear }} All Rights Reserved. The American Board of
-            Surgery
-          </p>
-          <p class="footer-text mb-1">{{ version }}</p>
-        </div>
-      </div>
-    </main>
-  </div>
-</ng-template>
+    </div>
+  </main>
+</div>
