@@ -3,6 +3,7 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
     public class CaseDetailReadOnlyDto
     {
         public string CaseNumber { get; set; }
+        public string CaseTitle { get; set; }
         public int CaseContentId { get; set; }
         public string Heading { get; set; }
         public string Content { get; set; }
