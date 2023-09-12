@@ -1,0 +1,124 @@
+{
+  "name": "ExamFeeReadOnly",
+  "implementationName": "Billing\\ExamFeeReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_exam_fees_byuserid",
+    "ControllerName": "Billing\\ExamFeeController",
+    "ControllerRoute": "api/billing/exam-fee",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Billing\\ExamFeeReadOnly",
+    "ModelGroup": "ExamFeeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_exam_fees_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[Get_Exam_Fees_byUserId]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Billing\\ExamFeeReadOnly",
+            "fields": [
+              {
+                "name": "SubTotal",
+                "dataType": "decimal?",
+                "maxLength": 8,
+                "precision": 19,
+                "scale": 4,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SubTotal"
+              },
+              {
+                "name": "InvoiceNumber",
+                "dataType": "string",
+                "maxLength": 16,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InvoiceNumber"
+              },
+              {
+                "name": "PaidTotal",
+                "dataType": "decimal?",
+                "maxLength": 8,
+                "precision": 19,
+                "scale": 4,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PaidTotal"
+              },
+              {
+                "name": "BalanceDue",
+                "dataType": "decimal?",
+                "maxLength": 8,
+                "precision": 19,
+                "scale": 4,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.BalanceDue"
+              },
+              {
+                "name": "ExamCode",
+                "dataType": "string",
+                "maxLength": 32,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamCode"
+              },
+              {
+                "name": "PaymentDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PaymentDate"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Billing\\ExamFeeReadOnly.GetByUserId ExamFeeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Billing\\ExamFeeReadOnly -p:Adapter=sp:abssp-[dbo].[Get_Exam_Fees_byUserId] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamFeeReadOnly -p:Route=by-userid -p:ControllerName=Billing\\ExamFeeController -p:ControllerRoute=api/billing/exam-fee -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim ",
+    "inferredCommand": "ytgim generate i  Billing\\ExamFeeReadOnly.GetByUserId ExamFeeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Billing\\ExamFeeReadOnly -p:Adapter=sp:abssp-[dbo].[Get_Exam_Fees_byUserId] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamFeeReadOnly -p:Route=by-userid -p:ControllerName=Billing\\ExamFeeController -p:ControllerRoute=api/billing/exam-fee -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-09-12T14:49:11.3263215Z"
+  },
+  "version": 1
+}
