@@ -84,7 +84,6 @@ export class DashboardComponent {
       if (isSurgeon) {
         this._store.dispatch(new GetDashboardCertificationInformation());
         this.certificateInformation$?.subscribe((userInformation) => {
-          console.log('userInformation', userInformation);
           if (userInformation?.certificates?.length > 0) {
             this.userInformation = userInformation.certificates;
           }
@@ -166,7 +165,6 @@ export class DashboardComponent {
       }
     });
 
-    //console.log(this.upcomingExams);
     const alertsAndNoticesCertfiied = [
       {
         title: 'Upcoming Exam Registration',
@@ -213,7 +211,6 @@ export class DashboardComponent {
   }
 
   setActionCardsByUserClaims(isSurgeon: boolean) {
-    console.log('setActionCardsByUserClaims', isSurgeon);
     this.userActionCards = isSurgeon
       ? CERTIFIED_ACTION_CARDS
       : TRAINEE_ACTION_CARDS;
