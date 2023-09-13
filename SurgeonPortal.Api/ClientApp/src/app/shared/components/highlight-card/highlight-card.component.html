@@ -6,13 +6,18 @@
     download
     *ngIf="alert?.downloadLink"
   ></a>
-  <div class="img-container" [style]="imageStyleUrl"></div>
-  <div class="highlight-content">
-    <!-- <div class="alert-title" *ngIf="alert?.alert">Alerts and Notices</div> -->
-    <div class="title">{{ alert?.title }}</div>
-    <div class="content" [innerHTML]="alert?.content"></div>
-    <div class="card-action" *ngIf="alert?.actionText">
-      {{ alert.actionText }}
+  <div class="flex col-12">
+    <div
+      *ngIf="alert.image"
+      class="img-container"
+      [style]="imageStyleUrl"
+    ></div>
+    <div class="highlight-content col-8">
+      <div class="title">{{ alert?.title }}</div>
+      <div class="content" [innerHTML]="alert?.content"></div>
+      <div class="card-action" *ngIf="alert?.actionText">
+        {{ alert.actionText }}
+      </div>
     </div>
   </div>
 </div>

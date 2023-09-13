@@ -181,7 +181,7 @@ export class DashboardComponent {
         actionText: 'View Your Documents',
         alert: false,
         image:
-          'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
+          'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
     ];
 

@@ -84,11 +84,21 @@ export class CeScoringAppComponent implements OnInit {
         title: 'Your Examination Agenda',
         content: 'Your agenda can be found here once it has been finalized.',
         alert: false,
-        actionText: 'Download Agenda',
+        actionText: 'Download Conflicts',
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
         downloadLink:
           '../../assets/files/examiner_056246_daythree_ce_agenda_dr_barnhart.pdf', //if the pdf is an external link
+      },
+      {
+        title: 'Your Conflicts',
+        content: 'Your conflicts report can be found here',
+        alert: false,
+        actionText: 'Download Agenda',
+        image:
+          'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
+        downloadLink:
+          '../../assets/files/examiner_056246_daythree_ce_agenda_dr_barnhart.pdf',
       },
     ];
 
