@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterOutlet,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
 import { Observable, Subscription, take } from 'rxjs';
@@ -19,7 +24,10 @@ import { UserClaims } from './side-navigation/user-status.enum';
 import { Message } from 'primeng/api';
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { LoadApplication } from './state/application/application.actions';
+import { IAppUserReadOnlyModel } from './api';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-root',
   templateUrl: './app.component.html',
@@ -36,20 +44,21 @@ import { LoadApplication } from './state/application/application.actions';
     AlertComponent,
   ],
 })
-export class AppComponent implements OnDestroy, OnInit {
+export class AppComponent implements OnInit {
   // TODO: MOve this logic into the auth guard
-  @Select(AuthSelectors.isAuthenticated) isAuthenticated$:
+  @Select(AuthSelectors.slices.isAuthenticated) isAuthenticated$:
     | Observable<boolean>
     | undefined;
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
-
-  authSub: Subscription | undefined;
-  userSub: Subscription | undefined;
+  @Select(AuthSelectors.loginUser)
+  loginUser$: Observable<IAppUserReadOnlyModel> | undefined;
 
   version = packageInfo.buildId;
 
+  isAuthenticated = false;
+  isPasswordReset = false;
   isSurgeon = false;
   isExaminer = false;
   isSideNavOpen = false;
@@ -61,28 +70,36 @@ export class AppComponent implements OnDestroy, OnInit {
   preventScreenshot = false;
   messages!: Message[];
 
-  constructor(private _store: Store) {
-    this.authSub = this.isAuthenticated$?.subscribe((isAuthed) => {
+  constructor(
+    private _store: Store,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.isAuthenticated$?.pipe(untilDestroyed(this)).subscribe((isAuthed) => {
+      this.isAuthenticated = isAuthed;
+      this.isPasswordReset = this._store.selectSnapshot(
+        AuthSelectors.slices.isPasswordReset
+      );
+      const routerStateSnapshot: RouterStateSnapshot =
+        this.router.routerState.snapshot;
       const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);
       const claims = this._store.selectSnapshot(AuthSelectors.claims);
       if (isAuthed && loginUser && claims) {
-        this._store
-          .dispatch(new LoadApplication())
-          .pipe(take(1))
-          .subscribe(() => {
-            if (claims.includes(UserClaims.surgeon)) {
-              this.isSurgeon = true;
-            }
-            if (claims.includes(UserClaims.trainee)) {
-              this.isSurgeon = false;
-            }
-            if (claims.includes(UserClaims.examiner)) {
-              this.isExaminer = true;
-            } else {
-              this.isExaminer = false;
-            }
-            this._store.dispatch(new GetUserProfile(loginUser, claims));
-          });
+        this._store.dispatch(new LoadApplication());
+        this.isSurgeon =
+          claims.includes(UserClaims.surgeon) &&
+          !claims.includes(UserClaims.trainee);
+        this.isExaminer = claims.includes(UserClaims.examiner);
+        this._store.dispatch(new GetUserProfile(loginUser, claims));
+      }
+
+      if (!isAuthed) {
+        const returnUrl = routerStateSnapshot.url
+          ? routerStateSnapshot.url
+          : '/dashboard';
+        this.router.navigate(['/login'], {
+          queryParams: { returnUrl: returnUrl },
+        });
       }
     });
   }
@@ -128,11 +145,6 @@ export class AppComponent implements OnDestroy, OnInit {
     } else {
       this.preventScreenshot = false;
     }
-  }
-
-  ngOnDestroy(): void {
-    this.authSub?.unsubscribe();
-    this.userSub?.unsubscribe();
   }
 
   handleSideNavToggle() {

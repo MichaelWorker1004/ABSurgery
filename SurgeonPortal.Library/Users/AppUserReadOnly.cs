@@ -45,6 +45,11 @@ namespace SurgeonPortal.Library.Users
 		public static readonly PropertyInfo<string> EmailAddressProperty = RegisterProperty<string>(c => c.EmailAddress);
 
         [DataMember]
+		[DisplayName(nameof(ResetRequired))]
+        public bool ResetRequired => ReadProperty(ResetRequiredProperty);
+		public static readonly PropertyInfo<bool> ResetRequiredProperty = RegisterProperty<bool>(c => c.ResetRequired);
+
+        [DataMember]
 		[DisplayName(nameof(LastLoginDateUtc))]
         public DateTime? LastLoginDateUtc => ReadProperty(LastLoginDateUtcProperty);
 		public static readonly PropertyInfo<DateTime?> LastLoginDateUtcProperty = RegisterProperty<DateTime?>(c => c.LastLoginDateUtc);
@@ -109,6 +114,7 @@ namespace SurgeonPortal.Library.Users
             LoadProperty(FullNameProperty, dto.FullName);
             LoadProperty(UserNameProperty, dto.UserName);
             LoadProperty(EmailAddressProperty, dto.EmailAddress);
+            LoadProperty(ResetRequiredProperty, dto.ResetRequired);
             LoadProperty(LastLoginDateUtcProperty, dto.LastLoginDateUtc);
 
             LoadProperty(ClaimsProperty, DataPortal.FetchChild<UserClaimReadOnlyList>(dto.Claims));
