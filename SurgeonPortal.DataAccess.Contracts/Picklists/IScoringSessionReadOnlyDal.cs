@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Picklists
 {
     public interface IScoringSessionReadOnlyDal
     {
-        Task<IEnumerable<ScoringSessionReadOnlyDto>> GetByKeysAsync(int examHeaderId);
+        Task<IEnumerable<ScoringSessionReadOnlyDto>> GetByKeysAsync(System.DateTime currentDate);
     }
 }

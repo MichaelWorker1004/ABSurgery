@@ -2,6 +2,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Picklists;
 using SurgeonPortal.DataAccess.Picklists;
+using System;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 using Ytg.UnitTest.ConnectionManager;
@@ -17,19 +18,19 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         {
             var expectedSprocName = "[dbo].[get_day_session_picklist]";
             var expectedExaminerUserId = Create<int>();
-            var expectedExamHeaderId = Create<int>();
+            var expectedCurrentDate = Create<DateTime>();
             var expectedParams =
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,
-                    ExamHeaderId = expectedExamHeaderId,
+                    CurrentDate = expectedCurrentDate,
                 };
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecords(CreateMany<ScoringSessionReadOnlyDto>());
         
             var sut = new ScoringSessionReadOnlyDal(sqlManager);
-            await sut.GetByKeysAsync(expectedExamHeaderId);
+            await sut.GetByKeysAsync(expectedCurrentDate);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +45,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new ScoringSessionReadOnlyDal(sqlManager);
-            var result = await sut.GetByKeysAsync(Create<int>());
+            var result = await sut.GetByKeysAsync(Create<DateTime>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

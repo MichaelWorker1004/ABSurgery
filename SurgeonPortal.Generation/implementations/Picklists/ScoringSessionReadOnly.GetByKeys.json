@@ -36,13 +36,13 @@
             "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
           },
           {
-            "name": "ExamHeaderId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
+            "name": "CurrentDate",
+            "dataType": "datetime",
+            "maxLength": 8,
+            "precision": 23,
+            "scale": 3,
             "required": true,
-            "mapsTo": "ExamHeaderId"
+            "mapsTo": "CurrentDate"
           }
         ],
         "recordsets": [
@@ -87,15 +87,15 @@
   ],
   "inputParameters": [
     {
-      "name": "ExamHeaderId",
-      "dataType": "int",
+      "name": "CurrentDate",
+      "dataType": "datetime",
       "required": true
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Picklists\\ScoringSessionReadOnly.GetByExaminer ScoringSessionReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ScoringSessionReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_day_session_picklist] -p:FetchMethodName=GetByKeys -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ScoringSessionReadOnly -p:Route=examiner-sessions -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:UsePaginatedList=false ",
+    "command": "ytgim g i s Picklists\\ScoringSessionReadOnly.GetByKeys ScoringSessionReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ScoringSessionReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_day_session_picklist] -p:FetchMethodName=GetByKeys -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ScoringSessionReadOnly -p:Route=examiner-sessions -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:UsePaginatedList=false -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-06-21T17:58:38.2102225Z"
+    "generatedDateUtc": "2023-09-13T18:54:44.3860693Z"
   },
   "version": 1
 }
