@@ -16,9 +16,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-    [Route("api/picklists")]
-    public class PicklistsController : YtgControllerBase
-    {
+	[Route("api/picklists")]
+	public class PicklistsController : YtgControllerBase
+	{
         private readonly IMapper _mapper;
 
         public PicklistsController(
@@ -41,9 +41,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IAccreditedProgramInstitutionReadOnlyListFactory accreditedProgramInstitutionReadOnlyListFactory)
         {
             var items = await accreditedProgramInstitutionReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<AccreditedProgramInstitutionReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -57,9 +57,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IAppointmentTypeReadOnlyListFactory appointmentTypeReadOnlyListFactory)
         {
             var items = await appointmentTypeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<AppointmentTypeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -73,9 +73,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] ICertificateTypeReadOnlyListFactory certificateTypeReadOnlyListFactory)
         {
             var items = await certificateTypeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<CertificateTypeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -89,9 +89,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IClinicalActivityReadOnlyListFactory clinicalActivityReadOnlyListFactory)
         {
             var items = await clinicalActivityReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<ClinicalActivityReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -105,9 +105,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IClinicalLevelReadOnlyListFactory clinicalLevelReadOnlyListFactory)
         {
             var items = await clinicalLevelReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<ClinicalLevelReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -121,9 +121,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] ICountryReadOnlyListFactory countryReadOnlyListFactory)
         {
             var items = await countryReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<CountryReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -137,9 +137,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IDegreeReadOnlyListFactory degreeReadOnlyListFactory)
         {
             var items = await degreeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<DegreeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -153,9 +153,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IDocumentTypeReadOnlyListFactory documentTypeReadOnlyListFactory)
         {
             var items = await documentTypeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<DocumentTypeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -169,9 +169,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IEthnicityReadOnlyListFactory ethnicityReadOnlyListFactory)
         {
             var items = await ethnicityReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<EthnicityReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -185,9 +185,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IExamSpecialtyReadOnlyListFactory examSpecialtyReadOnlyListFactory)
         {
             var items = await examSpecialtyReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<ExamSpecialtyReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -201,9 +201,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IExamStatusReadOnlyListFactory examStatusReadOnlyListFactory)
         {
             var items = await examStatusReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<ExamStatusReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -217,9 +217,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IExamTypeReadOnlyListFactory examTypeReadOnlyListFactory)
         {
             var items = await examTypeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<ExamTypeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -234,9 +234,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             string fellowshipType)
         {
             var items = await fellowshipProgramReadOnlyListFactory.GetAllAsync(fellowshipType);
-
+        
             return Ok(_mapper.Map<IEnumerable<FellowshipProgramReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -250,9 +250,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IFellowshipTypeReadOnlyListFactory fellowshipTypeReadOnlyListFactory)
         {
             var items = await fellowshipTypeReadOnlyListFactory.GetAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<FellowshipTypeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -266,9 +266,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IGenderReadOnlyListFactory genderReadOnlyListFactory)
         {
             var items = await genderReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<GenderReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -282,9 +282,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IGraduateProfileReadOnlyListFactory graduateProfileReadOnlyListFactory)
         {
             var items = await graduateProfileReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<GraduateProfileReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -298,9 +298,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IJcahoOrganizationReadOnlyListFactory jcahoOrganizationReadOnlyListFactory)
         {
             var items = await jcahoOrganizationReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<JcahoOrganizationReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -314,9 +314,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] ILanguageReadOnlyListFactory languageReadOnlyListFactory)
         {
             var items = await languageReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<LanguageReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -330,9 +330,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] ILicenseTypeReadOnlyListFactory licenseTypeReadOnlyListFactory)
         {
             var items = await licenseTypeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<LicenseTypeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -346,9 +346,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IOrganizationTypeReadOnlyListFactory organizationTypeReadOnlyListFactory)
         {
             var items = await organizationTypeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<OrganizationTypeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -362,9 +362,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IPracticeTypeReadOnlyListFactory practiceTypeReadOnlyListFactory)
         {
             var items = await practiceTypeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<PracticeTypeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -378,9 +378,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IPrimaryPracticeReadOnlyListFactory primaryPracticeReadOnlyListFactory)
         {
             var items = await primaryPracticeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<PrimaryPracticeReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -394,9 +394,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IRaceReadOnlyListFactory raceReadOnlyListFactory)
         {
             var items = await raceReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<RaceReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -410,9 +410,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] IResidencyProgramReadOnlyListFactory residencyProgramReadOnlyListFactory)
         {
             var items = await residencyProgramReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<ResidencyProgramReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -424,12 +424,12 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         [HttpGet("examiner-sessions")]
         public async Task<ActionResult<IEnumerable<ScoringSessionReadOnlyModel>>> GetScoringSessionReadOnly_GetByKeysAsync(
             [FromServices] IScoringSessionReadOnlyListFactory scoringSessionReadOnlyListFactory,
-            int examHeaderId)
+            DateTime currentDate)
         {
-            var items = await scoringSessionReadOnlyListFactory.GetByKeysAsync(examHeaderId);
-
+            var items = await scoringSessionReadOnlyListFactory.GetByKeysAsync(currentDate);
+        
             return Ok(_mapper.Map<IEnumerable<ScoringSessionReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -444,9 +444,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             string countryCode)
         {
             var items = await stateReadOnlyListFactory.GetByCountryAsync(countryCode);
-
+        
             return Ok(_mapper.Map<IEnumerable<StateReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -460,9 +460,9 @@ namespace SurgeonPortal.Api.Controllers.Picklists
             [FromServices] ITrainingTypeReadOnlyListFactory trainingTypeReadOnlyListFactory)
         {
             var items = await trainingTypeReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<TrainingTypeReadOnlyModel>>(items));
-        }
+        } 
     }
 }
 

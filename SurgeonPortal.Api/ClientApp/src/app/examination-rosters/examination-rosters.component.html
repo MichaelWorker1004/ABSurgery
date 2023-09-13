@@ -26,15 +26,16 @@
                 (onClick)="confirmCaseSelection(case)"
               >
                 <span
+                  class="text-left"
                   [ngClass]="{
                     'selected-case': selectedCaseId === case.id
                   }"
                 >
                   {{ case.caseNumber }}:
                   <span *ngIf="case.description">{{ case.description }}</span>
-                  <span *ngIf="!case.description"
-                    >Description of case {{ case.caseNumber }}</span
-                  >
+                  <span *ngIf="!case.description">
+                    {{ case.title }}
+                  </span>
                 </span>
               </p-button>
             </ng-container>
@@ -45,21 +46,18 @@
         </div>
         <div class="col-12 lg:col-8 md:col-7 no-highlight">
           <h5 class="pb-3 case-header">
-            <span *ngIf="selectedCaseDetails"
-              >Case {{ selectedCaseDetails.caseNumber }}:
-              <span *ngIf="selectedCaseDetails.description">{{
-                selectedCaseDetails.description
+            <span *ngIf="selectedCaseDetails">
+              Case {{ selectedCaseDetails.caseNumber }}:
+              <span *ngIf="selectedCaseDetails.title">{{
+                selectedCaseDetails.title
               }}</span>
-              <span *ngIf="!selectedCaseDetails.description"
-                >Description of case {{ selectedCaseDetails.caseNumber }}</span
-              >
             </span>
             <span *ngIf="!selectedCaseDetails">Case Details</span>
             <p-button
               *ngIf="selectedCaseDetails"
               styleClass="p-button-info p-button-text pl-0"
               (onClick)="scrollToCaseFeedback()"
-              >Provide Feedback</p-button
+              >Provide Case Feedback</p-button
             >
           </h5>
           <p
@@ -129,7 +127,9 @@
             </div>
 
             <div class="col-12 case-feedback-container" id="case-feedback">
-              <label for="case-feedback-comment">Case Feedback</label>
+              <label for="case-feedback-comment"
+                >Case Feedback for Exam Development</label
+              >
               <small class="text-muted block"
                 >Please provide any feedback for the exam writers here.</small
               >

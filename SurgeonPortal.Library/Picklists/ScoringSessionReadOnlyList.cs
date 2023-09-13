@@ -39,7 +39,7 @@ namespace SurgeonPortal.Library.Picklists
         private async Task GetByKeys(GetByKeysCriteria criteria)
         
         {
-            var dtos = await _scoringSessionReadOnlyDal.GetByKeysAsync(criteria.ExamHeaderId);
+            var dtos = await _scoringSessionReadOnlyDal.GetByKeysAsync(criteria.CurrentDate);
         			
             FetchChildren(dtos);
         }
