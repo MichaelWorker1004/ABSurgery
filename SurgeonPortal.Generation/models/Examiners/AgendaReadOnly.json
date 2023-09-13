@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Examiners\\AgendaReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "StreamId",
+      "dataType": "guid",
+      "maxLength": 16,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Name",
+      "dataType": "string",
+      "maxLength": 510,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examiners\\AgendaReadOnly -sp [dbo].[get_examiner_agenda] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-09-13T17:41:59.9385224Z"
+  },
+  "version": 1
+}
