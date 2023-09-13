@@ -106,7 +106,8 @@
     "lastGeneratedHash": "E5F62FC902C76A35265ECB4EAEFD0D1B"
   },
   "\\SurgeonPortal.Api\\Controllers\\Users\\UsersController.cs": {
-    "lastGeneratedHash": "98EC4CB775931AC158BEE2872E0F0E96"
+    "lastGeneratedHash": "28804BFDCA51C1484B261FC616629DA7",
+    "lastMergedHash": "FB7EA1D8AE55B40F7F11DB738400F48B"
   },
   "\\SurgeonPortal.Library.Contracts\\Users\\IUserClaimReadOnly.cs": {
     "lastGeneratedHash": "E1923C4FB5B09A7A45D85CC16C205786",
@@ -2526,19 +2527,19 @@
     "lastGeneratedHash": "D732C0631FBDAB19518756DB7E94E2B1"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\ICaseRosterReadOnly.cs": {
-    "lastGeneratedHash": "F4A0A6868F737C7D7481FD5B8D2BC040"
+    "lastGeneratedHash": "223FD5D77F964B82DCE1F25279038BE6"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\ICaseRosterReadOnlyList.cs": {
     "lastGeneratedHash": "8EC99790CC1386B3FE9A20A9D5582CE3"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\scoring\\case-roster-read-only.model.ts": {
-    "lastGeneratedHash": "F0937F2C74AC8AE55D80510F8F818DEE"
+    "lastGeneratedHash": "91419082ED6B2A08616E7529AFC1A99C"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Scoring\\CaseRosterReadOnlyDto.cs": {
-    "lastGeneratedHash": "427324850ED554FFBFFAAD01AEBE11A3"
+    "lastGeneratedHash": "E4FDEA87CE3AC297B2E19958E6A71602"
   },
   "\\SurgeonPortal.Models\\Scoring\\CaseRosterReadOnlyModel.cs": {
-    "lastGeneratedHash": "F2E92493698E799726BD8F27E946C7DD"
+    "lastGeneratedHash": "D4F1F2A4F4C4B4C554C397B2C31F67A2"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\scoring\\case-score.model.ts": {
     "lastGeneratedHash": "8A6D0455DE7386DD1FE6919F7D18ECBD"
@@ -3051,7 +3052,7 @@
     "lastGeneratedHash": "79239F7D6B61FB64B8E319AA178B63BF"
   },
   "\\SurgeonPortal.Library\\Scoring\\CaseRosterReadOnly.cs": {
-    "lastGeneratedHash": "361EF302D9D5A43372BD1B58B954B42E"
+    "lastGeneratedHash": "F49500885DC48933EA5665257D5B2D75"
   },
   "\\SurgeonPortal.Library\\Scoring\\CaseRosterReadOnlyList.cs": {
     "lastGeneratedHash": "B144A3E1C25A44BFA22C9DB3C0992127"

@@ -26,6 +26,17 @@
       "rules": {}
     },
     {
+      "name": "Title",
+      "dataType": "string",
+      "maxLength": -1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
       "name": "Id",
       "dataType": "int",
       "maxLength": 4,
@@ -40,7 +51,7 @@
   "metadata": {
     "command": "ytgim g m s Scoring\\CaseRosterReadOnly -sp [dbo].[get_toc_case_list] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-06-26T15:17:58.3754573Z"
+    "generatedDateUtc": "2023-09-13T14:00:01.3613927Z"
   },
   "version": 1
 }
