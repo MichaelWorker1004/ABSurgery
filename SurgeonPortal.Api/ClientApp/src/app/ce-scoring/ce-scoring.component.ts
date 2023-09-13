@@ -123,8 +123,8 @@ export class CeScoringAppComponent implements OnInit {
       if (examinerAgenda) {
         alertsAndNotices[1].action = {
           type: 'download',
-          documentId: examinerAgenda.streamId ?? 69,
-          documentName: examinerAgenda.name ?? 'somename.pdf',
+          documentId: examinerAgenda.id ?? 69,
+          documentName: examinerAgenda.documentName,
         };
       }
       this.globalDialogService.closeOpenDialog();
@@ -134,8 +134,8 @@ export class CeScoringAppComponent implements OnInit {
       if (examinerConflict) {
         alertsAndNotices[0].action = {
           type: 'download',
-          documentId: examinerConflict.streamId ?? 69,
-          documentName: examinerConflict.name ?? 'somename.pdf',
+          documentId: examinerConflict.id,
+          documentName: examinerConflict.documentName,
         };
       }
       this.globalDialogService.closeOpenDialog();
@@ -151,7 +151,7 @@ export class CeScoringAppComponent implements OnInit {
   }
 
   handleCardAction($event: any) {
-    //this._store.dispatch(new DownloadDocument(+$event));
+    this._store.dispatch(new DownloadDocument($event));
   }
 
   resetCaseCommentsData() {
