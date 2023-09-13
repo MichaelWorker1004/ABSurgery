@@ -120,23 +120,27 @@ export class CeScoringAppComponent implements OnInit {
     ];
 
     this.examinerAgenda$?.subscribe((examinerAgenda) => {
-      if (examinerAgenda) {
+      if (examinerAgenda.id) {
         alertsAndNotices[1].action = {
           type: 'download',
           documentId: examinerAgenda.id ?? 69,
           documentName: examinerAgenda.documentName,
         };
+      } else {
+        alertsAndNotices[1].actionText = 'Coming Soon';
       }
       this.globalDialogService.closeOpenDialog();
     });
 
     this.examinerConflict$?.subscribe((examinerConflict) => {
-      if (examinerConflict) {
+      if (examinerConflict.id) {
         alertsAndNotices[0].action = {
           type: 'download',
           documentId: examinerConflict.id,
           documentName: examinerConflict.documentName,
         };
+      } else {
+        alertsAndNotices[0].actionText = 'Coming Soon';
       }
       this.globalDialogService.closeOpenDialog();
     });
