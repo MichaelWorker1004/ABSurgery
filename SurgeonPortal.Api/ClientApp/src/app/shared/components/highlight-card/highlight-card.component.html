@@ -1,11 +1,17 @@
 <div [class]="alertClass">
-  <a class="hotspot" [routerLink]="alert?.action" *ngIf="alert?.action"></a>
   <a
     class="hotspot"
-    [href]="alert?.downloadLink"
-    download
-    *ngIf="alert?.downloadLink"
+    *ngIf="alert?.action?.type === 'component'"
+    [routerLink]="alert?.action?.action"
   ></a>
+  <button
+    class="hotspot"
+    (click)="handleCardAction(alert?.action?.type)"
+    download
+    *ngIf="
+      alert?.action?.type === 'action' || alert?.action?.type === 'download'
+    "
+  ></button>
   <div class="flex col-12">
     <div
       *ngIf="alert.image"

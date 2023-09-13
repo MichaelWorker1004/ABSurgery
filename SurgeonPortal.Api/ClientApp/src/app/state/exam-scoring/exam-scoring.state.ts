@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { catchError, map, mergeMap, share, tap } from 'rxjs/operators';
+import { catchError, map, share, tap } from 'rxjs/operators';
 import { Observable, forkJoin, of } from 'rxjs';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import {
   CaseContentsService,
   CaseNotesService,
   CasesService,
-  //ExamScoresService,
   ExamSessionsService,
   ICaseCommentModel,
   ICaseDetailReadOnlyModel,
   ICaseRosterReadOnlyModel,
-  //IExamScoreReadOnlyModel,
   IExamSessionReadOnlyModel,
   CaseScoresService,
   ICaseScoreReadOnlyModel,
@@ -26,7 +24,6 @@ import {
   CreateCaseComment,
   UpdateCaseComment,
   GetExamineeList,
-  GetActiveExamination,
   GetExamScoresList,
   GetSelectedExamScores, // if no api call is needed create a custom selector for this
   ClearExamScoringErrors,
@@ -46,6 +43,8 @@ import {
   UpdateCaseFeedback,
   DeleteCaseFeedback,
   GetCaseDetailsAndFeedback,
+  GetExaminerAgenda,
+  GetExaminerConflict,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -61,6 +60,10 @@ import { ExaminationsService } from 'src/app/api/services/examinations/examinati
 import { IExamTitleReadOnlyModel } from 'src/app/api/models/examinations/exam-title-read-only.model';
 import { ICaseFeedbackModel } from 'src/app/api/models/scoring/case-feedback.model';
 import { CaseFeedbackService } from 'src/app/api/services/scoring/case-feedback.service';
+import { IAgendaReadOnlyModel } from 'src/app/api/models/examiners/agenda-read-only.model';
+import { AgendaService } from 'src/app/api/services/examiners/agenda.service';
+import { ConflictService } from 'src/app/api/services/examiners/conflict.service';
+import { IConflictReadOnlyModel } from 'src/app/api/models/examiners/conflict-read-only.model';
 
 export interface IExamScoring {
   examTitle: IExamTitleReadOnlyModel | undefined;
@@ -81,6 +84,8 @@ export interface IExamScoring {
   roster: IRosterReadOnlyModel[] | undefined;
   dashboardRoster: IDashboardRosterReadOnlyModel[] | undefined;
   examinee: IExamineeReadOnlyModel | undefined;
+  examinerAgenda: IAgendaReadOnlyModel | undefined;
+  examinerConflict: IConflictReadOnlyModel | undefined;
   errors: IFormErrors | null;
 }
 
@@ -103,6 +108,8 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
     dashboardRoster: undefined,
     examinee: undefined,
     selectedCaseFeedback: undefined,
+    examinerAgenda: undefined,
+    examinerConflict: undefined,
     errors: null,
   },
 })
@@ -123,6 +130,8 @@ export class ExamScoringState {
     private examinationsService: ExaminationsService,
     private globalDialogService: GlobalDialogService,
     private caseFeedbackService: CaseFeedbackService,
+    private agendaService: AgendaService,
+    private conflictSerive: ConflictService,
     private router: Router
   ) {}
 
@@ -733,5 +742,49 @@ export class ExamScoringState {
   @Action(ClearExamScoringErrors)
   clearGraduateMedicalEducationErrors(ctx: StateContext<IExamScoring>) {
     ctx.patchState({ errors: null });
+  }
+
+  @Action(GetExaminerAgenda)
+  getExaminerAgenda(
+    ctx: StateContext<IExamScoring>,
+    payload: { examHeaderId: number }
+  ): Observable<IExamScoring> {
+    return this.agendaService
+      .retrieveAgendaReadOnly_GetByExamHeaderId(payload.examHeaderId)
+      .pipe(
+        tap((examinerAgenda: IAgendaReadOnlyModel) => {
+          ctx.patchState({
+            examinerAgenda,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetExaminerConflict)
+  getExaminerConflict(
+    ctx: StateContext<IExamScoring>,
+    payload: { examHeaderId: number }
+  ): Observable<IExamScoring> {
+    return this.conflictSerive
+      .retrieveConflictReadOnly_GetByExamHeaderId(payload.examHeaderId)
+      .pipe(
+        tap((examinerConflict: IConflictReadOnlyModel) => {
+          ctx.patchState({
+            examinerConflict,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
   }
 }

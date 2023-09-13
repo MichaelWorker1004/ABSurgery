@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -11,6 +11,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class HighlightCardComponent implements OnInit {
   @Input() alert: any;
+  @Output() action: EventEmitter<any> = new EventEmitter();
   imageStyleUrl!: string;
   alertClass!: string;
 
@@ -27,6 +28,17 @@ export class HighlightCardComponent implements OnInit {
 
   setAlertClass() {
     this.alertClass = `highlight-card ${this.alert?.alert ? 'alert' : ''}`;
+  }
+
+  handleCardAction(action: string) {
+    if (action === 'download') {
+      this.action.emit({
+        documentId: this.alert?.action?.documentId,
+        documentName: this.alert?.action.documentName,
+      });
+    } else {
+      this.action.emit(action);
+    }
   }
 
   get router(): Router {

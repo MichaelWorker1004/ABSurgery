@@ -6,8 +6,11 @@ import { HighlightCardComponent } from '../shared/components/highlight-card/high
 import { UserInformationSliderComponent } from '../shared/components/user-information-slider/user-information-slider.component';
 import { Select, Store } from '@ngxs/store';
 import {
+  DownloadDocument,
   ExamScoringSelectors,
   GetExamTitle,
+  GetExaminerAgenda,
+  GetExaminerConflict,
   GetRoster,
   ResetCaseCommentsData,
   ResetExamScoringData,
@@ -20,6 +23,9 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';
+import { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 
 @UntilDestroy()
 @Component({
@@ -49,6 +55,12 @@ export class CeScoringAppComponent implements OnInit {
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
+  @Select(ExamScoringSelectors.slices.examinerAgenda)
+  examinerAgenda$: Observable<IAgendaReadOnlyModel> | undefined;
+
+  @Select(ExamScoringSelectors.slices.examinerConflict)
+  examinerConflict$: Observable<IConflictReadOnlyModel> | undefined;
+
   examHeaderId = 491; // TODO - remove hard coded value
 
   currentYear = new Date().getFullYear();
@@ -61,8 +73,13 @@ export class CeScoringAppComponent implements OnInit {
 
   ceScoreTesting = false;
 
-  constructor(private _store: Store) {
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this._store.dispatch(new GetExaminerAgenda(this.examHeaderId));
+    this._store.dispatch(new GetExaminerConflict(this.examHeaderId));
     this.featureFlags$?.pipe().subscribe((featureFlags) => {
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
@@ -79,16 +96,16 @@ export class CeScoringAppComponent implements OnInit {
   }
 
   fetchCEDashboardDate() {
-    this.alertsAndNotices = [
+    this.globalDialogService.showLoading();
+    const alertsAndNotices = [
       {
         title: 'Your Examination Agenda',
         content: 'Your agenda can be found here once it has been finalized.',
         alert: false,
         actionText: 'Download Conflicts',
+        action: {},
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        downloadLink:
-          '../../assets/files/examiner_056246_daythree_ce_agenda_dr_barnhart.pdf', //if the pdf is an external link
       },
       {
         title: 'Your Conflicts',
@@ -102,11 +119,39 @@ export class CeScoringAppComponent implements OnInit {
       },
     ];
 
+    this.examinerAgenda$?.subscribe((examinerAgenda) => {
+      if (examinerAgenda) {
+        alertsAndNotices[1].action = {
+          type: 'download',
+          documentId: examinerAgenda.streamId ?? 69,
+          documentName: examinerAgenda.name ?? 'somename.pdf',
+        };
+      }
+      this.globalDialogService.closeOpenDialog();
+    });
+
+    this.examinerConflict$?.subscribe((examinerConflict) => {
+      if (examinerConflict) {
+        alertsAndNotices[0].action = {
+          type: 'download',
+          documentId: examinerConflict.streamId ?? 69,
+          documentName: examinerConflict.name ?? 'somename.pdf',
+        };
+      }
+      this.globalDialogService.closeOpenDialog();
+    });
+
+    this.alertsAndNotices = alertsAndNotices;
+
     this.dashboardRoster$?.subscribe((dashboardRoster) => {
       this.dashboardRoster = dashboardRoster;
     });
 
     this.examinationWeek = new Date().toLocaleDateString();
+  }
+
+  handleCardAction($event: any) {
+    //this._store.dispatch(new DownloadDocument(+$event));
   }
 
   resetCaseCommentsData() {

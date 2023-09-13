@@ -31,6 +31,7 @@
     <abs-highlight-card
       class="col-12 md:col-6"
       *ngFor="let alert of alertsAndNotices"
+      (action)="handleCardAction($event)"
       [alert]="alert"
     ></abs-highlight-card>
 
