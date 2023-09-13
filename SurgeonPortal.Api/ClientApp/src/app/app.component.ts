@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { NgxsModule, Select, Store } from '@ngxs/store';
 import packageInfo from '../../package.json';
 import { MessagesModule } from 'primeng/messages';

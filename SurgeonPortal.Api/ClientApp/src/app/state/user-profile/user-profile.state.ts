@@ -6,7 +6,11 @@ import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
 import { IUserProfileModel } from '../../api';
 import { IFormErrors } from '../../shared/common';
 import { UserProfilesService } from '../../api';
-import { GetUserProfile, UpdateUserProfile } from './user-profile.actions';
+import {
+  ClearUserProfileErrors,
+  GetUserProfile,
+  UpdateUserProfile,
+} from './user-profile.actions';
 import { GetPicklists, GetStateList } from '../picklists';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
@@ -193,19 +197,23 @@ export class UserProfileState {
             true
           );
         }),
-        catchError((httpError: HttpErrorResponse) => {
-          const errors = httpError.error;
+        catchError((error) => {
+          // const errors = httpError.error;
           ctx.setState({
             ...ctx.getState(),
-            errors,
+            errors: error.error.errors,
           });
-          this.globalDialogService.showSuccessError(
-            'Error',
-            'Save failed',
-            false
-          );
-          return of(errors);
+          this.globalDialogService.closeOpenDialog();
+          return of(error);
         })
       );
+  }
+
+  @Action(ClearUserProfileErrors)
+  clearUserProfileErrors(ctx: StateContext<IUserProfile>) {
+    ctx.patchState({
+      ...ctx.getState(),
+      errors: null,
+    });
   }
 }
