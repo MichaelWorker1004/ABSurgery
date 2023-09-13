@@ -1,5 +1,5 @@
 
 export interface IConflictReadOnlyModel {
-    streamId: string;
-    name: string;
+    id: number;
+    documentName: string;
 }

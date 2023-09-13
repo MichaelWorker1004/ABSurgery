@@ -3540,28 +3540,28 @@
     "lastGeneratedHash": "060D3BBEB5E2CF71824C6D8AF335D62C"
   },
   "\\SurgeonPortal.Library.Contracts\\Examiners\\IAgendaReadOnly.cs": {
-    "lastGeneratedHash": "66C491244C63C24C903E843BC0553438"
+    "lastGeneratedHash": "2980B1DD125CFAE8B4DEE00C2BDECFA1"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examiners\\agenda-read-only.model.ts": {
-    "lastGeneratedHash": "D442F9356A7914B6D094D9DC36D810D4"
+    "lastGeneratedHash": "CF262B49654D51D449E7FE1EF8385500"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Examiners\\AgendaReadOnlyDto.cs": {
-    "lastGeneratedHash": "A3CED9752CA32D4ACF571696A237F86B"
+    "lastGeneratedHash": "7DEA2F220FD2B5D051728EDC52C617DE"
   },
   "\\SurgeonPortal.Models\\Examiners\\AgendaReadOnlyModel.cs": {
-    "lastGeneratedHash": "198576811B603F7C80F4AC868BEF945E"
+    "lastGeneratedHash": "C76EE9582B4899ACA3F670EE17BA0D90"
   },
   "\\SurgeonPortal.Library.Contracts\\Examiners\\IConflictReadOnly.cs": {
-    "lastGeneratedHash": "ED862BCBCDB4E27E4CA54B9D45DA7663"
+    "lastGeneratedHash": "152640119DB3F701F949F503EA8B1EF8"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examiners\\conflict-read-only.model.ts": {
-    "lastGeneratedHash": "12A8BF9241B9BED8243E1CBFC7F92EA5"
+    "lastGeneratedHash": "109D81D786B5999BDE24D196699E80B8"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Examiners\\ConflictReadOnlyDto.cs": {
-    "lastGeneratedHash": "D822064DF23536D6ACA101DADD2FF79D"
+    "lastGeneratedHash": "338B4A698315F308CB2506AC76E73DCA"
   },
   "\\SurgeonPortal.Models\\Examiners\\ConflictReadOnlyModel.cs": {
-    "lastGeneratedHash": "9130737C9C860CD86AB2531524B436A2"
+    "lastGeneratedHash": "A35AFB970317B3530C24C7C5D2AA4F4D"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examiners\\agenda.service.ts": {
     "lastGeneratedHash": "5454DA6BA5046CAC56B625F65D87FD68"
@@ -3570,7 +3570,7 @@
     "lastGeneratedHash": "D683F3F80B853DA51BE2E2B156FDBB05"
   },
   "\\SurgeonPortal.Library\\Examiners\\AgendaReadOnly.cs": {
-    "lastGeneratedHash": "311D7393DBFBD17D11F86F46D050A3F0"
+    "lastGeneratedHash": "06F85FE192182120CD16556E1F8E6A33"
   },
   "\\SurgeonPortal.DataAccess\\Examiners\\AgendaReadOnlyDal.cs": {
     "lastGeneratedHash": "4153FC7312C957978EF2E815B5E4275B"
@@ -3597,7 +3597,7 @@
     "lastGeneratedHash": "290DD4E65E091F5D5296F504984BE431"
   },
   "\\SurgeonPortal.Library\\Examiners\\ConflictReadOnly.cs": {
-    "lastGeneratedHash": "872F42BCD5109DECFA0D94345A7B2E19"
+    "lastGeneratedHash": "BC949E1E4C0606350856FD56AAAA71CA"
   },
   "\\SurgeonPortal.DataAccess\\Examiners\\ConflictReadOnlyDal.cs": {
     "lastGeneratedHash": "8EB8693E1277093274FD7E9192A47CFC"

@@ -1,5 +1,5 @@
 
 export interface IAgendaReadOnlyModel {
-    streamId: string;
-    name: string;
+    id: number;
+    documentName: string;
 }
