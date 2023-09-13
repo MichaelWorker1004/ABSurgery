@@ -615,7 +615,7 @@ export class PicklistsService {
             return this.apiService.get<IResidencyProgramReadOnlyModel[]>(`api/picklists/residency-programs?api-version=${apiVersion}`);
         }
  
-        public retrieveScoringSessionReadOnly_GetByKeys(examHeaderId: number,
+        public retrieveScoringSessionReadOnly_GetByKeys(currentDate: string,
         apiVersion = '1.0'): Observable<IScoringSessionReadOnlyModel[]> {
             /**
             * Claims
@@ -628,7 +628,7 @@ export class PicklistsService {
             
             /**
             * Required Parameters
-            * examHeaderId:Number
+            * currentDate:String
             * apiVersion
             */
             
@@ -638,7 +638,7 @@ export class PicklistsService {
             */
             
             
-            return this.apiService.get<IScoringSessionReadOnlyModel[]>(`api/picklists/examiner-sessions?api-version=${apiVersion}&examHeaderId=${examHeaderId}`);
+            return this.apiService.get<IScoringSessionReadOnlyModel[]>(`api/picklists/examiner-sessions?api-version=${apiVersion}&currentDate=${currentDate}`);
         }
  
         public retrieveStateReadOnly_GetByCountry(countryCode: string,

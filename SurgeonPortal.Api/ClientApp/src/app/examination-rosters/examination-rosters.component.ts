@@ -110,7 +110,7 @@ export class ExaminationRostersComponent implements OnInit {
   initPicklistValues() {
     // defaulting country code to 500 for US states
     this._store
-      .dispatch(new GetScoringSessionList(this.examHeaderId))
+      .dispatch(new GetScoringSessionList())
       .pipe(untilDestroyed(this))
       .subscribe(() => {
         this.scoringSessionsList = this._store.selectSnapshot(

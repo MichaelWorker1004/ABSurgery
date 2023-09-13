@@ -4,6 +4,7 @@ using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Picklists;
 using SurgeonPortal.Library.Contracts.Picklists;
 using SurgeonPortal.Library.Picklists;
+using System;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 
@@ -16,10 +17,10 @@ namespace SurgeonPortal.Library.Tests.Picklists
         [Test]
         public async Task GetByKeysAsync_CallsDalCorrectly()
         {
-            var expectedExamHeaderId = Create<int>();
+            var expectedCurrentDate = Create<DateTime>();
             
             var mockDal = new Mock<IScoringSessionReadOnlyDal>();
-            mockDal.Setup(m => m.GetByKeysAsync(expectedExamHeaderId))
+            mockDal.Setup(m => m.GetByKeysAsync(expectedCurrentDate))
                 .ReturnsAsync(CreateMany<ScoringSessionReadOnlyDto>());
         
             UseMockServiceProvider()
@@ -30,7 +31,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new ScoringSessionReadOnlyListFactory();
-            var sut = await factory.GetByKeysAsync(expectedExamHeaderId);
+            var sut = await factory.GetByKeysAsync(expectedCurrentDate);
         
             mockDal.VerifyAll();
         }
@@ -41,7 +42,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
             var expectedDtos = CreateMany<ScoringSessionReadOnlyDto>();
         
             var mockDal = new Mock<IScoringSessionReadOnlyDal>();
-            mockDal.Setup(m => m.GetByKeysAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByKeysAsync(It.IsAny<DateTime>()))
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
@@ -52,7 +53,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new ScoringSessionReadOnlyListFactory();
-            var sut = await factory.GetByKeysAsync(Create<int>());
+            var sut = await factory.GetByKeysAsync(Create<DateTime>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 
