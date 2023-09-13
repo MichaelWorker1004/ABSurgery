@@ -32,9 +32,9 @@
                 >
                   {{ case.caseNumber }}:
                   <span *ngIf="case.description">{{ case.description }}</span>
-                  <span *ngIf="!case.description"
-                    >Description of case {{ case.caseNumber }}</span
-                  >
+                  <span *ngIf="!case.description">
+                    {{ case.caseTitle }}
+                  </span>
                 </span>
               </p-button>
             </ng-container>
@@ -45,14 +45,11 @@
         </div>
         <div class="col-12 lg:col-8 md:col-7 no-highlight">
           <h5 class="pb-3 case-header">
-            <span *ngIf="selectedCaseDetails"
-              >Case {{ selectedCaseDetails.caseNumber }}:
-              <span *ngIf="selectedCaseDetails.description">{{
-                selectedCaseDetails.description
+            <span *ngIf="selectedCaseDetails">
+              Case {{ selectedCaseDetails.caseNumber }}:
+              <span *ngIf="selectedCaseDetails.caseTitle">{{
+                selectedCaseDetails.caseTitle
               }}</span>
-              <span *ngIf="!selectedCaseDetails.description"
-                >Description of case {{ selectedCaseDetails.caseNumber }}</span
-              >
             </span>
             <span *ngIf="!selectedCaseDetails">Case Details</span>
             <p-button

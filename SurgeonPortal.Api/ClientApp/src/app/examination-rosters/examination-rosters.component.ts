@@ -39,7 +39,6 @@ import { ICaseFeedbackModel } from '../api/models/scoring/case-feedback.model';
 
 interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   editComment: boolean;
-  //editFeedback: boolean;
   newComment?: string;
   newFeedback?: string;
 }
@@ -209,7 +208,6 @@ export class ExaminationRostersComponent implements OnInit {
               return {
                 ...val,
                 editComment: false,
-                //editFeedback: false,
                 newComment: '',
               };
             }) as ICaseDetailModel[];
