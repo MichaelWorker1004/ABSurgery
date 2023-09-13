@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FileNotFoundComponent } from './file-not-found/file-not-found.component';
-import { AuthGuard } from './state';
+import { AuthGuard, FeatureToggleGuard } from './state';
 import { PersonalProfileComponent } from './personal-profile/personal-profile.component';
 import { MedicalTrainingComponent } from './medical-training/medical-training.component';
 import { ProfessionalStandingComponent } from './professional-standing/professional-standing.component';
@@ -40,7 +40,8 @@ const routes: Routes = [
       import('./dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
-    canActivate: [AuthGuard],
+    data: { requiredFeatures: ['dashboardPage'] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
   },
   {
     path: 'cme-repository',
@@ -48,8 +49,11 @@ const routes: Routes = [
       import('./cme-repository/cme-repository.component').then(
         (m) => m.CmeRepositoryComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['cmeRepositoryPage'],
+    },
   },
   {
     path: 'personal-profile',
@@ -57,8 +61,11 @@ const routes: Routes = [
       import('./personal-profile/personal-profile.component').then(
         (m) => m.PersonalProfileComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.user] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.user],
+      requiredFeatures: ['personalProfilePage'],
+    },
     canDeactivate: [
       (component: PersonalProfileComponent) => canDeactivate(component),
     ],
@@ -69,8 +76,11 @@ const routes: Routes = [
       import('./medical-training/medical-training.component').then(
         (m) => m.MedicalTrainingComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.user] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.user],
+      requiredFeatures: ['medicalTrainingPage'],
+    },
     canDeactivate: [
       (component: MedicalTrainingComponent) => canDeactivate(component),
     ],
@@ -81,8 +91,11 @@ const routes: Routes = [
       import('./professional-standing/professional-standing.component').then(
         (m) => m.ProfessionalStandingComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['professionalStandingPage'],
+    },
     canDeactivate: [
       (component: ProfessionalStandingComponent) => canDeactivate(component),
     ],
@@ -93,8 +106,11 @@ const routes: Routes = [
       import('./exam-process/exam-process.component').then(
         (m) => m.ExamProcessComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['applyRegisterPage'],
+    },
   },
   {
     path: 'apply-and-resgister/registration-requirements',
@@ -102,8 +118,11 @@ const routes: Routes = [
       import(
         './registration-requirements/registration-requirements.component'
       ).then((m) => m.RegistrationRequirementsComponent),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['applyRegisterPage'],
+    },
   },
   {
     path: 'apply-and-resgister/exam-registration',
@@ -111,8 +130,11 @@ const routes: Routes = [
       import('./exam-registration/exam-registration.component').then(
         (m) => m.ExamRegistrationComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['applyRegisterPage'],
+    },
   },
   {
     path: 'examination-history',
@@ -120,8 +142,11 @@ const routes: Routes = [
       import('./examination-history/examination-history.component').then(
         (m) => m.ExaminationHistoryComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['examHistoryPage'],
+    },
   },
   {
     path: 'continuous-certification',
@@ -129,8 +154,11 @@ const routes: Routes = [
       import(
         './continuous-certification/continuous-certification.component'
       ).then((m) => m.ContinuousCertificationComponent),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['continuousCertificationPage'],
+    },
   },
   {
     path: 'payment-history',
@@ -138,8 +166,11 @@ const routes: Routes = [
       import('./payment-history/payment-history.component').then(
         (m) => m.PaymentHistoryComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['paymentHistoryPage'],
+    },
   },
   {
     path: 'documents',
@@ -147,8 +178,11 @@ const routes: Routes = [
       import('./documents/documents.component').then(
         (m) => m.DocumentsComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.user] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.user],
+      requiredFeatures: ['documentsPage'],
+    },
   },
   {
     path: 'committees',
@@ -156,8 +190,11 @@ const routes: Routes = [
       import('./committees/committees.component').then(
         (m) => m.CommitteesComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.surgeon] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.surgeon],
+      requiredFeatures: ['committeesPage'],
+    },
   },
   {
     path: 'my-account',
@@ -165,8 +202,11 @@ const routes: Routes = [
       import('./my-account/my-account.component').then(
         (m) => m.MyAccountComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.user] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.user],
+      requiredFeatures: ['myAccountPage'],
+    },
     canDeactivate: [
       (component: MyAccountComponent) => canDeactivate(component),
     ],
@@ -177,8 +217,11 @@ const routes: Routes = [
       import('./gme-history/gme-history.component').then(
         (m) => m.GmeHistoryComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.trainee] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.trainee],
+      requiredFeatures: ['gmeHistoryPage'],
+    },
   },
   {
     path: 'ce-scoring',
@@ -186,8 +229,11 @@ const routes: Routes = [
       import('./ce-scoring/ce-scoring.component').then(
         (m) => m.CeScoringAppComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.examiner] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.examiner],
+      requiredFeatures: ['examScoringPage'],
+    },
   },
   {
     path: 'ce-scoring/examination-rosters',
@@ -195,8 +241,11 @@ const routes: Routes = [
       import('./examination-rosters/examination-rosters.component').then(
         (m) => m.ExaminationRostersComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.examiner] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.examiner],
+      requiredFeatures: ['examScoringPage'],
+    },
   },
   {
     path: 'ce-scoring/oral-examinations',
@@ -204,8 +253,11 @@ const routes: Routes = [
       import('./oral-examinations/oral-examinations.component').then(
         (m) => m.OralExaminationsComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.examiner] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.examiner],
+      requiredFeatures: ['examScoringPage'],
+    },
   },
   {
     path: 'ce-scoring/oral-examinations/exam/:examinationId',
@@ -213,8 +265,11 @@ const routes: Routes = [
       import('./oral-examination/oral-examination.component').then(
         (m) => m.OralExaminationsComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.examiner] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.examiner],
+      requiredFeatures: ['examScoringPage'],
+    },
     canDeactivate: [
       (component: OralExaminationsComponent) =>
         canDeactivate(
@@ -230,8 +285,11 @@ const routes: Routes = [
       import('./examination-scores/examination-scores.component').then(
         (m) => m.ExaminationScoresComponent
       ),
-    canActivate: [AuthGuard],
-    data: { requiredClaims: [UserClaims.examiner] },
+    canActivate: [AuthGuard, FeatureToggleGuard],
+    data: {
+      requiredClaims: [UserClaims.examiner],
+      requiredFeatures: ['examScoringPage'],
+    },
   },
   {
     path: 'unauthorized',

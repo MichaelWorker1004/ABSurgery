@@ -22,36 +22,38 @@
 
   <nav>
     <ul class="main-navigation">
-      <li class="left-padding" *ngFor="let item of navItems">
-        <a
-          [routerLink]="item.action"
-          routerLinkActive="active"
-          (click)="toggleSideNav()"
-          *ngIf="!item.children"
-          ><i [ngClass]="item.icon"></i>{{ item.display }}</a
-        >
-        <a
-          (click)="toggleSubNav(item)"
-          *ngIf="item.children"
-          [routerLink]="item.action"
-          routerLinkActive="active"
-          class="has-sub-menu"
-        >
-          <i [ngClass]="item.icon"></i>{{ item.display }}
-        </a>
-        <div class="sub-menu" *ngIf="item.children">
-          <ul>
-            <li *ngFor="let child of item.children">
-              <a
-                [routerLink]="[item.action, child.action]"
-                routerLinkActive="active"
-                (click)="toggleSideNav()"
-                ><i [ngClass]="child.icon"></i>{{ child.display }}</a
-              >
-            </li>
-          </ul>
-        </div>
-      </li>
+      <ng-container *ngFor="let item of navItems">
+        <li class="left-padding" *ngIf="featureToggle(item)">
+          <a
+            [routerLink]="item.action"
+            routerLinkActive="active"
+            (click)="toggleSideNav()"
+            *ngIf="!item.children"
+            ><i [ngClass]="item.icon"></i>{{ item.display }}</a
+          >
+          <a
+            (click)="toggleSubNav(item)"
+            *ngIf="item.children"
+            [routerLink]="item.action"
+            routerLinkActive="active"
+            class="has-sub-menu"
+          >
+            <i [ngClass]="item.icon"></i>{{ item.display }}
+          </a>
+          <div class="sub-menu" *ngIf="item.children">
+            <ul>
+              <li *ngFor="let child of item.children">
+                <a
+                  [routerLink]="[item.action, child.action]"
+                  routerLinkActive="active"
+                  (click)="toggleSideNav()"
+                  ><i [ngClass]="child.icon"></i>{{ child.display }}</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ng-container>
     </ul>
   </nav>
 

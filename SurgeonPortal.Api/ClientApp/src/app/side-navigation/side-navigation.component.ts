@@ -49,6 +49,17 @@ export class SideNavigationComponent implements OnInit {
     this.handleSideNavToggle.emit();
   }
 
+  featureToggle(item: IMenuItem) {
+    if (item.feature) {
+      const feature = item.feature;
+      return this._store.selectSnapshot(
+        (state) => state.application.featureFlags[feature]
+      );
+    } else {
+      return true;
+    }
+  }
+
   toggleSubNav(item: IMenuItem) {
     console.log('toggle side nav', item);
   }
