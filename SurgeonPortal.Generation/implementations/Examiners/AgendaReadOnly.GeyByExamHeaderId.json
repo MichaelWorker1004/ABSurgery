@@ -57,24 +57,24 @@
             "model": "Examiners\\AgendaReadOnly",
             "fields": [
               {
-                "name": "StreamId",
-                "dataType": "guid",
-                "maxLength": 16,
-                "precision": 0,
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.StreamId"
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
               },
               {
-                "name": "Name",
+                "name": "DocumentName",
                 "dataType": "string",
-                "maxLength": 510,
+                "maxLength": 50,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.Name"
+                "mapsTo": "model.DocumentName"
               }
             ]
           }
@@ -90,9 +90,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Examiners\\AgendaReadOnly.GeyByExamHeaderId AgendaReadOnly -t=ytg-framework/readonly-get -p:Model=Examiners\\AgendaReadOnly -p:Adapter=sp:abssp-[dbo].[get_examiner_agenda] -p:FetchMethodName=GetByExamHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AgendaReadOnly -p:Route=by-exam-header-id -p:ControllerName=Examiners\\AgendaController -p:ControllerRoute=api/examiners/agenda -p:ControllerVersion=1 -cl:SurgeonPortalClaims.ExaminerClaim ",
+    "command": "ytgim g i s Examiners\\AgendaReadOnly.GeyByExamHeaderId AgendaReadOnly -t=ytg-framework/readonly-get -p:Model=Examiners\\AgendaReadOnly -p:Adapter=sp:abssp-[dbo].[get_examiner_agenda] -p:FetchMethodName=GetByExamHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AgendaReadOnly -p:Route=by-exam-header-id -p:ControllerName=Examiners\\AgendaController -p:ControllerRoute=api/examiners/agenda -p:ControllerVersion=1 -cl:SurgeonPortalClaims.ExaminerClaim -f ",
     "inferredCommand": "ytgim generate i  Examiners\\AgendaReadOnly.GeyByExamHeaderId AgendaReadOnly -t=ytg-framework/readonly-get -p:Model=Examiners\\AgendaReadOnly -p:Adapter=sp:abssp-[dbo].[get_examiner_agenda] -p:FetchMethodName=GetByExamHeaderId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AgendaReadOnly -p:Route=by-exam-header-id -p:ControllerName=Examiners\\AgendaController -p:ControllerRoute=api/examiners/agenda -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-09-13T17:42:24.1025713Z"
+    "generatedDateUtc": "2023-09-13T19:33:24.2726573Z"
   },
   "version": 1
 }

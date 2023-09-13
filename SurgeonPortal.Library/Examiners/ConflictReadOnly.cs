@@ -25,14 +25,14 @@ namespace SurgeonPortal.Library.Examiners
         }
         
         [DataMember]
-		[DisplayName(nameof(StreamId))]
-        public Guid StreamId => ReadProperty(StreamIdProperty);
-		public static readonly PropertyInfo<Guid> StreamIdProperty = RegisterProperty<Guid>(c => c.StreamId);
+		[DisplayName(nameof(Id))]
+        public int Id => ReadProperty(IdProperty);
+		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
 
         [DataMember]
-		[DisplayName(nameof(name))]
-        public string name => ReadProperty(nameProperty);
-		public static readonly PropertyInfo<string> nameProperty = RegisterProperty<string>(c => c.name);
+		[DisplayName(nameof(DocumentName))]
+        public string DocumentName => ReadProperty(DocumentNameProperty);
+		public static readonly PropertyInfo<string> DocumentNameProperty = RegisterProperty<string>(c => c.DocumentName);
 
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace SurgeonPortal.Library.Examiners
         
 		private void FetchData(ConflictReadOnlyDto dto)
 		{
-            LoadProperty(StreamIdProperty, dto.StreamId);
-            LoadProperty(nameProperty, dto.Name);
+            LoadProperty(IdProperty, dto.Id);
+            LoadProperty(DocumentNameProperty, dto.DocumentName);
 		} 
         
     }

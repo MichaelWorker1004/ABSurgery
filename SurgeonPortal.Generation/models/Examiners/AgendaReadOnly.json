@@ -4,20 +4,20 @@
   "description": "",
   "properties": [
     {
-      "name": "StreamId",
-      "dataType": "guid",
-      "maxLength": 16,
-      "precision": 0,
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false,
+      "isIdentityColumn": true,
       "rules": {}
     },
     {
-      "name": "Name",
+      "name": "DocumentName",
       "dataType": "string",
-      "maxLength": 510,
+      "maxLength": 50,
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
@@ -27,9 +27,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g m s Examiners\\AgendaReadOnly -sp [dbo].[get_examiner_agenda] -cn abssp ",
+    "command": "ytgim g m s Examiners\\AgendaReadOnly -sp [dbo].[get_examiner_agenda] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-09-13T17:41:59.9385224Z"
+    "generatedDateUtc": "2023-09-13T19:32:20.7453883Z"
   },
   "version": 1
 }

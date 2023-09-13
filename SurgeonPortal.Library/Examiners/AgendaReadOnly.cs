@@ -25,14 +25,14 @@ namespace SurgeonPortal.Library.Examiners
         }
         
         [DataMember]
-		[DisplayName(nameof(StreamId))]
-        public Guid StreamId => ReadProperty(StreamIdProperty);
-		public static readonly PropertyInfo<Guid> StreamIdProperty = RegisterProperty<Guid>(c => c.StreamId);
+		[DisplayName(nameof(Id))]
+        public int Id => ReadProperty(IdProperty);
+		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
 
         [DataMember]
-		[DisplayName(nameof(Name))]
-        public string Name => ReadProperty(NameProperty);
-		public static readonly PropertyInfo<string> NameProperty = RegisterProperty<string>(c => c.Name);
+		[DisplayName(nameof(DocumentName))]
+        public string DocumentName => ReadProperty(DocumentNameProperty);
+		public static readonly PropertyInfo<string> DocumentNameProperty = RegisterProperty<string>(c => c.DocumentName);
 
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace SurgeonPortal.Library.Examiners
         
 		private void FetchData(AgendaReadOnlyDto dto)
 		{
-            LoadProperty(StreamIdProperty, dto.StreamId);
-            LoadProperty(NameProperty, dto.Name);
+            LoadProperty(IdProperty, dto.Id);
+            LoadProperty(DocumentNameProperty, dto.DocumentName);
 		} 
         
     }
