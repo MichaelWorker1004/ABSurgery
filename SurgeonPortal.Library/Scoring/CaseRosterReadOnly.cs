@@ -24,6 +24,11 @@ namespace SurgeonPortal.Library.Scoring
 		public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(c => c.Description);
 
         [DataMember]
+		[DisplayName(nameof(Title))]
+        public string Title => ReadProperty(TitleProperty);
+		public static readonly PropertyInfo<string> TitleProperty = RegisterProperty<string>(c => c.Title);
+
+        [DataMember]
 		[DisplayName(nameof(Id))]
         public int Id => ReadProperty(IdProperty);
 		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
@@ -42,6 +47,7 @@ namespace SurgeonPortal.Library.Scoring
 		{
             LoadProperty(CaseNumberProperty, dto.CaseNumber);
             LoadProperty(DescriptionProperty, dto.Description);
+            LoadProperty(TitleProperty, dto.Title);
             LoadProperty(IdProperty, dto.Id);
 		} 
         

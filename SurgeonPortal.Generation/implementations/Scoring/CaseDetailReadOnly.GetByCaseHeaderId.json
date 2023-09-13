@@ -68,6 +68,16 @@
                 "mapsTo": "model.CaseNumber"
               },
               {
+                "name": "CaseTitle",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CaseTitle"
+              },
+              {
                 "name": "CaseContentId",
                 "dataType": "int",
                 "maxLength": 4,

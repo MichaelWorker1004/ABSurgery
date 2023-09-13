@@ -6,6 +6,7 @@ namespace SurgeonPortal.Library.Contracts.Scoring
     {
         string CaseNumber { get; }
         string Description { get; }
+        string Title { get; }
         int Id { get; }
     }
 }

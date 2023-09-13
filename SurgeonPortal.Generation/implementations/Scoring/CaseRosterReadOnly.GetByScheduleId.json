@@ -78,6 +78,16 @@
                 "mapsTo": "model.Description"
               },
               {
+                "name": "Title",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Title"
+              },
+              {
                 "name": "Id",
                 "dataType": "int",
                 "maxLength": 4,
