@@ -1,0 +1,98 @@
+{
+  "name": "ConflictReadOnly",
+  "implementationName": "Examiners\\ConflictReadOnly.GeyByExamHeaderId",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_examiner_conflicts",
+    "ControllerName": "Examiners\\ConflictController",
+    "ControllerRoute": "api/examiners/conflict",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamHeaderId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examiners\\ConflictReadOnly",
+    "ModelGroup": "ConflictReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-exam-header-id"
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examiner_conflicts",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examiner_conflicts]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "ExamHeaderId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamHeaderId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examiners\\ConflictReadOnly",
+            "fields": [
+              {
+                "name": "StreamId",
+                "dataType": "guid",
+                "maxLength": 16,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StreamId"
+              },
+              {
+                "name": "name",
+                "dataType": "string",
+                "maxLength": 510,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.name"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamHeaderId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examiners\\ConflictReadOnly.GeyByExamHeaderId ConflictReadOnly -t=ytg-framework/readonly-get -p:Model=Examiners\\ConflictReadOnly -p:Adapter=sp:abssp-[dbo].[get_examiner_conflicts] -p:FetchMethodName=GetByExamHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ConflictReadOnly -p:Route=by-exam-header-id -p:ControllerName=Examiners\\ConflictController -p:ControllerRoute=api/examiners/conflict -p:ControllerVersion=1 -cl:SurgeonPortalClaims.ExaminerClaim ",
+    "inferredCommand": "ytgim generate i  Examiners\\ConflictReadOnly.GeyByExamHeaderId ConflictReadOnly -t=ytg-framework/readonly-get -p:Model=Examiners\\ConflictReadOnly -p:Adapter=sp:abssp-[dbo].[get_examiner_conflicts] -p:FetchMethodName=GetByExamHeaderId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ConflictReadOnly -p:Route=by-exam-header-id -p:ControllerName=Examiners\\ConflictController -p:ControllerRoute=api/examiners/conflict -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-09-13T17:46:27.0540012Z"
+  },
+  "version": 1
+}

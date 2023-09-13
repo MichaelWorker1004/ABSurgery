@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Examiners\\ConflictReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "StreamId",
+      "dataType": "guid",
+      "maxLength": 16,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "name",
+      "dataType": "string",
+      "maxLength": 510,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examiners\\ConflictReadOnly -sp [dbo].[get_examiner_conflicts] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-09-13T17:45:18.1776406Z"
+  },
+  "version": 1
+}
