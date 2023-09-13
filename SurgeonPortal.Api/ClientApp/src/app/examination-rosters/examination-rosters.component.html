@@ -26,6 +26,7 @@
                 (onClick)="confirmCaseSelection(case)"
               >
                 <span
+                  class="text-left"
                   [ngClass]="{
                     'selected-case': selectedCaseId === case.id
                   }"
@@ -33,7 +34,7 @@
                   {{ case.caseNumber }}:
                   <span *ngIf="case.description">{{ case.description }}</span>
                   <span *ngIf="!case.description">
-                    {{ case.caseTitle }}
+                    {{ case.title }}
                   </span>
                 </span>
               </p-button>
@@ -47,8 +48,8 @@
           <h5 class="pb-3 case-header">
             <span *ngIf="selectedCaseDetails">
               Case {{ selectedCaseDetails.caseNumber }}:
-              <span *ngIf="selectedCaseDetails.caseTitle">{{
-                selectedCaseDetails.caseTitle
+              <span *ngIf="selectedCaseDetails.title">{{
+                selectedCaseDetails.title
               }}</span>
             </span>
             <span *ngIf="!selectedCaseDetails">Case Details</span>
