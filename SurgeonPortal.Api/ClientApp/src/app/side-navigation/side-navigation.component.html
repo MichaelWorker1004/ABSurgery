@@ -58,10 +58,12 @@
   </nav>
 
   <nav class="lower-nav">
-    <button (click)="router.navigateByUrl('my-account')">
-      <i class="fa-solid fa-user-doctor"></i>My Account
-    </button>
-    |
+    <ng-container *ngIf="featureToggle({ feature: 'myAccountPage' })">
+      <button (click)="router.navigateByUrl('my-account')">
+        <i class="fa-solid fa-user-doctor"></i>My Account
+      </button>
+      |
+    </ng-container>
     <button (click)="logout()">
       Logout<i class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i>
     </button>

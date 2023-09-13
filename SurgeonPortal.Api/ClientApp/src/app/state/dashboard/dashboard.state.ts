@@ -117,8 +117,7 @@ export class DashboardState {
       .retrieveRegistrationStatusReadOnly_GetByExamCode(payload.examCode)
       .pipe(
         tap((result: IRegistrationStatusReadOnlyModel) => {
-          ctx.setState({
-            ...state,
+          ctx.patchState({
             registrationStatus: result,
           });
           this.globalDialogService.closeOpenDialog();
@@ -138,8 +137,7 @@ export class DashboardState {
     return this.qualifyingExamService.retrieveQualifyingExamReadOnly_Get().pipe(
       tap((result: IQualifyingExamReadOnlyModel) => {
         const alertsAndNotices = result as IQualifyingExamReadOnlyModel;
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           alertsAndNotices: alertsAndNotices,
         });
         this.globalDialogService.closeOpenDialog();

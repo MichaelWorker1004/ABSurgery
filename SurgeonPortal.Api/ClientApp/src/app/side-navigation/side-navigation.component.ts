@@ -23,7 +23,7 @@ export class SideNavigationComponent implements OnInit {
   @Input() isSurgeon = false;
   @Input() isExaminer = false;
 
-  navItems: Array<IMenuItem> = TRAINEE_NAV_ITEMS;
+  navItems: Array<IMenuItem> = [];
 
   constructor(private _router: Router, private _store: Store) {}
 
@@ -34,6 +34,8 @@ export class SideNavigationComponent implements OnInit {
   getNavItemsByUserRole() {
     if (this.isSurgeon) {
       this.navItems = CERTIFIED_NAV_ITEMS;
+    } else {
+      this.navItems = TRAINEE_NAV_ITEMS;
     }
 
     if (this.isExaminer) {
@@ -49,7 +51,7 @@ export class SideNavigationComponent implements OnInit {
     this.handleSideNavToggle.emit();
   }
 
-  featureToggle(item: IMenuItem) {
+  featureToggle(item: any) {
     if (item.feature) {
       const feature = item.feature;
       return this._store.selectSnapshot(
