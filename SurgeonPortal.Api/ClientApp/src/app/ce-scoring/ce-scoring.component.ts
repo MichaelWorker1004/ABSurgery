@@ -120,7 +120,6 @@ export class CeScoringAppComponent implements OnInit {
     ];
 
     this.examinerAgenda$?.subscribe((examinerAgenda: IAgendaReadOnlyModel) => {
-      console.log('examinerAgenda', examinerAgenda);
       if (examinerAgenda?.id) {
         alertsAndNotices[0].action = {
           type: 'download',
