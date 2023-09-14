@@ -202,7 +202,10 @@ export class DashboardComponent {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
-        action: this.featureFlags.documentsPage ? '/documents' : null,
+        action: {
+          type: this.featureFlags.documentsPage ? 'component' : null,
+          action: this.featureFlags.documentsPage ? '/documents' : null,
+        },
         actionText: this.featureFlags.documentsPage
           ? 'View Your Documents'
           : 'Coming Soon',
@@ -237,13 +240,16 @@ export class DashboardComponent {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
-        action: this.featureFlags.documentsPage ? '/documents' : null,
+        action: {
+          type: this.featureFlags.documentsPage ? 'component' : null,
+          action: this.featureFlags.documentsPage ? '/documents' : null,
+        },
         actionText: this.featureFlags.documentsPage
           ? 'View Your Documents'
           : 'Coming Soon',
         alert: false,
         image:
-          'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
+          'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
     ];
 
