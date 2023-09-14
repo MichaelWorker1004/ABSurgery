@@ -40,6 +40,7 @@ const routes: Routes = [
       import('./dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'cme-repository',

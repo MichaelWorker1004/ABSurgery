@@ -29,9 +29,9 @@ namespace SurgeonPortal.Api.Controllers.Users
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-    [Route("api/users")]
-    public class UsersController : YtgControllerBase
-    {
+	[Route("api/users")]
+	public class UsersController : YtgControllerBase
+	{
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly TokensConfiguration _tokensConfiguration;
@@ -141,7 +141,36 @@ namespace SurgeonPortal.Api.Controllers.Users
             }
         }
 
-        private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
+		[MapToApiVersion("1")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AppUserReadOnlyModel))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[HttpPost("reset-password")]
+		public async Task<IActionResult> ResetpasswordCommandAsync(
+			[FromServices] IPasswordResetCommandFactory passwordResetCommandFactory,
+			[FromBody] PasswordResetCommandModel model)
+		{
+			if (model == null)
+			{
+				return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+			}
+
+			var command = await passwordResetCommandFactory.ResetPasswordAsync(
+				model.OldPassword,
+				model.NewPassword);
+
+            if(command.PasswordReset.HasValue && command.PasswordReset.Value)
+            {
+				return Ok();
+			}
+            else
+            {
+                return BadRequest();
+            }
+		}
+
+		private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
         {
             var allClaims =
                 new List<Claim>

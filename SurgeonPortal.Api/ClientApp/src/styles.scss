@@ -429,17 +429,6 @@ sl-select.ng-touched.ng-invalid::part(form-control-label) {
   color: var(--global-danger);
 }
 
-// sl-input::part(base) {
-//   input[type='date']::-webkit-calendar-picker-indicator {
-//     color: var(--global-warning);
-//     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.3.0 by %40fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons  Inc. --%3E%3Cpath d='M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z'/%3E%3C/svg%3E");
-//   }
-// }
-// input[type='date']::-webkit-calendar-picker-indicator {
-//   color: var(--global-warning);
-//   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.3.0 by %40fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons  Inc. --%3E%3Cpath d='M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z'/%3E%3C/svg%3E");
-// }
-
 sl-dialog::part(header) {
   position: relative;
   font-weight: bold;
@@ -887,13 +876,10 @@ label {
 }
 
 .app-content {
-  //width: 100vw;
-  //height: 100vh;
   background: transparent
     linear-gradient(180deg, rgba(114, 141, 177, 0.15) 0%, #ffffff 100%) 0% 0%
     no-repeat padding-box;
   color: var(--global-text-primary);
-  //overflow-x: hidden;
 }
 
 .login-content {
@@ -944,6 +930,26 @@ label {
   .confirmation-icon {
     font-size: 5rem;
     color: var(--global-warning);
+  }
+}
+
+/**
+  * Global Button Styles - A plain old <button> is better than p-button, btw.
+  * 1. used with class .primary
+ */
+button {
+  &.primary {
+    color: var(--global-primary);
+    background: #dbad6a;
+    border: 1px solid #dbad6a;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    border-radius: 4px;
+    &:hover {
+      background: #e3be8a;
+      border-color: #e3be8a;
+    }
   }
 }
 

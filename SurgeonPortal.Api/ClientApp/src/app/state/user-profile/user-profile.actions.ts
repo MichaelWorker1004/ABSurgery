@@ -19,3 +19,7 @@ export class UpdateUserProfile {
 export class LinkUserData {
   static readonly type = '[UserProfile] Get the user profile values';
 }
+
+export class ClearUserProfileErrors {
+  static readonly type = '[UserProfile] Clear the user profile errors';
+}

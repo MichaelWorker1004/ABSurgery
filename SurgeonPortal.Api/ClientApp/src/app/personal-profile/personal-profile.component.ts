@@ -13,7 +13,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { UpdateUserProfile, UserProfileSelectors } from '../state';
+import {
+  ClearUserProfileErrors,
+  GetUserProfile,
+  UpdateUserProfile,
+  UserProfileSelectors,
+} from '../state';
 import { IUserProfile } from '../state';
 import {
   GetStateList,
@@ -37,6 +42,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { IFormErrors } from '../shared/common';
+import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
 
 interface IDisplayUserProfile extends IUserProfile {
   gender: string;
@@ -69,16 +76,21 @@ interface IDisplayUserProfile extends IUserProfile {
     InputMaskModule,
     CalendarModule,
     CheckboxModule,
+    FormErrorsComponent,
   ],
   providers: [provideNgxMask()],
 })
 export class PersonalProfileComponent implements OnInit {
-  // TODO: [Joe] - add form-errors shared component
   // TODO: [Joe] set up national provider identifier (NPI) report button
 
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
+
+  @Select(UserProfileSelectors.errors) errors$:
+    | Observable<IFormErrors>
+    | undefined;
+
   @Select(PicklistsSelectors.userPicklistValues) userPicklistValues$:
     | Observable<IPickListItem[]>
     | undefined;
@@ -97,6 +109,8 @@ export class PersonalProfileComponent implements OnInit {
   @Select(PicklistsSelectors.slices.races) races$:
     | Observable<IRaceReadOnlyModel[]>
     | undefined;
+
+  clearErrors = new ClearUserProfileErrors();
 
   mailingStates: IStateReadOnlyModel[] = [];
   birthStates: IStateReadOnlyModel[] = [];
@@ -284,17 +298,24 @@ export class PersonalProfileComponent implements OnInit {
     this.isEdit = !this.isEdit;
     this.resetFormDefaults();
     this.hasUnsavedChanges = false;
+    this._store.dispatch(new ClearUserProfileErrors());
   }
 
   onSubmit() {
-    this.isSubmitted = true;
-
-    this.isEdit = false;
-    this.hasUnsavedChanges = false;
-
     const model = this.userProfileForm.value;
     model.birthDate = new Date(model.birthDate).toISOString();
 
-    this._store.dispatch(new UpdateUserProfile(model));
+    this._store
+      .dispatch(new UpdateUserProfile(model))
+      .pipe(take(1))
+      .subscribe((res) => {
+        if (!res.userProfile.errors) {
+          this.isSubmitted = true;
+          this.isEdit = false;
+          this.hasUnsavedChanges = false;
+        } else {
+          this.userProfileForm.get('userConfrimed')?.setValue(false);
+        }
+      });
   }
 }

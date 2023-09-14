@@ -8,26 +8,22 @@ namespace SurgeonPortal.Library.Picklists
 {
     public class ScoringSessionReadOnlyListFactory : IScoringSessionReadOnlyListFactory
     {
-        public async Task<IScoringSessionReadOnlyList> GetByKeysAsync(int examHeaderId)
+        public async Task<IScoringSessionReadOnlyList> GetByKeysAsync(DateTime currentDate)
         {
-            if (examHeaderId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("examHeaderId is a required field.");
-            }
             
             return await DataPortal.FetchAsync<ScoringSessionReadOnlyList>(
-                new GetByKeysCriteria(examHeaderId));
+                new GetByKeysCriteria(currentDate));
             
         }
 
             [Serializable]
             internal class GetByKeysCriteria
             {
-                public int ExamHeaderId { get; set; }
+                public DateTime CurrentDate { get; set; }
             
-                public GetByKeysCriteria(int examHeaderId)
+                public GetByKeysCriteria(DateTime currentDate)
              {
-                    ExamHeaderId = examHeaderId;
+                    CurrentDate = currentDate;
               }
             }
             

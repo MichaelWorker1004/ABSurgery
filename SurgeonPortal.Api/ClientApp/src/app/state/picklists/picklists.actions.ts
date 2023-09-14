@@ -99,7 +99,7 @@ export class GetPrimaryPracticeList {
 export class GetScoringSessionList {
   static readonly type = '[Picklists] Get the Scoring Session list';
 
-  constructor(public id: number) {}
+  //constructor(public id: number) {}
 }
 
 export class GetFellowshipTypes {
