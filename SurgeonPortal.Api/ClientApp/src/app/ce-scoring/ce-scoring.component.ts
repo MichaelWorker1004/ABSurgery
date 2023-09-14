@@ -102,7 +102,7 @@ export class CeScoringAppComponent implements OnInit {
         title: 'Your Examination Agenda',
         content: 'Your agenda can be found here once it has been finalized.',
         alert: false,
-        actionText: 'Download Agenda',
+        actionText: 'Not Available',
         action: {},
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -111,7 +111,7 @@ export class CeScoringAppComponent implements OnInit {
         title: 'Your Conflicts',
         content: 'Your conflicts report can be found here',
         alert: false,
-        actionText: 'Download Conflicts',
+        actionText: 'Not Available',
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
         downloadLink:
@@ -119,31 +119,33 @@ export class CeScoringAppComponent implements OnInit {
       },
     ];
 
-    this.examinerAgenda$?.subscribe((examinerAgenda) => {
-      if (examinerAgenda.id) {
-        alertsAndNotices[1].action = {
+    this.examinerAgenda$?.subscribe((examinerAgenda: IAgendaReadOnlyModel) => {
+      console.log('examinerAgenda', examinerAgenda);
+      if (examinerAgenda?.id) {
+        alertsAndNotices[0].action = {
           type: 'download',
-          documentId: examinerAgenda.id ?? 69,
+          documentId: examinerAgenda.id,
           documentName: examinerAgenda.documentName,
         };
-      } else {
-        alertsAndNotices[1].actionText = 'Not Available';
+        alertsAndNotices[0].actionText = 'Download Agenda';
       }
       this.globalDialogService.closeOpenDialog();
     });
 
-    this.examinerConflict$?.subscribe((examinerConflict) => {
-      if (examinerConflict.id) {
-        alertsAndNotices[0].action = {
-          type: 'download',
-          documentId: examinerConflict.id,
-          documentName: examinerConflict.documentName,
-        };
-      } else {
-        alertsAndNotices[0].actionText = 'Not Available';
+    this.examinerConflict$?.subscribe(
+      (examinerConflict: IConflictReadOnlyModel) => {
+        if (examinerConflict?.id) {
+          alertsAndNotices[1].action = {
+            type: 'download',
+            documentId: examinerConflict.id,
+            documentName: examinerConflict.documentName,
+            actionText: 'Download Conflicts',
+          };
+          alertsAndNotices[1].actionText = 'Download Conflicts';
+        }
+        this.globalDialogService.closeOpenDialog();
       }
-      this.globalDialogService.closeOpenDialog();
-    });
+    );
 
     this.alertsAndNotices = alertsAndNotices;
 
