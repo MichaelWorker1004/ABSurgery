@@ -11,10 +11,16 @@ import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outc
 import { AttestationModalComponent } from './attestation-modal/attestation-modal.component';
 import { ReferenceFormModalComponent } from './reference-form-modal/reference-form-modal.component';
 import { Action } from '../shared/components/action-card/action.enum';
-import { IUserProfile, UserProfileSelectors } from '../state';
-import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { GetStateList } from '../state/picklists';
+import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  UserProfileSelectors,
+  IUserProfile,
+  GetExamFees,
+  ExamProcessSelectors,
+} from '../state';
+import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -39,22 +45,21 @@ interface ActionMap {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ContinuousCertificationComponent implements OnInit {
-  userData!: any;
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+
+  @Select(ExamProcessSelectors.slices.examFees) examFees$:
+    | Observable<IExamFeeReadOnlyModel[]>
+    | undefined;
+
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
   attestationModal = false;
   referenceFormsModal = false;
-  payFeeModal = true;
+  payFeeModal = false;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
-
-  paymentGridData = [
-    {
-      paymentDate: new Date('09/18/2015'),
-      paymentAmount: '$100',
-      balanceRemaining: '$285.00',
-    },
-  ];
 
   private actionMap: ActionMap = {
     outcomeRegistriesModal: () => {
@@ -73,27 +78,32 @@ export class ContinuousCertificationComponent implements OnInit {
 
   constructor(private _store: Store) {
     this._store.dispatch(new GetStateList('500'));
+    this._store.dispatch(new GetExamFees());
   }
 
   ngOnInit(): void {
-    this.getUserData();
     this.getContinuousCertificationData();
     this.getPayFeeData();
   }
 
-  getUserData() {
-    this.userData = {
-      name: 'John Doe, M.D',
-    };
-  }
-
   getPayFeeData() {
-    this.payFeeData = {
-      totalAmountOfFee: '$285.00',
-      totalAmountPaidDate: new Date('11/5/2022'),
-      totalAmountPaid: '$0.00',
-      remainingBalance: '$285.00',
-    };
+    this.examFees$?.subscribe((examFees) => {
+      const payFeeData = {
+        totalAmountOfFee: 0,
+        totalAmountPaidDate: new Date(),
+        totalAmountPaid: 0,
+        remainingBalance: 0,
+      };
+
+      examFees.forEach((examFee: any) => {
+        console.log(examFee);
+        payFeeData.totalAmountOfFee += examFee.subTotal;
+        payFeeData.totalAmountPaid += examFee.paidTotal;
+        payFeeData.remainingBalance += examFee.balanceDue;
+      });
+
+      this.payFeeData = payFeeData;
+    });
   }
 
   getContinuousCertificationData() {

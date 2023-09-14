@@ -14,7 +14,6 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
@@ -78,7 +77,10 @@ export class PayFeeComponent implements OnInit {
       return new Promise<void>((resolve, reject) => {
         this.paymentInformationForm.addControl(
           field.name,
-          new FormControl(field.value, field.validators)
+          new FormControl(
+            { value: field.value, disabled: true },
+            field.validators
+          )
         );
         resolve();
       });

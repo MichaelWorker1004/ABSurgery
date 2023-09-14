@@ -1,7 +1,7 @@
 <div class="flex justify-content-between align-items-end flex-wrap col-12">
-  <div>
+  <div *ngIf="user$ | async as user">
     <h1>Continuous Certification</h1>
-    <h4 class="thin">For {{ userData.name }}.</h4>
+    <h4 class="thin">For {{ user.displayName }}</h4>
   </div>
   <div class="legend flex flex-wrap">
     <div class="l flex align-items-center completed">
@@ -74,7 +74,7 @@
 >
   <abs-pay-fee
     [payFeeData]="payFeeData"
-    [paymentGridData]="paymentGridData"
+    [paymentGridData]="examFees$"
     (cancelAction)="handleCardAction('payFeeModal')"
   >
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
