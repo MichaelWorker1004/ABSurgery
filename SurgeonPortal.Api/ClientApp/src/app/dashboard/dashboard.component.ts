@@ -147,7 +147,10 @@ export class DashboardComponent {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
-        action: '/documents',
+        action: {
+          type: 'component',
+          action: '/documents',
+        },
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
@@ -177,11 +180,14 @@ export class DashboardComponent {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
-        action: '/documents',
+        action: {
+          type: 'component',
+          action: '/documents',
+        },
         actionText: 'View Your Documents',
         alert: false,
         image:
-          'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
+          'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
     ];
 

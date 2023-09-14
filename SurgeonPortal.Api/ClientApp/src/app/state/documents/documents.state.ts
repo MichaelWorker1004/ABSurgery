@@ -61,6 +61,7 @@ export class DocumentsState {
     ctx: StateContext<IDocuments>,
     action: { payload: { documentId: number; documentName: string } }
   ): Observable<Blob> {
+    this.globalDialogService.showLoading();
     return this.documentService
       .downloadDocument_GetById(action.payload.documentId)
       .pipe(
@@ -70,10 +71,16 @@ export class DocumentsState {
           link.href = url;
           link.download = action.payload.documentName;
           link.click();
+          this.globalDialogService.closeOpenDialog();
         }),
         catchError((error) => {
           console.error('------- In Documents Store', error);
           console.error(error);
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'Document download failed',
+            false
+          );
           return of(error);
         })
       );
