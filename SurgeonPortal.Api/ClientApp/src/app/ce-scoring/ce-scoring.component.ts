@@ -102,7 +102,7 @@ export class CeScoringAppComponent implements OnInit {
         title: 'Your Examination Agenda',
         content: 'Your agenda can be found here once it has been finalized.',
         alert: false,
-        actionText: 'Download Conflicts',
+        actionText: 'Download Agenda',
         action: {},
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -111,7 +111,7 @@ export class CeScoringAppComponent implements OnInit {
         title: 'Your Conflicts',
         content: 'Your conflicts report can be found here',
         alert: false,
-        actionText: 'Download Agenda',
+        actionText: 'Download Conflicts',
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
         downloadLink:
@@ -127,7 +127,7 @@ export class CeScoringAppComponent implements OnInit {
           documentName: examinerAgenda.documentName,
         };
       } else {
-        alertsAndNotices[1].actionText = 'Coming Soon';
+        alertsAndNotices[1].actionText = 'Not Available';
       }
       this.globalDialogService.closeOpenDialog();
     });
@@ -140,7 +140,7 @@ export class CeScoringAppComponent implements OnInit {
           documentName: examinerConflict.documentName,
         };
       } else {
-        alertsAndNotices[0].actionText = 'Coming Soon';
+        alertsAndNotices[0].actionText = 'Not Available';
       }
       this.globalDialogService.closeOpenDialog();
     });
