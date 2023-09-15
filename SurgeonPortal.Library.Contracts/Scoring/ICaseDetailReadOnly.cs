@@ -5,6 +5,7 @@ namespace SurgeonPortal.Library.Contracts.Scoring
     public interface ICaseDetailReadOnly : IYtgReadOnlyBase
     {
         string CaseNumber { get; }
+        string CaseTitle { get; }
         int CaseContentId { get; }
         string Heading { get; }
         string Content { get; }

@@ -29,17 +29,17 @@
     margin-bottom: 0.5rem;
   }
   .img-container {
-    width: 25.75rem;
+    width: 27.75rem;
+    height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 6px 0 0 6px;
   }
   .highlight-content {
     padding: 3rem 1.5rem;
-    display: flex;
-    flex-direction: column;
     .content {
       line-height: 23px;
+      width: 100%;
     }
     .card-action {
       margin-top: auto;

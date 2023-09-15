@@ -1,0 +1,98 @@
+{
+  "name": "AgendaReadOnly",
+  "implementationName": "Examiners\\AgendaReadOnly.GeyByExamHeaderId",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_examiner_agenda",
+    "ControllerName": "Examiners\\AgendaController",
+    "ControllerRoute": "api/examiners/agenda",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamHeaderId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examiners\\AgendaReadOnly",
+    "ModelGroup": "AgendaReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-exam-header-id"
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.ExaminerClaim": {
+      "claimId": "22a5dc1e-9c24-48fe-86ce-741c25a7e21d",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.ExaminerClaim",
+      "key": "SurgeonPortalClaims.ExaminerClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_examiner_agenda",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_examiner_agenda]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "ExamHeaderId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamHeaderId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examiners\\AgendaReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "DocumentName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentName"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamHeaderId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examiners\\AgendaReadOnly.GeyByExamHeaderId AgendaReadOnly -t=ytg-framework/readonly-get -p:Model=Examiners\\AgendaReadOnly -p:Adapter=sp:abssp-[dbo].[get_examiner_agenda] -p:FetchMethodName=GetByExamHeaderId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AgendaReadOnly -p:Route=by-exam-header-id -p:ControllerName=Examiners\\AgendaController -p:ControllerRoute=api/examiners/agenda -p:ControllerVersion=1 -cl:SurgeonPortalClaims.ExaminerClaim -f ",
+    "inferredCommand": "ytgim generate i  Examiners\\AgendaReadOnly.GeyByExamHeaderId AgendaReadOnly -t=ytg-framework/readonly-get -p:Model=Examiners\\AgendaReadOnly -p:Adapter=sp:abssp-[dbo].[get_examiner_agenda] -p:FetchMethodName=GetByExamHeaderId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AgendaReadOnly -p:Route=by-exam-header-id -p:ControllerName=Examiners\\AgendaController -p:ControllerRoute=api/examiners/agenda -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-09-13T19:33:24.2726573Z"
+  },
+  "version": 1
+}

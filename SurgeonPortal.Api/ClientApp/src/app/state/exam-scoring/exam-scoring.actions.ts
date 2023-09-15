@@ -154,3 +154,15 @@ export class GetCaseDetailsAndFeedback {
 
   constructor(public id: number) {}
 }
+
+export class GetExaminerAgenda {
+  static readonly type = '[Exam-Scoring] Get examiner agenda';
+
+  constructor(public examHeaderId: number) {}
+}
+
+export class GetExaminerConflict {
+  static readonly type = '[Exam-Scoring] Get examiner conflict';
+
+  constructor(public examHeaderId: number) {}
+}

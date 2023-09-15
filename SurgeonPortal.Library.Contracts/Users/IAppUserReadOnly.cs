@@ -9,6 +9,7 @@ namespace SurgeonPortal.Library.Contracts.Users
         string FullName { get; }
         string UserName { get; }
         string EmailAddress { get; }
+        bool ResetRequired { get; }
         DateTime? LastLoginDateUtc { get; }
         IUserClaimReadOnlyList Claims { get; }
     }

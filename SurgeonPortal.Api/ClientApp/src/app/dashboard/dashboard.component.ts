@@ -84,7 +84,6 @@ export class DashboardComponent {
       if (isSurgeon) {
         this._store.dispatch(new GetDashboardCertificationInformation());
         this.certificateInformation$?.subscribe((userInformation) => {
-          console.log('userInformation', userInformation);
           if (userInformation?.certificates?.length > 0) {
             this.userInformation = userInformation.certificates;
           }
@@ -148,7 +147,10 @@ export class DashboardComponent {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
-        action: '/documents',
+        action: {
+          type: 'component',
+          action: '/documents',
+        },
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
@@ -166,7 +168,6 @@ export class DashboardComponent {
       }
     });
 
-    //console.log(this.upcomingExams);
     const alertsAndNoticesCertfiied = [
       {
         title: 'Upcoming Exam Registration',
@@ -179,11 +180,14 @@ export class DashboardComponent {
         title: 'Documents',
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
-        action: '/documents',
+        action: {
+          type: 'component',
+          action: '/documents',
+        },
         actionText: 'View Your Documents',
         alert: false,
         image:
-          'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
+          'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
     ];
 
@@ -213,7 +217,6 @@ export class DashboardComponent {
   }
 
   setActionCardsByUserClaims(isSurgeon: boolean) {
-    console.log('setActionCardsByUserClaims', isSurgeon);
     this.userActionCards = isSurgeon
       ? CERTIFIED_ACTION_CARDS
       : TRAINEE_ACTION_CARDS;

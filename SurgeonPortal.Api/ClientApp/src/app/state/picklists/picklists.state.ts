@@ -707,16 +707,17 @@ export class PicklistsState {
 
   @Action(GetScoringSessionList)
   getScoringSessionList(
-    ctx: StateContext<IPicklist>,
-    payload: { id: number }
+    ctx: StateContext<IPicklist>
+    //payload: { date: string }
   ): Observable<IPickListItemNumber[] | undefined> {
-    const examHeaderId = payload.id;
+    //const examHeaderId = payload.id;
+    const currentDate = new Date().toISOString();
     // removed because we don't want to save this value in the store because it will change based on passed in id
     // if (ctx.getState()?.primaryPractices) {
     //   return of(ctx.getState()?.primaryPractices);
     // }
     return this.picklistsService
-      .retrieveScoringSessionReadOnly_GetByKeys(examHeaderId)
+      .retrieveScoringSessionReadOnly_GetByKeys(currentDate)
       .pipe(
         tap((scoringSessions: IScoringSessionReadOnlyModel[]) => {
           ctx.patchState({

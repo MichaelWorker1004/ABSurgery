@@ -17,21 +17,24 @@
       <h1 class="my-3">{{ 'LOGIN_TITLE' | translate }}</h1>
       <p class="mt-0 mb-3">{{ 'LOGIN_SUBTITLE' | translate }}</p>
       <div class="text-left mt-5 form-container">
-        <sl-alert
-          variant="danger"
-          open
-          closable
-          class="alert-closable login-alert"
-          *ngIf="errors$ | async as error"
-          (sl-hide)="clearErrors()"
-        >
-          <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
-          <strong>{{ error.title }}</strong
-          ><br />
-          <div *ngIf="error.errors">
-            <p *ngFor="let errmsg of getErrors(error)">{{ errmsg }}</p>
-          </div>
-        </sl-alert>
+        <ng-container *ngIf="!isPasswordReset">
+          <sl-alert
+            variant="danger"
+            open
+            closable
+            class="alert-closable login-alert"
+            *ngIf="errors$ | async as error"
+            (sl-hide)="clearErrors()"
+          >
+            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+            <strong>{{ error.title }}</strong
+            ><br />
+            <div *ngIf="error.errors">
+              <p *ngFor="let errmsg of getErrors(error)">{{ errmsg }}</p>
+            </div>
+          </sl-alert>
+        </ng-container>
+
         <form name="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <input
             class="mt-2"
@@ -76,7 +79,8 @@
             <span class="mr-2 font-bold">{{
               'LOGIN_SUBMIT_BTN' | translate
             }}</span>
-            <i class="fa-solid fa-right-to-bracket"></i>
+            <i class="fas fa-spinner fa-pulse" *ngIf="isBusy"></i>
+            <i class="fa-solid fa-right-to-bracket" *ngIf="!isBusy"></i>
           </p-button>
         </form>
       </div>
@@ -88,4 +92,92 @@
       <p class="footer-text mb-1">{{ version }}</p>
     </div>
   </div>
+</div>
+
+<div class="card flex justify-content-center">
+  <p-dialog
+    header="Header"
+    [(visible)]="isPasswordReset"
+    [modal]="true"
+    [closable]="false"
+    [style]="{ width: '50vw' }"
+  >
+    <ng-template pTemplate="header">
+      <span class="text-xl font-bold">Password Reset</span>
+    </ng-template>
+    <ng-container *ngIf="passwordResetComplete; else resetPasswordForm">
+      <p>Password reset is complete. Please log in again.</p>
+    </ng-container>
+    <ng-template #resetPasswordForm>
+      <sl-alert
+        variant="danger"
+        open
+        closable
+        class="alert-closable login-alert"
+        *ngIf="errors$ | async as error"
+        (sl-hide)="clearErrors()"
+      >
+        <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+        <strong>{{ error.title }}</strong
+        ><br />
+        <div *ngIf="error.errors">
+          <p *ngFor="let errmsg of getErrors(error)">{{ errmsg }}</p>
+        </div>
+      </sl-alert>
+      <p>
+        For improved security, your password needs to be reset. You will be
+        logged out and need to log in again using the new password once you have
+        completed the reset.
+      </p>
+      <form
+        id="password-reset-form"
+        name="password-reset-form"
+        [formGroup]="passwordResetForm"
+        (ngSubmit)="onSubmitPasswordReset()"
+      >
+        <label class="block">Current Password</label>
+        <p-password
+          inputId="currentPassword"
+          formControlName="currentPassword"
+          [feedback]="false"
+          [toggleMask]="true"
+        ></p-password>
+        <label class="block">New Password</label>
+        <p-password
+          inputId="newPassword"
+          formControlName="newPassword"
+          [feedback]="false"
+          [toggleMask]="true"
+        ></p-password>
+        <label class="block"> Confirm New Password </label>
+        <p-password
+          inputId="confirmPassword"
+          formControlName="confirmPassword"
+          [feedback]="false"
+          [toggleMask]="true"
+        ></p-password>
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        *ngIf="!passwordResetComplete"
+        type="submit"
+        class="primary"
+        form="password-reset-form"
+        [disabled]="passwordResetForm.invalid"
+      >
+        <span class="mr-2 font-bold">Reset Password</span>
+        <i class="fas fa-spinner fa-pulse" *ngIf="isBusy"></i>
+        <i class="fa-solid fa-right-to-bracket" *ngIf="!isBusy"></i>
+      </button>
+      <button
+        *ngIf="passwordResetComplete"
+        class="primary"
+        (click)="completePasswordReset()"
+      >
+        <span class="mr-2 font-bold">OK</span>
+      </button>
+    </ng-template>
+  </p-dialog>
 </div>

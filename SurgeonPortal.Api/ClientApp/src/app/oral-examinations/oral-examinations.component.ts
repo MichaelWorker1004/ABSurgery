@@ -142,10 +142,9 @@ export class OralExaminationsComponent implements OnInit {
         });
     } else if ($event.fieldKey === 'skipExam') {
       this._globalDialogService
-        .showConfirmationWithWarning(
-          'Skip Examination',
+        .showConfirmation(
           'Are you sure you want to skip this examination?',
-          'clicking confirm will skip this examination '
+          'Clicking confirm will permanantly skip this examination '
         )
         .then((result) => {
           if (result) {
