@@ -11,7 +11,7 @@ export interface IApplicationState {
   isLoaded: boolean;
   isAuth: boolean;
   isUserLoaded: boolean;
-  featureFlags: IFeatureFlags;
+  featureFlags: IFeatureFlags | undefined;
 }
 
 export interface IFeatureFlags {
@@ -43,7 +43,7 @@ export const APPLICATION_STATE_TOKEN = new StateToken<IApplicationState>(
     isLoaded: false,
     isAuth: false,
     isUserLoaded: false,
-    featureFlags: {},
+    featureFlags: undefined,
   },
 })
 @Injectable({ providedIn: 'root' })

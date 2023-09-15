@@ -54,8 +54,10 @@ export class SideNavigationComponent implements OnInit {
   featureToggle(item: any) {
     if (item.feature) {
       const feature = item.feature;
-      return this._store.selectSnapshot(
-        (state) => state.application.featureFlags[feature]
+      return this._store.selectSnapshot((state) =>
+        state.application?.featureFlags
+          ? state.application.featureFlags[feature]
+          : false
       );
     } else {
       return true;
