@@ -61,13 +61,7 @@ export class LoginComponent implements OnInit {
 
   @Select(AuthSelectors.getErrors) errors$?: Observable<IError> | undefined;
 
-  constructor(private store: Store, private route: ActivatedRoute) {
-    this.errors$?.pipe(
-      tap((errors) => {
-        // console.log('In the component', errors);
-      })
-    );
-  }
+  constructor(private store: Store) {}
   ngOnInit(): void {
     this.clearErrors();
   }
