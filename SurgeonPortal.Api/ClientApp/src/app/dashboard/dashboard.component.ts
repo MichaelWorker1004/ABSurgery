@@ -193,7 +193,7 @@ export class DashboardComponent {
     const alertsAndNoticesTrainee = [
       {
         content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+          'You will be able to find more information about upcoming exams here as that information becomes available.',
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
@@ -201,7 +201,7 @@ export class DashboardComponent {
       {
         title: 'Documents',
         content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+          'Click here to view all of your current document and certificate uploads.',
         action: {
           type: this.featureFlags.documentsPage ? 'component' : null,
           action: this.featureFlags.documentsPage ? '/documents' : null,
@@ -239,7 +239,7 @@ export class DashboardComponent {
       {
         title: 'Documents',
         content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+          'Click here to view all of your current document and certificate uploads.',
         action: {
           type: this.featureFlags.documentsPage ? 'component' : null,
           action: this.featureFlags.documentsPage ? '/documents' : null,
