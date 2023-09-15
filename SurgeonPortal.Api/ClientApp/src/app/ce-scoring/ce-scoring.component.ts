@@ -62,14 +62,13 @@ export class CeScoringAppComponent implements OnInit {
   examinerConflict$: Observable<IConflictReadOnlyModel> | undefined;
 
   examHeaderId = 491; // TODO - remove hard coded value
+  examinationDate = new Date('01/01/2024').toISOString().split('T')[0]; // TODO - remove hard coded value
 
   currentYear = new Date().getFullYear();
   userActionCards = ACTION_CARDS;
   alertsAndNotices: any[] | undefined;
   dashboardRoster!: IRosterReadOnlyModel[];
   examinationWeek!: string;
-
-  examinationDate = new Date('01/01/2024').toISOString().split('T')[0];
 
   ceScoreTesting = false;
 

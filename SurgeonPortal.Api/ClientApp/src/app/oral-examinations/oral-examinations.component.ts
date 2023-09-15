@@ -44,8 +44,8 @@ export class OralExaminationsComponent implements OnInit {
     | undefined;
 
   examHeaderId = 491; // TODO - remove hard coded value
+  examDate: Date = new Date('01/01/24'); // TODO - remove hard coded value
 
-  examDate: Date = new Date('01/01/24');
   examDateDisplay: Date = new Date();
   zoomLink: string | undefined = '';
   oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =

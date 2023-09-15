@@ -12,9 +12,11 @@ import { AttestationModalComponent } from './attestation-modal/attestation-modal
 import { ReferenceFormModalComponent } from './reference-form-modal/reference-form-modal.component';
 import { Action } from '../shared/components/action-card/action.enum';
 import { IUserProfile, UserProfileSelectors } from '../state';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { GetStateList } from '../state/picklists';
+import { ApplicationSelectors } from '../state/application/application.selectors';
+import { IFeatureFlags } from '../state/application/application.state';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -39,6 +41,10 @@ interface ActionMap {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ContinuousCertificationComponent implements OnInit {
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
+
   userData!: any;
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
@@ -55,6 +61,8 @@ export class ContinuousCertificationComponent implements OnInit {
       balanceRemaining: '$285.00',
     },
   ];
+
+  featureFlags: IFeatureFlags = {};
 
   private actionMap: ActionMap = {
     outcomeRegistriesModal: () => {
@@ -73,6 +81,11 @@ export class ContinuousCertificationComponent implements OnInit {
 
   constructor(private _store: Store) {
     this._store.dispatch(new GetStateList('500'));
+    this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
+      if (featureFlags) {
+        this.featureFlags = featureFlags;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -106,9 +119,12 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.component,
           action: '/personal-profile',
         },
-        actionDisplay: 'View / Update my information',
+        actionDisplay: this.featureFlags.personalProfilePage
+          ? 'View / Update my information'
+          : 'Coming Soon',
         icon: 'fa-solid fa-address-card',
         status: Status.Completed,
+        disabled: !this.featureFlags.personalProfilePage,
       },
       {
         title: 'Outcomes Registries / Quality Assessment Programs',
@@ -130,9 +146,12 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.component,
           action: '/medical-training',
         },
-        actionDisplay: 'View / Update my training',
+        actionDisplay: this.featureFlags.medicalTrainingPage
+          ? 'View / Update my training'
+          : 'Coming Soon',
         icon: 'fa-solid fa-language',
         status: Status.Completed,
+        disabled: !this.featureFlags.medicalTrainingPage,
       },
       {
         title: 'Professional Standing',
@@ -142,9 +161,12 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.component,
           action: '/professional-standing',
         },
-        actionDisplay: 'View / Update my activities',
+        actionDisplay: this.featureFlags.professionalStandingPage
+          ? 'View / Update my activities'
+          : 'Coming Soon',
         icon: 'fa-solid fa-certificate',
         status: Status.InProgress,
+        disabled: !this.featureFlags.professionalStandingPage,
       },
       {
         title: 'CME Repository',
@@ -154,9 +176,12 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.component,
           action: '/cme-repository',
         },
-        actionDisplay: 'View CMEs',
+        actionDisplay: this.featureFlags.cmeRepositoryPage
+          ? 'View CMEs'
+          : 'Coming Soon',
         icon: 'fa-solid fa-id-card-clip',
         status: Status.InProgress,
+        disabled: !this.featureFlags.cmeRepositoryPage,
       },
       {
         title: 'Pay Fee',

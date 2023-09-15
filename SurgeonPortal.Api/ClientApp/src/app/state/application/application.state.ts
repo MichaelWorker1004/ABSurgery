@@ -11,11 +11,25 @@ export interface IApplicationState {
   isLoaded: boolean;
   isAuth: boolean;
   isUserLoaded: boolean;
-  featureFlags: IFeatureFlags;
+  featureFlags: IFeatureFlags | undefined;
 }
 
 export interface IFeatureFlags {
   ceScoreTesting?: boolean;
+  //page level feature flags
+  dashboardPage?: boolean;
+  myAccountPage?: boolean;
+  personalProfilePage?: boolean;
+  medicalTrainingPage?: boolean;
+  professionalStandingPage?: boolean;
+  cmeRepositoryPage?: boolean;
+  gmeHistoryPage?: boolean;
+  applyRegisterPage?: boolean;
+  examHistoryPage?: boolean;
+  continuousCertificationPage?: boolean;
+  paymentHistoryPage?: boolean;
+  documentsPage?: boolean;
+  examScoringPage?: boolean;
 }
 
 export const APPLICATION_STATE_TOKEN = new StateToken<IApplicationState>(
@@ -29,7 +43,7 @@ export const APPLICATION_STATE_TOKEN = new StateToken<IApplicationState>(
     isLoaded: false,
     isAuth: false,
     isUserLoaded: false,
-    featureFlags: {},
+    featureFlags: undefined,
   },
 })
 @Injectable({ providedIn: 'root' })
