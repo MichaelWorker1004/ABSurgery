@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { matchFields, validatePassword } from '../shared/validators/validators';
 import {
@@ -38,6 +39,7 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule,
     ProfileHeaderComponent,
     FormErrorsComponent,
     InputTextModule,

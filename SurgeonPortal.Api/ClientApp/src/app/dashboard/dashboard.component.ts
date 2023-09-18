@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { Observable, take } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';
 import { UserInformationCardComponent } from '../shared/components/user-information-card/user-information-card.component';
@@ -25,7 +28,6 @@ import {
 } from './user-action-cards';
 import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.model';
 import { ICertificationReadOnlyModel } from '../api/models/surgeons/certification-read-only.model';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
 
@@ -37,6 +39,7 @@ import { IFeatureFlags } from '../state/application/application.state';
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     ActionCardComponent,
     UserInformationCardComponent,
     HighlightCardComponent,
@@ -83,7 +86,10 @@ export class DashboardComponent {
   certifiedCards: IActionCardReadOnlyModel[] = CERTIFIED_ACTION_CARDS;
   traineeCards: IActionCardReadOnlyModel[] = TRAINEE_ACTION_CARDS;
 
-  constructor(private _store: Store) {
+  constructor(
+    private _store: Store,
+    private _translateService: TranslateService
+  ) {
     this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.featureFlags = featureFlags;
@@ -166,13 +172,18 @@ export class DashboardComponent {
             ) {
               applyForQECard.disabled = !this.featureFlags.applyRegisterPage;
               applyForQECard.actionDisplay = this.featureFlags.applyRegisterPage
-                ? 'Apply Now'
+                ? this._translateService.instant('DASHBOARD_REGISTER_BTN')
                 : 'Coming Soon';
             } else {
               applyForQECard.disabled = true;
-              applyForQECard.description = `QE applications are not yet available. Check back on ${new Date(
-                registrationInformation?.regOpenDate ?? ''
-              ).toLocaleDateString()}`;
+              applyForQECard.description = this._translateService.instant(
+                'DASHBOARD_APPLY_SUBTITLE',
+                {
+                  date: new Date(
+                    registrationInformation?.regOpenDate ?? ''
+                  ).toLocaleDateString(),
+                }
+              );
             }
           });
         this.programInformation$
@@ -192,22 +203,22 @@ export class DashboardComponent {
   fetchAlertsAndNoticesByUserId(isSurgeon: boolean) {
     const alertsAndNoticesTrainee = [
       {
-        content:
-          'You will be able to find more information about upcoming exams here as that information becomes available.',
+        content: this._translateService.instant(
+          'DASHBOARD_UPCOMINGEXAMS_SUBTITLE'
+        ),
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
       },
       {
-        title: 'Documents',
-        content:
-          'Click here to view all of your current document and certificate uploads.',
+        title: this._translateService.instant('DASHBOARD_DOCUMENTS_TITLE'),
+        content: this._translateService.instant('DASHBOARD_DOCUMENTS_SUBTITLE'),
         action: {
           type: this.featureFlags.documentsPage ? 'component' : null,
           action: this.featureFlags.documentsPage ? '/documents' : null,
         },
         actionText: this.featureFlags.documentsPage
-          ? 'View Your Documents'
+          ? this._translateService.instant('DASHBOARD_DOCUMENTS_BTN')
           : 'Coming Soon',
         alert: false,
         image:
@@ -224,28 +235,32 @@ export class DashboardComponent {
           date = new Date(
             alertsAndNotices?.alertsAndNotices?.examStartDate ?? ''
           ).toLocaleDateString();
-          alertsAndNoticesTrainee[0].title = `Next General Surgery QE -  ${date}`;
+          alertsAndNoticesTrainee[0].title = this._translateService.instant(
+            'DASHBOARD_UPCOMINGEXAMS_TITLE',
+            { date: date }
+          );
         }
       });
 
     const alertsAndNoticesCertfiied = [
       {
-        title: 'Upcoming Exam Registration',
+        title: this._translateService.instant(
+          'DASHBOARD_UPCOMINGEXAMREGISTRATION_TITLE'
+        ),
         content: this.upcomingExams?.join('<br>'),
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
       },
       {
-        title: 'Documents',
-        content:
-          'Click here to view all of your current document and certificate uploads.',
+        title: this._translateService.instant('DASHBOARD_DOCUMENTS_TITLE'),
+        content: this._translateService.instant('DASHBOARD_DOCUMENTS_SUBTITLE'),
         action: {
           type: this.featureFlags.documentsPage ? 'component' : null,
           action: this.featureFlags.documentsPage ? '/documents' : null,
         },
         actionText: this.featureFlags.documentsPage
-          ? 'View Your Documents'
+          ? this._translateService.instant('DASHBOARD_DOCUMENTS_BTN')
           : 'Coming Soon',
         alert: false,
         image:

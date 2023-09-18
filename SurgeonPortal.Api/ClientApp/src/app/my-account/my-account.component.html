@@ -1,5 +1,5 @@
 <header>
-  <h1>My Account</h1>
+  <h1>{{ 'MYACCOUNT_TITLE' | translate }}</h1>
 </header>
 <ng-container *ngIf="user$ | async as user; else loading">
   <section>
@@ -15,7 +15,7 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <p>Update your account information here.</p>
+        <p>{{ 'MYACCOUNT_SUBTITLE' | translate }}</p>
         <ng-container *ngIf="isEdit">
           <abs-form-errors
             *ngIf="errors$ | async as error"

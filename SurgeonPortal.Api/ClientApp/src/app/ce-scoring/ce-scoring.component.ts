@@ -5,6 +5,8 @@ import { ACTION_CARDS } from './user-action-cards';
 import { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';
 import { UserInformationSliderComponent } from '../shared/components/user-information-slider/user-information-slider.component';
 import { Select, Store } from '@ngxs/store';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 import {
   DownloadDocument,
   ExamScoringSelectors,
@@ -33,6 +35,7 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     ActionCardComponent,
     HighlightCardComponent,
     UserInformationSliderComponent,
@@ -74,7 +77,8 @@ export class CeScoringAppComponent implements OnInit {
 
   constructor(
     private _store: Store,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    private _translateService: TranslateService
   ) {
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
     this._store.dispatch(new GetExaminerAgenda(this.examHeaderId));
@@ -98,8 +102,8 @@ export class CeScoringAppComponent implements OnInit {
     this.globalDialogService.showLoading();
     const alertsAndNotices = [
       {
-        title: 'Your Examination Agenda',
-        content: 'Your agenda can be found here once it has been finalized.',
+        title: this._translateService.instant('EXAMDASH_AGENDA_TITLE'),
+        content: this._translateService.instant('EXAMDASH_AGENDA_SUBTITLE'),
         alert: false,
         actionText: 'Not Available',
         action: {},
@@ -107,8 +111,8 @@ export class CeScoringAppComponent implements OnInit {
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
       },
       {
-        title: 'Your Conflicts',
-        content: 'Your conflicts report can be found here',
+        title: this._translateService.instant('EXAMDASH_CONFLICTS_TITLE'),
+        content: this._translateService.instant('EXAMDASH_CONFLICTS_SUBTITLE'),
         alert: false,
         actionText: 'Not Available',
         image:
@@ -125,7 +129,9 @@ export class CeScoringAppComponent implements OnInit {
           documentId: examinerAgenda.id,
           documentName: examinerAgenda.documentName,
         };
-        alertsAndNotices[0].actionText = 'Download Agenda';
+        alertsAndNotices[0].actionText = this._translateService.instant(
+          'EXAMDASH_AGENDA_BTN'
+        );
       }
       this.globalDialogService.closeOpenDialog();
     });
@@ -137,9 +143,10 @@ export class CeScoringAppComponent implements OnInit {
             type: 'download',
             documentId: examinerConflict.id,
             documentName: examinerConflict.documentName,
-            actionText: 'Download Conflicts',
           };
-          alertsAndNotices[1].actionText = 'Download Conflicts';
+          alertsAndNotices[1].actionText = this._translateService.instant(
+            'EXAMDASH_CONFLICTS_BTN'
+          );
         }
         this.globalDialogService.closeOpenDialog();
       }

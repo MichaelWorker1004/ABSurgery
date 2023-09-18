@@ -2,12 +2,19 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { IRosterReadOnlyModel } from 'src/app/api/models/scoring/roster-read-only.model';
 
 @Component({
   selector: 'abs-user-information-slider',
   standalone: true,
-  imports: [CommonModule, CarouselModule, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    CarouselModule,
+    RouterLink,
+    RouterLinkActive,
+  ],
   templateUrl: './user-information-slider.component.html',
   styleUrls: ['./user-information-slider.component.scss'],
 })
