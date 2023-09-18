@@ -27,7 +27,7 @@ export const CERTIFIED_ACTION_CARDS = [
   {
     title: 'Continuous Certification Requirements',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'Click here to view your current Continuous Certification progress and complete any remaining requirements.',
     action: {
       type: 'component',
       action: '/continuous-certification',
@@ -38,7 +38,7 @@ export const CERTIFIED_ACTION_CARDS = [
   {
     title: 'Apply and Register',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'Click here to view and apply or register for any exams that you are eligible for.',
     action: {
       type: 'component',
       action: '/apply-and-resgister',
@@ -49,7 +49,7 @@ export const CERTIFIED_ACTION_CARDS = [
   {
     title: 'Continuous Medical Education (CME)',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'Click here to view your current CME Credits and keep track of your requirements for the Continuous Certification Program.',
     action: {
       type: 'component',
       action: '/cme-repository',
