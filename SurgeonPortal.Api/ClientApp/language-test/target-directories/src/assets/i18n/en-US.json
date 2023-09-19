@@ -1,0 +1,105 @@
+{
+  "DASHBOARD": {
+    "ACTION_CARDS": {
+      "APPLY_BTN": "Apply for Exam",
+      "APPLY_SUBTITLE": "QE applications are not yet available. Check back on {{date}}",
+      "APPLY_TITLE": "Apply for a Qualified Exam",
+      "CCR_BTN": "See Requirements",
+      "CCR_SUBTITLE": "Click here to view your current Continuous Certification progress and complete any remaining requirements.",
+      "CCR_TITLE": "Continuous Certification Requirements",
+      "CME_BTN": "View Your CME",
+      "CME_SUBTITLE": "Click here to view your current CME Credits and keep track of your requirements for the Continuous Certification Program.",
+      "CME_TITLE": "Continuing Medical Education (CME)",
+      "GME_BTN": "View Your GME",
+      "GME_SUBTITLE": "Click here to view your current GME progress and to add rotations to your GME history.",
+      "GME_TITLE": "Graduate Medical Education (GME)",
+      "REGISTER_BTN": "Apply Now",
+      "REGISTER_SUBTITLE": "Click here to view and apply or register for any eligible exams.",
+      "REGISTER_TITLE": "Apply and Register"
+    },
+    "HIGHLIGHT_CARDS": {
+      "DOCUMENTS_BTN": "View Your Documents",
+      "DOCUMENTS_SUBTITLE": "Click here to view all of your current document and certificate uploads.",
+      "DOCUMENTS_TITLE": "Documents",
+      "EXAMREGISTRATION_TITLE": "Upcoming Exam Registration",
+      "UPCOMINGEXAMS_SUBTITLE": "You will be able to find more information about upcoming exams here as that information becomes available.",
+      "UPCOMINGEXAMS_TITLE": "Next General Surgery QE -  {{date}}"
+    },
+    "LASTLOGIN": "<strong>Last Login:</strong> {{lastLogin}}",
+    "STATUS": "<strong>Current Status:</strong> {{status}}",
+    "SUBTITLE": "Hello, {{user}}!",
+    "TITLE": "Dashboard"
+  },
+  "EXAMSCORING": {
+    "DASHBOARD": {
+      "AGENDA_BTN": "Download Agenda",
+      "AGENDA_SUBTITLE": "Your agenda can be found here once it has been finalized.",
+      "AGENDA_TITLE": "Your Examination Agenda",
+      "CERTIFYING_NORESULTS": "Links to certifying examinations and examinee scoring pages can be found here on the day of the exam.",
+      "CERTIFYING_TITLE": "Certifying Examinations for {{date}}",
+      "CONFLICTS_BTN": "Download Conflicts",
+      "CONFLICTS_SUBTITLE": "Your conflicts report can be found here once is has been finalized.",
+      "CONFLICTS_TITLE": "Your Conflicts",
+      "DELIVER_BTN": "Begin Certifying Examinations",
+      "DELIVER_SUBTITLE": "Certifying examinations along with scoring capability can be found here on exam day.",
+      "DELIVER_TITLE": "Deliver Certifying Examinations",
+      "ROSTER_BTN": "Review Exam Case Rosters",
+      "ROSTER_SUBTITLE": "Review the cases for the next certifying examination and add personal notes as needed. Your personal notes will display each time you present the case.",
+      "ROSTER_TITLE": "Examination Case Rosters",
+      "SCORE_BTN": "Review Exam Scores",
+      "SCORE_SUBTITLE": "Check the status of submitted scores and edit any that remain incomplete as soon as possible.",
+      "SCORE_TITLE": "Examination Scores",
+      "SUBTITLE": "Welcome to your examiner's dashboard. Information on the dashboard will change based on proximity to the exam adminstration. You will be able to review cases, score examinations, and access other documentation as applicable during the exam administration process."
+    },
+    "DEFAULT_EXAM": "Certifying Examination",
+    "EXAMINATION": {
+      "CANDIDATE": "<strong>Candidate Name:</strong> {{name}}",
+      "INSTRUCTIONS": "Please read carefully the instructions below.",
+      "LIST_DATE": "<strong>Date:</strong> {{date}}",
+      "LIST_TITLE": "Examinations",
+      "SUBTITLE": "Begin the oral examination process by first selecting the desired exam day from the first dropdown. You can then select the specific candidate times lot from the next dropdown. Finally, confirm your examiner user ID and you may begin the exam process.",
+      "TIME": "<strong>Day/Time:</strong> {{time}}",
+      "TITLE": "Examination"
+    },
+    "EXAMROSTERS": {
+      "TITLE": "Examination Rosters"
+    },
+    "EXAMSCORES": {
+      "SUBTITLE": "Review and submit exam scores here. We kindly request that all exams are scored by the end of the exam day, at which point they will be locked down. If you need to complete or edit scores after the current exam day, please contact the psychometricians.",
+      "TITLE": "Examination Scores"
+    }
+  },
+  "LOGIN": {
+    "PASSWORD": "Password",
+    "PASSWORD_ERROR": "The Password field is required.",
+    "SUBMIT_BTN": "Login",
+    "SUBTITLE": "Please enter your username and password to login.",
+    "TITLE": "Welcome to The American Board of Surgery Surgeon's Portal",
+    "USERNAME": "Username",
+    "USERNAME_ERROR": "The Username field is required."
+  },
+  "meta": {
+    "locale": "en-US"
+  },
+  "MYACCOUNT": {
+    "SUBTITLE": "Enter and review your Email Address and Password here to ensure that they are accurate and up to date.",
+    "TITLE": "My Account"
+  },
+  "PROFILE": {
+    "SUBTITLE": "Enter and review your Personal Information, Contact Information, Citizenship Information, and Demographic information here to ensure that it is accurate and up to date.",
+    "TITLE": "Personal Profile"
+  },
+  "SHELL": {
+    "ADD_BTN": "Add",
+    "CANCEL_BTN": "Cancel",
+    "CLOSE_BTN": "Close",
+    "CONTINUE_BTN": "Continue",
+    "COPYRIGHT": "@{{year}} All Rights Reserved. The American Board of Surgery",
+    "DELETE_BTN": "Delete",
+    "EDIT_BTN": "Edit",
+    "NO_BTN": "No",
+    "SAVE_BTN": "Save",
+    "SUBMIT_BTN": "Submit",
+    "YES_BTN": "Yes"
+  }
+}
