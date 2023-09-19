@@ -163,9 +163,17 @@ export class ReadFromLocales {
 const paths = process.argv.slice(3);
 const outputDirectory = process.argv[2];
 
-console.log("Paths: outputDirectory", outputDirectory, "paths", paths);
+console.log(
+  "Paths: outputDirectory",
+  outputDirectory,
+  "paths",
+  paths.toString().split(",")
+);
 
-ReadFromLocales.writeFromLocalesToExcel(paths, outputDirectory)
+ReadFromLocales.writeFromLocalesToExcel(
+  paths.toString().split(","),
+  outputDirectory
+)
   .then((result) => {
     console.info("Translations Complete");
   })

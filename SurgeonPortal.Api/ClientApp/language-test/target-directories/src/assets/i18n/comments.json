@@ -1,0 +1,11 @@
+{
+  "DASHBOARD": {
+    "ACTION_CARDS": {
+      "APPLY_BTN": "This is a really cool button that we love",
+      "CCR_TITLE": "THis is the coolest tag that we have ever written. As a matter of fact we would love to write 50 more, just like this."
+    }
+  },
+  "meta": {
+    "locale": "comments"
+  }
+}
