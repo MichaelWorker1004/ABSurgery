@@ -1,7 +1,9 @@
 <h1>
-  {{ (examTitle$ | async)?.examName || 'EXAMSCORING_DEFAULT_EXAM' | translate }}
+  {{ (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM' | translate }}
 </h1>
-<div class="text-xl">{{ 'EXAMINATION_INSTRUCTIONS' | translate }}</div>
+<div class="text-xl">
+  {{ 'EXAMSCORING.EXAMINATION.INSTRUCTIONS' | translate }}
+</div>
 <abs-exam-timer
   *ngIf="showTimer"
   [totalIncrements]="casesLength"
@@ -9,21 +11,26 @@
   incrementLabel="Case"
 ></abs-exam-timer>
 <sl-card class="w-11 mt-5 no-highlight">
-  <h3 class="mt-0 mb-2" header>{{ 'EXAMINATION_TITLE' | translate }}</h3>
+  <h3 class="mt-0 mb-2" header>
+    {{ 'EXAMSCORING.EXAMINATION.TITLE' | translate }}
+  </h3>
   <hr />
   <div class="grid">
     <p class="col-12">
-      {{ 'EXAMINATION_SUBTITLE' | translate }}
+      {{ 'EXAMSCORING.EXAMINATION.SUBTITLE' | translate }}
     </p>
 
     <div class="flex gap-5 view-header col-12">
       <div
         [innerHTML]="
-          'EXAMINATION_CANDIDATE' | translate : { name: candidateName }
+          'EXAMSCORING.EXAMINATION.CANDIDATE'
+            | translate : { name: candidateName }
         "
       ></div>
       <div
-        [innerHTML]="'EXAMINATION_TIME' | translate : { time: dayTime }"
+        [innerHTML]="
+          'EXAMSCORING.EXAMINATION.TIME' | translate : { time: dayTime }
+        "
       ></div>
     </div>
 

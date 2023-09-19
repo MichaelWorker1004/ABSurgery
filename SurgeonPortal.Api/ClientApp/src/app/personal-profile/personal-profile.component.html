@@ -1,5 +1,5 @@
 <header>
-  <h1>{{ 'PROFILE_TITLE' | translate }}</h1>
+  <h1>{{ 'PROFILE.TITLE' | translate }}</h1>
 </header>
 <ng-container *ngIf="user">
   <section>
@@ -14,7 +14,7 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <p>{{ 'PROFILE_SUBTITLE' | translate }}</p>
+        <p>{{ 'PROFILE.SUBTITLE' | translate }}</p>
         <div class="mb-3">
           <abs-form-errors
             *ngIf="errors$ | async as error"

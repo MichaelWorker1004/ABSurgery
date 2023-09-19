@@ -102,8 +102,12 @@ export class CeScoringAppComponent implements OnInit {
     this.globalDialogService.showLoading();
     const alertsAndNotices = [
       {
-        title: this._translateService.instant('EXAMDASH_AGENDA_TITLE'),
-        content: this._translateService.instant('EXAMDASH_AGENDA_SUBTITLE'),
+        title: this._translateService.instant(
+          'EXAMSCORING.DASHBOARD.AGENDA_TITLE'
+        ),
+        content: this._translateService.instant(
+          'EXAMSCORING.DASHBOARD.AGENDA_SUBTITLE'
+        ),
         alert: false,
         actionText: 'Not Available',
         action: {},
@@ -111,8 +115,12 @@ export class CeScoringAppComponent implements OnInit {
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
       },
       {
-        title: this._translateService.instant('EXAMDASH_CONFLICTS_TITLE'),
-        content: this._translateService.instant('EXAMDASH_CONFLICTS_SUBTITLE'),
+        title: this._translateService.instant(
+          'EXAMSCORING.DASHBOARD.CONFLICTS_TITLE'
+        ),
+        content: this._translateService.instant(
+          'EXAMSCORING.DASHBOARD.CONFLICTS_SUBTITLE'
+        ),
         alert: false,
         actionText: 'Not Available',
         image:
@@ -130,7 +138,7 @@ export class CeScoringAppComponent implements OnInit {
           documentName: examinerAgenda.documentName,
         };
         alertsAndNotices[0].actionText = this._translateService.instant(
-          'EXAMDASH_AGENDA_BTN'
+          'EXAMSCORING.DASHBOARD.AGENDA_BTN'
         );
       }
       this.globalDialogService.closeOpenDialog();
@@ -145,7 +153,7 @@ export class CeScoringAppComponent implements OnInit {
             documentName: examinerConflict.documentName,
           };
           alertsAndNotices[1].actionText = this._translateService.instant(
-            'EXAMDASH_CONFLICTS_BTN'
+            'EXAMSCORING.DASHBOARD.CONFLICTS_BTN'
           );
         }
         this.globalDialogService.closeOpenDialog();

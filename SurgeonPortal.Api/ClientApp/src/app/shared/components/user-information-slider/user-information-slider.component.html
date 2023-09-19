@@ -1,7 +1,8 @@
 <div class="user-information-card">
   <div class="status-container">
     <strong>{{
-      'EXAMDASH_CERTIFYING_TITLE' | translate : { date: examinationWeek }
+      'EXAMSCORING.DASHBOARD.CERTIFYING_TITLE'
+        | translate : { date: examinationWeek }
     }}</strong>
   </div>
 
@@ -29,7 +30,7 @@
     </p-carousel>
     <ng-template #noResults>
       <div class="no-results">
-        {{ 'EXAMDASH_CERTIFYING_NORESULTS' | translate }}
+        {{ 'EXAMSCORING.DASHBOARD.CERTIFYING_NORESULTS' | translate }}
       </div>
     </ng-template>
   </div>

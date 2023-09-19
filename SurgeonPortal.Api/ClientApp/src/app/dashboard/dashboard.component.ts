@@ -172,12 +172,14 @@ export class DashboardComponent {
             ) {
               applyForQECard.disabled = !this.featureFlags.applyRegisterPage;
               applyForQECard.actionDisplay = this.featureFlags.applyRegisterPage
-                ? this._translateService.instant('DASHBOARD_REGISTER_BTN')
+                ? this._translateService.instant(
+                    'DASHBOARD.ACTION_CARDS.REGISTER_BTN'
+                  )
                 : 'Coming Soon';
             } else {
               applyForQECard.disabled = true;
               applyForQECard.description = this._translateService.instant(
-                'DASHBOARD_APPLY_SUBTITLE',
+                'DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE',
                 {
                   date: new Date(
                     registrationInformation?.regOpenDate ?? ''
@@ -204,21 +206,27 @@ export class DashboardComponent {
     const alertsAndNoticesTrainee = [
       {
         content: this._translateService.instant(
-          'DASHBOARD_UPCOMINGEXAMS_SUBTITLE'
+          'DASHBOARD.HIGHLIGHT_CARDS.UPCOMINGEXAMS_SUBTITLE'
         ),
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
       },
       {
-        title: this._translateService.instant('DASHBOARD_DOCUMENTS_TITLE'),
-        content: this._translateService.instant('DASHBOARD_DOCUMENTS_SUBTITLE'),
+        title: this._translateService.instant(
+          'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_TITLE'
+        ),
+        content: this._translateService.instant(
+          'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_SUBTITLE'
+        ),
         action: {
           type: this.featureFlags.documentsPage ? 'component' : null,
           action: this.featureFlags.documentsPage ? '/documents' : null,
         },
         actionText: this.featureFlags.documentsPage
-          ? this._translateService.instant('DASHBOARD_DOCUMENTS_BTN')
+          ? this._translateService.instant(
+              'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_BTN'
+            )
           : 'Coming Soon',
         alert: false,
         image:
@@ -236,7 +244,7 @@ export class DashboardComponent {
             alertsAndNotices?.alertsAndNotices?.examStartDate ?? ''
           ).toLocaleDateString();
           alertsAndNoticesTrainee[0].title = this._translateService.instant(
-            'DASHBOARD_UPCOMINGEXAMS_TITLE',
+            'DASHBOARD.HIGHLIGHT_CARDS.UPCOMINGEXAMS_TITLE',
             { date: date }
           );
         }
@@ -245,7 +253,7 @@ export class DashboardComponent {
     const alertsAndNoticesCertfiied = [
       {
         title: this._translateService.instant(
-          'DASHBOARD_UPCOMINGEXAMREGISTRATION_TITLE'
+          'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_TITLE'
         ),
         content: this.upcomingExams?.join('<br>'),
         alert: true,
@@ -253,14 +261,20 @@ export class DashboardComponent {
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
       },
       {
-        title: this._translateService.instant('DASHBOARD_DOCUMENTS_TITLE'),
-        content: this._translateService.instant('DASHBOARD_DOCUMENTS_SUBTITLE'),
+        title: this._translateService.instant(
+          'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_TITLE'
+        ),
+        content: this._translateService.instant(
+          'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_SUBTITLE'
+        ),
         action: {
           type: this.featureFlags.documentsPage ? 'component' : null,
           action: this.featureFlags.documentsPage ? '/documents' : null,
         },
         actionText: this.featureFlags.documentsPage
-          ? this._translateService.instant('DASHBOARD_DOCUMENTS_BTN')
+          ? this._translateService.instant(
+              'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_BTN'
+            )
           : 'Coming Soon',
         alert: false,
         image:

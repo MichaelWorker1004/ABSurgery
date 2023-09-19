@@ -3,11 +3,11 @@
     <div>
       <h1>
         {{
-          (examTitle$ | async)?.examName || 'EXAMSCORING_DEFAULT_EXAM'
+          (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM'
             | translate
         }}
       </h1>
-      <div class="mb-5">{{ 'EXAMDASH_SUBTITLE' | translate }}</div>
+      <div class="mb-5">{{ 'EXAMSCORING.DASHBOARD.SUBTITLE' | translate }}</div>
       <div class="mb-5 flex gap-1" *ngIf="ceScoreTesting">
         <p-button
           label="Reset Case Comments Data"

@@ -1,10 +1,10 @@
 <h1>
-  {{ (examTitle$ | async)?.examName || 'EXAMSCORING_DEFAULT_EXAM' | translate }}
+  {{ (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM' | translate }}
 </h1>
 <sl-card class="w-full">
-  <div slot="header">{{ 'EXAMSCORES_TITLE' | translate }}</div>
+  <div slot="header">{{ 'EXAMSCORING.EXAMSCORES.TITLE' | translate }}</div>
   <div class="mt-2 mb-5">
-    {{ 'EXAMSCORES_SUBTITLE' | translate }}
+    {{ 'EXAMSCORING.EXAMSCORES.SUBTITLE' | translate }}
   </div>
 
   <form [formGroup]="filterForm" class="dropdown-container flex gap-2 absolute">
