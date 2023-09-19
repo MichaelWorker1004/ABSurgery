@@ -106,7 +106,7 @@ export const CERTIFIED_NAV_ITEMS = [
 
 export const EXAMINER_NAV_ITEMS = [
   {
-    display: 'Examiner Dashboard',
+    display: 'CE Examiner Home',
     action: 'ce-scoring',
     icon: 'fa-solid fa-clock',
     feature: 'examScoringPage',
