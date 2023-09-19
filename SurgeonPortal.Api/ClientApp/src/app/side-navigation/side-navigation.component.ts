@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IMenuItem } from 'src/web-components/menuItem';
 import { NgxsModule, Store } from '@ngxs/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Logout } from '../state';
 import {
   CERTIFIED_NAV_ITEMS,
@@ -25,7 +26,11 @@ export class SideNavigationComponent implements OnInit {
 
   navItems: Array<IMenuItem> = [];
 
-  constructor(private _router: Router, private _store: Store) {}
+  constructor(
+    private _router: Router,
+    private _store: Store,
+    private _translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.getNavItemsByUserRole();
@@ -41,6 +46,10 @@ export class SideNavigationComponent implements OnInit {
     if (this.isExaminer) {
       this.navItems = this.navItems.concat(EXAMINER_NAV_ITEMS);
     }
+    //let the page init before translating
+    setTimeout(() => {
+      this.navItems = this.translateNavItem(this.navItems);
+    }, 0);
   }
 
   logout() {
@@ -70,5 +79,23 @@ export class SideNavigationComponent implements OnInit {
 
   get router(): Router {
     return this._router;
+  }
+
+  /**
+   *
+   * @param alert
+   * @returns
+   */
+  private translateNavItem(navItems: any[]): any[] {
+    return navItems.map((navItem) => {
+      if (navItem.displayKey) {
+        console.log(this._translateService.instant(navItem.displayKey));
+        navItem.display = this._translateService.instant(navItem.displayKey);
+      }
+      if (navItem.children) {
+        navItem.children = this.translateNavItem(navItem.children);
+      }
+      return navItem;
+    });
   }
 }

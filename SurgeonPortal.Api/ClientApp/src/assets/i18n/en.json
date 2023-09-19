@@ -12,6 +12,30 @@
     "SUBMIT_BTN": "Submit",
     "CLOSE_BTN": "Close"
   },
+  "SIDENAV": {
+    "DASHBOARD": "Dashboard",
+    "PROFILE": "Personal Profile",
+    "MYACCOUNT": "My Account",
+    "MEDICAL_TRAINING": "Medical Training",
+    "PROFESSIONAL_STANDING": "Professional Standing",
+    "CME": "CME Repository",
+    "GME": "GME",
+    "APPLY_REGISTER": {
+      "MAIN": "Apply and Register",
+      "REQUIREMENTS": "Registration Requirements",
+      "REGISTRATION": "Exam Registration"
+    },
+    "EXAM_HISTORY": "Exam History",
+    "CONTINUOUS_CERTIFICATION": "Continuous Certification",
+    "PAYMENT_HISTORY": "Payment History",
+    "DOCUMENTS": "Documents",
+    "EXAM_SCORING": {
+      "MAIN": "CE Examiner Home",
+      "CASE_ROSTER": "Examination Case Rosters",
+      "EXAMINATION": "Deliver CE Exams",
+      "SCORES": "Examination Scores"
+    }
+  },
   "LOGIN": {
     "TITLE": "Welcome to The American Board of Surgery Surgeon's Portal",
     "SUBTITLE": "Please enter your username and password to login.",

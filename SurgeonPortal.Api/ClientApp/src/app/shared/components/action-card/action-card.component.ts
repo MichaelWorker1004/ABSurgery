@@ -48,7 +48,7 @@ export class ActionCardComponent implements OnInit {
    * @param alert
    * @returns
    */
-  private translateActionCard(actionCard: any): any[] {
+  private translateActionCard(actionCard: any): any {
     if (actionCard.titleKey) {
       actionCard.title = this._translateService.instant(actionCard.titleKey);
     }

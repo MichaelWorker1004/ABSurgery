@@ -57,7 +57,7 @@ export class HighlightCardComponent implements OnInit {
    * @param alert
    * @returns
    */
-  private translateAlert(alert: any): any[] {
+  private translateAlert(alert: any): any {
     if (alert.titleKey) {
       alert.title = this._translateService.instant(alert.titleKey);
     }
