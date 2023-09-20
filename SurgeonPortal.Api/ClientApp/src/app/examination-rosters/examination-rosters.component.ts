@@ -75,7 +75,7 @@ export class ExaminationRostersComponent implements OnInit {
 
   userId!: number;
 
-  examHeaderId = 491;
+  examHeaderId = 491; // TODO - remove hard coded value
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
   rosters: any = [];

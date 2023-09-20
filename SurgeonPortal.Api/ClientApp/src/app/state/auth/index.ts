@@ -2,4 +2,5 @@ export * from './auth.state';
 export * from './auth.actions';
 export * from './auth.selectors';
 export * from './auth.guard';
+export * from './featureToggle.guard';
 export * from './auth.interfaces';

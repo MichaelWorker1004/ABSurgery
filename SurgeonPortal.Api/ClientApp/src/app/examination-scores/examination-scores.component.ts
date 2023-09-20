@@ -44,7 +44,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExaminationScoresComponent implements OnInit {
-  examHeaderId = 491;
+  examHeaderId = 491; // TODO - remove hard coded value
 
   @Select(ExamScoringSelectors.slices.examScoresList)
   examScores$: Observable<IRosterReadOnlyModel[]> | undefined;

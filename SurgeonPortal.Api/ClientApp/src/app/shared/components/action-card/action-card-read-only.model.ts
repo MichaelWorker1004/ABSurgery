@@ -8,4 +8,5 @@ export interface IActionCardReadOnlyModel {
   actionDisplay: string;
   icon: string;
   status?: string;
+  disabled?: boolean;
 }
