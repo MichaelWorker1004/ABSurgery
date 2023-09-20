@@ -1,4 +1,17 @@
 {
+  "CME": {
+    "HELPTEXT": "Credits and ABS Waivers dropping off are those that were earned more than five years ago from today. You may see an increase in the number of credits needed the next time you login if you have CME that is expiring between now and the end of the year. Refer to the itemized CME section for specific CME activities that may drop off soon.",
+    "ITEMIZED_CME": {
+      "TITLE": "Itemized CME"
+    },
+    "SUBTITLE": "CME requirements for the Continuous Certification (CC) Program are <strong>150 category 1 CME credits</strong> earned over the last five calendar years, <strong>50 of which must be self-assesment credits.</strong>",
+    "TITLE": "CME Repository",
+    "TOOLTIP": "Stay on track with CME requirements by averaging 30 credits per year.",
+    "WAIVERS": {
+      "SUBTITLE": "Listed below are activities you completed (e.g., a CCA module) during the current five-year period that have reduced your overall CME requirements.",
+      "TITLE": "Itemized ABS Waivers that Reduce Your CME Requirements"
+    }
+  },
   "DASHBOARD": {
     "ACTION_CARDS": {
       "APPLY_BTN": "Apply for Exam",
@@ -29,6 +42,10 @@
     "STATUS": "<strong>Current Status:</strong> {{status}}",
     "SUBTITLE": "Hello, {{user}}!",
     "TITLE": "Dashboard"
+  },
+  "DOCUMENTS": {
+    "SUBTITLE": "View all of your uploaded documents and certifications.",
+    "TITLE": "Documents"
   },
   "EXAMSCORING": {
     "DASHBOARD": {
@@ -69,6 +86,21 @@
       "TITLE": "Examination Scores"
     }
   },
+  "GME": {
+    "ITEMIZED_GME": {
+      "SUBTITLE": "Document all GME rotations completely, without any gaps throughout your training years. Your program director must attest to the accuracy of your rotations, and you will be able to request an attestation from your PD upon completion of this section.",
+      "TITLE": "Itemized GME"
+    },
+    "ROTATIONS": {
+      "SUBTITLE": "Date Range Covered: {{ fromDate }} through {{ toDate }}",
+      "TITLE": "My GME Rotations"
+    },
+    "SUMMARY": {
+      "SUBTITLE": "The table below is a summary, by residency level, of your clinical experience based on the dates you entered in the table above. Columns 2 through 4 summarize the number of weeks of clinical experience during each year of residency. Column 5 is a total of weeks per residency year, of rotations devoted to the content areas of surgery. Column 6 summarizes chief resident year rotations also devoted to the content areas of surgery.",
+      "TITLE": "GME Summary"
+    },
+    "TITLE": "Graduate Medical Education (GME)"
+  },
   "LOGIN": {
     "PASSWORD": "Password",
     "PASSWORD_ERROR": "The Password field is required.",
@@ -78,12 +110,49 @@
     "USERNAME": "Username",
     "USERNAME_ERROR": "The Username field is required."
   },
+  "MEDICAL_TRAINING": {
+    "ADVANCED_TRAINING": {
+      "TITLE": "Additional / Advanced Medical Training"
+    },
+    "CERTIFICATES": {
+      "OTHER_CERTS_TITLE": "RPVI Certificate",
+      "TITLE": "Certificates"
+    },
+    "FELLOWSHIP": {
+      "SUBTITLE": "Enter and review your fellowship information here to ensure that it is accurate and up to date.",
+      "TITLE": "Fellowship"
+    },
+    "MEDICAL_SCHOOL": {
+      "SUBTITLE": "Enter and review your medical school informatuon here to ensure that it is accurate and up to date.",
+      "TITLE": "Medical School"
+    },
+    "RESIDENCY": {
+      "SUBTITLE": "Enter and review your residency information here to ensure that it is accurate and up to date.",
+      "TITLE": "Residency"
+    },
+    "TITLE": "Medical Training"
+  },
   "meta": {
     "locale": "en-US"
   },
   "MYACCOUNT": {
     "SUBTITLE": "Enter and review your Email Address and Password here to ensure that they are accurate and up to date.",
     "TITLE": "My Account"
+  },
+  "PROFESSIONAL_STANDING": {
+    "APPOINTMENTS": {
+      "ALL_APPOINTMENTS_TITLE": "All Hospital Appointments / Privileges",
+      "SUBTITLE": "If you are clinically active please provide your current practice and organization type. If you are not currently clinically active please explain why as well as providing information about any current non-clinical activities.",
+      "TITLE": "Current Hospital Appointments / Privileges"
+    },
+    "MEDICAL_LICENSE": {
+      "SUBTITLE": "Enter and review your State Medical License information here to ensure that it is accurate and up to date.",
+      "TITLE": "State Medical License"
+    },
+    "SANCTIONS": {
+      "TITLE": "Sanctions and Ethics"
+    },
+    "TITLE": "Professional Standing"
   },
   "PROFILE": {
     "SUBTITLE": "Enter and review your Personal Information, Contact Information, Citizenship Information, and Demographic information here to ensure that it is accurate and up to date.",
@@ -103,27 +172,27 @@
     "YES_BTN": "Yes"
   },
   "SIDENAV": {
-    "DASHBOARD": "Dashboard",
-    "PROFILE": "Personal Profile",
-    "MYACCOUNT": "My Account",
-    "MEDICAL_TRAINING": "Medical Training",
-    "PROFESSIONAL_STANDING": "Professional Standing",
-    "CME": "CME Repository",
-    "GME": "GME",
     "APPLY_REGISTER": {
       "MAIN": "Apply and Register",
-      "REQUIREMENTS": "Registration Requirements",
-      "REGISTRATION": "Exam Registration"
+      "REGISTRATION": "Exam Registration",
+      "REQUIREMENTS": "Registration Requirements"
     },
-    "EXAM_HISTORY": "Exam History",
+    "CME": "CME Repository",
     "CONTINUOUS_CERTIFICATION": "Continuous Certification",
-    "PAYMENT_HISTORY": "Payment History",
+    "DASHBOARD": "Dashboard",
     "DOCUMENTS": "Documents",
+    "EXAM_HISTORY": "Exam History",
     "EXAM_SCORING": {
-      "MAIN": "CE Examiner Home",
       "CASE_ROSTER": "Examination Case Rosters",
       "EXAMINATION": "Deliver CE Exams",
+      "MAIN": "CE Examiner Home",
       "SCORES": "Examination Scores"
-    }
+    },
+    "GME": "GME",
+    "MEDICAL_TRAINING": "Medical Training",
+    "MYACCOUNT": "My Account",
+    "PAYMENT_HISTORY": "Payment History",
+    "PROFESSIONAL_STANDING": "Professional Standing",
+    "PROFILE": "Personal Profile"
   }
 }

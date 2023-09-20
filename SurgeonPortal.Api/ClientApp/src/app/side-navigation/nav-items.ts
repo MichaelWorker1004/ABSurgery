@@ -131,7 +131,7 @@ export const EXAMINER_NAV_ITEMS = [
     children: [
       {
         display: 'Examination Case Rosters',
-        displayKey: 'SIDENAV.EXAM_SCORING.CASE_ROSTERS',
+        displayKey: 'SIDENAV.EXAM_SCORING.CASE_ROSTER',
         action: 'examination-rosters',
       },
       {

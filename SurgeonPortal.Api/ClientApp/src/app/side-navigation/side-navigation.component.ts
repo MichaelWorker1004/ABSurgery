@@ -46,10 +46,11 @@ export class SideNavigationComponent implements OnInit {
     if (this.isExaminer) {
       this.navItems = this.navItems.concat(EXAMINER_NAV_ITEMS);
     }
-    //let the page init before translating
+    // let the page init before translating
+    // TODO: [Joe] address this timing issue in a way that does not rely on a timeout
     setTimeout(() => {
       this.navItems = this.translateNavItem(this.navItems);
-    }, 0);
+    }, 100);
   }
 
   logout() {
@@ -89,8 +90,12 @@ export class SideNavigationComponent implements OnInit {
   private translateNavItem(navItems: any[]): any[] {
     return navItems.map((navItem) => {
       if (navItem.displayKey) {
-        console.log(this._translateService.instant(navItem.displayKey));
-        navItem.display = this._translateService.instant(navItem.displayKey);
+        // this safeguards against the timing issue of the page loading before the translations are ready
+        // TODO: [Joe] address this timing issue in a way that does not rely on a timeout
+        const newDisplay = this._translateService.instant(navItem.displayKey);
+        if (newDisplay !== navItem.displayKey) {
+          navItem.display = newDisplay;
+        }
       }
       if (navItem.children) {
         navItem.children = this.translateNavItem(navItem.children);
