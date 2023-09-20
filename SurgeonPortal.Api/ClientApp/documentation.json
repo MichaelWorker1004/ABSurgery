@@ -56298,6 +56298,16 @@
         "defaultValue": "[\n  {\n    label: 'Software Engineer',\n    value: 'Software Engineer',\n  },\n  {\n    label: 'Software Architect',\n    value: 'Software Architect',\n  },\n  {\n    label: 'CEO',\n    value: 'CEO',\n  },\n  {\n    label: 'Green Horn',\n    value: 'Green Horn',\n  },\n  {\n    label: 'Senior Green Horn',\n    value: 'Senior Green Horn',\n  },\n]"
       },
       {
+        "name": "DEFAULT_PROVIDERS",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/stories/default-providers.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "[]",
+        "defaultValue": "[\n  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },\n  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },\n  provideEnvironmentNgxMask(maskConfig),\n  importProvidersFrom(\n    BrowserModule,\n    AppRoutingModule,\n    NgxsModule.forRoot(surgeonPortalState, {\n      developmentMode: true,\n    }),\n    NgxsStoragePluginModule.forRoot({\n      storage: StorageOption.SessionStorage,\n      key: [AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN, PICKLISTS_STATE_TOKEN],\n    }),\n    NgxsLoggerPluginModule.forRoot(),\n    NgxsReduxDevtoolsPluginModule.forRoot(),\n    NgxsFormPluginModule.forRoot()\n  ),\n  provideHttpClient(withInterceptorsFromDi()),\n  provideAnimations(),\n]"
+      },
+      {
         "name": "DIRECTORY_COLS",
         "ctype": "miscellaneous",
         "subtype": "variable",
@@ -56598,6 +56608,16 @@
         "defaultValue": "{\n  validation: false,\n}"
       },
       {
+        "name": "maskConfig",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/stories/default-providers.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Partial<IConfig>",
+        "defaultValue": "{\n  validation: false,\n}"
+      },
+      {
         "name": "MEDICAL_LICENSE_GRID_COLS",
         "ctype": "miscellaneous",
         "subtype": "variable",
@@ -56685,7 +56705,7 @@
         "deprecated": false,
         "deprecationMessage": "",
         "type": "Meta<GridComponent>",
-        "defaultValue": "{\n  title: 'Components/Grid',\n  tags: ['autodocs'],\n  component: GridComponent,\n  argTypes: {\n    filterType: {\n      options: ['text', 'dropdown'],\n    },\n  },\n  render: (args: GridComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [provideAnimations()],\n    }),\n    moduleMetadata({\n      imports: [GridComponent],\n      declarations: [],\n    }),\n  ],\n}"
+        "defaultValue": "{\n  title: 'Components/Grid',\n  tags: ['autodocs'],\n  component: GridComponent,\n  argTypes: {\n    filterType: {\n      options: ['text', 'dropdown'],\n    },\n  },\n  render: (args: GridComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [...DEFAULT_PROVIDERS],\n    }),\n    moduleMetadata({\n      imports: [GridComponent],\n      declarations: [],\n    }),\n  ],\n}"
       },
       {
         "name": "ORAL_EXAMINATION_COLS",
@@ -57888,7 +57908,7 @@
           "deprecated": false,
           "deprecationMessage": "",
           "type": "Meta<GridComponent>",
-          "defaultValue": "{\n  title: 'Components/Grid',\n  tags: ['autodocs'],\n  component: GridComponent,\n  argTypes: {\n    filterType: {\n      options: ['text', 'dropdown'],\n    },\n  },\n  render: (args: GridComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [provideAnimations()],\n    }),\n    moduleMetadata({\n      imports: [GridComponent],\n      declarations: [],\n    }),\n  ],\n}"
+          "defaultValue": "{\n  title: 'Components/Grid',\n  tags: ['autodocs'],\n  component: GridComponent,\n  argTypes: {\n    filterType: {\n      options: ['text', 'dropdown'],\n    },\n  },\n  render: (args: GridComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [...DEFAULT_PROVIDERS],\n    }),\n    moduleMetadata({\n      imports: [GridComponent],\n      declarations: [],\n    }),\n  ],\n}"
         },
         {
           "name": "Pagination",
@@ -57921,6 +57941,28 @@
           "deprecationMessage": "",
           "type": "[]",
           "defaultValue": "[\n  {\n    label: 'Software Engineer',\n    value: 'Software Engineer',\n  },\n  {\n    label: 'Software Architect',\n    value: 'Software Architect',\n  },\n  {\n    label: 'CEO',\n    value: 'CEO',\n  },\n  {\n    label: 'Green Horn',\n    value: 'Green Horn',\n  },\n  {\n    label: 'Senior Green Horn',\n    value: 'Senior Green Horn',\n  },\n]"
+        }
+      ],
+      "src/stories/default-providers.ts": [
+        {
+          "name": "DEFAULT_PROVIDERS",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/stories/default-providers.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "[]",
+          "defaultValue": "[\n  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },\n  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },\n  provideEnvironmentNgxMask(maskConfig),\n  importProvidersFrom(\n    BrowserModule,\n    AppRoutingModule,\n    NgxsModule.forRoot(surgeonPortalState, {\n      developmentMode: true,\n    }),\n    NgxsStoragePluginModule.forRoot({\n      storage: StorageOption.SessionStorage,\n      key: [AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN, PICKLISTS_STATE_TOKEN],\n    }),\n    NgxsLoggerPluginModule.forRoot(),\n    NgxsReduxDevtoolsPluginModule.forRoot(),\n    NgxsFormPluginModule.forRoot()\n  ),\n  provideHttpClient(withInterceptorsFromDi()),\n  provideAnimations(),\n]"
+        },
+        {
+          "name": "maskConfig",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/stories/default-providers.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Partial<IConfig>",
+          "defaultValue": "{\n  validation: false,\n}"
         }
       ],
       "src/app/exam-process/directory-cols.ts": [
@@ -63851,6 +63893,26 @@
         "coveragePercent": 83,
         "coverageCount": "5/6",
         "status": "very-good"
+      },
+      {
+        "filePath": "src/stories/default-providers.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "DEFAULT_PROVIDERS",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
+        "filePath": "src/stories/default-providers.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "maskConfig",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
       },
       {
         "filePath": "src/stories/header.component.ts",
