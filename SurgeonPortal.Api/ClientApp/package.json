@@ -20,7 +20,7 @@
     "lint": "eslint src --ext js,ts,tsx",
     "i18n:init": "ngx-translate-extract --input ./src --output ./src/assets/i18n/template.json --key-as-default-value --replace --format json",
     "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/en.json --clean --format json",
-    "i18n:write-to-excel": "node scripts/language/read-from-locales.js ./language-test i18n/en-US.json,i18n/comments.json",
+    "i18n:write-to-excel": "node scripts/language/read-from-locales.js ./language-test i18n/en-US.json,i18n/comments.json,i18n/notes.json",
     "i18n:read-from-excel": "node scripts/language/write-to-locales.js ./language-test/translations.xlsx ./i18n/",
     "i18n:generate-interface": "node scripts/language/generate-i18n-interface.js ./i18n/ en-US.json ./language-test/target-directories ./language-test/localization-directories",
     "generate-language": "npm run i18n:read-from-excel && npm run i18n:generate-interface",
