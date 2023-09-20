@@ -28,6 +28,7 @@ import { IFormErrors } from 'src/app/shared/common';
 import {
   ClearMedicalTrainingErrors,
   MedicalTrainingSelectors,
+  SetUnsavedChanges,
 } from 'src/app/state';
 import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 
@@ -101,6 +102,7 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
       const isDirty = this.otherCertificatesForm.dirty;
       if (isDirty && !this.hasUnsavedChanges) {
         this.hasUnsavedChanges = true;
+        this._store.dispatch(new SetUnsavedChanges(true));
       }
     });
   }
@@ -125,15 +127,19 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
         .showConfirmation('Unsaved Changes', 'Do you want to navigate away')
         .then((result) => {
           if (result) {
+            this._store.dispatch(new SetUnsavedChanges(false));
             this.cancelDialog.emit({ show: false });
           }
         });
     } else {
+      this._store.dispatch(new SetUnsavedChanges(false));
       this.cancelDialog.emit({ show: false });
     }
   }
 
   save() {
+    this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetUnsavedChanges(false));
     this.saveDialog.emit({
       edit: this.isEdit,
       show: false,

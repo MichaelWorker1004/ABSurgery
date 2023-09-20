@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -72,6 +77,7 @@ import { FormErrorsComponent } from '../shared/components/form-errors/form-error
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFormErrors } from '../shared/common';
 import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-training.model';
+import { SetUnsavedChanges } from '../state/application/application.actions';
 
 @UntilDestroy()
 @Component({
@@ -99,7 +105,7 @@ import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-t
     FormErrorsComponent,
   ],
 })
-export class MedicalTrainingComponent implements OnInit {
+export class MedicalTrainingComponent implements OnInit, OnDestroy {
   //TODO: [Joe] - add form-errors shared component
 
   @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
@@ -218,7 +224,6 @@ export class MedicalTrainingComponent implements OnInit {
     residencyProgramOther: new FormControl('', Validators.max(8000)),
   });
 
-  hasUnsavedChanges = false;
   isSubmitted = false;
 
   constructor(
@@ -236,8 +241,13 @@ export class MedicalTrainingComponent implements OnInit {
     this._store.dispatch(new GetOtherCertifications());
     this._store.dispatch(new GetFellowships());
   }
+  ngOnDestroy(): void {
+    this._store.dispatch(new SetUnsavedChanges(false));
+  }
 
   ngOnInit(): void {
+    this._store.dispatch(new SetUnsavedChanges(false));
+
     this.maxYear.setFullYear(this.year);
     this.userId$?.subscribe((id) => {
       this.userId = id;
@@ -250,11 +260,7 @@ export class MedicalTrainingComponent implements OnInit {
     this.medicalTrainingForm.valueChanges.subscribe(() => {
       this._store.dispatch(this.clearErrors);
       const isDirty = this.medicalTrainingForm.dirty;
-      if (isDirty && !this.isSubmitted) {
-        this.hasUnsavedChanges = true;
-      } else {
-        this.hasUnsavedChanges = false;
-      }
+      this._store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
     });
     this.setStates();
   }
@@ -565,7 +571,8 @@ export class MedicalTrainingComponent implements OnInit {
 
   toggleFormEdit(toggle: boolean) {
     this.isEdit = toggle;
-    this.hasUnsavedChanges = toggle;
+    // this.hasUnsavedChanges = toggle;
+    this._store.dispatch(new SetUnsavedChanges(toggle));
   }
 
   save() {

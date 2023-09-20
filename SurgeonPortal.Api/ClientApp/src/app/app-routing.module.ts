@@ -1,27 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FileNotFoundComponent } from './file-not-found/file-not-found.component';
-import { AuthGuard, FeatureToggleGuard } from './state';
-import { PersonalProfileComponent } from './personal-profile/personal-profile.component';
-import { MedicalTrainingComponent } from './medical-training/medical-training.component';
-import { ProfessionalStandingComponent } from './professional-standing/professional-standing.component';
-import { MyAccountComponent } from './my-account/my-account.component';
-import { OralExaminationsComponent } from './oral-examination/oral-examination.component';
+import { AuthGuard, FeatureToggleGuard, WorkInProgressGuard } from './state';
 import { UserClaims } from './side-navigation/user-status.enum';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-
-const canDeactivate = async (component: any, title?: string, text?: string) => {
-  if (component?.hasUnsavedChanges) {
-    const result = await component.globalDialogService?.showConfirmation(
-      title ?? 'Unsaved Changes',
-      text ?? 'Do you want to navigate away'
-    );
-
-    return result;
-  }
-
-  return true;
-};
 
 const routes: Routes = [
   {
@@ -66,9 +48,7 @@ const routes: Routes = [
       requiredClaims: [UserClaims.user],
       requiredFeatures: ['personalProfilePage'],
     },
-    canDeactivate: [
-      (component: PersonalProfileComponent) => canDeactivate(component),
-    ],
+    canDeactivate: [WorkInProgressGuard],
   },
   {
     path: 'medical-training',
@@ -81,9 +61,7 @@ const routes: Routes = [
       requiredClaims: [UserClaims.user],
       requiredFeatures: ['medicalTrainingPage'],
     },
-    canDeactivate: [
-      (component: MedicalTrainingComponent) => canDeactivate(component),
-    ],
+    canDeactivate: [WorkInProgressGuard],
   },
   {
     path: 'professional-standing',
@@ -96,9 +74,7 @@ const routes: Routes = [
       requiredClaims: [UserClaims.surgeon],
       requiredFeatures: ['professionalStandingPage'],
     },
-    canDeactivate: [
-      (component: ProfessionalStandingComponent) => canDeactivate(component),
-    ],
+    canDeactivate: [WorkInProgressGuard],
   },
   {
     path: 'apply-and-resgister',
@@ -207,9 +183,7 @@ const routes: Routes = [
       requiredClaims: [UserClaims.user],
       requiredFeatures: ['myAccountPage'],
     },
-    canDeactivate: [
-      (component: MyAccountComponent) => canDeactivate(component),
-    ],
+    canDeactivate: [WorkInProgressGuard],
   },
   {
     path: 'gme-history',
@@ -270,14 +244,7 @@ const routes: Routes = [
       requiredClaims: [UserClaims.examiner],
       requiredFeatures: ['examScoringPage'],
     },
-    canDeactivate: [
-      (component: OralExaminationsComponent) =>
-        canDeactivate(
-          component,
-          'Exam in Process',
-          'Do you want to navigate away from the exam? <br/> Navigating away will result in an incomplete exam.'
-        ),
-    ],
+    canDeactivate: [WorkInProgressGuard],
   },
   {
     path: 'ce-scoring/examination-scores',

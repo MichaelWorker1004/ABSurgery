@@ -27,6 +27,7 @@ import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { SetUnsavedChanges } from '../state/application/application.actions';
 
 @Component({
   selector: 'abs-my-account',
@@ -61,7 +62,6 @@ export class MyAccountComponent implements OnDestroy {
   profilePicture =
     'https://fastly.picsum.photos/id/91/3504/2336.jpg?hmac=tK6z7RReLgUlCuf4flDKeg57o6CUAbgklgLsGL0UowU';
 
-  hasUnsavedChanges = false;
   isSubmitted = false;
 
   myAccountForm: FormGroup = new FormGroup(
@@ -83,6 +83,7 @@ export class MyAccountComponent implements OnDestroy {
     private store: Store,
     public globalDialogService: GlobalDialogService
   ) {
+    this.store.dispatch(new SetUnsavedChanges(false));
     this.userSub = this.user$?.subscribe((user) => {
       if (user) {
         this.user = user;
@@ -95,16 +96,13 @@ export class MyAccountComponent implements OnDestroy {
 
     this.myAccountForm.valueChanges.subscribe(() => {
       const isDirty = this.myAccountForm.dirty;
-      if (isDirty && !this.isSubmitted) {
-        this.hasUnsavedChanges = true;
-      } else {
-        this.hasUnsavedChanges = false;
-      }
+      this.store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
     });
   }
 
   ngOnDestroy() {
     this.userSub?.unsubscribe();
+    this.store.dispatch(new SetUnsavedChanges(false));
   }
 
   getErrors(error: object) {

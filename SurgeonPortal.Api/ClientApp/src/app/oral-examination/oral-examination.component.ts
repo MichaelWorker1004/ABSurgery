@@ -2,6 +2,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   HostListener,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -31,6 +32,7 @@ import { IExamScoreModel } from '../api/models/ce/exam-score.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { SetExamInProgress } from '../state/application/application.actions';
 
 @UntilDestroy()
 @Component({
@@ -48,7 +50,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./oral-examination.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class OralExaminationsComponent implements OnInit {
+export class OralExaminationsComponent implements OnInit, OnDestroy {
   @HostListener('contextmenu', ['$event'])
   onRightClick(event: any) {
     event.preventDefault();
@@ -94,8 +96,6 @@ export class OralExaminationsComponent implements OnInit {
   disable = true;
   submitDisable = true;
 
-  hasUnsavedChanges = true;
-
   disableSubmit = true;
 
   constructor(
@@ -106,8 +106,13 @@ export class OralExaminationsComponent implements OnInit {
   ) {
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
   }
+  ngOnDestroy(): void {
+    this._store.dispatch(new SetExamInProgress(false));
+  }
 
   ngOnInit(): void {
+    this._store.dispatch(new SetExamInProgress(true));
+
     this.activatedRoute.params.subscribe((params) => {
       this.examScheduleId = params['examinationId'];
       this._store.dispatch(new GetExaminee(params['examinationId']));
@@ -232,7 +237,7 @@ export class OralExaminationsComponent implements OnInit {
   async handleSaveAndSubmitLater() {
     await this.updateScores();
 
-    this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetExamInProgress(false));
 
     const dateParts = this.dayTime.replace(/\s+/g, ' ').trim().split(' ');
     const formattedDate = `${dateParts[1]} ${dateParts[0]} ${dateParts[2]}`;
@@ -253,7 +258,7 @@ export class OralExaminationsComponent implements OnInit {
       examScheduleId: this.examScheduleId,
     } as IExamScoreModel;
 
-    this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetExamInProgress(false));
 
     const caseCount = Object.keys(this.gradedCandidateCaseCores).length;
     let currentCase = 0;
@@ -304,7 +309,7 @@ export class OralExaminationsComponent implements OnInit {
           criticalFail: data?.criticalFail,
           remarks: data?.remarks,
         } as ICaseScoreModel;
-        this.hasUnsavedChanges = false;
+        this._store.dispatch(new SetExamInProgress(false));
 
         if (data?.examScoringId) {
           promise.push(
