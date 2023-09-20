@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 import { Observable, map, skipWhile, take } from 'rxjs';
 import { Select } from '@ngxs/store';
-import { ApplicationSelectors } from '../application/application.selectors';
-import { IFeatureFlags } from '../application/application.state';
+import { ApplicationSelectors } from './application.selectors';
+import { IFeatureFlags } from './application.state';
 
 interface CanActivate {
   canActivate(

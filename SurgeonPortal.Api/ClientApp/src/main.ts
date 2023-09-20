@@ -1,3 +1,4 @@
+import { DEFAULT_PROVIDERS } from './stories/default-providers';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import {
@@ -26,9 +27,6 @@ import { AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN } from './app/state';
 import { PICKLISTS_STATE_TOKEN } from './app/state/picklists';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-// TODO: Explore ngx-mask configs to see if onkeypress
-//  and onchange can be mapped to sl_change, etc
-// This is for the ngx-mask library
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -37,6 +35,9 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+// TODO: Explore ngx-mask configs to see if onkeypress
+//  and onchange can be mapped to sl_change, etc
+// This is for the ngx-mask library
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

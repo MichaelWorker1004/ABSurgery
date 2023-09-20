@@ -98,7 +98,9 @@ export class AppComponent implements OnInit {
 
       if (!isAuthed) {
         const returnUrl = routerStateSnapshot.url
-          ? routerStateSnapshot.url
+          ? routerStateSnapshot.url.includes('oral-examinations/exam/')
+            ? '/dashboard'
+            : routerStateSnapshot.url
           : '/dashboard';
         this.router.navigate(['/login'], {
           queryParams: { returnUrl: returnUrl },

@@ -11,8 +11,9 @@
     [allowUpload]="false"
     [documentsData$]="documentsData$"
     [gridCols]="documentsCols"
-    [showFilter]="true"
-    [filterOn]="'documentName'"
+    [showFilter]="gridOptions.showFilter"
+    [filterOn]="gridOptions.filterOn"
+    [filterType]="gridOptions.filterType"
     (documentsAction)="handleGridAction($event)"
   ></abs-documents-upload>
 </sl-card>

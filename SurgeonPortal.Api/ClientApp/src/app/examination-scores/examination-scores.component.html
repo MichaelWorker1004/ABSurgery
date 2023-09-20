@@ -30,6 +30,8 @@
   <abs-grid
     [columns]="examinationScoresCols"
     [gridOptions]="gridOptions"
+    [showFilter]="gridOptions.showFilter"
+    [filterOn]="gridOptions.filterOn"
     [data]="filteredExaminationScoresData$"
     (action)="handleView($event)"
     [pagination]="true"

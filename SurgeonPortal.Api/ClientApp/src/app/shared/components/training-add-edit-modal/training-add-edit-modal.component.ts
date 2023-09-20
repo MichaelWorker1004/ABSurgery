@@ -33,7 +33,7 @@ import { ITrainingTypeReadOnlyModel } from 'src/app/api/models/picklists/trainin
 import { IAdvancedTrainingModel } from 'src/app/api/models/medicaltraining/advanced-training.model';
 import { validateStartAndEndDates } from '../../validators/validators';
 import { GlobalDialogService } from '../../services/global-dialog.service';
-import { ClearMedicalTrainingErrors } from 'src/app/state';
+import { ClearMedicalTrainingErrors, SetUnsavedChanges } from 'src/app/state';
 import { IFormErrors } from '../../common';
 import { FormErrorsComponent } from '../form-errors/form-errors.component';
 
@@ -123,6 +123,7 @@ export class TrainingAddEditModalComponent implements OnInit {
       const isDirty = this.additionalTrainingForm.dirty;
       if (isDirty && !this.hasUnsavedChanges) {
         this.hasUnsavedChanges = true;
+        this._store.dispatch(new SetUnsavedChanges(true));
       }
     });
     this.subscribeToTraining();
@@ -226,16 +227,19 @@ export class TrainingAddEditModalComponent implements OnInit {
         .showConfirmation('Unsaved Changes', 'Do you want to navigate away')
         .then((result) => {
           if (result) {
+            this._store.dispatch(new SetUnsavedChanges(false));
             this.cancelDialog.emit({ show: false });
           }
         });
     } else {
+      this._store.dispatch(new SetUnsavedChanges(false));
       this.cancelDialog.emit({ show: false });
     }
   }
 
   save() {
     this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetUnsavedChanges(false));
     this.saveDialog.emit({
       edit: this.isEdit,
       show: false,

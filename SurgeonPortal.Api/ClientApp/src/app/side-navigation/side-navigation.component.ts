@@ -4,12 +4,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IMenuItem } from 'src/web-components/menuItem';
 import { NgxsModule, Store } from '@ngxs/store';
 import { TranslateService } from '@ngx-translate/core';
-import { Logout } from '../state';
 import {
   CERTIFIED_NAV_ITEMS,
   EXAMINER_NAV_ITEMS,
   TRAINEE_NAV_ITEMS,
 } from './nav-items';
+import { CloseApplication } from '../state/application/application.actions';
 
 @Component({
   selector: 'abs-side-navigation',
@@ -54,7 +54,7 @@ export class SideNavigationComponent implements OnInit {
   }
 
   logout() {
-    this._store.dispatch(new Logout());
+    this._store.dispatch(new CloseApplication());
   }
 
   toggleSideNav() {
