@@ -4,7 +4,7 @@ import { GRID_DEFAULT_COLS } from './defaults/grid-default-cols';
 import { GRID_DEFAULT_DATA } from './defaults/grid-dafault-data';
 import { DEFAULT_DROPDOWN_OPTIONS } from './defaults/grid-default-dropdown';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { DEFAULT_PROVIDERS } from 'src/stories/default-providers';
 
 const meta: Meta<GridComponent> = {
   title: 'Components/Grid',
@@ -23,7 +23,7 @@ const meta: Meta<GridComponent> = {
   decorators: [
     applicationConfig({
       // Provides necesarry utilities for PrimeNG components
-      providers: [provideAnimations()],
+      providers: [...DEFAULT_PROVIDERS],
     }),
     moduleMetadata({
       imports: [GridComponent],
