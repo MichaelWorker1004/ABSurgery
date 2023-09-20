@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { debounceTime, Observable, take } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -44,6 +49,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IFormErrors } from '../shared/common';
 import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
+import { SetUnsavedChanges } from '../state/application/application.actions';
 
 interface IDisplayUserProfile extends IUserProfile {
   gender: string;
@@ -80,7 +86,7 @@ interface IDisplayUserProfile extends IUserProfile {
   ],
   providers: [provideNgxMask()],
 })
-export class PersonalProfileComponent implements OnInit {
+export class PersonalProfileComponent implements OnInit, OnDestroy {
   // TODO: [Joe] set up national provider identifier (NPI) report button
 
   @Select(UserProfileSelectors.user) user$:
@@ -154,7 +160,6 @@ export class PersonalProfileComponent implements OnInit {
     zipCode: new FormControl('', [Validators.required]),
   });
 
-  hasUnsavedChanges = false;
   isSubmitted = false;
 
   constructor(
@@ -272,15 +277,16 @@ export class PersonalProfileComponent implements OnInit {
           });
       });
   }
+  ngOnDestroy(): void {
+    this._store.dispatch(new SetUnsavedChanges(false));
+  }
 
   ngOnInit(): void {
+    this._store.dispatch(new SetUnsavedChanges(false));
+
     this.userProfileForm.valueChanges.subscribe(() => {
       const isDirty = this.userProfileForm.dirty;
-      if (isDirty && !this.isSubmitted) {
-        this.hasUnsavedChanges = true;
-      } else {
-        this.hasUnsavedChanges = false;
-      }
+      this._store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
     });
   }
 
@@ -297,7 +303,7 @@ export class PersonalProfileComponent implements OnInit {
   toggleEdit() {
     this.isEdit = !this.isEdit;
     this.resetFormDefaults();
-    this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetUnsavedChanges(false));
     this._store.dispatch(new ClearUserProfileErrors());
   }
 
@@ -312,7 +318,7 @@ export class PersonalProfileComponent implements OnInit {
         if (!res.userProfile.errors) {
           this.isSubmitted = true;
           this.isEdit = false;
-          this.hasUnsavedChanges = false;
+          this._store.dispatch(new SetUnsavedChanges(false));
         } else {
           this.userProfileForm.get('userConfrimed')?.setValue(false);
         }
