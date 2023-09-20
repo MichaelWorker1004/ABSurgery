@@ -1,29 +1,43 @@
-import fs, { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
+import fs, { readFileSync, existsSync, mkdirSync } from "fs";
 import * as process from "process";
-import util from "util";
 import path from "path";
 import * as XLSX from "xlsx";
 import { Readable } from "stream";
 import { fileURLToPath } from "url";
 
+// A JS Module way to do the node.js __dirname
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 XLSX.set_fs(fs); // DO NOT FORGET THIS LINE! (required for use with raw data)
 XLSX.stream.set_readable(Readable); // DO NOT FORGET THIS LINE! (required for use with raw data)
 
+/**
+ * A class to read from an excel file and write to a set of locale files
+ */
 export class ReadFromLocales {
   static locales;
   static translationMap;
   static rows;
   static spreadsheetObject;
   static outputDirectory;
+
+  /**
+   * Read from an excel file and write to a set of locale files
+   * @param localePaths
+   * @param outputDirectory
+   * @returns {Promise<void>}
+   */
   static async writeFromLocalesToExcel(localePaths, outputDirectory) {
     debugger;
+
+    // Set the static properties
     ReadFromLocales.outputDirectory = outputDirectory;
     ReadFromLocales.translationMap = new Map();
     ReadFromLocales.rows = 0;
     ReadFromLocales.locales = [];
     ReadFromLocales.spreadsheetObject = [];
+
+    // Load the translation files
     const files = await ReadFromLocales.loadTranslationFiles(localePaths);
     files.forEach((file) => {
       ReadFromLocales.locales.push(file.meta.locale);
@@ -33,6 +47,11 @@ export class ReadFromLocales {
     ReadFromLocales.writeXLSX();
   }
 
+  /**
+   * Load the translation files
+   * @param {string[]} filePaths - The paths to the translation files
+   * @returns {Promise<*[]>}
+   */
   static async loadTranslationFiles(filePaths) {
     const files = [];
     filePaths.forEach((filePath) => {
@@ -44,6 +63,12 @@ export class ReadFromLocales {
     return files;
   }
 
+  /**
+   * This is a recursive method that walks the tree of the translation files
+   * @param obj
+   * @param propArray
+   * @param locale
+   */
   static walkTree(obj, propArray, locale) {
     // obj is the object to be parsed
     // propArray is an array of properties that have been traversed
@@ -69,6 +94,9 @@ export class ReadFromLocales {
     });
   }
 
+  /**
+   * Map the translation map to a spreadsheet object
+   */
   static mapToSpreadsheet() {
     const rows = [];
     ReadFromLocales.translationMap.forEach((value, key) => {
@@ -84,6 +112,9 @@ export class ReadFromLocales {
     ReadFromLocales.spreadsheetObject = rows;
   }
 
+  /**
+   * Write the spreadsheet object to an excel file
+   */
   static writeXLSX() {
     const rows = ReadFromLocales.spreadsheetObject;
     const workbook = XLSX.utils.book_new();
@@ -127,6 +158,11 @@ export class ReadFromLocales {
     );
   }
 
+  /**
+   * Get the column name based on the location
+   * @param location
+   * @returns {string}
+   */
   static getColumnName(location) {
     const letters = [
       "A",
@@ -163,7 +199,7 @@ export class ReadFromLocales {
 const paths = process.argv.slice(3);
 const outputDirectory = process.argv[2];
 
-console.log(
+console.info(
   "Paths: outputDirectory",
   outputDirectory,
   "paths",
