@@ -101,5 +101,29 @@
     "SAVE_BTN": "Save",
     "SUBMIT_BTN": "Submit",
     "YES_BTN": "Yes"
+  },
+  "SIDENAV": {
+    "APPLY_REGISTER": {
+      "MAIN": "Apply and Register",
+      "REGISTRATION": "Exam Registration",
+      "REQUIREMENTS": "Registration Requirements"
+    },
+    "CME": "CME Repository",
+    "CONTINUOUS_CERTIFICATION": "Continuous Certification",
+    "DASHBOARD": "Dashboard",
+    "DOCUMENTS": "Documents",
+    "EXAM_HISTORY": "Exam History",
+    "EXAM_SCORING": {
+      "CASE_ROSTER": "Examination Case Rosters",
+      "EXAMINATION": "Deliver CE Exams",
+      "MAIN": "CE Examiner Home",
+      "SCORES": "Examination Scores"
+    },
+    "GME": "GME",
+    "MEDICAL_TRAINING": "Medical Training",
+    "MYACCOUNT": "My Account",
+    "PAYMENT_HISTORY": "Payment History",
+    "PROFESSIONAL_STANDING": "Professional Standing",
+    "PROFILE": "Personal Profile"
   }
 }

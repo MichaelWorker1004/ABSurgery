@@ -103,27 +103,27 @@
     "YES_BTN": "Yes"
   },
   "SIDENAV": {
+    "DASHBOARD": "Dashboard",
+    "PROFILE": "Personal Profile",
+    "MYACCOUNT": "My Account",
+    "MEDICAL_TRAINING": "Medical Training",
+    "PROFESSIONAL_STANDING": "Professional Standing",
+    "CME": "CME Repository",
+    "GME": "GME",
     "APPLY_REGISTER": {
       "MAIN": "Apply and Register",
-      "REGISTRATION": "Exam Registration",
-      "REQUIREMENTS": "Registration Requirements"
+      "REQUIREMENTS": "Registration Requirements",
+      "REGISTRATION": "Exam Registration"
     },
-    "CME": "CME Repository",
-    "CONTINUOUS_CERTIFICATION": "Continuous Certification",
-    "DASHBOARD": "Dashboard",
-    "DOCUMENTS": "Documents",
     "EXAM_HISTORY": "Exam History",
+    "CONTINUOUS_CERTIFICATION": "Continuous Certification",
+    "PAYMENT_HISTORY": "Payment History",
+    "DOCUMENTS": "Documents",
     "EXAM_SCORING": {
+      "MAIN": "CE Examiner Home",
       "CASE_ROSTER": "Examination Case Rosters",
       "EXAMINATION": "Deliver CE Exams",
-      "MAIN": "CE Examiner Home",
       "SCORES": "Examination Scores"
-    },
-    "GME": "GME",
-    "MEDICAL_TRAINING": "Medical Training",
-    "MYACCOUNT": "My Account",
-    "PAYMENT_HISTORY": "Payment History",
-    "PROFESSIONAL_STANDING": "Professional Standing",
-    "PROFILE": "Personal Profile"
+    }
   }
 }

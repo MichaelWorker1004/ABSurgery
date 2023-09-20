@@ -46,7 +46,7 @@ bootstrapApplication(AppComponent, {
       BrowserModule,
       AppRoutingModule,
       TranslateModule.forRoot({
-        defaultLanguage: 'en',
+        defaultLanguage: 'en-US',
         loader: {
           provide: TranslateLoader,
           useFactory: createTranslateLoader,
