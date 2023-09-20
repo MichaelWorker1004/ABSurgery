@@ -14,7 +14,6 @@ const meta: Meta<ProfileHeaderComponent> = {
   }),
   decorators: [
     applicationConfig({
-      // Provides necesarry utilities for PrimeNG components
       providers: [...DEFAULT_PROVIDERS],
     }),
     moduleMetadata({
