@@ -4,7 +4,7 @@ import { GRID_DEFAULT_COLS } from './defaults/grid-default-cols';
 import { GRID_DEFAULT_DATA } from './defaults/grid-dafault-data';
 import { DEFAULT_DROPDOWN_OPTIONS } from './defaults/grid-default-dropdown';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
-import { DEFAULT_PROVIDERS } from 'src/default-providers';
+import { DEFAULT_PROVIDERS } from 'src/stories/default-providers';
 
 const meta: Meta<GridComponent> = {
   title: 'Components/Grid',

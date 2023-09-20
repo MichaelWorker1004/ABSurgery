@@ -4,7 +4,7 @@
     label="Profile Picture"
     style="--size: 5rem"
   ></sl-avatar>
-  <div class="ml-3" *ngIf="user$ | async as user">
+  <div class="ml-3" *ngIf="user$ | async as user; else noUser">
     <h2 class="font-normal mt-0 mb-0">
       <span>{{ user.displayName }}</span>
     </h2>
@@ -16,4 +16,12 @@
       {{ user.claims.includes(userClaims.surgeon) ? 'Surgeon' : 'Trainee' }}
     </p>
   </div>
+  <ng-template #noUser>
+    <div class="ml-3">
+      <h2 class="font-normal mt-0 mb-0">
+        <span>Guest</span>
+      </h2>
+      <p class="font-bold mt-0 mb-1">Not logged in</p>
+    </div>
+  </ng-template>
 </div>
