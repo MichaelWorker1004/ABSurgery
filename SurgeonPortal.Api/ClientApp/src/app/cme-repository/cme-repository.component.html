@@ -78,11 +78,7 @@
     </sl-card>
 
     <sl-card class="col-12">
-      <abs-collapse-panel
-        [panelId]="2"
-        [startExpanded]="true"
-        [heightToggle]="cmeCreditsHeightChange$"
-      >
+      <abs-collapse-panel [panelId]="2" [startExpanded]="true">
         <h5 class="mt-0 mb-2" panel-header>Itemized CME</h5>
         <abs-grid
           [columns]="itemizedCmeCols"
@@ -95,11 +91,7 @@
     </sl-card>
 
     <sl-card class="col-12">
-      <abs-collapse-panel
-        [panelId]="3"
-        [startExpanded]="true"
-        [heightToggle]="cmeAdjustmentsHeightChange$"
-      >
+      <abs-collapse-panel [panelId]="3" [startExpanded]="true">
         <h5 class="mt-0 mb-2" panel-header>
           Itemized ABS Waivers that Reduce Your CME Requirements
         </h5>

@@ -118,7 +118,6 @@ export class ProfessionalStandingComponent implements OnInit {
   medicalLicenses$: Observable<IMedicalLicense[]> | undefined;
   @Select(ProfessionalStandingSelectors.slices.selectedMedicalLicense)
   selectedMedicalLicense$: Observable<IMedicalLicenseModel> | undefined;
-  editStateMedicalLiscense$: Subject<boolean> = new BehaviorSubject(true);
 
   extendedMedicalLicenses$: Subject<IMedicalLicense[]> | undefined =
     new BehaviorSubject([] as any);
@@ -147,9 +146,6 @@ export class ProfessionalStandingComponent implements OnInit {
     organizationTypeOptions: [],
     primaryPracticeOptions: [],
   };
-
-  hospitalAppointmentsHeightChange$: BehaviorSubject<boolean> =
-    new BehaviorSubject(true);
 
   /* Appointments and Privileges variables */
   @Select(ProfessionalStandingSelectors.slices.allAppointments)
@@ -180,16 +176,6 @@ export class ProfessionalStandingComponent implements OnInit {
 
   ngOnInit() {
     this.initPicklistValues();
-
-    //handle resize on edit for appointments panel
-    this.editHospitalAppointmentsAndPrivileges$
-      .pipe(untilDestroyed(this))
-      .subscribe((edit) => {
-        this.hospitalAppointmentsHeightChange$.next(
-          !this.hospitalAppointmentsHeightChange$.getValue()
-        );
-      });
-
     this.setStateMedicalLicenseEdit();
   }
 
@@ -308,11 +294,6 @@ export class ProfessionalStandingComponent implements OnInit {
 
   getPreviousAppointmentsAndPrivileges() {
     this._store.dispatch(new GetPSAppointmentsAndPrivilegesList());
-    this.allAppointments$?.pipe(untilDestroyed(this)).subscribe(() => {
-      this.hospitalAppointmentsHeightChange$.next(
-        !this.hospitalAppointmentsHeightChange$.getValue()
-      );
-    });
   }
 
   getAppointmentDetails(appointment: IUserAppointmentModel) {

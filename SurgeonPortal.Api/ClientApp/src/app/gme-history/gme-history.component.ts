@@ -116,7 +116,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   gmeErrors$: Observable<any> | undefined;
 
   gmeRotationsSubscription: Subscription | undefined;
-  gmeSummarySubscription: Subscription | undefined;
   createGmeRotationSubscription: Subscription | undefined;
   updateGmeRotationSubscription: Subscription | undefined;
   gmeAllSubscription: Subscription | undefined;
@@ -222,12 +221,10 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     filterOn: 'clinicalLevel',
     filterOptions: [],
   };
-  itemizedGme$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   itemizedGmeCols = ITEMIZED_GME_COLS;
   itemizedGmeData!: IRotationReadOnlyModel[];
 
   gmeSummaryCols = GME_SUMMARY_COLS;
-  summaryGme$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   gmeSummaryData!: any[];
 
   selectedGmeRotation: IRotationReadOnlyModel | undefined;
@@ -254,7 +251,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     private globalDialogService: GlobalDialogService
   ) {
     this.initRotationsData();
-    this.initSummaryData();
     this.initPicklistOptions();
 
     this.selectedRotation$?.pipe(untilDestroyed(this)).subscribe((rotation) => {
@@ -542,19 +538,9 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
         });
 
         this.itemizedGridOptions.filterOptions = clinicalFilterOptions;
-
-        this.itemizedGme$.next(!this.itemizedGme$.getValue());
       }
 
       this.applyCalendarFilters();
-    });
-  }
-
-  initSummaryData() {
-    this.gmeSummarySubscription = this.gmeSummary$?.subscribe((gmeSummary) => {
-      if (gmeSummary) {
-        this.summaryGme$.next(!this.summaryGme$.getValue());
-      }
     });
   }
 
@@ -571,7 +557,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.gmeRotationsSubscription?.unsubscribe();
-    this.gmeSummarySubscription?.unsubscribe();
     this.gmeAllSubscription?.unsubscribe();
   }
 
@@ -621,7 +606,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     if (this.showAddEditGmeRotation) {
       this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
     }
-    this.itemizedGme$.next(!this.itemizedGme$.getValue());
     if ($event) {
       this.isEditGmeRotation$.next(true);
       this._store.dispatch(new GetGraduateMedicalEducationDetails($event));
@@ -643,7 +627,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     }
 
     this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
-    this.itemizedGme$.next(!this.itemizedGme$.getValue());
   }
 
   handleAddGmeGapRotation($event: any) {
@@ -661,7 +644,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
         usingAffiliateOrganization: false,
       } as unknown as IRotationReadOnlyModel;
       this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
-      this.itemizedGme$.next(!this.itemizedGme$.getValue());
     }
   }
 

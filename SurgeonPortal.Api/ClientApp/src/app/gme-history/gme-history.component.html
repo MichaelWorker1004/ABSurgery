@@ -86,7 +86,6 @@
         <abs-collapse-panel
           [panelId]="2"
           [startExpanded]="true"
-          [heightToggle]="summaryGme$"
           class="table-sm"
         >
           <h5 class="mt-0 mb-2" panel-header>GME Summary</h5>
@@ -116,7 +115,6 @@
         <abs-collapse-panel
           [panelId]="1"
           [startExpanded]="true"
-          [heightToggle]="itemizedGme$"
           class="table-sm"
         >
           <h5 class="mt-0 mb-2" panel-header>Itemized GME</h5>
@@ -131,7 +129,7 @@
               </p>
               <p-button
                 variant="default"
-                class="btn-add mb-5 absolute"
+                class="btn-add mt-4 mb-3"
                 (click)="handleAddEditGmeRotation()"
               >
                 <i slot="prefix" class="fa-solid fa-plus"></i>
