@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { ExpandableComponent } from '../shared/components/expandable/expandable.component';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -40,6 +41,7 @@ import { SetExamInProgress } from '../state/application/application.actions';
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     ExpandableComponent,
     ButtonModule,
     InputTextareaModule,

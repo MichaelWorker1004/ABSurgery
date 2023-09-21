@@ -1,17 +1,25 @@
 <header>
-  <h1>{{ (examTitle$ | async)?.examName || 'Certifying Examation' }}</h1>
+  <h1>
+    {{
+      (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM' | translate
+    }}
+  </h1>
 </header>
 <ng-container>
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <div slot="header">Examinations</div>
+        <div slot="header">
+          {{ 'EXAMSCORING.EXAMINATION.LIST_TITLE' | translate }}
+        </div>
         <div class="grid">
           <div class="col-12 flex justify-content-between">
-            <p>
-              <span class="font-bold">Date:</span>
-              {{ examDateDisplay | date : 'MM/dd/yyyy' }}
-            </p>
+            <p
+              [innerHTML]="
+                'EXAMSCORING.EXAMINATION.LIST_DATE'
+                  | translate : { date: examDateDisplay | date : 'MM/dd/yyyy' }
+              "
+            ></p>
             <div
               class="flex align-items-center justify-content-end flex-grow-1"
             >

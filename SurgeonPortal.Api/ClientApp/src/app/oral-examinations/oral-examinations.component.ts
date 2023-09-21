@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { ORAL_EXAMINATION_COLS } from './oral-examination-cols';
@@ -27,6 +28,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
   imports: [
     FormsModule,
     CommonModule,
+    TranslateModule,
     GridComponent,
     InputTextModule,
     ButtonModule,

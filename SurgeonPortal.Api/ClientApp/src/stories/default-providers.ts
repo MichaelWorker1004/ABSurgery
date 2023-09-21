@@ -2,6 +2,7 @@ import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
+  HttpClient,
 } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,6 +12,8 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IConfig, provideEnvironmentNgxMask } from 'ngx-mask';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ErrorInterceptor, AuthInterceptor } from 'src/app/shared/common';
@@ -22,6 +25,10 @@ const maskConfig: Partial<IConfig> = {
   validation: false,
 };
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 export const DEFAULT_PROVIDERS = [
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -29,6 +36,14 @@ export const DEFAULT_PROVIDERS = [
   importProvidersFrom(
     BrowserModule,
     AppRoutingModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'en-US',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
     NgxsModule.forRoot(surgeonPortalState, {
       developmentMode: true,
     }),

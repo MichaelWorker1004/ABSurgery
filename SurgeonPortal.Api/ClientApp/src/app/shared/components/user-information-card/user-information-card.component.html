@@ -5,8 +5,13 @@
       <div class="status two active"></div>
       <div class="status three active"></div>
     </div>
-    <strong>Current Status</strong>:
-    {{ localIsSurgeon ? localCurrentStatus : 'Trainee' }}
+    <span
+      [innerHTML]="
+        'DASHBOARD.STATUS'
+          | translate
+            : { status: localIsSurgeon ? localCurrentStatus : 'Trainee' }
+      "
+    ></span>
   </div>
 
   <div class="info-container" *ngIf="!localIsSurgeon; else certified">

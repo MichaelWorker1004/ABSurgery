@@ -12,6 +12,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { ExaminationScoreModalComponent } from './examination-score-modal/examination-score-modal.component';
 import {
@@ -31,7 +32,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
   standalone: true,
   imports: [
     CommonModule,
-    GridComponent,
+    TranslateModule,
     GridComponent,
     DropdownModule,
     FormsModule,

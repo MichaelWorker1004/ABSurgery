@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { matchFields, validatePassword } from '../shared/validators/validators';
 import {
@@ -39,6 +40,7 @@ import { SetUnsavedChanges } from '../state/application/application.actions';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule,
     ProfileHeaderComponent,
     FormErrorsComponent,
     InputTextModule,

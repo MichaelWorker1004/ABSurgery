@@ -1,13 +1,18 @@
 <div class="app" *ngIf="user$ | async as user">
   <div class="flex justify-content-between align-items-end">
     <div>
-      <h1>Dashboard</h1>
-      <h4 class="thin">Hello, {{ user.displayName }}!</h4>
+      <h1>{{ 'DASHBOARD.TITLE' | translate }}</h1>
+      <h4 class="thin">
+        {{ 'DASHBOARD.SUBTITLE' | translate : { user: user.displayName } }}
+      </h4>
     </div>
-    <div class="last-login">
-      <strong>Last Login:</strong>
-      {{ user.lastLoginDateUtc | date }}
-    </div>
+    <div
+      class="last-login"
+      [innerHTML]="
+        'DASHBOARD.LASTLOGIN'
+          | translate : { lastLogin: user.lastLoginDateUtc | date }
+      "
+    ></div>
   </div>
 
   <div class="grid">

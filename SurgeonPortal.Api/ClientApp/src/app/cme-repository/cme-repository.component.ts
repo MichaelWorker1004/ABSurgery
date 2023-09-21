@@ -20,6 +20,7 @@ import {
 } from '../state';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TooltipComponent } from '../shared/components/tooltip/tooltip.component';
 
 @UntilDestroy()
 @Component({
@@ -34,6 +35,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
     ProgressBarComponent,
     TooltipModule,
     AlertComponent,
+    TooltipComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,

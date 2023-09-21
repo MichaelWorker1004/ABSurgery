@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription, take } from 'rxjs';
 import { NgxsModule, Select, Store } from '@ngxs/store';
 import packageInfo from '../../package.json';
@@ -37,6 +38,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
     RouterOutlet,
     LoginComponent,
     CommonModule,
+    TranslateModule,
     NgxsModule,
     SideNavigationComponent,
     DashboardHeaderComponent,
@@ -72,6 +74,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private _store: Store,
+    private translate: TranslateService,
     private router: Router,
     private route: ActivatedRoute
   ) {

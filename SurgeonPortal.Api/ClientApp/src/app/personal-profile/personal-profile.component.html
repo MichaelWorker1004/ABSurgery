@@ -1,5 +1,5 @@
 <header>
-  <h1>Personal Profile</h1>
+  <h1>{{ 'PROFILE.TITLE' | translate }}</h1>
 </header>
 <ng-container *ngIf="user">
   <section>
@@ -14,11 +14,7 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <p>
-          Enter and review your Personal Information, Contact Information,
-          Citizenship Information, and Demographic information here to ensure
-          that it is accurate and up to date.
-        </p>
+        <p>{{ 'PROFILE.SUBTITLE' | translate }}</p>
         <div class="mb-3">
           <abs-form-errors
             *ngIf="errors$ | async as error"

@@ -18,6 +18,12 @@
     "test-lint": "ng test --source-map=false --browsers=ChromeHeadless --watch=false",
     "test": "ng test",
     "lint": "eslint src --ext js,ts,tsx",
+    "i18n:init": "ngx-translate-extract --input ./src --output ./src/assets/i18n/template.json --key-as-default-value --replace --format json",
+    "i18n:extract": "ngx-translate-extract --input ./src --output ./src/assets/i18n/en.json --clean --format json",
+    "i18n:write-to-excel": "node scripts/language/read-from-locales.js ./language-test i18n/en-US.json,i18n/comments.json,i18n/notes.json",
+    "i18n:read-from-excel": "node scripts/language/write-to-locales.js ./language-test/translations.xlsx ./i18n/",
+    "i18n:generate-interface": "node scripts/language/generate-i18n-interface.js ./i18n/ en-US.json ./language-test/target-directories ./language-test/localization-directories",
+    "generate-language": "npm run i18n:read-from-excel && npm run i18n:generate-interface",
     "prepare": "cd ../../ && husky install SurgeonPortal.Api/ClientApp/.husky",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
@@ -42,6 +48,8 @@
     "@fullcalendar/core": "^6.1.6",
     "@fullcalendar/multimonth": "^6.1.6",
     "@ngneat/until-destroy": "^10.0.0-beta.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "@ngxs/form-plugin": "^3.8.1",
     "@ngxs/router-plugin": "^3.8.1",
     "@ngxs/storage-plugin": "^3.8.1",
@@ -69,6 +77,7 @@
     "@angular-eslint/template-parser": "15.2.1",
     "@angular/cli": "~15.2.0",
     "@angular/compiler-cli": "15.2.1",
+    "@biesbjerg/ngx-translate-extract": "^7.0.4",
     "@compodoc/compodoc": "^1.1.21",
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "@ngxs/devtools-plugin": "^3.8.1",
@@ -101,7 +110,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "^7.0.17",
-    "typescript": "~4.9.4"
+    "typescript": "~4.9.4",
+    "xlsx": "file:vendor/xlsx-0.19.3.tar"
   },
   "lint-staged": {
     "{src,test}/**/*.{js,ts,jsx,tsx}": [

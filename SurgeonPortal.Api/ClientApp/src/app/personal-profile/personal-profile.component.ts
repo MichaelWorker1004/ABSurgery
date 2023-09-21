@@ -18,6 +18,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
+import { TranslateModule } from '@ngx-translate/core';
+
 import {
   ClearUserProfileErrors,
   GetUserProfile,
@@ -73,6 +75,7 @@ interface IDisplayUserProfile extends IUserProfile {
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     ProfileHeaderComponent,
     SuccessFailModalComponent,
     NgxMaskDirective,

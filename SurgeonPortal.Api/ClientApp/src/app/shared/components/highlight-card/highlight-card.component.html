@@ -1,28 +1,29 @@
 <div [class]="alertClass">
   <a
     class="hotspot"
-    *ngIf="alert?.action?.type === 'component'"
-    [routerLink]="alert?.action?.action"
+    *ngIf="localAlert?.action?.type === 'component'"
+    [routerLink]="localAlert?.action?.action"
   ></a>
   <button
     class="hotspot"
-    (click)="handleCardAction(alert?.action?.type)"
+    (click)="handleCardAction(localAlert?.action?.type)"
     download
     *ngIf="
-      alert?.action?.type === 'action' || alert?.action?.type === 'download'
+      localAlert?.action?.type === 'action' ||
+      localAlert?.action?.type === 'download'
     "
   ></button>
   <div class="flex col-12">
     <div
-      *ngIf="alert.image"
+      *ngIf="localAlert.image"
       class="img-container"
       [style]="imageStyleUrl"
     ></div>
     <div class="highlight-content col-8">
-      <div class="title">{{ alert?.title }}</div>
-      <div class="content" [innerHTML]="alert?.content"></div>
-      <div class="card-action" *ngIf="alert?.actionText">
-        {{ alert.actionText }}
+      <div class="title">{{ localAlert?.title }}</div>
+      <div class="content" [innerHTML]="localAlert?.content"></div>
+      <div class="card-action" *ngIf="localAlert?.actionText">
+        {{ localAlert.actionText }}
       </div>
     </div>
   </div>
