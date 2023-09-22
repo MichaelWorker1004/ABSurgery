@@ -4,7 +4,6 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 import { CollapsePanelComponent } from './collapse-panel.component';
-import { BehaviorSubject, of, Subject } from 'rxjs';
 
 interface CollapsePanelComponentArgs extends CollapsePanelComponent {
   panelTitle: string;
@@ -14,15 +13,21 @@ interface CollapsePanelComponentArgs extends CollapsePanelComponent {
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<CollapsePanelComponentArgs> = {
   title: 'Components/Collapse-Panel',
+  tags: ['autodocs'],
   component: CollapsePanelComponent,
   decorators: [
     componentWrapperDecorator(
+      //  using the contentWrapper allows you to define content that would appear in an <ng-content> tag
       (CollapsePanelComponent) => `${CollapsePanelComponent}`
     ),
   ],
-  tags: ['autodocs'],
   render: (args: CollapsePanelComponentArgs) => ({
-    template: `<abs-collapse-panel [panelId]="${args.panelId}" [startExpanded]="${args.startExpanded}" [contentToggle]="${args.contentToggle}"><h5 class="mt-0 mb-2" panel-header>${args.panelTitle}</h5>${args.panelContent}</abs-collapse-panel>`,
+    // The template in the render method can access component args that need to be rendered outside of the component tag
+    // this allows the support of slot based content projection
+    template: `<abs-collapse-panel [panelId]="panelId" [startExpanded]="startExpanded">
+      <h5 class="mt-0 mb-2" panel-header>${args.panelTitle}</h5>
+      <div [innerHTML]="'${args.panelContent}'"></div>
+    </abs-collapse-panel>`,
     props: {
       ...args,
     },
@@ -37,42 +42,22 @@ export const Default: Story = {
   args: {
     panelId: 1,
     startExpanded: true,
-    heightToggle: of(true) as Subject<boolean>,
     panelTitle: 'Panel Title',
-    panelContent: 'Panel Content',
+    panelContent: 'Panel Content<br><br>More content.',
   },
 };
 
 export const StartOpen: Story = {
   args: {
+    ...Default.args,
     panelId: 2,
-    startExpanded: true,
-    heightToggle: new BehaviorSubject(true),
-    contentToggle: false,
-    panelTitle: 'Panel Title',
-    panelContent: 'Panel Content',
   },
 };
 
 export const StartClosed: Story = {
   args: {
+    ...Default.args,
     panelId: 3,
     startExpanded: false,
-    heightToggle: new BehaviorSubject(true),
-    contentToggle: false,
-    panelTitle: 'Panel Title',
-    panelContent: 'Panel Content',
-  },
-};
-
-// this story needs to be fixed by converting the observable to a boolean with an ngOnChanges
-export const ContentHeightChanging: Story = {
-  args: {
-    panelId: 4,
-    startExpanded: false,
-    heightToggle: new BehaviorSubject(true),
-    contentToggle: true,
-    panelTitle: 'Panel Title',
-    panelContent: 'Panel Content',
   },
 };

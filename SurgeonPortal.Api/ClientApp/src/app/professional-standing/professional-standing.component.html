@@ -17,11 +17,7 @@
           neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
           erat, egestas sit amet tortor at, condimentum tempor erat.
         </p>
-        <abs-collapse-panel
-          [panelId]="1"
-          [startExpanded]="true"
-          [heightToggle]="editStateMedicalLiscense$"
-        >
+        <abs-collapse-panel [panelId]="1" [startExpanded]="true">
           <h5 class="mt-0 mb-2" panel-header>State Medical License</h5>
           <div class="grid">
             <div class="col-12">
@@ -41,11 +37,7 @@
       </sl-card>
       <sl-card class="col-12">
         <div>
-          <abs-collapse-panel
-            [panelId]="2"
-            [startExpanded]="true"
-            [heightToggle]="hospitalAppointmentsHeightChange$"
-          >
+          <abs-collapse-panel [panelId]="2" [startExpanded]="true">
             <h5 class="mt-0 mb-2" panel-header>
               Current Hospital Appointments / Privileges
             </h5>
@@ -225,11 +217,7 @@
       </sl-card>
       <sl-card class="col-12">
         <div>
-          <abs-collapse-panel
-            [panelId]="3"
-            [startExpanded]="true"
-            [heightToggle]="editSanctionsAndEthics$"
-          >
+          <abs-collapse-panel [panelId]="3" [startExpanded]="true">
             <h5 class="mt-0 mb-2" panel-header>Sanctions and Ethics</h5>
             <div
               class="grid"

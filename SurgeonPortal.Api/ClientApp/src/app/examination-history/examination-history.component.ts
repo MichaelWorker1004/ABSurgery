@@ -28,8 +28,6 @@ export class ExaminationHistoryComponent {
     | Observable<IUserProfile>
     | undefined;
 
-  tableHeightChanged$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
   examHistoryCols = EXAM_HISTORY_COLS;
 
   activeExams = [

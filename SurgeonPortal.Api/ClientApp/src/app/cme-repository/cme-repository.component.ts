@@ -18,7 +18,7 @@ import {
   ICmeSummaryRow,
   IDroppingCmeCredits,
 } from '../state';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TooltipComponent } from '../shared/components/tooltip/tooltip.component';
 
@@ -52,11 +52,6 @@ export class CmeRepositoryComponent implements OnInit {
   @Select(ContinuingMedicalEducationSelectors.slices.cmeSummary)
   cmeSummary$: Observable<ICmeSummaryRow[]> | undefined;
 
-  cmeAdjustmentsHeightChange$: BehaviorSubject<boolean> = new BehaviorSubject(
-    true
-  );
-  cmeCreditsHeightChange$: BehaviorSubject<boolean> = new BehaviorSubject(true);
-
   droppingCredits?: IDroppingCmeCredits;
 
   cycleStartDate = new Date();
@@ -85,24 +80,5 @@ export class CmeRepositoryComponent implements OnInit {
           ContinuingMedicalEducationSelectors.slices.cmeDroppingCredits
         );
       });
-
-    this.getItemizedCmeData();
-    this.getRequirementsAndAdjustmentsData();
-  }
-
-  getRequirementsAndAdjustmentsData() {
-    this.cmeAdjustments$?.pipe(untilDestroyed(this)).subscribe((data) => {
-      this.cmeAdjustmentsHeightChange$.next(
-        !this.cmeAdjustmentsHeightChange$.getValue()
-      );
-    });
-  }
-
-  getItemizedCmeData() {
-    this.cmeCredits$?.pipe(untilDestroyed(this)).subscribe((data) => {
-      this.cmeCreditsHeightChange$.next(
-        !this.cmeCreditsHeightChange$.getValue()
-      );
-    });
   }
 }
