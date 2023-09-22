@@ -24,7 +24,17 @@
     class="col-12 md:col-6 lg:col-4"
     *ngFor="let actionCard of continousCertificationData"
     [actionCard]="actionCard"
+    [title]="actionCard.title"
+    [description]="actionCard.description"
+    [icon]="actionCard.icon"
+    [actionType]="actionCard?.action?.type"
+    [actionAction]="actionCard?.action?.action"
+    [actionStyle]="actionCard?.actionStyle"
     (cardAction)="handleCardAction(actionCard.action.action)"
+    [actionDisplayKey]="actionCard?.actionDisplay"
+    [status]="actionCard?.status"
+    [disabled]="actionCard.disabled"
+    [displayStatusText]="actionCard?.displayStatusText"
   ></abs-action-card>
 </div>
 

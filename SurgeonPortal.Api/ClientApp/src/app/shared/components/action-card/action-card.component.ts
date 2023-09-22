@@ -20,8 +20,100 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ActionCardComponent implements OnInit {
   @Input() actionCard!: any;
-  @Input() status!: string;
+
+  /**
+   * Title to display in the card
+   * @type {string}
+   */
+  @Input() title!: string | undefined;
+
+  /**
+   * Title to display in the card via translation key
+   * @type {string}
+   */
+  @Input() titleKey!: string | undefined;
+
+  /**
+   * Description to display in the card
+   * @type {string}
+   */
+  @Input() description!: string | undefined;
+
+  /**
+   * Description to display in the card via translation key
+   * @type {string}
+   */
+  @Input() descriptionKey!: string | undefined;
+
+  /**
+   * Whether or not the card is disabled
+   * @type {boolean}
+   */
+  @Input() disabled: boolean | undefined = false;
+
+  /**
+   * Type of action to perform
+   * @type {string}
+   */
+  @Input() actionType!: string | 'dialog' | 'component';
+
+  /**
+   * Action being passed to the parent component
+   * @type {string}
+   */
+  @Input() actionAction: string | undefined = '';
+
+  /**
+   * Style of action to perform
+   * @type {string}
+   */
+  @Input() actionStyle: 'link' | 'button' = 'link';
+
+  // @Input() action: {
+  //   type: 'component',
+  //   action: '/ce-scoring/examination-rosters',
+  // }
+
+  /**
+   * Action display to show in the card
+   * @type {string}
+   */
+  @Input() actionDisplay!: string | undefined;
+
+  /**
+   * Action display to show in the card via translation key
+   * @type {string}
+   */
+  @Input() actionDisplayKey!: string | undefined;
+
+  /**
+   * Icon to display in the card. Must be a font awesome icon
+   * @type {string}
+   */
+  @Input() icon!: string | undefined;
+
+  /**
+   * Status of the card
+   * @type {string}
+   */
+  @Input() status!: 'completed' | 'in-progress' | 'contingent' | 'alert';
+
+  /**
+   * Whether or not to display the status text
+   * @type {boolean}
+   */
+  @Input() displayStatusText = true;
+
+  /**
+   * Date the card was recieved
+   * @type {Date}
+   */
   @Input() recievedOn!: Date;
+
+  /**
+   * Action to perform when the card is clicked
+   * @type {EventEmitter<any>}
+   */
   @Output() cardAction: EventEmitter<any> = new EventEmitter();
 
   localActionCard!: any;
@@ -32,10 +124,10 @@ export class ActionCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.localActionCard = this.translateActionCard(this.actionCard);
+    this.translateActionCard();
   }
 
-  handleCardAction(action: string) {
+  handleCardAction(action?: string) {
     this.cardAction.emit(action);
   }
 
@@ -48,20 +140,17 @@ export class ActionCardComponent implements OnInit {
    * @param alert
    * @returns
    */
-  private translateActionCard(actionCard: any): any {
-    if (actionCard.titleKey) {
-      actionCard.title = this._translateService.instant(actionCard.titleKey);
+  private translateActionCard(): any {
+    if (this.titleKey) {
+      this.title = this._translateService.instant(this.titleKey);
     }
-    if (actionCard.descriptionKey) {
-      actionCard.description = this._translateService.instant(
-        actionCard.descriptionKey
+    if (this.descriptionKey) {
+      this.description = this._translateService.instant(this.descriptionKey);
+    }
+    if (this.actionDisplayKey) {
+      this.actionDisplay = this._translateService.instant(
+        this.actionDisplayKey
       );
     }
-    if (actionCard.actionDisplayKey) {
-      actionCard.actionDisplay = this._translateService.instant(
-        actionCard.actionDisplayKey
-      );
-    }
-    return actionCard;
   }
 }

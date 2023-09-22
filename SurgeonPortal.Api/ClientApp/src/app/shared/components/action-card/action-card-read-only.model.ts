@@ -3,8 +3,11 @@ export interface IActionCardReadOnlyModel {
   titleKey?: string;
   description: string;
   descriptionKey?: string;
+  actionType?: string;
+  actionAction?: string;
+  actionStyle?: number;
   action?: {
-    type: string;
+    type?: string;
     action?: string;
   };
   actionDisplay: string;

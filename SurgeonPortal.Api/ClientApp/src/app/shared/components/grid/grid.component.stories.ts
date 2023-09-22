@@ -10,11 +10,6 @@ const meta: Meta<GridComponent> = {
   title: 'Components/Grid',
   tags: ['autodocs'],
   component: GridComponent,
-  argTypes: {
-    filterType: {
-      options: ['text', 'dropdown'],
-    },
-  },
   render: (args: GridComponent) => ({
     props: {
       ...args,

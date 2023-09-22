@@ -63,11 +63,6 @@ export class RegistrationRequirementsComponent implements OnInit {
   private actionMap: ActionMap = {
     surgeonProfileModal: () => {
       this.showSurgeonProfile = !this.showSurgeonProfile;
-      // this._globalDialogService.showComponentModal(
-      //   SurgeonProfileModalComponent,
-      //   'Surgeon Profile',
-      //   'in-progress'
-      // );
     },
     medicalLicenseModal: () => {
       this.showMedicalLicense = !this.showMedicalLicense;
