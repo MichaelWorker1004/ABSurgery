@@ -35,6 +35,13 @@
       }} "
       *ngFor="let actionCard of userActionCards"
       [actionCard]="actionCard"
+      [titleKey]="actionCard.titleKey"
+      [descriptionKey]="actionCard.descriptionKey"
+      [icon]="actionCard.icon"
+      [actionType]="actionCard?.action?.type ?? ''"
+      [actionAction]="actionCard?.action?.action ?? ''"
+      [actionDisplayKey]="actionCard?.actionDisplayKey"
+      [disabled]="actionCard.disabled"
     ></abs-action-card>
   </div>
 </div>

@@ -4,6 +4,8 @@ export const TRAINEE_ACTION_CARDS = [
     titleKey: 'DASHBOARD.ACTION_CARDS.GME_TITLE',
     description: '',
     descriptionKey: 'DASHBOARD.ACTION_CARDS.GME_SUBTITLE',
+    actionType: 'component',
+    actionAction: '/gme-history',
     action: {
       type: 'component',
       action: '/gme-history',
