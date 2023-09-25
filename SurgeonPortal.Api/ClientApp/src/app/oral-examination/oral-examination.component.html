@@ -16,7 +16,10 @@
   </h3>
   <hr />
   <div class="grid">
-    <p class="col-12">
+    <p
+      class="col-12"
+      *ngIf="('EXAMSCORING.EXAMINATION.SUBTITLE' | translate) !== ''"
+    >
       {{ 'EXAMSCORING.EXAMINATION.SUBTITLE' | translate }}
     </p>
 
