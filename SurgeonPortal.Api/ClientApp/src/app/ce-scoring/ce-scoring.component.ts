@@ -112,7 +112,7 @@ export class CeScoringAppComponent implements OnInit {
         actionText: 'Not Available',
         action: {},
         image:
-          'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+          'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
       {
         title: this._translateService.instant(
