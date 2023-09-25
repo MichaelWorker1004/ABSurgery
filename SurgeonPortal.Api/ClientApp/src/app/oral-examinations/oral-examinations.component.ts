@@ -20,6 +20,7 @@ import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { LegendComponent } from '../shared/components/legend/legend.component';
 
 @UntilDestroy()
 @Component({
@@ -32,6 +33,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
     GridComponent,
     InputTextModule,
     ButtonModule,
+    LegendComponent,
   ],
   templateUrl: './oral-examinations.component.html',
   styleUrls: ['./oral-examinations.component.scss'],
@@ -53,6 +55,21 @@ export class OralExaminationsComponent implements OnInit {
   oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =
     new BehaviorSubject<IExamSessionReadOnlyModel[]>([]);
   oralExaminationCols = ORAL_EXAMINATION_COLS;
+
+  legendItems = [
+    {
+      text: 'Not Submitted',
+      color: '#7f7f7f',
+    },
+    {
+      text: 'Current Session',
+      color: '#dbad6a',
+    },
+    {
+      text: 'Submitted',
+      color: '#1c827d',
+    },
+  ];
 
   constructor(
     private _route: Router,
