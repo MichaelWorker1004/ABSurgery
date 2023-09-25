@@ -5395,6 +5395,38 @@
       "methods": []
     },
     {
+      "name": "ILegend",
+      "id": "interface-ILegend-763bff947960983753bb94ebe40ffbda1c3bee1bd67d10c47fb04ab73fde131dcf675cbadf3887e95adc17366a92abe6b17d46b24cec72a6b82b5d800ed32c80",
+      "file": "src/app/shared/components/legend/legend.model.ts",
+      "deprecated": false,
+      "deprecationMessage": "",
+      "type": "interface",
+      "sourceCode": "export interface ILegend {\n  text: string;\n  color: string;\n}\n",
+      "properties": [
+        {
+          "name": "color",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "string",
+          "optional": false,
+          "description": "",
+          "line": 3
+        },
+        {
+          "name": "text",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "string",
+          "optional": false,
+          "description": "",
+          "line": 2
+        }
+      ],
+      "indexSignatures": [],
+      "kind": 168,
+      "methods": []
+    },
+    {
       "name": "ILicenseTypeReadOnlyModel",
       "id": "interface-ILicenseTypeReadOnlyModel-8b8175ce7f333693291c3244f0de545b9e7e472bf6fa9c140f3860705c837efc013e95701080e1fc07d4e259cc6e4fecc16c820ccb0ae74e1b535c638c8bec8d",
       "file": "src/app/api/models/picklists/license-type-read-only.model.ts",
@@ -37469,7 +37501,7 @@
     },
     {
       "name": "CeScoringAppComponent",
-      "id": "component-CeScoringAppComponent-0f3b31814780c428be403ff0ef7e348f18ac9568389cacb227adfca2685b50043175da171bb4ba4896c9a77d5057b99a8a4928e3631886d9440897de20d912c4",
+      "id": "component-CeScoringAppComponent-2ef9ea4ada693d5757695709fbc34254c8eedbb710d91d8f16443c267aa3a610440378f92604cf0af2cc7982acad98b6f2aea92db6c543f938f2ca65f2cd5907",
       "file": "src/app/ce-scoring/ce-scoring.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -37763,7 +37795,7 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { Component, OnInit, isDevMode } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ActionCardComponent } from '../shared/components/action-card/action-card.component';\nimport { ACTION_CARDS } from './user-action-cards';\nimport { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';\nimport { UserInformationSliderComponent } from '../shared/components/user-information-slider/user-information-slider.component';\nimport { Select, Store } from '@ngxs/store';\nimport { TranslateModule, TranslateService } from '@ngx-translate/core';\n\nimport {\n  DownloadDocument,\n  ExamScoringSelectors,\n  GetExamTitle,\n  GetExaminerAgenda,\n  GetExaminerConflict,\n  GetRoster,\n  ResetCaseCommentsData,\n  ResetExamScoringData,\n  UserProfileSelectors,\n} from '../state';\nimport { IRosterReadOnlyModel } from '../api/models/scoring/roster-read-only.model';\nimport { Observable } from 'rxjs';\nimport { ButtonModule } from 'primeng/button';\nimport { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';\nimport { ApplicationSelectors } from '../state/application/application.selectors';\nimport { IFeatureFlags } from '../state/application/application.state';\nimport { UntilDestroy } from '@ngneat/until-destroy';\nimport { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';\nimport { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';\nimport { GlobalDialogService } from '../shared/services/global-dialog.service';\n\n@UntilDestroy()\n@Component({\n  selector: 'abs-ce-scoring',\n  standalone: true,\n  imports: [\n    CommonModule,\n    TranslateModule,\n    ActionCardComponent,\n    HighlightCardComponent,\n    UserInformationSliderComponent,\n    ButtonModule,\n  ],\n  templateUrl: './ce-scoring.component.html',\n  styleUrls: ['./ce-scoring.component.scss'],\n})\nexport class CeScoringAppComponent implements OnInit {\n  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:\n    | Observable<IFeatureFlags>\n    | undefined;\n  @Select(ExamScoringSelectors.slices.dashboardRoster) dashboardRoster$:\n    | Observable<IRosterReadOnlyModel[]>\n    | undefined;\n\n  @Select(UserProfileSelectors.userId) userId$: Observable<string> | undefined;\n\n  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:\n    | Observable<IExamTitleReadOnlyModel>\n    | undefined;\n\n  @Select(ExamScoringSelectors.slices.examinerAgenda)\n  examinerAgenda$: Observable<IAgendaReadOnlyModel> | undefined;\n\n  @Select(ExamScoringSelectors.slices.examinerConflict)\n  examinerConflict$: Observable<IConflictReadOnlyModel> | undefined;\n\n  examHeaderId = 491; // TODO - remove hard coded value\n  examinationDate = new Date('01/01/2024').toISOString().split('T')[0]; // TODO - remove hard coded value\n\n  currentYear = new Date().getFullYear();\n  userActionCards = ACTION_CARDS;\n  alertsAndNotices: any[] | undefined;\n  dashboardRoster!: IRosterReadOnlyModel[];\n  examinationWeek!: string;\n\n  ceScoreTesting = false;\n\n  constructor(\n    private _store: Store,\n    private globalDialogService: GlobalDialogService,\n    private _translateService: TranslateService\n  ) {\n    this._store.dispatch(new GetExamTitle(this.examHeaderId));\n    this._store.dispatch(new GetExaminerAgenda(this.examHeaderId));\n    this._store.dispatch(new GetExaminerConflict(this.examHeaderId));\n    this.featureFlags$?.pipe().subscribe((featureFlags) => {\n      if (featureFlags) {\n        this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;\n      }\n    });\n  }\n\n  ngOnInit(): void {\n    this.userId$?.subscribe((userId) => {\n      this._store.dispatch(new GetRoster(+userId, this.examinationDate));\n    });\n\n    this.fetchCEDashboardDate();\n  }\n\n  fetchCEDashboardDate() {\n    this.globalDialogService.showLoading();\n    const alertsAndNotices = [\n      {\n        title: this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.AGENDA_TITLE'\n        ),\n        content: this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.AGENDA_SUBTITLE'\n        ),\n        alert: false,\n        actionText: 'Not Available',\n        action: {},\n        image:\n          'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',\n      },\n      {\n        title: this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.CONFLICTS_TITLE'\n        ),\n        content: this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.CONFLICTS_SUBTITLE'\n        ),\n        alert: false,\n        actionText: 'Not Available',\n        image:\n          'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',\n        downloadLink:\n          '../../assets/files/examiner_056246_daythree_ce_agenda_dr_barnhart.pdf',\n      },\n    ];\n\n    this.examinerAgenda$?.subscribe((examinerAgenda: IAgendaReadOnlyModel) => {\n      if (examinerAgenda?.id) {\n        alertsAndNotices[0].action = {\n          type: 'download',\n          documentId: examinerAgenda.id,\n          documentName: examinerAgenda.documentName,\n        };\n        alertsAndNotices[0].actionText = this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.AGENDA_BTN'\n        );\n      }\n      this.globalDialogService.closeOpenDialog();\n    });\n\n    this.examinerConflict$?.subscribe(\n      (examinerConflict: IConflictReadOnlyModel) => {\n        if (examinerConflict?.id) {\n          alertsAndNotices[1].action = {\n            type: 'download',\n            documentId: examinerConflict.id,\n            documentName: examinerConflict.documentName,\n          };\n          alertsAndNotices[1].actionText = this._translateService.instant(\n            'EXAMSCORING.DASHBOARD.CONFLICTS_BTN'\n          );\n        }\n        this.globalDialogService.closeOpenDialog();\n      }\n    );\n\n    this.alertsAndNotices = alertsAndNotices;\n\n    this.dashboardRoster$?.subscribe((dashboardRoster) => {\n      this.dashboardRoster = dashboardRoster;\n    });\n\n    this.examinationWeek = new Date().toLocaleDateString();\n  }\n\n  handleCardAction($event: any) {\n    this._store.dispatch(new DownloadDocument($event));\n  }\n\n  resetCaseCommentsData() {\n    this._store.dispatch(new ResetCaseCommentsData());\n  }\n\n  resetExamScoringData() {\n    this._store.dispatch(new ResetExamScoringData());\n  }\n}\n",
+      "sourceCode": "import { Component, OnInit, isDevMode } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ActionCardComponent } from '../shared/components/action-card/action-card.component';\nimport { ACTION_CARDS } from './user-action-cards';\nimport { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';\nimport { UserInformationSliderComponent } from '../shared/components/user-information-slider/user-information-slider.component';\nimport { Select, Store } from '@ngxs/store';\nimport { TranslateModule, TranslateService } from '@ngx-translate/core';\n\nimport {\n  DownloadDocument,\n  ExamScoringSelectors,\n  GetExamTitle,\n  GetExaminerAgenda,\n  GetExaminerConflict,\n  GetRoster,\n  ResetCaseCommentsData,\n  ResetExamScoringData,\n  UserProfileSelectors,\n} from '../state';\nimport { IRosterReadOnlyModel } from '../api/models/scoring/roster-read-only.model';\nimport { Observable } from 'rxjs';\nimport { ButtonModule } from 'primeng/button';\nimport { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';\nimport { ApplicationSelectors } from '../state/application/application.selectors';\nimport { IFeatureFlags } from '../state/application/application.state';\nimport { UntilDestroy } from '@ngneat/until-destroy';\nimport { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';\nimport { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';\nimport { GlobalDialogService } from '../shared/services/global-dialog.service';\n\n@UntilDestroy()\n@Component({\n  selector: 'abs-ce-scoring',\n  standalone: true,\n  imports: [\n    CommonModule,\n    TranslateModule,\n    ActionCardComponent,\n    HighlightCardComponent,\n    UserInformationSliderComponent,\n    ButtonModule,\n  ],\n  templateUrl: './ce-scoring.component.html',\n  styleUrls: ['./ce-scoring.component.scss'],\n})\nexport class CeScoringAppComponent implements OnInit {\n  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:\n    | Observable<IFeatureFlags>\n    | undefined;\n  @Select(ExamScoringSelectors.slices.dashboardRoster) dashboardRoster$:\n    | Observable<IRosterReadOnlyModel[]>\n    | undefined;\n\n  @Select(UserProfileSelectors.userId) userId$: Observable<string> | undefined;\n\n  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:\n    | Observable<IExamTitleReadOnlyModel>\n    | undefined;\n\n  @Select(ExamScoringSelectors.slices.examinerAgenda)\n  examinerAgenda$: Observable<IAgendaReadOnlyModel> | undefined;\n\n  @Select(ExamScoringSelectors.slices.examinerConflict)\n  examinerConflict$: Observable<IConflictReadOnlyModel> | undefined;\n\n  examHeaderId = 491; // TODO - remove hard coded value\n  examinationDate = new Date('01/01/2024').toISOString().split('T')[0]; // TODO - remove hard coded value\n\n  currentYear = new Date().getFullYear();\n  userActionCards = ACTION_CARDS;\n  alertsAndNotices: any[] | undefined;\n  dashboardRoster!: IRosterReadOnlyModel[];\n  examinationWeek!: string;\n\n  ceScoreTesting = false;\n\n  constructor(\n    private _store: Store,\n    private globalDialogService: GlobalDialogService,\n    private _translateService: TranslateService\n  ) {\n    this._store.dispatch(new GetExamTitle(this.examHeaderId));\n    this._store.dispatch(new GetExaminerAgenda(this.examHeaderId));\n    this._store.dispatch(new GetExaminerConflict(this.examHeaderId));\n    this.featureFlags$?.pipe().subscribe((featureFlags) => {\n      if (featureFlags) {\n        this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;\n      }\n    });\n  }\n\n  ngOnInit(): void {\n    this.userId$?.subscribe((userId) => {\n      this._store.dispatch(new GetRoster(+userId, this.examinationDate));\n    });\n\n    this.fetchCEDashboardDate();\n  }\n\n  fetchCEDashboardDate() {\n    this.globalDialogService.showLoading();\n    const alertsAndNotices = [\n      {\n        title: this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.AGENDA_TITLE'\n        ),\n        content: this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.AGENDA_SUBTITLE'\n        ),\n        alert: false,\n        actionText: 'Not Available',\n        action: {},\n        image:\n          'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',\n      },\n      {\n        title: this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.CONFLICTS_TITLE'\n        ),\n        content: this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.CONFLICTS_SUBTITLE'\n        ),\n        alert: false,\n        actionText: 'Not Available',\n        image:\n          'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',\n        downloadLink:\n          '../../assets/files/examiner_056246_daythree_ce_agenda_dr_barnhart.pdf',\n      },\n    ];\n\n    this.examinerAgenda$?.subscribe((examinerAgenda: IAgendaReadOnlyModel) => {\n      if (examinerAgenda?.id) {\n        alertsAndNotices[0].action = {\n          type: 'download',\n          documentId: examinerAgenda.id,\n          documentName: examinerAgenda.documentName,\n        };\n        alertsAndNotices[0].actionText = this._translateService.instant(\n          'EXAMSCORING.DASHBOARD.AGENDA_BTN'\n        );\n      }\n      this.globalDialogService.closeOpenDialog();\n    });\n\n    this.examinerConflict$?.subscribe(\n      (examinerConflict: IConflictReadOnlyModel) => {\n        if (examinerConflict?.id) {\n          alertsAndNotices[1].action = {\n            type: 'download',\n            documentId: examinerConflict.id,\n            documentName: examinerConflict.documentName,\n          };\n          alertsAndNotices[1].actionText = this._translateService.instant(\n            'EXAMSCORING.DASHBOARD.CONFLICTS_BTN'\n          );\n        }\n        this.globalDialogService.closeOpenDialog();\n      }\n    );\n\n    this.alertsAndNotices = alertsAndNotices;\n\n    this.dashboardRoster$?.subscribe((dashboardRoster) => {\n      this.dashboardRoster = dashboardRoster;\n    });\n\n    this.examinationWeek = new Date().toLocaleDateString();\n  }\n\n  handleCardAction($event: any) {\n    this._store.dispatch(new DownloadDocument($event));\n  }\n\n  resetCaseCommentsData() {\n    this._store.dispatch(new ResetCaseCommentsData());\n  }\n\n  resetExamScoringData() {\n    this._store.dispatch(new ResetExamScoringData());\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
@@ -48641,6 +48673,150 @@
       }
     },
     {
+      "name": "LegendComponent",
+      "id": "component-LegendComponent-7456c08b51d77d4aca4de3faaf124d02a81182dc03eaa814fc9087f6c73fffab1f8a8b044eb9c3020652fe26bf04b92975a6d2ef5572e2b30774b07e1774acba",
+      "file": "src/app/shared/components/legend/legend.component.ts",
+      "encapsulation": [],
+      "entryComponents": [],
+      "inputs": [],
+      "outputs": [],
+      "providers": [],
+      "selector": "abs-legend",
+      "styleUrls": ["./legend.component.scss"],
+      "styles": [],
+      "templateUrl": ["./legend.component.html"],
+      "viewProviders": [],
+      "hostDirectives": [],
+      "inputsClass": [
+        {
+          "name": "legendItems",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "jsdoctags": [
+            {
+              "pos": 385,
+              "end": 408,
+              "flags": 8421376,
+              "modifierFlagsCache": 0,
+              "transformFlags": 0,
+              "kind": 347,
+              "tagName": {
+                "pos": 386,
+                "end": 390,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 79,
+                "escapedText": "type"
+              },
+              "comment": "",
+              "typeExpression": {
+                "pos": 391,
+                "end": 402,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 312,
+                "type": {
+                  "pos": 392,
+                  "end": 401,
+                  "flags": 8388608,
+                  "modifierFlagsCache": 0,
+                  "transformFlags": 1,
+                  "kind": 185,
+                  "elementType": {
+                    "pos": 392,
+                    "end": 399,
+                    "flags": 8388608,
+                    "modifierFlagsCache": 0,
+                    "transformFlags": 1,
+                    "kind": 180,
+                    "typeName": {
+                      "pos": 392,
+                      "end": 399,
+                      "flags": 8388608,
+                      "modifierFlagsCache": 0,
+                      "transformFlags": 0,
+                      "kind": 79,
+                      "escapedText": "ILegend"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "pos": 408,
+              "end": 439,
+              "flags": 8421376,
+              "modifierFlagsCache": 0,
+              "transformFlags": 0,
+              "kind": 330,
+              "tagName": {
+                "pos": 409,
+                "end": 417,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 79,
+                "escapedText": "memberof"
+              },
+              "comment": "<p>LegendComponent</p>\n"
+            },
+            {
+              "pos": 439,
+              "end": 542,
+              "flags": 8421376,
+              "modifierFlagsCache": 0,
+              "transformFlags": 0,
+              "kind": 330,
+              "tagName": {
+                "pos": 440,
+                "end": 447,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 79,
+                "escapedText": "example"
+              },
+              "comment": "<p>legendItems = [\n{\n text: &#39;Legend Item 1&#39;,\n  color: &#39;#000000&#39;,\n },</p>\n"
+            }
+          ],
+          "rawdescription": "\n\nLegend items to display\n```html\nlegendItems = [\n{\n text: 'Legend Item 1',\n  color: '#000000',\n },\n```",
+          "description": "<p>Legend items to display</p>\n<div><pre class=\"line-numbers\"><code class=\"language-html\">legendItems = [\n{\n text: &#39;Legend Item 1&#39;,\n  color: &#39;#000000&#39;,\n },</code></pre></div>",
+          "line": 24,
+          "type": "ILegend[]",
+          "decorators": []
+        }
+      ],
+      "outputsClass": [],
+      "propertiesClass": [],
+      "methodsClass": [],
+      "deprecated": false,
+      "deprecationMessage": "",
+      "hostBindings": [],
+      "hostListeners": [],
+      "standalone": true,
+      "imports": [
+        {
+          "name": "CommonModule",
+          "type": "module"
+        }
+      ],
+      "description": "",
+      "rawdescription": "\n",
+      "type": "component",
+      "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { ILegend } from './legend.model';\n\n@Component({\n  selector: 'abs-legend',\n  standalone: true,\n  imports: [CommonModule],\n  templateUrl: './legend.component.html',\n  styleUrls: ['./legend.component.scss'],\n})\nexport class LegendComponent {\n  /**\n   * Legend items to display\n   * @type {ILegend[]}\n   * @memberof LegendComponent\n   * @example\n   * legendItems = [\n   * {\n   *  text: 'Legend Item 1',\n   *   color: '#000000',\n   *  },\n   */\n  @Input() legendItems!: ILegend[];\n}\n",
+      "assetsDirs": [],
+      "styleUrlsData": [
+        {
+          "data": ".legend {\n  margin-top: 1.5rem;\n  .l {\n    margin-left: 2rem;\n    font-weight: bold;\n    position: relative;\n    &:first-child {\n      margin-left: 0;\n    }\n    .i {\n      margin-right: 0.5rem;\n      width: 15px;\n      height: 15px;\n      background-color: var(--global-gray);\n      left: 0;\n      border-radius: 50%;\n    }\n    &.completed {\n      color: var(--global-success);\n      .i {\n        background-color: var(--global-success);\n      }\n    }\n    &.in-progress {\n      color: var(--global-warning);\n      .i {\n        background-color: var(--global-warning);\n      }\n    }\n    &.contingent {\n      color: var(--global-gray);\n      .i {\n        background-color: vvar(--global-gray);\n      }\n    }\n  }\n}\n",
+          "styleUrl": "./legend.component.scss"
+        }
+      ],
+      "stylesData": "",
+      "templateData": "<div class=\"legend flex flex-wrap mb-3\">\n  <div\n    *ngFor=\"let legend of legendItems\"\n    class=\"l flex align-items-center\"\n    [style.color]=\"legend?.color\"\n  >\n    <div class=\"i\" [style.backgroundColor]=\"legend?.color\"></div>\n    {{ legend?.text }}\n  </div>\n</div>\n"
+    },
+    {
       "name": "LicenseFormComponent",
       "id": "component-LicenseFormComponent-967c5de1cb735a98c4829ef4411860a46e9b7c375558c75b40c7fa851c6ca216f0bf62de831eef51702e1affe5f00bb2a7b191912e8b358bf934c878c3405839",
       "file": "src/app/professional-standing/license-form/license-form.component.ts",
@@ -51909,7 +52085,7 @@
     },
     {
       "name": "OralExaminationsComponent",
-      "id": "component-OralExaminationsComponent-2484d713cdb11166f9e57b38da5c1fa29f90ead266c2427bb8fa6daa6798ecac412458be81c24076692a2fd6b23a2c8592e03ff1ea87997b0d34b0df6baecd7f-1",
+      "id": "component-OralExaminationsComponent-cfd58d0680156d3f3dc1a2f3f78ae485656a4b1633e376ea8e26e0d31553b48f90a318ba0c326fc262b7a9bbb78a404bb8a2010820e910e700690195edab890f-1",
       "file": "src/app/oral-examinations/oral-examinations.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -51933,7 +52109,7 @@
           "type": "Date",
           "optional": false,
           "description": "",
-          "line": 49
+          "line": 51
         },
         {
           "name": "examDateDisplay",
@@ -51943,7 +52119,7 @@
           "type": "Date",
           "optional": false,
           "description": "",
-          "line": 51
+          "line": 53
         },
         {
           "name": "examHeaderId",
@@ -51953,7 +52129,7 @@
           "type": "number",
           "optional": false,
           "description": "",
-          "line": 48
+          "line": 50
         },
         {
           "name": "examineeList$",
@@ -51962,7 +52138,7 @@
           "type": "Observable<IExamSessionReadOnlyModel[]> | undefined",
           "optional": false,
           "description": "",
-          "line": 42,
+          "line": 44,
           "decorators": [
             {
               "name": "Select",
@@ -51978,7 +52154,7 @@
           "type": "Observable<IExamTitleReadOnlyModel> | undefined",
           "optional": false,
           "description": "",
-          "line": 44,
+          "line": 46,
           "decorators": [
             {
               "name": "Select",
@@ -51988,6 +52164,16 @@
           "modifierKind": [167]
         },
         {
+          "name": "legendItems",
+          "defaultValue": "[\n    {\n      text: 'Not Submitted',\n      color: '#7f7f7f',\n    },\n    {\n      text: 'Current Session',\n      color: '#dbad6a',\n    },\n    {\n      text: 'Submitted',\n      color: '#1c827d',\n    },\n  ]",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "[]",
+          "optional": false,
+          "description": "",
+          "line": 59
+        },
+        {
           "name": "oralExaminationCols",
           "defaultValue": "ORAL_EXAMINATION_COLS",
           "deprecated": false,
@@ -51995,7 +52181,7 @@
           "type": "",
           "optional": false,
           "description": "",
-          "line": 55
+          "line": 57
         },
         {
           "name": "oralExaminations$",
@@ -52005,7 +52191,7 @@
           "type": "BehaviorSubject<IExamSessionReadOnlyModel[]>",
           "optional": false,
           "description": "",
-          "line": 53
+          "line": 55
         },
         {
           "name": "zoomLink",
@@ -52015,7 +52201,7 @@
           "type": "string | undefined",
           "optional": false,
           "description": "",
-          "line": 52
+          "line": 54
         }
       ],
       "methodsClass": [
@@ -52032,7 +52218,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 166,
+          "line": 183,
           "deprecated": false,
           "deprecationMessage": "",
           "jsdoctags": [
@@ -52053,7 +52239,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 69,
+          "line": 86,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -52070,7 +52256,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 125,
+          "line": 142,
           "deprecated": false,
           "deprecationMessage": "",
           "jsdoctags": [
@@ -52091,7 +52277,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 65,
+          "line": 82,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -52101,7 +52287,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 177,
+          "line": 194,
           "deprecated": false,
           "deprecationMessage": ""
         },
@@ -52118,7 +52304,7 @@
           "optional": false,
           "returnType": "\"current-session\" | \"submitted-session\" | \"not-started\"",
           "typeParameters": [],
-          "line": 115,
+          "line": 132,
           "deprecated": false,
           "deprecationMessage": "",
           "jsdoctags": [
@@ -52163,12 +52349,16 @@
         {
           "name": "ButtonModule",
           "type": "module"
+        },
+        {
+          "name": "LegendComponent",
+          "type": "component"
         }
       ],
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';\nimport { FormsModule } from '@angular/forms';\nimport { CommonModule } from '@angular/common';\nimport { Router } from '@angular/router';\nimport { TranslateModule } from '@ngx-translate/core';\nimport { GlobalDialogService } from '../shared/services/global-dialog.service';\nimport { GridComponent } from '../shared/components/grid/grid.component';\nimport { ORAL_EXAMINATION_COLS } from './oral-examination-cols';\n\nimport { InputTextModule } from 'primeng/inputtext';\nimport { ButtonModule } from 'primeng/button';\nimport { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-read-only.model';\nimport {\n  ExamScoringSelectors,\n  GetExamTitle,\n  GetExamineeList,\n  SkipExam,\n} from '../state';\nimport { Select, Store } from '@ngxs/store';\nimport { BehaviorSubject, Observable, map } from 'rxjs';\nimport { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';\nimport { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';\n\n@UntilDestroy()\n@Component({\n  selector: 'abs-oral-examinations',\n  standalone: true,\n  imports: [\n    FormsModule,\n    CommonModule,\n    TranslateModule,\n    GridComponent,\n    InputTextModule,\n    ButtonModule,\n  ],\n  templateUrl: './oral-examinations.component.html',\n  styleUrls: ['./oral-examinations.component.scss'],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n})\nexport class OralExaminationsComponent implements OnInit {\n  @Select(ExamScoringSelectors.slices.examineeList)\n  examineeList$: Observable<IExamSessionReadOnlyModel[]> | undefined;\n\n  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:\n    | Observable<IExamTitleReadOnlyModel>\n    | undefined;\n\n  examHeaderId = 491; // TODO - remove hard coded value\n  examDate: Date = new Date('01/01/24'); // TODO - remove hard coded value\n\n  examDateDisplay: Date = new Date();\n  zoomLink: string | undefined = '';\n  oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =\n    new BehaviorSubject<IExamSessionReadOnlyModel[]>([]);\n  oralExaminationCols = ORAL_EXAMINATION_COLS;\n\n  constructor(\n    private _route: Router,\n    private _globalDialogService: GlobalDialogService,\n    private _store: Store\n  ) {\n    this._store.dispatch(new GetExamTitle(this.examHeaderId));\n  }\n\n  ngOnInit(): void {\n    this.getOralExaminations();\n  }\n\n  getOralExaminations() {\n    this._store.dispatch(new GetExamineeList(this.examDate.toISOString()));\n\n    this.examineeList$\n      ?.pipe(\n        untilDestroyed(this),\n        map((examineeList) => {\n          if (examineeList?.length > 0) {\n            return examineeList.map((examinee) => {\n              let examTime = 'not scheduled';\n              if (examinee.startTime) {\n                examTime = `${examinee.startTime}`;\n                if (examinee.endTime) {\n                  examTime = `${examTime} - ${examinee.endTime}`;\n                }\n              } else if (examinee.endTime) {\n                examTime = `${examinee.endTime}`;\n              }\n              return {\n                ...examinee,\n                fullName: `${examinee.firstName} ${examinee.lastName}`,\n                examTime: `${examTime}`,\n                rowClass: this.setExaminationStatus(examinee),\n              };\n            });\n          }\n          return [];\n        })\n      )\n      .subscribe((examineeList) => {\n        this.oralExaminations$.next(examineeList);\n        if (examineeList?.length > 0) {\n          const currentExam = examineeList.find(\n            (exam) => exam.isCurrentSession\n          );\n          if (currentExam && currentExam.meetingLink) {\n            this.zoomLink = currentExam.meetingLink;\n          } else {\n            this.zoomLink = examineeList[0].meetingLink;\n          }\n        } else {\n          this.zoomLink = '';\n        }\n      });\n  }\n\n  setExaminationStatus(exam: IExamSessionReadOnlyModel) {\n    if (exam.isCurrentSession) {\n      return 'current-session';\n    } else if (exam.isSubmitted) {\n      return 'submitted-session';\n    } else {\n      return 'not-started';\n    }\n  }\n\n  handleGridAction($event: any) {\n    const { data } = $event;\n    if ($event.fieldKey === 'startExam') {\n      // add any store logic required to start the exam here\n      // add any checks to prevent the exam from being started incorrectly here\n      this._globalDialogService\n        .showConfirmationWithWarning(\n          'Examination Confirmation',\n          `Are you sure you want to start the examination for ${data.fullName}?`,\n          'Clicking confirm will start the timer and begin the exam.'\n        )\n        .then((result) => {\n          if (result) {\n            this._route.navigate([\n              'ce-scoring/oral-examinations/exam',\n              data.examScheduleId,\n            ]);\n          }\n          // take any actions required on cancel of confirmation here\n        });\n    } else if ($event.fieldKey === 'skipExam') {\n      this._globalDialogService\n        .showConfirmation(\n          'Are you sure you want to skip this examination?',\n          'Clicking confirm will permanantly skip this examination '\n        )\n        .then((result) => {\n          if (result) {\n            this._store.dispatch(\n              new SkipExam(\n                $event.data.examScheduleId,\n                this.examDate.toISOString()\n              )\n            );\n          }\n        });\n    } else {\n      console.log('unhandled grid action', $event);\n    }\n  }\n\n  copyFromTextInput(element: any) {\n    if (navigator.clipboard) {\n      navigator.clipboard.writeText(element.value);\n    } else {\n      // handle any older browsers that don't support navigator.clipboard\n      element.select();\n      document.execCommand('copy');\n      element.setSelectionRange(0, 0);\n    }\n  }\n\n  openZoomLink() {\n    if (this.zoomLink) {\n      window.open(this.zoomLink, '_blank');\n    }\n  }\n}\n",
+      "sourceCode": "import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';\nimport { FormsModule } from '@angular/forms';\nimport { CommonModule } from '@angular/common';\nimport { Router } from '@angular/router';\nimport { TranslateModule } from '@ngx-translate/core';\nimport { GlobalDialogService } from '../shared/services/global-dialog.service';\nimport { GridComponent } from '../shared/components/grid/grid.component';\nimport { ORAL_EXAMINATION_COLS } from './oral-examination-cols';\n\nimport { InputTextModule } from 'primeng/inputtext';\nimport { ButtonModule } from 'primeng/button';\nimport { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-read-only.model';\nimport {\n  ExamScoringSelectors,\n  GetExamTitle,\n  GetExamineeList,\n  SkipExam,\n} from '../state';\nimport { Select, Store } from '@ngxs/store';\nimport { BehaviorSubject, Observable, map } from 'rxjs';\nimport { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';\nimport { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';\nimport { LegendComponent } from '../shared/components/legend/legend.component';\n\n@UntilDestroy()\n@Component({\n  selector: 'abs-oral-examinations',\n  standalone: true,\n  imports: [\n    FormsModule,\n    CommonModule,\n    TranslateModule,\n    GridComponent,\n    InputTextModule,\n    ButtonModule,\n    LegendComponent,\n  ],\n  templateUrl: './oral-examinations.component.html',\n  styleUrls: ['./oral-examinations.component.scss'],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n})\nexport class OralExaminationsComponent implements OnInit {\n  @Select(ExamScoringSelectors.slices.examineeList)\n  examineeList$: Observable<IExamSessionReadOnlyModel[]> | undefined;\n\n  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:\n    | Observable<IExamTitleReadOnlyModel>\n    | undefined;\n\n  examHeaderId = 491; // TODO - remove hard coded value\n  examDate: Date = new Date('01/01/24'); // TODO - remove hard coded value\n\n  examDateDisplay: Date = new Date();\n  zoomLink: string | undefined = '';\n  oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =\n    new BehaviorSubject<IExamSessionReadOnlyModel[]>([]);\n  oralExaminationCols = ORAL_EXAMINATION_COLS;\n\n  legendItems = [\n    {\n      text: 'Not Submitted',\n      color: '#7f7f7f',\n    },\n    {\n      text: 'Current Session',\n      color: '#dbad6a',\n    },\n    {\n      text: 'Submitted',\n      color: '#1c827d',\n    },\n  ];\n\n  constructor(\n    private _route: Router,\n    private _globalDialogService: GlobalDialogService,\n    private _store: Store\n  ) {\n    this._store.dispatch(new GetExamTitle(this.examHeaderId));\n  }\n\n  ngOnInit(): void {\n    this.getOralExaminations();\n  }\n\n  getOralExaminations() {\n    this._store.dispatch(new GetExamineeList(this.examDate.toISOString()));\n\n    this.examineeList$\n      ?.pipe(\n        untilDestroyed(this),\n        map((examineeList) => {\n          if (examineeList?.length > 0) {\n            return examineeList.map((examinee) => {\n              let examTime = 'not scheduled';\n              if (examinee.startTime) {\n                examTime = `${examinee.startTime}`;\n                if (examinee.endTime) {\n                  examTime = `${examTime} - ${examinee.endTime}`;\n                }\n              } else if (examinee.endTime) {\n                examTime = `${examinee.endTime}`;\n              }\n              return {\n                ...examinee,\n                fullName: `${examinee.firstName} ${examinee.lastName}`,\n                examTime: `${examTime}`,\n                rowClass: this.setExaminationStatus(examinee),\n              };\n            });\n          }\n          return [];\n        })\n      )\n      .subscribe((examineeList) => {\n        this.oralExaminations$.next(examineeList);\n        if (examineeList?.length > 0) {\n          const currentExam = examineeList.find(\n            (exam) => exam.isCurrentSession\n          );\n          if (currentExam && currentExam.meetingLink) {\n            this.zoomLink = currentExam.meetingLink;\n          } else {\n            this.zoomLink = examineeList[0].meetingLink;\n          }\n        } else {\n          this.zoomLink = '';\n        }\n      });\n  }\n\n  setExaminationStatus(exam: IExamSessionReadOnlyModel) {\n    if (exam.isCurrentSession) {\n      return 'current-session';\n    } else if (exam.isSubmitted) {\n      return 'submitted-session';\n    } else {\n      return 'not-started';\n    }\n  }\n\n  handleGridAction($event: any) {\n    const { data } = $event;\n    if ($event.fieldKey === 'startExam') {\n      // add any store logic required to start the exam here\n      // add any checks to prevent the exam from being started incorrectly here\n      this._globalDialogService\n        .showConfirmationWithWarning(\n          'Examination Confirmation',\n          `Are you sure you want to start the examination for ${data.fullName}?`,\n          'Clicking confirm will start the timer and begin the exam.'\n        )\n        .then((result) => {\n          if (result) {\n            this._route.navigate([\n              'ce-scoring/oral-examinations/exam',\n              data.examScheduleId,\n            ]);\n          }\n          // take any actions required on cancel of confirmation here\n        });\n    } else if ($event.fieldKey === 'skipExam') {\n      this._globalDialogService\n        .showConfirmation(\n          'Are you sure you want to skip this examination?',\n          'Clicking confirm will permanantly skip this examination '\n        )\n        .then((result) => {\n          if (result) {\n            this._store.dispatch(\n              new SkipExam(\n                $event.data.examScheduleId,\n                this.examDate.toISOString()\n              )\n            );\n          }\n        });\n    } else {\n      console.log('unhandled grid action', $event);\n    }\n  }\n\n  copyFromTextInput(element: any) {\n    if (navigator.clipboard) {\n      navigator.clipboard.writeText(element.value);\n    } else {\n      // handle any older browsers that don't support navigator.clipboard\n      element.select();\n      document.execCommand('copy');\n      element.setSelectionRange(0, 0);\n    }\n  }\n\n  openZoomLink() {\n    if (this.zoomLink) {\n      window.open(this.zoomLink, '_blank');\n    }\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
@@ -52202,7 +52392,7 @@
             "deprecationMessage": ""
           }
         ],
-        "line": 55,
+        "line": 72,
         "jsdoctags": [
           {
             "name": "_route",
@@ -52237,7 +52427,7 @@
       "isDuplicate": true,
       "duplicateId": 1,
       "duplicateName": "OralExaminationsComponent-1",
-      "templateData": "<header>\n  <h1>\n    {{\n      (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM' | translate\n    }}\n  </h1>\n</header>\n<ng-container>\n  <section>\n    <div class=\"grid\">\n      <sl-card class=\"col-12\">\n        <div slot=\"header\">\n          {{ 'EXAMSCORING.EXAMINATION.LIST_TITLE' | translate }}\n        </div>\n        <div class=\"grid\">\n          <div class=\"col-12 flex justify-content-between\">\n            <p\n              [innerHTML]=\"\n                'EXAMSCORING.EXAMINATION.LIST_DATE'\n                  | translate : { date: examDateDisplay | date : 'MM/dd/yyyy' }\n              \"\n            ></p>\n            <div\n              class=\"flex align-items-center justify-content-end flex-grow-1\"\n            >\n              <p-button\n                label=\"Zoom Link\"\n                icon=\"fa fa-video-camera\"\n                class=\"zoom-link\"\n                styleClass=\"p-button-success p-button-text\"\n                (onClick)=\"openZoomLink()\"\n              ></p-button>\n              <div class=\"p-inputgroup\" style=\"max-width: 450px\">\n                <input\n                  pInputText\n                  type=\"text\"\n                  placeholder=\"Zoom Link\"\n                  [value]=\"zoomLink\"\n                  [disabled]=\"true\"\n                  placeholder=\"No Zoom Link Available\"\n                  #zoomLinkInput\n                />\n                <button\n                  pButton\n                  icon=\"pi pi-copy\"\n                  styleClass=\"p-button-primary\"\n                  (onClick)=\"copyFromTextInput(zoomLinkInput)\"\n                ></button>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-12\">\n            <abs-grid\n              class=\"margin-bottom-2 exam-grid\"\n              [columns]=\"oralExaminationCols\"\n              [data]=\"oralExaminations$\"\n              (action)=\"handleGridAction($event)\"\n              [pagination]=\"true\"\n              [itemsPerPage]=\"10\"\n            ></abs-grid>\n          </div>\n        </div>\n      </sl-card>\n    </div>\n  </section>\n</ng-container>\n\n<ng-template #loading>\n  <div class=\"my-5 flex flex-column justify-content-center align-items-center\">\n    <sl-spinner\n      class=\"block\"\n      style=\"font-size: 3rem; --indicator-color: var(--global-primary)\"\n    ></sl-spinner>\n    <p>loading examinations...</p>\n  </div>\n</ng-template>\n"
+      "templateData": "<header>\n  <h1>\n    {{\n      (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM' | translate\n    }}\n  </h1>\n</header>\n<ng-container>\n  <section>\n    <div class=\"grid\">\n      <sl-card class=\"col-12\">\n        <div slot=\"header\">\n          {{ 'EXAMSCORING.EXAMINATION.LIST_TITLE' | translate }}\n        </div>\n        <div class=\"grid\">\n          <div class=\"col-12 flex justify-content-between\">\n            <p\n              [innerHTML]=\"\n                'EXAMSCORING.EXAMINATION.LIST_DATE'\n                  | translate : { date: examDateDisplay | date : 'MM/dd/yyyy' }\n              \"\n            ></p>\n            <div\n              class=\"flex align-items-center justify-content-end flex-grow-1\"\n            >\n              <p-button\n                label=\"Zoom Link\"\n                icon=\"fa fa-video-camera\"\n                class=\"zoom-link\"\n                styleClass=\"p-button-success p-button-text\"\n                (onClick)=\"openZoomLink()\"\n              ></p-button>\n              <div class=\"p-inputgroup\" style=\"max-width: 450px\">\n                <input\n                  pInputText\n                  type=\"text\"\n                  placeholder=\"Zoom Link\"\n                  [value]=\"zoomLink\"\n                  [disabled]=\"true\"\n                  placeholder=\"No Zoom Link Available\"\n                  #zoomLinkInput\n                />\n                <button\n                  pButton\n                  icon=\"pi pi-copy\"\n                  styleClass=\"p-button-primary\"\n                  (onClick)=\"copyFromTextInput(zoomLinkInput)\"\n                ></button>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-12\">\n            <abs-legend [legendItems]=\"legendItems\"></abs-legend>\n            <abs-grid\n              class=\"margin-bottom-2 exam-grid\"\n              [columns]=\"oralExaminationCols\"\n              [data]=\"oralExaminations$\"\n              (action)=\"handleGridAction($event)\"\n              [pagination]=\"true\"\n              [itemsPerPage]=\"10\"\n            ></abs-grid>\n          </div>\n        </div>\n      </sl-card>\n    </div>\n  </section>\n</ng-container>\n\n<ng-template #loading>\n  <div class=\"my-5 flex flex-column justify-content-center align-items-center\">\n    <sl-spinner\n      class=\"block\"\n      style=\"font-size: 3rem; --indicator-color: var(--global-primary)\"\n    ></sl-spinner>\n    <p>loading examinations...</p>\n  </div>\n</ng-template>\n"
     },
     {
       "name": "OtherCertificatesAddEditModalComponent",
@@ -58803,7 +58993,17 @@
         "deprecated": false,
         "deprecationMessage": "",
         "type": "Story",
-        "defaultValue": "{\n  args: {\n    title: \"Action Card's Title\",\n    content: 'This is some cool description of what this card does',\n    actionText: 'Click here!',\n    actionType: 'action',\n    actionAction: 'do something',\n    image:\n      'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',\n  },\n}"
+        "defaultValue": "{\n  args: {\n    title: \"Action Card's Title\",\n    content: 'This is some cool description of what this card does',\n    image:\n      'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',\n  },\n}"
+      },
+      {
+        "name": "Default",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/app/shared/components/legend/legend.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story",
+        "defaultValue": "{\n  args: {\n    legendItems: [\n      {\n        text: 'Legend Item 1',\n        color: 'red',\n      },\n      {\n        text: 'Legend Item 2',\n        color: 'yellow',\n      },\n      {\n        text: 'Legend Item 3',\n        color: 'green',\n      },\n    ],\n  },\n}"
       },
       {
         "name": "Default",
@@ -59329,6 +59529,16 @@
         "name": "meta",
         "ctype": "miscellaneous",
         "subtype": "variable",
+        "file": "src/app/shared/components/legend/legend.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Meta<LegendComponent>",
+        "defaultValue": "{\n  title: 'Components/Legend',\n  tags: ['autodocs'],\n  component: LegendComponent,\n  render: (args: LegendComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    moduleMetadata({\n      imports: [LegendComponent],\n      declarations: [],\n    }),\n  ],\n}"
+      },
+      {
+        "name": "meta",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
         "file": "src/app/shared/components/profile-header/profile-header.component.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
@@ -59624,6 +59834,16 @@
         "deprecationMessage": "",
         "type": "",
         "defaultValue": "new StateToken<IUserProfile>(\n  'userProfile'\n)"
+      },
+      {
+        "name": "WithAction",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/app/shared/components/highlight-card/highlight-card.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story",
+        "defaultValue": "{\n  args: {\n    ...Default.args,\n    actionText: 'Click here!',\n    actionType: 'action',\n    actionAction: 'action',\n  },\n}"
       },
       {
         "name": "WithAllOptions",
@@ -60119,6 +60339,17 @@
         "name": "Story",
         "ctype": "miscellaneous",
         "subtype": "typealias",
+        "rawtype": "StoryObj<LegendComponent>",
+        "file": "src/app/shared/components/legend/legend.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "description": "",
+        "kind": 180
+      },
+      {
+        "name": "Story",
+        "ctype": "miscellaneous",
+        "subtype": "typealias",
         "rawtype": "StoryObj<ProfileHeaderComponent>",
         "file": "src/app/shared/components/profile-header/profile-header.component.stories.ts",
         "deprecated": false,
@@ -60436,7 +60667,7 @@
           "deprecated": false,
           "deprecationMessage": "",
           "type": "Story",
-          "defaultValue": "{\n  args: {\n    title: \"Action Card's Title\",\n    content: 'This is some cool description of what this card does',\n    actionText: 'Click here!',\n    actionType: 'action',\n    actionAction: 'do something',\n    image:\n      'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',\n  },\n}"
+          "defaultValue": "{\n  args: {\n    title: \"Action Card's Title\",\n    content: 'This is some cool description of what this card does',\n    image:\n      'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',\n  },\n}"
         },
         {
           "name": "meta",
@@ -60447,6 +60678,16 @@
           "deprecationMessage": "",
           "type": "Meta<HighlightCardComponent>",
           "defaultValue": "{\n  title: 'Components/Highlight Card',\n  tags: ['autodocs'],\n  component: HighlightCardComponent,\n  render: (args: HighlightCardComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [...DEFAULT_PROVIDERS],\n    }),\n    moduleMetadata({\n      imports: [HighlightCardComponent],\n      declarations: [],\n    }),\n  ],\n}"
+        },
+        {
+          "name": "WithAction",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/highlight-card/highlight-card.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Story",
+          "defaultValue": "{\n  args: {\n    ...Default.args,\n    actionText: 'Click here!',\n    actionType: 'action',\n    actionAction: 'action',\n  },\n}"
         }
       ],
       "src/app/state/auth/auth.state.ts": [
@@ -60801,6 +61042,28 @@
           "deprecationMessage": "",
           "type": "Story",
           "defaultValue": "{\n  args: {\n    ...Default.args,\n    showFilter: true,\n    filterOn: 'name',\n    filterType: 'text',\n    noFilteredResultsMessage: 'There are no results to display.',\n  },\n}"
+        }
+      ],
+      "src/app/shared/components/legend/legend.component.stories.ts": [
+        {
+          "name": "Default",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/legend/legend.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Story",
+          "defaultValue": "{\n  args: {\n    legendItems: [\n      {\n        text: 'Legend Item 1',\n        color: 'red',\n      },\n      {\n        text: 'Legend Item 2',\n        color: 'yellow',\n      },\n      {\n        text: 'Legend Item 3',\n        color: 'green',\n      },\n    ],\n  },\n}"
+        },
+        {
+          "name": "meta",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/legend/legend.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Meta<LegendComponent>",
+          "defaultValue": "{\n  title: 'Components/Legend',\n  tags: ['autodocs'],\n  component: LegendComponent,\n  render: (args: LegendComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    moduleMetadata({\n      imports: [LegendComponent],\n      declarations: [],\n    }),\n  ],\n}"
         }
       ],
       "src/app/shared/components/profile-header/profile-header.component.stories.ts": [
@@ -62215,6 +62478,19 @@
           "subtype": "typealias",
           "rawtype": "StoryObj<HighlightCardComponent>",
           "file": "src/app/shared/components/highlight-card/highlight-card.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "description": "",
+          "kind": 180
+        }
+      ],
+      "src/app/shared/components/legend/legend.component.stories.ts": [
+        {
+          "name": "Story",
+          "ctype": "miscellaneous",
+          "subtype": "typealias",
+          "rawtype": "StoryObj<LegendComponent>",
+          "file": "src/app/shared/components/legend/legend.component.stories.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "description": "",
@@ -63838,7 +64114,7 @@
         "linktype": "component",
         "name": "OralExaminationsComponent",
         "coveragePercent": 0,
-        "coverageCount": "0/16",
+        "coverageCount": "0/17",
         "status": "low"
       },
       {
@@ -64694,6 +64970,16 @@
         "status": "low"
       },
       {
+        "filePath": "src/app/shared/components/highlight-card/highlight-card.component.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "WithAction",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
         "filePath": "src/app/shared/components/highlight-card/highlight-card.component.ts",
         "type": "component",
         "linktype": "component",
@@ -64701,6 +64987,44 @@
         "coveragePercent": 55,
         "coverageCount": "10/18",
         "status": "good"
+      },
+      {
+        "filePath": "src/app/shared/components/legend/legend.component.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "Default",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
+        "filePath": "src/app/shared/components/legend/legend.component.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "meta",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
+        "filePath": "src/app/shared/components/legend/legend.component.ts",
+        "type": "component",
+        "linktype": "component",
+        "name": "LegendComponent",
+        "coveragePercent": 50,
+        "coverageCount": "1/2",
+        "status": "medium"
+      },
+      {
+        "filePath": "src/app/shared/components/legend/legend.model.ts",
+        "type": "interface",
+        "linktype": "interface",
+        "name": "ILegend",
+        "coveragePercent": 0,
+        "coverageCount": "0/3",
+        "status": "low"
       },
       {
         "filePath": "src/app/shared/components/modal/modal.component.ts",

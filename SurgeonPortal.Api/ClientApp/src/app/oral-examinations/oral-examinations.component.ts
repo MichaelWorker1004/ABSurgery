@@ -145,10 +145,9 @@ export class OralExaminationsComponent implements OnInit {
       // add any store logic required to start the exam here
       // add any checks to prevent the exam from being started incorrectly here
       this._globalDialogService
-        .showConfirmationWithWarning(
-          'Examination Confirmation',
-          `Are you sure you want to start the examination for ${data.fullName}?`,
-          'Clicking confirm will start the timer and begin the exam.'
+        .showConfirmation(
+          'Clicking YES will start the exam timer',
+          `Are you sure you want to start the examination for ${data.fullName}?`
         )
         .then((result) => {
           if (result) {

@@ -3,20 +3,7 @@
     <h1>Continuous Certification</h1>
     <h4 class="thin">For {{ userData.name }}.</h4>
   </div>
-  <div class="legend flex flex-wrap">
-    <div class="l flex align-items-center completed">
-      <div class="i"></div>
-      Completed
-    </div>
-    <div class="l flex align-items-center in-progress">
-      <div class="i"></div>
-      In Progress
-    </div>
-    <div class="l flex align-items-center contingent">
-      <div class="i"></div>
-      Contingent
-    </div>
-  </div>
+  <abs-legend [legendItems]="legendItems"></abs-legend>
 </div>
 
 <div class="grid">

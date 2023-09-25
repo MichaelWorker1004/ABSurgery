@@ -10,5 +10,16 @@ import { ILegend } from './legend.model';
   styleUrls: ['./legend.component.scss'],
 })
 export class LegendComponent {
+  /**
+   * Legend items to display
+   * @type {ILegend[]}
+   * @memberof LegendComponent
+   * @example
+   * legendItems = [
+   * {
+   *  text: 'Legend Item 1',
+   *   color: '#000000',
+   *  },
+   */
   @Input() legendItems!: ILegend[];
 }
