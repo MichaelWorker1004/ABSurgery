@@ -71,10 +71,10 @@
     "DEFAULT_EXAM": "Certifying Examination",
     "EXAMINATION": {
       "CANDIDATE": "<strong>Candidate Name:</strong> {{name}}",
-      "INSTRUCTIONS": "Please read carefully the instructions below.",
+      "INSTRUCTIONS": "",
       "LIST_DATE": "<strong>Date:</strong> {{date}}",
       "LIST_TITLE": "Examinations",
-      "SUBTITLE": "Begin the oral examination process by first selecting the desired exam day from the first dropdown. You can then select the specific candidate times lot from the next dropdown. Finally, confirm your examiner user ID and you may begin the exam process.",
+      "SUBTITLE": "",
       "TIME": "<strong>Day/Time:</strong> {{time}}",
       "TITLE": "Examination"
     },

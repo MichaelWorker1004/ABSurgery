@@ -1,0 +1,10 @@
+<div class="legend flex flex-wrap">
+  <div
+    *ngFor="let legend of legendItems"
+    class="l flex align-items-center"
+    [style.color]="legend?.color"
+  >
+    <div class="i" [style.backgroundColor]="legend?.color"></div>
+    {{ legend?.text }}
+  </div>
+</div>
