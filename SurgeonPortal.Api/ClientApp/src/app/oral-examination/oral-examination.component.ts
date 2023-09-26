@@ -249,7 +249,6 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
       .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
       .pipe(take(1))
       .subscribe(() => {
-        this.submitExamFunctionality();
         this.router.navigate(['/ce-scoring/oral-examinations']);
       });
   }
@@ -279,22 +278,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe(() => {
         if (currentCase === caseCount) {
-          this._store
-            .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
-            .pipe(take(1))
-            .subscribe(() => {
-              this.submitExamFunctionality();
-            });
+          this._store.dispatch(
+            new SkipExam(this.examScheduleId, examDate.toISOString())
+          );
         }
       });
-  }
-
-  submitExamFunctionality() {
-    this.globalDialogService.showSuccessError(
-      'Success',
-      'Scores updated successfully',
-      true
-    );
   }
 
   async updateScores() {

@@ -3,7 +3,7 @@ import { TooltipComponent } from './tooltip.component';
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<TooltipComponent> = {
-  title: 'Components/Tooltip',
+  title: 'YTG/Tooltip',
   component: TooltipComponent,
   tags: ['autodocs'],
   render: (args: TooltipComponent) => ({

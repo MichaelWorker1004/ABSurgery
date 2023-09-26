@@ -17,8 +17,23 @@ import { Store } from '@ngxs/store';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FormErrorsComponent implements OnDestroy {
+  /**
+   * An array of errors to display
+   * @type {IFormErrors}
+   */
   @Input() errors!: IFormErrors;
+
+  /**
+   * This should be a function that dispatches an action to clear the errors.
+   * The action should come from the state.actions and be able to be used with a dispatch action from NGSX
+   * @type {any}
+   */
   @Input() clearErrors: any | undefined;
+
+  /**
+   * Whether or not the errors can be closed
+   * @type {boolean}
+   */
   @Input() closable = false;
 
   constructor(private store: Store) {}
