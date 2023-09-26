@@ -20,6 +20,7 @@ import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { LegendComponent } from '../shared/components/legend/legend.component';
 
 @UntilDestroy()
 @Component({
@@ -32,6 +33,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
     GridComponent,
     InputTextModule,
     ButtonModule,
+    LegendComponent,
   ],
   templateUrl: './oral-examinations.component.html',
   styleUrls: ['./oral-examinations.component.scss'],
@@ -53,6 +55,21 @@ export class OralExaminationsComponent implements OnInit {
   oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =
     new BehaviorSubject<IExamSessionReadOnlyModel[]>([]);
   oralExaminationCols = ORAL_EXAMINATION_COLS;
+
+  legendItems = [
+    {
+      text: 'Not Submitted',
+      color: '#7f7f7f',
+    },
+    {
+      text: 'Current Session',
+      color: '#dbad6a',
+    },
+    {
+      text: 'Submitted',
+      color: '#1c827d',
+    },
+  ];
 
   constructor(
     private _route: Router,
@@ -128,10 +145,9 @@ export class OralExaminationsComponent implements OnInit {
       // add any store logic required to start the exam here
       // add any checks to prevent the exam from being started incorrectly here
       this._globalDialogService
-        .showConfirmationWithWarning(
-          'Examination Confirmation',
-          `Are you sure you want to start the examination for ${data.fullName}?`,
-          'Clicking confirm will start the timer and begin the exam.'
+        .showConfirmation(
+          'Clicking YES will start the exam timer',
+          `Are you sure you want to start the examination for ${data.fullName}?`
         )
         .then((result) => {
           if (result) {

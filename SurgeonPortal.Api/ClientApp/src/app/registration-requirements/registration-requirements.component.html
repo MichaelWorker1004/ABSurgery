@@ -5,24 +5,11 @@
     mattis ut urna id, convallis eleifend purus. Phasellus sodales condimentum
     orci, id malesuada ante faucibus eu.
   </div>
-  <div class="legend flex justify-content-end flex-wrap">
-    <div class="l flex align-items-center completed">
-      <div class="i"></div>
-      Completed
-    </div>
-    <div class="l flex align-items-center in-progress">
-      <div class="i"></div>
-      In Progress
-    </div>
-    <div class="l flex align-items-center alert">
-      <div class="i"></div>
-      Alert
-    </div>
-    <div class="l flex align-items-center contingent">
-      <div class="i"></div>
-      Contingent
-    </div>
-  </div>
+
+  <abs-legend
+    [legendItems]="legendItems"
+    class="block w-full flex justify-content-end"
+  ></abs-legend>
 </div>
 
 <div class="grid margin-bottom-2">

@@ -16,6 +16,7 @@ import { Select, Store } from '@ngxs/store';
 import { GetStateList } from '../state/picklists';
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
+import { LegendComponent } from '../shared/components/legend/legend.component';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -35,6 +36,7 @@ interface ActionMap {
     OutcomeRegistriesModalComponent,
     AttestationModalComponent,
     ReferenceFormModalComponent,
+    LegendComponent,
   ],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -58,6 +60,21 @@ export class ContinuousCertificationComponent implements OnInit {
       paymentDate: new Date('09/18/2015'),
       paymentAmount: '$100',
       balanceRemaining: '$285.00',
+    },
+  ];
+
+  legendItems = [
+    {
+      text: 'Completed',
+      color: '#1c827c',
+    },
+    {
+      text: 'In Progress',
+      color: '#dbad69',
+    },
+    {
+      text: 'Contingent',
+      color: '#a0a0a0',
     },
   ];
 
