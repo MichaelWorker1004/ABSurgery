@@ -249,12 +249,12 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
       .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
       .pipe(take(1))
       .subscribe(() => {
-        this.submitExamFunctionality();
         this.router.navigate(['/ce-scoring/oral-examinations']);
       });
   }
 
   async handleSubmit() {
+    this.globalDialogService.showLoading();
     await this.updateScores();
     const model = {
       examScheduleId: this.examScheduleId,
@@ -275,26 +275,20 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     }
 
     this._store
-      .dispatch(new CreateExamScore(model))
+      .dispatch(new CreateExamScore(model, false))
       .pipe(take(1))
       .subscribe(() => {
         if (currentCase === caseCount) {
           this._store
-            .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
+            .dispatch(
+              new SkipExam(this.examScheduleId, examDate.toISOString(), false)
+            )
             .pipe(take(1))
             .subscribe(() => {
-              this.submitExamFunctionality();
+              this.router.navigate(['/ce-scoring/oral-examinations']);
             });
         }
       });
-  }
-
-  submitExamFunctionality() {
-    this.globalDialogService.showSuccessError(
-      'Success',
-      'Scores updated successfully',
-      true
-    );
   }
 
   async updateScores() {
@@ -319,7 +313,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
           );
         } else if ((model?.score && model.score > 0) || model?.remarks) {
           promise.push(
-            this._store.dispatch(new CreateCaseScore(model)).toPromise()
+            this._store.dispatch(new CreateCaseScore(model, false)).toPromise()
           );
         }
       });

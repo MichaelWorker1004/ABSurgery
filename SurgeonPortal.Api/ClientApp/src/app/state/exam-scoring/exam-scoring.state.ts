@@ -359,23 +359,30 @@ export class ExamScoringState {
   @Action(CreateCaseScore)
   createCaseScore(
     ctx: StateContext<IExamScoring>,
-    payload: { score: ICaseScoreModel }
+    payload: { score: ICaseScoreModel; showLoading: boolean }
   ) {
     const score = payload.score;
-    this.globalDialogService.showLoading();
+    if (payload.showLoading) {
+      this.globalDialogService.showLoading();
+    }
+
     return this.caseScoresService.createCaseScore(score).pipe(
-      tap((result: ICaseScoreModel) => {
+      tap(() => {
         // figure out how to update the store here
         ctx.patchState({
           // selectedCaseComment: result,
           errors: null,
         });
-        this.globalDialogService.closeOpenDialog();
+        if (payload.showLoading) {
+          this.globalDialogService.closeOpenDialog();
+        }
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
         ctx.patchState({ errors });
-        this.globalDialogService.closeOpenDialog();
+        if (payload.showLoading) {
+          this.globalDialogService.closeOpenDialog();
+        }
         return of(errors);
       })
     );
@@ -478,7 +485,7 @@ export class ExamScoringState {
         ctx.patchState({
           errors: null,
         });
-        await this.globalDialogService.showSuccessError(
+        this.globalDialogService.showSuccessError(
           'Success',
           'Exam Submitted Successfully',
           true
@@ -529,15 +536,20 @@ export class ExamScoringState {
   @Action(SkipExam)
   skipExam(
     ctx: StateContext<IExamScoring>,
-    payload: { examScheduleId: number; examDate: string }
+    payload: { examScheduleId: number; examDate: string; showLoading: boolean }
   ) {
-    this.globalDialogService.showLoading();
+    if (payload.showLoading) {
+      this.globalDialogService.showLoading();
+    }
+
     return this.examSessionsService
       .skipExamSessionReadOnly_SkipByExamScheduleId(payload.examScheduleId)
       .pipe(
         tap(() => {
           ctx.dispatch(new GetExamineeList(payload.examDate));
-          this.globalDialogService.closeOpenDialog();
+          if (payload.showLoading) {
+            this.globalDialogService.closeOpenDialog();
+          }
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;

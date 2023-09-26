@@ -11,11 +11,15 @@
           >
             <p-radioButton
               [value]="score.value"
-              [inputId]="score.label"
+              [inputId]="score.value + '-' + localData?.examCaseId"
               formControlName="score"
               (onClick)="handleScoreSelect(score.value)"
             ></p-radioButton>
-            <label [for]="score.label" class="ml-2">{{ score.label }}</label>
+            <label
+              [for]="score.value + '-' + localData?.examCaseId"
+              class="ml-2"
+              >{{ score.label }}</label
+            >
           </div>
 
           <div class="flex align-items-center gap-2">

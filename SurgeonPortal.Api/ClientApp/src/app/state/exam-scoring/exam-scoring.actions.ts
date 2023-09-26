@@ -87,7 +87,7 @@ export class GetSelectedExamScores {
 export class CreateCaseScore {
   static readonly type = '[Exam-Scoring] create score for exam case';
 
-  constructor(public score: ICaseScoreModel) {}
+  constructor(public score: ICaseScoreModel, public showLoading = true) {}
 }
 
 export class UpdateCaseScore {
@@ -111,7 +111,11 @@ export class GetRoster {
 export class SkipExam {
   static readonly type = '[Exam-Scoring] skip exam';
 
-  constructor(public examScheduleId: number, public examDate: string) {}
+  constructor(
+    public examScheduleId: number,
+    public examDate: string,
+    public showLoading = true
+  ) {}
 }
 
 export class ClearExamScoringErrors {

@@ -14,7 +14,7 @@ import {
 import { DEFAULT_PROVIDERS } from 'src/stories/default-providers';
 
 const meta: Meta<GridComponent> = {
-  title: 'Components/Grid',
+  title: 'YTG/Grid',
   tags: ['autodocs'],
   component: GridComponent,
   render: (args: GridComponent) => ({
