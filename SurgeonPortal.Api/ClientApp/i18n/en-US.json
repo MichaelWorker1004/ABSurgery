@@ -62,10 +62,10 @@
       "DELIVER_TITLE": "Deliver Certifying Examinations",
       "ROSTER_BTN": "Review Exam Case Rosters",
       "ROSTER_SUBTITLE": "Review the cases for the next certifying examination and add personal notes as needed. Your personal notes will display each time you present the case.",
-      "ROSTER_TITLE": "Examination Case Rosters",
+      "ROSTER_TITLE": "Exam Case Rosters",
       "SCORE_BTN": "Review Exam Scores",
       "SCORE_SUBTITLE": "Check the status of submitted scores and edit any that remain incomplete as soon as possible.",
-      "SCORE_TITLE": "Examination Scores",
+      "SCORE_TITLE": "Daily Exam Scores",
       "SUBTITLE": "Welcome to your examiner's dashboard. Information on the dashboard will change based on proximity to the exam adminstration. You will be able to review cases, score examinations, and access other documentation as applicable during the exam administration process."
     },
     "DEFAULT_EXAM": "Certifying Examination",
@@ -79,11 +79,11 @@
       "TITLE": "Examination"
     },
     "EXAMROSTERS": {
-      "TITLE": "Examination Rosters"
+      "TITLE": "Exam Case Rosters"
     },
     "EXAMSCORES": {
       "SUBTITLE": "Review and submit exam scores here. We kindly request that all exams are scored by the end of the exam day, at which point they will be locked down. If you need to complete or edit scores after the current exam day, please contact the psychometricians.",
-      "TITLE": "Examination Scores"
+      "TITLE": "Daily Exam Scores"
     }
   },
   "GME": {
@@ -106,7 +106,7 @@
     "PASSWORD_ERROR": "The Password field is required.",
     "SUBMIT_BTN": "Login",
     "SUBTITLE": "Please enter your username and password to login.",
-    "TITLE": "Welcome to The American Board of Surgery Surgeon's Portal",
+    "TITLE": "Welcome to The American Board of Surgery Surgeon Portal",
     "USERNAME": "Username",
     "USERNAME_ERROR": "The Username field is required."
   },
@@ -183,10 +183,10 @@
     "DOCUMENTS": "Documents",
     "EXAM_HISTORY": "Exam History",
     "EXAM_SCORING": {
-      "CASE_ROSTER": "Examination Case Rosters",
-      "EXAMINATION": "Deliver CE Exams",
+      "CASE_ROSTER": "Exam Case Rosters",
+      "EXAMINATION": "Start CE Exams",
       "MAIN": "CE Examiner Home",
-      "SCORES": "Examination Scores"
+      "SCORES": "Daily Exam Scores"
     },
     "GME": "GME",
     "MEDICAL_TRAINING": "Medical Training",

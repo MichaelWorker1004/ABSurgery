@@ -76,9 +76,9 @@ export interface IExamScoring {
   examineeList: IExamSessionReadOnlyModel[] | undefined; // oral-examinations list page grid values
   // oral-examination actual exam page values
   activeExamination: any[] | undefined; // oral-examination actual exam (includes all cases for selected exam) (no api call)
-  //examination scores page values
-  examScoresList: IRosterReadOnlyModel[] | undefined; // examination scores page grid values
-  selectedExamScores: ICaseScoreReadOnlyModel[] | undefined; // examination scores page details values (no api call)
+  //Daily Exam Scores page values
+  examScoresList: IRosterReadOnlyModel[] | undefined; // Daily Exam Scores page grid values
+  selectedExamScores: ICaseScoreReadOnlyModel[] | undefined; // Daily Exam Scores page details values (no api call)
   // misc values
 
   roster: IRosterReadOnlyModel[] | undefined;

@@ -62,10 +62,10 @@
       "DELIVER_TITLE": "Deliver Certifying Examinations",
       "ROSTER_BTN": "Review Exam Case Rosters",
       "ROSTER_SUBTITLE": "Review the cases for the next certifying examination and add personal notes as needed. Your personal notes will display each time you present the case.",
-      "ROSTER_TITLE": "Examination Case Rosters",
+      "ROSTER_TITLE": "Exam Case Rosters",
       "SCORE_BTN": "Review Exam Scores",
       "SCORE_SUBTITLE": "Check the status of submitted scores and edit any that remain incomplete as soon as possible.",
-      "SCORE_TITLE": "Examination Scores",
+      "SCORE_TITLE": "Daily Exam Scores",
       "SUBTITLE": "Welcome to your examiner's dashboard. Information on the dashboard will change based on proximity to the exam adminstration. You will be able to review cases, score examinations, and access other documentation as applicable during the exam administration process."
     },
     "DEFAULT_EXAM": "Certifying Examination",
@@ -73,17 +73,32 @@
       "CANDIDATE": "<strong>Candidate Name:</strong> {{name}}",
       "INSTRUCTIONS": "",
       "LIST_DATE": "<strong>Date:</strong> {{date}}",
-      "LIST_TITLE": "Examinations",
+      "LIST_TITLE": "Start CE Exams",
       "SUBTITLE": "",
       "TIME": "<strong>Day/Time:</strong> {{time}}",
-      "TITLE": "Examination"
+      "TITLE": "Examination",
+      "SKIP": {
+        "TITLE": "Click YES to skip this exam and move to the next session",
+        "SUBTITLE": "You will be able to score this exam later if needed"
+      },
+      "START": {
+        "TITLE": "Clicking YES will start the exam timer",
+        "SUBTITLE": "Start the clock and begin examination for {{name}}? <br/> Once you start the clock, you cannot undo this action and return to this session"
+      },
+      "SCORE_CARD": {
+        "SCORE": "Score Case {{caseId}}",
+        "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseId}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
+        "REMARKS_TITLE_NO_CASE": "Remakrs for Case {{caseId}}"
+      }
     },
     "EXAMROSTERS": {
-      "TITLE": "Examination Rosters"
+      "TITLE": "Exam Case Rosters",
+      "CASE_FEEDBACK_TITLE": "Case Feedback for Exam Development",
+      "CASE_FEEDBACK_SUBTITLE": "Comments entered in this section will be shared with the exam writers.  Your feedback to the writers will only appear here and will not be displayed during the exam.  You may return to this section to revise your comments throughout the current CE administration."
     },
     "EXAMSCORES": {
-      "SUBTITLE": "Review and submit exam scores here. We kindly request that all exams are scored by the end of the exam day, at which point they will be locked down. If you need to complete or edit scores after the current exam day, please contact the psychometricians.",
-      "TITLE": "Examination Scores"
+      "SUBTITLE": "All Exams Must be Scored by End of Day! Scores will be locked down at the end of each day.  If you need to modify locked scores, please email Nicole Gifford at ngifford@abusrgey.org.",
+      "TITLE": "Daily Exam Scores"
     }
   },
   "GME": {
@@ -183,10 +198,10 @@
     "DOCUMENTS": "Documents",
     "EXAM_HISTORY": "Exam History",
     "EXAM_SCORING": {
-      "CASE_ROSTER": "Examination Case Rosters",
-      "EXAMINATION": "Deliver CE Exams",
+      "CASE_ROSTER": "Exam Case Rosters",
+      "EXAMINATION": "Start CE Exams",
       "MAIN": "CE Examiner Home",
-      "SCORES": "Examination Scores"
+      "SCORES": "Daily Exam Scores"
     },
     "GME": "GME",
     "MEDICAL_TRAINING": "Medical Training",

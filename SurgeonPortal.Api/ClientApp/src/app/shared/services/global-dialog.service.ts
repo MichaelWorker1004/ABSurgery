@@ -48,7 +48,7 @@ export class GlobalDialogService {
     this._dialog.innerHTML = `<div class="global-dialog flex flex-column justify-content-center align-items-center">
       <i class="fa-regular ${icon} ${iconClass}"></i>
       <h2 class="font-normal mt-3 mb-1">${title}</h2>
-      <p class="font-bold mt-0 mb-1" *ngIf="message">${message}</p>
+      <p class="font-bold mt-0 mb-1 text-center" *ngIf="message">${message}</p>
       <sl-button
         slot="footer"
         class="mt-5"
@@ -92,7 +92,7 @@ export class GlobalDialogService {
       this._dialog.innerHTML = `<div class="global-dialog flex flex-column justify-content-center align-items-center">
         <i class="fa-solid fa-triangle-exclamation confirmation-icon"></i>
         <h2 class="font-normal mt-3 mb-1">${title}</h2>
-        <p class="font-bold mt-0 mb-1" *ngIf="message">${message}</p>
+        <p class="font-bold mt-0 mb-1 text-center" *ngIf="message">${message}</p>
         <div class="mt-5" slot="footer">
         <sl-button id="declineButton" variant="default" outline style="width: 200px">
         <i slot="prefix" class="fa-solid fa-xmark"></i>

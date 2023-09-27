@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { ORAL_EXAMINATION_COLS } from './oral-examination-cols';
@@ -74,7 +74,8 @@ export class OralExaminationsComponent implements OnInit {
   constructor(
     private _route: Router,
     private _globalDialogService: GlobalDialogService,
-    private _store: Store
+    private _store: Store,
+    private _translateService: TranslateService
   ) {
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
   }
@@ -147,8 +148,13 @@ export class OralExaminationsComponent implements OnInit {
       console.log('start exam', $event);
       this._globalDialogService
         .showConfirmation(
-          'Clicking YES will start the exam timer',
-          `Are you sure you want to start the examination for ${data.fullName}?`
+          this._translateService.instant('EXAMSCORING.EXAMINATION.START.TITLE'),
+          this._translateService.instant(
+            'EXAMSCORING.EXAMINATION.START.SUBTITLE',
+            {
+              name: data.fullName,
+            }
+          )
         )
         .then((result) => {
           if (result) {
@@ -163,8 +169,10 @@ export class OralExaminationsComponent implements OnInit {
       console.log('skip exam', $event);
       this._globalDialogService
         .showConfirmation(
-          'Are you sure you want to skip this examination?',
-          'Clicking confirm will permanantly skip this examination '
+          this._translateService.instant('EXAMSCORING.EXAMINATION.SKIP.TITLE'),
+          this._translateService.instant(
+            'EXAMSCORING.EXAMINATION.SKIP.SUBTITLE'
+          )
         )
         .then((result) => {
           if (result) {
