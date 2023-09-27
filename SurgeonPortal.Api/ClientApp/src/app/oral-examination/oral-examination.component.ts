@@ -16,6 +16,7 @@ import { ExaminationScoreCardComponent } from '../shared/components/examination-
 import { BehaviorSubject, Observable, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import {
+  ClearExamScoringErrors,
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
@@ -34,6 +35,8 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SetExamInProgress } from '../state/application/application.actions';
+import { IFormErrors } from '../shared/common';
+import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
 
 @UntilDestroy()
 @Component({
@@ -47,6 +50,7 @@ import { SetExamInProgress } from '../state/application/application.actions';
     InputTextareaModule,
     ExaminationScoreCardComponent,
     ExamTimerComponent,
+    FormErrorsComponent,
   ],
   templateUrl: './oral-examination.component.html',
   styleUrls: ['./oral-examination.component.scss'],
@@ -99,6 +103,9 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
   submitDisable = true;
 
   disableSubmit = true;
+
+  errors: IFormErrors | null = null;
+  clearErrors = new ClearExamScoringErrors();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -273,20 +280,17 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
         currentCase += 1;
       });
     }
-
     this._store
       .dispatch(new CreateExamScore(model, false))
       .pipe(take(1))
-      .subscribe(() => {
-        if (currentCase === caseCount) {
-          this._store
-            .dispatch(
-              new SkipExam(this.examScheduleId, examDate.toISOString(), false)
-            )
-            .pipe(take(1))
-            .subscribe(() => {
-              this.router.navigate(['/ce-scoring/oral-examinations']);
-            });
+      .subscribe((results) => {
+        if (results.examScoring.examErrors) {
+          // handle exam submission error
+          this.errors = results.examScoring.examErrors;
+          this.scrollToElementById('exam-score-errors');
+        } else {
+          this.errors = null;
+          this.router.navigate(['/ce-scoring/oral-examinations']);
         }
       });
   }

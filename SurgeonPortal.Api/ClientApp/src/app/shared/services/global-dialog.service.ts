@@ -361,7 +361,9 @@ export class GlobalDialogService {
 
     // hide and remove the dialog
     if (document.body.contains(this._dialog)) {
-      this._dialog.hide();
+      if (!this._dialog.hasAttribute('class', 'loading')) {
+        this._dialog.hide();
+      }
       document.body.removeChild(this._dialog);
     }
   }
