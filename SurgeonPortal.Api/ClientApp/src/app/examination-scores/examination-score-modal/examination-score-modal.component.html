@@ -1,3 +1,11 @@
+<div id="exam-score-errors-container">
+  <abs-form-errors
+    *ngIf="errors"
+    [errors]="errors"
+    [clearErrors]="clearErrors"
+  ></abs-form-errors>
+</div>
+
 <div class="flex gap-5 view-header col-12">
   <div>
     <strong>Candidate Name:</strong> {{ localCandidateData?.candidateName }}
@@ -58,7 +66,7 @@
       >Cancel</p-button
     >
     <p-button
-      (onClick)="saveScores()"
+      (onClick)="saveScores(true)"
       [style]="{ width: '337px' }"
       variant="primary"
       >Save

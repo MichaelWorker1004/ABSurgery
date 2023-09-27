@@ -87,6 +87,7 @@ export interface IExamScoring {
   examinerAgenda: IAgendaReadOnlyModel | undefined;
   examinerConflict: IConflictReadOnlyModel | undefined;
   errors: IFormErrors | null;
+  examErrors: IFormErrors | null;
 }
 
 export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
@@ -111,6 +112,7 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
     examinerAgenda: undefined,
     examinerConflict: undefined,
     errors: null,
+    examErrors: null,
   },
 })
 @Injectable()
@@ -150,6 +152,7 @@ export class ExamScoringState {
           ctx.patchState({
             examTitle: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -175,6 +178,7 @@ export class ExamScoringState {
           ctx.patchState({
             caseRoster: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -196,6 +200,7 @@ export class ExamScoringState {
           ctx.patchState({
             selectedCaseContents: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -215,6 +220,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -237,6 +243,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -259,6 +266,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -278,6 +286,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -299,6 +308,7 @@ export class ExamScoringState {
           ctx.patchState({
             examineeList: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -323,6 +333,7 @@ export class ExamScoringState {
           ctx.patchState({
             examinee,
             errors: null,
+            examErrors: null,
           });
           this.globalDialogService.closeOpenDialog();
         }),
@@ -346,6 +357,7 @@ export class ExamScoringState {
           ctx.patchState({
             examScoresList: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -372,6 +384,7 @@ export class ExamScoringState {
         ctx.patchState({
           // selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
         if (payload.showLoading) {
           this.globalDialogService.closeOpenDialog();
@@ -403,6 +416,7 @@ export class ExamScoringState {
         tap(() => {
           ctx.patchState({
             errors: null,
+            examErrors: null,
           });
           if (payload.showLoading) {
             this.globalDialogService.showSuccessError(
@@ -437,6 +451,7 @@ export class ExamScoringState {
         ctx.patchState({
           // selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -462,6 +477,7 @@ export class ExamScoringState {
           ctx.patchState({
             selectedExamScores: result,
             errors: null,
+            examErrors: null,
           });
           this.globalDialogService.closeOpenDialog();
         }),
@@ -483,25 +499,20 @@ export class ExamScoringState {
     return this.examScoreService.createExamScore(payload.model).pipe(
       tap(async (result: IExamScoreModel) => {
         ctx.patchState({
+          selectedExamScores: undefined,
           errors: null,
+          examErrors: null,
         });
         this.globalDialogService.showSuccessError(
           'Success',
           'Exam Submitted Successfully',
           true
         );
-        if (payload.navigate) {
-          this.router.navigate(['/ce-scoring/oral-examinations']);
-        }
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
-        ctx.patchState({ errors });
-        this.globalDialogService.showSuccessError(
-          'Error',
-          'Exam Submission Failed',
-          false
-        );
+        ctx.patchState({ examErrors: errors });
+        this.globalDialogService.closeOpenDialog();
         return of(errors);
       })
     );
@@ -521,6 +532,7 @@ export class ExamScoringState {
           ctx.patchState({
             dashboardRoster: dashboardRoster,
             errors: null,
+            examErrors: null,
           });
           this.globalDialogService.closeOpenDialog();
         }),
@@ -546,6 +558,11 @@ export class ExamScoringState {
       .skipExamSessionReadOnly_SkipByExamScheduleId(payload.examScheduleId)
       .pipe(
         tap(() => {
+          ctx.patchState({
+            selectedExamScores: undefined,
+            examErrors: null,
+            errors: null,
+          });
           ctx.dispatch(new GetExamineeList(payload.examDate));
           if (payload.showLoading) {
             this.globalDialogService.closeOpenDialog();
@@ -621,6 +638,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseFeedback: result,
           errors: null,
+          examErrors: null,
         });
         await this.globalDialogService.showSuccessError(
           'Success',
@@ -651,6 +669,7 @@ export class ExamScoringState {
           ctx.patchState({
             selectedCaseFeedback: result,
             errors: null,
+            examErrors: null,
           });
           this.globalDialogService.closeOpenDialog();
         }),
@@ -681,6 +700,7 @@ export class ExamScoringState {
           ctx.patchState({
             selectedCaseFeedback: result,
             errors: null,
+            examErrors: null,
           });
           await this.globalDialogService.showSuccessError(
             'Success',
@@ -709,6 +729,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseFeedback: result,
           errors: null,
+          examErrors: null,
         });
         await this.globalDialogService.showSuccessError(
           'Success',
@@ -753,7 +774,7 @@ export class ExamScoringState {
 
   @Action(ClearExamScoringErrors)
   clearGraduateMedicalEducationErrors(ctx: StateContext<IExamScoring>) {
-    ctx.patchState({ errors: null });
+    ctx.patchState({ errors: null, examErrors: null });
   }
 
   @Action(GetExaminerAgenda)
@@ -768,6 +789,7 @@ export class ExamScoringState {
           ctx.patchState({
             examinerAgenda,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -790,6 +812,7 @@ export class ExamScoringState {
           ctx.patchState({
             examinerConflict,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
