@@ -48,7 +48,7 @@
     >
       <div class="grid">
         <div class="col-12" *ngFor="let section of case.sections">
-          <p class="font-bold m-0">{{ section.heading }}:</p>
+          <p class="font-bold m-0">{{ section.heading }}</p>
           <div class="section-details" [innerHTML]="section?.content"></div>
 
           <div *ngIf="section.comments || section.editComment">
@@ -100,6 +100,13 @@
       [checked]="casesLength === activeCase"
       class="w-full"
     >
+      <div id="exam-score-errors">
+        <abs-form-errors
+          *ngIf="errors"
+          [errors]="errors"
+          [clearErrors]="clearErrors"
+        ></abs-form-errors>
+      </div>
       <div class="grid w-full">
         <ng-template
           ngFor

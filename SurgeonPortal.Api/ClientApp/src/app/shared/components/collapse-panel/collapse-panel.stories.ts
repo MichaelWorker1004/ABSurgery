@@ -12,7 +12,7 @@ interface CollapsePanelComponentArgs extends CollapsePanelComponent {
 
 // More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction
 const meta: Meta<CollapsePanelComponentArgs> = {
-  title: 'Components/Collapse-Panel',
+  title: 'YTG/Collapse-Panel',
   tags: ['autodocs'],
   component: CollapsePanelComponent,
   decorators: [
