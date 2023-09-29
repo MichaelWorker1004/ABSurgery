@@ -3,7 +3,8 @@
 </h1>
 <sl-card class="w-full">
   <div slot="header">{{ 'EXAMSCORING.EXAMSCORES.TITLE' | translate }}</div>
-  <div class="mt-2 mb-5">
+  <div class="mt-2 mb-5" [style.fontWeight]="'bold'">
+    <i class="fa-solid fa-triangle-exclamation text-warning"></i>
     {{ 'EXAMSCORING.EXAMSCORES.SUBTITLE' | translate }}
   </div>
 
@@ -44,7 +45,7 @@
   [preventOverlayClose]="!lockedCases"
   [hideClose]="!lockedCases"
   (closeDialog)="closeDialog($event)"
-  title="Examination Scores"
+  title="Daily Exam Scores"
 >
   <abs-examination-score-modal
     [candidateData]="candidateData$"

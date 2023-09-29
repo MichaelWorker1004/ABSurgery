@@ -2,7 +2,12 @@
   <form [formGroup]="scoringForm">
     <div class="flex">
       <div class="col-12 md:col-3">
-        <div class="title mb-2">Score Case {{ localData?.examCaseId }}</div>
+        <div class="title mb-2">
+          {{
+            'EXAMSCORING.EXAMINATION.SCORE_CARD.SCORE'
+              | translate : { caseId: localData?.caseId }
+          }}
+        </div>
 
         <div class="flex flex-column gap-1 radios">
           <div
@@ -26,11 +31,11 @@
             <p-checkbox
               formControlName="criticalFail"
               value="true"
-              inputId="criticalFail"
+              [inputId]="'critical-fail-' + localData?.examCaseId"
               [binary]="true"
             ></p-checkbox>
             <label
-              for="criticalFail"
+              [for]="'critical-fail-' + localData?.examCaseId"
               [class]="disabledCriticalFail ? 'disabled' : ''"
               >Mark only if critical fail</label
             >
@@ -39,8 +44,7 @@
       </div>
       <div class="col-12 md:col-9">
         <label for="textarea" class="mb-2">
-          Please record any remarks about this candidate for Case
-          {{ localData?.examCaseId }}
+          {{ localData?.remarksTitle }}
         </label>
         <textarea
           pKeyFilter="int"
