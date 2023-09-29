@@ -67,25 +67,5 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     // TODO - allow the user to set a container value to check against instead of window
-
-    // let containerElement: any = document.querySelector('body');
-    // if (this.containerId) {
-    //   containerElement = document.getElementById(this.containerId);
-    // }
-
-    // const tooltipRect = this.tooltipRef.nativeElement.getBoundingClientRect();
-    // const containerRect = containerElement.getBoundingClientRect();
-    // const iconRect = this.iconRef.nativeElement.getBoundingClientRect();
-
-    // console.log('innerWidth', window.innerWidth);
-    // console.log('innerHeight', window.innerHeight);
-    // console.log('containerElement', containerElement?.getBoundingClientRect());
-
-    // console.log(
-    //   'tooltipRef',
-    //   this.tooltipRef.nativeElement.getBoundingClientRect()
-    // );
-
-    // console.log('iconRef', this.iconRef.nativeElement.getBoundingClientRect());
   }
 }

@@ -102,7 +102,6 @@ export class ApplicationState {
 
   @Action(CloseApplication)
   closeApplication(ctx: StateContext<IApplicationState>) {
-    console.log('closeApplication');
     const hasUnsavedChanges = this.store.selectSnapshot(
       (state) => state.application.hasUnsavedChanges
     );
@@ -118,7 +117,12 @@ export class ApplicationState {
               .dispatch(new SetUnsavedChanges(false))
               .pipe(take(1))
               .subscribe(() => {
-                this.store.dispatch(new Logout());
+                this.store
+                  .dispatch(new Logout())
+                  .pipe(take(1))
+                  .subscribe(() => {
+                    this.store.reset({});
+                  });
               });
           }
         });

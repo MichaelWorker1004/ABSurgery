@@ -32,6 +32,13 @@ export class AuthInterceptor implements HttpInterceptor {
     return;
   }
 
+  getRefreshToken(): string | undefined {
+    const refreshToken = this.store.selectSnapshot(
+      (state) => state.auth.refresh_token
+    );
+    return refreshToken;
+  }
+
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Get the auth token from the service.
     const authToken = this.getAuthorizationToken();
@@ -71,29 +78,32 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
+    if (this.getRefreshToken()) {
+      if (!this.isRefreshing) {
+        this.isRefreshing = true;
+        this.refreshTokenSubject.next(null);
 
-      return this.store.dispatch(new RefreshToken()).pipe(
-        switchMap((token: any) => {
-          this.isRefreshing = false;
-          this.refreshTokenSubject.next(token.access_token);
-          return next.handle(this.addToken(req, token.access_token));
-        }),
-        catchError((err) => {
-          this.store.dispatch(new Logout());
-          throw err;
-        })
-      );
-    } else {
-      return this.refreshTokenSubject.pipe(
-        filter((token) => token != null),
-        take(1),
-        switchMap((token) => {
-          return next.handle(this.addToken(req, token));
-        })
-      );
+        return this.store.dispatch(new RefreshToken()).pipe(
+          switchMap((token: any) => {
+            this.isRefreshing = false;
+            this.refreshTokenSubject.next(token.access_token);
+            return next.handle(this.addToken(req, token.access_token));
+          }),
+          catchError((err) => {
+            this.store.dispatch(new Logout());
+            throw err;
+          })
+        );
+      } else {
+        return this.refreshTokenSubject.pipe(
+          filter((token) => token != null),
+          take(1),
+          switchMap((token) => {
+            return next.handle(this.addToken(req, token));
+          })
+        );
+      }
     }
+    return next.handle(req);
   }
 }

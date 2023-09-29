@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
-import { Observable, take } from 'rxjs';
+import { Observable, skipWhile, take } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
@@ -129,77 +129,85 @@ export class DashboardComponent {
   }
 
   initDashboardData() {
-    this.userClaims$?.pipe(untilDestroyed(this)).subscribe((userClaims) => {
-      const isSurgeon = userClaims?.includes(UserClaims.surgeon);
-      this.isSurgeon = isSurgeon;
+    this.userClaims$
+      ?.pipe(
+        skipWhile((userClaims) => !userClaims),
+        untilDestroyed(this)
+      )
+      .subscribe((userClaims) => {
+        const isSurgeon = userClaims?.includes(UserClaims.surgeon);
+        const isTrainee = userClaims?.includes(UserClaims.trainee);
+        this.isSurgeon = isSurgeon;
 
-      if (isSurgeon) {
-        this._store.dispatch(new GetDashboardCertificationInformation());
-        this.certificateInformation$
-          ?.pipe(untilDestroyed(this))
-          .subscribe((userInformation) => {
-            if (userInformation?.certificates?.length > 0) {
-              this.userInformation = userInformation.certificates;
-            }
-          });
-      } else {
-        this._store.dispatch(new GetDashboardProgramInformation());
-        this._store.dispatch(new GetTraineeRegistrationStatus('2022GO6'));
-        this._store.dispatch(new GetAlertsAndNotices());
-        this.registrationStatus$
-          ?.pipe(untilDestroyed(this))
-          .subscribe((userInformation) => {
-            const registrationInformation = userInformation?.registrationStatus;
-            const todaysDate = new Date();
-            const regOpenDate = new Date(
-              registrationInformation?.regOpenDate ?? ''
-            );
-            const regCloseDate = new Date(
-              registrationInformation?.regEndDate ?? ''
-            );
-            const isRegisterDates = () => {
-              if (todaysDate >= regOpenDate && todaysDate <= regCloseDate) {
-                return true;
+        if (isSurgeon) {
+          this._store.dispatch(new GetDashboardCertificationInformation());
+          this.certificateInformation$
+            ?.pipe(untilDestroyed(this))
+            .subscribe((userInformation) => {
+              if (userInformation?.certificates?.length > 0) {
+                this.userInformation = userInformation.certificates;
               }
-              return false;
-            };
-
-            const applyForQECard = this.traineeCards[1];
-            if (
-              (registrationInformation?.isRegOpen ||
-                registrationInformation?.isRegLate) &&
-              isRegisterDates()
-            ) {
-              applyForQECard.disabled = !this.featureFlags.applyRegisterPage;
-              applyForQECard.actionDisplay = this.featureFlags.applyRegisterPage
-                ? this._translateService.instant(
-                    'DASHBOARD.ACTION_CARDS.REGISTER_BTN'
-                  )
-                : 'Coming Soon';
-            } else {
-              applyForQECard.disabled = true;
-              applyForQECard.description = this._translateService.instant(
-                'DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE',
-                {
-                  date: new Date(
-                    registrationInformation?.regOpenDate ?? ''
-                  ).toLocaleDateString(),
-                }
+            });
+        } else if (isTrainee) {
+          this._store.dispatch(new GetDashboardProgramInformation());
+          this._store.dispatch(new GetTraineeRegistrationStatus('2022GO6'));
+          this._store.dispatch(new GetAlertsAndNotices());
+          this.registrationStatus$
+            ?.pipe(untilDestroyed(this))
+            .subscribe((userInformation) => {
+              const registrationInformation =
+                userInformation?.registrationStatus;
+              const todaysDate = new Date();
+              const regOpenDate = new Date(
+                registrationInformation?.regOpenDate ?? ''
               );
-            }
-          });
-        this.programInformation$
-          ?.pipe(untilDestroyed(this))
-          .subscribe((userInformation) => {
-            if (userInformation?.programs?.programName.length > 0) {
-              this.userInformation = userInformation.programs;
-            }
-          });
-      }
+              const regCloseDate = new Date(
+                registrationInformation?.regEndDate ?? ''
+              );
+              const isRegisterDates = () => {
+                if (todaysDate >= regOpenDate && todaysDate <= regCloseDate) {
+                  return true;
+                }
+                return false;
+              };
 
-      this.setActionCardsByUserClaims(isSurgeon);
-      this.fetchAlertsAndNoticesByUserId(isSurgeon);
-    });
+              const applyForQECard = this.traineeCards[1];
+              if (
+                (registrationInformation?.isRegOpen ||
+                  registrationInformation?.isRegLate) &&
+                isRegisterDates()
+              ) {
+                applyForQECard.disabled = !this.featureFlags.applyRegisterPage;
+                applyForQECard.actionDisplay = this.featureFlags
+                  .applyRegisterPage
+                  ? this._translateService.instant(
+                      'DASHBOARD.ACTION_CARDS.REGISTER_BTN'
+                    )
+                  : 'Coming Soon';
+              } else {
+                applyForQECard.disabled = true;
+                applyForQECard.description = this._translateService.instant(
+                  'DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE',
+                  {
+                    date: new Date(
+                      registrationInformation?.regOpenDate ?? ''
+                    ).toLocaleDateString(),
+                  }
+                );
+              }
+            });
+          this.programInformation$
+            ?.pipe(untilDestroyed(this))
+            .subscribe((userInformation) => {
+              if (userInformation?.programs?.programName.length > 0) {
+                this.userInformation = userInformation.programs;
+              }
+            });
+        }
+
+        this.setActionCardsByUserClaims(isSurgeon);
+        this.fetchAlertsAndNoticesByUserId(isSurgeon);
+      });
   }
 
   fetchAlertsAndNoticesByUserId(isSurgeon: boolean) {
