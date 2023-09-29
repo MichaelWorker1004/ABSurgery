@@ -130,17 +130,17 @@ export const EXAMINER_NAV_ITEMS = [
     feature: 'examScoringPage',
     children: [
       {
-        display: 'Examination Case Rosters',
+        display: 'Exam Case Rosters',
         displayKey: 'SIDENAV.EXAM_SCORING.CASE_ROSTER',
         action: 'examination-rosters',
       },
       {
-        display: 'Deliver CE Exams',
+        display: 'Start CE Exams',
         displayKey: 'SIDENAV.EXAM_SCORING.EXAMINATION',
         action: 'oral-examinations',
       },
       {
-        display: 'Examination Scores',
+        display: 'Daily Exam Scores',
         displayKey: 'SIDENAV.EXAM_SCORING.SCORES',
         action: 'examination-scores',
       },

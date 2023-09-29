@@ -18,6 +18,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { isObservable } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'abs-examination-score-card',
@@ -29,6 +30,7 @@ import { isObservable } from 'rxjs';
     InputTextareaModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   templateUrl: './examination-score-card.component.html',
   styleUrls: ['./examination-score-card.component.scss'],
@@ -57,10 +59,11 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
     criticalFail: new FormControl({ value: false, disabled: true }),
   });
 
+  constructor(private _translateService: TranslateService) {}
+
   ngOnInit() {
     this.scoringForm.valueChanges.subscribe((value: any) => {
       const caseData = { ...this.localData };
-
       if (caseData) {
         caseData.score = value?.score ?? 0;
         caseData.remarks = value?.remarks;
@@ -73,10 +76,32 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
     if (isObservable(this.case)) {
       this.case.subscribe((data) => {
         this.localData = data;
+        console.log('data obs', data);
         this.setLocalData();
       });
     } else {
-      this.localData = this.case;
+      const localData = { ...this.case };
+
+      localData['caseId'] = this.case?.sections
+        ? this.case?.sections[0].caseNumber
+        : this.case?.examCaseId;
+      localData['remarksTitle'] = this.case?.sections
+        ? this._translateService.instant(
+            'EXAMSCORING.EXAMINATION.SCORE_CARD.REMARKS_TITLE',
+            {
+              caseTitle: this.case?.sections[0].caseTitle,
+              caseId: this.case?.sections[0].caseNumber,
+            }
+          )
+        : this._translateService.instant(
+            'EXAMSCORING.EXAMINATION.SCORE_CARD.REMARKS_TITLE_NO_CASE',
+            {
+              caseId: this.case?.examCaseId,
+            }
+          );
+
+      this.localData = localData;
+      console.log('data reg', this.localData);
       this.setLocalData();
     }
   }
