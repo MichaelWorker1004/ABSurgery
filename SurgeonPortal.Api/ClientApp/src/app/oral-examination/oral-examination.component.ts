@@ -127,7 +127,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
       this._store.dispatch(new GetExaminee(params['examinationId']));
     });
 
-    this.userId$?.subscribe((userId: number) => {
+    this.userId$?.pipe(untilDestroyed(this)).subscribe((userId: number) => {
       this.userId = userId;
     });
 
@@ -135,17 +135,19 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
   }
 
   getExaminationData() {
-    this.examinee$?.subscribe((examinee: IExamineeReadOnlyModel) => {
-      if (examinee) {
-        this.candidateName = examinee?.fullName;
-        this.dayTime = examinee?.examDate;
-        this.cases$.next(examinee.cases);
-        this.casesLength = examinee.cases?.length;
-        this.examScoringId = examinee?.examScoringId;
-        this.examineeUserId = examinee?.examineeUserId;
-        this.showTimer = true;
-      }
-    });
+    this.examinee$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((examinee: IExamineeReadOnlyModel) => {
+        if (examinee) {
+          this.candidateName = examinee?.fullName;
+          this.dayTime = examinee?.examDate;
+          this.cases$.next(examinee.cases);
+          this.casesLength = examinee.cases?.length;
+          this.examScoringId = examinee?.examScoringId;
+          this.examineeUserId = examinee?.examineeUserId;
+          this.showTimer = true;
+        }
+      });
   }
 
   handleChange(event: any) {

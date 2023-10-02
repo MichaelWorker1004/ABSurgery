@@ -28,7 +28,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-outcome-registries-modal',
   standalone: true,
@@ -99,16 +101,18 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   }
 
   getOutcomeRegistriesData() {
-    this.outcomeRegistries$?.subscribe((res: any) => {
-      const outcomeRegistries = res.outcomeRegistries;
-      if (outcomeRegistries) {
-        for (const [key, value] of Object.entries(outcomeRegistries)) {
-          this.outcomeRegistriesForm.patchValue({
-            [key]: value,
-          });
+    this.outcomeRegistries$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((res: any) => {
+        const outcomeRegistries = res.outcomeRegistries;
+        if (outcomeRegistries) {
+          for (const [key, value] of Object.entries(outcomeRegistries)) {
+            this.outcomeRegistriesForm.patchValue({
+              [key]: value,
+            });
+          }
         }
-      }
-    });
+      });
   }
 
   onSubmit() {

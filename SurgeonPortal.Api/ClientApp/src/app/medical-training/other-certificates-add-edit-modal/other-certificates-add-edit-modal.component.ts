@@ -25,13 +25,11 @@ import { ICertificateTypeReadOnlyModel } from 'src/app/api/models/picklists/cert
 import { PicklistsSelectors } from 'src/app/state/picklists';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { IFormErrors } from 'src/app/shared/common';
-import {
-  ClearMedicalTrainingErrors,
-  MedicalTrainingSelectors,
-  SetUnsavedChanges,
-} from 'src/app/state';
+import { ClearMedicalTrainingErrors, SetUnsavedChanges } from 'src/app/state';
 import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-other-certificates-add-edit-modal',
   standalone: true,
@@ -91,24 +89,26 @@ export class OtherCertificatesAddEditModalComponent implements OnInit {
       this.isEdit = isEdit;
     });
     this.subscribeToRowData();
-    this.certificateTypes$?.subscribe(
-      (certificateTypes: ICertificateTypeReadOnlyModel[]) => {
+    this.certificateTypes$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((certificateTypes: ICertificateTypeReadOnlyModel[]) => {
         this.certificateTypes = certificateTypes;
-      }
-    );
+      });
 
-    this.otherCertificatesForm.valueChanges.subscribe(() => {
-      this._store.dispatch(this.clearErrors);
-      const isDirty = this.otherCertificatesForm.dirty;
-      if (isDirty && !this.hasUnsavedChanges) {
-        this.hasUnsavedChanges = true;
-        this._store.dispatch(new SetUnsavedChanges(true));
-      }
-    });
+    this.otherCertificatesForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this._store.dispatch(this.clearErrors);
+        const isDirty = this.otherCertificatesForm.dirty;
+        if (isDirty && !this.hasUnsavedChanges) {
+          this.hasUnsavedChanges = true;
+          this._store.dispatch(new SetUnsavedChanges(true));
+        }
+      });
   }
 
   subscribeToRowData() {
-    this.otherCertificate$.subscribe((res) => {
+    this.otherCertificate$.pipe(untilDestroyed(this)).subscribe((res) => {
       if (Object.keys(res.length > 0)) {
         for (const [key, value] of Object.entries(res)) {
           this.otherCertificatesForm.get(key)?.setValue(value);

@@ -24,10 +24,7 @@ import {
   CreateAdditionalTraining,
 } from '../../state';
 import { Select, Store } from '@ngxs/store';
-import {
-  IAdditionalTrainingModel,
-  IAdditionalTrainingReadOnlyModel,
-} from 'src/app/api';
+import { IAdditionalTrainingReadOnlyModel } from 'src/app/api';
 import { IAdvancedTrainingModel } from 'src/app/api/models/medicaltraining/advanced-training.model';
 
 import { InputTextModule } from 'primeng/inputtext';
@@ -36,6 +33,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 interface MedicalTrainingData {
   medicalSchool: any;
@@ -43,6 +41,7 @@ interface MedicalTrainingData {
   additionalDocuments: any;
 }
 
+@UntilDestroy()
 @Component({
   selector: 'abs-training-modal',
   standalone: true,
@@ -146,13 +145,13 @@ export class TrainingModalComponent implements OnInit, OnDestroy {
   initTrainingData() {
     this._store.dispatch(new GetAdditionalTrainingList());
 
-    this.selectedTrainingSubscription = this.selectedTraining$?.subscribe(
-      (selectedTraining) => {
+    this.selectedTrainingSubscription = this.selectedTraining$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((selectedTraining) => {
         if (selectedTraining?.trainingId > -1) {
           this.tempTraining$.next(selectedTraining);
         }
-      }
-    );
+      });
   }
 
   getMedicalTraining() {

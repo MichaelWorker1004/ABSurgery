@@ -36,7 +36,9 @@ import { GlobalDialogService } from '../../services/global-dialog.service';
 import { ClearMedicalTrainingErrors, SetUnsavedChanges } from 'src/app/state';
 import { IFormErrors } from '../../common';
 import { FormErrorsComponent } from '../form-errors/form-errors.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-training-add-edit-modal',
   standalone: true,
@@ -109,28 +111,31 @@ export class TrainingAddEditModalComponent implements OnInit {
   ) {
     this._store.dispatch(new GetStateList('500'));
     this._store.dispatch(new GetAccreditedProgramInstitutionsList());
-    this.states$?.subscribe((value) => {
+    this.states$?.pipe(untilDestroyed(this)).subscribe((value) => {
       this.stateOptions = value;
     });
   }
 
   ngOnInit() {
     this.setPicklistOptions();
-    this.isEdit$.subscribe((isEdit) => {
+    this.isEdit$.pipe(untilDestroyed(this)).subscribe((isEdit) => {
       this.isEdit = isEdit;
     });
-    this.additionalTrainingForm.valueChanges.subscribe(() => {
-      const isDirty = this.additionalTrainingForm.dirty;
-      if (isDirty && !this.hasUnsavedChanges) {
-        this.hasUnsavedChanges = true;
-        this._store.dispatch(new SetUnsavedChanges(true));
-      }
-    });
+    this.additionalTrainingForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        const isDirty = this.additionalTrainingForm.dirty;
+        if (isDirty && !this.hasUnsavedChanges) {
+          this.hasUnsavedChanges = true;
+          this._store.dispatch(new SetUnsavedChanges(true));
+        }
+      });
     this.subscribeToTraining();
   }
 
   subscribeToTraining() {
-    this.training$.subscribe((formData) => {
+    this.training$.pipe(untilDestroyed(this)).subscribe((formData) => {
       if (Object.keys(formData).length > 0) {
         this.trainingId = formData.id;
         for (const [key, value] of Object.entries(formData)) {
@@ -183,17 +188,19 @@ export class TrainingAddEditModalComponent implements OnInit {
   }
 
   setPicklistOptions() {
-    this.accreditedInstitutions$?.subscribe((insitutions) => {
-      this.accreditedInstitutions = insitutions;
-      insitutions.forEach((insitution) => {
-        this.institutionOptions.push({
-          itemValue: insitution.programId.toString(),
-          itemDescription: insitution.institutionName,
+    this.accreditedInstitutions$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((insitutions) => {
+        this.accreditedInstitutions = insitutions;
+        insitutions.forEach((insitution) => {
+          this.institutionOptions.push({
+            itemValue: insitution.programId.toString(),
+            itemDescription: insitution.institutionName,
+          });
         });
       });
-    });
 
-    this.trainingTypes$?.subscribe((training) => {
+    this.trainingTypes$?.pipe(untilDestroyed(this)).subscribe((training) => {
       this.trainingTypes = training;
     });
   }

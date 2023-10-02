@@ -17,9 +17,11 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { isObservable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, isObservable } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-examination-score-card',
   standalone: true,
@@ -62,16 +64,18 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
   constructor(private _translateService: TranslateService) {}
 
   ngOnInit() {
-    this.scoringForm.valueChanges.subscribe((value: any) => {
-      const caseData = { ...this.localData };
-      if (caseData) {
-        caseData.score = value?.score ?? 0;
-        caseData.remarks = value?.remarks;
-        caseData.criticalFail = value?.criticalFail;
+    this.scoringForm.valueChanges
+      .pipe(debounceTime(250), distinctUntilChanged(), untilDestroyed(this))
+      .subscribe((value: any) => {
+        const caseData = { ...this.localData };
+        if (caseData) {
+          caseData.score = value?.score ?? 0;
+          caseData.remarks = value?.remarks;
+          caseData.criticalFail = value?.criticalFail;
 
-        this.handleFormChange(caseData);
-      }
-    });
+          this.handleFormChange(caseData);
+        }
+      });
 
     if (isObservable(this.case)) {
       this.case.subscribe((data) => {

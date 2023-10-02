@@ -180,15 +180,17 @@ export class ProfessionalStandingComponent implements OnInit {
   }
 
   setStateMedicalLicenseEdit() {
-    this.medicalLicenses$?.subscribe((medicalLicenses: IMedicalLicense[]) => {
-      const extendedLicenses: IMedicalLicense[] = medicalLicenses.map(
-        (license) => ({
-          ...license,
-          showEdit: license.reportingOrganization === 'Self',
-        })
-      );
-      this.extendedMedicalLicenses$?.next(extendedLicenses);
-    });
+    this.medicalLicenses$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((medicalLicenses: IMedicalLicense[]) => {
+        const extendedLicenses: IMedicalLicense[] = medicalLicenses.map(
+          (license) => ({
+            ...license,
+            showEdit: license.reportingOrganization === 'Self',
+          })
+        );
+        this.extendedMedicalLicenses$?.next(extendedLicenses);
+      });
   }
 
   initPicklistValues() {
@@ -269,12 +271,14 @@ export class ProfessionalStandingComponent implements OnInit {
       .dispatch(new GetUserProfessionalStandingDetails())
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.currentAppointments$?.subscribe((res) => {
-          this.currentAppointments = res;
-          if (!res) {
-            this.editHospitalAppointmentsAndPrivileges$.next(true);
-          }
-        });
+        this.currentAppointments$
+          ?.pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            this.currentAppointments = res;
+            if (!res) {
+              this.editHospitalAppointmentsAndPrivileges$.next(true);
+            }
+          });
       });
   }
 
@@ -283,12 +287,14 @@ export class ProfessionalStandingComponent implements OnInit {
       .dispatch(new GetProfessionalStandingSanctionsDetails())
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.sanctionsAndEthics$?.subscribe((res) => {
-          this.sanctionsAndEthics = res;
-          if (!res) {
-            this.editSanctionsAndEthics$.next(true);
-          }
-        });
+        this.sanctionsAndEthics$
+          ?.pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            this.sanctionsAndEthics = res;
+            if (!res) {
+              this.editSanctionsAndEthics$.next(true);
+            }
+          });
       });
   }
 

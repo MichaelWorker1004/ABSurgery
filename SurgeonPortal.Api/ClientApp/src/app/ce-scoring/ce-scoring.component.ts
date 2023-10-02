@@ -24,7 +24,7 @@ import { ButtonModule } from 'primeng/button';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';
 import { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
@@ -83,7 +83,7 @@ export class CeScoringAppComponent implements OnInit {
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
     this._store.dispatch(new GetExaminerAgenda(this.examHeaderId));
     this._store.dispatch(new GetExaminerConflict(this.examHeaderId));
-    this.featureFlags$?.pipe().subscribe((featureFlags) => {
+    this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
       }
@@ -91,7 +91,7 @@ export class CeScoringAppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId$?.subscribe((userId) => {
+    this.userId$?.pipe(untilDestroyed(this)).subscribe((userId) => {
       this._store.dispatch(new GetRoster(+userId, this.examinationDate));
     });
 
@@ -130,22 +130,25 @@ export class CeScoringAppComponent implements OnInit {
       },
     ];
 
-    this.examinerAgenda$?.subscribe((examinerAgenda: IAgendaReadOnlyModel) => {
-      if (examinerAgenda?.id) {
-        alertsAndNotices[0].action = {
-          type: 'download',
-          documentId: examinerAgenda.id,
-          documentName: examinerAgenda.documentName,
-        };
-        alertsAndNotices[0].actionText = this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.AGENDA_BTN'
-        );
-      }
-      this.globalDialogService.closeOpenDialog();
-    });
+    this.examinerAgenda$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((examinerAgenda: IAgendaReadOnlyModel) => {
+        if (examinerAgenda?.id) {
+          alertsAndNotices[0].action = {
+            type: 'download',
+            documentId: examinerAgenda.id,
+            documentName: examinerAgenda.documentName,
+          };
+          alertsAndNotices[0].actionText = this._translateService.instant(
+            'EXAMSCORING.DASHBOARD.AGENDA_BTN'
+          );
+        }
+        this.globalDialogService.closeOpenDialog();
+      });
 
-    this.examinerConflict$?.subscribe(
-      (examinerConflict: IConflictReadOnlyModel) => {
+    this.examinerConflict$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((examinerConflict: IConflictReadOnlyModel) => {
         if (examinerConflict?.id) {
           alertsAndNotices[1].action = {
             type: 'download',
@@ -157,14 +160,15 @@ export class CeScoringAppComponent implements OnInit {
           );
         }
         this.globalDialogService.closeOpenDialog();
-      }
-    );
+      });
 
     this.alertsAndNotices = alertsAndNotices;
 
-    this.dashboardRoster$?.subscribe((dashboardRoster) => {
-      this.dashboardRoster = dashboardRoster;
-    });
+    this.dashboardRoster$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((dashboardRoster) => {
+        this.dashboardRoster = dashboardRoster;
+      });
 
     this.examinationWeek = new Date().toLocaleDateString();
   }
