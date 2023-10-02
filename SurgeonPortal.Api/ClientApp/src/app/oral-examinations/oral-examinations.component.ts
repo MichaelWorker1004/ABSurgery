@@ -145,7 +145,6 @@ export class OralExaminationsComponent implements OnInit {
     if ($event.fieldKey === 'startExam') {
       // add any store logic required to start the exam here
       // add any checks to prevent the exam from being started incorrectly here
-      console.log('start exam', $event);
       this._globalDialogService
         .showConfirmation(
           this._translateService.instant('EXAMSCORING.EXAMINATION.START.TITLE'),
@@ -166,7 +165,6 @@ export class OralExaminationsComponent implements OnInit {
           // take any actions required on cancel of confirmation here
         });
     } else if ($event.fieldKey === 'skipExam') {
-      console.log('skip exam', $event);
       this._globalDialogService
         .showConfirmation(
           this._translateService.instant('EXAMSCORING.EXAMINATION.SKIP.TITLE'),

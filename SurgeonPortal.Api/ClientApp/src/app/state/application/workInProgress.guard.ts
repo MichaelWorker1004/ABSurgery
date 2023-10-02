@@ -42,10 +42,12 @@ export class WorkInProgressGuard implements CanDeactivateFn {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log('canDeactivate');
-    const hasUnsavedChanges = this.store.selectSnapshot(
-      (state) => state.application.hasUnsavedChanges
-    );
+    const hasUnsavedChanges = this.store.selectSnapshot((state) => {
+      if (state.application?.hasUnsavedChanges) {
+        return state.application.hasUnsavedChanges;
+      }
+      return null;
+    });
     if (hasUnsavedChanges) {
       return this.globalDialogService
         ?.showConfirmation('Unsaved Changes', 'Do you want to navigate away')
@@ -56,9 +58,12 @@ export class WorkInProgressGuard implements CanDeactivateFn {
           return result;
         });
     } else {
-      const examInProgress = this.store.selectSnapshot(
-        (state) => state.application.examInProgress
-      );
+      const examInProgress = this.store.selectSnapshot((state) => {
+        if (state.application?.examInProgress) {
+          return state.application.examInProgress;
+        }
+        return null;
+      });
       if (examInProgress) {
         return this.globalDialogService
           ?.showConfirmation(
