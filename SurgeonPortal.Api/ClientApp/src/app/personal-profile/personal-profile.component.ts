@@ -267,7 +267,7 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
       .subscribe((value) => {
         this._store
           .dispatch(new GetStateList(value))
-          .pipe(untilDestroyed(this))
+          .pipe(take(1))
           .subscribe(() => {
             this.birthStates = this._store.selectSnapshot(
               PicklistsSelectors.slices.states
