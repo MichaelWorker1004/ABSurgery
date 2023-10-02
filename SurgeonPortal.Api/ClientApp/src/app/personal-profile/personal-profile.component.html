@@ -554,7 +554,7 @@
             </div>
           </div>
 
-          <div class="col-12">
+          <div class="col-12" *ngIf="canEditProfile">
             <div class="flex justify-content-end" *ngIf="!isEdit">
               <p-button [style]="{ width: '200px' }" (onClick)="toggleEdit()">
                 Edit

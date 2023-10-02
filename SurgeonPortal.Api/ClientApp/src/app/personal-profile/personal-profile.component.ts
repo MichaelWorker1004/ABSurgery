@@ -21,7 +21,9 @@ import { Select, Store } from '@ngxs/store';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {
+  ApplicationSelectors,
   ClearUserProfileErrors,
+  IFeatureFlags,
   UpdateUserProfile,
   UserProfileSelectors,
 } from '../state';
@@ -91,6 +93,9 @@ interface IDisplayUserProfile extends IUserProfile {
 export class PersonalProfileComponent implements OnInit, OnDestroy {
   // TODO: [Joe] set up national provider identifier (NPI) report button
 
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
@@ -163,11 +168,18 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
   });
 
   isSubmitted = false;
+  canEditProfile = true;
 
   constructor(
     private _store: Store,
     public globalDialogService: GlobalDialogService
   ) {
+    this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      if (featureFlags) {
+        this.canEditProfile = <boolean>featureFlags.personalProfileEdit;
+      }
+    });
+
     this.userProfileForm.controls['state'].disable();
     this.userProfileForm.controls['birthState'].disable();
     this.user$

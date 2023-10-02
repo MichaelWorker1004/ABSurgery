@@ -11,9 +11,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-read-only.model';
 import {
+  ApplicationSelectors,
   ExamScoringSelectors,
   GetExamTitle,
   GetExamineeList,
+  IFeatureFlags,
   SkipExam,
 } from '../state';
 import { Select, Store } from '@ngxs/store';
@@ -40,6 +42,9 @@ import { LegendComponent } from '../shared/components/legend/legend.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class OralExaminationsComponent implements OnInit {
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
   @Select(ExamScoringSelectors.slices.examineeList)
   examineeList$: Observable<IExamSessionReadOnlyModel[]> | undefined;
 
@@ -48,7 +53,7 @@ export class OralExaminationsComponent implements OnInit {
     | undefined;
 
   examHeaderId = 491; // TODO - remove hard coded value
-  examDate: Date = new Date('01/01/24'); // TODO - remove hard coded value
+  examDate: Date = new Date();
 
   examDateDisplay: Date = new Date();
   zoomLink: string | undefined = '';
@@ -78,6 +83,13 @@ export class OralExaminationsComponent implements OnInit {
     private _translateService: TranslateService
   ) {
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this.featureFlags$?.pipe().subscribe((featureFlags) => {
+      if (featureFlags) {
+        if (featureFlags.ceScoreTestingDate) {
+          this.examDate = new Date('10/11/2023');
+        }
+      }
+    });
   }
 
   ngOnInit(): void {

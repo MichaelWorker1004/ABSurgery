@@ -9,6 +9,7 @@ import { IUserCredentialModel } from '../../api';
 import { UserCredentialsService } from '../../api';
 import { Logout } from '../auth';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { CloseApplication } from '../application';
 
 export interface IUserCredential extends IUserCredentialModel {
   errors?: IFormErrors | null;
@@ -45,10 +46,9 @@ export class MyAccountState {
           password: null,
           errors: null,
         });
-        this.authStore.dispatch(new Logout());
         this.globalDialogService.showSuccessError(
           'Success',
-          'Saved successfully',
+          'Saved successfully.<br>For Security purposes please login again with your updated information.',
           true
         );
       }),
