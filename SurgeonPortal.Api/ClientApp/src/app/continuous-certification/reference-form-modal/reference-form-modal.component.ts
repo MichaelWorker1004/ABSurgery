@@ -18,7 +18,9 @@ import { PicklistsSelectors } from 'src/app/state/picklists';
 import { Observable } from 'rxjs';
 import { IStateReadOnlyModel } from 'src/app/api';
 import { ButtonModule } from 'primeng/button';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-reference-form-modal',
   standalone: true,
@@ -218,7 +220,7 @@ export class ReferenceFormModalComponent implements OnInit {
   }
 
   setPicklists() {
-    this.states$?.subscribe((states) => {
+    this.states$?.pipe(untilDestroyed(this)).subscribe((states) => {
       this.referenceFormFields.filter((field) => {
         if (field.name === 'states') {
           field.options = states;

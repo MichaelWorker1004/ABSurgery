@@ -9,7 +9,9 @@ import { Select, Store } from '@ngxs/store';
 import { DocumentSelectors, GetAllDocuments } from '../state/documents';
 import { IDocumentReadOnlyModel } from '../api/models/documents/document-read-only.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-documents',
   templateUrl: './documents.component.html',
@@ -46,7 +48,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   getDocuments() {
-    this.documents$?.subscribe((documentsData) => {
+    this.documents$?.pipe(untilDestroyed(this)).subscribe((documentsData) => {
       if (documentsData && documentsData.length > 0) {
         this.documentsData$.next(documentsData);
       }

@@ -112,23 +112,25 @@ export class FellowshipAddEditModalComponent implements OnInit, OnDestroy {
     this.setPicklistData();
     this.subscribeToRowData();
 
-    this.fellowshipForm.valueChanges.subscribe(() => {
-      const isDirty = this.fellowshipForm.dirty;
-      if (isDirty && !this.hasUnsavedChanges) {
-        this.hasUnsavedChanges = true;
-        this._store.dispatch(new SetUnsavedChanges(true));
-      }
-    });
+    this.fellowshipForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        const isDirty = this.fellowshipForm.dirty;
+        if (isDirty && !this.hasUnsavedChanges) {
+          this.hasUnsavedChanges = true;
+          this._store.dispatch(new SetUnsavedChanges(true));
+        }
+      });
 
-    this.fellowshipPrograms$?.subscribe(
-      (fellowshipPrograms: IFellowshipProgramReadOnlyModel[]) => {
+    this.fellowshipPrograms$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((fellowshipPrograms: IFellowshipProgramReadOnlyModel[]) => {
         this.fellowshipPrograms = [];
         fellowshipPrograms.forEach((fellowshipProgram) => {
           this.fellowshipPrograms.push(fellowshipProgram.programName);
         });
         this.fellowshipForm.get('programName')?.enable();
-      }
-    );
+      });
   }
 
   getFellowshipPrograms(fellowshipType: string) {
@@ -168,11 +170,11 @@ export class FellowshipAddEditModalComponent implements OnInit, OnDestroy {
   }
 
   setPicklistData() {
-    this.fellowshipTypes$?.subscribe(
-      (fellowshipTypes: IFellowshipTypeReadOnlyModel[]) => {
+    this.fellowshipTypes$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((fellowshipTypes: IFellowshipTypeReadOnlyModel[]) => {
         this.fellowshipTypes = fellowshipTypes;
-      }
-    );
+      });
   }
 
   onInstitutionSelect() {

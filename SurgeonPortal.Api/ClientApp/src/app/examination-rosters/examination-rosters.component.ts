@@ -104,7 +104,7 @@ export class ExaminationRostersComponent implements OnInit {
 
   ngOnInit(): void {
     this.initPicklistValues();
-    this.user$?.subscribe((userId) => {
+    this.user$?.pipe(untilDestroyed(this)).subscribe((userId) => {
       this.userId = userId;
     });
   }

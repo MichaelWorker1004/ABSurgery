@@ -18,7 +18,9 @@ import { IStateReadOnlyModel } from 'src/app/api';
 import { Select, Store } from '@ngxs/store';
 import { IFormFields } from '../../models/form-fields/form-fields';
 import { ButtonModule } from 'primeng/button';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-pay-fee',
   standalone: true,
@@ -146,7 +148,7 @@ export class PayFeeComponent implements OnInit {
   }
 
   setPicklists() {
-    this.states$?.subscribe((states) => {
+    this.states$?.pipe(untilDestroyed(this)).subscribe((states) => {
       this.states = states;
       this.paymentInformationFormFields.filter((fields) => {
         if (fields.name === 'state') {

@@ -22,7 +22,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {
   ClearUserProfileErrors,
-  GetUserProfile,
   UpdateUserProfile,
   UserProfileSelectors,
 } from '../state';
@@ -264,10 +263,11 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
 
     this.userProfileForm
       .get('birthCountry')
-      ?.valueChanges.subscribe((value) => {
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((value) => {
         this._store
           .dispatch(new GetStateList(value))
-          .pipe(take(1))
+          .pipe(untilDestroyed(this))
           .subscribe(() => {
             this.birthStates = this._store.selectSnapshot(
               PicklistsSelectors.slices.states
@@ -287,10 +287,14 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._store.dispatch(new SetUnsavedChanges(false));
 
-    this.userProfileForm.valueChanges.subscribe(() => {
-      const isDirty = this.userProfileForm.dirty;
-      this._store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
-    });
+    this.userProfileForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        const isDirty = this.userProfileForm.dirty;
+        this._store.dispatch(
+          new SetUnsavedChanges(isDirty && !this.isSubmitted)
+        );
+      });
   }
 
   resetFormDefaults() {

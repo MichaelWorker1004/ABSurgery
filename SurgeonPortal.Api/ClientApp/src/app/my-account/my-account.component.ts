@@ -29,6 +29,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { SetUnsavedChanges } from '../state/application/application.actions';
+import { untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
   selector: 'abs-my-account',
@@ -86,7 +87,7 @@ export class MyAccountComponent implements OnDestroy {
     public globalDialogService: GlobalDialogService
   ) {
     this.store.dispatch(new SetUnsavedChanges(false));
-    this.userSub = this.user$?.subscribe((user) => {
+    this.userSub = this.user$?.pipe(untilDestroyed(this)).subscribe((user) => {
       if (user) {
         this.user = user;
         this.myAccountForm.patchValue({
@@ -96,7 +97,7 @@ export class MyAccountComponent implements OnDestroy {
       }
     });
 
-    this.myAccountForm.valueChanges.subscribe(() => {
+    this.myAccountForm.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
       const isDirty = this.myAccountForm.dirty;
       this.store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
     });

@@ -249,7 +249,7 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     this._store.dispatch(new SetUnsavedChanges(false));
 
     this.maxYear.setFullYear(this.year);
-    this.userId$?.subscribe((id) => {
+    this.userId$?.pipe(untilDestroyed(this)).subscribe((id) => {
       this.userId = id;
     });
     this.setPicklists();
@@ -257,46 +257,55 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     this.getMedicalTraining();
     this.getRPVICertificates();
 
-    this.medicalTrainingForm.valueChanges.subscribe(() => {
-      this._store.dispatch(this.clearErrors);
-      const isDirty = this.medicalTrainingForm.dirty;
-      this._store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
-    });
+    this.medicalTrainingForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this._store.dispatch(this.clearErrors);
+        const isDirty = this.medicalTrainingForm.dirty;
+        this._store.dispatch(
+          new SetUnsavedChanges(isDirty && !this.isSubmitted)
+        );
+      });
     this.setStates();
   }
 
   setPicklists() {
-    this.countries$?.subscribe((countries: IPickListItem[]) => {
-      this.countries = countries;
-    });
-    this.graduateProfiles$?.subscribe(
-      (graduateProfiles: IGraduateProfileReadOnlyModel[]) => {
+    this.countries$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((countries: IPickListItem[]) => {
+        this.countries = countries;
+      });
+    this.graduateProfiles$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((graduateProfiles: IGraduateProfileReadOnlyModel[]) => {
         this.graduateProfiles = graduateProfiles;
-      }
-    );
-    this.degrees$?.subscribe((degrees: IDegreeReadOnlyModel[]) => {
-      this.degrees = degrees;
-    });
-    this.residencyPrograms$?.subscribe(
-      (residencyPrograms: IResidencyProgramReadOnlyModel[]) => {
+      });
+    this.degrees$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((degrees: IDegreeReadOnlyModel[]) => {
+        this.degrees = degrees;
+      });
+    this.residencyPrograms$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((residencyPrograms: IResidencyProgramReadOnlyModel[]) => {
         this.residencyPrograms = residencyPrograms;
-      }
-    );
-    this.documentTypes$?.subscribe(
-      (documentTypes: IDocumentTypeReadOnlyModel[]) => {
+      });
+    this.documentTypes$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((documentTypes: IDocumentTypeReadOnlyModel[]) => {
         this.documentTypes = documentTypes;
-      }
-    );
-    this.certificateTypes$?.subscribe(
-      (certificateTypes: ICertificateTypeReadOnlyModel[]) => {
+      });
+    this.certificateTypes$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((certificateTypes: ICertificateTypeReadOnlyModel[]) => {
         this.certificateTypes = certificateTypes;
-      }
-    );
+      });
   }
 
   getMedicalTraining() {
-    this.medicalTraining$?.subscribe(
-      (medicalTraining: IMedicalTrainingModel) => {
+    this.medicalTraining$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((medicalTraining: IMedicalTrainingModel) => {
         if (medicalTraining) {
           this.createMode = false;
           this.medicalTrainingId = medicalTraining.id;
@@ -321,18 +330,17 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
         } else {
           this.createMode = true;
         }
-      }
-    );
+      });
   }
 
   getRPVICertificates() {
-    this.otherCertifications$?.subscribe(
-      (otherCertifications: IOtherCertificationsModel[]) => {
+    this.otherCertifications$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((otherCertifications: IOtherCertificationsModel[]) => {
         if (otherCertifications?.length > 0) {
           this.canAddRPVI = false;
         }
-      }
-    );
+      });
   }
 
   onCountryChange(event: any) {
@@ -370,22 +378,24 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
 
   setStates(countryId?: string) {
     this._store.dispatch(new GetStateList(countryId ?? '500'));
-    this.states$?.subscribe((states: IStateReadOnlyModel[]) => {
-      this.states = states;
-      if (states.length > 0) {
-        this.medicalTrainingForm.get('medicalSchoolStateId')?.enable();
-      } else {
-        this.medicalTrainingForm.get('medicalSchoolStateId')?.disable();
-      }
-    });
+    this.states$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((states: IStateReadOnlyModel[]) => {
+        this.states = states;
+        if (states.length > 0) {
+          this.medicalTrainingForm.get('medicalSchoolStateId')?.enable();
+        } else {
+          this.medicalTrainingForm.get('medicalSchoolStateId')?.disable();
+        }
+      });
   }
 
   getDocumentsData() {
-    this.userCertificates$?.subscribe(
-      (userCertificates: IUserCertificateReadOnlyModel[]) => {
+    this.userCertificates$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((userCertificates: IUserCertificateReadOnlyModel[]) => {
         this.documentsData$.next(userCertificates);
-      }
-    );
+      });
   }
 
   handleDocumentUpload(event: any) {
