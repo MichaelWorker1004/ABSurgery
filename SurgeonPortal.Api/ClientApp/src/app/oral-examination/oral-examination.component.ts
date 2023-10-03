@@ -221,11 +221,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
   }
 
   skipCase(examCaseId: number) {
-    let message = 'Are you sure you want to skip this case?';
+    let message = 'Skip scoring for now.  (I will score later.)';
     const currentCase = this.candidateCaseScores[examCaseId];
     if (currentCase?.score > 0) {
       message =
-        'Are you sure you want to skip this case? This will remove the selected case score.';
+        'Skip scoring for now.  (I will score later.) <br> This will remove the selected case score.';
     }
     this.globalDialogService
       ?.showConfirmation('Skip Case', message)

@@ -79,7 +79,7 @@
       "TITLE": "Examination",
       "SKIP": {
         "TITLE": "Click YES to skip this exam and move to the next session",
-        "SUBTITLE": "You will be able to score this exam later if needed"
+        "SUBTITLE": "You will be able to score this exam later if needed (e.g., after reviewing a recording)"
       },
       "START": {
         "TITLE": "Clicking YES will start the exam timer",

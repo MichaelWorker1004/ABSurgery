@@ -79,7 +79,7 @@
         "SCORE": "Score Case {{caseId}}"
       },
       "SKIP": {
-        "SUBTITLE": "You will be able to score this exam later if needed",
+        "SUBTITLE": "You will be able to score this exam later if needed (e.g., after reviewing a recording)",
         "TITLE": "Click YES to skip this exam and move to the next session"
       },
       "START": {
