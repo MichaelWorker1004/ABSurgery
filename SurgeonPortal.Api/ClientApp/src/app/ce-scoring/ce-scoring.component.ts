@@ -65,7 +65,7 @@ export class CeScoringAppComponent implements OnInit {
   examinerConflict$: Observable<IConflictReadOnlyModel> | undefined;
 
   examHeaderId = 491; // TODO - remove hard coded value
-  examinationDate = new Date('01/01/2024').toISOString().split('T')[0]; // TODO - remove hard coded value
+  examinationDate = new Date().toISOString().split('T')[0];
 
   currentYear = new Date().getFullYear();
   userActionCards = ACTION_CARDS;
@@ -86,6 +86,11 @@ export class CeScoringAppComponent implements OnInit {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
+        if (featureFlags.ceScoreTestingDate) {
+          this.examinationDate = new Date('10/11/2023')
+            .toISOString()
+            .split('T')[0];
+        }
       }
     });
   }

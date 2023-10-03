@@ -9,6 +9,7 @@ import { IUserCredentialModel } from '../../api';
 import { UserCredentialsService } from '../../api';
 import { Logout } from '../auth';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { CloseApplication } from '../application';
 
 export interface IUserCredential extends IUserCredentialModel {
   errors?: IFormErrors | null;
@@ -39,18 +40,19 @@ export class MyAccountState {
     this.globalDialogService.showLoading();
     return this.userCredentialsService.updateUserCredential(payload).pipe(
       tap((result: IUserCredentialModel) => {
+        let message = 'Saved scuccessfully.';
+        if (payload.password && payload.password.length > 0) {
+          message =
+            message +
+            '<br>For Security purposes please login again with your updated information.';
+        }
         // Succeeded in changing the user's credentials so logout
         ctx.setState({
           emailAddress: null,
           password: null,
           errors: null,
         });
-        this.authStore.dispatch(new Logout());
-        this.globalDialogService.showSuccessError(
-          'Success',
-          'Saved successfully',
-          true
-        );
+        this.globalDialogService.showSuccessError('Success', message, true);
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;

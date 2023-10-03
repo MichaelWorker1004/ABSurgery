@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import {
   FormControl,
@@ -28,9 +28,13 @@ import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
-import { SetUnsavedChanges } from '../state/application/application.actions';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import {
+  CloseApplication,
+  SetUnsavedChanges,
+} from '../state/application/application.actions';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-my-account',
   templateUrl: './my-account.component.html',
@@ -136,7 +140,20 @@ export class MyAccountComponent implements OnDestroy {
       emailAddress,
       password,
     };
-    this.store.dispatch(new SaveMyAccountChanges(userCreds));
-    this.isSubmitted = true;
+    this.store
+      .dispatch(new SaveMyAccountChanges(userCreds))
+      .pipe(take(1))
+      .subscribe(() => {
+        this.isSubmitted = true;
+        this.isEdit = false;
+        if (password && password.length > 0) {
+          this.store
+            .dispatch(new SetUnsavedChanges(false))
+            .pipe(take(1))
+            .subscribe(() => {
+              this.store.dispatch(new CloseApplication());
+            });
+        }
+      });
   }
 }

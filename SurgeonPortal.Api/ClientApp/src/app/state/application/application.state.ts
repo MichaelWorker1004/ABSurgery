@@ -25,10 +25,12 @@ export interface IApplicationState {
 
 export interface IFeatureFlags {
   ceScoreTesting?: boolean;
+  ceScoreTestingDate?: boolean;
   //page level feature flags
   dashboardPage?: boolean;
   myAccountPage?: boolean;
   personalProfilePage?: boolean;
+  personalProfileEdit?: boolean;
   medicalTrainingPage?: boolean;
   professionalStandingPage?: boolean;
   cmeRepositoryPage?: boolean;
