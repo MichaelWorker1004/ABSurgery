@@ -47,16 +47,14 @@ export const DEFAULT_PROVIDERS = [
       },
     }),
     NgxsModule.forRoot(surgeonPortalState, {
-      developmentMode: environment.production,
+      developmentMode: !environment.production,
     }),
     NgxsStoragePluginModule.forRoot({
       storage: StorageOption.SessionStorage,
       key: [AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN, PICKLISTS_STATE_TOKEN],
     }),
-    NgxsLoggerPluginModule.forRoot({ disabled: !environment.production }),
-    NgxsReduxDevtoolsPluginModule.forRoot({
-      disabled: !environment.production,
-    }),
+    NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     NgxsFormPluginModule.forRoot()
   ),
   provideHttpClient(withInterceptorsFromDi()),
