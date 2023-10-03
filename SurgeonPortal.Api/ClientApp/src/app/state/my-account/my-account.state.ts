@@ -40,17 +40,19 @@ export class MyAccountState {
     this.globalDialogService.showLoading();
     return this.userCredentialsService.updateUserCredential(payload).pipe(
       tap((result: IUserCredentialModel) => {
+        let message = 'Saved scuccessfully.';
+        if (payload.password && payload.password.length > 0) {
+          message =
+            message +
+            '<br>For Security purposes please login again with your updated information.';
+        }
         // Succeeded in changing the user's credentials so logout
         ctx.setState({
           emailAddress: null,
           password: null,
           errors: null,
         });
-        this.globalDialogService.showSuccessError(
-          'Success',
-          'Saved successfully.<br>For Security purposes please login again with your updated information.',
-          true
-        );
+        this.globalDialogService.showSuccessError('Success', message, true);
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;

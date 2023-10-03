@@ -146,12 +146,14 @@ export class MyAccountComponent implements OnDestroy {
       .subscribe(() => {
         this.isSubmitted = true;
         this.isEdit = false;
-        this.store
-          .dispatch(new SetUnsavedChanges(false))
-          .pipe(take(1))
-          .subscribe(() => {
-            this.store.dispatch(new CloseApplication());
-          });
+        if (password && password.length > 0) {
+          this.store
+            .dispatch(new SetUnsavedChanges(false))
+            .pipe(take(1))
+            .subscribe(() => {
+              this.store.dispatch(new CloseApplication());
+            });
+        }
       });
   }
 }
