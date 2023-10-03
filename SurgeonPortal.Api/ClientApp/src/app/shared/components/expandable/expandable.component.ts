@@ -10,13 +10,40 @@ import { AccordionModule } from 'primeng/accordion';
   styleUrls: ['./expandable.component.scss'],
 })
 export class ExpandableComponent {
+  /**
+   * Title of the Expandable
+   * @type {string}
+   */
   @Input() caseTitle!: string;
-  @Input() caseId!: number;
-  @Input() index!: number;
-  @Input() checked!: boolean;
-  @Input() customTitle!: string;
-  @Input() completed!: string;
 
+  /**
+   * The ID of the case. Needed for scoring functionality
+   * @type {number}
+   */
+  @Input() caseId!: number;
+
+  /**
+   * The index of the case. Needed for expanable functionality being controlled by the parent component
+   * @type {number}
+   */
+  @Input() index = 0;
+
+  /**
+   * Whether the expandable is expanded or not
+   * @type {boolean}
+   */
+  @Input() checked = true;
+
+  /**
+   * A custom title to display in the header of the expandable
+   * @type {string}
+   */
+  @Input() customTitle!: string;
+
+  /**
+   * Converts a decimal number to a roman numeral
+   * @type {number}
+   */
   decimalToRoman(decimal: number) {
     const values = [
       { symbol: 'M', value: 1000 },
