@@ -3,9 +3,11 @@
 	public class FeatureFlagsModel
 	{
 		public bool CeScoreTesting { get; set; }
+		public bool CeScoreTestingDate { get; set; }
 		public bool DashboardPage { get; set; }
 		public bool MyAccountPage { get; set; }
 		public bool PersonalProfilePage { get; set; }
+		public bool PersonalProfileEdit { get; set; }
 		public bool MedicalTrainingPage { get; set; }
 		public bool ProfessionalStandingPage { get; set; }
 		public bool CmeRepositoryPage { get; set; }
