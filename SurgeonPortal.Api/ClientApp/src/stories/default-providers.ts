@@ -21,6 +21,8 @@ import { AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN } from 'src/app/state';
 import { PICKLISTS_STATE_TOKEN } from 'src/app/state/picklists';
 import { surgeonPortalState } from 'src/app/state/surgeon-portal.state';
 
+import { environment } from 'src/environments/environment';
+
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
@@ -45,14 +47,16 @@ export const DEFAULT_PROVIDERS = [
       },
     }),
     NgxsModule.forRoot(surgeonPortalState, {
-      developmentMode: true,
+      developmentMode: environment.production,
     }),
     NgxsStoragePluginModule.forRoot({
       storage: StorageOption.SessionStorage,
       key: [AUTH_STATE_TOKEN, USER_PROFILE_STATE_TOKEN, PICKLISTS_STATE_TOKEN],
     }),
-    NgxsLoggerPluginModule.forRoot(),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot({ disabled: !environment.production }),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      disabled: !environment.production,
+    }),
     NgxsFormPluginModule.forRoot()
   ),
   provideHttpClient(withInterceptorsFromDi()),
