@@ -334,12 +334,12 @@
     },
     {
       "name": "ExpandableComponentArgs",
-      "id": "interface-ExpandableComponentArgs-6202a104ca96d0976c9379778f6af931b3b9cceca91eb6cf36b6effe1e1ac087887838bbd1b09dc1aa3c67bbb137d3fc3d6c6f6d607db56ecfc7d7aa7c100acc",
+      "id": "interface-ExpandableComponentArgs-882d49fb05de67706c8d037812f3727343f328a90aeaad3a0a046f9374accfd589ce2b7d4e7ffb06232c5d342ccefc75cbe1efb90d56e5eec010cccb2d9d0889",
       "file": "src/app/shared/components/expandable/expandable.component.stories.ts",
       "deprecated": false,
       "deprecationMessage": "",
       "type": "interface",
-      "sourceCode": "import {\n  componentWrapperDecorator,\n  type Meta,\n  type StoryObj,\n} from '@storybook/angular';\nimport { ExpandableComponent } from './expandable.component';\n\ninterface ExpandableComponentArgs extends ExpandableComponent {\n  caseTitle: string;\n  content: string;\n}\n\n// More on how to set up stories at: https://storybook.js.org/docs/angular/writing-stories/introduction\nconst meta: Meta<ExpandableComponentArgs> = {\n  title: 'ABS/Expandable',\n  tags: ['autodocs'],\n  component: ExpandableComponent,\n  decorators: [\n    componentWrapperDecorator(\n      //  using the contentWrapper allows you to define content that would appear in an <ng-content> tag\n      (ExpandableComponent) => `${ExpandableComponent}`\n    ),\n  ],\n  render: (args: ExpandableComponentArgs) => ({\n    template: `\n      <abs-expandable [caseTitle]=\"caseTitle\" [index]=\"index\" [checked]=\"checked\" [customTitle]=\"customTitle\" [caseId]=\"caseId\">\n        <div [innerHTML]=\"'${args.content}'\"></div>\n      </abs-expandable>\n    `,\n    props: {\n      ...args,\n    },\n  }),\n};\n\nexport default meta;\ntype Story = StoryObj<ExpandableComponentArgs>;\n\nexport const Default: Story = {\n  args: {\n    caseTitle: 'Panel Title',\n    index: 5,\n    checked: true,\n    content:\n      '<strong>Lorem ipsum dolor</strong> sit amet, consectetur adipiscing elit. Fusce porta lacus et interdum varius. Nunc imperdiet lorem vitae lorem aliquam, ut consequat sapien dapibus. Morbi sodales consectetur varius. Cras vulputate rhoncus leo, facilisis imperdiet neque sodales quis. Etiam convallis placerat aliquam. Nunc faucibus nunc vitae lacus ullamcorper lobortis. Quisque euismod nec felis ultricies porttitor. Maecenas at orci bibendum, iaculis eros sed, aliquet mi. Aenean imperdiet purus et turpis aliquet, vel dictum lectus lacinia. Morbi eget sapien sed mi accumsan gravida. Quisque ac ligula lorem. Proin sagittis dui id tempus dignissim. Aliquam semper sapien eget libero malesuada commodo.',\n  },\n};\n\nexport const Closed: Story = {\n  args: {\n    ...Default.args,\n    checked: false,\n  },\n};\n\nexport const CustomTitle: Story = {\n  args: {\n    ...Default.args,\n    customTitle: 'This is a custom Title!',\n  },\n};\n",
+      "sourceCode": "import {\n  componentWrapperDecorator,\n  type Meta,\n  type StoryObj,\n} from '@storybook/angular';\nimport { ExpandableComponent } from './expandable.component';\n\ninterface ExpandableComponentArgs extends ExpandableComponent {\n  caseTitle: string;\n  content: string;\n}\n\nconst meta: Meta<ExpandableComponentArgs> = {\n  title: 'ABS/Expandable',\n  tags: ['autodocs'],\n  component: ExpandableComponent,\n  decorators: [\n    componentWrapperDecorator(\n      (ExpandableComponent) => `${ExpandableComponent}`\n    ),\n  ],\n  render: (args: ExpandableComponentArgs) => ({\n    template: `\n      <abs-expandable [caseTitle]=\"caseTitle\" [index]=\"index\" [checked]=\"checked\" [customTitle]=\"customTitle\" [caseId]=\"caseId\">\n        <div>${args.content}</div>\n      </abs-expandable>\n    `,\n    props: {\n      ...args,\n    },\n  }),\n};\n\nexport default meta;\ntype Story = StoryObj<ExpandableComponentArgs>;\n\nexport const Default: Story = {\n  args: {\n    caseTitle: 'Panel Title',\n    index: 5,\n    checked: true,\n    content:\n      '<strong>Lorem ipsum dolor</strong> sit amet, consectetur adipiscing elit. Fusce porta lacus et interdum varius. Nunc imperdiet lorem vitae lorem aliquam, ut consequat sapien dapibus. Morbi sodales consectetur varius. Cras vulputate rhoncus leo, facilisis imperdiet neque sodales quis. Etiam convallis placerat aliquam. Nunc faucibus nunc vitae lacus ullamcorper lobortis. Quisque euismod nec felis ultricies porttitor. Maecenas at orci bibendum, iaculis eros sed, aliquet mi. Aenean imperdiet purus et turpis aliquet, vel dictum lectus lacinia. Morbi eget sapien sed mi accumsan gravida. Quisque ac ligula lorem. Proin sagittis dui id tempus dignissim. Aliquam semper sapien eget libero malesuada commodo.',\n  },\n};\n\nexport const Closed: Story = {\n  args: {\n    ...Default.args,\n    checked: false,\n  },\n};\n\nexport const CustomTitle: Story = {\n  args: {\n    ...Default.args,\n    customTitle: 'This is a custom Title!',\n  },\n};\n",
       "properties": [
         {
           "name": "caseTitle",
@@ -58797,7 +58797,7 @@
     },
     {
       "name": "UserInformationCardComponent",
-      "id": "component-UserInformationCardComponent-c24dce2bb57d44adfc80a0ad904998fd41fe585161c122d06a8cabe58cfcc502831a3095b6504281f665e966372866cbd93a5cb66b07d59851cb1220fd389132",
+      "id": "component-UserInformationCardComponent-169d4d9224415a2c7f8bb76d62893195d0875f9b803a51253c53aa48e940bc443750c1d47821b5169f3afd10fecc7668016c304ee6ffc30ff7a4b9a94b759f8f",
       "file": "src/app/shared/components/user-information-card/user-information-card.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -58815,7 +58815,45 @@
           "name": "currentStatus",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 22,
+          "jsdoctags": [
+            {
+              "pos": 713,
+              "end": 731,
+              "flags": 8421376,
+              "modifierFlagsCache": 0,
+              "transformFlags": 0,
+              "kind": 347,
+              "tagName": {
+                "pos": 714,
+                "end": 718,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 79,
+                "escapedText": "type"
+              },
+              "comment": "",
+              "typeExpression": {
+                "pos": 719,
+                "end": 727,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 312,
+                "type": {
+                  "pos": 720,
+                  "end": 726,
+                  "flags": 8388608,
+                  "modifierFlagsCache": 0,
+                  "transformFlags": 1,
+                  "kind": 152
+                }
+              }
+            }
+          ],
+          "rawdescription": "\n\nCurrent status of the user\n",
+          "description": "<p>Current status of the user</p>\n",
+          "line": 30,
           "type": "string",
           "decorators": []
         },
@@ -58823,7 +58861,45 @@
           "name": "isSurgeon",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 23,
+          "jsdoctags": [
+            {
+              "pos": 823,
+              "end": 842,
+              "flags": 8421376,
+              "modifierFlagsCache": 0,
+              "transformFlags": 0,
+              "kind": 347,
+              "tagName": {
+                "pos": 824,
+                "end": 828,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 79,
+                "escapedText": "type"
+              },
+              "comment": "",
+              "typeExpression": {
+                "pos": 829,
+                "end": 838,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 312,
+                "type": {
+                  "pos": 830,
+                  "end": 837,
+                  "flags": 8388608,
+                  "modifierFlagsCache": 0,
+                  "transformFlags": 1,
+                  "kind": 134
+                }
+              }
+            }
+          ],
+          "rawdescription": "\n\nWhether the user is a surgeon or not\n",
+          "description": "<p>Whether the user is a surgeon or not</p>\n",
+          "line": 36,
           "type": "boolean | undefined",
           "decorators": []
         },
@@ -58831,7 +58907,9 @@
           "name": "userInformation",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 21,
+          "rawdescription": "\n\n User information to display. See Examples below\n",
+          "description": "<p> User information to display. See Examples below</p>\n",
+          "line": 24,
           "type": "any",
           "decorators": []
         }
@@ -58845,7 +58923,7 @@
           "type": "string",
           "optional": false,
           "description": "",
-          "line": 26
+          "line": 39
         },
         {
           "name": "localIsSurgeon",
@@ -58854,7 +58932,7 @@
           "type": "boolean",
           "optional": false,
           "description": "",
-          "line": 25
+          "line": 38
         }
       ],
       "methodsClass": [
@@ -58871,7 +58949,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 33,
+          "line": 46,
           "deprecated": false,
           "deprecationMessage": "",
           "jsdoctags": [
@@ -58892,7 +58970,7 @@
           "optional": false,
           "returnType": "void",
           "typeParameters": [],
-          "line": 28,
+          "line": 41,
           "deprecated": false,
           "deprecationMessage": ""
         }
@@ -58915,7 +58993,7 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import {\n  Component,\n  Input,\n  OnChanges,\n  OnInit,\n  SimpleChanges,\n  CUSTOM_ELEMENTS_SCHEMA,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { TranslateModule } from '@ngx-translate/core';\n\n@Component({\n  selector: 'abs-user-information-card',\n  standalone: true,\n  imports: [CommonModule, TranslateModule],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n  templateUrl: './user-information-card.component.html',\n  styleUrls: ['./user-information-card.component.scss'],\n})\nexport class UserInformationCardComponent implements OnInit, OnChanges {\n  @Input() userInformation: any;\n  @Input() currentStatus!: string;\n  @Input() isSurgeon: boolean | undefined;\n\n  localIsSurgeon!: boolean;\n  localCurrentStatus!: string;\n\n  ngOnInit(): void {\n    this.localIsSurgeon = this.isSurgeon || false;\n    this.localCurrentStatus = this.currentStatus || 'Not Certified';\n  }\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['isSurgeon']) {\n      this.localIsSurgeon = changes['isSurgeon'].currentValue;\n    }\n    if (changes['currentStatus']) {\n      this.localCurrentStatus = changes['currentStatus'].currentValue;\n    }\n  }\n}\n",
+      "sourceCode": "import {\n  Component,\n  Input,\n  OnChanges,\n  OnInit,\n  SimpleChanges,\n  CUSTOM_ELEMENTS_SCHEMA,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { TranslateModule } from '@ngx-translate/core';\n\n@Component({\n  selector: 'abs-user-information-card',\n  standalone: true,\n  imports: [CommonModule, TranslateModule],\n  schemas: [CUSTOM_ELEMENTS_SCHEMA],\n  templateUrl: './user-information-card.component.html',\n  styleUrls: ['./user-information-card.component.scss'],\n})\nexport class UserInformationCardComponent implements OnInit, OnChanges {\n  /**\n   *  User information to display. See Examples below\n   */\n  @Input() userInformation: any;\n\n  /**\n   * Current status of the user\n   * @type {string}\n   */\n  @Input() currentStatus!: string;\n\n  /**\n   * Whether the user is a surgeon or not\n   * @type {boolean}\n   */\n  @Input() isSurgeon: boolean | undefined;\n\n  localIsSurgeon!: boolean;\n  localCurrentStatus!: string;\n\n  ngOnInit(): void {\n    this.localIsSurgeon = this.isSurgeon || false;\n    this.localCurrentStatus = this.currentStatus || 'Not Certified';\n  }\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['isSurgeon']) {\n      this.localIsSurgeon = changes['isSurgeon'].currentValue;\n    }\n    if (changes['currentStatus']) {\n      this.localCurrentStatus = changes['currentStatus'].currentValue;\n    }\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
@@ -59326,6 +59404,16 @@
         "deprecationMessage": "",
         "type": "Story",
         "defaultValue": "{\n  args: {\n    tooltipText: 'This is a tooltip',\n    position: 'top',\n  },\n}"
+      },
+      {
+        "name": "Default",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story",
+        "defaultValue": "{\n  args: {\n    userInformation: [\n      {\n        certificateId: '9999',\n        status: 'Active',\n        speciality: 'Orthopaedic Surgery',\n        initialCertificationDate:\n          'Initial Certification Date: October 11, 2021',\n        endDateDisplay: 'Next Assessment Due: December 31, 2026',\n      },\n      {\n        certificateId: '1111',\n        status: 'Active',\n        speciality: 'Hand Surgery',\n        initialCertificationDate:\n          'Initial Certification Date: October 11, 2021',\n        endDateDisplay: 'Next Assessment Due: December 31, 2026',\n      },\n    ],\n    currentStatus: 'Certified',\n    isSurgeon: true,\n  },\n}"
       },
       {
         "name": "DEFAULT_DROPDOWN_OPTIONS",
@@ -59745,7 +59833,7 @@
         "deprecated": false,
         "deprecationMessage": "",
         "type": "Meta<ExpandableComponentArgs>",
-        "defaultValue": "{\n  title: 'ABS/Expandable',\n  tags: ['autodocs'],\n  component: ExpandableComponent,\n  decorators: [\n    componentWrapperDecorator(\n      //  using the contentWrapper allows you to define content that would appear in an <ng-content> tag\n      (ExpandableComponent) => `${ExpandableComponent}`\n    ),\n  ],\n  render: (args: ExpandableComponentArgs) => ({\n    template: `\n      <abs-expandable [caseTitle]=\"caseTitle\" [index]=\"index\" [checked]=\"checked\" [customTitle]=\"customTitle\" [caseId]=\"caseId\">\n        <div [innerHTML]=\"'${args.content}'\"></div>\n      </abs-expandable>\n    `,\n    props: {\n      ...args,\n    },\n  }),\n}"
+        "defaultValue": "{\n  title: 'ABS/Expandable',\n  tags: ['autodocs'],\n  component: ExpandableComponent,\n  decorators: [\n    componentWrapperDecorator(\n      (ExpandableComponent) => `${ExpandableComponent}`\n    ),\n  ],\n  render: (args: ExpandableComponentArgs) => ({\n    template: `\n      <abs-expandable [caseTitle]=\"caseTitle\" [index]=\"index\" [checked]=\"checked\" [customTitle]=\"customTitle\" [caseId]=\"caseId\">\n        <div>${args.content}</div>\n      </abs-expandable>\n    `,\n    props: {\n      ...args,\n    },\n  }),\n}"
       },
       {
         "name": "meta",
@@ -59816,6 +59904,26 @@
         "deprecationMessage": "",
         "type": "Meta<TooltipComponent>",
         "defaultValue": "{\n  title: 'YTG/Tooltip',\n  component: TooltipComponent,\n  tags: ['autodocs'],\n  render: (args: TooltipComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n}"
+      },
+      {
+        "name": "meta",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Meta<UserInformationCardComponent>",
+        "defaultValue": "{\n  title: 'ABS/User Information Card',\n  tags: ['autodocs'],\n  component: UserInformationCardComponent,\n  render: (args: UserInformationCardComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [...DEFAULT_PROVIDERS],\n    }),\n    moduleMetadata({\n      imports: [UserInformationCardComponent],\n      declarations: [],\n    }),\n  ],\n}"
+      },
+      {
+        "name": "NotCertified",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story",
+        "defaultValue": "{\n  args: {\n    userInformation: {\n      programDirector: 'Tim Yocum',\n      programName: 'Angular Rockstars',\n      city: 'Allentown',\n      state: 'PA',\n      clinicalLevel: 'The Best',\n    },\n    currentStatus: 'Trainee',\n    isSurgeon: false,\n  },\n}"
       },
       {
         "name": "ORAL_EXAMINATION_COLS",
@@ -60659,6 +60767,17 @@
         "deprecationMessage": "",
         "description": "",
         "kind": 180
+      },
+      {
+        "name": "Story",
+        "ctype": "miscellaneous",
+        "subtype": "typealias",
+        "rawtype": "StoryObj<UserInformationCardComponent>",
+        "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "description": "",
+        "kind": 180
       }
     ],
     "enumerations": [
@@ -61101,7 +61220,7 @@
           "deprecated": false,
           "deprecationMessage": "",
           "type": "Meta<ExpandableComponentArgs>",
-          "defaultValue": "{\n  title: 'ABS/Expandable',\n  tags: ['autodocs'],\n  component: ExpandableComponent,\n  decorators: [\n    componentWrapperDecorator(\n      //  using the contentWrapper allows you to define content that would appear in an <ng-content> tag\n      (ExpandableComponent) => `${ExpandableComponent}`\n    ),\n  ],\n  render: (args: ExpandableComponentArgs) => ({\n    template: `\n      <abs-expandable [caseTitle]=\"caseTitle\" [index]=\"index\" [checked]=\"checked\" [customTitle]=\"customTitle\" [caseId]=\"caseId\">\n        <div [innerHTML]=\"'${args.content}'\"></div>\n      </abs-expandable>\n    `,\n    props: {\n      ...args,\n    },\n  }),\n}"
+          "defaultValue": "{\n  title: 'ABS/Expandable',\n  tags: ['autodocs'],\n  component: ExpandableComponent,\n  decorators: [\n    componentWrapperDecorator(\n      (ExpandableComponent) => `${ExpandableComponent}`\n    ),\n  ],\n  render: (args: ExpandableComponentArgs) => ({\n    template: `\n      <abs-expandable [caseTitle]=\"caseTitle\" [index]=\"index\" [checked]=\"checked\" [customTitle]=\"customTitle\" [caseId]=\"caseId\">\n        <div>${args.content}</div>\n      </abs-expandable>\n    `,\n    props: {\n      ...args,\n    },\n  }),\n}"
         }
       ],
       "src/app/state/continuingmedicaleducation/cme.state.ts": [
@@ -61586,6 +61705,38 @@
           "deprecationMessage": "",
           "type": "Meta<TooltipComponent>",
           "defaultValue": "{\n  title: 'YTG/Tooltip',\n  component: TooltipComponent,\n  tags: ['autodocs'],\n  render: (args: TooltipComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n}"
+        }
+      ],
+      "src/app/shared/components/user-information-card/user-information-card.component.stories.ts": [
+        {
+          "name": "Default",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Story",
+          "defaultValue": "{\n  args: {\n    userInformation: [\n      {\n        certificateId: '9999',\n        status: 'Active',\n        speciality: 'Orthopaedic Surgery',\n        initialCertificationDate:\n          'Initial Certification Date: October 11, 2021',\n        endDateDisplay: 'Next Assessment Due: December 31, 2026',\n      },\n      {\n        certificateId: '1111',\n        status: 'Active',\n        speciality: 'Hand Surgery',\n        initialCertificationDate:\n          'Initial Certification Date: October 11, 2021',\n        endDateDisplay: 'Next Assessment Due: December 31, 2026',\n      },\n    ],\n    currentStatus: 'Certified',\n    isSurgeon: true,\n  },\n}"
+        },
+        {
+          "name": "meta",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Meta<UserInformationCardComponent>",
+          "defaultValue": "{\n  title: 'ABS/User Information Card',\n  tags: ['autodocs'],\n  component: UserInformationCardComponent,\n  render: (args: UserInformationCardComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [...DEFAULT_PROVIDERS],\n    }),\n    moduleMetadata({\n      imports: [UserInformationCardComponent],\n      declarations: [],\n    }),\n  ],\n}"
+        },
+        {
+          "name": "NotCertified",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Story",
+          "defaultValue": "{\n  args: {\n    userInformation: {\n      programDirector: 'Tim Yocum',\n      programName: 'Angular Rockstars',\n      city: 'Allentown',\n      state: 'PA',\n      clinicalLevel: 'The Best',\n    },\n    currentStatus: 'Trainee',\n    isSurgeon: false,\n  },\n}"
         }
       ],
       "src/app/shared/components/grid/defaults/grid-default-dropdown.ts": [
@@ -62849,6 +63000,19 @@
           "subtype": "typealias",
           "rawtype": "StoryObj<TooltipComponent>",
           "file": "src/app/shared/components/tooltip/tooltip.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "description": "",
+          "kind": 180
+        }
+      ],
+      "src/app/shared/components/user-information-card/user-information-card.component.stories.ts": [
+        {
+          "name": "Story",
+          "ctype": "miscellaneous",
+          "subtype": "typealias",
+          "rawtype": "StoryObj<UserInformationCardComponent>",
+          "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "description": "",
@@ -65679,13 +65843,43 @@
         "status": "low"
       },
       {
+        "filePath": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "Default",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
+        "filePath": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "meta",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
+        "filePath": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "NotCertified",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
         "filePath": "src/app/shared/components/user-information-card/user-information-card.component.ts",
         "type": "component",
         "linktype": "component",
         "name": "UserInformationCardComponent",
-        "coveragePercent": 0,
-        "coverageCount": "0/8",
-        "status": "low"
+        "coveragePercent": 37,
+        "coverageCount": "3/8",
+        "status": "medium"
       },
       {
         "filePath": "src/app/shared/components/user-information-slider/user-information-slider.component.ts",
