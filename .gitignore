@@ -364,3 +364,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /SurgeonPortal.Api/Properties/launchSettings.json
 /SurgeonPortal.Api/appsettingsDev.json
+SurgeonPortal.Api/ClientApp/documentation.json
