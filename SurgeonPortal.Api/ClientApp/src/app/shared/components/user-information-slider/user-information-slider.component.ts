@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { IRosterReadOnlyModel } from 'src/app/api/models/scoring/roster-read-only.model';
 
 @Component({
   selector: 'abs-user-information-slider',
@@ -19,7 +18,20 @@ import { IRosterReadOnlyModel } from 'src/app/api/models/scoring/roster-read-onl
   styleUrls: ['./user-information-slider.component.scss'],
 })
 export class UserInformationSliderComponent {
-  @Input() sliderData: IRosterReadOnlyModel[] = [];
+  /**
+   * Data to display in the slider
+   * @type {any[]}
+   * @example
+   * sliderData = [
+   * {
+   * firstName: 'John',
+   * lastName: 'Doe',
+   * sessionNumber: 1,
+   * startTime: '09:00:00',
+   * endTime: '10:00:00',
+   * },
+   */
+  @Input() sliderData: any = [];
   @Input() examinationWeek!: string;
   responsiveOptions = [
     {

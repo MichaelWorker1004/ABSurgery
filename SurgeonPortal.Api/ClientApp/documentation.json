@@ -59007,7 +59007,7 @@
     },
     {
       "name": "UserInformationSliderComponent",
-      "id": "component-UserInformationSliderComponent-5fd50e7e4f77944d68d96ad43cbef8842d71ae3b536a069150bb6e3a6a7eccd939bb3cadbaf0f122bfa9c83a4a4da4f2e0b57265df14a156d9684ba295e20cf5",
+      "id": "component-UserInformationSliderComponent-26867bc41eaf6437bbce2894623863f1cf3e9fd92a6ccf03d22e0f13a5e86a17907ec901875c4dcc70cbd14250a506229b1ece518e558a509a54934b2da2a1c8",
       "file": "src/app/shared/components/user-information-slider/user-information-slider.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -59025,7 +59025,7 @@
           "name": "examinationWeek",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 23,
+          "line": 35,
           "type": "string",
           "decorators": []
         },
@@ -59034,8 +59034,72 @@
           "defaultValue": "[]",
           "deprecated": false,
           "deprecationMessage": "",
-          "line": 22,
-          "type": "IRosterReadOnlyModel[]",
+          "jsdoctags": [
+            {
+              "pos": 673,
+              "end": 692,
+              "flags": 8421376,
+              "modifierFlagsCache": 0,
+              "transformFlags": 0,
+              "kind": 347,
+              "tagName": {
+                "pos": 674,
+                "end": 678,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 79,
+                "escapedText": "type"
+              },
+              "comment": "",
+              "typeExpression": {
+                "pos": 679,
+                "end": 686,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 312,
+                "type": {
+                  "pos": 680,
+                  "end": 685,
+                  "flags": 8388608,
+                  "modifierFlagsCache": 0,
+                  "transformFlags": 1,
+                  "kind": 185,
+                  "elementType": {
+                    "pos": 680,
+                    "end": 683,
+                    "flags": 8388608,
+                    "modifierFlagsCache": 0,
+                    "transformFlags": 1,
+                    "kind": 131
+                  }
+                }
+              }
+            },
+            {
+              "pos": 692,
+              "end": 862,
+              "flags": 8421376,
+              "modifierFlagsCache": 0,
+              "transformFlags": 0,
+              "kind": 330,
+              "tagName": {
+                "pos": 693,
+                "end": 700,
+                "flags": 8421376,
+                "modifierFlagsCache": 0,
+                "transformFlags": 0,
+                "kind": 79,
+                "escapedText": "example"
+              },
+              "comment": "<p>sliderData = [\n{\nfirstName: &#39;John&#39;,\nlastName: &#39;Doe&#39;,\nsessionNumber: 1,\nstartTime: &#39;09:00:00&#39;,\nendTime: &#39;10:00:00&#39;,\n},</p>\n"
+            }
+          ],
+          "rawdescription": "\n\nData to display in the slider\n```html\nsliderData = [\n{\nfirstName: 'John',\nlastName: 'Doe',\nsessionNumber: 1,\nstartTime: '09:00:00',\nendTime: '10:00:00',\n},\n```",
+          "description": "<p>Data to display in the slider</p>\n<div><pre class=\"line-numbers\"><code class=\"language-html\">sliderData = [\n{\nfirstName: &#39;John&#39;,\nlastName: &#39;Doe&#39;,\nsessionNumber: 1,\nstartTime: &#39;09:00:00&#39;,\nendTime: &#39;10:00:00&#39;,\n},</code></pre></div>",
+          "line": 34,
+          "type": "any",
           "decorators": []
         }
       ],
@@ -59049,7 +59113,7 @@
           "type": "[]",
           "optional": false,
           "description": "",
-          "line": 24
+          "line": 36
         }
       ],
       "methodsClass": [],
@@ -59081,7 +59145,7 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CarouselModule } from 'primeng/carousel';\nimport { RouterLink, RouterLinkActive } from '@angular/router';\nimport { TranslateModule } from '@ngx-translate/core';\nimport { IRosterReadOnlyModel } from 'src/app/api/models/scoring/roster-read-only.model';\n\n@Component({\n  selector: 'abs-user-information-slider',\n  standalone: true,\n  imports: [\n    CommonModule,\n    TranslateModule,\n    CarouselModule,\n    RouterLink,\n    RouterLinkActive,\n  ],\n  templateUrl: './user-information-slider.component.html',\n  styleUrls: ['./user-information-slider.component.scss'],\n})\nexport class UserInformationSliderComponent {\n  @Input() sliderData: IRosterReadOnlyModel[] = [];\n  @Input() examinationWeek!: string;\n  responsiveOptions = [\n    {\n      breakpoint: '1199px',\n      numVisible: 1,\n      numScroll: 1,\n    },\n    {\n      breakpoint: '991px',\n      numVisible: 2,\n      numScroll: 1,\n    },\n    {\n      breakpoint: '767px',\n      numVisible: 1,\n      numScroll: 1,\n    },\n  ];\n}\n",
+      "sourceCode": "import { Component, Input } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { CarouselModule } from 'primeng/carousel';\nimport { RouterLink, RouterLinkActive } from '@angular/router';\nimport { TranslateModule } from '@ngx-translate/core';\n\n@Component({\n  selector: 'abs-user-information-slider',\n  standalone: true,\n  imports: [\n    CommonModule,\n    TranslateModule,\n    CarouselModule,\n    RouterLink,\n    RouterLinkActive,\n  ],\n  templateUrl: './user-information-slider.component.html',\n  styleUrls: ['./user-information-slider.component.scss'],\n})\nexport class UserInformationSliderComponent {\n  /**\n   * Data to display in the slider\n   * @type {any[]}\n   * @example\n   * sliderData = [\n   * {\n   * firstName: 'John',\n   * lastName: 'Doe',\n   * sessionNumber: 1,\n   * startTime: '09:00:00',\n   * endTime: '10:00:00',\n   * },\n   */\n  @Input() sliderData: any = [];\n  @Input() examinationWeek!: string;\n  responsiveOptions = [\n    {\n      breakpoint: '1199px',\n      numVisible: 1,\n      numScroll: 1,\n    },\n    {\n      breakpoint: '991px',\n      numVisible: 2,\n      numScroll: 1,\n    },\n    {\n      breakpoint: '767px',\n      numVisible: 1,\n      numScroll: 1,\n    },\n  ];\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
@@ -59414,6 +59478,16 @@
         "deprecationMessage": "",
         "type": "Story",
         "defaultValue": "{\n  args: {\n    userInformation: [\n      {\n        certificateId: '9999',\n        status: 'Active',\n        speciality: 'Orthopaedic Surgery',\n        initialCertificationDate:\n          'Initial Certification Date: October 11, 2021',\n        endDateDisplay: 'Next Assessment Due: December 31, 2026',\n      },\n      {\n        certificateId: '1111',\n        status: 'Active',\n        speciality: 'Hand Surgery',\n        initialCertificationDate:\n          'Initial Certification Date: October 11, 2021',\n        endDateDisplay: 'Next Assessment Due: December 31, 2026',\n      },\n    ],\n    currentStatus: 'Certified',\n    isSurgeon: true,\n  },\n}"
+      },
+      {
+        "name": "Default",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Story",
+        "defaultValue": "{\n  args: {\n    sliderData: [\n      {\n        firstName: 'John',\n        lastName: 'Doe',\n        sessionNumber: 1,\n        startTime: '09:00:00',\n        endTime: '10:00:00',\n      },\n      {\n        firstName: 'Jane',\n        lastName: 'Doe',\n        sessionNumber: 2,\n        startTime: '10:00:00',\n        endTime: '11:00:00',\n      },\n      {\n        firstName: 'Alex',\n        lastName: 'Doe',\n        sessionNumber: 3,\n        startTime: '11:00:00',\n        endTime: '12:00:00',\n      },\n      {\n        firstName: 'Mary',\n        lastName: 'Doe',\n        sessionNumber: 4,\n        startTime: '12:00:00',\n        endTime: '01:00:00',\n      },\n      {\n        firstName: 'Hannah',\n        lastName: 'Doe',\n        sessionNumber: 5,\n        startTime: '01:00:00',\n        endTime: '02:00:00',\n      },\n    ],\n  },\n}"
       },
       {
         "name": "DEFAULT_DROPDOWN_OPTIONS",
@@ -59914,6 +59988,16 @@
         "deprecationMessage": "",
         "type": "Meta<UserInformationCardComponent>",
         "defaultValue": "{\n  title: 'ABS/User Information Card',\n  tags: ['autodocs'],\n  component: UserInformationCardComponent,\n  render: (args: UserInformationCardComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [...DEFAULT_PROVIDERS],\n    }),\n    moduleMetadata({\n      imports: [UserInformationCardComponent],\n      declarations: [],\n    }),\n  ],\n}"
+      },
+      {
+        "name": "meta",
+        "ctype": "miscellaneous",
+        "subtype": "variable",
+        "file": "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "type": "Meta<UserInformationSliderComponent>",
+        "defaultValue": "{\n  title: 'ABS/User Information Slider',\n  tags: ['autodocs'],\n  component: UserInformationSliderComponent,\n  render: (args: UserInformationSliderComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [...DEFAULT_PROVIDERS],\n    }),\n    moduleMetadata({\n      imports: [UserInformationSliderComponent],\n      declarations: [],\n    }),\n  ],\n}"
       },
       {
         "name": "NotCertified",
@@ -60774,6 +60858,17 @@
         "subtype": "typealias",
         "rawtype": "StoryObj<UserInformationCardComponent>",
         "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+        "deprecated": false,
+        "deprecationMessage": "",
+        "description": "",
+        "kind": 180
+      },
+      {
+        "name": "Story",
+        "ctype": "miscellaneous",
+        "subtype": "typealias",
+        "rawtype": "StoryObj<UserInformationSliderComponent>",
+        "file": "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "description": "",
@@ -61737,6 +61832,28 @@
           "deprecationMessage": "",
           "type": "Story",
           "defaultValue": "{\n  args: {\n    userInformation: {\n      programDirector: 'Tim Yocum',\n      programName: 'Angular Rockstars',\n      city: 'Allentown',\n      state: 'PA',\n      clinicalLevel: 'The Best',\n    },\n    currentStatus: 'Trainee',\n    isSurgeon: false,\n  },\n}"
+        }
+      ],
+      "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts": [
+        {
+          "name": "Default",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Story",
+          "defaultValue": "{\n  args: {\n    sliderData: [\n      {\n        firstName: 'John',\n        lastName: 'Doe',\n        sessionNumber: 1,\n        startTime: '09:00:00',\n        endTime: '10:00:00',\n      },\n      {\n        firstName: 'Jane',\n        lastName: 'Doe',\n        sessionNumber: 2,\n        startTime: '10:00:00',\n        endTime: '11:00:00',\n      },\n      {\n        firstName: 'Alex',\n        lastName: 'Doe',\n        sessionNumber: 3,\n        startTime: '11:00:00',\n        endTime: '12:00:00',\n      },\n      {\n        firstName: 'Mary',\n        lastName: 'Doe',\n        sessionNumber: 4,\n        startTime: '12:00:00',\n        endTime: '01:00:00',\n      },\n      {\n        firstName: 'Hannah',\n        lastName: 'Doe',\n        sessionNumber: 5,\n        startTime: '01:00:00',\n        endTime: '02:00:00',\n      },\n    ],\n  },\n}"
+        },
+        {
+          "name": "meta",
+          "ctype": "miscellaneous",
+          "subtype": "variable",
+          "file": "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "type": "Meta<UserInformationSliderComponent>",
+          "defaultValue": "{\n  title: 'ABS/User Information Slider',\n  tags: ['autodocs'],\n  component: UserInformationSliderComponent,\n  render: (args: UserInformationSliderComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      // Provides necesarry utilities for PrimeNG components\n      providers: [...DEFAULT_PROVIDERS],\n    }),\n    moduleMetadata({\n      imports: [UserInformationSliderComponent],\n      declarations: [],\n    }),\n  ],\n}"
         }
       ],
       "src/app/shared/components/grid/defaults/grid-default-dropdown.ts": [
@@ -63013,6 +63130,19 @@
           "subtype": "typealias",
           "rawtype": "StoryObj<UserInformationCardComponent>",
           "file": "src/app/shared/components/user-information-card/user-information-card.component.stories.ts",
+          "deprecated": false,
+          "deprecationMessage": "",
+          "description": "",
+          "kind": 180
+        }
+      ],
+      "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts": [
+        {
+          "name": "Story",
+          "ctype": "miscellaneous",
+          "subtype": "typealias",
+          "rawtype": "StoryObj<UserInformationSliderComponent>",
+          "file": "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "description": "",
@@ -65882,12 +66012,32 @@
         "status": "medium"
       },
       {
+        "filePath": "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "Default",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
+        "filePath": "src/app/shared/components/user-information-slider/user-information-slider.component.stories.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "meta",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
         "filePath": "src/app/shared/components/user-information-slider/user-information-slider.component.ts",
         "type": "component",
         "linktype": "component",
         "name": "UserInformationSliderComponent",
-        "coveragePercent": 0,
-        "coverageCount": "0/4",
+        "coveragePercent": 25,
+        "coverageCount": "1/4",
         "status": "low"
       },
       {
