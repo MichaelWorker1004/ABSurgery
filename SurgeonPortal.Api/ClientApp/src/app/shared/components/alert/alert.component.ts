@@ -10,7 +10,18 @@ import { CommonModule } from '@angular/common';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AlertComponent {
-  @Input() alertType!: string;
+  /**
+   * the type of alert to dispaly
+   */
+  @Input() alertType!: 'success' | 'info' | 'warning' | 'danger';
+
+  /**
+   * boolean flag to hide or display the alert icon
+   */
   @Input() hideIcon = false;
+
+  /**
+   * font size used for the alert content
+   */
   @Input() fontSize = 1.25;
 }
