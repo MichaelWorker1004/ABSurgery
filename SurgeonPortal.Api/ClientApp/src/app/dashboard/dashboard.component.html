@@ -42,6 +42,7 @@
       *ngFor="let actionCard of userActionCards"
       [actionCard]="actionCard"
       [titleKey]="actionCard.titleKey"
+      [description]="actionCard.description"
       [descriptionKey]="actionCard.descriptionKey"
       [icon]="actionCard.icon"
       [actionType]="actionCard?.action?.type ?? ''"

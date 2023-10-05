@@ -9,7 +9,7 @@
   </div>
   <abs-documents-upload
     [allowUpload]="false"
-    [documentsData$]="documentsData$"
+    [documentsData]="documentsData$ | async"
     [gridCols]="documentsCols"
     [showFilter]="gridOptions.showFilter"
     [filterOn]="gridOptions.filterOn"
