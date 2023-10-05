@@ -19,7 +19,7 @@ import {
   UserProfileSelectors,
 } from '../state';
 import { IRosterReadOnlyModel } from '../api/models/scoring/roster-read-only.model';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { ApplicationSelectors } from '../state/application/application.selectors';
@@ -28,6 +28,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';
 import { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { IDashboardRosterReadOnlyModel } from '../api/models/scoring/dashboard-roster-read-only.model';
 
 @UntilDestroy()
 @Component({
@@ -49,7 +50,7 @@ export class CeScoringAppComponent implements OnInit {
     | Observable<IFeatureFlags>
     | undefined;
   @Select(ExamScoringSelectors.slices.dashboardRoster) dashboardRoster$:
-    | Observable<IRosterReadOnlyModel[]>
+    | Observable<IDashboardRosterReadOnlyModel[]>
     | undefined;
 
   @Select(UserProfileSelectors.userId) userId$: Observable<string> | undefined;
@@ -70,7 +71,7 @@ export class CeScoringAppComponent implements OnInit {
   currentYear = new Date().getFullYear();
   userActionCards = ACTION_CARDS;
   alertsAndNotices: any[] | undefined;
-  dashboardRoster!: IRosterReadOnlyModel[];
+  dashboardRoster!: IDashboardRosterReadOnlyModel[];
   examinationWeek!: string;
 
   ceScoreTesting = false;
@@ -172,7 +173,37 @@ export class CeScoringAppComponent implements OnInit {
     this.dashboardRoster$
       ?.pipe(untilDestroyed(this))
       .subscribe((dashboardRoster) => {
-        this.dashboardRoster = dashboardRoster;
+        const newDashboardRoster = dashboardRoster?.map((roster) => {
+          const item = { ...roster };
+          if (item.startTime) {
+            const startParts = item.startTime.split(':');
+            const startHours = parseInt(startParts[0], 10);
+            const startMinutes = parseInt(startParts[1], 10);
+            const newStartTime = new Date();
+            newStartTime.setHours(startHours);
+            newStartTime.setMinutes(startMinutes);
+            item.startTime = newStartTime.toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true,
+            });
+          }
+          if (item.endTime) {
+            const endParts = item.endTime.split(':');
+            const endHours = parseInt(endParts[0], 10);
+            const endMinutes = parseInt(endParts[1], 10);
+            const newEndTime = new Date();
+            newEndTime.setHours(endHours);
+            newEndTime.setMinutes(endMinutes);
+            item.endTime = newEndTime.toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true,
+            });
+          }
+          return item;
+        });
+        this.dashboardRoster = newDashboardRoster;
       });
 
     this.examinationWeek = new Date().toLocaleDateString();

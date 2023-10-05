@@ -43,3 +43,4 @@ documentation.json
 .DS_Store
 Thumbs.db
 .npmrc
+.documentation.json
