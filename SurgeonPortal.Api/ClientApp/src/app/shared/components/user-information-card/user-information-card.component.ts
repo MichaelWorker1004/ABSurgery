@@ -18,8 +18,21 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./user-information-card.component.scss'],
 })
 export class UserInformationCardComponent implements OnInit, OnChanges {
+  /**
+   *  User information to display. See Examples below
+   */
   @Input() userInformation: any;
+
+  /**
+   * Current status of the user
+   * @type {string}
+   */
   @Input() currentStatus!: string;
+
+  /**
+   * Whether the user is a surgeon or not
+   * @type {boolean}
+   */
   @Input() isSurgeon: boolean | undefined;
 
   localIsSurgeon!: boolean;
