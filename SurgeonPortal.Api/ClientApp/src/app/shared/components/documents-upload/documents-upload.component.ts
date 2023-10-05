@@ -3,14 +3,15 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { AbsFilterType } from 'src/app/shared/components/grid/abs-grid.enum';
 import { IGridOptions } from 'src/app/shared/components/grid/grid-options.model';
-import { Subject } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import { Store } from '@ngxs/store';
 import {
@@ -23,6 +24,7 @@ import { GetDocumentTypes } from 'src/app/state/picklists';
 import { IUserCertificateModel } from 'src/app/api/models/medicaltraining/user-certificate.model';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { IGridColumns } from '../grid/abs-grid-col.interface';
 
 @Component({
   selector: 'abs-documents-upload',
@@ -38,23 +40,77 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: ['./documents-upload.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class DocumentsUploadComponent implements OnInit {
-  // TODO: [Joe] - add form-errors shared component
-
+export class DocumentsUploadComponent implements OnInit, OnChanges {
+  /**
+   * Whether or not to allow upload
+   * @type {boolean}
+   */
   @Input() allowUpload = true;
-  @Input() gridCols!: any;
-  @Input() documentsData$: Subject<any> = new Subject();
-  @Input() dropdownOptions!: any;
-  @Input() dropdownPlaceholder!: string;
+
+  /**
+   * grid column definitions
+   * @type {IGridColumns[]}
+   */
+  @Input() gridCols: IGridColumns[] = [];
+
+  /**
+   * Data to display in the grid
+   * @type {any[]}
+   */
+  @Input() documentsData: any[] | null = [];
+
+  /**
+   * Data to display in the dropdown
+   * @type {any[] | undefined}
+   */
+  @Input() dropdownOptions: any[] | undefined;
+
+  /**
+   * Placeholder to display in the dropdown
+   * @type {string}
+   */
+  @Input() dropdownPlaceholder = 'Select Document Type';
+
+  /**
+   * Field to filter on
+   * @type {string}
+   */
   @Input() filterOn!: string;
-  @Input() showFilter!: boolean;
-  @Input() dropdownLabel!: string;
-  @Input() dropdownValue!: string;
+
+  /**
+   * Whether or not to display filter
+   * @type {boolean}
+   */
+  @Input() showFilter = true;
+
+  /**
+   * label field for dropdown
+   * @type {string}
+   */
+  @Input() dropdownLabel = 'itemDescription';
+
+  /**
+   * value field for dropdown
+   * @type {string}
+   */
+  @Input() dropdownValue = 'itemValue';
+
+  /**
+   * User Id
+   * @type {number}
+   */
   @Input() userId!: number;
+
+  /**
+   * event emitter for document actions
+   * @type {EventEmitter<any>}
+   */
   @Output() documentsAction: EventEmitter<any> = new EventEmitter();
 
+  localDocumentsData: any[] = [];
+
   gridOptions: IGridOptions = {
-    showFilter: true,
+    showFilter: this.showFilter,
     filterOn: '',
     filterType: AbsFilterType.Text,
   };
@@ -69,8 +125,14 @@ export class DocumentsUploadComponent implements OnInit {
   constructor(private _store: Store) {
     this._store.dispatch(new GetDocumentTypes());
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['documentsData']) {
+      this.localDocumentsData = changes['documentsData'].currentValue;
+    }
+  }
 
   ngOnInit() {
+    this.localDocumentsData = this.documentsData || [];
     this.setFilterOptions();
   }
 

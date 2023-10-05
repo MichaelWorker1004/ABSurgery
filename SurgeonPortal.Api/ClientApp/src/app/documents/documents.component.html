@@ -8,8 +8,8 @@
     amet tortor at, condimentum tempor erat.
   </div>
   <abs-documents-upload
-    [allowUpload]="false"
-    [documentsData$]="documentsData$"
+    [allowUpload]="true"
+    [documentsData]="documentsData$ | async"
     [gridCols]="documentsCols"
     [showFilter]="gridOptions.showFilter"
     [filterOn]="gridOptions.filterOn"

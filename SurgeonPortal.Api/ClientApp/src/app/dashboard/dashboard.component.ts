@@ -263,7 +263,9 @@ export class DashboardComponent {
         title: this._translateService.instant(
           'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_TITLE'
         ),
-        content: this.upcomingExams?.join('<br>'),
+        content: this._translateService.instant(
+          'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_SUBTITLE'
+        ),
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
@@ -305,8 +307,10 @@ export class DashboardComponent {
                 <br>${regOpenDate.toLocaleDateString()} - ${regCloseDate.toLocaleDateString()}`;
             });
 
-          alertsAndNoticesCertfiied[0].content =
-            this.upcomingExams?.join('<br><br>');
+          if (this.featureFlags.applyRegisterPage) {
+            alertsAndNoticesCertfiied[0].content =
+              this.upcomingExams?.join('<br><br>');
+          }
         });
     }
 

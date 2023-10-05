@@ -35,6 +35,7 @@
       "DOCUMENTS_SUBTITLE": "Click here to view all of your current document and certificate uploads.",
       "DOCUMENTS_TITLE": "Documents",
       "EXAMREGISTRATION_TITLE": "Upcoming Exam Registration",
+      "EXAMREGISTRATION_SUBTITLE": "<strong>Coming soon.</strong><br>You will be able to find more information about upcoming exams and registration windows here.",
       "UPCOMINGEXAMS_SUBTITLE": "You will be able to find more information about upcoming exams here as that information becomes available.",
       "UPCOMINGEXAMS_TITLE": "Next General Surgery QE -  {{date}}"
     },
@@ -88,7 +89,7 @@
       "SCORE_CARD": {
         "SCORE": "Score Case {{caseId}}",
         "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseId}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
-        "REMARKS_TITLE_NO_CASE": "Remakrs for Case {{caseId}}"
+        "REMARKS_TITLE_NO_CASE": "Remarks for Case {{caseId}}"
       }
     },
     "EXAMROSTERS": {

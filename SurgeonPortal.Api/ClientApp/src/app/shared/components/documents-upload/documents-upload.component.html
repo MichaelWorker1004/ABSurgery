@@ -7,6 +7,7 @@
   >
     <form class="flex gap-3" [formGroup]="uploadForm">
       <p-dropdown
+        *ngIf="dropdownOptions"
         [options]="dropdownOptions"
         [placeholder]="dropdownPlaceholder"
         [optionLabel]="dropdownLabel"
@@ -32,7 +33,9 @@
         [disabled]="
           !uploadForm.valid ||
           !fileUploadedName ||
-          !uploadForm.value.certificateTypeId
+          (!uploadForm.value.certificateTypeId &&
+            dropdownOptions !== undefined &&
+            dropdownOptions.length > 0)
         "
         class="btn-add"
       >
@@ -43,7 +46,7 @@
   </div>
   <abs-grid
     [columns]="gridCols"
-    [data]="documentsData$"
+    [data]="localDocumentsData"
     (action)="handleGridAction($event)"
     [gridOptions]="gridOptions"
     [showFilter]="gridOptions.showFilter"
