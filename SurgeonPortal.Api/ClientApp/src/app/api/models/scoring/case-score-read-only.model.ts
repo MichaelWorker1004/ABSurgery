@@ -2,6 +2,7 @@
 export interface ICaseScoreReadOnlyModel {
     examScoringId: number;
     examCaseId: number;
+    caseId: number;
     examinerUserId: number;
     examineeUserId: number;
     examineeFirstName: string;

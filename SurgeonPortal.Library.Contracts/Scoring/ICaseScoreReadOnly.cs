@@ -7,6 +7,7 @@ namespace SurgeonPortal.Library.Contracts.Scoring
     {
         int? ExamScoringId { get; }
         int ExamCaseId { get; }
+        int CaseId { get; }
         int? ExaminerUserId { get; }
         int? ExamineeUserId { get; }
         string ExamineeFirstName { get; }
