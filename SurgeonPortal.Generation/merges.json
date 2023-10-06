@@ -2551,19 +2551,19 @@
     "lastGeneratedHash": "FD55C4A4F686699B9F44B041686B0908"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\ICaseScoreReadOnly.cs": {
-    "lastGeneratedHash": "51460817C8890AD2CBEC77794082B772"
+    "lastGeneratedHash": "D3FF21B06A545CFE41966ACB2102FAF4"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\ICaseScoreReadOnlyList.cs": {
     "lastGeneratedHash": "91B8D76B19F586F73D64718981E28136"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\scoring\\case-score-read-only.model.ts": {
-    "lastGeneratedHash": "FB749FBFC8B286E4E2DEE528DB8525BF"
+    "lastGeneratedHash": "221526E13890D65750BCC8613E331A58"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Scoring\\CaseScoreReadOnlyDto.cs": {
-    "lastGeneratedHash": "95F3AF61C50977689614A2DAD17276FD"
+    "lastGeneratedHash": "A896A2E66826B73A5AB5075479DF290D"
   },
   "\\SurgeonPortal.Models\\Scoring\\CaseScoreReadOnlyModel.cs": {
-    "lastGeneratedHash": "D98E44FAD486FEFF8193A5793260C9A1"
+    "lastGeneratedHash": "ED414C78A62DA600D781DEB44E9AF7AB"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\IDashboardRosterReadOnly.cs": {
     "lastGeneratedHash": "0345CE713596F6CAB76E31012C854291"
@@ -2666,7 +2666,8 @@
     "lastGeneratedHash": "8A6B0597837B2BE90B30061DF9DDF77A"
   },
   "\\SurgeonPortal.Library\\CE\\ExamScore.cs": {
-    "lastGeneratedHash": "AFF9D5BE8123C9CB6A80BD379069EB7F"
+    "lastGeneratedHash": "AFF9D5BE8123C9CB6A80BD379069EB7F",
+    "lastMergedHash": "061265D873255ACA502E8F1CF2F1788F"
   },
   "\\SurgeonPortal.DataAccess\\CE\\ExamScoreDal.cs": {
     "lastGeneratedHash": "6849798F3F6BFB6D8A2678B6C9FB2031"
@@ -3107,7 +3108,7 @@
     "lastGeneratedHash": "733502A1F84BC360F2583C305E203BEB"
   },
   "\\SurgeonPortal.Library\\Scoring\\CaseScoreReadOnly.cs": {
-    "lastGeneratedHash": "BF0EC4ADDCEB2D5FD8530AC3BB4BB725"
+    "lastGeneratedHash": "497E26E5910A96E46FF1DEA01EA5CFDC"
   },
   "\\SurgeonPortal.Library\\Scoring\\CaseScoreReadOnlyList.cs": {
     "lastGeneratedHash": "D48A785C96281C6C96B260D5AE8725A3"

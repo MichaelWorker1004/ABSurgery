@@ -78,6 +78,16 @@
                 "mapsTo": "model.ExamCaseId"
               },
               {
+                "name": "CaseNumber",
+                "dataType": "string",
+                "maxLength": 20,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CaseNumber"
+              },
+              {
                 "name": "ExaminerUserId",
                 "dataType": "int?",
                 "maxLength": 4,
