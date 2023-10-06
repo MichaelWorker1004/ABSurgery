@@ -16,6 +16,7 @@ import { ExaminationScoreCardComponent } from '../shared/components/examination-
 import { BehaviorSubject, Observable, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import {
+  ApplicationSelectors,
   ClearExamScoringErrors,
   CreateCaseScore,
   CreateExamScore,
@@ -23,6 +24,7 @@ import {
   GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
+  IFeatureFlags,
   SkipExam,
   UpdateCaseScore,
   UserProfileSelectors,
@@ -62,6 +64,10 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     event.preventDefault();
   }
 
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
+
   @Select(ExamScoringSelectors.slices.examinee) examinee$:
     | Observable<IExamineeReadOnlyModel>
     | undefined;
@@ -80,7 +86,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
 
   @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
 
-  examHeaderId = 491; // TODO - remove hard coded value
+  examHeaderId = 481; // TODO - remove hard coded value
 
   cases$: BehaviorSubject<any> = new BehaviorSubject([]);
   userId!: number;
@@ -113,6 +119,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     private router: Router,
     public globalDialogService: GlobalDialogService
   ) {
+    this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      if (featureFlags?.ceScoreTesting) {
+        this.examHeaderId = 491;
+      }
+    });
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
   }
   ngOnDestroy(): void {

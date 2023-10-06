@@ -65,7 +65,7 @@ export class CeScoringAppComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.examinerConflict)
   examinerConflict$: Observable<IConflictReadOnlyModel> | undefined;
 
-  examHeaderId = 491; // TODO - remove hard coded value
+  examHeaderId = 481; // TODO - remove hard coded value
   examinationDate = new Date().toISOString().split('T')[0];
 
   currentYear = new Date().getFullYear();
@@ -81,12 +81,12 @@ export class CeScoringAppComponent implements OnInit {
     private globalDialogService: GlobalDialogService,
     private _translateService: TranslateService
   ) {
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
-    this._store.dispatch(new GetExaminerAgenda(this.examHeaderId));
-    this._store.dispatch(new GetExaminerConflict(this.examHeaderId));
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
+        if (featureFlags.ceScoreTesting) {
+          this.examHeaderId = 491;
+        }
         if (featureFlags.ceScoreTestingDate) {
           this.examinationDate = new Date('10/12/2023')
             .toISOString()
@@ -94,6 +94,10 @@ export class CeScoringAppComponent implements OnInit {
         }
       }
     });
+
+    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this._store.dispatch(new GetExaminerAgenda(this.examHeaderId));
+    this._store.dispatch(new GetExaminerConflict(this.examHeaderId));
   }
 
   ngOnInit(): void {

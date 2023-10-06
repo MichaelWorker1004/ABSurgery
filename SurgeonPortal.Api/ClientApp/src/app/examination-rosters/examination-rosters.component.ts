@@ -21,6 +21,7 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import {
+  ApplicationSelectors,
   CreateCaseComment,
   CreateCaseFeedback,
   DeleteCaseComment,
@@ -29,6 +30,7 @@ import {
   GetCaseDetailsAndFeedback,
   GetCaseRoster,
   GetExamTitle,
+  IFeatureFlags,
   UpdateCaseComment,
   UpdateCaseFeedback,
   UserProfileSelectors,
@@ -68,6 +70,10 @@ export class ExaminationRostersComponent implements OnInit {
 
   @Select(UserProfileSelectors.userId) user$: Observable<number> | undefined;
 
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
+
   @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
@@ -77,7 +83,7 @@ export class ExaminationRostersComponent implements OnInit {
 
   userId!: number;
 
-  examHeaderId = 491; // TODO - remove hard coded value
+  examHeaderId = 481; // TODO - remove hard coded value
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
   rosters: any = [];
@@ -99,6 +105,12 @@ export class ExaminationRostersComponent implements OnInit {
     private _store: Store,
     private _globalDialogService: GlobalDialogService
   ) {
+    this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      if (featureFlags?.ceScoreTesting) {
+        this.examHeaderId = 491;
+      }
+    });
+
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
   }
 
