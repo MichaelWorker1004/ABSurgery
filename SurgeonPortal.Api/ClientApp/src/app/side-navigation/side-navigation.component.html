@@ -2,15 +2,9 @@
   <div class="nav-header">
     <div class="flex">
       <div class="logo">
-        <img
-          src="../../assets/img/abs-logo.svg"
-          alt="The American Board Of Surgery"
-        />
+        <img *ngIf="logoPath" [src]="logoPath" [alt]="applicationName" />
       </div>
-      <h3>
-        The American <br />
-        Board of Surgery
-      </h3>
+      <h3>{{ applicationName }}</h3>
     </div>
     <div class="nav-toggle">
       <div class="hamburger" (click)="toggleSideNav()">
@@ -21,8 +15,8 @@
   </div>
 
   <nav>
-    <ul class="main-navigation">
-      <ng-container *ngFor="let item of navItems">
+    <ul class="main-navigation pb-5">
+      <div *ngFor="let item of navItems">
         <li class="left-padding" *ngIf="featureToggle(item)">
           <a
             [routerLink]="item.action"
@@ -32,7 +26,6 @@
             ><i [ngClass]="item.icon"></i>{{ item.display }}</a
           >
           <a
-            (click)="toggleSubNav(item)"
             *ngIf="item.children"
             [routerLink]="item.action"
             routerLinkActive="active"
@@ -53,7 +46,7 @@
             </ul>
           </div>
         </li>
-      </ng-container>
+      </div>
     </ul>
   </nav>
 
