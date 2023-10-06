@@ -10,8 +10,9 @@
     [ngClass]="isSideNavOpen ? 'toggled' : ''"
   >
     <abs-side-navigation
-      [isSurgeon]="isSurgeon"
-      [isExaminer]="isExaminer"
+      [applicationName]="applicationName"
+      [logoPath]="sideNavLogoPath"
+      [navItems]="navItems"
       (handleSideNavToggle)="handleSideNavToggle()"
     ></abs-side-navigation>
   </aside>
