@@ -36786,7 +36786,7 @@
     },
     {
       "name": "AppComponent",
-      "id": "component-AppComponent-ad429cdd2eda94c4ed4a1da73347ef4372161745aaf36ac1a0ef30122cdd30454493811ac953293cfa3697dd34be61ed36011e9ac9319bc4bf39eadb79e7ad3e",
+      "id": "component-AppComponent-c770420dc59501e5c52cb0b597762d1e6adb37b5d3641e833b5ec87b9373e80c4e5d43ce3aaf551c1f2897ebd7b77d31f032ea03ef3445d281566f06e8c75707",
       "file": "src/app/app.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -37057,7 +37057,7 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { CommonModule } from '@angular/common';\nimport { Component, OnInit } from '@angular/core';\nimport { Router, RouterOutlet, RouterStateSnapshot } from '@angular/router';\nimport { TranslateModule } from '@ngx-translate/core';\nimport { NgxsModule, Select, Store } from '@ngxs/store';\nimport { MessagesModule } from 'primeng/messages';\nimport { Observable } from 'rxjs';\nimport packageInfo from '../../package.json';\nimport { LoginComponent } from './login/login.component';\n\nimport { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';\nimport { Message } from 'primeng/api';\nimport { IMenuItem } from 'src/web-components/menuItem';\nimport { IAppUserReadOnlyModel } from './api';\nimport { AlertComponent } from './shared/components/alert/alert.component';\nimport { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';\nimport { SideNavigationComponent } from './side-navigation/side-navigation.component';\nimport { UserClaims } from './side-navigation/user-status.enum';\nimport {\n  AuthSelectors,\n  GetUserProfile,\n  IUserProfile,\n  UserProfileSelectors,\n} from './state';\nimport { LoadApplication } from './state/application/application.actions';\nimport {\n  CERTIFIED_NAV_ITEMS,\n  EXAMINER_NAV_ITEMS,\n  TRAINEE_NAV_ITEMS,\n} from './side-navigation/nav-items';\n\n@UntilDestroy()\n@Component({\n  selector: 'abs-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss'],\n  standalone: true,\n  imports: [\n    RouterOutlet,\n    LoginComponent,\n    CommonModule,\n    TranslateModule,\n    NgxsModule,\n    SideNavigationComponent,\n    DashboardHeaderComponent,\n    MessagesModule,\n    AlertComponent,\n  ],\n})\nexport class AppComponent implements OnInit {\n  // TODO: MOve this logic into the auth guard\n  @Select(AuthSelectors.slices.isAuthenticated) isAuthenticated$:\n    | Observable<boolean>\n    | undefined;\n  @Select(UserProfileSelectors.user) user$:\n    | Observable<IUserProfile>\n    | undefined;\n  @Select(AuthSelectors.loginUser)\n  loginUser$: Observable<IAppUserReadOnlyModel> | undefined;\n\n  version = packageInfo.buildId;\n\n  isAuthenticated = false;\n  isPasswordReset = false;\n\n  isSurgeon = false;\n  isExaminer = false;\n  isSideNavOpen = false;\n  sideNavLogoPath = '../../assets/img/abs-logo.svg';\n  applicationName = 'The American Board Of Surgery';\n\n  navItems: Array<IMenuItem> = [];\n\n  currentYear = new Date().getFullYear();\n\n  keysPressed = new Set();\n\n  preventScreenshot = false;\n  messages!: Message[];\n\n  constructor(private _store: Store, private router: Router) {\n    this.isAuthenticated$?.pipe(untilDestroyed(this)).subscribe((isAuthed) => {\n      this.isAuthenticated = isAuthed;\n      this.isPasswordReset = this._store.selectSnapshot(\n        AuthSelectors.slices.isPasswordReset\n      );\n      const routerStateSnapshot: RouterStateSnapshot =\n        this.router.routerState.snapshot;\n      const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);\n      const claims = this._store.selectSnapshot(AuthSelectors.claims);\n      if (isAuthed && loginUser && claims) {\n        this._store.dispatch(new LoadApplication());\n        this.isSurgeon =\n          claims.includes(UserClaims.surgeon) &&\n          !claims.includes(UserClaims.trainee);\n        this.navItems = this.isSurgeon\n          ? CERTIFIED_NAV_ITEMS\n          : TRAINEE_NAV_ITEMS;\n        this.isExaminer = claims.includes(UserClaims.examiner);\n\n        if (this.isExaminer) {\n          this.navItems = this.navItems.concat(EXAMINER_NAV_ITEMS);\n        }\n\n        this._store.dispatch(new GetUserProfile(loginUser, claims));\n      }\n\n      if (!isAuthed) {\n        const returnUrl = routerStateSnapshot.url\n          ? routerStateSnapshot.url.includes('oral-examinations/exam/')\n            ? '/dashboard'\n            : routerStateSnapshot.url\n          : '/dashboard';\n        this.router.navigate(['/login'], {\n          queryParams: { returnUrl: returnUrl },\n        });\n      }\n    });\n  }\n\n  ngOnInit(): void {\n    document.addEventListener('keydown', (event) => {\n      this.keysPressed.add(event.keyCode);\n      this.checkMacOsScreenshotV1();\n    });\n\n    document.addEventListener('keyup', (event) => {\n      this.keysPressed.delete(event.keyCode);\n      if (event.keyCode === 44) {\n        this.preventScreenshot = true;\n      }\n      this.preventScreenshot = false;\n    });\n  }\n\n  checkMacOsScreenshotV1() {\n    const windowsKeyOrCommand = 91;\n    const windowsR = 91;\n    const commanR = 93;\n    const shiftKey = 16;\n    const prntScreen = 44;\n    const sKey = 83;\n\n    if (\n      (this.keysPressed.has(windowsKeyOrCommand) &&\n        this.keysPressed.has(shiftKey)) ||\n      (this.keysPressed.has(commanR) && this.keysPressed.has(shiftKey)) ||\n      (this.keysPressed.has(windowsR) &&\n        this.keysPressed.has(shiftKey) &&\n        this.keysPressed.has(sKey)) ||\n      this.keysPressed.has(prntScreen) ||\n      (this.keysPressed.has(windowsKeyOrCommand) &&\n        this.keysPressed.has(shiftKey)) ||\n      (this.keysPressed.has(windowsKeyOrCommand) &&\n        this.keysPressed.has(shiftKey) &&\n        this.keysPressed.has(sKey))\n    ) {\n      this.preventScreenshot = true;\n    } else {\n      this.preventScreenshot = false;\n    }\n  }\n\n  handleSideNavToggle() {\n    this.isSideNavOpen = !this.isSideNavOpen;\n  }\n}\n",
+      "sourceCode": "import { CommonModule } from '@angular/common';\nimport { Component, OnInit } from '@angular/core';\nimport { Router, RouterOutlet, RouterStateSnapshot } from '@angular/router';\nimport { TranslateModule } from '@ngx-translate/core';\nimport { NgxsModule, Select, Store } from '@ngxs/store';\nimport { MessagesModule } from 'primeng/messages';\nimport { Observable } from 'rxjs';\nimport packageInfo from '../../package.json';\nimport { LoginComponent } from './login/login.component';\n\nimport { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';\nimport { Message } from 'primeng/api';\nimport { IMenuItem } from 'src/web-components/menuItem';\nimport { IAppUserReadOnlyModel } from './api';\nimport { AlertComponent } from './shared/components/alert/alert.component';\nimport { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';\nimport { SideNavigationComponent } from './side-navigation/side-navigation.component';\nimport { UserClaims } from './side-navigation/user-status.enum';\nimport {\n  AuthSelectors,\n  GetUserProfile,\n  IUserProfile,\n  UserProfileSelectors,\n} from './state';\nimport { LoadApplication } from './state/application/application.actions';\nimport {\n  CERTIFIED_NAV_ITEMS,\n  EXAMINER_NAV_ITEMS,\n  TRAINEE_NAV_ITEMS,\n} from './nav-items';\n\n@UntilDestroy()\n@Component({\n  selector: 'abs-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss'],\n  standalone: true,\n  imports: [\n    RouterOutlet,\n    LoginComponent,\n    CommonModule,\n    TranslateModule,\n    NgxsModule,\n    SideNavigationComponent,\n    DashboardHeaderComponent,\n    MessagesModule,\n    AlertComponent,\n  ],\n})\nexport class AppComponent implements OnInit {\n  // TODO: MOve this logic into the auth guard\n  @Select(AuthSelectors.slices.isAuthenticated) isAuthenticated$:\n    | Observable<boolean>\n    | undefined;\n  @Select(UserProfileSelectors.user) user$:\n    | Observable<IUserProfile>\n    | undefined;\n  @Select(AuthSelectors.loginUser)\n  loginUser$: Observable<IAppUserReadOnlyModel> | undefined;\n\n  version = packageInfo.buildId;\n\n  isAuthenticated = false;\n  isPasswordReset = false;\n\n  isSurgeon = false;\n  isExaminer = false;\n  isSideNavOpen = false;\n  sideNavLogoPath = '../../assets/img/abs-logo.svg';\n  applicationName = 'The American Board Of Surgery';\n\n  navItems: Array<IMenuItem> = [];\n\n  currentYear = new Date().getFullYear();\n\n  keysPressed = new Set();\n\n  preventScreenshot = false;\n  messages!: Message[];\n\n  constructor(private _store: Store, private router: Router) {\n    this.isAuthenticated$?.pipe(untilDestroyed(this)).subscribe((isAuthed) => {\n      this.isAuthenticated = isAuthed;\n      this.isPasswordReset = this._store.selectSnapshot(\n        AuthSelectors.slices.isPasswordReset\n      );\n      const routerStateSnapshot: RouterStateSnapshot =\n        this.router.routerState.snapshot;\n      const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);\n      const claims = this._store.selectSnapshot(AuthSelectors.claims);\n      if (isAuthed && loginUser && claims) {\n        this._store.dispatch(new LoadApplication());\n        this.isSurgeon =\n          claims.includes(UserClaims.surgeon) &&\n          !claims.includes(UserClaims.trainee);\n        this.navItems = this.isSurgeon\n          ? CERTIFIED_NAV_ITEMS\n          : TRAINEE_NAV_ITEMS;\n        this.isExaminer = claims.includes(UserClaims.examiner);\n\n        if (this.isExaminer) {\n          this.navItems = this.navItems.concat(EXAMINER_NAV_ITEMS);\n        }\n\n        this._store.dispatch(new GetUserProfile(loginUser, claims));\n      }\n\n      if (!isAuthed) {\n        const returnUrl = routerStateSnapshot.url\n          ? routerStateSnapshot.url.includes('oral-examinations/exam/')\n            ? '/dashboard'\n            : routerStateSnapshot.url\n          : '/dashboard';\n        this.router.navigate(['/login'], {\n          queryParams: { returnUrl: returnUrl },\n        });\n      }\n    });\n  }\n\n  ngOnInit(): void {\n    document.addEventListener('keydown', (event) => {\n      this.keysPressed.add(event.keyCode);\n      this.checkMacOsScreenshotV1();\n    });\n\n    document.addEventListener('keyup', (event) => {\n      this.keysPressed.delete(event.keyCode);\n      if (event.keyCode === 44) {\n        this.preventScreenshot = true;\n      }\n      this.preventScreenshot = false;\n    });\n  }\n\n  checkMacOsScreenshotV1() {\n    const windowsKeyOrCommand = 91;\n    const windowsR = 91;\n    const commanR = 93;\n    const shiftKey = 16;\n    const prntScreen = 44;\n    const sKey = 83;\n\n    if (\n      (this.keysPressed.has(windowsKeyOrCommand) &&\n        this.keysPressed.has(shiftKey)) ||\n      (this.keysPressed.has(commanR) && this.keysPressed.has(shiftKey)) ||\n      (this.keysPressed.has(windowsR) &&\n        this.keysPressed.has(shiftKey) &&\n        this.keysPressed.has(sKey)) ||\n      this.keysPressed.has(prntScreen) ||\n      (this.keysPressed.has(windowsKeyOrCommand) &&\n        this.keysPressed.has(shiftKey)) ||\n      (this.keysPressed.has(windowsKeyOrCommand) &&\n        this.keysPressed.has(shiftKey) &&\n        this.keysPressed.has(sKey))\n    ) {\n      this.preventScreenshot = true;\n    } else {\n      this.preventScreenshot = false;\n    }\n  }\n\n  handleSideNavToggle() {\n    this.isSideNavOpen = !this.isSideNavOpen;\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
@@ -56626,7 +56626,7 @@
     },
     {
       "name": "SideNavigationComponent",
-      "id": "component-SideNavigationComponent-af60f849c79b3b3f22cf931cbbc96a4482789697ca7dda48d6af11d3afdba023d69a23725e1c8b6ee9581db383f9e7f89082699bd9634cd907b73013c7ed0359",
+      "id": "component-SideNavigationComponent-669d07e6958a145db7d6b707567b3da85385a4cadc1759f490f7a0ff871a7203a2d289ada31bd37425f9cde86328fb9b19cd7171e884466d74416750fd826515",
       "file": "src/app/side-navigation/side-navigation.component.ts",
       "encapsulation": [],
       "entryComponents": [],
@@ -56739,15 +56739,15 @@
           "deprecationMessage": "",
           "jsdoctags": [
             {
-              "pos": 1131,
-              "end": 1159,
+              "pos": 1120,
+              "end": 1148,
               "flags": 8421376,
               "modifierFlagsCache": 0,
               "transformFlags": 0,
               "kind": 347,
               "tagName": {
-                "pos": 1132,
-                "end": 1136,
+                "pos": 1121,
+                "end": 1125,
                 "flags": 8421376,
                 "modifierFlagsCache": 0,
                 "transformFlags": 0,
@@ -56756,22 +56756,22 @@
               },
               "comment": "",
               "typeExpression": {
-                "pos": 1137,
-                "end": 1155,
+                "pos": 1126,
+                "end": 1144,
                 "flags": 8421376,
                 "modifierFlagsCache": 0,
                 "transformFlags": 0,
                 "kind": 312,
                 "type": {
-                  "pos": 1138,
-                  "end": 1154,
+                  "pos": 1127,
+                  "end": 1143,
                   "flags": 8388608,
                   "modifierFlagsCache": 0,
                   "transformFlags": 1,
                   "kind": 180,
                   "typeName": {
-                    "pos": 1138,
-                    "end": 1143,
+                    "pos": 1127,
+                    "end": 1132,
                     "flags": 8388608,
                     "modifierFlagsCache": 0,
                     "transformFlags": 0,
@@ -56780,15 +56780,15 @@
                   },
                   "typeArguments": [
                     {
-                      "pos": 1144,
-                      "end": 1153,
+                      "pos": 1133,
+                      "end": 1142,
                       "flags": 8388608,
                       "modifierFlagsCache": 0,
                       "transformFlags": 1,
                       "kind": 180,
                       "typeName": {
-                        "pos": 1144,
-                        "end": 1153,
+                        "pos": 1133,
+                        "end": 1142,
                         "flags": 8388608,
                         "modifierFlagsCache": 0,
                         "transformFlags": 0,
@@ -56801,8 +56801,8 @@
               }
             }
           ],
-          "rawdescription": "\n\nThe version of the application\n",
-          "description": "<p>The version of the application</p>\n",
+          "rawdescription": "\n\nThe Navigtion Items\n",
+          "description": "<p>The Navigtion Items</p>\n",
           "line": 39,
           "type": "Array<IMenuItem>",
           "decorators": []
@@ -56956,8 +56956,8 @@
             },
             {
               "tagName": {
-                "pos": 1856,
-                "end": 1863,
+                "pos": 1845,
+                "end": 1852,
                 "flags": 8421376,
                 "modifierFlagsCache": 0,
                 "transformFlags": 0,
@@ -56993,11 +56993,11 @@
       "description": "",
       "rawdescription": "\n",
       "type": "component",
-      "sourceCode": "import { CommonModule } from '@angular/common';\nimport { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { Router, RouterLink, RouterLinkActive } from '@angular/router';\nimport { TranslateService } from '@ngx-translate/core';\nimport { NgxsModule, Store } from '@ngxs/store';\nimport { IMenuItem } from 'src/web-components/menuItem';\nimport { CloseApplication } from '../state/application/application.actions';\n\n@Component({\n  selector: 'abs-side-navigation',\n  standalone: true,\n  imports: [CommonModule, RouterLink, RouterLinkActive, NgxsModule],\n  templateUrl: './side-navigation.component.html',\n  styleUrls: ['./side-navigation.component.scss'],\n})\nexport class SideNavigationComponent {\n  /**\n   * Emits an event when the side navigation is toggled\n   * @type {EventEmitter<any>}\n   */\n  @Output() handleSideNavToggle: EventEmitter<any> = new EventEmitter();\n\n  /**\n   * The path to the logo image\n   * @type {string}\n   */\n  @Input() logoPath!: string;\n\n  /**\n   * The name of the application\n   * @type {string}\n   */\n  @Input() applicationName!: string;\n\n  /**\n   * The version of the application\n   * @type {Array<IMenuItem>}\n   */\n  @Input() navItems: Array<IMenuItem> = [];\n\n  constructor(\n    private _router: Router,\n    private _store: Store,\n    private _translateService: TranslateService\n  ) {}\n\n  logout() {\n    this._store.dispatch(new CloseApplication());\n  }\n\n  toggleSideNav() {\n    this.handleSideNavToggle.emit();\n  }\n\n  featureToggle(item: any) {\n    if (item.feature) {\n      const feature = item.feature;\n      return this._store.selectSnapshot((state) =>\n        state.application?.featureFlags\n          ? state.application.featureFlags[feature]\n          : false\n      );\n    } else {\n      return true;\n    }\n  }\n\n  get router(): Router {\n    return this._router;\n  }\n\n  /**\n   *\n   * @param alert\n   * @returns\n   */\n  private translateNavItem(navItems: any[]): any[] {\n    return navItems.map((navItem) => {\n      if (navItem.displayKey) {\n        // this safeguards against the timing issue of the page loading before the translations are ready\n        // TODO: [Joe] address this timing issue in a way that does not rely on a timeout\n        const newDisplay = this._translateService.instant(navItem.displayKey);\n        if (newDisplay !== navItem.displayKey) {\n          navItem.display = newDisplay;\n        }\n      }\n      if (navItem.children) {\n        navItem.children = this.translateNavItem(navItem.children);\n      }\n      return navItem;\n    });\n  }\n}\n",
+      "sourceCode": "import { CommonModule } from '@angular/common';\nimport { Component, EventEmitter, Input, Output } from '@angular/core';\nimport { Router, RouterLink, RouterLinkActive } from '@angular/router';\nimport { TranslateService } from '@ngx-translate/core';\nimport { NgxsModule, Store } from '@ngxs/store';\nimport { IMenuItem } from 'src/web-components/menuItem';\nimport { CloseApplication } from '../state/application/application.actions';\n\n@Component({\n  selector: 'abs-side-navigation',\n  standalone: true,\n  imports: [CommonModule, RouterLink, RouterLinkActive, NgxsModule],\n  templateUrl: './side-navigation.component.html',\n  styleUrls: ['./side-navigation.component.scss'],\n})\nexport class SideNavigationComponent {\n  /**\n   * Emits an event when the side navigation is toggled\n   * @type {EventEmitter<any>}\n   */\n  @Output() handleSideNavToggle: EventEmitter<any> = new EventEmitter();\n\n  /**\n   * The path to the logo image\n   * @type {string}\n   */\n  @Input() logoPath!: string;\n\n  /**\n   * The name of the application\n   * @type {string}\n   */\n  @Input() applicationName!: string;\n\n  /**\n   * The Navigtion Items\n   * @type {Array<IMenuItem>}\n   */\n  @Input() navItems: Array<IMenuItem> = [];\n\n  constructor(\n    private _router: Router,\n    private _store: Store,\n    private _translateService: TranslateService\n  ) {}\n\n  logout() {\n    this._store.dispatch(new CloseApplication());\n  }\n\n  toggleSideNav() {\n    this.handleSideNavToggle.emit();\n  }\n\n  featureToggle(item: any) {\n    if (item.feature) {\n      const feature = item.feature;\n      return this._store.selectSnapshot((state) =>\n        state.application?.featureFlags\n          ? state.application.featureFlags[feature]\n          : false\n      );\n    } else {\n      return true;\n    }\n  }\n\n  get router(): Router {\n    return this._router;\n  }\n\n  /**\n   *\n   * @param alert\n   * @returns\n   */\n  private translateNavItem(navItems: any[]): any[] {\n    return navItems.map((navItem) => {\n      if (navItem.displayKey) {\n        // this safeguards against the timing issue of the page loading before the translations are ready\n        // TODO: [Joe] address this timing issue in a way that does not rely on a timeout\n        const newDisplay = this._translateService.instant(navItem.displayKey);\n        if (newDisplay !== navItem.displayKey) {\n          navItem.display = newDisplay;\n        }\n      }\n      if (navItem.children) {\n        navItem.children = this.translateNavItem(navItem.children);\n      }\n      return navItem;\n    });\n  }\n}\n",
       "assetsDirs": [],
       "styleUrlsData": [
         {
-          "data": ".container {\n  padding-right: 0;\n}\n\nimg {\n  width: 100%;\n}\n\nh1 {\n  color: var(--global-primary);\n  text-transform: uppercase;\n  font-size: 1.35rem;\n}\n\n.flex {\n  display: flex;\n}\n\n.hamburger {\n  border: none;\n  background: none;\n  display: block;\n  cursor: pointer;\n  span {\n    position: relative;\n    display: block;\n    height: 5px;\n    width: 3rem;\n    background-color: var(--global-primary);\n    transition: 250ms ease-in-out;\n    margin-bottom: 5px;\n    &:first-child {\n      transform: rotate(-45deg);\n      top: 9px;\n    }\n    &:nth-child(2) {\n      transform: rotate(45deg);\n    }\n  }\n  &:hover {\n    span {\n      background-color: var(--global-warning);\n    }\n  }\n}\n\n.container {\n  position: relative;\n  height: 100%;\n}\n\n.nav-header {\n  padding: 1.5rem;\n  display: flex;\n  align-items: center;\n  margin-bottom: 0.5rem;\n  justify-content: space-between;\n  .logo {\n    margin: 0 1rem 0 0;\n    display: flex;\n    align-items: center;\n    max-width: 5rem;\n  }\n}\n\n.left-padding,\n.lower-nav {\n  padding: 0 0 0 1.5rem;\n}\n\n.lower-nav {\n  position: absolute;\n  bottom: 1.25rem;\n}\n\nnav {\n  max-height: calc(100vh - 17.5rem);\n  overflow: hidden;\n  &:hover {\n    overflow-y: auto;\n  }\n\n  &::-webkit-scrollbar {\n    width: 0.125rem;\n  }\n  &::-webkit-scrollbar-track {\n    background: var(--global-warning-lighten-60);\n  }\n  &::-webkit-scrollbar-thumb {\n    background: var(--global-warning);\n    &:hover {\n      background: var(--global-warning-darken-20);\n    }\n  }\n\n  ul {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n    li {\n      margin-bottom: 2.5rem;\n      position: relative;\n      a {\n        text-decoration: none;\n        display: flex;\n        align-items: center;\n        position: relative;\n        font-size: 1.25rem;\n        color: var(--global-primary);\n        font-weight: bold;\n        width: 100%;\n        &::after {\n          content: '';\n          position: absolute;\n          right: 0;\n          width: 5px;\n          height: 55px;\n          background-color: none;\n          transition: 250ms ease-in-out;\n        }\n        i {\n          margin-right: 1rem;\n          margin-right: 0 auto;\n          font-size: 1.5rem;\n          width: 1.5rem;\n          transition: 250ms ease-in-out;\n        }\n        &:hover,\n        &.active {\n          i {\n            color: var(--global-warning);\n          }\n          &::after {\n            background-color: var(--global-warning);\n          }\n        }\n      }\n    }\n  }\n\n  .sub-menu {\n    max-height: 0;\n    overflow: hidden;\n    transition: 550ms ease-in-out;\n    ul {\n      li {\n        margin-top: 1.5rem;\n        margin-bottom: 0rem;\n        a {\n          font-size: 1rem;\n          transition: 250ms ease-in-out;\n          &:hover,\n          &.active {\n            color: var(--global-success);\n            &::after {\n              display: none;\n            }\n          }\n        }\n      }\n    }\n    &:hover {\n      max-height: 500px;\n    }\n  }\n\n  .has-sub-menu {\n    &:hover,\n    &.active {\n      + .sub-menu {\n        max-height: 500px;\n      }\n    }\n  }\n}\n\n.lower-nav {\n  color: var(--global-primary);\n  font-weight: bold;\n  button {\n    background: none;\n    border: none;\n    font-size: 1.25rem;\n    color: var(--global-primary);\n    font-weight: bold;\n    font-family: 'proxima-nova', sans-serif;\n    cursor: pointer;\n    i {\n      transition: 250ms ease-in-out;\n      margin: 0 1rem;\n    }\n    &:hover {\n      i {\n        color: var(--global-warning);\n      }\n    }\n  }\n}\n\n@media screen and (min-width: 1015px) {\n  .hamburger {\n    display: none;\n  }\n}\n",
+          "data": ".nav-container {\n  max-width: 416px;\n  min-height: 700px;\n  height: 100%;\n  box-shadow: 0px 3px 6px #00000022;\n  position: relative;\n}\n\n.container {\n  padding-right: 0;\n  max-width: 416px;\n  min-height: 700px;\n  height: 100%;\n  box-shadow: 0px 3px 6px #00000022;\n}\n\nimg {\n  width: 100%;\n}\n\nh1 {\n  color: var(--global-primary);\n  text-transform: uppercase;\n  font-size: 1.35rem;\n}\n\n.flex {\n  display: flex;\n}\n\n.hamburger {\n  border: none;\n  background: none;\n  display: block;\n  cursor: pointer;\n  span {\n    position: relative;\n    display: block;\n    height: 5px;\n    width: 3rem;\n    background-color: var(--global-primary);\n    transition: 250ms ease-in-out;\n    margin-bottom: 5px;\n    &:first-child {\n      transform: rotate(-45deg);\n      top: 9px;\n    }\n    &:nth-child(2) {\n      transform: rotate(45deg);\n    }\n  }\n  &:hover {\n    span {\n      background-color: var(--global-warning);\n    }\n  }\n}\n\n.container {\n  position: relative;\n  height: 100%;\n}\n\n.nav-header {\n  padding: 1.5rem;\n  display: flex;\n  align-items: center;\n  margin-bottom: 0.5rem;\n  justify-content: space-between;\n  .logo {\n    margin: 0 1rem 0 0;\n    display: flex;\n    align-items: center;\n    max-width: 5rem;\n  }\n}\n\n.left-padding,\n.lower-nav {\n  padding: 0 0 0 1.5rem;\n}\n\n.lower-nav {\n  position: absolute;\n  bottom: 1.25rem;\n}\n\nnav {\n  max-height: calc(100vh - 17.5rem);\n  overflow: hidden;\n  &:hover {\n    overflow-y: auto;\n  }\n\n  &::-webkit-scrollbar {\n    width: 0.125rem;\n  }\n  &::-webkit-scrollbar-track {\n    background: var(--global-warning-lighten-60);\n  }\n  &::-webkit-scrollbar-thumb {\n    background: var(--global-warning);\n    &:hover {\n      background: var(--global-warning-darken-20);\n    }\n  }\n\n  ul {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n    li {\n      margin-bottom: 2.5rem;\n      position: relative;\n      a {\n        text-decoration: none;\n        display: flex;\n        align-items: center;\n        position: relative;\n        font-size: 1.25rem;\n        color: var(--global-primary);\n        font-weight: bold;\n        width: 100%;\n        &::after {\n          content: '';\n          position: absolute;\n          right: 0;\n          width: 5px;\n          height: 55px;\n          background-color: none;\n          transition: 250ms ease-in-out;\n        }\n        i {\n          margin-right: 1rem;\n          margin-right: 0 auto;\n          font-size: 1.5rem;\n          width: 1.5rem;\n          transition: 250ms ease-in-out;\n        }\n        &:hover,\n        &.active {\n          i {\n            color: var(--global-warning);\n          }\n          &::after {\n            background-color: var(--global-warning);\n          }\n        }\n      }\n    }\n  }\n\n  .sub-menu {\n    max-height: 0;\n    overflow: hidden;\n    transition: 550ms ease-in-out;\n    ul {\n      li {\n        margin-top: 1.5rem;\n        margin-bottom: 0rem;\n        a {\n          font-size: 1rem;\n          transition: 250ms ease-in-out;\n          &:hover,\n          &.active {\n            color: var(--global-success);\n            &::after {\n              display: none;\n            }\n          }\n        }\n      }\n    }\n    &:hover {\n      max-height: 500px;\n    }\n  }\n\n  .has-sub-menu {\n    &:hover,\n    &.active {\n      + .sub-menu {\n        max-height: 500px;\n      }\n    }\n  }\n}\n\n.lower-nav {\n  color: var(--global-primary);\n  font-weight: bold;\n  button {\n    background: none;\n    border: none;\n    font-size: 1.25rem;\n    color: var(--global-primary);\n    font-weight: bold;\n    font-family: 'proxima-nova', sans-serif;\n    cursor: pointer;\n    i {\n      transition: 250ms ease-in-out;\n      margin: 0 1rem;\n    }\n    &:hover {\n      i {\n        color: var(--global-warning);\n      }\n    }\n  }\n}\n\n@media screen and (min-width: 1015px) {\n  .hamburger {\n    display: none;\n  }\n}\n",
           "styleUrl": "./side-navigation.component.scss"
         }
       ],
@@ -57069,7 +57069,7 @@
           }
         }
       },
-      "templateData": "<div class=\"container\">\n  <div class=\"nav-header\">\n    <div class=\"flex\">\n      <div class=\"logo\">\n        <img *ngIf=\"logoPath\" [src]=\"logoPath\" [alt]=\"applicationName\" />\n      </div>\n      <h3>{{ applicationName }}</h3>\n    </div>\n    <div class=\"nav-toggle\">\n      <div class=\"hamburger\" (click)=\"toggleSideNav()\">\n        <span></span>\n        <span></span>\n      </div>\n    </div>\n  </div>\n\n  <nav>\n    <ul class=\"main-navigation\">\n      <ng-container *ngFor=\"let item of navItems\">\n        <li class=\"left-padding\" *ngIf=\"featureToggle(item)\">\n          <a\n            [routerLink]=\"item.action\"\n            routerLinkActive=\"active\"\n            (click)=\"toggleSideNav()\"\n            *ngIf=\"!item.children\"\n            ><i [ngClass]=\"item.icon\"></i>{{ item.display }}</a\n          >\n          <a\n            *ngIf=\"item.children\"\n            [routerLink]=\"item.action\"\n            routerLinkActive=\"active\"\n            class=\"has-sub-menu\"\n          >\n            <i [ngClass]=\"item.icon\"></i>{{ item.display }}\n          </a>\n          <div class=\"sub-menu\" *ngIf=\"item.children\">\n            <ul>\n              <li *ngFor=\"let child of item.children\">\n                <a\n                  [routerLink]=\"[item.action, child.action]\"\n                  routerLinkActive=\"active\"\n                  (click)=\"toggleSideNav()\"\n                  ><i [ngClass]=\"child.icon\"></i>{{ child.display }}</a\n                >\n              </li>\n            </ul>\n          </div>\n        </li>\n      </ng-container>\n    </ul>\n  </nav>\n\n  <nav class=\"lower-nav\">\n    <ng-container *ngIf=\"featureToggle({ feature: 'myAccountPage' })\">\n      <button (click)=\"router.navigateByUrl('my-account')\">\n        <i class=\"fa-solid fa-user-doctor\"></i>My Account\n      </button>\n      |\n    </ng-container>\n    <button (click)=\"logout()\">\n      Logout<i class=\"fa-sharp fa-solid fa-arrow-right-from-bracket\"></i>\n    </button>\n  </nav>\n</div>\n"
+      "templateData": "<div class=\"container\">\n  <div class=\"nav-header\">\n    <div class=\"flex\">\n      <div class=\"logo\">\n        <img *ngIf=\"logoPath\" [src]=\"logoPath\" [alt]=\"applicationName\" />\n      </div>\n      <h3>{{ applicationName }}</h3>\n    </div>\n    <div class=\"nav-toggle\">\n      <div class=\"hamburger\" (click)=\"toggleSideNav()\">\n        <span></span>\n        <span></span>\n      </div>\n    </div>\n  </div>\n\n  <nav>\n    <ul class=\"main-navigation pb-5\">\n      <div *ngFor=\"let item of navItems\">\n        <li class=\"left-padding\" *ngIf=\"featureToggle(item)\">\n          <a\n            [routerLink]=\"item.action\"\n            routerLinkActive=\"active\"\n            (click)=\"toggleSideNav()\"\n            *ngIf=\"!item.children\"\n            ><i [ngClass]=\"item.icon\"></i>{{ item.display }}</a\n          >\n          <a\n            *ngIf=\"item.children\"\n            [routerLink]=\"item.action\"\n            routerLinkActive=\"active\"\n            class=\"has-sub-menu\"\n          >\n            <i [ngClass]=\"item.icon\"></i>{{ item.display }}\n          </a>\n          <div class=\"sub-menu\" *ngIf=\"item.children\">\n            <ul>\n              <li *ngFor=\"let child of item.children\">\n                <a\n                  [routerLink]=\"[item.action, child.action]\"\n                  routerLinkActive=\"active\"\n                  (click)=\"toggleSideNav()\"\n                  ><i [ngClass]=\"child.icon\"></i>{{ child.display }}</a\n                >\n              </li>\n            </ul>\n          </div>\n        </li>\n      </div>\n    </ul>\n  </nav>\n\n  <nav class=\"lower-nav\">\n    <ng-container *ngIf=\"featureToggle({ feature: 'myAccountPage' })\">\n      <button (click)=\"router.navigateByUrl('my-account')\">\n        <i class=\"fa-solid fa-user-doctor\"></i>My Account\n      </button>\n      |\n    </ng-container>\n    <button (click)=\"logout()\">\n      Logout<i class=\"fa-sharp fa-solid fa-arrow-right-from-bracket\"></i>\n    </button>\n  </nav>\n</div>\n"
     },
     {
       "name": "SpecialAccommodationsModalComponent",
@@ -59389,7 +59389,7 @@
         "name": "CERTIFIED_NAV_ITEMS",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "src/app/side-navigation/nav-items.ts",
+        "file": "src/app/nav-items.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "[]",
@@ -59463,7 +59463,7 @@
         "deprecated": false,
         "deprecationMessage": "",
         "type": "Story",
-        "defaultValue": "{\n  args: {\n    navItems: [\n      {\n        display: 'Dashboard',\n        action: 'dashboard',\n        icon: 'fa-solid fa-chart-line',\n        feature: 'dashboardPage',\n      },\n      {\n        display: 'Personal Profile',\n        action: 'personal-profile',\n        icon: 'fa-solid fa-circle-info',\n        feature: 'personalProfilePage',\n      },\n      {\n        display: 'Medical Training',\n        action: 'medical-training',\n        icon: 'fa-solid fa-graduation-cap',\n        feature: 'medicalTrainingPage',\n      },\n      {\n        display: 'GME',\n        action: 'gme-history',\n        icon: 'fa-regular fa-folder-open',\n        feature: 'gmeHistoryPage',\n      },\n      {\n        display: 'Documents',\n        action: 'documents',\n        icon: 'fa-solid fa-file-lines',\n        feature: 'documentsPage',\n      },\n    ],\n  },\n}"
+        "defaultValue": "{\n  args: {\n    applicationName: 'The American Board Of Surgery',\n    logoPath:\n      'https://surgeonportaldev.azurewebsites.net/assets/img/abs-logo.svg',\n    navItems: [\n      {\n        display: 'No Children',\n        action: 'dashboard',\n        icon: 'fa-solid fa-chart-line',\n      },\n      {\n        display: 'Has Children',\n        action: 'apply-and-resgister',\n        icon: 'fa-solid fa-list-check',\n        children: [\n          {\n            display: 'Registration Requirements',\n            action: 'registration-requirements',\n          },\n          {\n            display: 'Exam Registration',\n            action: 'exam-registration',\n          },\n        ],\n      },\n    ],\n  },\n}"
       },
       {
         "name": "Default",
@@ -59779,7 +59779,7 @@
         "name": "EXAMINER_NAV_ITEMS",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "src/app/side-navigation/nav-items.ts",
+        "file": "src/app/nav-items.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "[]",
@@ -60409,7 +60409,7 @@
         "name": "TRAINEE_NAV_ITEMS",
         "ctype": "miscellaneous",
         "subtype": "variable",
-        "file": "src/app/side-navigation/nav-items.ts",
+        "file": "src/app/nav-items.ts",
         "deprecated": false,
         "deprecationMessage": "",
         "type": "[]",
@@ -61400,12 +61400,12 @@
           "defaultValue": "[\n  {\n    title: '',\n    titleKey: 'DASHBOARD.ACTION_CARDS.GME_TITLE',\n    description: '',\n    descriptionKey: 'DASHBOARD.ACTION_CARDS.GME_SUBTITLE',\n    actionType: 'component',\n    actionAction: '/gme-history',\n    action: {\n      type: 'component',\n      action: '/gme-history',\n    },\n    actionDisplay: '',\n    actionDisplayKey: 'DASHBOARD.ACTION_CARDS.GME_BTN',\n    icon: 'fa-sharp fa-solid fa-file-waveform',\n  },\n  {\n    title: '',\n    titleKey: 'DASHBOARD.ACTION_CARDS.APPLY_TITLE',\n    description: '',\n    descriptionKey: 'DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE',\n    action: {\n      type: 'component',\n      action: '/exam-process/exam-registration',\n    },\n    actionDisplay: '',\n    actionDisplayKey: 'DASHBOARD.ACTION_CARDS.APPLY_BTN',\n    icon: 'fa-solid fa-user-graduate',\n    disabled: true,\n  },\n]"
         }
       ],
-      "src/app/side-navigation/nav-items.ts": [
+      "src/app/nav-items.ts": [
         {
           "name": "CERTIFIED_NAV_ITEMS",
           "ctype": "miscellaneous",
           "subtype": "variable",
-          "file": "src/app/side-navigation/nav-items.ts",
+          "file": "src/app/nav-items.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "type": "[]",
@@ -61415,7 +61415,7 @@
           "name": "EXAMINER_NAV_ITEMS",
           "ctype": "miscellaneous",
           "subtype": "variable",
-          "file": "src/app/side-navigation/nav-items.ts",
+          "file": "src/app/nav-items.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "type": "[]",
@@ -61425,7 +61425,7 @@
           "name": "TRAINEE_NAV_ITEMS",
           "ctype": "miscellaneous",
           "subtype": "variable",
-          "file": "src/app/side-navigation/nav-items.ts",
+          "file": "src/app/nav-items.ts",
           "deprecated": false,
           "deprecationMessage": "",
           "type": "[]",
@@ -61621,7 +61621,7 @@
           "deprecated": false,
           "deprecationMessage": "",
           "type": "Story",
-          "defaultValue": "{\n  args: {\n    navItems: [\n      {\n        display: 'Dashboard',\n        action: 'dashboard',\n        icon: 'fa-solid fa-chart-line',\n        feature: 'dashboardPage',\n      },\n      {\n        display: 'Personal Profile',\n        action: 'personal-profile',\n        icon: 'fa-solid fa-circle-info',\n        feature: 'personalProfilePage',\n      },\n      {\n        display: 'Medical Training',\n        action: 'medical-training',\n        icon: 'fa-solid fa-graduation-cap',\n        feature: 'medicalTrainingPage',\n      },\n      {\n        display: 'GME',\n        action: 'gme-history',\n        icon: 'fa-regular fa-folder-open',\n        feature: 'gmeHistoryPage',\n      },\n      {\n        display: 'Documents',\n        action: 'documents',\n        icon: 'fa-solid fa-file-lines',\n        feature: 'documentsPage',\n      },\n    ],\n  },\n}"
+          "defaultValue": "{\n  args: {\n    applicationName: 'The American Board Of Surgery',\n    logoPath:\n      'https://surgeonportaldev.azurewebsites.net/assets/img/abs-logo.svg',\n    navItems: [\n      {\n        display: 'No Children',\n        action: 'dashboard',\n        icon: 'fa-solid fa-chart-line',\n      },\n      {\n        display: 'Has Children',\n        action: 'apply-and-resgister',\n        icon: 'fa-solid fa-list-check',\n        children: [\n          {\n            display: 'Registration Requirements',\n            action: 'registration-requirements',\n          },\n          {\n            display: 'Exam Registration',\n            action: 'exam-registration',\n          },\n        ],\n      },\n    ],\n  },\n}"
         },
         {
           "name": "meta",
@@ -64942,6 +64942,36 @@
         "status": "low"
       },
       {
+        "filePath": "src/app/nav-items.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "CERTIFIED_NAV_ITEMS",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
+        "filePath": "src/app/nav-items.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "EXAMINER_NAV_ITEMS",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
+        "filePath": "src/app/nav-items.ts",
+        "type": "variable",
+        "linktype": "miscellaneous",
+        "linksubtype": "variable",
+        "name": "TRAINEE_NAV_ITEMS",
+        "coveragePercent": 0,
+        "coverageCount": "0/1",
+        "status": "low"
+      },
+      {
         "filePath": "src/app/oral-examination/oral-examination.component.ts",
         "type": "component",
         "linktype": "component",
@@ -66446,36 +66476,6 @@
         "linktype": "miscellaneous",
         "linksubtype": "function",
         "name": "validateStartAndEndDates",
-        "coveragePercent": 0,
-        "coverageCount": "0/1",
-        "status": "low"
-      },
-      {
-        "filePath": "src/app/side-navigation/nav-items.ts",
-        "type": "variable",
-        "linktype": "miscellaneous",
-        "linksubtype": "variable",
-        "name": "CERTIFIED_NAV_ITEMS",
-        "coveragePercent": 0,
-        "coverageCount": "0/1",
-        "status": "low"
-      },
-      {
-        "filePath": "src/app/side-navigation/nav-items.ts",
-        "type": "variable",
-        "linktype": "miscellaneous",
-        "linksubtype": "variable",
-        "name": "EXAMINER_NAV_ITEMS",
-        "coveragePercent": 0,
-        "coverageCount": "0/1",
-        "status": "low"
-      },
-      {
-        "filePath": "src/app/side-navigation/nav-items.ts",
-        "type": "variable",
-        "linktype": "miscellaneous",
-        "linksubtype": "variable",
-        "name": "TRAINEE_NAV_ITEMS",
         "coveragePercent": 0,
         "coverageCount": "0/1",
         "status": "low"
