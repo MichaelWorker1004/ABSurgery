@@ -88,7 +88,7 @@ export class OralExaminationsComponent implements OnInit {
           this.examHeaderId = 491;
         }
         if (featureFlags.ceScoreTestingDate) {
-          this.examDate = new Date('10/12/2023');
+          this.examDate = new Date('10/13/2023');
         }
       }
     });
