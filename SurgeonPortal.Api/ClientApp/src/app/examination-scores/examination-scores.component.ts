@@ -47,7 +47,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExaminationScoresComponent implements OnInit {
-  examHeaderId = 491; // TODO - remove hard coded value
+  examHeaderId = 481; // TODO - remove hard coded value
 
   // TODO: [Joe] - remove after release 1 as part of feature/1811
   @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
@@ -99,13 +99,17 @@ export class ExaminationScoresComponent implements OnInit {
   currentDay = new Date();
 
   constructor(private _store: Store) {
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    //this._store.dispatch(new GetExamTitle(this.examHeaderId));
     // TODO: [Joe] - remove after release 1 as part of feature/1811
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      if (featureFlags?.ceScoreTesting) {
+        this.examHeaderId = 491;
+      }
       if (featureFlags?.ceScoreTestingDate) {
         this.currentDay = new Date('10/12/2023');
       }
     });
+    this._store.dispatch(new GetExamTitle(this.examHeaderId));
   }
 
   ngOnInit(): void {

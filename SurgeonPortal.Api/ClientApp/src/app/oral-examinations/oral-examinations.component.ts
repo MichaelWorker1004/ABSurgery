@@ -52,7 +52,7 @@ export class OralExaminationsComponent implements OnInit {
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
-  examHeaderId = 491; // TODO - remove hard coded value
+  examHeaderId = 481; // TODO - remove hard coded value
   examDate: Date = new Date();
 
   examDateDisplay: Date = new Date();
@@ -82,14 +82,17 @@ export class OralExaminationsComponent implements OnInit {
     private _store: Store,
     private _translateService: TranslateService
   ) {
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
     this.featureFlags$?.pipe().subscribe((featureFlags) => {
       if (featureFlags) {
+        if (featureFlags.ceScoreTesting) {
+          this.examHeaderId = 491;
+        }
         if (featureFlags.ceScoreTestingDate) {
           this.examDate = new Date('10/12/2023');
         }
       }
     });
+    this._store.dispatch(new GetExamTitle(this.examHeaderId));
   }
 
   ngOnInit(): void {
