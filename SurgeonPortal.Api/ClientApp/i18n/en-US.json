@@ -75,9 +75,9 @@
       "LIST_DATE": "<strong>Date:</strong> {{date}}",
       "LIST_TITLE": "Start CE Exams",
       "SCORE_CARD": {
-        "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseId}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
-        "REMARKS_TITLE_NO_CASE": "Remarks for Case {{caseId}}",
-        "SCORE": "Score Case {{caseId}}"
+        "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseNumber}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
+        "REMARKS_TITLE_NO_CASE": "Remarks for Case {{caseNumber}}",
+        "SCORE": "Score Case {{caseNumber}}"
       },
       "SKIP": {
         "SUBTITLE": "You will be able to score this exam later if needed (e.g., after reviewing a recording)",

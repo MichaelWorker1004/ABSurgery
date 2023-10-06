@@ -87,9 +87,9 @@
         "SUBTITLE": "Start the clock and begin examination for {{name}}? <br/> Once you start the clock, you cannot undo this action and return to this session"
       },
       "SCORE_CARD": {
-        "SCORE": "Score Case {{caseId}}",
-        "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseId}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
-        "REMARKS_TITLE_NO_CASE": "Remarks for Case {{caseId}}"
+        "SCORE": "Score Case {{caseNumber}}",
+        "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseNumber}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
+        "REMARKS_TITLE_NO_CASE": "Remarks for Case {{caseNumber}}"
       }
     },
     "EXAMROSTERS": {
