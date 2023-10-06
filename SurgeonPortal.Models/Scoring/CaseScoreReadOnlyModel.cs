@@ -6,6 +6,7 @@ namespace SurgeonPortal.Models.Scoring
     {
         public int? ExamScoringId { get; set; }
         public int ExamCaseId { get; set; }
+        public int CaseId { get; set; }
         public int? ExaminerUserId { get; set; }
         public int? ExamineeUserId { get; set; }
         public string ExamineeFirstName { get; set; }
