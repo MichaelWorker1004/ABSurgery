@@ -24,9 +24,9 @@ namespace SurgeonPortal.Library.Scoring
 		public static readonly PropertyInfo<int> ExamCaseIdProperty = RegisterProperty<int>(c => c.ExamCaseId);
 
         [DataMember]
-		[DisplayName(nameof(CaseId))]
-        public int CaseId => ReadProperty(CaseIdProperty);
-		public static readonly PropertyInfo<int> CaseIdProperty = RegisterProperty<int>(c => c.CaseId);
+		[DisplayName(nameof(CaseNumber))]
+        public string CaseNumber => ReadProperty(CaseNumberProperty);
+		public static readonly PropertyInfo<string> CaseNumberProperty = RegisterProperty<string>(c => c.CaseNumber);
 
         [DataMember]
 		[DisplayName(nameof(ExaminerUserId))]
@@ -107,7 +107,7 @@ namespace SurgeonPortal.Library.Scoring
 		{
             LoadProperty(ExamScoringIdProperty, dto.ExamScoringId);
             LoadProperty(ExamCaseIdProperty, dto.ExamCaseId);
-            LoadProperty(CaseIdProperty, dto.CaseId);
+            LoadProperty(CaseNumberProperty, dto.CaseNumber);
             LoadProperty(ExaminerUserIdProperty, dto.ExaminerUserId);
             LoadProperty(ExamineeUserIdProperty, dto.ExamineeUserId);
             LoadProperty(ExamineeFirstNameProperty, dto.ExamineeFirstName);

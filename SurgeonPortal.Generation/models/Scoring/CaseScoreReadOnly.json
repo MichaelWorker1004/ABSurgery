@@ -26,13 +26,13 @@
       "rules": {}
     },
     {
-      "name": "CaseId",
-      "dataType": "int",
-      "maxLength": 4,
-      "precision": 10,
+      "name": "CaseNumber",
+      "dataType": "string",
+      "maxLength": 20,
+      "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
     },
