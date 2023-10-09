@@ -1,7 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
+interface HeaderLink {
+  display: string;
+  action: string;
+}
 
 @Component({
   selector: 'abs-dashboard-header',
@@ -11,27 +16,19 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./dashboard-header.component.scss'],
 })
 export class DashboardHeaderComponent {
-  @Output() handleSideNavToggle: EventEmitter<any> = new EventEmitter();
+  /**
+   * The links to display in the header
+   * @type {HeaderLink[]}
+   */
+  @Input() headerLinks: HeaderLink[] = [];
+  /**
+   * Whether or not to show the search bar
+   * @type {boolean}
+   */
+  @Input() showSearch = true;
 
+  @Output() handleSideNavToggle: EventEmitter<any> = new EventEmitter();
   searchText: string | undefined;
-  headerLinks = [
-    {
-      display: 'News',
-      action: 'https://www.absurgery.org/default.jsp?news_home_mb',
-    },
-    {
-      display: 'EPAs',
-      action: 'https://www.absurgery.org/default.jsp?epahome',
-    },
-    {
-      display: 'About',
-      action: 'https://www.absurgery.org/default.jsp?abouthome',
-    },
-    {
-      display: 'Contact',
-      action: 'https://www.absurgery.org/default.jsp?aboutcontact',
-    },
-  ];
 
   constructor(private _router: Router) {}
 

@@ -34,5 +34,48 @@ type Story = StoryObj<DashboardHeaderComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/angular/writing-stories/args
 export const Default: Story = {
-  args: {},
+  args: {
+    showSearch: true,
+    headerLinks: [
+      {
+        display: 'News',
+        action: 'https://www.absurgery.org/default.jsp?news_home_mb',
+      },
+      {
+        display: 'EPAs',
+        action: 'https://www.absurgery.org/default.jsp?epahome',
+      },
+      {
+        display: 'About',
+        action: 'https://www.absurgery.org/default.jsp?abouthome',
+      },
+      {
+        display: 'Contact',
+        action: 'https://www.absurgery.org/default.jsp?aboutcontact',
+      },
+    ],
+  },
+};
+
+export const CustomLinks: Story = {
+  args: {
+    ...Default.args,
+    headerLinks: [
+      {
+        display: 'Google',
+        action: 'https://www.google.com',
+      },
+      {
+        display: 'YouTube',
+        action: 'https://www.youtube.com',
+      },
+    ],
+  },
+};
+
+export const NoSearch: Story = {
+  args: {
+    ...Default.args,
+    showSearch: false,
+  },
 };

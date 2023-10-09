@@ -31,6 +31,8 @@
       }"
     >
       <abs-dashboard-header
+        [headerLinks]="headerLinks"
+        [showSearch]="true"
         (handleSideNavToggle)="handleSideNavToggle()"
         *ngIf="isAuthenticated && !isPasswordReset"
       ></abs-dashboard-header>

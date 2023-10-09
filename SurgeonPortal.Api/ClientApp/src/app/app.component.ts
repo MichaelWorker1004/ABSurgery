@@ -70,6 +70,24 @@ export class AppComponent implements OnInit {
   applicationName = 'The American Board Of Surgery';
 
   navItems: Array<IMenuItem> = [];
+  headerLinks = [
+    {
+      display: 'News',
+      action: 'https://www.absurgery.org/default.jsp?news_home_mb',
+    },
+    {
+      display: 'EPAs',
+      action: 'https://www.absurgery.org/default.jsp?epahome',
+    },
+    {
+      display: 'About',
+      action: 'https://www.absurgery.org/default.jsp?abouthome',
+    },
+    {
+      display: 'Contact',
+      action: 'https://www.absurgery.org/default.jsp?aboutcontact',
+    },
+  ];
 
   currentYear = new Date().getFullYear();
 
