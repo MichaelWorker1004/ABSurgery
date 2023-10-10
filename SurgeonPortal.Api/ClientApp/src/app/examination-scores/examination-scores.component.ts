@@ -106,7 +106,7 @@ export class ExaminationScoresComponent implements OnInit {
         this.examHeaderId = 491;
       }
       if (featureFlags?.ceScoreTestingDate) {
-        this.currentDay = new Date('10/13/2023');
+        this.currentDay = new Date('10/11/2023');
       }
     });
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
