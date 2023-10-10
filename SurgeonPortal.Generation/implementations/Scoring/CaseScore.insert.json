@@ -40,7 +40,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "ExamineeUserId"
+            "mapsTo": "ExaminerUserId"
           },
           {
             "name": "ExamineeUserId",
@@ -98,6 +98,11 @@
       "dataType": "int",
       "required": true,
       "substitution": "$UserId"
+    },
+    {
+      "name": "ExamineeUserId",
+      "dataType": "int",
+      "required": true
     },
     {
       "name": "ExamCaseId",
