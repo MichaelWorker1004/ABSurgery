@@ -88,7 +88,7 @@ export class CeScoringAppComponent implements OnInit {
           this.examHeaderId = 491;
         }
         if (featureFlags.ceScoreTestingDate) {
-          this.examinationDate = new Date('10/13/2023')
+          this.examinationDate = new Date('10/11/2023')
             .toISOString()
             .split('T')[0];
         }
