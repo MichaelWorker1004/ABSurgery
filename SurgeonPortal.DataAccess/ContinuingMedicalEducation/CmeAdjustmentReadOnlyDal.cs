@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.ContinuingMedicalEducation
                     "[dbo].[get_usercme_waivers_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

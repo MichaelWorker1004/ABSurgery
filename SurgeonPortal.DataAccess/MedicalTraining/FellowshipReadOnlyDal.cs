@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                     "[dbo].[get_userfellowships_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

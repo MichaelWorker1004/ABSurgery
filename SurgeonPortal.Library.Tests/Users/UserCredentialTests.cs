@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class UserCredentialTests : TestBase<string>
+	public class UserCredentialTests : TestBase<int>
     {
         private UserCredentialDto CreateValidDto()
         {     
@@ -37,7 +37,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .ReturnsAsync(Create<UserCredentialDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCredential, UserCredential>()
                 .WithBusinessObject<IPasswordValidationCommandFactory, PasswordValidationCommandFactory>()
@@ -59,7 +59,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCredential, UserCredential>()
                 .WithBusinessObject<IPasswordValidationCommandFactory, PasswordValidationCommandFactory>()
@@ -100,7 +100,7 @@ namespace SurgeonPortal.Library.Tests.Users
         //        .ReturnsAsync(dto);
         
         //    UseMockServiceProvider()
-        //        .WithMockedIdentity()
+        //        .WithMockedIdentity(1234, "SomeUser")
         //        .WithRegisteredInstance(mockDal)
         //        .WithBusinessObject<IUserCredential, UserCredential>()
         //        .WithRegisteredInstance(passwordValidationCommandFactory)
@@ -157,7 +157,7 @@ namespace SurgeonPortal.Library.Tests.Users
         //        .ReturnsAsync(dto);
         
         //    UseMockServiceProvider()
-        //        .WithMockedIdentity()
+        //        .WithMockedIdentity(1234, "SomeUser")
         //        .WithRegisteredInstance(mockDal)
         //        .WithBusinessObject<IUserCredential, UserCredential>()
         //        .WithRegisteredInstance(passwordValidationCommandFactory)

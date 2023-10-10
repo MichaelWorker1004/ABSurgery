@@ -57,7 +57,7 @@ namespace SurgeonPortal.Library.Documents
 		public Guid StreamId
 		{
 			get { return GetProperty(StreamIdProperty); }
-            private set { SetProperty(StreamIdProperty, value); }
+			 private set { SetProperty(StreamIdProperty, value); }
 		}
 		public static readonly PropertyInfo<Guid> StreamIdProperty = RegisterProperty<Guid>(c => c.StreamId);
 
@@ -135,6 +135,10 @@ namespace SurgeonPortal.Library.Documents
         {
             
 
+            
+
+            
+
         }
 
 
@@ -186,7 +190,9 @@ namespace SurgeonPortal.Library.Documents
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _documentDal.GetByIdAsync(criteria.Id);
+                var dto = await _documentDal.GetByIdAsync(
+                    criteria.Id,
+                    _identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -205,6 +211,14 @@ namespace SurgeonPortal.Library.Documents
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedAtUserIdProperty, _identity.GetUserId<int>());
+        
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

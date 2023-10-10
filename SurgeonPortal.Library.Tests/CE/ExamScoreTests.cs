@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.CE
 {
     [TestFixture] 
-	public class ExamScoreTests : TestBase<string>
+	public class ExamScoreTests : TestBase<int>
     {
         private ExamScoreDto CreateValidDto()
         {     
@@ -44,14 +44,16 @@ namespace SurgeonPortal.Library.Tests.CE
                 .ReturnsAsync(Create<ExamScoreDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamScore, ExamScore>()
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(expectedExamScheduleScoreId);
+            var sut = await factory.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId);
         
             mockDal.VerifyAll();
         }
@@ -62,18 +64,22 @@ namespace SurgeonPortal.Library.Tests.CE
             var dto = CreateValidDto();
         
             var mockDal = new Mock<IExamScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(
+                It.IsAny<int>(),
+                It.IsAny<int>()))
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamScore, ExamScore>()
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(
+                Create<int>(),
+                Create<int>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -94,7 +100,7 @@ namespace SurgeonPortal.Library.Tests.CE
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamScore, ExamScore>()
@@ -105,7 +111,6 @@ namespace SurgeonPortal.Library.Tests.CE
             
             sut.ExamScheduleScoreId = dto.ExamScheduleScoreId;
             sut.ExamScheduleId = dto.ExamScheduleId;
-            sut.ExaminerUserId = dto.ExaminerUserId;
             sut.ExaminerScore = dto.ExaminerScore;
             sut.Submitted = dto.Submitted;
             sut.SubmittedDateTimeUTC = dto.SubmittedDateTimeUTC;
@@ -125,7 +130,6 @@ namespace SurgeonPortal.Library.Tests.CE
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.ExamScheduleScoreId)
-                .Excluding(m => m.ExaminerUserId)
                 .Excluding(m => m.ExaminerScore)
                 .Excluding(m => m.Submitted)
                 .Excluding(m => m.SubmittedDateTimeUTC)
@@ -148,7 +152,7 @@ namespace SurgeonPortal.Library.Tests.CE
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamScore, ExamScore>()
@@ -182,25 +186,28 @@ namespace SurgeonPortal.Library.Tests.CE
             ExamScoreDto passedDto = null;
         
             var mockDal = new Mock<IExamScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleScoreId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId))
                         .ReturnsAsync(dto);
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<ExamScoreDto>()))
                 .Callback<ExamScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamScore, ExamScore>()
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(expectedExamScheduleScoreId);
+            var sut = await factory.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId);
             
             sut.ExamScheduleScoreId = dto.ExamScheduleScoreId;
             sut.ExamScheduleId = dto.ExamScheduleId;
-            sut.ExaminerUserId = dto.ExaminerUserId;
             sut.ExaminerScore = dto.ExaminerScore;
             sut.Submitted = dto.Submitted;
             sut.SubmittedDateTimeUTC = dto.SubmittedDateTimeUTC;
@@ -215,7 +222,6 @@ namespace SurgeonPortal.Library.Tests.CE
         
             sut.ExamScheduleScoreId = dto.ExamScheduleScoreId;
             sut.ExamScheduleId = dto.ExamScheduleId;
-            sut.ExaminerUserId = dto.ExaminerUserId;
             sut.ExaminerScore = dto.ExaminerScore;
             sut.Submitted = dto.Submitted;
             sut.SubmittedDateTimeUTC = dto.SubmittedDateTimeUTC;
@@ -235,7 +241,6 @@ namespace SurgeonPortal.Library.Tests.CE
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.ExamScheduleId)
-                    .Excluding(m => m.ExaminerUserId)
                     .Excluding(m => m.Submitted)
                     .Excluding(m => m.SubmittedDateTimeUTC)
                     .Excluding(m => m.CreatedByUserId)
@@ -255,20 +260,24 @@ namespace SurgeonPortal.Library.Tests.CE
             var dto = Create<ExamScoreDto>();
         
             var mockDal = new Mock<IExamScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleScoreId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId))
                         .ReturnsAsync(Create<ExamScoreDto>());
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<ExamScoreDto>()))
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamScore, ExamScore>()
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(expectedExamScheduleScoreId);
+            var sut = await factory.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId);
             sut.ExamScheduleScoreId = Create<int>();
         
             await sut.SaveAsync();

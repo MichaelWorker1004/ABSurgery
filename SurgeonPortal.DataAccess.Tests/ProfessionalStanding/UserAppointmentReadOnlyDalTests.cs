@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
 {
-	public class UserAppointmentReadOnlyDalTests : TestBase<string>
+	public class UserAppointmentReadOnlyDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         

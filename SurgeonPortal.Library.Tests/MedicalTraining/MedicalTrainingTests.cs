@@ -11,7 +11,7 @@ using MedicalTrainingNamespace = SurgeonPortal.Library.MedicalTraining;
 namespace SurgeonPortal.Library.Tests.MedicalTraining
 {
     [TestFixture] 
-	public class MedicalTrainingTests : TestBase<string>
+	public class MedicalTrainingTests : TestBase<int>
     {
         private MedicalTrainingDto CreateValidDto()
         {     
@@ -53,7 +53,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -84,7 +84,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -108,7 +108,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -139,7 +139,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -163,7 +163,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -194,7 +194,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -218,7 +218,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -249,7 +249,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -273,7 +273,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -304,7 +304,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -328,7 +328,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -359,7 +359,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -383,7 +383,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -414,7 +414,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -438,7 +438,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -469,7 +469,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -493,7 +493,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -524,7 +524,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -548,7 +548,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -579,7 +579,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -603,7 +603,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -634,7 +634,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                     .Build();
@@ -660,7 +660,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(Create<MedicalTrainingDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                 .Build();
@@ -681,7 +681,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                 .Build();
@@ -708,7 +708,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                 .Build();
@@ -772,7 +772,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                 .Build();
@@ -811,7 +811,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                 .Build();
@@ -901,7 +901,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
                 .Build();

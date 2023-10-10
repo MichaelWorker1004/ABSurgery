@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Examinations
 {
     [TestFixture] 
-	public class ExamHistoryReadOnlyListTests : TestBase<string>
+	public class ExamHistoryReadOnlyListTests : TestBase<int>
     {
 
         [Test]
@@ -22,6 +22,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
                 .ReturnsAsync(CreateMany<ExamHistoryReadOnlyDto>());
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamHistoryReadOnlyList, ExamHistoryReadOnlyList>()
@@ -44,6 +45,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamHistoryReadOnlyList, ExamHistoryReadOnlyList>()

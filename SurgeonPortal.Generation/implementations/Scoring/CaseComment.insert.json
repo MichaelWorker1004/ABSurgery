@@ -40,7 +40,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           },
           {
             "name": "CaseContentId",
@@ -67,7 +67,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -142,6 +142,12 @@
   ],
   "inputParameters": [
     {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
       "name": "CaseContentId",
       "dataType": "int",
       "required": true
@@ -150,6 +156,12 @@
       "name": "Comments",
       "dataType": "string",
       "required": true
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

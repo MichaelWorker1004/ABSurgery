@@ -37,7 +37,7 @@ namespace SurgeonPortal.DataAccess.ContinuingMedicalEducation
                     "[dbo].[get_usercme_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

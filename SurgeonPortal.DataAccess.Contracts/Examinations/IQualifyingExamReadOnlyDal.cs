@@ -4,6 +4,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Examinations
 {
     public interface IQualifyingExamReadOnlyDal
     {
-        Task<QualifyingExamReadOnlyDto> GetAsync();
+        Task<QualifyingExamReadOnlyDto> GetAsync(System.Collections.Generic.List`1[System.String]);
     }
 }

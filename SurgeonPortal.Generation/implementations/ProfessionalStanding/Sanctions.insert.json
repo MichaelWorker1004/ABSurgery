@@ -40,7 +40,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           },
           {
             "name": "HadDrugAlchoholTreatment",
@@ -112,7 +112,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "CreatedByUserId"
           },
           {
             "name": "LastUpdatedByUserId",
@@ -121,7 +121,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "LastUpdatedByUserId"
           }
         ],
         "recordsets": [
@@ -266,6 +266,12 @@
   ],
   "inputParameters": [
     {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
       "name": "HadDrugAlchoholTreatment",
       "dataType": "bool",
       "required": true
@@ -299,6 +305,18 @@
       "name": "Explanation",
       "dataType": "string",
       "required": true
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

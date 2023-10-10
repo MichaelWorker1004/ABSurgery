@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
 {
-	public class MedicalLicenseDalTests : TestBase<string>
+	public class MedicalLicenseDalTests : TestBase<int>
     {
         #region DeleteAsync
                 

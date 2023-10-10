@@ -4,6 +4,6 @@ namespace SurgeonPortal.Library.Contracts.ContinuingMedicalEducation
 {
     public interface ICmeCreditReadOnlyFactory
     {
-        Task<ICmeCreditReadOnly> GetByIdAsync(int cmeId);
+        Task<ICmeCreditReadOnly> GetByIdAsync(System.Collections.Generic.List`1[System.String]);
     }
 }

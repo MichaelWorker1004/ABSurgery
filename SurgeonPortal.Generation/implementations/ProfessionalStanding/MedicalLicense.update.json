@@ -49,7 +49,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           },
           {
             "name": "IssuingStateId",
@@ -221,6 +221,12 @@
       "name": "LicenseId",
       "dataType": "int",
       "required": true
+    },
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     },
     {
       "name": "IssuingStateId",

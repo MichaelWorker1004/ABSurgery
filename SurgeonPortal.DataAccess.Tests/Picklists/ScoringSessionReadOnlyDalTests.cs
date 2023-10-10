@@ -9,7 +9,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Picklists
 {
-	public class ScoringSessionReadOnlyDalTests : TestBase<string>
+	public class ScoringSessionReadOnlyDalTests : TestBase<int>
     {
         #region GetByKeysAsync
         

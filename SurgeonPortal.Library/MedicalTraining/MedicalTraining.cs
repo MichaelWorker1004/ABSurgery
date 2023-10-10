@@ -83,7 +83,7 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public string MedicalSchoolStateId
 		{
 			get { return GetProperty(MedicalSchoolStateIdProperty); }
-			set { LoadProperty(MedicalSchoolStateIdProperty, value); }
+			set { SetProperty(MedicalSchoolStateIdProperty, value); }
 		}
 		public static readonly PropertyInfo<string> MedicalSchoolStateIdProperty = RegisterProperty<string>(c => c.MedicalSchoolStateId);
 
@@ -223,6 +223,11 @@ namespace SurgeonPortal.Library.MedicalTraining
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

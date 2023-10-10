@@ -15,7 +15,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class AppUserReadOnlyTests : TestBase<string>
+	public class AppUserReadOnlyTests : TestBase<int>
     {
         #region GetByCredentialsAsync
         

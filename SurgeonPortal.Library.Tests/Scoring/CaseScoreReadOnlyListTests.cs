@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Scoring
 {
     [TestFixture] 
-	public class CaseScoreReadOnlyListTests : TestBase<string>
+	public class CaseScoreReadOnlyListTests : TestBase<int>
     {
 
         [Test]

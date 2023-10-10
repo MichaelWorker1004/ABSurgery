@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 {
     [TestFixture] 
-	public class UserAppointmentTests : TestBase<string>
+	public class UserAppointmentTests : TestBase<int>
     {
         private UserAppointmentDto CreateValidDto()
         {     
@@ -53,7 +53,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .Returns(Task.CompletedTask);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -92,7 +92,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(Create<UserAppointmentDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -114,7 +114,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -142,7 +142,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -196,7 +196,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -237,7 +237,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -312,7 +312,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()

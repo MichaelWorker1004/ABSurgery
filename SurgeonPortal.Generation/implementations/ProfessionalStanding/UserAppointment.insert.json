@@ -40,7 +40,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           },
           {
             "name": "PracticeTypeId",
@@ -112,7 +112,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -257,6 +257,12 @@
   ],
   "inputParameters": [
     {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
       "name": "PracticeTypeId",
       "dataType": "int",
       "required": true
@@ -290,6 +296,12 @@
       "name": "Other",
       "dataType": "string",
       "required": true
+    },
+    {
+      "name": "LastUpdatedUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

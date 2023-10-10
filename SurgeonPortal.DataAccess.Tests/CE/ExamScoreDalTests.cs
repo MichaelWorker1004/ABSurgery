@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.CE
 {
-	public class ExamScoreDalTests : TestBase<string>
+	public class ExamScoreDalTests : TestBase<int>
     {
         #region GetByIdAsync
         
@@ -44,7 +44,9 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             sqlManager.AddRecord(expectedDto);
         
             var sut = new ExamScoreDal(sqlManager);
-            var result = await sut.GetByIdAsync(Create<int>());
+            var result = await sut.GetByIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -70,6 +72,7 @@ namespace SurgeonPortal.DataAccess.Tests.CE
                 new
                 {
                     ExamScheduleId = expectedDto.ExamScheduleId,
+                    ExaminerUserId = expectedDto.ExaminerUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -112,6 +115,7 @@ namespace SurgeonPortal.DataAccess.Tests.CE
                 {
                     ExamScheduleScoreId = expectedDto.ExamScheduleScoreId,
                     ExaminerScore = expectedDto.ExaminerScore,
+                    ExaminerUserId = expectedDto.ExaminerUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

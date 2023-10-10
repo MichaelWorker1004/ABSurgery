@@ -40,7 +40,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -183,7 +183,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s ProfessionalStanding\\Sanctions.GetByUserId Sanctions -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  ProfessionalStanding\\Sanctions.GetByUserId Sanctions -t=ytg-framework/editable-get -p:Model=ProfessionalStanding\\Sanctions -p:Adapter=sp:ABSSP-[dbo].[get_user_professional_standing_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Sanctions -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\UserProfessionalStandingController -p:ControllerRoute=api/professional-standing -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

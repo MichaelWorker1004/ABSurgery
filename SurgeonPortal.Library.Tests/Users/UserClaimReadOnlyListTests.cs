@@ -11,7 +11,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class UserClaimReadOnlyListTests : TestBase<string>
+	public class UserClaimReadOnlyListTests : TestBase<int>
     {
 
         //[Test]

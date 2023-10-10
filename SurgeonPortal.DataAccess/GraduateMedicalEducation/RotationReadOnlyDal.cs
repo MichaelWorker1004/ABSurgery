@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                     "[dbo].[get_gmerotations_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

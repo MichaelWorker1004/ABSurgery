@@ -5,7 +5,7 @@ namespace SurgeonPortal.DataAccess.Contracts.ContinuingMedicalEducation
 {
     public interface ICmeCreditReadOnlyDal
     {
-        Task<CmeCreditReadOnlyDto> GetByIdAsync(int cmeId);
-        Task<IEnumerable<CmeCreditReadOnlyDto>> GetByUserIdAsync();
+        Task<CmeCreditReadOnlyDto> GetByIdAsync(System.Collections.Generic.List`1[System.String]);
+        Task<IEnumerable<CmeCreditReadOnlyDto>> GetByUserIdAsync(System.Collections.Generic.List`1[System.String]);
     }
 }

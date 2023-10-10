@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Examiners
 {
-	public class ConflictReadOnlyDalTests : TestBase<string>
+	public class ConflictReadOnlyDalTests : TestBase<int>
     {
         #region GetByExamHeaderIdAsync
         

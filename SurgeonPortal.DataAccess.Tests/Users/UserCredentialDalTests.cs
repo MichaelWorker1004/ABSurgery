@@ -9,7 +9,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class UserCredentialDalTests : TestBase<string>
+	public class UserCredentialDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         

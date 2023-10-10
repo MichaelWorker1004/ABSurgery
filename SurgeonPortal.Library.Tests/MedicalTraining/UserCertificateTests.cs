@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.MedicalTraining
 {
     [TestFixture] 
-	public class UserCertificateTests : TestBase<string>
+	public class UserCertificateTests : TestBase<int>
     {
         private UserCertificateDto CreateValidDto()
         {     
@@ -51,7 +51,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Returns(Task.CompletedTask);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
@@ -89,7 +89,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(Create<UserCertificateDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
@@ -110,7 +110,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
@@ -137,7 +137,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
@@ -189,7 +189,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();

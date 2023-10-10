@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
 {
-	public class FellowshipDalTests : TestBase<string>
+	public class FellowshipDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -92,9 +92,11 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
             var p =
                 new
                 {
+                    UserId = expectedDto.,
                     ProgramName = expectedDto.ProgramName,
                     CompletionYear = expectedDto.CompletionYear,
                     ProgramOther = expectedDto.ProgramOther,
+                    CreatedByUserId = expectedDto.,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -136,9 +138,11 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
                 new
                 {
                     Id = expectedDto.Id,
+                    UserId = expectedDto.,
                     ProgramName = expectedDto.ProgramName,
                     CompletionYear = expectedDto.CompletionYear,
                     ProgramOther = expectedDto.ProgramOther,
+                    LastUpdatedByUserId = expectedDto.,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

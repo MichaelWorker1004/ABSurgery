@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class CaseCommentDalTests : TestBase<string>
+	public class CaseCommentDalTests : TestBase<int>
     {
         #region DeleteAsync
                 

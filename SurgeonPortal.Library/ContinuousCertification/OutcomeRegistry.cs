@@ -238,7 +238,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _outcomeRegistryDal.GetByUserIdAsync();
+                var dto = await _outcomeRegistryDal.GetByUserIdAsync(_identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -248,6 +248,13 @@ namespace SurgeonPortal.Library.ContinuousCertification
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+        
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

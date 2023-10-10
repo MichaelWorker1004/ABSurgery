@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.MedicalTraining
 {
     [TestFixture] 
-	public class FellowshipReadOnlyListTests : TestBase<string>
+	public class FellowshipReadOnlyListTests : TestBase<int>
     {
 
         [Test]
@@ -22,7 +22,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(CreateMany<FellowshipReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IFellowshipReadOnlyList, FellowshipReadOnlyList>()
                 .WithBusinessObject<IFellowshipReadOnly, FellowshipReadOnly>()
@@ -44,7 +44,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IFellowshipReadOnlyList, FellowshipReadOnlyList>()
                 .WithBusinessObject<IFellowshipReadOnly, FellowshipReadOnly>()

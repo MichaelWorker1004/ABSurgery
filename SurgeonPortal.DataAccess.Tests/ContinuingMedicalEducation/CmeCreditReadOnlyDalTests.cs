@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.ContinuingMedicalEducation
 {
-	public class CmeCreditReadOnlyDalTests : TestBase<string>
+	public class CmeCreditReadOnlyDalTests : TestBase<int>
     {
         #region GetByIdAsync
         
@@ -82,7 +82,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuingMedicalEducation
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new CmeCreditReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

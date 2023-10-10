@@ -229,7 +229,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -567,6 +567,12 @@
       "name": "UserConfirmedDateUtc",
       "dataType": "datetime",
       "required": true
+    },
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

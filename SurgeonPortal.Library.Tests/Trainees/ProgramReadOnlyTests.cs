@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Trainees
 {
     [TestFixture] 
-	public class ProgramReadOnlyTests : TestBase<string>
+	public class ProgramReadOnlyTests : TestBase<int>
     {
         private ProgramReadOnlyDto CreateValidDto()
         {     
@@ -40,7 +40,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
                 .ReturnsAsync(Create<ProgramReadOnlyDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IProgramReadOnly, ProgramReadOnly>()
@@ -62,7 +62,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IProgramReadOnly, ProgramReadOnly>()

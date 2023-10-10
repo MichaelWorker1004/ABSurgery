@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Documents
 {
-	public class DocumentDalTests : TestBase<string>
+	public class DocumentDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -95,10 +95,12 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             var p =
                 new
                 {
+                    UserId = expectedDto.,
                     StreamId = expectedDto.StreamId,
                     DocumentName = expectedDto.DocumentName,
                     DocumentTypeId = expectedDto.DocumentTypeId,
                     InternalViewOnly = expectedDto.InternalViewOnly,
+                    CreatedByUserId = expectedDto.,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

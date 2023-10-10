@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Picklists
 {
     [TestFixture] 
-	public class AccreditedProgramInstitutionReadOnlyListTests : TestBase<string>
+	public class AccreditedProgramInstitutionReadOnlyListTests : TestBase<int>
     {
 
         [Test]

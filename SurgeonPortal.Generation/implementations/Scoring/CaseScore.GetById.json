@@ -49,7 +49,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "ExaminerUserId"
           }
         ],
         "recordsets": [
@@ -217,6 +217,12 @@
       "name": "ExamScoringId",
       "dataType": "int",
       "required": true
+    },
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

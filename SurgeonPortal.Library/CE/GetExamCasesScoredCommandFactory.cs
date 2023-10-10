@@ -8,7 +8,9 @@ namespace SurgeonPortal.Library.CE
 {
     public class GetExamCasesScoredCommandFactory : IGetExamCasesScoredCommandFactory
     {
-        public IGetExamCasesScoredCommand GetExamCasesScored(int examScheduleId)
+        public IGetExamCasesScoredCommand GetExamCasesScored(
+            int examScheduleId,
+            int examinerUserId)
         {
             if(!GetExamCasesScoredCommand.CanExecuteCommand())
             {
@@ -19,6 +21,7 @@ namespace SurgeonPortal.Library.CE
         	    as GetExamCasesScoredCommand;
         
                 cmd.ExamScheduleId = examScheduleId;
+                cmd.ExaminerUserId = examinerUserId;
         
             return DataPortal.Execute(cmd);
         }

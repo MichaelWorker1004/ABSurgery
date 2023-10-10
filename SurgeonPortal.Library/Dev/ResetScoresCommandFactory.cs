@@ -8,7 +8,7 @@ namespace SurgeonPortal.Library.Dev
 {
     public class ResetScoresCommandFactory : IResetScoresCommandFactory
     {
-        public async Task<IResetScoresCommand> ResetExamScoresAsync()
+        public async Task<IResetScoresCommand> ResetExamScoresAsync(int examinerUserId)
         {
             if(!ResetScoresCommand.CanExecuteCommand())
             {
@@ -18,6 +18,7 @@ namespace SurgeonPortal.Library.Dev
             var cmd = ApplicationContext.DataPortalActivator.CreateInstance(typeof(IResetScoresCommand))
         	    as ResetScoresCommand;
         
+                cmd.ExaminerUserId = examinerUserId;
         
             return await DataPortal.ExecuteAsync(cmd);
         }

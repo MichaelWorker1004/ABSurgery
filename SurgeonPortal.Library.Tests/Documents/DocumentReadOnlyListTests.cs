@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Documents
 {
     [TestFixture] 
-	public class DocumentReadOnlyListTests : TestBase<string>
+	public class DocumentReadOnlyListTests : TestBase<int>
     {
 
         [Test]
@@ -22,7 +22,7 @@ namespace SurgeonPortal.Library.Tests.Documents
                 .ReturnsAsync(CreateMany<DocumentReadOnlyDto>());
         
             UseMockServiceProvider()
-                
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocumentReadOnlyList, DocumentReadOnlyList>()
                 .WithBusinessObject<IDocumentReadOnly, DocumentReadOnly>()
@@ -44,7 +44,7 @@ namespace SurgeonPortal.Library.Tests.Documents
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
-                
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocumentReadOnlyList, DocumentReadOnlyList>()
                 .WithBusinessObject<IDocumentReadOnly, DocumentReadOnly>()

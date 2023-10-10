@@ -32,7 +32,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "ExaminerUserId"
           },
           {
             "name": "CaseHeaderId",
@@ -115,6 +115,12 @@
     }
   ],
   "inputParameters": [
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
     {
       "name": "CaseHeaderId",
       "dataType": "int",

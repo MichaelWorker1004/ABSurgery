@@ -22,7 +22,7 @@ namespace SurgeonPortal.DataAccess.Examiners
                     "[dbo].[get_examiner_agenda]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                             ExamHeaderId = examHeaderId,
                         });
                         

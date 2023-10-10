@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Examinations
                     "[dbo].[get_userexamhistory]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

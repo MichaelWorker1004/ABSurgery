@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class IsExamSessionLockedCommandDalTests : TestBase<string>
+	public class IsExamSessionLockedCommandDalTests : TestBase<int>
     {
         #region IsExamSessionLocked
         

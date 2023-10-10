@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Examinations
 {
     [TestFixture] 
-	public class ExamTitleReadOnlyTests : TestBase<string>
+	public class ExamTitleReadOnlyTests : TestBase<int>
     {
 
         #region GetByExamIdAsync
@@ -25,6 +25,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
                 .ReturnsAsync(Create<ExamTitleReadOnlyDto>());
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamTitleReadOnly, ExamTitleReadOnly>()
@@ -46,6 +47,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamTitleReadOnly, ExamTitleReadOnly>()

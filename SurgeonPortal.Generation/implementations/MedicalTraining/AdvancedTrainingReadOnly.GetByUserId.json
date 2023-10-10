@@ -33,7 +33,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -126,7 +126,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s MedicalTraining\\AdvancedTrainingReadOnly.GetByUserId AdvancedTrainingReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\AdvancedTrainingReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_advanced_training_by_userid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AdvancedTrainingReadOnly -p:Route=by-userid -p:ControllerName=MedicalTraining\\AdvancedTrainingController -p:ControllerRoute=api/advanced-training -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  MedicalTraining\\AdvancedTrainingReadOnly.GetByUserId AdvancedTrainingReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\AdvancedTrainingReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_advanced_training_by_userid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AdvancedTrainingReadOnly -p:Route=by-userid -p:ControllerName=MedicalTraining\\AdvancedTrainingController -p:ControllerRoute=api/advanced-training -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

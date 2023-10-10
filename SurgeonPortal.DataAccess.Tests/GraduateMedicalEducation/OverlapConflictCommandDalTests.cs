@@ -9,7 +9,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
 {
-	public class OverlapConflictCommandDalTests : TestBase<string>
+	public class OverlapConflictCommandDalTests : TestBase<int>
     {
         #region CheckOverlapConflicts
         

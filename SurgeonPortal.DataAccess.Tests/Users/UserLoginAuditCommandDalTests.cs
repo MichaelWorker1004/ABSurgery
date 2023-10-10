@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class UserLoginAuditCommandDalTests : TestBase<string>
+	public class UserLoginAuditCommandDalTests : TestBase<int>
     {
         #region AuditAsync
         

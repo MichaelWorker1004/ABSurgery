@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
 {
     [TestFixture] 
-	public class RotationGapReadOnlyListTests : TestBase<string>
+	public class RotationGapReadOnlyListTests : TestBase<int>
     {
 
         [Test]
@@ -22,6 +22,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .ReturnsAsync(CreateMany<RotationGapReadOnlyDto>());
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotationGapReadOnlyList, RotationGapReadOnlyList>()
@@ -44,6 +45,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotationGapReadOnlyList, RotationGapReadOnlyList>()

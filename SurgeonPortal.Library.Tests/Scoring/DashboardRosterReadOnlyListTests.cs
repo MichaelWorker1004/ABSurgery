@@ -11,7 +11,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Scoring
 {
     [TestFixture] 
-	public class DashboardRosterReadOnlyListTests : TestBase<string>
+	public class DashboardRosterReadOnlyListTests : TestBase<int>
     {
 
         [Test]

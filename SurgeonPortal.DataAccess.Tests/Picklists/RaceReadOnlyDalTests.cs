@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Picklists
 {
-	public class RaceReadOnlyDalTests : TestBase<string>
+	public class RaceReadOnlyDalTests : TestBase<int>
     {
         #region GetAllAsync
         

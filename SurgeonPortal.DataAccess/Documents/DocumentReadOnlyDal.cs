@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Documents
                     "[dbo].[get_documents_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

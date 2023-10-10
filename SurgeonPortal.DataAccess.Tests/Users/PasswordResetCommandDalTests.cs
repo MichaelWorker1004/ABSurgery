@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class PasswordResetCommandDalTests : TestBase<string>
+	public class PasswordResetCommandDalTests : TestBase<int>
     {
         #region ResetPasswordAsync
         

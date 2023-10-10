@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 {
     [TestFixture] 
-	public class SanctionsTests : TestBase<string>
+	public class SanctionsTests : TestBase<int>
     {
         private SanctionsDto CreateValidDto()
         {     
@@ -46,7 +46,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(Create<SanctionsDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
@@ -68,7 +68,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
@@ -96,7 +96,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
@@ -150,7 +150,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
@@ -190,7 +190,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()
@@ -265,7 +265,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ISanctions, Sanctions>()

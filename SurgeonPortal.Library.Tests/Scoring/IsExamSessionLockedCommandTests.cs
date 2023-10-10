@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Scoring
 {
     [TestFixture] 
-	public class IsExamSessionLockedCommandTests : TestBase<string>
+	public class IsExamSessionLockedCommandTests : TestBase<int>
     {
         private IsExamSessionLockedCommandDto CreateValidDto()
         {     

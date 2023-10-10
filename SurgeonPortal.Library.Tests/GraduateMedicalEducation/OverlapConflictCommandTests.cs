@@ -11,7 +11,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
 {
     [TestFixture] 
-	public class OverlapConflictCommandTests : TestBase<string>
+	public class OverlapConflictCommandTests : TestBase<int>
     {
         private OverlapConflictCommandDto CreateValidDto()
         {     
@@ -47,6 +47,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .Returns(dto);
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOverlapConflictCommand, OverlapConflictCommand>()

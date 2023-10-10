@@ -4,7 +4,7 @@ namespace SurgeonPortal.Library.Contracts.MedicalTraining
 {
     public interface IFellowshipFactory
     {
-        Task<IFellowship> GetByIdAsync(int id);
+        Task<IFellowship> GetByIdAsync(System.Collections.Generic.List`1[System.String]);
         IFellowship Create();
     }
 }

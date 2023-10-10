@@ -141,6 +141,11 @@ namespace SurgeonPortal.Library.MedicalTraining
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

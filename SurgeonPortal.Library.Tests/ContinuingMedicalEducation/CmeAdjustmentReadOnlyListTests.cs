@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
 {
     [TestFixture] 
-	public class CmeAdjustmentReadOnlyListTests : TestBase<string>
+	public class CmeAdjustmentReadOnlyListTests : TestBase<int>
     {
 
         [Test]
@@ -22,6 +22,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .ReturnsAsync(CreateMany<CmeAdjustmentReadOnlyDto>());
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICmeAdjustmentReadOnlyList, CmeAdjustmentReadOnlyList>()
@@ -29,7 +30,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeAdjustmentReadOnlyListFactory();
-            var sut = await factory.GetByUserIdAsync();
+            var sut = await factory.GetByUserIdAsync(expectedUserId);
         
             mockDal.VerifyAll();
         }
@@ -40,10 +41,11 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
             var expectedDtos = CreateMany<CmeAdjustmentReadOnlyDto>();
         
             var mockDal = new Mock<ICmeAdjustmentReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<int>()))
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICmeAdjustmentReadOnlyList, CmeAdjustmentReadOnlyList>()
@@ -51,7 +53,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeAdjustmentReadOnlyListFactory();
-            var sut = await factory.GetByUserIdAsync();
+            var sut = await factory.GetByUserIdAsync(Create<int>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

@@ -78,7 +78,8 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
         [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] IOutcomeRegistryFactory outcomeRegistryFactory,
-            [FromBody] OutcomeRegistryModel model)
+            [FromBody] OutcomeRegistryModel model,
+            int userId)
         {
             var item = await outcomeRegistryFactory.GetByUserIdAsync();
             AssignEditProperties(item, model);
@@ -88,6 +89,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
 
         private void AssignCreateProperties(IOutcomeRegistry entity, OutcomeRegistryModel model)
         {
+            entity.UserId = model.UserId;
             entity.SurgeonSpecificRegistry = model.SurgeonSpecificRegistry;
             entity.RegistryComments = model.RegistryComments;
             entity.RegisteredWithACHQC = model.RegisteredWithACHQC;
@@ -134,6 +136,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
             entity.RegisteredWithELSO = model.RegisteredWithELSO;
             entity.UserConfirmed = model.UserConfirmed;
             entity.UserConfirmedDateUtc = model.UserConfirmedDateUtc;
+            entity.UserId = model.UserId;
         }
     }
 }

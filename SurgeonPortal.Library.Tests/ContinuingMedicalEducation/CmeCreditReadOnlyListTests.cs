@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
 {
     [TestFixture] 
-	public class CmeCreditReadOnlyListTests : TestBase<string>
+	public class CmeCreditReadOnlyListTests : TestBase<int>
     {
 
         [Test]
@@ -22,6 +22,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .ReturnsAsync(CreateMany<CmeCreditReadOnlyDto>());
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICmeCreditReadOnlyList, CmeCreditReadOnlyList>()
@@ -29,7 +30,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeCreditReadOnlyListFactory();
-            var sut = await factory.GetByUserIdAsync();
+            var sut = await factory.GetByUserIdAsync(expectedUserId);
         
             mockDal.VerifyAll();
         }
@@ -40,10 +41,11 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
             var expectedDtos = CreateMany<CmeCreditReadOnlyDto>();
         
             var mockDal = new Mock<ICmeCreditReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<int>()))
                 .ReturnsAsync(expectedDtos);
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICmeCreditReadOnlyList, CmeCreditReadOnlyList>()
@@ -51,7 +53,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeCreditReadOnlyListFactory();
-            var sut = await factory.GetByUserIdAsync();
+            var sut = await factory.GetByUserIdAsync(Create<int>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

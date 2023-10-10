@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Scoring
 {
     [TestFixture] 
-	public class CaseFeedbackTests : TestBase<string>
+	public class CaseFeedbackTests : TestBase<int>
     {
         private CaseFeedbackDto CreateValidDto()
         {     
@@ -46,7 +46,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .Returns(Task.CompletedTask);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
@@ -85,7 +85,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(Create<CaseFeedbackDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
                 .Build();
@@ -106,7 +106,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
                 .Build();
@@ -131,7 +131,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(Create<CaseFeedbackDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
@@ -153,7 +153,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
@@ -181,7 +181,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
@@ -225,7 +225,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
@@ -266,7 +266,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
@@ -325,7 +325,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()

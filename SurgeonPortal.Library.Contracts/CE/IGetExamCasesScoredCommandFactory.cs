@@ -4,6 +4,6 @@ namespace SurgeonPortal.Library.Contracts.CE
 {
     public interface IGetExamCasesScoredCommandFactory
     {
-        IGetExamCasesScoredCommand GetExamCasesScored(int examScheduleId);
+        IGetExamCasesScoredCommand GetExamCasesScored(System.Collections.Generic.List`1[System.String]);
     }
 }

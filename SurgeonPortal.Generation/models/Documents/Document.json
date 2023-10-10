@@ -41,7 +41,7 @@
       "maxLength": 16,
       "precision": 0,
       "scale": 0,
-      "isAlwaysReadOnly": false,
+      "isAlwaysReadOnly": true,
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {}

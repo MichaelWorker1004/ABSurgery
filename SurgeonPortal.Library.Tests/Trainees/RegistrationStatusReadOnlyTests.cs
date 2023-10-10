@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Trainees
 {
     [TestFixture] 
-	public class RegistrationStatusReadOnlyTests : TestBase<string>
+	public class RegistrationStatusReadOnlyTests : TestBase<int>
     {
 
         #region GetByExamCodeAsync

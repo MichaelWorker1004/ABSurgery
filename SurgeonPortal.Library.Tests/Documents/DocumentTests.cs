@@ -12,7 +12,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Documents
 {
     [TestFixture] 
-	public class DocumentTests : TestBase<string>
+	public class DocumentTests : TestBase<int>
     {
         private DocumentDto CreateValidDto()
         {     
@@ -50,8 +50,8 @@ namespace SurgeonPortal.Library.Tests.Documents
                 var mockStorageDal = new Mock<IStorageDal>();
 
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
-                    .WithRegisteredInstance(mockStorageDal)
+                    .WithMockedIdentity(1234, "SomeUser")
+					.WithRegisteredInstance(mockStorageDal)
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IDocument, Document>()
                     .Build();
@@ -85,7 +85,7 @@ namespace SurgeonPortal.Library.Tests.Documents
                 var mockStorageDal = new Mock<IStorageDal>();
 
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithRegisteredInstance(mockStorageDal)
                     .WithBusinessObject<IDocument, Document>()
@@ -111,7 +111,7 @@ namespace SurgeonPortal.Library.Tests.Documents
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IDocument, Document>()
                     .Build();
@@ -145,7 +145,7 @@ namespace SurgeonPortal.Library.Tests.Documents
                 var mockStorageDal = new Mock<IStorageDal>();
     
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockStorageDal)
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IDocument, Document>()
@@ -181,7 +181,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             var mockStorageDal = new Mock<IStorageDal>();
 
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockStorageDal)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocument, Document>()
@@ -222,7 +222,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             var mockStorageDal = new Mock<IStorageDal>();
 
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockStorageDal)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocument, Document>()
@@ -246,7 +246,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             var mockStorageDal = new Mock<IStorageDal>();
 
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockStorageDal)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocument, Document>()
@@ -276,7 +276,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             var mockStorageDal = new Mock<IStorageDal>();
 
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockStorageDal)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocument, Document>()
@@ -334,7 +334,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             var mockStorageDal = new Mock<IStorageDal>();
 
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockStorageDal)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocument, Document>()
@@ -342,6 +342,7 @@ namespace SurgeonPortal.Library.Tests.Documents
         
             var factory = new DocumentFactory();
             var sut = factory.Create();
+            sut.StreamId = Create<Guid>();
         
             await sut.SaveAsync();
             

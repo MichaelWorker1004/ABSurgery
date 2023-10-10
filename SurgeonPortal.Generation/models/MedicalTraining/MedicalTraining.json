@@ -109,7 +109,7 @@
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
     },

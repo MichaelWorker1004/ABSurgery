@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class UserTokenTests : TestBase<string>
+	public class UserTokenTests : TestBase<int>
     {
         private UserTokenDto CreateValidDto()
         {     
@@ -37,7 +37,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .ReturnsAsync(Create<UserTokenDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserToken, UserToken>()
                 .Build();
@@ -58,7 +58,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserToken, UserToken>()
                 .Build();
@@ -85,7 +85,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserToken, UserToken>()
                 .Build();
@@ -122,7 +122,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserToken, UserToken>()
                 .Build();

@@ -52,7 +52,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                         "[dbo].[ins_gmerotations]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.,
                                 StartDate = dto.StartDate,
                                 EndDate = dto.EndDate,
                                 ClinicalLevelId = dto.ClinicalLevelId,
@@ -65,7 +65,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                                 FourMonthRotationExplain = dto.FourMonthRotationExplain,
                                 NonPrimaryExplain = dto.NonPrimaryExplain,
                                 NonClinicalExplain = dto.NonClinicalExplain,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.,
                             });
                             
                 }
@@ -92,7 +92,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                         new
                         {
                             Id = dto.Id,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.,
                             StartDate = dto.StartDate,
                             EndDate = dto.EndDate,
                             ClinicalLevelId = dto.ClinicalLevelId,
@@ -105,7 +105,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                             FourMonthRotationExplain = dto.FourMonthRotationExplain,
                             NonPrimaryExplain = dto.NonPrimaryExplain,
                             NonClinicalExplain = dto.NonClinicalExplain,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            LastUpdatedByUserId = dto.,
                         });
                         
             }

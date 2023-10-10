@@ -7,7 +7,7 @@ namespace SurgeonPortal.Library.Contracts.Documents
     {
         int Id { get; set; }
         int UserId { get; set; }
-        Guid StreamId { get; }
+        Guid StreamId { get;  }
         int DocumentTypeId { get; set; }
         string DocumentName { get; set; }
         string DocumentType { get; set; }

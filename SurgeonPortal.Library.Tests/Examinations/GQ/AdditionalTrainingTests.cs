@@ -11,7 +11,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Examinations.GQ
 {
     [TestFixture] 
-	public class AdditionalTrainingTests : TestBase<string>
+	public class AdditionalTrainingTests : TestBase<int>
     {
         private AdditionalTrainingDto CreateValidDto()
         {     
@@ -45,7 +45,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .ReturnsAsync(Create<AdditionalTrainingDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
@@ -67,7 +67,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
@@ -95,7 +95,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
@@ -143,7 +143,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
@@ -184,7 +184,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()
@@ -250,7 +250,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdditionalTraining, AdditionalTraining>()

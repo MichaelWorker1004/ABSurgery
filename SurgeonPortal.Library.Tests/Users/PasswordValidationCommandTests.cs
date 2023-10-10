@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class PasswordValidationCommandTests : TestBase<string>
+	public class PasswordValidationCommandTests : TestBase<int>
     {
         private PasswordValidationCommandDto CreateValidDto()
         {     

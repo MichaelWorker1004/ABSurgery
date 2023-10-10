@@ -67,7 +67,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "CreatedByUserId"
           }
         ],
         "recordsets": [
@@ -144,7 +144,8 @@
     {
       "name": "UserId",
       "dataType": "int",
-      "required": true
+      "required": true,
+      "substitution": "$UserId"
     },
     {
       "name": "CaseHeaderId",
@@ -155,6 +156,12 @@
       "name": "Feedback",
       "dataType": "string",
       "required": true
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

@@ -50,7 +50,7 @@ namespace SurgeonPortal.Library.CE
 		public int ExaminerUserId
 		{
 			get { return GetProperty(ExaminerUserIdProperty); }
-			set { SetProperty(ExaminerUserIdProperty, value); }
+			 private set { SetProperty(ExaminerUserIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> ExaminerUserIdProperty = RegisterProperty<int>(c => c.ExaminerUserId);
 
@@ -108,7 +108,7 @@ namespace SurgeonPortal.Library.CE
 		}
 
 
-		[Fetch]
+        [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
@@ -117,7 +117,9 @@ namespace SurgeonPortal.Library.CE
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _examScoreDal.GetByIdAsync(criteria.ExamScheduleScoreId);
+                var dto = await _examScoreDal.GetByIdAsync(
+                    criteria.ExamScheduleScoreId,
+                    _identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -127,6 +129,13 @@ namespace SurgeonPortal.Library.CE
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(ExaminerUserIdProperty, _identity.GetUserId<int>());
+        
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

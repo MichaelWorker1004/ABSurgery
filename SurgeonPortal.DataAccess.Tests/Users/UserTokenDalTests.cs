@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class UserTokenDalTests : TestBase<string>
+	public class UserTokenDalTests : TestBase<int>
     {
         #region GetActiveAsync
         

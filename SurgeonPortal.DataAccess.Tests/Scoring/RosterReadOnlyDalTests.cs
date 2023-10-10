@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class RosterReadOnlyDalTests : TestBase<string>
+	public class RosterReadOnlyDalTests : TestBase<int>
     {
         #region GetByExaminationHeaderIdAsync
         

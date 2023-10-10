@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Examinations
 {
-	public class QualifyingExamReadOnlyDalTests : TestBase<string>
+	public class QualifyingExamReadOnlyDalTests : TestBase<int>
     {
         #region GetAsync
         

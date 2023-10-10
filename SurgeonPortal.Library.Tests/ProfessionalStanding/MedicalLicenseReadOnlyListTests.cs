@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 {
     [TestFixture] 
-	public class MedicalLicenseReadOnlyListTests : TestBase<string>
+	public class MedicalLicenseReadOnlyListTests : TestBase<int>
     {
 
         [Test]

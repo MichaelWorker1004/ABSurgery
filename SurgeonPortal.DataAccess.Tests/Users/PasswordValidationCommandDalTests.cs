@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class PasswordValidationCommandDalTests : TestBase<string>
+	public class PasswordValidationCommandDalTests : TestBase<int>
     {
         #region Validate
         

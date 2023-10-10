@@ -23,13 +23,15 @@ namespace SurgeonPortal.DataAccess.Documents
                         new
                         {
                             Id = dto.Id,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                         });
                         
             }
         }
 
-        public async Task<DocumentDto> GetByIdAsync(int id)
+        public async Task<DocumentDto> GetByIdAsync(
+            int id,
+            int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -38,7 +40,7 @@ namespace SurgeonPortal.DataAccess.Documents
                         new
                         {
                             Id = id,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }
@@ -54,12 +56,12 @@ namespace SurgeonPortal.DataAccess.Documents
                         "[dbo].[ins_userdocument]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.UserId,
                                 StreamId = dto.StreamId,
                                 DocumentName = dto.DocumentName,
                                 DocumentTypeId = dto.DocumentTypeId,
                                 InternalViewOnly = dto.InternalViewOnly,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.,
                             });
                             
                 }

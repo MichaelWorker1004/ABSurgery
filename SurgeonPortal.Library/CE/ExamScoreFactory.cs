@@ -8,15 +8,23 @@ namespace SurgeonPortal.Library.CE
 {
     public class ExamScoreFactory : IExamScoreFactory
     {
-        public async Task<IExamScore> GetByIdAsync(int examScheduleScoreId)
+        public async Task<IExamScore> GetByIdAsync(
+            int examScheduleScoreId,
+            int examinerUserId)
         {
             if (examScheduleScoreId <= 0)
             {
                 throw new FactoryInvalidCriteriaException("examScheduleScoreId is a required field.");
             }
+            if (examinerUserId <= 0)
+            {
+                throw new FactoryInvalidCriteriaException("examinerUserId is a required field.");
+            }
             
             return await DataPortal.FetchAsync<ExamScore>(
-                new GetByIdCriteria(examScheduleScoreId));
+                new GetByIdCriteria(
+                examScheduleScoreId,
+                examinerUserId));
             
         }
 
@@ -31,10 +39,14 @@ namespace SurgeonPortal.Library.CE
             internal class GetByIdCriteria
             {
                 public int ExamScheduleScoreId { get; set; }
+                public int ExaminerUserId { get; set; }
             
-                public GetByIdCriteria(int examScheduleScoreId)
+                public GetByIdCriteria(
+                int examScheduleScoreId,
+                int examinerUserId)
              {
                     ExamScheduleScoreId = examScheduleScoreId;
+                    ExaminerUserId = examinerUserId;
               }
             }
             

@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.MedicalTraining
 {
     [TestFixture] 
-	public class AdvancedTrainingTests : TestBase<string>
+	public class AdvancedTrainingTests : TestBase<int>
     {
         private AdvancedTrainingDto CreateValidDto()
         {     
@@ -48,7 +48,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                     .Build();
@@ -80,7 +80,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                     .Build();
@@ -105,7 +105,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                     .Build();
@@ -137,7 +137,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                     .Build();
@@ -162,7 +162,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                     .Build();
@@ -194,7 +194,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                     .Build();
@@ -219,7 +219,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                     .Build();
@@ -251,7 +251,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
-                    .WithMockedIdentity()
+                    .WithMockedIdentity(1234, "SomeUser")
                     .WithRegisteredInstance(mockDal)
                     .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                     .Build();
@@ -278,7 +278,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(Create<AdvancedTrainingDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                 .Build();
@@ -299,7 +299,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                 .Build();
@@ -326,7 +326,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                 .Build();
@@ -381,7 +381,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                 .Build();
@@ -421,7 +421,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                 .Build();
@@ -495,7 +495,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
                 .Build();

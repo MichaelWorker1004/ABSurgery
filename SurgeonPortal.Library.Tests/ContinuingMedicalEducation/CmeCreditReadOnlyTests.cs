@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
 {
     [TestFixture] 
-	public class CmeCreditReadOnlyTests : TestBase<string>
+	public class CmeCreditReadOnlyTests : TestBase<int>
     {
 
         #region GetByIdAsync
@@ -25,6 +25,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .ReturnsAsync(Create<CmeCreditReadOnlyDto>());
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICmeCreditReadOnly, CmeCreditReadOnly>()
@@ -46,6 +47,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICmeCreditReadOnly, CmeCreditReadOnly>()

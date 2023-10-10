@@ -152,7 +152,7 @@ namespace SurgeonPortal.Library.MedicalTraining
             BusinessRules.AddRule(new Required(TrainingTypeIdProperty, "TrainingTypeId is required"));
             BusinessRules.AddRule(new Required(StartDateProperty, "StartDate is required"));
             BusinessRules.AddRule(new Required(EndDateProperty, "EndDate is required"));
-						BusinessRules.AddRule(new DateGreaterThanRule(EndDateProperty, StartDateProperty));
+			BusinessRules.AddRule(new DateGreaterThanRule(EndDateProperty, StartDateProperty));
             BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
             BusinessRules.AddRule(new EitherOrRequiredRule(ProgramIdProperty, OtherProperty, 1));
         }
@@ -177,6 +177,11 @@ namespace SurgeonPortal.Library.MedicalTraining
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

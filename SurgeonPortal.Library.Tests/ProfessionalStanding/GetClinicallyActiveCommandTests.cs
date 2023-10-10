@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 {
     [TestFixture] 
-	public class GetClinicallyActiveCommandTests : TestBase<string>
+	public class GetClinicallyActiveCommandTests : TestBase<int>
     {
         private GetClinicallyActiveCommandDto CreateValidDto()
         {     

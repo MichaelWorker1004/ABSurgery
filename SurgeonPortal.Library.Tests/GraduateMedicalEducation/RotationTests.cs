@@ -11,7 +11,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
 {
     [TestFixture] 
-	public class RotationTests : TestBase<string>
+	public class RotationTests : TestBase<int>
     {
         private RotationDto CreateValidDto()
         {     
@@ -63,7 +63,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .Returns(Task.CompletedTask);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
@@ -103,7 +103,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .ReturnsAsync(Create<RotationDto>());
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
@@ -126,7 +126,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
@@ -155,7 +155,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
@@ -221,7 +221,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
@@ -263,7 +263,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
@@ -359,7 +359,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()

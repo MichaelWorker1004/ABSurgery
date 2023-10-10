@@ -9,7 +9,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class DashboardRosterReadOnlyDalTests : TestBase<string>
+	public class DashboardRosterReadOnlyDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         

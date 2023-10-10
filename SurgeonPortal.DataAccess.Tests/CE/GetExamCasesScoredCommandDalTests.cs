@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.CE
 {
-	public class GetExamCasesScoredCommandDalTests : TestBase<string>
+	public class GetExamCasesScoredCommandDalTests : TestBase<int>
     {
         #region GetExamCasesScored
         

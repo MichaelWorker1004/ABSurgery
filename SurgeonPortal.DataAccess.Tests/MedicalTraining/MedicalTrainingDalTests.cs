@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
 {
-	public class MedicalTrainingDalTests : TestBase<string>
+	public class MedicalTrainingDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         

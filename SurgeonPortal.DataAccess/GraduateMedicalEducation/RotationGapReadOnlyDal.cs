@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                     "[dbo].[get_gme_conflicts]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

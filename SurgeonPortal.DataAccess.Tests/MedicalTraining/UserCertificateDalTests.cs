@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
 {
-	public class UserCertificateDalTests : TestBase<string>
+	public class UserCertificateDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
