@@ -100,6 +100,8 @@ export class OralExaminationsComponent implements OnInit {
   }
 
   getOralExaminations() {
+    console.log('getOralExaminations', this.examDate.toString());
+    console.log('getOralExaminations', this.examDate.toISOString());
     this._store.dispatch(new GetExamineeList(this.examDate.toISOString()));
 
     this.examineeList$
