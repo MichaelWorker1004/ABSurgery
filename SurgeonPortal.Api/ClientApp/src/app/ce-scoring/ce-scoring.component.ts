@@ -85,7 +85,7 @@ export class CeScoringAppComponent implements OnInit {
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
         if (featureFlags.ceScoreTesting) {
-          this.examHeaderId = 491;
+          this.examHeaderId = 493;
         }
         if (featureFlags.ceScoreTestingDate) {
           this.examinationDate = new Date('10/11/2023')

@@ -85,7 +85,7 @@ export class OralExaminationsComponent implements OnInit {
     this.featureFlags$?.pipe().subscribe((featureFlags) => {
       if (featureFlags) {
         if (featureFlags.ceScoreTesting) {
-          this.examHeaderId = 491;
+          this.examHeaderId = 493;
         }
         if (featureFlags.ceScoreTestingDate) {
           this.examDate = new Date('10/11/2023');
