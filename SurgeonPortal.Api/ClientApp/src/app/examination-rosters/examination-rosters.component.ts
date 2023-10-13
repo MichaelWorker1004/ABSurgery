@@ -83,7 +83,7 @@ export class ExaminationRostersComponent implements OnInit {
 
   userId!: number;
 
-  examHeaderId = 481; // TODO - remove hard coded value
+  examHeaderId = 482; // TODO - remove hard coded value
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
   rosters: any = [];
@@ -201,10 +201,12 @@ export class ExaminationRostersComponent implements OnInit {
         .then((result) => {
           if (result) {
             this.editActive = false;
+            this.selectedCaseDetails = undefined;
             this.selectCase(caseData);
           }
         });
     } else {
+      this.selectedCaseDetails = undefined;
       this.selectCase(caseData);
     }
   }

@@ -52,7 +52,7 @@ export class OralExaminationsComponent implements OnInit {
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
-  examHeaderId = 481; // TODO - remove hard coded value
+  examHeaderId = 482; // TODO - remove hard coded value
   examDate: Date = new Date();
 
   examDateDisplay: Date = new Date();
@@ -88,7 +88,7 @@ export class OralExaminationsComponent implements OnInit {
           this.examHeaderId = 491;
         }
         if (featureFlags.ceScoreTestingDate) {
-          this.examDate = new Date('10/11/2023');
+          this.examDate = new Date('10/16/2023');
         }
       }
     });
