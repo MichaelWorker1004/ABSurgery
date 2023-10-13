@@ -65,7 +65,7 @@ export class CeScoringAppComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.examinerConflict)
   examinerConflict$: Observable<IConflictReadOnlyModel> | undefined;
 
-  examHeaderId = 481; // TODO - remove hard coded value
+  examHeaderId = 482; // TODO - remove hard coded value
   examinationDate = new Date().toISOString().split('T')[0];
 
   currentYear = new Date().getFullYear();
@@ -88,7 +88,7 @@ export class CeScoringAppComponent implements OnInit {
           this.examHeaderId = 493;
         }
         if (featureFlags.ceScoreTestingDate) {
-          this.examinationDate = new Date('10/11/2023')
+          this.examinationDate = new Date('10/16/2023')
             .toISOString()
             .split('T')[0];
         }

@@ -86,7 +86,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
 
   @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
 
-  examHeaderId = 481; // TODO - remove hard coded value
+  examHeaderId = 482; // TODO - remove hard coded value
 
   cases$: BehaviorSubject<any> = new BehaviorSubject([]);
   userId!: number;

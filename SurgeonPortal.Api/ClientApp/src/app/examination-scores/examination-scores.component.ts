@@ -47,7 +47,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExaminationScoresComponent implements OnInit {
-  examHeaderId = 481; // TODO - remove hard coded value
+  examHeaderId = 482; // TODO - remove hard coded value
 
   // TODO: [Joe] - remove after release 1 as part of feature/1811
   @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
@@ -106,7 +106,7 @@ export class ExaminationScoresComponent implements OnInit {
         this.examHeaderId = 493;
       }
       if (featureFlags?.ceScoreTestingDate) {
-        this.currentDay = new Date('10/11/2023');
+        this.currentDay = new Date('10/16/2023');
       }
     });
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
@@ -160,7 +160,7 @@ export class ExaminationScoresComponent implements OnInit {
         untilDestroyed(this),
         map((scoreList) => {
           // TODO: [Joe] - remove hardcoded dates after release 1 as part of feature/1811
-          const hardcodedDates = ['10/11/2023', '10/12/2023', '10/13/2023'];
+          const hardcodedDates = ['10/16/2023', '10/17/2023', '10/18/2023'];
           if (scoreList?.length > 0) {
             return scoreList.map((score) => {
               return {
