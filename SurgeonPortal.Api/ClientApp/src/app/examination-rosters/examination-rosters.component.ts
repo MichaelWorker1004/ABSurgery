@@ -107,7 +107,7 @@ export class ExaminationRostersComponent implements OnInit {
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags?.ceScoreTesting) {
-        this.examHeaderId = 493;
+        this.examHeaderId = 494;
       }
     });
 
