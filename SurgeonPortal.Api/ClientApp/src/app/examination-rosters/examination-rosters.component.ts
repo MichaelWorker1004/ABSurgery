@@ -29,6 +29,7 @@ import {
   ExamScoringSelectors,
   GetCaseDetailsAndFeedback,
   GetCaseRoster,
+  GetExamHeaderId,
   GetExamTitle,
   IFeatureFlags,
   UpdateCaseComment,
@@ -81,9 +82,12 @@ export class ExaminationRostersComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.selectedCaseFeedback)
   selectedCaseFeedback$: Observable<ICaseFeedbackModel> | undefined;
 
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
   userId!: number;
 
-  examHeaderId = 482; // TODO - remove hard coded value
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
   rosters: any = [];
@@ -107,11 +111,13 @@ export class ExaminationRostersComponent implements OnInit {
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags?.ceScoreTesting) {
-        this.examHeaderId = 494;
+        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
       }
     });
 
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+    });
   }
 
   ngOnInit(): void {

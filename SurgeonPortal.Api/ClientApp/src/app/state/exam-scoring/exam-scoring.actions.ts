@@ -170,3 +170,9 @@ export class GetExaminerConflict {
 
   constructor(public examHeaderId: number) {}
 }
+
+export class GetExamHeaderId {
+  static readonly type = '[Exam-Scoring] Get exam header id';
+
+  constructor(public isCeScoreTesting = false) {}
+}
