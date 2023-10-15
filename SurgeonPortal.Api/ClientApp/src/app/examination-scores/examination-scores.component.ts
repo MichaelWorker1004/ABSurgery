@@ -103,7 +103,7 @@ export class ExaminationScoresComponent implements OnInit {
     // TODO: [Joe] - remove after release 1 as part of feature/1811
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags?.ceScoreTesting) {
-        this.examHeaderId = 493;
+        this.examHeaderId = 494;
       }
       if (featureFlags?.ceScoreTestingDate) {
         this.currentDay = new Date('10/16/2023');

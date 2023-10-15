@@ -121,7 +121,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags?.ceScoreTesting) {
-        this.examHeaderId = 493;
+        this.examHeaderId = 494;
       }
     });
     this._store.dispatch(new GetExamTitle(this.examHeaderId));
