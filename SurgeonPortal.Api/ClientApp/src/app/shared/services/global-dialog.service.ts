@@ -331,7 +331,12 @@ export class GlobalDialogService {
     </div>`;
 
     // add click event listener to the dialog overlay so that the close cleans up the DOM
-    this._dialog.addEventListener('sl-request-close', () => {
+    this._dialog.addEventListener('sl-request-close', (event: any) => {
+      if (event.detail.source === 'overlay') {
+        event.preventDefault();
+        return;
+      }
+
       this.hide();
     });
 
