@@ -57,7 +57,7 @@ namespace SurgeonPortal.Library.Examiners
             
             if (dto == null)
             {
-                throw new DataNotFoundException("AgendaReadOnly not found based on criteria.");
+                return;
             }
             
             FetchData(dto);

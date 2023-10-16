@@ -8,18 +8,6 @@ namespace SurgeonPortal.Library.Scoring
 {
     public class CaseFeedbackFactory : ICaseFeedbackFactory
     {
-        public async Task<ICaseFeedback> GetByExaminerIdAsync(int caseHeaderId)
-        {
-            if (caseHeaderId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("caseHeaderId is a required field.");
-            }
-            
-            return await DataPortal.FetchAsync<CaseFeedback>(
-                new GetByExaminerIdCriteria(caseHeaderId));
-            
-        }
-
         public async Task<ICaseFeedback> GetByIdAsync(int id)
         {
             if (id <= 0)
@@ -39,18 +27,6 @@ namespace SurgeonPortal.Library.Scoring
 
 
         
-            [Serializable]
-            internal class GetByExaminerIdCriteria
-            {
-                public int CaseHeaderId { get; set; }
-            
-                public GetByExaminerIdCriteria(int caseHeaderId)
-             {
-                    CaseHeaderId = caseHeaderId;
-              }
-            }
-            
-
             [Serializable]
             internal class GetByIdCriteria
             {

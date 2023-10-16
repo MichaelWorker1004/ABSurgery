@@ -73,52 +73,6 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
         #endregion
 
-        #region GetByExaminerIdAsync CaseFeedback
-        
-        [Test]
-        public async Task GetByExaminerIdAsync_CallsDalCorrectly()
-        {
-            var expectedCaseHeaderId = Create<int>();
-            
-            var mockDal = new Mock<ICaseFeedbackDal>();
-            mockDal.Setup(m => m.GetByExaminerIdAsync(expectedCaseHeaderId))
-                .ReturnsAsync(Create<CaseFeedbackDto>());
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity()
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<ICaseFeedback, CaseFeedback>()
-                .Build();
-        
-            var factory = new CaseFeedbackFactory();
-            var sut = await factory.GetByExaminerIdAsync(expectedCaseHeaderId);
-        
-            mockDal.VerifyAll();
-        }
-        
-        [Test]
-        public async Task GetByExaminerId_YieldsCorrectResult()
-        {
-            var dto = CreateValidDto();
-        
-            var mockDal = new Mock<ICaseFeedbackDal>();
-            mockDal.Setup(m => m.GetByExaminerIdAsync(It.IsAny<int>()))
-                .ReturnsAsync(dto);
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity()
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<ICaseFeedback, CaseFeedback>()
-                .Build();
-        
-            var factory = new CaseFeedbackFactory();
-            var sut = await factory.GetByExaminerIdAsync(Create<int>());
-        
-            dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
-        }
-        
-        #endregion
-
         #region GetByIdAsync CaseFeedback
         
         [Test]
