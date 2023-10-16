@@ -4,17 +4,13 @@
   "template": "ytg-framework/editable-get",
   "parameters": {
     "Adapter": "dbo.get_case_feedback_byid",
-    "ControllerName": "Scoring\\CaseFeedbackController",
-    "ControllerRoute": "api/cases/feedback",
-    "ControllerVersion": "1",
     "FetchMethodName": "GetById",
-    "IncludeControllerInGeneration": "true",
+    "IncludeControllerInGeneration": "false",
     "IsChild": "false",
     "IsRoot": "true",
     "Model": "Scoring\\CaseFeedback",
     "ModelGroup": "CaseFeedback",
-    "RootNamespace": "$project.RootNamespace",
-    "Route": "by-id"
+    "RootNamespace": "$project.RootNamespace"
   },
   "projectClaims": {
     "SurgeonPortalClaims.ExaminerClaim": {

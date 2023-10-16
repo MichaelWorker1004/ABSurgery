@@ -108,7 +108,7 @@ namespace SurgeonPortal.Library.CE
 		}
 
 
-		[Fetch]
+        [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
