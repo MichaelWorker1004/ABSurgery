@@ -89,10 +89,6 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     | Observable<number>
     | undefined;
 
-  @Select(ExamScoringSelectors.slices.selectedExamScores) selectedExamScores$:
-    | Observable<ICaseScoreReadOnlyModel[]>
-    | undefined;
-
   @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
 
   cases$: BehaviorSubject<any> = new BehaviorSubject([]);
