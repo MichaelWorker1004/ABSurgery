@@ -21,6 +21,7 @@ import {
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
+  GetExamHeaderId,
   GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
@@ -84,9 +85,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
-  @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
 
-  examHeaderId = 482; // TODO - remove hard coded value
+  @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
 
   cases$: BehaviorSubject<any> = new BehaviorSubject([]);
   userId!: number;
@@ -121,10 +124,13 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags?.ceScoreTesting) {
-        this.examHeaderId = 494;
+        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
       }
     });
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+    });
   }
   ngOnDestroy(): void {
     this._store.dispatch(new SetExamInProgress(false));

@@ -45,6 +45,7 @@ import {
   GetCaseDetailsAndFeedback,
   GetExaminerAgenda,
   GetExaminerConflict,
+  GetExamHeaderId,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -89,6 +90,7 @@ export interface IExamScoring {
   examinerConflict: IConflictReadOnlyModel | undefined;
   errors: IFormErrors | null;
   examErrors: IFormErrors | null;
+  examHeaderId: number | null;
 }
 
 export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
@@ -114,6 +116,7 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
     examinerConflict: undefined,
     errors: null,
     examErrors: null,
+    examHeaderId: 482,
   },
 })
 @Injectable()
@@ -822,5 +825,20 @@ export class ExamScoringState {
           return of(errors);
         })
       );
+  }
+
+  @Action(GetExamHeaderId)
+  getExamHeaderId(
+    ctx: StateContext<IExamScoring>,
+    payload: { isCeScoreTesting: boolean }
+  ) {
+    const state = ctx.getState();
+    if (payload.isCeScoreTesting) {
+      ctx.patchState({
+        examHeaderId: 494,
+      });
+    }
+
+    return of(state.examHeaderId);
   }
 }

@@ -13,6 +13,7 @@ import { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-re
 import {
   ApplicationSelectors,
   ExamScoringSelectors,
+  GetExamHeaderId,
   GetExamTitle,
   GetExamineeList,
   IFeatureFlags,
@@ -52,7 +53,10 @@ export class OralExaminationsComponent implements OnInit {
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
-  examHeaderId = 482; // TODO - remove hard coded value
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
   examDate: Date = new Date();
 
   examDateDisplay: Date = new Date();
@@ -85,14 +89,19 @@ export class OralExaminationsComponent implements OnInit {
     this.featureFlags$?.pipe().subscribe((featureFlags) => {
       if (featureFlags) {
         if (featureFlags.ceScoreTesting) {
-          this.examHeaderId = 494;
+          this._store.dispatch(
+            new GetExamHeaderId(featureFlags.ceScoreTesting)
+          );
         }
         if (featureFlags.ceScoreTestingDate) {
           this.examDate = new Date('10/16/2023');
         }
       }
     });
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+    });
   }
 
   ngOnInit(): void {
