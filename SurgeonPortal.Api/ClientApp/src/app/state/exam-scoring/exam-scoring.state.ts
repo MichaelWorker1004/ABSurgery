@@ -65,6 +65,7 @@ import { IAgendaReadOnlyModel } from 'src/app/api/models/examiners/agenda-read-o
 import { AgendaService } from 'src/app/api/services/examiners/agenda.service';
 import { ConflictService } from 'src/app/api/services/examiners/conflict.service';
 import { IConflictReadOnlyModel } from 'src/app/api/models/examiners/conflict-read-only.model';
+import { ICaseFeedbackReadOnlyModel } from 'src/app/api/models/scoring/case-feedback-read-only.model';
 
 export interface IExamScoring {
   examTitle: IExamTitleReadOnlyModel | undefined;
@@ -72,7 +73,7 @@ export interface IExamScoring {
   caseRoster: ICaseRosterReadOnlyModel[] | undefined; // examination rosters page list values
   selectedCaseContents: ICaseDetailReadOnlyModel[] | undefined; // examination rosters page details values
   selectedCaseComment: ICaseCommentModel | undefined; // examination rosters page selected comment value
-  selectedCaseFeedback: ICaseFeedbackModel | undefined; // examination rosters page selected feedback value
+  selectedCaseFeedback: ICaseFeedbackReadOnlyModel | undefined; // examination rosters page selected feedback value
   // oral-examinations list page values
   examineeList: IExamSessionReadOnlyModel[] | undefined; // oral-examinations list page grid values
   // oral-examination actual exam page values
@@ -666,9 +667,9 @@ export class ExamScoringState {
   getCaseFeedback(ctx: StateContext<IExamScoring>, payload: { id: number }) {
     this.globalDialogService.showLoading();
     return this.caseFeedbackService
-      .retrieveCaseFeedback_GetByExaminerId(payload.id)
+      .retrieveCaseFeedbackReadOnly_GetByExaminerId(payload.id)
       .pipe(
-        tap((result: ICaseFeedbackModel) => {
+        tap((result: ICaseFeedbackReadOnlyModel) => {
           ctx.patchState({
             selectedCaseFeedback: result,
             errors: null,
