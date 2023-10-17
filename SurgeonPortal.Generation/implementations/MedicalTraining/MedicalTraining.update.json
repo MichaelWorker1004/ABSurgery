@@ -366,11 +366,6 @@
       "substitution": "$UserId"
     },
     {
-      "name": "UserId",
-      "dataType": "int",
-      "required": true
-    },
-    {
       "name": "GraduateProfileId",
       "dataType": "int",
       "required": true
