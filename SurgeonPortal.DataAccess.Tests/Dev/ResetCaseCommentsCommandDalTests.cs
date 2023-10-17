@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.Dev
             sqlManager.AddRecord(Create<ResetCaseCommentsCommandDto>());
         
             var sut = new ResetCaseCommentsCommandDal(sqlManager);
-            await sut.ResetCaseCommentsAsync();
+            await sut.ResetCaseCommentsAsync(expectedExaminerUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

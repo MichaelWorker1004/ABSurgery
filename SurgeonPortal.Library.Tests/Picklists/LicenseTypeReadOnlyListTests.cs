@@ -12,7 +12,6 @@ namespace SurgeonPortal.Library.Tests.Picklists
     [TestFixture] 
 	public class LicenseTypeReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
@@ -21,8 +20,9 @@ namespace SurgeonPortal.Library.Tests.Picklists
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(CreateMany<LicenseTypeReadOnlyDto>());
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ILicenseTypeReadOnlyList, LicenseTypeReadOnlyList>()
                 .WithBusinessObject<ILicenseTypeReadOnly, LicenseTypeReadOnly>()
@@ -39,12 +39,14 @@ namespace SurgeonPortal.Library.Tests.Picklists
         {
             var expectedDtos = CreateMany<LicenseTypeReadOnlyDto>();
         
+        
             var mockDal = new Mock<ILicenseTypeReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(expectedDtos);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ILicenseTypeReadOnlyList, LicenseTypeReadOnlyList>()
                 .WithBusinessObject<ILicenseTypeReadOnly, LicenseTypeReadOnly>()

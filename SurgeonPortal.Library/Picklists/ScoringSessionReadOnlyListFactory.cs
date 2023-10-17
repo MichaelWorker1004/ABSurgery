@@ -19,10 +19,14 @@ namespace SurgeonPortal.Library.Picklists
             [Serializable]
             internal class GetByKeysCriteria
             {
+                public int ExaminerUserId { get; set; }
                 public DateTime CurrentDate { get; set; }
             
-                public GetByKeysCriteria(DateTime currentDate)
+                public GetByKeysCriteria(
+                int examinerUserId,
+                DateTime currentDate)
              {
+                    ExaminerUserId = examinerUserId;
                     CurrentDate = currentDate;
               }
             }

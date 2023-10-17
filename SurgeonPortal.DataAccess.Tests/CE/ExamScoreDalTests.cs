@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             sqlManager.AddRecord(Create<ExamScoreDto>());
         
             var sut = new ExamScoreDal(sqlManager);
-            await sut.GetByIdAsync(expectedExamScheduleScoreId);
+            await sut.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

@@ -13,9 +13,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
 	public class FellowshipTests : TestBase<int>
     {
         private FellowshipDto CreateValidDto()
-        {     
+        {
             var dto = Create<FellowshipDto>();
-
+        
             dto.Id = Create<int>();
             dto.UserId = Create<int>();
             dto.ProgramName = Create<string>();
@@ -25,12 +25,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedByUserId = Create<int>();
-    
+        
             return dto;
         }
-
-            #region Fellowship Business Rules
-            #endregion
+        
+        #region Fellowship Business Rules
+        #endregion
 
         #region DeleteAsync
         
@@ -45,6 +45,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var mockDal = new Mock<IFellowshipDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<FellowshipDto>()))
                 .Callback<FellowshipDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
@@ -86,6 +87,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var mockDal = new Mock<IFellowshipDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(Create<FellowshipDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -103,10 +105,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
-        
+            var expectedId = Create<int>();
+            
             var mockDal = new Mock<IFellowshipDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -165,8 +169,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
-                .Excluding(m => m.UserId)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
@@ -214,12 +216,13 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         {
             var expectedId = Create<int>();
             
-            var dto = Create<FellowshipDto>();
+            var dto = CreateValidDto();
             FellowshipDto passedDto = null;
         
             var mockDal = new Mock<IFellowshipDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(dto);
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<FellowshipDto>()))
                 .Callback<FellowshipDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -267,11 +270,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.UserId)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -282,11 +283,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         {
             var expectedId = Create<int>();
             
-            var dto = Create<FellowshipDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IFellowshipDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(Create<FellowshipDto>());
+                .ReturnsAsync(Create<FellowshipDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<FellowshipDto>()))
                 .ReturnsAsync(dto);
         

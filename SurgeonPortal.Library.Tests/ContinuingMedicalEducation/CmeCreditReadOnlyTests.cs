@@ -12,7 +12,22 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
     [TestFixture] 
 	public class CmeCreditReadOnlyTests : TestBase<int>
     {
-
+        private CmeCreditReadOnlyDto CreateValidDto()
+        {
+            var dto = Create<CmeCreditReadOnlyDto>();
+        
+            dto.CmeId = Create<decimal>();
+            dto.UserId = Create<int?>();
+            dto.Date = Create<string>();
+            dto.Description = Create<string>();
+            dto.CreditsTotal = Create<decimal>();
+            dto.CreditsSA = Create<decimal?>();
+            dto.CMEDirect = Create<int>();
+            dto.CreditExpDate = Create<System.DateTime>();
+        
+            return dto;
+        }
+        
         #region GetByIdAsync
         
         [Test]
@@ -23,6 +38,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
             var mockDal = new Mock<ICmeCreditReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedCmeId))
                 .ReturnsAsync(Create<CmeCreditReadOnlyDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -40,11 +56,12 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
         [Test]
         public async Task GetByIdAsync_LoadsSelfCorrectly()
         {
-            var dto = Create<CmeCreditReadOnlyDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<ICmeCreditReadOnlyDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedCmeId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

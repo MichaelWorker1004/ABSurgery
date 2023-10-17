@@ -8,10 +8,11 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 {
     public class SanctionsFactory : ISanctionsFactory
     {
-        public async Task<ISanctions> GetByUserIdAsync()
+        public async Task<ISanctions> GetByUserIdAsync(int userId)
         {
             
-            return await DataPortal.FetchAsync<Sanctions>();
+            return await DataPortal.FetchAsync<Sanctions>(
+                new GetByUserIdCriteria(userId));
             
         }
 
@@ -22,6 +23,16 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 
 
         
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+                public int UserId { get; set; }
+            
+                public GetByUserIdCriteria(int userId)
+             {
+                    UserId = userId;
+              }
+            }
             
 
 

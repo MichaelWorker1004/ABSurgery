@@ -78,7 +78,8 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
         [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] IMedicalTrainingFactory medicalTrainingFactory,
-            [FromBody] MedicalTrainingModel model)
+            [FromBody] MedicalTrainingModel model,
+            int userId)
         {
             var item = await medicalTrainingFactory.GetByUserIdAsync();
             AssignEditProperties(item, model);

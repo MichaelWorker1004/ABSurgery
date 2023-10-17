@@ -213,7 +213,7 @@ namespace SurgeonPortal.Library.MedicalTraining
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _medicalTrainingDal.GetByUserIdAsync();
+                var dto = await _medicalTrainingDal.GetByUserIdAsync(_identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -226,7 +226,9 @@ namespace SurgeonPortal.Library.MedicalTraining
         [Create]
         private void Create()
         {
-            }
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
+        }
         
         [RunLocal]
         [Insert]

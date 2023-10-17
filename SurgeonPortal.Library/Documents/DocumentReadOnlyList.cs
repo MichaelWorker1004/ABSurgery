@@ -39,7 +39,7 @@ namespace SurgeonPortal.Library.Documents
         private async Task GetByUserId()
         
         {
-            var dtos = await _documentReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _documentReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

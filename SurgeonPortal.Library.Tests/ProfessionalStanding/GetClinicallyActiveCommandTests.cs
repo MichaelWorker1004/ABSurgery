@@ -16,7 +16,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         {     
             var dto = Create<GetClinicallyActiveCommandDto>();
 
-            dto.UserId = Create<int?>();
+            dto.UserId = 1234;
             dto.ClinicallyActive = Create<bool?>();
     
             return dto;
@@ -27,15 +27,17 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public void GetClinicallyActiveByUserId_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<GetClinicallyActiveCommandDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IGetClinicallyActiveCommandDal>();
-            mockDal.Setup(m => m.GetClinicallyActiveByUserId())
+            mockDal.Setup(m => m.GetClinicallyActiveByUserId(expectedUserId))
                 .Returns(dto);
+            
         
             UseMockServiceProvider()
-                
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IGetClinicallyActiveCommand, GetClinicallyActiveCommand>()
                 .Build();

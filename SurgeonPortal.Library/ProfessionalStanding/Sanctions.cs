@@ -135,7 +135,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _sanctionsDal.GetByUserIdAsync();
+                var dto = await _sanctionsDal.GetByUserIdAsync(_identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -145,6 +145,14 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(LastUpdatedByUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

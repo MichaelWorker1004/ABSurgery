@@ -16,10 +16,6 @@ namespace SurgeonPortal.Library.CE
             {
                 throw new FactoryInvalidCriteriaException("examScheduleScoreId is a required field.");
             }
-            if (examinerUserId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("examinerUserId is a required field.");
-            }
             
             return await DataPortal.FetchAsync<ExamScore>(
                 new GetByIdCriteria(

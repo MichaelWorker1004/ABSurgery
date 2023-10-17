@@ -93,6 +93,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     IssuingStateId = expectedDto.IssuingStateId,
                     LicenseNumber = expectedDto.LicenseNumber,
                     LicenseTypeId = expectedDto.LicenseTypeId,
@@ -140,6 +141,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                 new
                 {
                     LicenseId = expectedDto.LicenseId,
+                    UserId = expectedDto.UserId,
                     IssuingStateId = expectedDto.IssuingStateId,
                     LicenseNumber = expectedDto.LicenseNumber,
                     LicenseTypeId = expectedDto.LicenseTypeId,

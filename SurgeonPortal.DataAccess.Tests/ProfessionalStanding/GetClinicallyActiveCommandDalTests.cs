@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecord(Create<GetClinicallyActiveCommandDto>());
         
             var sut = new GetClinicallyActiveCommandDal(sqlManager);
-            sut.GetClinicallyActiveByUserId();
+            sut.GetClinicallyActiveByUserId(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

@@ -12,7 +12,6 @@ namespace SurgeonPortal.Library.Tests.Picklists
     [TestFixture] 
 	public class ClinicalActivityReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
@@ -21,8 +20,9 @@ namespace SurgeonPortal.Library.Tests.Picklists
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(CreateMany<ClinicalActivityReadOnlyDto>());
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IClinicalActivityReadOnlyList, ClinicalActivityReadOnlyList>()
                 .WithBusinessObject<IClinicalActivityReadOnly, ClinicalActivityReadOnly>()
@@ -39,12 +39,14 @@ namespace SurgeonPortal.Library.Tests.Picklists
         {
             var expectedDtos = CreateMany<ClinicalActivityReadOnlyDto>();
         
+        
             var mockDal = new Mock<IClinicalActivityReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(expectedDtos);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IClinicalActivityReadOnlyList, ClinicalActivityReadOnlyList>()
                 .WithBusinessObject<IClinicalActivityReadOnly, ClinicalActivityReadOnly>()

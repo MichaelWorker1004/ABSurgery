@@ -12,14 +12,15 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
     [TestFixture] 
 	public class CmeAdjustmentReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<ICmeAdjustmentReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(CreateMany<CmeAdjustmentReadOnlyDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -30,7 +31,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeAdjustmentReadOnlyListFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = await factory.GetByUserIdAsync();
         
             mockDal.VerifyAll();
         }
@@ -39,10 +40,13 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
         public async Task GetByUserIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<CmeAdjustmentReadOnlyDto>();
+            var expectedUserId = 1234;
+            
         
             var mockDal = new Mock<ICmeAdjustmentReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(expectedDtos);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -53,7 +57,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeAdjustmentReadOnlyListFactory();
-            var sut = await factory.GetByUserIdAsync(Create<int>());
+            var sut = await factory.GetByUserIdAsync();
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

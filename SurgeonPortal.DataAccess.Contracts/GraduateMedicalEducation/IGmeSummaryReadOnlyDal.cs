@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.GraduateMedicalEducation
 {
     public interface IGmeSummaryReadOnlyDal
     {
-        Task<IEnumerable<GmeSummaryReadOnlyDto>> GetByUserIdAsync(System.Collections.Generic.List`1[System.String]);
+        Task<IEnumerable<GmeSummaryReadOnlyDto>> GetByUserIdAsync();
     }
 }

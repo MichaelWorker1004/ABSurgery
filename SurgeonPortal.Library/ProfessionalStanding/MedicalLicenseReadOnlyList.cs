@@ -41,7 +41,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
         private async Task GetByUserId()
         
         {
-            var dtos = await _medicalLicenseReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _medicalLicenseReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

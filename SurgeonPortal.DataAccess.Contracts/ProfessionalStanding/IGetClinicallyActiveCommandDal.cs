@@ -4,6 +4,6 @@ namespace SurgeonPortal.DataAccess.Contracts.ProfessionalStanding
 {
     public interface IGetClinicallyActiveCommandDal
     {
-        GetClinicallyActiveCommandDto GetClinicallyActiveByUserId();
+        GetClinicallyActiveCommandDto GetClinicallyActiveByUserId(System.Collections.Generic.List`1[System.String]);
     }
 }

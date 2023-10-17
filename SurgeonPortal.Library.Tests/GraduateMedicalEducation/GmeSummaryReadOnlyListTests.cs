@@ -12,14 +12,15 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
     [TestFixture] 
 	public class GmeSummaryReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IGmeSummaryReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(CreateMany<GmeSummaryReadOnlyDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -39,10 +40,13 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         public async Task GetByUserIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<GmeSummaryReadOnlyDto>();
+            var expectedUserId = 1234;
+            
         
             var mockDal = new Mock<IGmeSummaryReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(expectedDtos);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

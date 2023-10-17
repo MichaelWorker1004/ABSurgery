@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.Dev
 
 
 
-        public async Task ResetCaseCommentsAsync(int examinerUserId)
+        public async Task ResetCaseCommentsAsync(_identity.GetUserId<int>())
         {
             using (var connection = CreateConnection())
             {

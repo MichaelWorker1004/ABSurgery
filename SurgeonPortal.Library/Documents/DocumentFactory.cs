@@ -8,7 +8,9 @@ namespace SurgeonPortal.Library.Documents
 {
     public class DocumentFactory : IDocumentFactory
     {
-        public async Task<IDocument> GetByIdAsync(int id)
+        public async Task<IDocument> GetByIdAsync(
+            int id,
+            int userId)
         {
             if (id <= 0)
             {
@@ -16,7 +18,9 @@ namespace SurgeonPortal.Library.Documents
             }
             
             return await DataPortal.FetchAsync<Document>(
-                new GetByIdCriteria(id));
+                new GetByIdCriteria(
+                id,
+                userId));
             
         }
 
@@ -31,10 +35,14 @@ namespace SurgeonPortal.Library.Documents
             internal class GetByIdCriteria
             {
                 public int Id { get; set; }
+                public int UserId { get; set; }
             
-                public GetByIdCriteria(int id)
+                public GetByIdCriteria(
+                int id,
+                int userId)
              {
                     Id = id;
+                    UserId = userId;
               }
             }
             

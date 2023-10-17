@@ -45,6 +45,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var mockDal = new Mock<IOtherCertificationsDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<OtherCertificationsDto>()))
                 .Callback<OtherCertificationsDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
@@ -87,6 +88,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(Create<OtherCertificationsDto>());
         
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -103,10 +105,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedId = Create<int>();
         
             var mockDal = new Mock<IOtherCertificationsDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -166,9 +170,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
-                .Excluding(m => m.UserId)
                 .Excluding(m => m.CertificateTypeName)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
@@ -216,12 +218,13 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         {
             var expectedId = Create<int>();
             
-            var dto = Create<OtherCertificationsDto>();
+            var dto = CreateValidDto();
             OtherCertificationsDto passedDto = null;
         
             var mockDal = new Mock<IOtherCertificationsDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OtherCertificationsDto>()))
                 .Callback<OtherCertificationsDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -276,7 +279,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -287,11 +289,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         {
             var expectedId = Create<int>();
             
-            var dto = Create<OtherCertificationsDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IOtherCertificationsDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                         .ReturnsAsync(Create<OtherCertificationsDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OtherCertificationsDto>()))
                 .ReturnsAsync(dto);
         

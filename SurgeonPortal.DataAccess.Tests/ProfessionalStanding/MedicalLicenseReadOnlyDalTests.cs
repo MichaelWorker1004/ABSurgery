@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecords(CreateMany<MedicalLicenseReadOnlyDto>());
         
             var sut = new MedicalLicenseReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new MedicalLicenseReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

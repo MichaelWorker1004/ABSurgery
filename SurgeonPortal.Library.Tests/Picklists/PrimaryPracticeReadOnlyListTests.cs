@@ -12,7 +12,6 @@ namespace SurgeonPortal.Library.Tests.Picklists
     [TestFixture] 
 	public class PrimaryPracticeReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
@@ -21,8 +20,9 @@ namespace SurgeonPortal.Library.Tests.Picklists
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(CreateMany<PrimaryPracticeReadOnlyDto>());
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IPrimaryPracticeReadOnlyList, PrimaryPracticeReadOnlyList>()
                 .WithBusinessObject<IPrimaryPracticeReadOnly, PrimaryPracticeReadOnly>()
@@ -39,12 +39,14 @@ namespace SurgeonPortal.Library.Tests.Picklists
         {
             var expectedDtos = CreateMany<PrimaryPracticeReadOnlyDto>();
         
+        
             var mockDal = new Mock<IPrimaryPracticeReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(expectedDtos);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IPrimaryPracticeReadOnlyList, PrimaryPracticeReadOnlyList>()
                 .WithBusinessObject<IPrimaryPracticeReadOnly, PrimaryPracticeReadOnly>()

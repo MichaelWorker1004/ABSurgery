@@ -12,7 +12,15 @@ namespace SurgeonPortal.Library.Tests.Examinations
     [TestFixture] 
 	public class ExamTitleReadOnlyTests : TestBase<int>
     {
-
+        private ExamTitleReadOnlyDto CreateValidDto()
+        {
+            var dto = Create<ExamTitleReadOnlyDto>();
+        
+            dto.ExamName = Create<string>();
+        
+            return dto;
+        }
+        
         #region GetByExamIdAsync
         
         [Test]
@@ -23,6 +31,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
             var mockDal = new Mock<IExamTitleReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamIdAsync(expectedExamId))
                 .ReturnsAsync(Create<ExamTitleReadOnlyDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -40,11 +49,12 @@ namespace SurgeonPortal.Library.Tests.Examinations
         [Test]
         public async Task GetByExamIdAsync_LoadsSelfCorrectly()
         {
-            var dto = Create<ExamTitleReadOnlyDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IExamTitleReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExamIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByExamIdAsync(expectedExamId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

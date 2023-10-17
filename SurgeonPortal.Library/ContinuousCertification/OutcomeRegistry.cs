@@ -252,7 +252,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
         private void Create()
         {
             LoadProperty(UserIdProperty, _identity.GetUserId<int>());
-        
         }
         
         [RunLocal]

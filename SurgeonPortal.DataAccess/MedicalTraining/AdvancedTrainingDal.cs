@@ -38,13 +38,13 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         "[dbo].[ins_advanced_training]",
                             new
                             {
-                                UserId = dto.,
+                                UserId = dto.UserId,
                                 TrainingTypeId = dto.TrainingTypeId,
                                 ProgramId = dto.ProgramId,
                                 Other = dto.Other,
                                 StartDate = dto.StartDate,
                                 EndDate = dto.EndDate,
-                                CreatedByUserId = dto.,
+                                CreatedByUserId = dto.CreatedByUserId,
                             });
                             
                 }
@@ -71,13 +71,13 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         new
                         {
                             Id = dto.Id,
-                            UserId = dto.,
+                            UserId = dto.UserId,
                             TrainingTypeId = dto.TrainingTypeId,
                             ProgramId = dto.ProgramId,
                             Other = dto.Other,
                             StartDate = dto.StartDate,
                             EndDate = dto.EndDate,
-                            LastUpdatedByUserId = dto.,
+                            LastUpdatedByUserId = dto.LastUpdatedByUserId,
                         });
                         
             }

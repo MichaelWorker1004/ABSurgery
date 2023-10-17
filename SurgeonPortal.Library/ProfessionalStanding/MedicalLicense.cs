@@ -144,7 +144,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 		}
 
 
-		[RunLocal]
+        [RunLocal]
         [DeleteSelf]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
@@ -179,6 +179,12 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -275,5 +281,5 @@ namespace SurgeonPortal.Library.ProfessionalStanding
                 }
 			}
 		}
-	}
+    }
 }

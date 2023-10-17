@@ -133,7 +133,6 @@ namespace SurgeonPortal.Library.CE
         private void Create()
         {
             LoadProperty(ExaminerUserIdProperty, _identity.GetUserId<int>());
-        
         }
         
         [RunLocal]

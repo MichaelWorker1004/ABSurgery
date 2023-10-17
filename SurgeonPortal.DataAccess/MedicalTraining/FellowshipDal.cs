@@ -52,11 +52,11 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         "[dbo].[ins_userfellowships]",
                             new
                             {
-                                UserId = dto.,
+                                UserId = dto.UserId,
                                 ProgramName = dto.ProgramName,
                                 CompletionYear = dto.CompletionYear,
                                 ProgramOther = dto.ProgramOther,
-                                CreatedByUserId = dto.,
+                                CreatedByUserId = dto.CreatedByUserId,
                             });
                             
                 }
@@ -83,11 +83,11 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         new
                         {
                             Id = dto.Id,
-                            UserId = dto.,
+                            UserId = dto.UserId,
                             ProgramName = dto.ProgramName,
                             CompletionYear = dto.CompletionYear,
                             ProgramOther = dto.ProgramOther,
-                            LastUpdatedByUserId = dto.,
+                            LastUpdatedByUserId = dto.LastUpdatedByUserId,
                         });
                         
             }

@@ -12,14 +12,15 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
     [TestFixture] 
 	public class FellowshipReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IFellowshipReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(CreateMany<FellowshipReadOnlyDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -38,10 +39,13 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         public async Task GetByUserIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<FellowshipReadOnlyDto>();
+            var expectedUserId = 1234;
+            
         
             var mockDal = new Mock<IFellowshipReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(expectedDtos);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

@@ -13,12 +13,12 @@ namespace SurgeonPortal.Library.Tests.CE
 	public class ExamScoreTests : TestBase<int>
     {
         private ExamScoreDto CreateValidDto()
-        {     
+        {
             var dto = Create<ExamScoreDto>();
-
+        
             dto.ExamScheduleScoreId = Create<int>();
             dto.ExamScheduleId = Create<int>();
-            dto.ExaminerUserId = Create<int>();
+            dto.ExaminerUserId = 1234;
             dto.ExaminerScore = Create<int>();
             dto.Submitted = Create<bool?>();
             dto.SubmittedDateTimeUTC = Create<System.DateTime?>();
@@ -26,11 +26,11 @@ namespace SurgeonPortal.Library.Tests.CE
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedByUserId = Create<int>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-    
+        
             return dto;
         }
-
-            
+        
+        
 
         #region GetByIdAsync ExamScore
         
@@ -38,10 +38,14 @@ namespace SurgeonPortal.Library.Tests.CE
         public async Task GetByIdAsync_CallsDalCorrectly()
         {
             var expectedExamScheduleScoreId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<IExamScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleScoreId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId))
                 .ReturnsAsync(Create<ExamScoreDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -51,9 +55,7 @@ namespace SurgeonPortal.Library.Tests.CE
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(
-                expectedExamScheduleScoreId,
-                expectedExaminerUserId);
+            var sut = await factory.GetByIdAsync(expectedExamScheduleScoreId);
         
             mockDal.VerifyAll();
         }
@@ -62,12 +64,15 @@ namespace SurgeonPortal.Library.Tests.CE
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
-        
+            var expectedExamScheduleScoreId = Create<int>();
+            var expectedExaminerUserId = 1234;
+            
             var mockDal = new Mock<IExamScoreDal>();
             mockDal.Setup(m => m.GetByIdAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>()))
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -77,9 +82,7 @@ namespace SurgeonPortal.Library.Tests.CE
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(
-                Create<int>(),
-                Create<int>());
+            var sut = await factory.GetByIdAsync(Create<int>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -181,15 +184,15 @@ namespace SurgeonPortal.Library.Tests.CE
         public async Task Update_CallsDalCorrectly()
         {
             var expectedExamScheduleScoreId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
-            var dto = Create<ExamScoreDto>();
+            var dto = CreateValidDto();
             ExamScoreDto passedDto = null;
         
             var mockDal = new Mock<IExamScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(
-                expectedExamScheduleScoreId,
-                expectedExaminerUserId))
-                        .ReturnsAsync(dto);
+            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleScoreId))
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<ExamScoreDto>()))
                 .Callback<ExamScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -202,9 +205,7 @@ namespace SurgeonPortal.Library.Tests.CE
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(
-                expectedExamScheduleScoreId,
-                expectedExaminerUserId);
+            var sut = await factory.GetByIdAsync(expectedExamScheduleScoreId);
             
             sut.ExamScheduleScoreId = dto.ExamScheduleScoreId;
             sut.ExamScheduleId = dto.ExamScheduleId;
@@ -256,14 +257,16 @@ namespace SurgeonPortal.Library.Tests.CE
         public async Task Update_YieldsCorrectResult()
         {
             var expectedExamScheduleScoreId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
-            var dto = Create<ExamScoreDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IExamScoreDal>();
             mockDal.Setup(m => m.GetByIdAsync(
                 expectedExamScheduleScoreId,
                 expectedExaminerUserId))
-                        .ReturnsAsync(Create<ExamScoreDto>());
+                .ReturnsAsync(Create<ExamScoreDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<ExamScoreDto>()))
                 .ReturnsAsync(dto);
         
@@ -275,9 +278,7 @@ namespace SurgeonPortal.Library.Tests.CE
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(
-                expectedExamScheduleScoreId,
-                expectedExaminerUserId);
+            var sut = await factory.GetByIdAsync(expectedExamScheduleScoreId);
             sut.ExamScheduleScoreId = Create<int>();
         
             await sut.SaveAsync();

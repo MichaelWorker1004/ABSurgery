@@ -156,13 +156,6 @@ namespace SurgeonPortal.Library.Documents
             BusinessRules.AddRule(new Required(UserIdProperty, "UserId is required"));
         }
 
-        [Create]
-        private void Create()
-        {
-            LoadProperty(StreamIdProperty, Guid.NewGuid());
-
-        }
-
         [RunLocal]
         [DeleteSelf]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -216,7 +209,7 @@ namespace SurgeonPortal.Library.Documents
         {
             LoadProperty(UserIdProperty, _identity.GetUserId<int>());
             LoadProperty(CreatedAtUserIdProperty, _identity.GetUserId<int>());
-        
+			LoadProperty(StreamIdProperty, Guid.NewGuid());
         }
         
         [RunLocal]

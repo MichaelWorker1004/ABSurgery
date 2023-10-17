@@ -30,7 +30,9 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
             sqlManager.AddRecords(CreateMany<ScoringSessionReadOnlyDto>());
         
             var sut = new ScoringSessionReadOnlyDal(sqlManager);
-            await sut.GetByKeysAsync(expectedCurrentDate);
+            await sut.GetByKeysAsync(
+                expectedExaminerUserId,
+                expectedCurrentDate);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -45,7 +47,9 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new ScoringSessionReadOnlyDal(sqlManager);
-            var result = await sut.GetByKeysAsync(Create<DateTime>());
+            var result = await sut.GetByKeysAsync(
+                Create<int>(),
+                Create<DateTime>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

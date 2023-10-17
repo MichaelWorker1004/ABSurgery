@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.MedicalTraining
 {
     public interface IFellowshipReadOnlyDal
     {
-        Task<IEnumerable<FellowshipReadOnlyDto>> GetByUserIdAsync(System.Collections.Generic.List`1[System.String]);
+        Task<IEnumerable<FellowshipReadOnlyDto>> GetByUserIdAsync();
     }
 }

@@ -67,7 +67,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuingMedicalEducation
             sqlManager.AddRecords(CreateMany<CmeCreditReadOnlyDto>());
         
             var sut = new CmeCreditReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

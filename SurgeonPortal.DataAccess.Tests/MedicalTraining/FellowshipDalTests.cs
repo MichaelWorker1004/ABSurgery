@@ -92,11 +92,11 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
             var p =
                 new
                 {
-                    UserId = expectedDto.,
+                    UserId = expectedDto.UserId,
                     ProgramName = expectedDto.ProgramName,
                     CompletionYear = expectedDto.CompletionYear,
                     ProgramOther = expectedDto.ProgramOther,
-                    CreatedByUserId = expectedDto.,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -138,11 +138,11 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
                 new
                 {
                     Id = expectedDto.Id,
-                    UserId = expectedDto.,
+                    UserId = expectedDto.UserId,
                     ProgramName = expectedDto.ProgramName,
                     CompletionYear = expectedDto.CompletionYear,
                     ProgramOther = expectedDto.ProgramOther,
-                    LastUpdatedByUserId = expectedDto.,
+                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

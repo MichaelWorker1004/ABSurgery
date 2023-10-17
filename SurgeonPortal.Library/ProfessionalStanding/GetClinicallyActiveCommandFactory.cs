@@ -8,7 +8,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 {
     public class GetClinicallyActiveCommandFactory : IGetClinicallyActiveCommandFactory
     {
-        public IGetClinicallyActiveCommand GetClinicallyActiveByUserId()
+        public IGetClinicallyActiveCommand GetClinicallyActiveByUserId(int userId)
         {
             if(!GetClinicallyActiveCommand.CanExecuteCommand())
             {
@@ -18,6 +18,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             var cmd = ApplicationContext.DataPortalActivator.CreateInstance(typeof(IGetClinicallyActiveCommand))
         	    as GetClinicallyActiveCommand;
         
+                cmd.UserId = userId;
         
             return DataPortal.Execute(cmd);
         }

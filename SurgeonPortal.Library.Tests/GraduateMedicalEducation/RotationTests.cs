@@ -14,9 +14,9 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
 	public class RotationTests : TestBase<int>
     {
         private RotationDto CreateValidDto()
-        {     
+        {
             var dto = Create<RotationDto>();
-
+        
             dto.Id = Create<int>();
             dto.UserId = Create<int>();
             dto.StartDate = Create<System.DateTime>();
@@ -39,12 +39,11 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedByUserId = Create<int>();
             dto.ClinicalActivity = Create<string>();
-    
+        
             return dto;
         }
-
-            
-
+        
+        
         #region DeleteAsync
         
         [Test]
@@ -58,6 +57,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var mockDal = new Mock<IRotationDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<RotationDto>()))
                 .Callback<RotationDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
@@ -101,6 +101,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var mockDal = new Mock<IRotationDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(Create<RotationDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -120,10 +121,12 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
-        
+            var expectedId = Create<int>();
+            
             var mockDal = new Mock<IRotationDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -199,9 +202,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
-                .Excluding(m => m.UserId)
                 .Excluding(m => m.ClinicalLevel)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
@@ -252,12 +253,13 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         {
             var expectedId = Create<int>();
             
-            var dto = Create<RotationDto>();
+            var dto = CreateValidDto();
             RotationDto passedDto = null;
         
             var mockDal = new Mock<IRotationDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(dto);
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<RotationDto>()))
                 .Callback<RotationDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -333,12 +335,10 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.UserId)
                     .Excluding(m => m.ClinicalLevel)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.ClinicalActivity)
                 .ExcludingMissingMembers());
         
@@ -350,11 +350,12 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         {
             var expectedId = Create<int>();
             
-            var dto = Create<RotationDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IRotationDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(Create<RotationDto>());
+                .ReturnsAsync(Create<RotationDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<RotationDto>()))
                 .ReturnsAsync(dto);
         

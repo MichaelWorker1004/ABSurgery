@@ -52,7 +52,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                         "[dbo].[ins_gmerotations]",
                             new
                             {
-                                UserId = dto.,
+                                UserId = dto.UserId,
                                 StartDate = dto.StartDate,
                                 EndDate = dto.EndDate,
                                 ClinicalLevelId = dto.ClinicalLevelId,
@@ -65,7 +65,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                                 FourMonthRotationExplain = dto.FourMonthRotationExplain,
                                 NonPrimaryExplain = dto.NonPrimaryExplain,
                                 NonClinicalExplain = dto.NonClinicalExplain,
-                                CreatedByUserId = dto.,
+                                CreatedByUserId = dto.CreatedByUserId,
                             });
                             
                 }
@@ -92,7 +92,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                         new
                         {
                             Id = dto.Id,
-                            UserId = dto.,
+                            UserId = dto.UserId,
                             StartDate = dto.StartDate,
                             EndDate = dto.EndDate,
                             ClinicalLevelId = dto.ClinicalLevelId,
@@ -105,7 +105,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                             FourMonthRotationExplain = dto.FourMonthRotationExplain,
                             NonPrimaryExplain = dto.NonPrimaryExplain,
                             NonClinicalExplain = dto.NonClinicalExplain,
-                            LastUpdatedByUserId = dto.,
+                            LastUpdatedByUserId = dto.LastUpdatedByUserId,
                         });
                         
             }

@@ -15,6 +15,16 @@ namespace SurgeonPortal.Library.Examinations
             
         }
 
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+                public int UserId { get; set; }
+            
+                public GetByUserIdCriteria(int userId)
+             {
+                    UserId = userId;
+              }
+            }
             
 
 

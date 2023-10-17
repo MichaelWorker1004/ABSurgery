@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Picklists
                     "[dbo].[get_day_session_picklist]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                             CurrentDate = currentDate,
                         });
                         

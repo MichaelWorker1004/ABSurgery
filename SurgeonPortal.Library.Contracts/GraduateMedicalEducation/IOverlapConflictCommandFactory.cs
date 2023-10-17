@@ -4,6 +4,10 @@ namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
 {
     public interface IOverlapConflictCommandFactory
     {
-        IOverlapConflictCommand CheckOverlapConflicts(System.Collections.Generic.List`1[System.String]);
+        IOverlapConflictCommand CheckOverlapConflicts(
+            int userId,
+            System.DateTime startDate,
+            System.DateTime endDate,
+            int? rotationId);
     }
 }

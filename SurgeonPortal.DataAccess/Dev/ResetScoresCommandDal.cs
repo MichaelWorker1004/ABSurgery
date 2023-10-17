@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.Dev
 
 
 
-        public async Task ResetExamScoresAsync(int examinerUserId)
+        public async Task ResetExamScoresAsync(_identity.GetUserId<int>())
         {
             using (var connection = CreateConnection())
             {

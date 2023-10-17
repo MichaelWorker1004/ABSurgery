@@ -92,7 +92,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
             var p =
                 new
                 {
-                    UserId = expectedDto.,
+                    UserId = expectedDto.UserId,
                     StartDate = expectedDto.StartDate,
                     EndDate = expectedDto.EndDate,
                     ClinicalLevelId = expectedDto.ClinicalLevelId,
@@ -105,7 +105,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                     FourMonthRotationExplain = expectedDto.FourMonthRotationExplain,
                     NonPrimaryExplain = expectedDto.NonPrimaryExplain,
                     NonClinicalExplain = expectedDto.NonClinicalExplain,
-                    CreatedByUserId = expectedDto.,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -147,7 +147,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                 new
                 {
                     Id = expectedDto.Id,
-                    UserId = expectedDto.,
+                    UserId = expectedDto.UserId,
                     StartDate = expectedDto.StartDate,
                     EndDate = expectedDto.EndDate,
                     ClinicalLevelId = expectedDto.ClinicalLevelId,
@@ -160,7 +160,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                     FourMonthRotationExplain = expectedDto.FourMonthRotationExplain,
                     NonPrimaryExplain = expectedDto.NonPrimaryExplain,
                     NonClinicalExplain = expectedDto.NonClinicalExplain,
-                    LastUpdatedByUserId = expectedDto.,
+                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

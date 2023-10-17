@@ -13,19 +13,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
     [TestFixture] 
 	public class OverlapConflictCommandTests : TestBase<int>
     {
-        private OverlapConflictCommandDto CreateValidDto()
-        {     
-            var dto = Create<OverlapConflictCommandDto>();
-
-            dto.UserId = Create<int>();
-            dto.StartDate = Create<System.DateTime>();
-            dto.EndDate = Create<System.DateTime>();
-            dto.OverlapConflict = Create<bool>();
-            dto.RotationId = Create<int?>();
-    
-            return dto;
-        }
-
         #region CheckOverlapConflicts
         
         [Test]
@@ -36,7 +23,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var expectedEndDate = Create<DateTime>();
             var expectedRotationId = Create<int?>();
             
-            var dto = Create<OverlapConflictCommandDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IOverlapConflictCommandDal>();
             mockDal.Setup(m => m.CheckOverlapConflicts(
@@ -45,6 +32,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 expectedEndDate,
                 expectedRotationId))
                 .Returns(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

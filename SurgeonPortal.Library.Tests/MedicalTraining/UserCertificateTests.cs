@@ -39,13 +39,17 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         public async Task Delete_CallsDalCorrectly()
         {
             var expectedCertificateId = Create<int>();
+            var expectedUserId = 1234;
             
             var dto = CreateValidDto();
             UserCertificateDto passedDto = null;
         
             var mockDal = new Mock<IUserCertificateDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedCertificateId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedCertificateId,
+                expectedUserId))
                 .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<UserCertificateDto>()))
                 .Callback<UserCertificateDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
@@ -88,6 +92,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             mockDal.Setup(m => m.GetByIdAsync(expectedCertificateId))
                 .ReturnsAsync(Create<UserCertificateDto>());
         
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -104,10 +109,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedCertificateId = Create<int>();
         
             var mockDal = new Mock<IUserCertificateDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedCertificateId))
                 .ReturnsAsync(dto);
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -168,9 +175,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.CertificateId)
-                .Excluding(m => m.UserId)
                 .Excluding(m => m.CertificateType)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)

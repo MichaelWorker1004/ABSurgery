@@ -12,7 +12,6 @@ namespace SurgeonPortal.Library.Tests.Examinations
     [TestFixture] 
 	public class ExamOverviewReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
@@ -20,6 +19,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
             var mockDal = new Mock<IExamOverviewReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(CreateMany<ExamOverviewReadOnlyDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -39,10 +39,12 @@ namespace SurgeonPortal.Library.Tests.Examinations
         public async Task GetAllAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<ExamOverviewReadOnlyDto>();
+            
         
             var mockDal = new Mock<IExamOverviewReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(expectedDtos);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

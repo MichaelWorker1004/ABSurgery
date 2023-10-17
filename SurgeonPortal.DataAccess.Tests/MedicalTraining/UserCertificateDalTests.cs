@@ -93,10 +93,12 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     DocumentId = expectedDto.DocumentId,
                     CertificateTypeId = expectedDto.CertificateTypeId,
                     IssueDate = expectedDto.IssueDate,
                     CertificateNumber = expectedDto.CertificateNumber,
+                    CreatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

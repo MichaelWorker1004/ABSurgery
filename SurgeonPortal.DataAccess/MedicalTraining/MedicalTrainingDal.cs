@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
 
 
 
-        public async Task<MedicalTrainingDto> GetByUserIdAsync()
+        public async Task<MedicalTrainingDto> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -38,7 +38,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         "[dbo].[ins_medical_training]",
                             new
                             {
-                                UserId = dto.,
+                                UserId = dto.UserId,
                                 GraduateProfileId = dto.GraduateProfileId,
                                 MedicalSchoolName = dto.MedicalSchoolName,
                                 MedicalSchoolCity = dto.MedicalSchoolCity,
@@ -49,7 +49,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                                 ResidencyProgramName = dto.ResidencyProgramName,
                                 ResidencyCompletionYear = dto.ResidencyCompletionYear,
                                 ResidencyProgramOther = dto.ResidencyProgramOther,
-                                CreatedByUserId = dto.,
+                                CreatedByUserId = dto.CreatedByUserId,
                             });
                             
                 }
@@ -76,7 +76,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         new
                         {
                             Id = dto.Id,
-                            UserId = dto.,
+                            UserId = dto.UserId,
                             GraduateProfileId = dto.GraduateProfileId,
                             MedicalSchoolName = dto.MedicalSchoolName,
                             MedicalSchoolCity = dto.MedicalSchoolCity,
@@ -87,7 +87,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                             ResidencyProgramName = dto.ResidencyProgramName,
                             ResidencyCompletionYear = dto.ResidencyCompletionYear,
                             ResidencyProgramOther = dto.ResidencyProgramOther,
-                            LastUpdatedByUserId = dto.,
+                            LastUpdatedByUserId = dto.UserId,
                         });
                         
             }

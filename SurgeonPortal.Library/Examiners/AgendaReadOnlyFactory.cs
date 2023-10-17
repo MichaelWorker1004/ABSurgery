@@ -25,10 +25,14 @@ namespace SurgeonPortal.Library.Examiners
             [Serializable]
             internal class GetByExamHeaderIdCriteria
             {
+                public int ExaminerUserId { get; set; }
                 public int ExamHeaderId { get; set; }
             
-                public GetByExamHeaderIdCriteria(int examHeaderId)
+                public GetByExamHeaderIdCriteria(
+                int examinerUserId,
+                int examHeaderId)
              {
+                    ExaminerUserId = examinerUserId;
                     ExamHeaderId = examHeaderId;
               }
             }

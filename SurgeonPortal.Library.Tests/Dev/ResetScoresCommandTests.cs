@@ -12,26 +12,19 @@ namespace SurgeonPortal.Library.Tests.Dev
     [TestFixture] 
 	public class ResetScoresCommandTests : TestBase<int>
     {
-        private ResetScoresCommandDto CreateValidDto()
-        {     
-            var dto = Create<ResetScoresCommandDto>();
-
-            dto.ExaminerUserId = Create<int>();
-    
-            return dto;
-        }
-
         #region ResetExamScoresAsync
         
         [Test]
         public async Task ResetExamScoresAsync_CallsDalCorrectly()
         {
+            var expectedExaminerUserId = 1234;
             
-            var dto = Create<ResetScoresCommandDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IResetScoresCommandDal>();
-            mockDal.Setup(m => m.ResetExamScoresAsync())
+            mockDal.Setup(m => m.ResetExamScoresAsyncAsync(expectedExaminerUserId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -40,7 +33,7 @@ namespace SurgeonPortal.Library.Tests.Dev
                 .Build();
         
             var factory = new ResetScoresCommandFactory();
-            var sut = await factory.ResetExamScoresAsync(expectedExaminerUserId);
+            var sut = await factory.ResetExamScoresAsync();
         
             mockDal.VerifyAll();
         

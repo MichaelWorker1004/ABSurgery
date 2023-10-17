@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.Examiners
             sqlManager.AddRecord(Create<AgendaReadOnlyDto>());
         
             var sut = new AgendaReadOnlyDal(sqlManager);
-            await sut.GetByExamHeaderIdAsync(expectedExamHeaderId);
+            await sut.GetByExamHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +46,9 @@ namespace SurgeonPortal.DataAccess.Tests.Examiners
             sqlManager.AddRecord(expectedDto);
         
             var sut = new AgendaReadOnlyDal(sqlManager);
-            var result = await sut.GetByExamHeaderIdAsync(Create<int>());
+            var result = await sut.GetByExamHeaderIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());

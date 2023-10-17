@@ -12,17 +12,30 @@ namespace SurgeonPortal.Library.Tests.Examiners
     [TestFixture] 
 	public class ConflictReadOnlyTests : TestBase<int>
     {
-
+        private ConflictReadOnlyDto CreateValidDto()
+        {
+            var dto = Create<ConflictReadOnlyDto>();
+        
+            dto.Id = Create<int>();
+            dto.DocumentName = Create<string>();
+        
+            return dto;
+        }
+        
         #region GetByExamHeaderIdAsync
         
         [Test]
         public async Task GetByExamHeaderIdAsync_CallsDalCorrectly()
         {
             var expectedExamHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<IConflictReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExamHeaderIdAsync(expectedExamHeaderId))
+            mockDal.Setup(m => m.GetByExamHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId))
                 .ReturnsAsync(Create<ConflictReadOnlyDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -40,11 +53,14 @@ namespace SurgeonPortal.Library.Tests.Examiners
         [Test]
         public async Task GetByExamHeaderIdAsync_LoadsSelfCorrectly()
         {
-            var dto = Create<ConflictReadOnlyDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IConflictReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExamHeaderIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByExamHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -54,7 +70,9 @@ namespace SurgeonPortal.Library.Tests.Examiners
                 .Build();
         
             var factory = new ConflictReadOnlyFactory();
-            var sut = await factory.GetByExamHeaderIdAsync(Create<int>());
+            var sut = await factory.GetByExamHeaderIdAsync(
+                Create<int>(),
+                Create<int>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

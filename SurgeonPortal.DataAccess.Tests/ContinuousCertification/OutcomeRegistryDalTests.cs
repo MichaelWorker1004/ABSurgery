@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
             sqlManager.AddRecord(Create<OutcomeRegistryDto>());
         
             var sut = new OutcomeRegistryDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

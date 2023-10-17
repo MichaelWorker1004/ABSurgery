@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                     "[dbo].[get_userlicenses_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

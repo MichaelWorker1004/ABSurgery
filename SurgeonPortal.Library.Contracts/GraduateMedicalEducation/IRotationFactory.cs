@@ -4,7 +4,7 @@ namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
 {
     public interface IRotationFactory
     {
-        Task<IRotation> GetByIdAsync(System.Collections.Generic.List`1[System.String]);
+        Task<IRotation> GetByIdAsync(int id);
         IRotation Create();
     }
 }

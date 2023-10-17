@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             sqlManager.AddRecord(Create<GetExamCasesScoredCommandDto>());
         
             var sut = new GetExamCasesScoredCommandDal(sqlManager);
-            sut.GetExamCasesScored(expectedExamScheduleId);
+            sut.GetExamCasesScored(
+                expectedExamScheduleId,
+                expectedExaminerUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

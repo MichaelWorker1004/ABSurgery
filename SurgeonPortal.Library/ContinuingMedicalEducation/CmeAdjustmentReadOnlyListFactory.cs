@@ -10,10 +10,6 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
     {
         public async Task<ICmeAdjustmentReadOnlyList> GetByUserIdAsync()
         {
-            if (userId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("userId is a required field.");
-            }
             
             return await DataPortal.FetchAsync<CmeAdjustmentReadOnlyList>();
             

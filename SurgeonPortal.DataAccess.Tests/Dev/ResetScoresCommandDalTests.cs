@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.Dev
             sqlManager.AddRecord(Create<ResetScoresCommandDto>());
         
             var sut = new ResetScoresCommandDal(sqlManager);
-            await sut.ResetExamScoresAsync();
+            await sut.ResetExamScoresAsync(expectedExaminerUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

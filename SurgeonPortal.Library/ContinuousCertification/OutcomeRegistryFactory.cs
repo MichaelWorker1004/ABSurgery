@@ -10,10 +10,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
     {
         public async Task<IOutcomeRegistry> GetByUserIdAsync(int userId)
         {
-            if (userId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("userId is a required field.");
-            }
             
             return await DataPortal.FetchAsync<OutcomeRegistry>(
                 new GetByUserIdCriteria(userId));

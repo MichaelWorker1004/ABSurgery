@@ -12,7 +12,19 @@ namespace SurgeonPortal.Library.Tests.Examinations
     [TestFixture] 
 	public class QualifyingExamReadOnlyTests : TestBase<int>
     {
-
+        private QualifyingExamReadOnlyDto CreateValidDto()
+        {
+            var dto = Create<QualifyingExamReadOnlyDto>();
+        
+            dto.ExamName = Create<string>();
+            dto.RegOpenDate = Create<System.DateTime?>();
+            dto.RegEndDate = Create<System.DateTime?>();
+            dto.ExamStartDate = Create<System.DateTime?>();
+            dto.ExamEndDate = Create<System.DateTime?>();
+        
+            return dto;
+        }
+        
         #region GetAsync
         
         [Test]
@@ -22,6 +34,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
             var mockDal = new Mock<IQualifyingExamReadOnlyDal>();
             mockDal.Setup(m => m.GetAsync())
                 .ReturnsAsync(Create<QualifyingExamReadOnlyDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -39,11 +52,12 @@ namespace SurgeonPortal.Library.Tests.Examinations
         [Test]
         public async Task GetAsync_LoadsSelfCorrectly()
         {
-            var dto = Create<QualifyingExamReadOnlyDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IQualifyingExamReadOnlyDal>();
             mockDal.Setup(m => m.GetAsync())
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
