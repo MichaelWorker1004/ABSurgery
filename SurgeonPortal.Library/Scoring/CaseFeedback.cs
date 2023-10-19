@@ -73,8 +73,6 @@ namespace SurgeonPortal.Library.Scoring
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
 
-            
-
             Csla.Rules.BusinessRules.AddRule(typeof(CaseFeedback),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
@@ -105,25 +103,6 @@ namespace SurgeonPortal.Library.Scoring
                 await _caseFeedbackDal.DeleteAsync(ToDto());
         
                 MarkIdle();
-            }
-        }
-
-        [Fetch]
-        [RunLocal]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
-           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
-        private async Task GetByExaminerId(GetByExaminerIdCriteria criteria)
-        
-        {
-            using (BypassPropertyChecks)
-            {
-                var dto = await _caseFeedbackDal.GetByExaminerIdAsync(criteria.CaseHeaderId);
-        
-                if(dto == null)
-                {
-                    throw new Ytg.Framework.Exceptions.DataNotFoundException("CaseFeedback not found based on criteria");
-                }
-                FetchData(dto);
             }
         }
 

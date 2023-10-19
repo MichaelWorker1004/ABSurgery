@@ -1,7 +1,7 @@
 {
-  "name": "CaseFeedback",
-  "implementationName": "Scoring\\CaseFeedback.GetByExaminerId",
-  "template": "ytg-framework/editable-get",
+  "name": "CaseFeedbackReadOnly",
+  "implementationName": "Scoring\\CaseFeedbackReadOnly.GetByExaminerId",
+  "template": "ytg-framework/readonly-get",
   "parameters": {
     "Adapter": "dbo.get_case_feedback_by_examinerid",
     "ControllerName": "Scoring\\CaseFeedbackController",
@@ -11,8 +11,8 @@
     "IncludeControllerInGeneration": "true",
     "IsChild": "false",
     "IsRoot": "true",
-    "Model": "Scoring\\CaseFeedback",
-    "ModelGroup": "CaseFeedback",
+    "Model": "Scoring\\CaseFeedbackReadOnly",
+    "ModelGroup": "CaseFeedbackReadOnly",
     "RootNamespace": "$project.RootNamespace",
     "Route": "by-examiner-id"
   },
@@ -87,26 +87,6 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.Feedback"
-              },
-              {
-                "name": "CreatedByUserId",
-                "dataType": "int",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.CreatedByUserId"
-              },
-              {
-                "name": "LastUpdatedByUserId",
-                "dataType": "int",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": false,
-                "isIdentityColumn": false,
-                "mapsTo": "model.LastUpdatedByUserId"
               }
             ]
           }

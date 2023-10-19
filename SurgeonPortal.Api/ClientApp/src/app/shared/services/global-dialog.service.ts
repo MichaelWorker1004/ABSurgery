@@ -26,10 +26,13 @@ export class GlobalDialogService {
     // set the aria-modal attribute to better support screen readers
     this._dialog.setAttribute('aria-modal', 'true');
 
-    // set any event listeners that should be universal (and not type specific) here
-    // this._dialog.addEventListener('sl-initial-focus', () => {
-    //   console.log('sl-initial-focus');
-    // });
+    this._dialog.addEventListener('sl-request-close', (event: any) => {
+      if (event.detail.source === 'overlay') {
+        event.preventDefault();
+      } else {
+        this.hide();
+      }
+    });
   }
 
   // handle the Success/Error dialog
@@ -62,11 +65,6 @@ export class GlobalDialogService {
     const button = this._dialog.querySelector('sl-button');
     button.setAttribute('autofocus', '');
     button.addEventListener('click', () => {
-      this.hide();
-    });
-
-    // add click event listener to the dialog overlay so that the close cleans up the DOM
-    this._dialog.addEventListener('sl-request-close', () => {
       this.hide();
     });
 
@@ -329,11 +327,6 @@ export class GlobalDialogService {
     this._dialog.innerHTML = `<div class="global-dialog flex flex-column justify-content-center align-items-center">
     <sl-spinner style="font-size: 150px; --track-width: 10px;"></sl-spinner>
     </div>`;
-
-    // add click event listener to the dialog overlay so that the close cleans up the DOM
-    this._dialog.addEventListener('sl-request-close', () => {
-      this.hide();
-    });
 
     // set modal specific attributes (this can be done with param options)
     this._dialog.setAttribute('style', '--width: unset');

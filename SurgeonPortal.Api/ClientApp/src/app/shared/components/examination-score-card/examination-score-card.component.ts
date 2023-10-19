@@ -50,9 +50,9 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
   disabledCriticalFail = true;
 
   scoreOptions = [
-    { label: 'Pass', value: '1' },
+    { label: 'Pass', value: '3' },
     { label: 'Equivocal', value: '2' },
-    { label: 'Fail', value: '3' },
+    { label: 'Fail', value: '1' },
   ];
 
   scoringForm = new FormGroup({
@@ -115,7 +115,7 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
   }
 
   handleScoreSelect(value: any) {
-    if (value === '3' || value === 3) {
+    if (value === '1' || value === 1) {
       this.scoringForm.get('criticalFail')?.enable();
       this.disabledCriticalFail = false;
     } else {

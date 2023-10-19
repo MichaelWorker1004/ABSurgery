@@ -28,21 +28,6 @@ namespace SurgeonPortal.DataAccess.Scoring
             }
         }
 
-        public async Task<CaseFeedbackDto> GetByExaminerIdAsync(int caseHeaderId)
-        {
-            using (var connection = CreateConnection())
-            {
-                return await connection.ExecFirstOrDefaultAsync<CaseFeedbackDto>(
-                    "[dbo].[get_case_feedback_by_examinerId]",
-                        new
-                        {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                            CaseHeaderId = caseHeaderId,
-                        });
-                        
-            }
-        }
-
         public async Task<CaseFeedbackDto> GetByIdAsync(int id)
         {
             using (var connection = CreateConnection())

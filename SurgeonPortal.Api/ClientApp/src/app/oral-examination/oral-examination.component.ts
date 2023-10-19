@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -6,21 +7,30 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateModule } from '@ngx-translate/core';
-import { ExpandableComponent } from '../shared/components/expandable/expandable.component';
+import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ExaminationScoreCardComponent } from '../shared/components/examination-score-card/examination-score-card.component';
 import { BehaviorSubject, Observable, take } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
+import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
+import { IExamScoreModel } from '../api/models/ce/exam-score.model';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { IExamineeReadOnlyModel } from '../api/models/scoring/ce/examinee-read-only.model';
+import { IFormErrors } from '../shared/common';
+import { ExamTimerComponent } from '../shared/components/exam-timer-component/exam-timer.component';
+import { ExaminationScoreCardComponent } from '../shared/components/examination-score-card/examination-score-card.component';
+import { ExpandableComponent } from '../shared/components/expandable/expandable.component';
+import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   ApplicationSelectors,
   ClearExamScoringErrors,
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
+  GetExamHeaderId,
   GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
@@ -29,16 +39,7 @@ import {
   UpdateCaseScore,
   UserProfileSelectors,
 } from '../state';
-import { IExamineeReadOnlyModel } from '../api/models/scoring/ce/examinee-read-only.model';
-import { ExamTimerComponent } from '../shared/components/exam-timer-component/exam-timer.component';
-import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
-import { IExamScoreModel } from '../api/models/ce/exam-score.model';
-import { GlobalDialogService } from '../shared/services/global-dialog.service';
-import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SetExamInProgress } from '../state/application/application.actions';
-import { IFormErrors } from '../shared/common';
-import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
 
 @UntilDestroy()
 @Component({
@@ -84,9 +85,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
-  @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
 
-  examHeaderId = 481; // TODO - remove hard coded value
+  @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
 
   cases$: BehaviorSubject<any> = new BehaviorSubject([]);
   userId!: number;
@@ -121,10 +124,17 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags?.ceScoreTesting) {
-        this.examHeaderId = 491;
+        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
       }
     });
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+    });
+
+    window.onbeforeunload = (e) => {
+      e.returnValue = true;
+    };
   }
   ngOnDestroy(): void {
     this._store.dispatch(new SetExamInProgress(false));
@@ -282,11 +292,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
 
     this._store.dispatch(new SetExamInProgress(false));
 
-    const caseCount = Object.keys(this.gradedCandidateCaseCores).length;
     let currentCase = 0;
-    const dateParts = this.dayTime.replace(/\s+/g, ' ').trim().split(' ');
-    const formattedDate = `${dateParts[1]} ${dateParts[0]} ${dateParts[2]}`;
-    const examDate = new Date(formattedDate);
 
     if (Object.entries(this.gradedCandidateCaseCores).length > 0) {
       Object.entries(this.gradedCandidateCaseCores).forEach(() => {

@@ -18,6 +18,7 @@ import { ExaminationScoreModalComponent } from './examination-score-modal/examin
 import {
   ApplicationSelectors,
   ExamScoringSelectors,
+  GetExamHeaderId,
   GetExamScoresList,
   GetExamTitle,
   GetSelectedExamScores,
@@ -47,8 +48,6 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExaminationScoresComponent implements OnInit {
-  examHeaderId = 481; // TODO - remove hard coded value
-
   // TODO: [Joe] - remove after release 1 as part of feature/1811
   @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
     | Observable<IFeatureFlags>
@@ -62,6 +61,12 @@ export class ExaminationScoresComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
+
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
+  examHeaderId!: number;
 
   currentYear = new Date().getFullYear();
 
@@ -99,21 +104,23 @@ export class ExaminationScoresComponent implements OnInit {
   currentDay = new Date();
 
   constructor(private _store: Store) {
-    //this._store.dispatch(new GetExamTitle(this.examHeaderId));
     // TODO: [Joe] - remove after release 1 as part of feature/1811
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags?.ceScoreTesting) {
-        this.examHeaderId = 491;
+        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
       }
       if (featureFlags?.ceScoreTestingDate) {
-        this.currentDay = new Date('10/11/2023');
+        this.currentDay = new Date('10/16/2023');
       }
     });
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+      this.getExaminationScoresDate(examHeaderId);
+      this.examHeaderId = examHeaderId;
+    });
   }
 
   ngOnInit(): void {
-    this.getExaminationScoresDate();
     this.examSelected();
   }
 
@@ -152,15 +159,15 @@ export class ExaminationScoresComponent implements OnInit {
       });
   }
 
-  getExaminationScoresDate() {
-    this._store.dispatch(new GetExamScoresList(this.examHeaderId));
+  getExaminationScoresDate(examHeaderId: number) {
+    this._store.dispatch(new GetExamScoresList(examHeaderId));
 
     this.examScores$
       ?.pipe(
         untilDestroyed(this),
         map((scoreList) => {
           // TODO: [Joe] - remove hardcoded dates after release 1 as part of feature/1811
-          const hardcodedDates = ['10/11/2023', '10/12/2023', '10/13/2023'];
+          const hardcodedDates = ['10/16/2023', '10/17/2023', '10/18/2023'];
           if (scoreList?.length > 0) {
             return scoreList.map((score) => {
               return {
