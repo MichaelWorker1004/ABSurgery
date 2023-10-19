@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
+  AfterContentInit,
   Component,
   ElementRef,
   Input,
@@ -8,7 +9,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'abs-tooltip',
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './tooltip.component.html',
   styleUrls: ['./tooltip.component.scss'],
 })
-export class TooltipComponent implements OnInit, AfterViewInit, OnChanges {
+export class TooltipComponent implements OnInit, AfterContentInit, OnChanges {
   @ViewChild('tooltip', { static: false }) tooltipRef!: ElementRef;
   @ViewChild('icon', { static: false }) iconRef!: ElementRef;
 
@@ -31,7 +31,7 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnChanges {
     this.localPosition = this.position;
   }
 
-  ngAfterViewInit(): void {
+  ngAfterContentInit(): void {
     this.adjustPosition();
   }
 
