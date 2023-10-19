@@ -189,7 +189,7 @@
   },
   "SIDENAV": {
     "APPLY_REGISTER": {
-      "MAIN": "Apply and Register",
+      "MAIN": "Apply & Register",
       "REGISTRATION": "Exam Registration",
       "REQUIREMENTS": "Registration Requirements"
     },
@@ -197,7 +197,7 @@
     "CONTINUOUS_CERTIFICATION": "Continuous Certification",
     "DASHBOARD": "Dashboard",
     "DOCUMENTS": "Documents",
-    "EXAM_HISTORY": "Exam History",
+    "EXAM_HISTORY": "Examination History",
     "EXAM_SCORING": {
       "CASE_ROSTER": "Exam Case Rosters",
       "EXAMINATION": "Start CE Exams",

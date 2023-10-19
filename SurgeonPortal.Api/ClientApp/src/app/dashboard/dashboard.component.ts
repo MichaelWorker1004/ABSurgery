@@ -178,22 +178,28 @@ export class DashboardComponent {
                 isRegisterDates()
               ) {
                 applyForQECard.disabled = !this.featureFlags.applyRegisterPage;
-                applyForQECard.actionDisplay = this.featureFlags
-                  .applyRegisterPage
-                  ? this._translateService.instant(
-                      'DASHBOARD.ACTION_CARDS.REGISTER_BTN'
-                    )
-                  : 'Coming Soon';
+                if (this.featureFlags.applyRegisterPage) {
+                  this._translateService
+                    .get('DASHBOARD.ACTION_CARDS.REGISTER_BTN')
+                    .pipe(untilDestroyed(this))
+                    .subscribe((res) => {
+                      applyForQECard.actionDisplay = res;
+                    });
+                } else {
+                  applyForQECard.actionDisplay = 'Coming Soon';
+                }
               } else {
                 applyForQECard.disabled = true;
-                applyForQECard.description = this._translateService.instant(
-                  'DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE',
-                  {
+                this._translateService
+                  .get('DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE', {
                     date: new Date(
                       registrationInformation?.regOpenDate ?? ''
                     ).toLocaleDateString(),
-                  }
-                );
+                  })
+                  .pipe(untilDestroyed(this))
+                  .subscribe((res) => {
+                    applyForQECard.description = res;
+                  });
               }
             });
           this.programInformation$
@@ -213,34 +219,57 @@ export class DashboardComponent {
   fetchAlertsAndNoticesByUserId(isSurgeon: boolean) {
     const alertsAndNoticesTrainee = [
       {
-        content: this._translateService.instant(
-          'DASHBOARD.HIGHLIGHT_CARDS.UPCOMINGEXAMS_SUBTITLE'
-        ),
+        content: '',
+        contentKey: 'DASHBOARD.HIGHLIGHT_CARDS.UPCOMINGEXAMS_SUBTITLE',
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
       },
       {
-        title: this._translateService.instant(
-          'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_TITLE'
-        ),
-        content: this._translateService.instant(
-          'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_SUBTITLE'
-        ),
+        title: '',
+        titleKey: 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_TITLE',
+        content: '',
+        contentKey: 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_SUBTITLE',
         action: {
           type: this.featureFlags.documentsPage ? 'component' : null,
           action: this.featureFlags.documentsPage ? '/documents' : null,
         },
-        actionText: this.featureFlags.documentsPage
-          ? this._translateService.instant(
-              'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_BTN'
-            )
-          : 'Coming Soon',
+        actionText: this.featureFlags.documentsPage ? '' : 'Coming Soon',
+        actionTextKey: this.featureFlags.documentsPage
+          ? 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_BTN'
+          : undefined,
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
       },
     ];
+
+    alertsAndNoticesTrainee.forEach((card) => {
+      if (card.titleKey) {
+        this._translateService
+          .get(card.titleKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.title = res;
+          });
+      }
+      if (card.contentKey) {
+        this._translateService
+          .get(card.contentKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.content = res;
+          });
+      }
+      if (card.actionTextKey) {
+        this._translateService
+          .get(card.actionTextKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.actionText = res;
+          });
+      }
+    });
 
     this.alertsAndNotices$
       ?.pipe(untilDestroyed(this))
@@ -251,46 +280,73 @@ export class DashboardComponent {
           date = new Date(
             alertsAndNotices?.alertsAndNotices?.examStartDate ?? ''
           ).toLocaleDateString();
-          alertsAndNoticesTrainee[0].title = this._translateService.instant(
-            'DASHBOARD.HIGHLIGHT_CARDS.UPCOMINGEXAMS_TITLE',
-            { date: date }
-          );
+
+          this._translateService
+            .get('DASHBOARD.HIGHLIGHT_CARDS.UPCOMINGEXAMS_TITLE', {
+              date: date,
+            })
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              alertsAndNoticesTrainee[0].title = res;
+            });
         }
       });
 
     const alertsAndNoticesCertfiied = [
       {
-        title: this._translateService.instant(
-          'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_TITLE'
-        ),
-        content: this._translateService.instant(
-          'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_SUBTITLE'
-        ),
+        title: '',
+        titleKey: 'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_TITLE',
+        content: '',
+        contentKey: 'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_SUBTITLE',
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
       },
       {
-        title: this._translateService.instant(
-          'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_TITLE'
-        ),
-        content: this._translateService.instant(
-          'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_SUBTITLE'
-        ),
+        title: '',
+        titleKey: 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_TITLE',
+        content: '',
+        contentKey: 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_SUBTITLE',
         action: {
           type: this.featureFlags.documentsPage ? 'component' : null,
           action: this.featureFlags.documentsPage ? '/documents' : null,
         },
-        actionText: this.featureFlags.documentsPage
-          ? this._translateService.instant(
-              'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_BTN'
-            )
-          : 'Coming Soon',
+        actionText: this.featureFlags.documentsPage ? '' : 'Coming Soon',
+        actionTextKey: this.featureFlags.documentsPage
+          ? 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_BTN'
+          : undefined,
         alert: false,
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
     ];
+
+    alertsAndNoticesCertfiied.forEach((card) => {
+      if (card.titleKey) {
+        this._translateService
+          .get(card.titleKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.title = res;
+          });
+      }
+      if (card.contentKey) {
+        this._translateService
+          .get(card.contentKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.content = res;
+          });
+      }
+      if (card.actionTextKey) {
+        this._translateService
+          .get(card.actionTextKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.actionText = res;
+          });
+      }
+    });
 
     if (isSurgeon) {
       this._store
@@ -309,7 +365,7 @@ export class DashboardComponent {
 
           if (this.featureFlags.applyRegisterPage) {
             alertsAndNoticesCertfiied[0].content =
-              this.upcomingExams?.join('<br><br>');
+              this.upcomingExams?.join('<br><br>') || '';
           }
         });
     }

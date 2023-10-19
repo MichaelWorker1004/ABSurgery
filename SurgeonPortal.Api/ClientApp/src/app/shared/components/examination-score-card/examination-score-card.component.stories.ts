@@ -59,3 +59,29 @@ export const Locked: Story = {
     locked: true,
   },
 };
+
+export const WithCaseTitle: Story = {
+  args: {
+    ...Default.args,
+    case: {
+      caseNumber: '1',
+      endTime: '10:00:00',
+      examCaseId: 1,
+      examDate: '2023-10-11T00:00:00',
+      examineeFirstName: 'Joe',
+      examineeLastName: 'Smith',
+      examineeMiddleName: 'M',
+      examineeSuffix: '',
+      examineeUserId: 1,
+      examinerUserId: 2,
+      isLocked: false,
+      startTime: '09:00:00',
+      sections: [
+        {
+          caseTitle: 'case title',
+          caseNumber: 1,
+        },
+      ],
+    },
+  },
+};
