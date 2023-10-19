@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsModule } from '@ngxs/store';
 import { surgeonPortalState } from '../state/surgeon-portal.state';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('OralExaminationsComponent', () => {
   let component: OralExaminationsComponent;
@@ -17,6 +18,7 @@ describe('OralExaminationsComponent', () => {
         RouterTestingModule,
         NgxsModule.forRoot(surgeonPortalState),
         HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
     }).compileComponents();
 

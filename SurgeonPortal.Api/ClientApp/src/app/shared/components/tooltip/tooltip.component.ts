@@ -49,19 +49,19 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnChanges {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
-    const tooltipRect = this.tooltipRef.nativeElement.getBoundingClientRect();
-    const iconRect = this.iconRef.nativeElement.getBoundingClientRect();
+    const tooltipRect = this.tooltipRef?.nativeElement.getBoundingClientRect();
+    const iconRect = this.iconRef?.nativeElement.getBoundingClientRect();
 
-    if (iconRect.top - tooltipRect.height < 0) {
+    if (iconRect?.top - tooltipRect?.height < 0) {
       //tooltip spills over top of page
       this.localPosition = 'bottom';
-    } else if (iconRect.bottom + tooltipRect.height > windowHeight) {
+    } else if (iconRect?.bottom + tooltipRect?.height > windowHeight) {
       //tooltip spills over bottom of page
       this.localPosition = 'top';
-    } else if (iconRect.left - tooltipRect.width < 0) {
+    } else if (iconRect?.left - tooltipRect?.width < 0) {
       //tooltip spills over left of page
       this.localPosition = 'right';
-    } else if (iconRect.right + tooltipRect.width > windowWidth) {
+    } else if (iconRect?.right + tooltipRect?.width > windowWidth) {
       //tooltip spills over right of page
       this.localPosition = 'left';
     }
