@@ -17,7 +17,7 @@ namespace SurgeonPortal.Library.Tests.Users
             var dto = Create<UserProfileDto>();
 
             dto.UserProfileId = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.FirstName = Create<string>();
             dto.MiddleName = Create<string>();
             dto.LastName = Create<string>();
@@ -41,10 +41,10 @@ namespace SurgeonPortal.Library.Tests.Users
             dto.ReceiveComms = Create<bool?>();
             dto.UserConfirmed = Create<bool?>();
             dto.UserConfirmedDate = Create<System.DateTime?>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
             dto.Street1 = Create<string>();
             dto.Street2 = Create<string>();
             dto.City = Create<string>();
@@ -60,7 +60,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_FirstName_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -92,7 +91,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_FirstName_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -117,7 +115,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_LastName_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -149,7 +146,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_LastName_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -174,7 +170,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_DisplayName_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -206,7 +201,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_DisplayName_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -231,7 +225,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_OfficePhoneNumber_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -263,7 +256,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_OfficePhoneNumber_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -288,7 +280,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_BirthCity_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -320,7 +311,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_BirthCity_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -345,7 +335,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_BirthCountry_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -377,7 +366,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_BirthCountry_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -402,7 +390,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_CountryCitizenship_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -434,7 +421,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_CountryCitizenship_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -459,7 +445,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_GenderId_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -491,7 +476,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_GenderId_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -516,7 +500,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_BirthDate_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -548,7 +531,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_BirthDate_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -573,7 +555,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_Race_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -605,7 +586,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_Race_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -630,7 +610,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_Ethnicity_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -662,7 +641,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_Ethnicity_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -687,7 +665,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_FirstLanguageId_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -719,7 +696,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_FirstLanguageId_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -744,7 +720,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_BestLanguageId_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -776,7 +751,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_BestLanguageId_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -801,7 +775,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_ReceiveComms_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -833,7 +806,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_ReceiveComms_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -858,7 +830,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_UserConfirmed_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -890,7 +861,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_UserConfirmed_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -915,7 +885,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_Street1_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -947,7 +916,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_Street1_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -972,7 +940,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_City_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -1004,7 +971,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_City_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -1029,7 +995,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_ZipCode_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -1061,7 +1026,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_ZipCode_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -1086,7 +1050,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_Country_Fails()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -1118,7 +1081,6 @@ namespace SurgeonPortal.Library.Tests.Users
             public async Task IsRequired_GetByUserId_Country_Passes()
             {
                 var dto = CreateValidDto();
-            
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
@@ -1152,6 +1114,7 @@ namespace SurgeonPortal.Library.Tests.Users
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<UserProfileDto>());
         
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -1168,10 +1131,12 @@ namespace SurgeonPortal.Library.Tests.Users
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedUserId = Create<int>();
         
             var mockDal = new Mock<IUserProfileDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -1253,10 +1218,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.UserProfileId)
-                .Excluding(m => m.UserId)
                 .Excluding(m => m.CertificationStatus)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -1301,12 +1263,13 @@ namespace SurgeonPortal.Library.Tests.Users
         {
             var expectedUserId = Create<int>();
             
-            var dto = Create<UserProfileDto>();
+            var dto = CreateValidDto();
             UserProfileDto passedDto = null;
         
             var mockDal = new Mock<IUserProfileDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfileDto>()))
                 .Callback<UserProfileDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -1400,10 +1363,7 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.UserId)
                     .Excluding(m => m.CertificationStatus)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -1414,11 +1374,12 @@ namespace SurgeonPortal.Library.Tests.Users
         {
             var expectedUserId = Create<int>();
             
-            var dto = Create<UserProfileDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IUserProfileDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                         .ReturnsAsync(Create<UserProfileDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfileDto>()))
                 .ReturnsAsync(dto);
         

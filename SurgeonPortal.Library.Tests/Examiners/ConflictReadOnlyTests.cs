@@ -12,16 +12,6 @@ namespace SurgeonPortal.Library.Tests.Examiners
     [TestFixture] 
 	public class ConflictReadOnlyTests : TestBase<int>
     {
-        private ConflictReadOnlyDto CreateValidDto()
-        {
-            var dto = Create<ConflictReadOnlyDto>();
-        
-            dto.Id = Create<int>();
-            dto.DocumentName = Create<string>();
-        
-            return dto;
-        }
-        
         #region GetByExamHeaderIdAsync
         
         [Test]

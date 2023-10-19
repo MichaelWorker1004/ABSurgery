@@ -17,7 +17,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var dto = Create<SanctionsDto>();
 
             dto.Id = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.HadDrugAlchoholTreatment = Create<bool>();
             dto.HadHospitalPrivilegesDenied = Create<bool>();
             dto.HadLicenseRestricted = Create<bool>();
@@ -25,10 +25,10 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.HadFelonyConviction = Create<bool>();
             dto.HadCensure = Create<bool>();
             dto.Explanation = Create<string>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
     
             return dto;
         }
@@ -40,10 +40,12 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<ISanctionsDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<SanctionsDto>());
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -62,10 +64,12 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedUserId = 1234;
         
             var mockDal = new Mock<ISanctionsDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -130,11 +134,8 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
-                .Excluding(m => m.UserId)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -178,13 +179,15 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task Update_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<SanctionsDto>();
+            var dto = CreateValidDto();
             SanctionsDto passedDto = null;
         
             var mockDal = new Mock<ISanctionsDal>();
             mockDal.Setup(m => m.GetByUserIdAsync())
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<SanctionsDto>()))
                 .Callback<SanctionsDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -242,11 +245,9 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.Id)
-                    .Excluding(m => m.UserId)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -255,12 +256,14 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task Update_YieldsCorrectResult()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<SanctionsDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<ISanctionsDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                         .ReturnsAsync(Create<SanctionsDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<SanctionsDto>()))
                 .ReturnsAsync(dto);
         

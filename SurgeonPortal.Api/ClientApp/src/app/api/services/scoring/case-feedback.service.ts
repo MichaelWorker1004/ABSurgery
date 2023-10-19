@@ -105,7 +105,6 @@ export class CaseFeedbackService {
             
             /**
             * Required Parameters
-            * userId:Number
             * caseHeaderId:Number
             * feedback:String
             * apiVersion

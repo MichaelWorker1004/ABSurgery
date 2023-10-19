@@ -54,7 +54,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecord(Create<CaseFeedbackDto>());
         
             var sut = new CaseFeedbackDal(sqlManager);
-            await sut.GetByExaminerIdAsync(expectedCaseHeaderId);
+            await sut.GetByExaminerIdAsync(
+                expectedExaminerUserId,
+                expectedCaseHeaderId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -69,7 +71,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecord(expectedDto);
         
             var sut = new CaseFeedbackDal(sqlManager);
-            var result = await sut.GetByExaminerIdAsync(Create<int>());
+            var result = await sut.GetByExaminerIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -137,6 +141,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
                     UserId = expectedDto.UserId,
                     CaseHeaderId = expectedDto.CaseHeaderId,
                     Feedback = expectedDto.Feedback,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -180,6 +185,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
                     Id = expectedDto.Id,
                     CaseHeaderId = expectedDto.CaseHeaderId,
                     Feedback = expectedDto.Feedback,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

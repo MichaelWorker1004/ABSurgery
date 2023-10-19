@@ -32,6 +32,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
         
             var sut = new PasswordResetCommandDal(sqlManager);
             await sut.ResetPasswordAsync(
+                expectedUserId,
                 expectedOldPassword,
                 expectedNewPassword);
         

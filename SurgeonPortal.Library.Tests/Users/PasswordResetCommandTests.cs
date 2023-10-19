@@ -16,7 +16,7 @@ namespace SurgeonPortal.Library.Tests.Users
         {     
             var dto = Create<PasswordResetCommandDto>();
 
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.OldPassword = Create<string>();
             dto.NewPassword = Create<string>();
             dto.PasswordReset = Create<bool?>();
@@ -31,17 +31,20 @@ namespace SurgeonPortal.Library.Tests.Users
         {
             var expectedOldPassword = Create<string>();
             var expectedNewPassword = Create<string>();
+            var expectedUserId = 1234;
             
-            var dto = Create<PasswordResetCommandDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IPasswordResetCommandDal>();
             mockDal.Setup(m => m.ResetPasswordAsync(
+                expectedUserId,
                 expectedOldPassword,
                 expectedNewPassword))
                 .ReturnsAsync(dto);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IPasswordResetCommand, PasswordResetCommand>()
                 .Build();

@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                     "[dbo].[get_examination_scores]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                             ExamHeaderId = examHeaderId,
                         });
                         

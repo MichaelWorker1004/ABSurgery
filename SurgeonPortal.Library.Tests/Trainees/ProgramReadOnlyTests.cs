@@ -34,10 +34,12 @@ namespace SurgeonPortal.Library.Tests.Trainees
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IProgramReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<ProgramReadOnlyDto>());
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -56,10 +58,12 @@ namespace SurgeonPortal.Library.Tests.Trainees
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedUserId = 1234;
         
             var mockDal = new Mock<IProgramReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

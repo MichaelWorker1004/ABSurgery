@@ -110,7 +110,7 @@ namespace SurgeonPortal.Library.Trainees
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _programReadOnlyDal.GetByUserIdAsync();
+                var dto = await _programReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         
                 if(dto == null)
                 {

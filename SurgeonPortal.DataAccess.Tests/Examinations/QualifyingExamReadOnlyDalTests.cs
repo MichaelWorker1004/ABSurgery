@@ -16,7 +16,8 @@ namespace SurgeonPortal.DataAccess.Tests.Examinations
         public async Task GetAsync_ExecutesSprocCorrectly()
         {
             var expectedSprocName = "[dbo].[get_current_qualifying_exam]";
-        
+            
+            
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(Create<QualifyingExamReadOnlyDto>());
         

@@ -13,15 +13,15 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 	public class GetClinicallyActiveCommandTests : TestBase<int>
     {
         private GetClinicallyActiveCommandDto CreateValidDto()
-        {     
+        {
             var dto = Create<GetClinicallyActiveCommandDto>();
-
+        
             dto.UserId = 1234;
             dto.ClinicallyActive = Create<bool?>();
-    
+        
             return dto;
         }
-
+        
         #region GetClinicallyActiveByUserId
         
         [Test]

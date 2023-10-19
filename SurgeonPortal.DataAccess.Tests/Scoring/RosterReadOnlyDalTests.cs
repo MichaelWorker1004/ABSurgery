@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecords(CreateMany<RosterReadOnlyDto>());
         
             var sut = new RosterReadOnlyDal(sqlManager);
-            await sut.GetByExaminationHeaderIdAsync(expectedExamHeaderId);
+            await sut.GetByExaminationHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +46,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new RosterReadOnlyDal(sqlManager);
-            var result = await sut.GetByExaminationHeaderIdAsync(Create<int>());
+            var result = await sut.GetByExaminationHeaderIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

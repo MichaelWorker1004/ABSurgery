@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Examinations.GQ
                     "[dbo].[get_additionaltrainingreadonly_allbyuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

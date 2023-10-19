@@ -8,9 +8,7 @@ namespace SurgeonPortal.Library.CE
 {
     public class ExamScoreFactory : IExamScoreFactory
     {
-        public async Task<IExamScore> GetByIdAsync(
-            int examScheduleScoreId,
-            int examinerUserId)
+        public async Task<IExamScore> GetByIdAsync(int examScheduleScoreId)
         {
             if (examScheduleScoreId <= 0)
             {
@@ -18,9 +16,7 @@ namespace SurgeonPortal.Library.CE
             }
             
             return await DataPortal.FetchAsync<ExamScore>(
-                new GetByIdCriteria(
-                examScheduleScoreId,
-                examinerUserId));
+                new GetByIdCriteria(examScheduleScoreId));
             
         }
 

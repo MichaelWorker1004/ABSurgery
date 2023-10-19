@@ -19,10 +19,14 @@ namespace SurgeonPortal.Library.Scoring
             [Serializable]
             internal class GetByUserIdCriteria
             {
+                public int ExaminerUserId { get; set; }
                 public DateTime ExamDate { get; set; }
             
-                public GetByUserIdCriteria(DateTime examDate)
+                public GetByUserIdCriteria(
+                int examinerUserId,
+                DateTime examDate)
              {
+                    ExaminerUserId = examinerUserId;
                     ExamDate = examDate;
               }
             }

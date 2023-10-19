@@ -17,14 +17,14 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var dto = Create<FellowshipDto>();
         
             dto.Id = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.ProgramName = Create<string>();
             dto.CompletionYear = Create<string>();
             dto.ProgramOther = Create<string>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
         
             return dto;
         }

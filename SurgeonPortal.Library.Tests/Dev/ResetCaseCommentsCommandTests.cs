@@ -12,6 +12,15 @@ namespace SurgeonPortal.Library.Tests.Dev
     [TestFixture] 
 	public class ResetCaseCommentsCommandTests : TestBase<int>
     {
+        private ResetCaseCommentsCommandDto CreateValidDto()
+        {
+            var dto = Create<ResetCaseCommentsCommandDto>();
+        
+            dto.ExaminerUserId = 1234;
+        
+            return dto;
+        }
+        
         #region ResetCaseCommentsAsync
         
         [Test]
@@ -22,8 +31,7 @@ namespace SurgeonPortal.Library.Tests.Dev
             var dto = CreateValidDto();
         
             var mockDal = new Mock<IResetCaseCommentsCommandDal>();
-            mockDal.Setup(m => m.ResetCaseCommentsAsyncAsync(expectedExaminerUserId))
-                .ReturnsAsync(dto);
+            mockDal.Setup(m => m.ResetCaseCommentsAsync(expectedExaminerUserId));
             
         
             UseMockServiceProvider()

@@ -24,7 +24,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                         new
                         {
                             CaseHeaderId = caseHeaderId,
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                         });
                         
             }

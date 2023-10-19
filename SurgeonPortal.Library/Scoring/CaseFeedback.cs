@@ -117,7 +117,9 @@ namespace SurgeonPortal.Library.Scoring
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _caseFeedbackDal.GetByExaminerIdAsync(criteria.CaseHeaderId);
+                var dto = await _caseFeedbackDal.GetByExaminerIdAsync(
+                    criteria.CaseHeaderId,
+                    _identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -146,6 +148,13 @@ namespace SurgeonPortal.Library.Scoring
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

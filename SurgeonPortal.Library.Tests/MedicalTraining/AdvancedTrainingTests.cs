@@ -17,7 +17,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var dto = Create<AdvancedTrainingDto>();
         
             dto.Id = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.TrainingTypeId = Create<int>();
             dto.TrainingType = Create<string>();
             dto.ProgramId = Create<int?>();
@@ -27,10 +27,10 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             dto.Other = Create<string>();
             dto.StartDate = Create<System.DateTime>();
             dto.EndDate = Create<System.DateTime>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
         
             return dto;
         }

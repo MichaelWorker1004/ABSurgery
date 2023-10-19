@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecord(Create<SanctionsDto>());
         
             var sut = new SanctionsDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecord(expectedDto);
         
             var sut = new SanctionsDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -67,6 +67,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     HadDrugAlchoholTreatment = expectedDto.HadDrugAlchoholTreatment,
                     HadHospitalPrivilegesDenied = expectedDto.HadHospitalPrivilegesDenied,
                     HadLicenseRestricted = expectedDto.HadLicenseRestricted,
@@ -74,6 +75,8 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                     HadFelonyConviction = expectedDto.HadFelonyConviction,
                     HadCensure = expectedDto.HadCensure,
                     Explanation = expectedDto.Explanation,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
+                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -114,6 +117,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     HadDrugAlchoholTreatment = expectedDto.HadDrugAlchoholTreatment,
                     HadHospitalPrivilegesDenied = expectedDto.HadHospitalPrivilegesDenied,
                     HadLicenseRestricted = expectedDto.HadLicenseRestricted,
@@ -121,6 +125,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                     HadFelonyConviction = expectedDto.HadFelonyConviction,
                     HadCensure = expectedDto.HadCensure,
                     Explanation = expectedDto.Explanation,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

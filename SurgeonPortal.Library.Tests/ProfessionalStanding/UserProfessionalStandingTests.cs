@@ -17,7 +17,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var dto = Create<UserProfessionalStandingDto>();
 
             dto.Id = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.PrimaryPracticeId = Create<int?>();
             dto.PrimaryPractice = Create<string>();
             dto.OrganizationTypeId = Create<int?>();
@@ -25,10 +25,10 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.ExplanationOfNonPrivileges = Create<string>();
             dto.ExplanationOfNonClinicalActivities = Create<string>();
             dto.ClinicallyActive = Create<int>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
     
             return dto;
         }
@@ -40,10 +40,12 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IUserProfessionalStandingDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<UserProfessionalStandingDto>());
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -62,10 +64,12 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedUserId = 1234;
         
             var mockDal = new Mock<IUserProfessionalStandingDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -130,14 +134,11 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
-                .Excluding(m => m.UserId)
                 .Excluding(m => m.PrimaryPractice)
                 .Excluding(m => m.OrganizationType)
                 .Excluding(m => m.ClinicallyActive)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -181,13 +182,15 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task Update_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<UserProfessionalStandingDto>();
+            var dto = CreateValidDto();
             UserProfessionalStandingDto passedDto = null;
         
             var mockDal = new Mock<IUserProfessionalStandingDal>();
             mockDal.Setup(m => m.GetByUserIdAsync())
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfessionalStandingDto>()))
                 .Callback<UserProfessionalStandingDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -245,14 +248,12 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.Id)
-                    .Excluding(m => m.UserId)
                     .Excluding(m => m.PrimaryPractice)
                     .Excluding(m => m.OrganizationType)
                     .Excluding(m => m.ClinicallyActive)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -261,12 +262,14 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task Update_YieldsCorrectResult()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<UserProfessionalStandingDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IUserProfessionalStandingDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                         .ReturnsAsync(Create<UserProfessionalStandingDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfessionalStandingDto>()))
                 .ReturnsAsync(dto);
         

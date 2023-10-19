@@ -24,10 +24,14 @@ namespace SurgeonPortal.Library.Scoring
             internal class GetByCaseHeaderIdCriteria
             {
                 public int CaseHeaderId { get; set; }
+                public int ExaminerUserId { get; set; }
             
-                public GetByCaseHeaderIdCriteria(int caseHeaderId)
+                public GetByCaseHeaderIdCriteria(
+                int caseHeaderId,
+                int examinerUserId)
              {
                     CaseHeaderId = caseHeaderId;
+                    ExaminerUserId = examinerUserId;
               }
             }
             

@@ -12,19 +12,6 @@ namespace SurgeonPortal.Library.Tests.Examinations
     [TestFixture] 
 	public class QualifyingExamReadOnlyTests : TestBase<int>
     {
-        private QualifyingExamReadOnlyDto CreateValidDto()
-        {
-            var dto = Create<QualifyingExamReadOnlyDto>();
-        
-            dto.ExamName = Create<string>();
-            dto.RegOpenDate = Create<System.DateTime?>();
-            dto.RegEndDate = Create<System.DateTime?>();
-            dto.ExamStartDate = Create<System.DateTime?>();
-            dto.ExamEndDate = Create<System.DateTime?>();
-        
-            return dto;
-        }
-        
         #region GetAsync
         
         [Test]

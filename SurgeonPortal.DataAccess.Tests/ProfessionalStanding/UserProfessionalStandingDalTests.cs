@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecord(Create<UserProfessionalStandingDto>());
         
             var sut = new UserProfessionalStandingDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecord(expectedDto);
         
             var sut = new UserProfessionalStandingDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -67,10 +67,13 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     PrimaryPracticeId = expectedDto.PrimaryPracticeId,
                     OrganizationTypeId = expectedDto.OrganizationTypeId,
                     ExplanationOfNonPrivileges = expectedDto.ExplanationOfNonPrivileges,
                     ExplanationOfNonClinicalActivities = expectedDto.ExplanationOfNonClinicalActivities,
+                    CreatedByUserId = expectedDto.UserId,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -111,10 +114,12 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     PrimaryPracticeId = expectedDto.PrimaryPracticeId,
                     OrganizationTypeId = expectedDto.OrganizationTypeId,
                     ExplanationOfNonPrivileges = expectedDto.ExplanationOfNonPrivileges,
                     ExplanationOfNonClinicalActivities = expectedDto.ExplanationOfNonClinicalActivities,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

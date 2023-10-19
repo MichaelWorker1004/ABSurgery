@@ -13,18 +13,17 @@ namespace SurgeonPortal.Library.Tests.Users
 	public class UserCredentialTests : TestBase<int>
     {
         private UserCredentialDto CreateValidDto()
-        {     
-            var dto = new UserCredentialDto
-            {
-                EmailAddress = "test@test.com",
-                Password = "Pass@word123"
-            };
-    
+        {
+            var dto = Create<UserCredentialDto>();
+        
+            dto.EmailAddress = Create<string>();
+            dto.Password = Create<string>();
+        
             return dto;
         }
-
-            #region UserCredential Business Rules
-            #endregion
+        
+        #region UserCredential Business Rules
+        #endregion
 
         #region GetByUserIdAsync UserCredential
         
@@ -35,6 +34,7 @@ namespace SurgeonPortal.Library.Tests.Users
             var mockDal = new Mock<IUserCredentialDal>();
             mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(Create<UserCredentialDto>());
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -53,10 +53,11 @@ namespace SurgeonPortal.Library.Tests.Users
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
-        
+            
             var mockDal = new Mock<IUserCredentialDal>();
             mockDal.Setup(m => m.GetByUserIdAsync())
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

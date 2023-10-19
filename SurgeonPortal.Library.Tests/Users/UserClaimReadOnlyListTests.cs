@@ -13,7 +13,7 @@ namespace SurgeonPortal.Library.Tests.Users
     [TestFixture] 
 	public class UserClaimReadOnlyListTests : TestBase<int>
     {
-
+        
         //[Test]
         //public async Task GetByIdsAsync_CallsDalCorrectly()
         //{

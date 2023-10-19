@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Surgeons
                     "[dbo].[get_user_certifications]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

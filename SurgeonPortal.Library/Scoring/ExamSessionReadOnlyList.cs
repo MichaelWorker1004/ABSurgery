@@ -41,7 +41,9 @@ namespace SurgeonPortal.Library.Scoring
         private async Task GetByUserId(GetByUserIdCriteria criteria)
         
         {
-            var dtos = await _examSessionReadOnlyDal.GetByUserIdAsync(criteria.ExamDate);
+            var dtos = await _examSessionReadOnlyDal.GetByUserIdAsync(
+                criteria.ExamDate,
+                _identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

@@ -8,11 +8,10 @@ namespace SurgeonPortal.Library.MedicalTraining
 {
     public class MedicalTrainingFactory : IMedicalTrainingFactory
     {
-        public async Task<IMedicalTraining> GetByUserIdAsync(int userId)
+        public async Task<IMedicalTraining> GetByUserIdAsync()
         {
             
-            return await DataPortal.FetchAsync<MedicalTraining>(
-                new GetByUserIdCriteria(userId));
+            return await DataPortal.FetchAsync<MedicalTraining>();
             
         }
 

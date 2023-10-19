@@ -17,12 +17,12 @@ namespace SurgeonPortal.DataAccess.Tests.Trainees
         {
             var expectedSprocName = "[dbo].[get_registration_open]";
             var expectedExamCode = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     examCode = expectedExamCode,
                 };
-        
+            
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(Create<RegistrationStatusReadOnlyDto>());
         

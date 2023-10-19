@@ -12,17 +12,21 @@ namespace SurgeonPortal.Library.Tests.Scoring
     [TestFixture] 
 	public class CaseDetailReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByCaseHeaderIdAsync_CallsDalCorrectly()
         {
             var expectedCaseHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<ICaseDetailReadOnlyDal>();
-            mockDal.Setup(m => m.GetByCaseHeaderIdAsync(expectedCaseHeaderId))
+            mockDal.Setup(m => m.GetByCaseHeaderIdAsync(
+                expectedCaseHeaderId,
+                expectedExaminerUserId))
                 .ReturnsAsync(CreateMany<CaseDetailReadOnlyDto>());
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseDetailReadOnlyList, CaseDetailReadOnlyList>()
@@ -39,12 +43,19 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task GetByCaseHeaderIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<CaseDetailReadOnlyDto>();
+            var expectedCaseHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
+            
         
             var mockDal = new Mock<ICaseDetailReadOnlyDal>();
-            mockDal.Setup(m => m.GetByCaseHeaderIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByCaseHeaderIdAsync(
+                expectedCaseHeaderId,
+                expectedExaminerUserId))
                 .ReturnsAsync(expectedDtos);
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseDetailReadOnlyList, CaseDetailReadOnlyList>()

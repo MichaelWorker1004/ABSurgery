@@ -12,7 +12,6 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
     [TestFixture] 
 	public class TitleReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByIdAsync_CallsDalCorrectly()
         {
@@ -22,7 +21,9 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(CreateMany<TitleReadOnlyDto>());
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ITitleReadOnlyList, TitleReadOnlyList>()
@@ -39,12 +40,16 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         public async Task GetByIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<TitleReadOnlyDto>();
+            var expectedExamScheduleId = Create<int>();
+            
         
             var mockDal = new Mock<ITitleReadOnlyDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(expectedDtos);
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ITitleReadOnlyList, TitleReadOnlyList>()

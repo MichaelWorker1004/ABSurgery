@@ -31,7 +31,7 @@ namespace SurgeonPortal.Library.Tests.Users
             var expectedUserId = Create<int>();
             var expectedPassword = Create<string>();
             
-            var dto = Create<PasswordValidationCommandDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IPasswordValidationCommandDal>();
             mockDal.Setup(m => m.Validate(
@@ -39,8 +39,9 @@ namespace SurgeonPortal.Library.Tests.Users
                 expectedPassword))
                 .Returns(dto);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IPasswordValidationCommand, PasswordValidationCommand>()
                 .Build();

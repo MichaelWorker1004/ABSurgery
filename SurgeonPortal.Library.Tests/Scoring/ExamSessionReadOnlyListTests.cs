@@ -13,17 +13,21 @@ namespace SurgeonPortal.Library.Tests.Scoring
     [TestFixture] 
 	public class ExamSessionReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
             var expectedExamDate = Create<DateTime>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<IExamSessionReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedExamDate))
+            mockDal.Setup(m => m.GetByUserIdAsync(
+                expectedExaminerUserId,
+                expectedExamDate))
                 .ReturnsAsync(CreateMany<ExamSessionReadOnlyDto>());
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamSessionReadOnlyList, ExamSessionReadOnlyList>()
@@ -40,12 +44,19 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task GetByUserIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<ExamSessionReadOnlyDto>();
+            var expectedExamDate = Create<DateTime>();
+            var expectedExaminerUserId = 1234;
+            
         
             var mockDal = new Mock<IExamSessionReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(It.IsAny<DateTime>()))
+            mockDal.Setup(m => m.GetByUserIdAsync(
+                expectedExaminerUserId,
+                expectedExamDate))
                 .ReturnsAsync(expectedDtos);
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamSessionReadOnlyList, ExamSessionReadOnlyList>()

@@ -67,6 +67,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     FirstName = expectedDto.FirstName,
                     MiddleName = expectedDto.MiddleName,
                     LastName = expectedDto.LastName,
@@ -95,8 +96,10 @@ namespace SurgeonPortal.DataAccess.Tests.Users
                     State = expectedDto.State,
                     ZipCode = expectedDto.ZipCode,
                     Country = expectedDto.Country,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                     CreatedAtUtc = expectedDto.CreatedAtUtc,
                     LastUpdatedAtUtc = expectedDto.LastUpdatedAtUtc,
+                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -138,6 +141,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
                 new
                 {
                     UserProfileId = expectedDto.UserProfileId,
+                    UserId = expectedDto.UserId,
                     FirstName = expectedDto.FirstName,
                     MiddleName = expectedDto.MiddleName,
                     LastName = expectedDto.LastName,
@@ -166,8 +170,10 @@ namespace SurgeonPortal.DataAccess.Tests.Users
                     State = expectedDto.State,
                     ZipCode = expectedDto.ZipCode,
                     Country = expectedDto.Country,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                     CreatedAtUtc = expectedDto.CreatedAtUtc,
                     LastUpdatedAtUtc = expectedDto.LastUpdatedAtUtc,
+                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

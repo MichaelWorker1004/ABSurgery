@@ -8,11 +8,10 @@ namespace SurgeonPortal.Library.ContinuousCertification
 {
     public class OutcomeRegistryFactory : IOutcomeRegistryFactory
     {
-        public async Task<IOutcomeRegistry> GetByUserIdAsync(int userId)
+        public async Task<IOutcomeRegistry> GetByUserIdAsync()
         {
             
-            return await DataPortal.FetchAsync<OutcomeRegistry>(
-                new GetByUserIdCriteria(userId));
+            return await DataPortal.FetchAsync<OutcomeRegistry>();
             
         }
 

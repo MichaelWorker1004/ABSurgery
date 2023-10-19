@@ -18,7 +18,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
 
             dto.ExamScoringId = Create<int>();
             dto.ExamCaseId = Create<int>();
-            dto.ExaminerUserId = Create<int>();
+            dto.ExaminerUserId = 1234;
             dto.ExamineeUserId = Create<int>();
             dto.ExamineeFirstName = Create<string>();
             dto.ExamineeMiddleName = Create<string>();
@@ -50,6 +50,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             var mockDal = new Mock<ICaseScoreDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScoringId))
                 .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<CaseScoreDto>()))
                 .Callback<CaseScoreDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
@@ -88,10 +89,14 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task GetByIdAsync_CallsDalCorrectly()
         {
             var expectedExamScoringId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<ICaseScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScoringId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScoringId,
+                expectedExaminerUserId))
                 .ReturnsAsync(Create<CaseScoreDto>());
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -110,10 +115,15 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedExamScoringId = Create<int>();
+            var expectedExaminerUserId = 1234;
         
             var mockDal = new Mock<ICaseScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScoringId,
+                expectedExaminerUserId))
                 .ReturnsAsync(dto);
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -180,7 +190,6 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.ExamScoringId)
-                .Excluding(m => m.ExaminerUserId)
                 .Excluding(m => m.ExamineeFirstName)
                 .Excluding(m => m.ExamineeMiddleName)
                 .Excluding(m => m.ExamineeLastName)
@@ -233,13 +242,15 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task Update_CallsDalCorrectly()
         {
             var expectedExamScoringId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
-            var dto = Create<CaseScoreDto>();
+            var dto = CreateValidDto();
             CaseScoreDto passedDto = null;
         
             var mockDal = new Mock<ICaseScoreDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScoringId))
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseScoreDto>()))
                 .Callback<CaseScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -301,7 +312,6 @@ namespace SurgeonPortal.Library.Tests.Scoring
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.ExamScoringId)
-                    .Excluding(m => m.ExaminerUserId)
                     .Excluding(m => m.ExamineeFirstName)
                     .Excluding(m => m.ExamineeMiddleName)
                     .Excluding(m => m.ExamineeLastName)
@@ -319,12 +329,16 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task Update_YieldsCorrectResult()
         {
             var expectedExamScoringId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
-            var dto = Create<CaseScoreDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<ICaseScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScoringId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScoringId,
+                expectedExaminerUserId))
                         .ReturnsAsync(Create<CaseScoreDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseScoreDto>()))
                 .ReturnsAsync(dto);
         

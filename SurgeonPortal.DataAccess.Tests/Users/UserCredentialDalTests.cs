@@ -68,7 +68,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var p =
                 new
                 {
-                    UserId = IdentityHelper.UserId,
+                    UserId = expectedDto.UserId,
                     EmailAddress = expectedDto.EmailAddress,
                     Password = expectedDto.Password,
                     LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,

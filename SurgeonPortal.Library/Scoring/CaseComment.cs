@@ -125,6 +125,13 @@ namespace SurgeonPortal.Library.Scoring
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

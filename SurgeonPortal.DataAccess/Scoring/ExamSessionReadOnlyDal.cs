@@ -25,7 +25,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                     "[dbo].[get_examinee_sessions]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                             ExamDate = date,
                         });
                         

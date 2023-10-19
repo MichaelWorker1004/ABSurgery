@@ -36,6 +36,7 @@ namespace SurgeonPortal.Library.Tests.Users
             mockDal.Setup(m => m.GetActiveAsync(expectedToken))
                 .ReturnsAsync(Create<UserTokenDto>());
         
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -52,10 +53,12 @@ namespace SurgeonPortal.Library.Tests.Users
         public async Task GetActive_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedToken = Create<string>();
         
             var mockDal = new Mock<IUserTokenDal>();
-            mockDal.Setup(m => m.GetActiveAsync(It.IsAny<string>()))
+            mockDal.Setup(m => m.GetActiveAsync(expectedToken))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")

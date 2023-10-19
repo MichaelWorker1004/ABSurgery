@@ -92,8 +92,10 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     CaseContentId = expectedDto.CaseContentId,
                     Comments = expectedDto.Comments,
+                    CreatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -137,6 +139,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
                     Id = expectedDto.Id,
                     CaseContentId = expectedDto.CaseContentId,
                     Comments = expectedDto.Comments,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

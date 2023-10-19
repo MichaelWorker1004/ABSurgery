@@ -12,7 +12,6 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
     [TestFixture] 
 	public class ExamineeReadOnlyTests : TestBase<int>
     {
-
         #region GetByIdAsync
         
         [Test]
@@ -24,7 +23,9 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(Create<ExamineeReadOnlyDto>());
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamineeReadOnly, ExamineeReadOnly>()
@@ -39,13 +40,15 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         [Test]
         public async Task GetByIdAsync_LoadsSelfCorrectly()
         {
-            var dto = Create<ExamineeReadOnlyDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IExamineeReadOnlyDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(dto);
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamineeReadOnly, ExamineeReadOnly>()

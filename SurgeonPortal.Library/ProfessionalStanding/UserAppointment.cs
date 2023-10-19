@@ -197,6 +197,13 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(LastUpdatedUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

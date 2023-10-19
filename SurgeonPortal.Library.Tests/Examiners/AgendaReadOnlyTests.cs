@@ -12,16 +12,6 @@ namespace SurgeonPortal.Library.Tests.Examiners
     [TestFixture] 
 	public class AgendaReadOnlyTests : TestBase<int>
     {
-        private AgendaReadOnlyDto CreateValidDto()
-        {
-            var dto = Create<AgendaReadOnlyDto>();
-        
-            dto.Id = Create<int>();
-            dto.DocumentName = Create<string>();
-        
-            return dto;
-        }
-        
         #region GetByExamHeaderIdAsync
         
         [Test]

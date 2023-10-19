@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         new
                         {
                             ApptId = dto.ApptId,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                         });
                         
             }
@@ -53,7 +53,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         "[dbo].[insert_userhospappt]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.UserId,
                                 PracticeTypeId = dto.PracticeTypeId,
                                 AppointmentTypeId = dto.AppointmentTypeId,
                                 OrganizationTypeId = dto.OrganizationTypeId,
@@ -61,7 +61,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                                 OrganizationId = dto.OrganizationId,
                                 AuthorizingOfficial = dto.AuthorizingOfficial,
                                 Other = dto.Other,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.UserId,
                             });
                             
                 }
@@ -88,7 +88,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         new
                         {
                             ApptId = dto.ApptId,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                             PracticeTypeId = dto.PracticeTypeId,
                             AppointmentTypeId = dto.AppointmentTypeId,
                             OrganizationTypeId = dto.OrganizationTypeId,
@@ -96,7 +96,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                             OrganizationId = dto.OrganizationId,
                             AuthorizingOfficial = dto.AuthorizingOfficial,
                             Other = dto.Other,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            LastUpdatedByUserId = dto.UserId,
                         });
                         
             }

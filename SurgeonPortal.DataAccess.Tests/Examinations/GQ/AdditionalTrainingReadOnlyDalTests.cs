@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.Examinations.GQ
             sqlManager.AddRecords(CreateMany<AdditionalTrainingReadOnlyDto>());
         
             var sut = new AdditionalTrainingReadOnlyDal(sqlManager);
-            await sut.GetAllByUserIdAsync();
+            await sut.GetAllByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Examinations.GQ
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new AdditionalTrainingReadOnlyDal(sqlManager);
-            var result = await sut.GetAllByUserIdAsync();
+            var result = await sut.GetAllByUserIdAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

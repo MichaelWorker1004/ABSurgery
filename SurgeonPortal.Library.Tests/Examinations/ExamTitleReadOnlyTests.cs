@@ -12,15 +12,6 @@ namespace SurgeonPortal.Library.Tests.Examinations
     [TestFixture] 
 	public class ExamTitleReadOnlyTests : TestBase<int>
     {
-        private ExamTitleReadOnlyDto CreateValidDto()
-        {
-            var dto = Create<ExamTitleReadOnlyDto>();
-        
-            dto.ExamName = Create<string>();
-        
-            return dto;
-        }
-        
         #region GetByExamIdAsync
         
         [Test]

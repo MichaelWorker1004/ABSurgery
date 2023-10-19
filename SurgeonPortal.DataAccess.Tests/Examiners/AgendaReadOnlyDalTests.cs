@@ -18,13 +18,13 @@ namespace SurgeonPortal.DataAccess.Tests.Examiners
             var expectedSprocName = "[dbo].[get_examiner_agenda]";
             var expectedExaminerUserId = Create<int>();
             var expectedExamHeaderId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,
                     ExamHeaderId = expectedExamHeaderId,
                 };
-        
+            
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(Create<AgendaReadOnlyDto>());
         

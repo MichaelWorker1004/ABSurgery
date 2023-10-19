@@ -8,11 +8,10 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 {
     public class SanctionsFactory : ISanctionsFactory
     {
-        public async Task<ISanctions> GetByUserIdAsync(int userId)
+        public async Task<ISanctions> GetByUserIdAsync()
         {
             
-            return await DataPortal.FetchAsync<Sanctions>(
-                new GetByUserIdCriteria(userId));
+            return await DataPortal.FetchAsync<Sanctions>();
             
         }
 

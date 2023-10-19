@@ -44,6 +44,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
             mockDal.Setup(m => m.GetByTrainingIdAsync(expectedTrainingId))
                 .ReturnsAsync(Create<AdditionalTrainingDto>());
         
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
@@ -61,10 +62,12 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         public async Task GetByTrainingId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedTrainingId = Create<int>();
         
             var mockDal = new Mock<IAdditionalTrainingDal>();
-            mockDal.Setup(m => m.GetByTrainingIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByTrainingIdAsync(expectedTrainingId))
                 .ReturnsAsync(dto);
+        
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -173,12 +176,13 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         {
             var expectedTrainingId = Create<int>();
             
-            var dto = Create<AdditionalTrainingDto>();
+            var dto = CreateValidDto();
             AdditionalTrainingDto passedDto = null;
         
             var mockDal = new Mock<IAdditionalTrainingDal>();
             mockDal.Setup(m => m.GetByTrainingIdAsync(expectedTrainingId))
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<AdditionalTrainingDto>()))
                 .Callback<AdditionalTrainingDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
@@ -241,11 +245,12 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         {
             var expectedTrainingId = Create<int>();
             
-            var dto = Create<AdditionalTrainingDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IAdditionalTrainingDal>();
             mockDal.Setup(m => m.GetByTrainingIdAsync(expectedTrainingId))
                         .ReturnsAsync(Create<AdditionalTrainingDto>());
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<AdditionalTrainingDto>()))
                 .ReturnsAsync(dto);
         

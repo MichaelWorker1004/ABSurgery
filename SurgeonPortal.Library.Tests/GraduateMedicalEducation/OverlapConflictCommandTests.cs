@@ -13,6 +13,19 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
     [TestFixture] 
 	public class OverlapConflictCommandTests : TestBase<int>
     {
+        private OverlapConflictCommandDto CreateValidDto()
+        {
+            var dto = Create<OverlapConflictCommandDto>();
+        
+            dto.UserId = Create<int>();
+            dto.StartDate = Create<System.DateTime>();
+            dto.EndDate = Create<System.DateTime>();
+            dto.OverlapConflict = Create<bool>();
+            dto.RotationId = Create<int?>();
+        
+            return dto;
+        }
+        
         #region CheckOverlapConflicts
         
         [Test]

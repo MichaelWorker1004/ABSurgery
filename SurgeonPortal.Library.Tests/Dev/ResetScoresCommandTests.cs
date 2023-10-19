@@ -12,6 +12,15 @@ namespace SurgeonPortal.Library.Tests.Dev
     [TestFixture] 
 	public class ResetScoresCommandTests : TestBase<int>
     {
+        private ResetScoresCommandDto CreateValidDto()
+        {
+            var dto = Create<ResetScoresCommandDto>();
+        
+            dto.ExaminerUserId = 1234;
+        
+            return dto;
+        }
+        
         #region ResetExamScoresAsync
         
         [Test]
@@ -22,8 +31,7 @@ namespace SurgeonPortal.Library.Tests.Dev
             var dto = CreateValidDto();
         
             var mockDal = new Mock<IResetScoresCommandDal>();
-            mockDal.Setup(m => m.ResetExamScoresAsyncAsync(expectedExaminerUserId))
-                .ReturnsAsync(dto);
+            mockDal.Setup(m => m.ResetExamScoresAsync(expectedExaminerUserId));
             
         
             UseMockServiceProvider()

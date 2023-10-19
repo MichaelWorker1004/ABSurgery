@@ -12,7 +12,6 @@ namespace SurgeonPortal.Library.Tests.Trainees
     [TestFixture] 
 	public class RegistrationStatusReadOnlyTests : TestBase<int>
     {
-
         #region GetByExamCodeAsync
         
         [Test]
@@ -24,7 +23,9 @@ namespace SurgeonPortal.Library.Tests.Trainees
             mockDal.Setup(m => m.GetByExamCodeAsync(expectedExamCode))
                 .ReturnsAsync(Create<RegistrationStatusReadOnlyDto>());
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRegistrationStatusReadOnly, RegistrationStatusReadOnly>()
@@ -39,13 +40,15 @@ namespace SurgeonPortal.Library.Tests.Trainees
         [Test]
         public async Task GetByExamCodeAsync_LoadsSelfCorrectly()
         {
-            var dto = Create<RegistrationStatusReadOnlyDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IRegistrationStatusReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExamCodeAsync(It.IsAny<string>()))
+            mockDal.Setup(m => m.GetByExamCodeAsync(expectedExamCode))
                 .ReturnsAsync(dto);
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRegistrationStatusReadOnly, RegistrationStatusReadOnly>()

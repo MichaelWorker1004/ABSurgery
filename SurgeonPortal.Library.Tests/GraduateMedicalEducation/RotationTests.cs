@@ -18,7 +18,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var dto = Create<RotationDto>();
         
             dto.Id = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.StartDate = Create<System.DateTime>();
             dto.EndDate = Create<System.DateTime>();
             dto.ClinicalLevelId = Create<int>();
@@ -34,16 +34,17 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             dto.FourMonthRotationExplain = Create<string>();
             dto.NonPrimaryExplain = Create<string>();
             dto.NonClinicalExplain = Create<string>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
             dto.ClinicalActivity = Create<string>();
         
             return dto;
         }
         
         
+
         #region DeleteAsync
         
         [Test]

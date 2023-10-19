@@ -8,7 +8,7 @@ namespace SurgeonPortal.Library.Dev
 {
     public class ResetCaseCommentsCommandFactory : IResetCaseCommentsCommandFactory
     {
-        public async Task<IResetCaseCommentsCommand> ResetCaseCommentsAsync(int examinerUserId)
+        public async Task<IResetCaseCommentsCommand> ResetCaseCommentsAsync()
         {
             if(!ResetCaseCommentsCommand.CanExecuteCommand())
             {
@@ -18,7 +18,6 @@ namespace SurgeonPortal.Library.Dev
             var cmd = ApplicationContext.DataPortalActivator.CreateInstance(typeof(IResetCaseCommentsCommand))
         	    as ResetCaseCommentsCommand;
         
-                cmd.ExaminerUserId = examinerUserId;
         
             return await DataPortal.ExecuteAsync(cmd);
         }

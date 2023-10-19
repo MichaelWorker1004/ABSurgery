@@ -12,22 +12,6 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
     [TestFixture] 
 	public class CmeCreditReadOnlyTests : TestBase<int>
     {
-        private CmeCreditReadOnlyDto CreateValidDto()
-        {
-            var dto = Create<CmeCreditReadOnlyDto>();
-        
-            dto.CmeId = Create<decimal>();
-            dto.UserId = Create<int?>();
-            dto.Date = Create<string>();
-            dto.Description = Create<string>();
-            dto.CreditsTotal = Create<decimal>();
-            dto.CreditsSA = Create<decimal?>();
-            dto.CMEDirect = Create<int>();
-            dto.CreditExpDate = Create<System.DateTime>();
-        
-            return dto;
-        }
-        
         #region GetByIdAsync
         
         [Test]

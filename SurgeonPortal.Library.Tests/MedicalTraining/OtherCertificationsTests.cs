@@ -17,15 +17,15 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var dto = Create<OtherCertificationsDto>();
 
             dto.Id = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.CertificateTypeId = Create<int>();
             dto.CertificateTypeName = Create<string>();
             dto.IssueDate = Create<System.DateTime>();
             dto.CertificateNumber = Create<string>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
     
             return dto;
         }

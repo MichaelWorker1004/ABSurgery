@@ -8,9 +8,7 @@ namespace SurgeonPortal.Library.Documents
 {
     public class DocumentFactory : IDocumentFactory
     {
-        public async Task<IDocument> GetByIdAsync(
-            int id,
-            int userId)
+        public async Task<IDocument> GetByIdAsync(int id)
         {
             if (id <= 0)
             {
@@ -18,9 +16,7 @@ namespace SurgeonPortal.Library.Documents
             }
             
             return await DataPortal.FetchAsync<Document>(
-                new GetByIdCriteria(
-                id,
-                userId));
+                new GetByIdCriteria(id));
             
         }
 

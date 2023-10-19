@@ -34,8 +34,8 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             dto.ResidencyCompletionYear = Create<string>();
             dto.ResidencyProgramOther = Create<string>();
             dto.CreatedAtUtc = Create<System.DateTime>();
-            dto.CreatedByUserId = Create<int>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
+            dto.LastUpdatedByUserId = 1234;
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
         
             return dto;

@@ -17,12 +17,12 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuingMedicalEducation
         {
             var expectedSprocName = "[dbo].[get_usercme_byid]";
             var expectedCmeId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     CmeId = expectedCmeId,
                 };
-        
+            
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(Create<CmeCreditReadOnlyDto>());
         

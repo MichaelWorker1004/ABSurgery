@@ -17,7 +17,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var dto = Create<MedicalLicenseDto>();
 
             dto.LicenseId = Create<decimal>();
-            dto.UserId = Create<int?>();
+            dto.UserId = 1234;
             dto.IssuingStateId = Create<string>();
             dto.IssuingState = Create<string>();
             dto.LicenseNumber = Create<string>();

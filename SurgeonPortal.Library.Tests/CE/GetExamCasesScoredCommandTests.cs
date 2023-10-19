@@ -12,6 +12,16 @@ namespace SurgeonPortal.Library.Tests.CE
     [TestFixture] 
 	public class GetExamCasesScoredCommandTests : TestBase<int>
     {
+        private GetExamCasesScoredCommandDto CreateValidDto()
+        {
+            var dto = Create<GetExamCasesScoredCommandDto>();
+        
+            dto.ExamScheduleId = Create<int>();
+            dto.CasesScored = Create<bool>();
+        
+            return dto;
+        }
+        
         #region GetExamCasesScored
         
         [Test]

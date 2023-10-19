@@ -153,6 +153,11 @@ namespace SurgeonPortal.Library.Examinations.GQ
             }
         }
 
+        [Create]
+        private void Create()
+        {
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

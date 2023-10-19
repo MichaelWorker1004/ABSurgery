@@ -14,7 +14,9 @@ namespace SurgeonPortal.DataAccess.Scoring
 
 
 
-        public async Task SkipExamSessionAsync(int examScheduleId)
+        public async Task SkipExamSessionAsync(
+            int examScheduleId,
+            _identity.GetUserId<int>())
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +25,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                         new
                         {
                             ExamScheduleId = examScheduleId,
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                         });
                         
             }

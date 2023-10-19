@@ -78,7 +78,8 @@ namespace SurgeonPortal.Api.Controllers.ProfessionalStanding
         [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] IUserProfessionalStandingFactory userProfessionalStandingFactory,
-            [FromBody] UserProfessionalStandingModel model)
+            [FromBody] UserProfessionalStandingModel model,
+            int userId)
         {
             var item = await userProfessionalStandingFactory.GetByUserIdAsync();
             AssignEditProperties(item, model);
