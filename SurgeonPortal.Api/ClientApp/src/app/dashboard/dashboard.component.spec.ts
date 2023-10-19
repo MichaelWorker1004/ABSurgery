@@ -5,6 +5,7 @@ import { NgxsModule } from '@ngxs/store';
 import { surgeonPortalState } from '../state/surgeon-portal.state';
 
 import { DashboardComponent } from './dashboard.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -17,6 +18,7 @@ describe('DashboardComponent', () => {
         DashboardComponent,
         NgxsModule.forRoot(surgeonPortalState),
         HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
     }).compileComponents();
 
