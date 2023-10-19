@@ -119,7 +119,6 @@ export class CeScoringAppComponent implements OnInit {
   }
 
   fetchCEDashboardDate() {
-    this.globalDialogService.showLoading();
     const alertsAndNotices = [
       {
         title: '',
