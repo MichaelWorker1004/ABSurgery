@@ -9,7 +9,7 @@ import { ACTION_CARDS } from './user-action-cards';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';
 import { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';
@@ -122,33 +122,48 @@ export class CeScoringAppComponent implements OnInit {
     this.globalDialogService.showLoading();
     const alertsAndNotices = [
       {
-        title: this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.AGENDA_TITLE'
-        ),
-        content: this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.AGENDA_SUBTITLE'
-        ),
+        title: '',
+        titleKey: 'EXAMSCORING.DASHBOARD.AGENDA_TITLE',
+        content: '',
+        contentKey: 'EXAMSCORING.DASHBOARD.AGENDA_SUBTITLE',
         alert: false,
-        actionText: 'Not Available',
+        actionText: '',
         action: {},
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
       {
-        title: this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.CONFLICTS_TITLE'
-        ),
-        content: this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.CONFLICTS_SUBTITLE'
-        ),
+        title: '',
+        titleKey: 'EXAMSCORING.DASHBOARD.CONFLICTS_TITLE',
+        content: '',
+        contentKey: 'EXAMSCORING.DASHBOARD.CONFLICTS_SUBTITLE',
         alert: false,
-        actionText: 'Not Available',
+        actionText: '',
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
         downloadLink:
           '../../assets/files/examiner_056246_daythree_ce_agenda_dr_barnhart.pdf',
       },
     ];
+
+    alertsAndNotices.forEach((item) => {
+      if (item.titleKey) {
+        this._translateService
+          .get(item.titleKey)
+          .pipe(take(1))
+          .subscribe((res) => {
+            item.title = res;
+          });
+      }
+      if (item.contentKey) {
+        this._translateService
+          .get(item.contentKey)
+          .pipe(take(1))
+          .subscribe((res) => {
+            item.content = res;
+          });
+      }
+    });
 
     this.examinerAgenda$
       ?.pipe(untilDestroyed(this))
@@ -159,9 +174,14 @@ export class CeScoringAppComponent implements OnInit {
             documentId: examinerAgenda.id,
             documentName: examinerAgenda.documentName,
           };
-          alertsAndNotices[0].actionText = this._translateService.instant(
-            'EXAMSCORING.DASHBOARD.AGENDA_BTN'
-          );
+          this._translateService
+            .get('EXAMSCORING.DASHBOARD.AGENDA_BTN')
+            .pipe(take(1))
+            .subscribe((res) => {
+              alertsAndNotices[0].actionText = res;
+            });
+        } else {
+          alertsAndNotices[0].actionText = 'Not Available';
         }
         this.globalDialogService.closeOpenDialog();
       });
@@ -175,9 +195,14 @@ export class CeScoringAppComponent implements OnInit {
             documentId: examinerConflict.id,
             documentName: examinerConflict.documentName,
           };
-          alertsAndNotices[1].actionText = this._translateService.instant(
-            'EXAMSCORING.DASHBOARD.CONFLICTS_BTN'
-          );
+          this._translateService
+            .get('EXAMSCORING.DASHBOARD.CONFLICTS_BTN')
+            .pipe(take(1))
+            .subscribe((res) => {
+              alertsAndNotices[1].actionText = res;
+            });
+        } else {
+          alertsAndNotices[1].actionText = 'Not Available';
         }
         this.globalDialogService.closeOpenDialog();
       });
