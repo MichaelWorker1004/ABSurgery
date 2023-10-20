@@ -54,7 +54,7 @@ import { IFormErrors } from '../shared/common';
 import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
 import { SetUnsavedChanges } from '../state/application/application.actions';
 
-interface IDisplayUserProfile extends IUserProfile {
+export interface IDisplayUserProfile extends IUserProfile {
   gender: string;
   countryDisplay: string;
   birthCountryDisplay: string;
@@ -328,13 +328,14 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const model = this.userProfileForm.value;
+    console.log(model);
     model.birthDate = new Date(model.birthDate).toISOString();
 
     this._store
       .dispatch(new UpdateUserProfile(model))
       .pipe(take(1))
       .subscribe((res) => {
-        if (!res.userProfile.errors) {
+        if (res.userProfile && !res.userProfile.errors) {
           this.isSubmitted = true;
           this.isEdit = false;
           this._store.dispatch(new SetUnsavedChanges(false));
