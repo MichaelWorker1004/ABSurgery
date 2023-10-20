@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
         {
             var expectedSprocName = "[dbo].[get_gmerotations_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

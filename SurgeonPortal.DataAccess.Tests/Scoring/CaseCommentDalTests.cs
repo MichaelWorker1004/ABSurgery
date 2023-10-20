@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
         {
             var expectedSprocName = "[dbo].[get_case_comments_byid]";
             var expectedId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     Id = expectedId,

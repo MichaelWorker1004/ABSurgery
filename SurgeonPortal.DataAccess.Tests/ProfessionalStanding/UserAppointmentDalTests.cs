@@ -43,7 +43,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         {
             var expectedSprocName = "[dbo].[get_userhospappts_byid]";
             var expectedApptId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ApptId = expectedApptId,

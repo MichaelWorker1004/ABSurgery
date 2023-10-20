@@ -43,7 +43,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var expectedSprocName = "[dbo].[get_examcasescore_byid]";
             var expectedExamScoringId = Create<int>();
             var expectedExaminerUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamScoringId = expectedExamScoringId,

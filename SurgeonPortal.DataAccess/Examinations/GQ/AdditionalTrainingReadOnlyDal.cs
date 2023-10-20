@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Examinations.GQ
 
 
 
-        public async Task<IEnumerable<AdditionalTrainingReadOnlyDto>> GetAllByUserIdAsync()
+        public async Task<IEnumerable<AdditionalTrainingReadOnlyDto>> GetAllByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {

@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var expectedSprocName = "[dbo].[get_user_passwordvalidate]";
             var expectedUserId = Create<int>();
             var expectedPassword = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
 
 
 
-        public async Task<IEnumerable<RotationGapReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<RotationGapReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {

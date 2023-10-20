@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
 
 
 
-        public async Task<IEnumerable<UserAppointmentReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<UserAppointmentReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {

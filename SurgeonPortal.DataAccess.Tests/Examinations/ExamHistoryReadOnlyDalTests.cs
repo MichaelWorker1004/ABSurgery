@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Examinations
         {
             var expectedSprocName = "[dbo].[get_userexamhistory]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

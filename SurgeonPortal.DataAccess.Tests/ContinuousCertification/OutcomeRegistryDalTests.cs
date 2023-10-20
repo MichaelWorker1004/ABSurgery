@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
         {
             var expectedSprocName = "[dbo].[get_outcomeregistry_getbyuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

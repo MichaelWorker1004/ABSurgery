@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Dev
         {
             var expectedSprocName = "[dbo].[dev_reset_scoring_by_ExaminerId]";
             var expectedExaminerUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,

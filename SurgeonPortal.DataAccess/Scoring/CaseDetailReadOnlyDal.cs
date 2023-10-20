@@ -15,7 +15,9 @@ namespace SurgeonPortal.DataAccess.Scoring
 
 
 
-        public async Task<IEnumerable<CaseDetailReadOnlyDto>> GetByCaseHeaderIdAsync(int caseHeaderId)
+        public async Task<IEnumerable<CaseDetailReadOnlyDto>> GetByCaseHeaderIdAsync(
+            int caseHeaderId,
+            int examinerUserId)
         {
             using (var connection = CreateConnection())
             {

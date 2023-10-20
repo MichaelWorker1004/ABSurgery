@@ -44,7 +44,7 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             var expectedSprocName = "[dbo].[get_document_byid]";
             var expectedId = Create<int>();
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     Id = expectedId,
@@ -104,7 +104,7 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
                     DocumentName = expectedDto.DocumentName,
                     DocumentTypeId = expectedDto.DocumentTypeId,
                     InternalViewOnly = expectedDto.InternalViewOnly,
-                    CreatedByUserId = expectedDto.,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

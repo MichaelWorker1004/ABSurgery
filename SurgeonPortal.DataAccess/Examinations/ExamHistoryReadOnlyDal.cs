@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Examinations
 
 
 
-        public async Task<IEnumerable<ExamHistoryReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<ExamHistoryReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {

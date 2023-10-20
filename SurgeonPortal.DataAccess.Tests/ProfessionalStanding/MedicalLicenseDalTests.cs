@@ -43,7 +43,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         {
             var expectedSprocName = "[dbo].[get_userlicenses_byid]";
             var expectedLicenseId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     LicenseId = expectedLicenseId,

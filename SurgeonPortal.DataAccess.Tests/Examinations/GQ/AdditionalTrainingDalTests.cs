@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Examinations.GQ
         {
             var expectedSprocName = "[dbo].[get_additionaltraining_bytrainingid]";
             var expectedTrainingId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     TrainingId = expectedTrainingId,

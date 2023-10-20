@@ -16,6 +16,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         public async Task GetAsync_ExecutesSprocCorrectly()
         {
             var expectedSprocName = "[dbo].[get_fellowship_types]";
+            
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecords(CreateMany<FellowshipTypeReadOnlyDto>());

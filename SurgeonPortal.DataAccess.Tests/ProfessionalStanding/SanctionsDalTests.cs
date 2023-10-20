@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         {
             var expectedSprocName = "[dbo].[get_user_sanctions_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
         {
             var expectedSprocName = "[dbo].[get_usertoken_getactive]";
             var expectedToken = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     Token = expectedToken,

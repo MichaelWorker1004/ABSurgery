@@ -61,7 +61,7 @@ namespace SurgeonPortal.DataAccess.Documents
                                 DocumentName = dto.DocumentName,
                                 DocumentTypeId = dto.DocumentTypeId,
                                 InternalViewOnly = dto.InternalViewOnly,
-                                CreatedByUserId = dto.,
+                                CreatedByUserId = dto.CreatedByUserId,
                             });
                             
                 }

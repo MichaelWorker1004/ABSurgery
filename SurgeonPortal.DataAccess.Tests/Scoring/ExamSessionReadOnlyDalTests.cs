@@ -19,7 +19,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var expectedSprocName = "[dbo].[get_examinee_sessions]";
             var expectedExaminerUserId = Create<int>();
             var expectedExamDate = Create<DateTime>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,

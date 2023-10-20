@@ -15,8 +15,8 @@ namespace SurgeonPortal.DataAccess.Examiners
 
 
         public async Task<AgendaReadOnlyDto> GetByExamHeaderIdAsync(
-            int examinerUserId,
-            int examHeaderId)
+            int examHeaderId,
+            int examinerUserId)
         {
             using (var connection = CreateConnection())
             {

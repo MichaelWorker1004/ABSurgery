@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var expectedSprocName = "[dbo].[update_skip_exam]";
             var expectedExamScheduleId = Create<int>();
             var expectedExaminerUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamScheduleId = expectedExamScheduleId,

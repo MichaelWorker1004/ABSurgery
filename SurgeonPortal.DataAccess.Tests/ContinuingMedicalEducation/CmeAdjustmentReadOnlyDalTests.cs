@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuingMedicalEducation
         {
             var expectedSprocName = "[dbo].[get_usercme_waivers_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

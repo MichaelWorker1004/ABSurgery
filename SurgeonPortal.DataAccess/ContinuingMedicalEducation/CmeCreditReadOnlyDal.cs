@@ -29,7 +29,7 @@ namespace SurgeonPortal.DataAccess.ContinuingMedicalEducation
             }
         }
 
-        public async Task<IEnumerable<CmeCreditReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<CmeCreditReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {

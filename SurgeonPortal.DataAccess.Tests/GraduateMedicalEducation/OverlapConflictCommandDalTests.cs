@@ -21,7 +21,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
             var expectedStartDate = Create<DateTime>();
             var expectedEndDate = Create<DateTime>();
             var expectedRotationId = Create<int?>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         {
             var expectedSprocName = "[dbo].[get_fellowship_program]";
             var expectedFellowshipType = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     FellowshipType = expectedFellowshipType,

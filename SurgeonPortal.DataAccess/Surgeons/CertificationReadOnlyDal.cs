@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Surgeons
 
 
 
-        public async Task<IEnumerable<CertificationReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<CertificationReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {

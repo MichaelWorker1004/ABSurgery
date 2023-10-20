@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Documents
 
 
 
-        public async Task<IEnumerable<DocumentReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<DocumentReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {

@@ -40,7 +40,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsto": "UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [

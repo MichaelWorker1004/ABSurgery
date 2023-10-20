@@ -19,7 +19,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var expectedUserId = Create<int>();
             var expectedOldPassword = Create<string>();
             var expectedNewPassword = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

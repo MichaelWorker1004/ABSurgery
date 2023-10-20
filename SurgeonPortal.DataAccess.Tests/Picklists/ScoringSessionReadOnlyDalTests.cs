@@ -19,7 +19,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
             var expectedSprocName = "[dbo].[get_day_session_picklist]";
             var expectedExaminerUserId = Create<int>();
             var expectedCurrentDate = Create<DateTime>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,

@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             var expectedSprocName = "[dbo].[get_exam_schedule_scores]";
             var expectedExamScheduleScoreId = Create<int>();
             var expectedExaminerUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamScheduleScoreId = expectedExamScheduleScoreId,

@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         {
             var expectedSprocName = "[dbo].[get_picklist_states_bycountry]";
             var expectedCountryCode = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     CountryCode = expectedCountryCode,

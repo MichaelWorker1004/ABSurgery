@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
 
 
 
-        public async Task<IEnumerable<GmeSummaryReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<GmeSummaryReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
