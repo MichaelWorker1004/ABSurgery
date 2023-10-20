@@ -45,7 +45,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
         [Execute]
         protected void ExecuteCommand()
         {
-                var dto = _getClinicallyActiveCommandDal.GetClinicallyActiveByUserId();
+                var dto = _getClinicallyActiveCommandDal.GetClinicallyActiveByUserId(_identity.GetUserId<int>());
             
             			this.UserId = dto.UserId;
         			this.ClinicallyActive = dto.ClinicallyActive;

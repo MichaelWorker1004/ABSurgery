@@ -45,7 +45,9 @@ namespace SurgeonPortal.Library.Scoring
         [Execute]
         protected new async Task ExecuteCommand()
         {
-                await _examSessionSkipCommandDal.SkipExamSessionAsync(ExamScheduleId);
+                await _examSessionSkipCommandDal.SkipExamSessionAsync(
+                    ExamScheduleId,
+                    _identity.GetUserId<int>());
             }
 
 

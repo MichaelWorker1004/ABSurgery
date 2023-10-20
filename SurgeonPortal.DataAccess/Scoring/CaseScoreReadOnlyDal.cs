@@ -16,8 +16,8 @@ namespace SurgeonPortal.DataAccess.Scoring
 
 
         public async Task<IEnumerable<CaseScoreReadOnlyDto>> GetByExamScheduleIdAsync(
-            int examScheduleId,
-            int examinerUserId)
+            int examinerUserId,
+            int examScheduleId)
         {
             using (var connection = CreateConnection())
             {

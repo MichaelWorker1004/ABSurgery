@@ -45,7 +45,9 @@ namespace SurgeonPortal.Library.CE
         [Execute]
         protected void ExecuteCommand()
         {
-                var dto = _getExamCasesScoredCommandDal.GetExamCasesScored(ExamScheduleId);
+                var dto = _getExamCasesScoredCommandDal.GetExamCasesScored(
+                    ExamScheduleId,
+                    _identity.GetUserId<int>());
             
             			this.ExamScheduleId = dto.ExamScheduleId;
         			this.CasesScored = dto.CasesScored;

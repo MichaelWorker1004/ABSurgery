@@ -39,7 +39,7 @@ namespace SurgeonPortal.Library.MedicalTraining
         private async Task GetByUserId()
         
         {
-            var dtos = await _otherCertificationsReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _otherCertificationsReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

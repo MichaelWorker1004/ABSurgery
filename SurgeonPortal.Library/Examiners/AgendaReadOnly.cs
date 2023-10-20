@@ -53,7 +53,9 @@ namespace SurgeonPortal.Library.Examiners
         private async Task GetByExamHeaderId(GetByExamHeaderIdCriteria criteria)
         
         {
-            var dto = await _agendaReadOnlyDal.GetByExamHeaderIdAsync(criteria.ExamHeaderId);
+            var dto = await _agendaReadOnlyDal.GetByExamHeaderIdAsync(
+                _identity.GetUserId<int>(),
+                criteria.ExamHeaderId);
             
             if (dto == null)
             {

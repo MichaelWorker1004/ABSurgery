@@ -6,7 +6,7 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
     public interface IExamSessionReadOnlyDal
     {
         Task<IEnumerable<ExamSessionReadOnlyDto>> GetByUserIdAsync(
-            System.DateTime examDate,
-            int examinerUserId);
+            int examinerUserId,
+            System.DateTime examDate);
     }
 }

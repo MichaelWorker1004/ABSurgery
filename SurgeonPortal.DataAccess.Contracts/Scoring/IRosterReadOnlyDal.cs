@@ -6,7 +6,7 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
     public interface IRosterReadOnlyDal
     {
         Task<IEnumerable<RosterReadOnlyDto>> GetByExaminationHeaderIdAsync(
-            int examHeaderId,
-            int examinerUserId);
+            int examinerUserId,
+            int examHeaderId);
     }
 }

@@ -41,7 +41,7 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
         private async Task GetByUserId()
         
         {
-            var dtos = await _cmeAdjustmentReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _cmeAdjustmentReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

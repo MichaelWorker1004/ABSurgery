@@ -39,7 +39,9 @@ namespace SurgeonPortal.Library.Picklists
         private async Task GetByKeys(GetByKeysCriteria criteria)
         
         {
-            var dtos = await _scoringSessionReadOnlyDal.GetByKeysAsync(criteria.CurrentDate);
+            var dtos = await _scoringSessionReadOnlyDal.GetByKeysAsync(
+                _identity.GetUserId<int>(),
+                criteria.CurrentDate);
         			
             FetchChildren(dtos);
         }

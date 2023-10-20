@@ -118,8 +118,8 @@ namespace SurgeonPortal.Library.Scoring
             using (BypassPropertyChecks)
             {
                 var dto = await _caseFeedbackDal.GetByExaminerIdAsync(
-                    criteria.CaseHeaderId,
-                    _identity.GetUserId<int>());
+                    _identity.GetUserId<int>(),
+                    criteria.CaseHeaderId);
         
                 if(dto == null)
                 {

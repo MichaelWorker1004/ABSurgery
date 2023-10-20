@@ -20,11 +20,9 @@ namespace SurgeonPortal.Library.Trainees
             [Serializable]
             internal class GetByUserIdCriteria
             {
-                public int UserId { get; set; }
             
-                public GetByUserIdCriteria(int userId)
+                public GetByUserIdCriteria()
              {
-                    UserId = userId;
               }
             }
             

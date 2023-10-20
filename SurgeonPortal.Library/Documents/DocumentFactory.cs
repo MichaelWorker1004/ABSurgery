@@ -31,14 +31,10 @@ namespace SurgeonPortal.Library.Documents
             internal class GetByIdCriteria
             {
                 public int Id { get; set; }
-                public int UserId { get; set; }
             
-                public GetByIdCriteria(
-                int id,
-                int userId)
+                public GetByIdCriteria(int id)
              {
                     Id = id;
-                    UserId = userId;
               }
             }
             

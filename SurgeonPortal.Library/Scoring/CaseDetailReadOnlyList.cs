@@ -41,7 +41,9 @@ namespace SurgeonPortal.Library.Scoring
         private async Task GetByCaseHeaderId(GetByCaseHeaderIdCriteria criteria)
         
         {
-            var dtos = await _caseDetailReadOnlyDal.GetByCaseHeaderIdAsync(criteria.CaseHeaderId);
+            var dtos = await _caseDetailReadOnlyDal.GetByCaseHeaderIdAsync(
+                criteria.CaseHeaderId,
+                _identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

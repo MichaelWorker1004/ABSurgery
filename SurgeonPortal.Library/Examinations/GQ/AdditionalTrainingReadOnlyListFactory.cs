@@ -18,11 +18,9 @@ namespace SurgeonPortal.Library.Examinations.GQ
             [Serializable]
             internal class GetAllByUserIdCriteria
             {
-                public int UserId { get; set; }
             
-                public GetAllByUserIdCriteria(int userId)
+                public GetAllByUserIdCriteria()
              {
-                    UserId = userId;
               }
             }
             

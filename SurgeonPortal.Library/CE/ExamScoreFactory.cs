@@ -31,14 +31,10 @@ namespace SurgeonPortal.Library.CE
             internal class GetByIdCriteria
             {
                 public int ExamScheduleScoreId { get; set; }
-                public int ExaminerUserId { get; set; }
             
-                public GetByIdCriteria(
-                int examScheduleScoreId,
-                int examinerUserId)
+                public GetByIdCriteria(int examScheduleScoreId)
              {
                     ExamScheduleScoreId = examScheduleScoreId;
-                    ExaminerUserId = examinerUserId;
               }
             }
             

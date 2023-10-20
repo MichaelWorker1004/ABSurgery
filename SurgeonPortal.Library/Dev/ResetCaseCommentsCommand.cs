@@ -38,7 +38,7 @@ namespace SurgeonPortal.Library.Dev
         [Execute]
         protected new async Task ExecuteCommand()
         {
-                await _resetCaseCommentsCommandDal.ResetCaseCommentsAsync();
+                await _resetCaseCommentsCommandDal.ResetCaseCommentsAsync(_identity.GetUserId<int>());
             }
 
 

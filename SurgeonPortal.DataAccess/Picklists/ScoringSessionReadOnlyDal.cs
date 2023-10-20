@@ -16,8 +16,8 @@ namespace SurgeonPortal.DataAccess.Picklists
 
 
         public async Task<IEnumerable<ScoringSessionReadOnlyDto>> GetByKeysAsync(
-            System.DateTime currentDate,
-            int examinerUserId)
+            int examinerUserId,
+            System.DateTime currentDate)
         {
             using (var connection = CreateConnection())
             {

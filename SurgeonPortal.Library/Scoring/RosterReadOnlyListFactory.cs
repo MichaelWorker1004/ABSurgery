@@ -23,14 +23,10 @@ namespace SurgeonPortal.Library.Scoring
             [Serializable]
             internal class GetByExaminationHeaderIdCriteria
             {
-                public int ExaminerUserId { get; set; }
                 public int ExamHeaderId { get; set; }
             
-                public GetByExaminationHeaderIdCriteria(
-                int examinerUserId,
-                int examHeaderId)
+                public GetByExaminationHeaderIdCriteria(int examHeaderId)
              {
-                    ExaminerUserId = examinerUserId;
                     ExamHeaderId = examHeaderId;
               }
             }

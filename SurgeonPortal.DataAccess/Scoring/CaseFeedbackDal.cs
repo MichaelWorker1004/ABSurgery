@@ -29,8 +29,8 @@ namespace SurgeonPortal.DataAccess.Scoring
         }
 
         public async Task<CaseFeedbackDto> GetByExaminerIdAsync(
-            int caseHeaderId,
-            int examinerUserId)
+            int examinerUserId,
+            int caseHeaderId)
         {
             using (var connection = CreateConnection())
             {

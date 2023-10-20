@@ -60,6 +60,7 @@ namespace SurgeonPortal.Library.Users
         protected new async Task ExecuteCommand()
         {
                 var dto = await _passwordResetCommandDal.ResetPasswordAsync(
+                    _identity.GetUserId<int>(),
                     OldPassword,
                     NewPassword);
             

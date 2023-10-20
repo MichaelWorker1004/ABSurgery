@@ -25,11 +25,9 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             [Serializable]
             internal class GetByUserIdCriteria
             {
-                public int UserId { get; set; }
             
-                public GetByUserIdCriteria(int userId)
+                public GetByUserIdCriteria()
              {
-                    UserId = userId;
               }
             }
             
