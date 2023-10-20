@@ -4,7 +4,7 @@ namespace SurgeonPortal.DataAccess.Contracts.MedicalTraining
 {
     public interface IMedicalTrainingDal
     {
-        Task<MedicalTrainingDto> GetByUserIdAsync();
+        Task<MedicalTrainingDto> GetByUserIdAsync(int userId);
         Task<MedicalTrainingDto> InsertAsync(MedicalTrainingDto dto);
         Task<MedicalTrainingDto> UpdateAsync(MedicalTrainingDto dto);
     }

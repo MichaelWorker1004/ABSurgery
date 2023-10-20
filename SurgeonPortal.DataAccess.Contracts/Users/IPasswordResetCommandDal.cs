@@ -6,6 +6,7 @@ namespace SurgeonPortal.DataAccess.Contracts.Users
     {
         Task<PasswordResetCommandDto> ResetPasswordAsync(
             string oldPassword,
-            string newPassword);
+            string newPassword,
+            int userId);
     }
 }

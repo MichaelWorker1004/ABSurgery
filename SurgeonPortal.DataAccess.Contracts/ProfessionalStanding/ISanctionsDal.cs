@@ -4,7 +4,7 @@ namespace SurgeonPortal.DataAccess.Contracts.ProfessionalStanding
 {
     public interface ISanctionsDal
     {
-        Task<SanctionsDto> GetByUserIdAsync();
+        Task<SanctionsDto> GetByUserIdAsync(int userId);
         Task<SanctionsDto> InsertAsync(SanctionsDto dto);
         Task<SanctionsDto> UpdateAsync(SanctionsDto dto);
     }

@@ -41,7 +41,7 @@ namespace SurgeonPortal.Library.Examinations
         private async Task GetByUserId()
         
         {
-            var dtos = await _examHistoryReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
+            var dtos = await _examHistoryReadOnlyDal.GetByUserIdAsync();
         			
             FetchChildren(dtos);
         }

@@ -16,7 +16,7 @@ namespace SurgeonPortal.DataAccess.CE
 
         public GetExamCasesScoredCommandDto GetExamCasesScored(
             int examScheduleId,
-            _identity.GetUserId<int>())
+            int examinerUserId)
         {
             using (var connection = CreateConnection())
             {

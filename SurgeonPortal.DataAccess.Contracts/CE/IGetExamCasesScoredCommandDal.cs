@@ -4,6 +4,8 @@ namespace SurgeonPortal.DataAccess.Contracts.CE
 {
     public interface IGetExamCasesScoredCommandDal
     {
-        GetExamCasesScoredCommandDto GetExamCasesScored(int examScheduleId);
+        GetExamCasesScoredCommandDto GetExamCasesScored(
+            int examScheduleId,
+            int examinerUserId);
     }
 }

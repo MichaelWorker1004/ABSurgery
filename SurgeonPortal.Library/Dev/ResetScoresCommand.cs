@@ -38,7 +38,7 @@ namespace SurgeonPortal.Library.Dev
         [Execute]
         protected new async Task ExecuteCommand()
         {
-                await _resetScoresCommandDal.ResetExamScoresAsync(_identity.GetUserId<int>());
+                await _resetScoresCommandDal.ResetExamScoresAsync();
             }
 
 

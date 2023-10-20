@@ -41,7 +41,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         private async Task GetByUserId()
         
         {
-            var dtos = await _rotationReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
+            var dtos = await _rotationReadOnlyDal.GetByUserIdAsync();
         			
             FetchChildren(dtos);
         }

@@ -61,8 +61,7 @@ namespace SurgeonPortal.Library.Users
         {
                 var dto = await _passwordResetCommandDal.ResetPasswordAsync(
                     OldPassword,
-                    NewPassword,
-                    _identity.GetUserId<int>());
+                    NewPassword);
             
             			this.UserId = dto.UserId;
         			this.OldPassword = dto.OldPassword;

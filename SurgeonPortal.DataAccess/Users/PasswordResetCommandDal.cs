@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Users
         public async Task<PasswordResetCommandDto> ResetPasswordAsync(
             string oldPassword,
             string newPassword,
-            _identity.GetUserId<int>())
+            int userId)
         {
             using (var connection = CreateConnection())
             {
