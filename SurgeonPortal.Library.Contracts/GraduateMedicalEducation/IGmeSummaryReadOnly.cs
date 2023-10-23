@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
 {
-    public interface IGmeSummaryReadOnly : IYtgReadOnlyBase
+    public interface IGmeSummaryReadOnly : IYtgReadOnlyBase<int>
     {
         string ClinicalLevel { get; }
         DateTime? MinStartDate { get; }

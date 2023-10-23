@@ -1,6 +1,5 @@
 using FluentAssertions;
 using NUnit.Framework;
-using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.DataAccess.Users;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
@@ -40,7 +39,6 @@ namespace SurgeonPortal.DataAccess.Tests.Users
                 };
         
             var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(Create<UserLoginAuditCommandDto>());
         
             var sut = new UserLoginAuditCommandDal(sqlManager);
             await sut.AuditAsync(

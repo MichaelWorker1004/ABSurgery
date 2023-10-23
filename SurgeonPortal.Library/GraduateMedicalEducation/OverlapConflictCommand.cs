@@ -4,6 +4,8 @@ using Csla;
 using SurgeonPortal.DataAccess.Contracts.GraduateMedicalEducation;
 using SurgeonPortal.Library.Contracts.GraduateMedicalEducation;
 using System;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 
 namespace SurgeonPortal.Library.GraduateMedicalEducation
@@ -11,12 +13,15 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0003", Justification = "Direct Injection.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
-    public class OverlapConflictCommand : CommandBase<OverlapConflictCommand>, IOverlapConflictCommand
+    public class OverlapConflictCommand : YtgCommandBase<OverlapConflictCommand, int>, IOverlapConflictCommand
     {
         private readonly IOverlapConflictCommandDal _overlapConflictCommandDal;
 
 
-        public OverlapConflictCommand(IOverlapConflictCommandDal overlapConflictCommandDal)
+        public OverlapConflictCommand(
+            IIdentityProvider identityProvider,
+            IOverlapConflictCommandDal overlapConflictCommandDal)
+            : base(identityProvider)
         {
             _overlapConflictCommandDal = overlapConflictCommandDal;
         }

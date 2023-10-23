@@ -1,6 +1,5 @@
 using FluentAssertions;
 using NUnit.Framework;
-using SurgeonPortal.DataAccess.Contracts.Scoring;
 using SurgeonPortal.DataAccess.Scoring;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
@@ -24,7 +23,6 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
                 };
         
             var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(Create<ExamSessionLockCommandDto>());
         
             var sut = new ExamSessionLockCommandDal(sqlManager);
             await sut.LockExamSessionAsync(expectedExamscheduleId);

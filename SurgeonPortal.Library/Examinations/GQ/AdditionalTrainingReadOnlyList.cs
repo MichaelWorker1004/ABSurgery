@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Examinations.GQ.AdditionalTrainingReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Examinations.GQ
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Examinations.GQ
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class AdditionalTrainingReadOnlyList : YtgReadOnlyListBase<IAdditionalTrainingReadOnlyList, IAdditionalTrainingReadOnly>, IAdditionalTrainingReadOnlyList
+	public class AdditionalTrainingReadOnlyList : YtgReadOnlyListBase<IAdditionalTrainingReadOnlyList, IAdditionalTrainingReadOnly, int>, IAdditionalTrainingReadOnlyList
     {
         private readonly IAdditionalTrainingReadOnlyDal _additionalTrainingReadOnlyDal;
 
-        public AdditionalTrainingReadOnlyList(IAdditionalTrainingReadOnlyDal additionalTrainingReadOnlyDal)
+        public AdditionalTrainingReadOnlyList(
+            IIdentityProvider identityProvider,
+            IAdditionalTrainingReadOnlyDal additionalTrainingReadOnlyDal)
+            : base(identityProvider)
         {
             _additionalTrainingReadOnlyDal = additionalTrainingReadOnlyDal;
         }

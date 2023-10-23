@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.ExamSessionReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class ExamSessionReadOnlyList : YtgReadOnlyListBase<IExamSessionReadOnlyList, IExamSessionReadOnly>, IExamSessionReadOnlyList
+	public class ExamSessionReadOnlyList : YtgReadOnlyListBase<IExamSessionReadOnlyList, IExamSessionReadOnly, int>, IExamSessionReadOnlyList
     {
         private readonly IExamSessionReadOnlyDal _examSessionReadOnlyDal;
 
-        public ExamSessionReadOnlyList(IExamSessionReadOnlyDal examSessionReadOnlyDal)
+        public ExamSessionReadOnlyList(
+            IIdentityProvider identityProvider,
+            IExamSessionReadOnlyDal examSessionReadOnlyDal)
+            : base(identityProvider)
         {
             _examSessionReadOnlyDal = examSessionReadOnlyDal;
         }

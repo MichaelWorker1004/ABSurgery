@@ -2,7 +2,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Scoring
 {
-    public interface IRosterReadOnly : IYtgReadOnlyBase
+    public interface IRosterReadOnly : IYtgReadOnlyBase<int>
     {
         int ExamScheduleId { get; }
         int? DayNumber { get; }

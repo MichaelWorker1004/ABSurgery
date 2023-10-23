@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.CountryReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CountryReadOnlyList : YtgReadOnlyListBase<ICountryReadOnlyList, ICountryReadOnly>, ICountryReadOnlyList
+	public class CountryReadOnlyList : YtgReadOnlyListBase<ICountryReadOnlyList, ICountryReadOnly, int>, ICountryReadOnlyList
     {
         private readonly ICountryReadOnlyDal _countryReadOnlyDal;
 
-        public CountryReadOnlyList(ICountryReadOnlyDal countryReadOnlyDal)
+        public CountryReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICountryReadOnlyDal countryReadOnlyDal)
+            : base(identityProvider)
         {
             _countryReadOnlyDal = countryReadOnlyDal;
         }

@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.ContinuingMedicalEducation.CmeAdjustmentReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.ContinuingMedicalEducation
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CmeAdjustmentReadOnlyList : YtgReadOnlyListBase<ICmeAdjustmentReadOnlyList, ICmeAdjustmentReadOnly>, ICmeAdjustmentReadOnlyList
+	public class CmeAdjustmentReadOnlyList : YtgReadOnlyListBase<ICmeAdjustmentReadOnlyList, ICmeAdjustmentReadOnly, int>, ICmeAdjustmentReadOnlyList
     {
         private readonly ICmeAdjustmentReadOnlyDal _cmeAdjustmentReadOnlyDal;
 
-        public CmeAdjustmentReadOnlyList(ICmeAdjustmentReadOnlyDal cmeAdjustmentReadOnlyDal)
+        public CmeAdjustmentReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICmeAdjustmentReadOnlyDal cmeAdjustmentReadOnlyDal)
+            : base(identityProvider)
         {
             _cmeAdjustmentReadOnlyDal = cmeAdjustmentReadOnlyDal;
         }

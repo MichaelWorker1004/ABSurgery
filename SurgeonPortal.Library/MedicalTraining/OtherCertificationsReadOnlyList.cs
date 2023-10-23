@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.MedicalTraining.OtherCertificationsReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.MedicalTraining
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.MedicalTraining
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class OtherCertificationsReadOnlyList : YtgReadOnlyListBase<IOtherCertificationsReadOnlyList, IOtherCertificationsReadOnly>, IOtherCertificationsReadOnlyList
+	public class OtherCertificationsReadOnlyList : YtgReadOnlyListBase<IOtherCertificationsReadOnlyList, IOtherCertificationsReadOnly, int>, IOtherCertificationsReadOnlyList
     {
         private readonly IOtherCertificationsReadOnlyDal _otherCertificationsReadOnlyDal;
 
-        public OtherCertificationsReadOnlyList(IOtherCertificationsReadOnlyDal otherCertificationsReadOnlyDal)
+        public OtherCertificationsReadOnlyList(
+            IIdentityProvider identityProvider,
+            IOtherCertificationsReadOnlyDal otherCertificationsReadOnlyDal)
+            : base(identityProvider)
         {
             _otherCertificationsReadOnlyDal = otherCertificationsReadOnlyDal;
         }

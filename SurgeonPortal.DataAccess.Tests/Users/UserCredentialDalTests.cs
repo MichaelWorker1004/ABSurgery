@@ -2,7 +2,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.DataAccess.Users;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 using Ytg.UnitTest.ConnectionManager;

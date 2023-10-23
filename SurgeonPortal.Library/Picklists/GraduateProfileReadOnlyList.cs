@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.GraduateProfileReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class GraduateProfileReadOnlyList : YtgReadOnlyListBase<IGraduateProfileReadOnlyList, IGraduateProfileReadOnly>, IGraduateProfileReadOnlyList
+	public class GraduateProfileReadOnlyList : YtgReadOnlyListBase<IGraduateProfileReadOnlyList, IGraduateProfileReadOnly, int>, IGraduateProfileReadOnlyList
     {
         private readonly IGraduateProfileReadOnlyDal _graduateProfileReadOnlyDal;
 
-        public GraduateProfileReadOnlyList(IGraduateProfileReadOnlyDal graduateProfileReadOnlyDal)
+        public GraduateProfileReadOnlyList(
+            IIdentityProvider identityProvider,
+            IGraduateProfileReadOnlyDal graduateProfileReadOnlyDal)
+            : base(identityProvider)
         {
             _graduateProfileReadOnlyDal = graduateProfileReadOnlyDal;
         }

@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.DashboardRosterReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class DashboardRosterReadOnlyList : YtgReadOnlyListBase<IDashboardRosterReadOnlyList, IDashboardRosterReadOnly>, IDashboardRosterReadOnlyList
+	public class DashboardRosterReadOnlyList : YtgReadOnlyListBase<IDashboardRosterReadOnlyList, IDashboardRosterReadOnly, int>, IDashboardRosterReadOnlyList
     {
         private readonly IDashboardRosterReadOnlyDal _dashboardRosterReadOnlyDal;
 
-        public DashboardRosterReadOnlyList(IDashboardRosterReadOnlyDal dashboardRosterReadOnlyDal)
+        public DashboardRosterReadOnlyList(
+            IIdentityProvider identityProvider,
+            IDashboardRosterReadOnlyDal dashboardRosterReadOnlyDal)
+            : base(identityProvider)
         {
             _dashboardRosterReadOnlyDal = dashboardRosterReadOnlyDal;
         }

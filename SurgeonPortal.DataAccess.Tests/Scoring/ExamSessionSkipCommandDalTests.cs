@@ -1,6 +1,5 @@
 using FluentAssertions;
 using NUnit.Framework;
-using SurgeonPortal.DataAccess.Contracts.Scoring;
 using SurgeonPortal.DataAccess.Scoring;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
@@ -26,7 +25,6 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
                 };
         
             var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(Create<ExamSessionSkipCommandDto>());
         
             var sut = new ExamSessionSkipCommandDal(sqlManager);
             await sut.SkipExamSessionAsync(

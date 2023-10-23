@@ -1,9 +1,8 @@
-using System;
 using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Users
 {
-    public interface IUserClaimReadOnly : IYtgReadOnlyBase
+    public interface IUserClaimReadOnly : IYtgReadOnlyBase<int>
     {
         string ClaimName { get; }
         int ApplicationId { get; }

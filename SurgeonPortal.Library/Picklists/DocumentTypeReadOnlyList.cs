@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.DocumentTypeReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class DocumentTypeReadOnlyList : YtgReadOnlyListBase<IDocumentTypeReadOnlyList, IDocumentTypeReadOnly>, IDocumentTypeReadOnlyList
+	public class DocumentTypeReadOnlyList : YtgReadOnlyListBase<IDocumentTypeReadOnlyList, IDocumentTypeReadOnly, int>, IDocumentTypeReadOnlyList
     {
         private readonly IDocumentTypeReadOnlyDal _documentTypeReadOnlyDal;
 
-        public DocumentTypeReadOnlyList(IDocumentTypeReadOnlyDal documentTypeReadOnlyDal)
+        public DocumentTypeReadOnlyList(
+            IIdentityProvider identityProvider,
+            IDocumentTypeReadOnlyDal documentTypeReadOnlyDal)
+            : base(identityProvider)
         {
             _documentTypeReadOnlyDal = documentTypeReadOnlyDal;
         }

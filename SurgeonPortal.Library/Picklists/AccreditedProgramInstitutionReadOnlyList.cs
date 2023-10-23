@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.AccreditedProgramInstitutionReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class AccreditedProgramInstitutionReadOnlyList : YtgReadOnlyListBase<IAccreditedProgramInstitutionReadOnlyList, IAccreditedProgramInstitutionReadOnly>, IAccreditedProgramInstitutionReadOnlyList
+	public class AccreditedProgramInstitutionReadOnlyList : YtgReadOnlyListBase<IAccreditedProgramInstitutionReadOnlyList, IAccreditedProgramInstitutionReadOnly, int>, IAccreditedProgramInstitutionReadOnlyList
     {
         private readonly IAccreditedProgramInstitutionReadOnlyDal _accreditedProgramInstitutionReadOnlyDal;
 
-        public AccreditedProgramInstitutionReadOnlyList(IAccreditedProgramInstitutionReadOnlyDal accreditedProgramInstitutionReadOnlyDal)
+        public AccreditedProgramInstitutionReadOnlyList(
+            IIdentityProvider identityProvider,
+            IAccreditedProgramInstitutionReadOnlyDal accreditedProgramInstitutionReadOnlyDal)
+            : base(identityProvider)
         {
             _accreditedProgramInstitutionReadOnlyDal = accreditedProgramInstitutionReadOnlyDal;
         }

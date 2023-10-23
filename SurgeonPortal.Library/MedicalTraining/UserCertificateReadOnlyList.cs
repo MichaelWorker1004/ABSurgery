@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.MedicalTraining.UserCertificateReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.MedicalTraining
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.MedicalTraining
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class UserCertificateReadOnlyList : YtgReadOnlyListBase<IUserCertificateReadOnlyList, IUserCertificateReadOnly>, IUserCertificateReadOnlyList
+	public class UserCertificateReadOnlyList : YtgReadOnlyListBase<IUserCertificateReadOnlyList, IUserCertificateReadOnly, int>, IUserCertificateReadOnlyList
     {
         private readonly IUserCertificateReadOnlyDal _userCertificateReadOnlyDal;
 
-        public UserCertificateReadOnlyList(IUserCertificateReadOnlyDal userCertificateReadOnlyDal)
+        public UserCertificateReadOnlyList(
+            IIdentityProvider identityProvider,
+            IUserCertificateReadOnlyDal userCertificateReadOnlyDal)
+            : base(identityProvider)
         {
             _userCertificateReadOnlyDal = userCertificateReadOnlyDal;
         }

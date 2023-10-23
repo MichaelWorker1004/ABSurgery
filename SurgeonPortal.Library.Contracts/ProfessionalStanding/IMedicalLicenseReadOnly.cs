@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.ProfessionalStanding
 {
-    public interface IMedicalLicenseReadOnly : IYtgReadOnlyBase
+    public interface IMedicalLicenseReadOnly : IYtgReadOnlyBase<int>
     {
         decimal LicenseId { get; }
         int? UserId { get; }

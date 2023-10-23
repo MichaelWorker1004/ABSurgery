@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.ContinuingMedicalEducation
 {
-    public interface ICmeCreditReadOnly : IYtgReadOnlyBase
+    public interface ICmeCreditReadOnly : IYtgReadOnlyBase<int>
     {
         decimal CmeId { get; }
         int? UserId { get; }

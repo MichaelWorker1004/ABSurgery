@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.MedicalTraining
 {
-    public interface IUserCertificateReadOnly : IYtgReadOnlyBase
+    public interface IUserCertificateReadOnly : IYtgReadOnlyBase<int>
     {
         int CertificateId { get; }
         int UserId { get; }

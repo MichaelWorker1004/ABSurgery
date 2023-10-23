@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.FellowshipProgramReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class FellowshipProgramReadOnlyList : YtgReadOnlyListBase<IFellowshipProgramReadOnlyList, IFellowshipProgramReadOnly>, IFellowshipProgramReadOnlyList
+	public class FellowshipProgramReadOnlyList : YtgReadOnlyListBase<IFellowshipProgramReadOnlyList, IFellowshipProgramReadOnly, int>, IFellowshipProgramReadOnlyList
     {
         private readonly IFellowshipProgramReadOnlyDal _fellowshipProgramReadOnlyDal;
 
-        public FellowshipProgramReadOnlyList(IFellowshipProgramReadOnlyDal fellowshipProgramReadOnlyDal)
+        public FellowshipProgramReadOnlyList(
+            IIdentityProvider identityProvider,
+            IFellowshipProgramReadOnlyDal fellowshipProgramReadOnlyDal)
+            : base(identityProvider)
         {
             _fellowshipProgramReadOnlyDal = fellowshipProgramReadOnlyDal;
         }

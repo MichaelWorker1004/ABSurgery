@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.ProfessionalStanding.UserAppointmentReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.ProfessionalStanding
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.ProfessionalStanding
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class UserAppointmentReadOnlyList : YtgReadOnlyListBase<IUserAppointmentReadOnlyList, IUserAppointmentReadOnly>, IUserAppointmentReadOnlyList
+	public class UserAppointmentReadOnlyList : YtgReadOnlyListBase<IUserAppointmentReadOnlyList, IUserAppointmentReadOnly, int>, IUserAppointmentReadOnlyList
     {
         private readonly IUserAppointmentReadOnlyDal _userAppointmentReadOnlyDal;
 
-        public UserAppointmentReadOnlyList(IUserAppointmentReadOnlyDal userAppointmentReadOnlyDal)
+        public UserAppointmentReadOnlyList(
+            IIdentityProvider identityProvider,
+            IUserAppointmentReadOnlyDal userAppointmentReadOnlyDal)
+            : base(identityProvider)
         {
             _userAppointmentReadOnlyDal = userAppointmentReadOnlyDal;
         }

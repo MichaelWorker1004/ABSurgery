@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.CertificateTypeReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CertificateTypeReadOnlyList : YtgReadOnlyListBase<ICertificateTypeReadOnlyList, ICertificateTypeReadOnly>, ICertificateTypeReadOnlyList
+	public class CertificateTypeReadOnlyList : YtgReadOnlyListBase<ICertificateTypeReadOnlyList, ICertificateTypeReadOnly, int>, ICertificateTypeReadOnlyList
     {
         private readonly ICertificateTypeReadOnlyDal _certificateTypeReadOnlyDal;
 
-        public CertificateTypeReadOnlyList(ICertificateTypeReadOnlyDal certificateTypeReadOnlyDal)
+        public CertificateTypeReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICertificateTypeReadOnlyDal certificateTypeReadOnlyDal)
+            : base(identityProvider)
         {
             _certificateTypeReadOnlyDal = certificateTypeReadOnlyDal;
         }

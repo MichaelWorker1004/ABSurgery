@@ -2,7 +2,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Picklists
 {
-    public interface IFellowshipTypeReadOnlyList : IYtgReadOnlyListBase<IFellowshipTypeReadOnly>
+    public interface IFellowshipTypeReadOnlyList : IYtgReadOnlyListBase<IFellowshipTypeReadOnly, int>
     {
     }
 }

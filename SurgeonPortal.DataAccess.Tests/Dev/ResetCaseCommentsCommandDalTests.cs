@@ -1,6 +1,5 @@
 using FluentAssertions;
 using NUnit.Framework;
-using SurgeonPortal.DataAccess.Contracts.Dev;
 using SurgeonPortal.DataAccess.Dev;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
@@ -24,7 +23,6 @@ namespace SurgeonPortal.DataAccess.Tests.Dev
                 };
         
             var sqlManager = new MockSqlConnectionManager();
-            sqlManager.AddRecord(Create<ResetCaseCommentsCommandDto>());
         
             var sut = new ResetCaseCommentsCommandDal(sqlManager);
             await sut.ResetCaseCommentsAsync(expectedExaminerUserId);

@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.CaseScoreReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CaseScoreReadOnlyList : YtgReadOnlyListBase<ICaseScoreReadOnlyList, ICaseScoreReadOnly>, ICaseScoreReadOnlyList
+	public class CaseScoreReadOnlyList : YtgReadOnlyListBase<ICaseScoreReadOnlyList, ICaseScoreReadOnly, int>, ICaseScoreReadOnlyList
     {
         private readonly ICaseScoreReadOnlyDal _caseScoreReadOnlyDal;
 
-        public CaseScoreReadOnlyList(ICaseScoreReadOnlyDal caseScoreReadOnlyDal)
+        public CaseScoreReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICaseScoreReadOnlyDal caseScoreReadOnlyDal)
+            : base(identityProvider)
         {
             _caseScoreReadOnlyDal = caseScoreReadOnlyDal;
         }

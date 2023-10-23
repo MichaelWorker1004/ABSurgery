@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Csla;
 using SurgeonPortal.DataAccess.Contracts.CE;
 using SurgeonPortal.Library.Contracts.CE;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 
 namespace SurgeonPortal.Library.CE
@@ -10,12 +12,15 @@ namespace SurgeonPortal.Library.CE
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0003", Justification = "Direct Injection.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
-    public class GetExamCasesScoredCommand : CommandBase<GetExamCasesScoredCommand>, IGetExamCasesScoredCommand
+    public class GetExamCasesScoredCommand : YtgCommandBase<GetExamCasesScoredCommand, int>, IGetExamCasesScoredCommand
     {
         private readonly IGetExamCasesScoredCommandDal _getExamCasesScoredCommandDal;
 
 
-        public GetExamCasesScoredCommand(IGetExamCasesScoredCommandDal getExamCasesScoredCommandDal)
+        public GetExamCasesScoredCommand(
+            IIdentityProvider identityProvider,
+            IGetExamCasesScoredCommandDal getExamCasesScoredCommandDal)
+            : base(identityProvider)
         {
             _getExamCasesScoredCommandDal = getExamCasesScoredCommandDal;
         }

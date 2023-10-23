@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.GraduateMedicalEducation.RotationReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.GraduateMedicalEducation
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class RotationReadOnlyList : YtgReadOnlyListBase<IRotationReadOnlyList, IRotationReadOnly>, IRotationReadOnlyList
+	public class RotationReadOnlyList : YtgReadOnlyListBase<IRotationReadOnlyList, IRotationReadOnly, int>, IRotationReadOnlyList
     {
         private readonly IRotationReadOnlyDal _rotationReadOnlyDal;
 
-        public RotationReadOnlyList(IRotationReadOnlyDal rotationReadOnlyDal)
+        public RotationReadOnlyList(
+            IIdentityProvider identityProvider,
+            IRotationReadOnlyDal rotationReadOnlyDal)
+            : base(identityProvider)
         {
             _rotationReadOnlyDal = rotationReadOnlyDal;
         }

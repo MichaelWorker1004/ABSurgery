@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.LicenseTypeReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class LicenseTypeReadOnlyList : YtgReadOnlyListBase<ILicenseTypeReadOnlyList, ILicenseTypeReadOnly>, ILicenseTypeReadOnlyList
+	public class LicenseTypeReadOnlyList : YtgReadOnlyListBase<ILicenseTypeReadOnlyList, ILicenseTypeReadOnly, int>, ILicenseTypeReadOnlyList
     {
         private readonly ILicenseTypeReadOnlyDal _licenseTypeReadOnlyDal;
 
-        public LicenseTypeReadOnlyList(ILicenseTypeReadOnlyDal licenseTypeReadOnlyDal)
+        public LicenseTypeReadOnlyList(
+            IIdentityProvider identityProvider,
+            ILicenseTypeReadOnlyDal licenseTypeReadOnlyDal)
+            : base(identityProvider)
         {
             _licenseTypeReadOnlyDal = licenseTypeReadOnlyDal;
         }

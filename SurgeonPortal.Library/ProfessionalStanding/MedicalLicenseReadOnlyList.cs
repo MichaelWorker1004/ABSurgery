@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.ProfessionalStanding.MedicalLicenseReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.ProfessionalStanding
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.ProfessionalStanding
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class MedicalLicenseReadOnlyList : YtgReadOnlyListBase<IMedicalLicenseReadOnlyList, IMedicalLicenseReadOnly>, IMedicalLicenseReadOnlyList
+	public class MedicalLicenseReadOnlyList : YtgReadOnlyListBase<IMedicalLicenseReadOnlyList, IMedicalLicenseReadOnly, int>, IMedicalLicenseReadOnlyList
     {
         private readonly IMedicalLicenseReadOnlyDal _medicalLicenseReadOnlyDal;
 
-        public MedicalLicenseReadOnlyList(IMedicalLicenseReadOnlyDal medicalLicenseReadOnlyDal)
+        public MedicalLicenseReadOnlyList(
+            IIdentityProvider identityProvider,
+            IMedicalLicenseReadOnlyDal medicalLicenseReadOnlyDal)
+            : base(identityProvider)
         {
             _medicalLicenseReadOnlyDal = medicalLicenseReadOnlyDal;
         }

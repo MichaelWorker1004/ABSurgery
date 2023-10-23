@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.RaceReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class RaceReadOnlyList : YtgReadOnlyListBase<IRaceReadOnlyList, IRaceReadOnly>, IRaceReadOnlyList
+	public class RaceReadOnlyList : YtgReadOnlyListBase<IRaceReadOnlyList, IRaceReadOnly, int>, IRaceReadOnlyList
     {
         private readonly IRaceReadOnlyDal _raceReadOnlyDal;
 
-        public RaceReadOnlyList(IRaceReadOnlyDal raceReadOnlyDal)
+        public RaceReadOnlyList(
+            IIdentityProvider identityProvider,
+            IRaceReadOnlyDal raceReadOnlyDal)
+            : base(identityProvider)
         {
             _raceReadOnlyDal = raceReadOnlyDal;
         }

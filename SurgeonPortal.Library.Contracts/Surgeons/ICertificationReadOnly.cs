@@ -2,7 +2,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Surgeons
 {
-    public interface ICertificationReadOnly : IYtgReadOnlyBase
+    public interface ICertificationReadOnly : IYtgReadOnlyBase<int>
     {
         string Speciality { get; }
         string CertificateId { get; }

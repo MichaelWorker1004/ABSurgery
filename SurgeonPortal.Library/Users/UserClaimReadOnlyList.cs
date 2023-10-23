@@ -2,10 +2,10 @@ using Csla;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Users.UserClaimReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Users
@@ -14,11 +14,14 @@ namespace SurgeonPortal.Library.Users
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class UserClaimReadOnlyList : YtgReadOnlyListBase<IUserClaimReadOnlyList, IUserClaimReadOnly>, IUserClaimReadOnlyList
+	public class UserClaimReadOnlyList : YtgReadOnlyListBase<IUserClaimReadOnlyList, IUserClaimReadOnly, int>, IUserClaimReadOnlyList
     {
         private readonly IUserClaimReadOnlyDal _userClaimReadOnlyDal;
 
-        public UserClaimReadOnlyList(IUserClaimReadOnlyDal userClaimReadOnlyDal)
+        public UserClaimReadOnlyList(
+            IIdentityProvider identityProvider,
+            IUserClaimReadOnlyDal userClaimReadOnlyDal)
+            : base(identityProvider)
         {
             _userClaimReadOnlyDal = userClaimReadOnlyDal;
         }
