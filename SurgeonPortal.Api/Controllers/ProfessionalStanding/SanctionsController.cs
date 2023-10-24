@@ -78,8 +78,7 @@ namespace SurgeonPortal.Api.Controllers.ProfessionalStanding
         [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] ISanctionsFactory sanctionsFactory,
-            [FromBody] SanctionsModel model,
-            int userId)
+            [FromBody] SanctionsModel model)
         {
             var item = await sanctionsFactory.GetByUserIdAsync();
             AssignEditProperties(item, model);

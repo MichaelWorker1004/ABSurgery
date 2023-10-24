@@ -14,7 +14,7 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
     [Serializable]
 	[DataContract]
     public class CmeAdjustmentReadOnly : YtgReadOnlyBase<CmeAdjustmentReadOnly, int>, ICmeAdjustmentReadOnly
-    {
+    {        
 
 
         public CmeAdjustmentReadOnly(IIdentityProvider identityProvider)

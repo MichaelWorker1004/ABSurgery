@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.Examinations.GQ;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.Examinations.GQ
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.Examinations.GQ
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class AdditionalTrainingReadOnly : ReadOnlyBase<AdditionalTrainingReadOnly>, IAdditionalTrainingReadOnly
+    public class AdditionalTrainingReadOnly : YtgReadOnlyBase<AdditionalTrainingReadOnly, int>, IAdditionalTrainingReadOnly
     {
+
+
+        public AdditionalTrainingReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(TrainingId))]
         public int TrainingId => ReadProperty(TrainingIdProperty);

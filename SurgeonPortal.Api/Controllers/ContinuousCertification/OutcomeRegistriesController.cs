@@ -78,8 +78,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
         [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] IOutcomeRegistryFactory outcomeRegistryFactory,
-            [FromBody] OutcomeRegistryModel model,
-            int userId)
+            [FromBody] OutcomeRegistryModel model)
         {
             var item = await outcomeRegistryFactory.GetByUserIdAsync();
             AssignEditProperties(item, model);

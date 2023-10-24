@@ -298,7 +298,7 @@
       "required": true
     },
     {
-      "name": "LastUpdatedUserId",
+      "name": "CreatedByUserId",
       "dataType": "int",
       "required": true,
       "substitution": "$UserId"

@@ -28,7 +28,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             dto.DocumentName = Create<string>();
             dto.DocumentType = Create<string>();
             dto.InternalViewOnly = Create<bool>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.UploadedBy = Create<string>();
             dto.UploadedDateUtc = Create<System.DateTime>();
             dto.CreatedAtUtc = Create<System.DateTime>();
@@ -334,7 +334,6 @@ namespace SurgeonPortal.Library.Tests.Documents
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
                 .Excluding(m => m.DocumentType)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.UploadedBy)
                 .Excluding(m => m.UploadedDateUtc)
                 .Excluding(m => m.CreatedAtUtc)

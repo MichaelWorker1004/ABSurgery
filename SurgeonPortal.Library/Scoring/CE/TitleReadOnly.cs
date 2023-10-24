@@ -6,6 +6,8 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.CaseDetailReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring.CE
@@ -14,8 +16,15 @@ namespace SurgeonPortal.Library.Scoring.CE
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class TitleReadOnly : ReadOnlyBase<TitleReadOnly>, ITitleReadOnly
+    public class TitleReadOnly : YtgReadOnlyBase<TitleReadOnly, int>, ITitleReadOnly
     {
+
+
+        public TitleReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(Title))]
         public string Title => ReadProperty(TitleProperty);

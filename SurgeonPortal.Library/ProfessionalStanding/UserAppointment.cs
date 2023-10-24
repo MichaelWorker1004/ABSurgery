@@ -201,7 +201,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
         private void Create()
         {
             LoadProperty(UserIdProperty, _identity.GetUserId<int>());
-            LoadProperty(LastUpdatedUserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
         }
         
         [RunLocal]

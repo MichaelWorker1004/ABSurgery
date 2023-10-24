@@ -80,8 +80,7 @@ namespace SurgeonPortal.Api.Controllers.CE
         public async Task<IActionResult> EditAsync(
             [FromServices] IExamScoreFactory examScoreFactory,
             [FromBody] ExamScoreModel model,
-            int examScheduleScoreId,
-            int examinerUserId)
+            int examScheduleScoreId)
         {
             var item = await examScoreFactory.GetByIdAsync(examScheduleScoreId);
             AssignEditProperties(item, model);

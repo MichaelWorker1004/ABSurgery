@@ -245,7 +245,7 @@
       "required": true
     },
     {
-      "name": "CreatedAtUserId",
+      "name": "CreatedByUserId",
       "dataType": "int",
       "required": true,
       "substitution": "$UserId"

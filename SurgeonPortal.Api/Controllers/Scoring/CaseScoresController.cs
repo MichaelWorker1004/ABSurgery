@@ -95,8 +95,7 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         public async Task<IActionResult> EditAsync(
             [FromServices] ICaseScoreFactory caseScoreFactory,
             [FromBody] CaseScoreModel model,
-            int examScoringId,
-            int examinerUserId)
+            int examScoringId)
         {
             var item = await caseScoreFactory.GetByIdAsync(examScoringId);
             AssignEditProperties(item, model);

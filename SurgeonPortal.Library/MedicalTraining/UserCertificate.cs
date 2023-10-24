@@ -233,11 +233,11 @@ namespace SurgeonPortal.Library.MedicalTraining
         public void LoadDocument(Stream file)
         {
             var document = _documentFactory.Create();
-            document.UserId = IdentityHelper.UserId;
+            document.UserId = _identity.GetUserId<int>();
             document.DocumentTypeId = (int)DocumentTypes.Certificate;
             document.DocumentName = $"Certificate-{Enum.GetName(typeof(CertificateTypes), CertificateTypeId)}-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}";
             document.InternalViewOnly = false;
-            document.UploadedBy = IdentityHelper.UserName;
+            document.UploadedBy = _identity.GetUserName();
             document.File = file;
             LoadProperty(DocumentProperty, document);
         }

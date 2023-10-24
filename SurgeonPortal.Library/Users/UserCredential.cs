@@ -94,7 +94,7 @@ namespace SurgeonPortal.Library.Users
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _userCredentialDal.GetByUserIdAsync();
+                var dto = await _userCredentialDal.GetByUserIdAsync(_identity.GetUserId<int>());
         
                 if(dto == null)
                 {

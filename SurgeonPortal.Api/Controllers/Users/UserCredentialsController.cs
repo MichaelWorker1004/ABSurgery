@@ -34,22 +34,6 @@ namespace SurgeonPortal.Api.Controllers.Users
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserCredentialModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [HttpGet("by-userid")]
-        public async Task<ActionResult<UserCredentialModel>> GetUserCredential_GetByUserIdAsync(
-            [FromServices] IUserCredentialFactory userCredentialFactory)
-        {
-            var item = await userCredentialFactory.GetByUserIdAsync();
-        
-            return Ok(_mapper.Map<UserCredentialModel>(item));
-        } 
-
-        ///<summary>
-        /// YtgIm
-        ///<summary>
-        [MapToApiVersion("1")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400, Type = typeof(UserCredentialModel))]
         [ProducesResponseType(401)]
