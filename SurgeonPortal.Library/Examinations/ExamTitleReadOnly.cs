@@ -5,7 +5,9 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Ytg.Framework.Csla;
 using Ytg.Framework.Exceptions;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Examinations.ExamTitleReadOnlyFactory;
 
 namespace SurgeonPortal.Library.Examinations
@@ -14,12 +16,15 @@ namespace SurgeonPortal.Library.Examinations
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class ExamTitleReadOnly : ReadOnlyBase<ExamTitleReadOnly>, IExamTitleReadOnly
+    public class ExamTitleReadOnly : YtgReadOnlyBase<ExamTitleReadOnly, int>, IExamTitleReadOnly
     {
         private readonly IExamTitleReadOnlyDal _examTitleReadOnlyDal;
 
 
-        public ExamTitleReadOnly(IExamTitleReadOnlyDal examTitleReadOnlyDal)
+        public ExamTitleReadOnly(
+            IIdentityProvider identityProvider,
+            IExamTitleReadOnlyDal examTitleReadOnlyDal)
+            : base(identityProvider)
         {
             _examTitleReadOnlyDal = examTitleReadOnlyDal;
         }

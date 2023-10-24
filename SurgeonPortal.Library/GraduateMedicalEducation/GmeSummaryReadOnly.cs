@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.GraduateMedicalEducation;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.GraduateMedicalEducation
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class GmeSummaryReadOnly : ReadOnlyBase<GmeSummaryReadOnly>, IGmeSummaryReadOnly
+    public class GmeSummaryReadOnly : YtgReadOnlyBase<GmeSummaryReadOnly, int>, IGmeSummaryReadOnly
     {
+
+
+        public GmeSummaryReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(ClinicalLevel))]
         public string ClinicalLevel => ReadProperty(ClinicalLevelProperty);

@@ -5,7 +5,9 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Ytg.Framework.Csla;
 using Ytg.Framework.Exceptions;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Examiners.AgendaReadOnlyFactory;
 
 namespace SurgeonPortal.Library.Examiners
@@ -14,12 +16,15 @@ namespace SurgeonPortal.Library.Examiners
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class AgendaReadOnly : ReadOnlyBase<AgendaReadOnly>, IAgendaReadOnly
+    public class AgendaReadOnly : YtgReadOnlyBase<AgendaReadOnly, int>, IAgendaReadOnly
     {
         private readonly IAgendaReadOnlyDal _agendaReadOnlyDal;
 
 
-        public AgendaReadOnly(IAgendaReadOnlyDal agendaReadOnlyDal)
+        public AgendaReadOnly(
+            IIdentityProvider identityProvider,
+            IAgendaReadOnlyDal agendaReadOnlyDal)
+            : base(identityProvider)
         {
             _agendaReadOnlyDal = agendaReadOnlyDal;
         }

@@ -5,7 +5,9 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Ytg.Framework.Csla;
 using Ytg.Framework.Exceptions;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Examiners.ConflictReadOnlyFactory;
 
 namespace SurgeonPortal.Library.Examiners
@@ -14,12 +16,15 @@ namespace SurgeonPortal.Library.Examiners
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class ConflictReadOnly : ReadOnlyBase<ConflictReadOnly>, IConflictReadOnly
+    public class ConflictReadOnly : YtgReadOnlyBase<ConflictReadOnly, int>, IConflictReadOnly
     {
         private readonly IConflictReadOnlyDal _conflictReadOnlyDal;
 
 
-        public ConflictReadOnly(IConflictReadOnlyDal conflictReadOnlyDal)
+        public ConflictReadOnly(
+            IIdentityProvider identityProvider,
+            IConflictReadOnlyDal conflictReadOnlyDal)
+            : base(identityProvider)
         {
             _conflictReadOnlyDal = conflictReadOnlyDal;
         }
