@@ -25,4 +25,8 @@
     <ProjectReference Include="..\SurgeonPortal.Library\SurgeonPortal.Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dev\" />
+  </ItemGroup>
+
 </Project>

@@ -43,7 +43,7 @@ namespace SurgeonPortal.Library.Tests.Examiners
         [Test]
         public async Task GetByExamHeaderIdAsync_LoadsSelfCorrectly()
         {
-            var dto = CreateValidDto();
+            var dto = Create<AgendaReadOnlyDto>();
         
             var mockDal = new Mock<IAgendaReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamHeaderIdAsync(

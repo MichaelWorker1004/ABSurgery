@@ -40,7 +40,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
         [Test]
         public async Task GetByExamIdAsync_LoadsSelfCorrectly()
         {
-            var dto = CreateValidDto();
+            var dto = Create<ExamTitleReadOnlyDto>();
         
             var mockDal = new Mock<IExamTitleReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamIdAsync(expectedExamId))

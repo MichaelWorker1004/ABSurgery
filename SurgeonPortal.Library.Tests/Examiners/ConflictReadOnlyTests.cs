@@ -43,7 +43,7 @@ namespace SurgeonPortal.Library.Tests.Examiners
         [Test]
         public async Task GetByExamHeaderIdAsync_LoadsSelfCorrectly()
         {
-            var dto = CreateValidDto();
+            var dto = Create<ConflictReadOnlyDto>();
         
             var mockDal = new Mock<IConflictReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamHeaderIdAsync(

@@ -40,7 +40,7 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         [Test]
         public async Task GetByIdAsync_LoadsSelfCorrectly()
         {
-            var dto = CreateValidDto();
+            var dto = Create<ExamineeReadOnlyDto>();
         
             var mockDal = new Mock<IExamineeReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
