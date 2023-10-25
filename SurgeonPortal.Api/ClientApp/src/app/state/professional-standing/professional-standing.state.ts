@@ -80,8 +80,13 @@ export class ProfessionalStandingState {
   ) {}
 
   @Action(GetPSMedicalLicenseList)
-  getMedicalLicenseList(ctx: StateContext<IProfessionalStanding>) {
-    // const state = ctx.getState();
+  getMedicalLicenseList(
+    ctx: StateContext<IProfessionalStanding>,
+    payload: { isUpdate: boolean }
+  ) {
+    if (ctx.getState()?.medicalLiscenseList.length && !payload?.isUpdate) {
+      return of(ctx.getState()?.medicalLiscenseList);
+    }
     return this.medicalLicenseService
       .retrieveMedicalLicenseReadOnly_GetByUserId()
       .pipe(
@@ -104,7 +109,9 @@ export class ProfessionalStandingState {
     ctx: StateContext<IProfessionalStanding>,
     payload: { id: number }
   ) {
-    // const state = ctx.getState();
+    if (ctx.getState()?.selectedMedicalLicense?.licenseId === payload.id) {
+      return of(ctx.getState()?.selectedMedicalLicense);
+    }
     const licenseId = payload.id;
     return this.medicalLicenseService
       .retrieveMedicalLicense_GetById(licenseId)
@@ -228,7 +235,9 @@ export class ProfessionalStandingState {
 
   @Action(GetPSAppointmentsAndPrivilegesList)
   getPSAppointmentsAndPrivilegesList(ctx: StateContext<IProfessionalStanding>) {
-    // const state = ctx.getState();
+    if (ctx.getState()?.allAppointments.length) {
+      return of(ctx.getState()?.allAppointments);
+    }
     return this.userAppointmentService
       .retrieveUserAppointmentReadOnly_GetByUserId()
       .pipe(
@@ -378,7 +387,9 @@ export class ProfessionalStandingState {
 
   @Action(GetUserProfessionalStandingDetails)
   getUserProfessionalStandingDetails(ctx: StateContext<IProfessionalStanding>) {
-    //const state = ctx.getState();
+    if (ctx.getState()?.userProfessionalStandingDetails) {
+      return of(ctx.getState()?.userProfessionalStandingDetails);
+    }
     return this.userProfessionalStandingService
       .retrieveUserProfessionalStanding_GetByUserId()
       .pipe(
@@ -454,7 +465,9 @@ export class ProfessionalStandingState {
   getProfessionalStandingSanctionsDetails(
     ctx: StateContext<IProfessionalStanding>
   ) {
-    //const state = ctx.getState();
+    if (ctx.getState()?.sanctions) {
+      return of(ctx.getState()?.sanctions);
+    }
     return this.sanctionsService.retrieveSanctions_GetByUserId().pipe(
       tap((response) => {
         ctx.patchState({
