@@ -87,7 +87,7 @@ namespace SurgeonPortal.Library.Tests.Users
             UserCredentialDto passedDto = null;
         
             var mockDal = new Mock<IUserCredentialDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserCredentialDto>()))

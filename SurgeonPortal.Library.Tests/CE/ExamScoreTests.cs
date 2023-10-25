@@ -190,7 +190,9 @@ namespace SurgeonPortal.Library.Tests.CE
             ExamScoreDto passedDto = null;
         
             var mockDal = new Mock<IExamScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleScoreId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<ExamScoreDto>()))

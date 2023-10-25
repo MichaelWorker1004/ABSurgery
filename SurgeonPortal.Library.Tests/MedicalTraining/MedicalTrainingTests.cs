@@ -807,7 +807,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             MedicalTrainingDto passedDto = null;
         
             var mockDal = new Mock<IMedicalTrainingDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<MedicalTrainingDto>()))

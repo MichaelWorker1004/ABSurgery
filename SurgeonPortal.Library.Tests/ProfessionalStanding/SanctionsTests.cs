@@ -185,7 +185,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             SanctionsDto passedDto = null;
         
             var mockDal = new Mock<ISanctionsDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                         .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<SanctionsDto>()))
