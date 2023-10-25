@@ -32,7 +32,7 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
                 .Build();
         
             var factory = new ExamineeReadOnlyFactory();
-            var sut = await factory.GetByIdAsync(expectedExamScheduleId);
+            var sut = await factory.GetByIdAsync(It.IsAny<int>());
         
             mockDal.VerifyAll();
         }

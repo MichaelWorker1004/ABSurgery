@@ -32,7 +32,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
                 .Build();
         
             var factory = new RegistrationStatusReadOnlyFactory();
-            var sut = await factory.GetByExamCodeAsync(expectedExamCode);
+            var sut = await factory.GetByExamCodeAsync(It.IsAny<string>());
         
             mockDal.VerifyAll();
         }

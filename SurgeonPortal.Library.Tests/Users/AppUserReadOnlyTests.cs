@@ -35,8 +35,8 @@ namespace SurgeonPortal.Library.Tests.Users
         
             var factory = new AppUserReadOnlyFactory();
             var sut = await factory.GetByCredentialsAsync(
-                expectedUserName,
-                expectedPassword);
+                It.IsAny<string>(),
+                It.IsAny<string>());
         
             mockDal.VerifyAll();
         }
@@ -88,7 +88,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new AppUserReadOnlyFactory();
-            var sut = await factory.GetByTokenAsync(expectedToken);
+            var sut = await factory.GetByTokenAsync(It.IsAny<string>());
         
             mockDal.VerifyAll();
         }

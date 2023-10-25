@@ -32,7 +32,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
                 .Build();
         
             var factory = new ExamTitleReadOnlyFactory();
-            var sut = await factory.GetByExamIdAsync(expectedExamId);
+            var sut = await factory.GetByExamIdAsync(It.IsAny<int>());
         
             mockDal.VerifyAll();
         }

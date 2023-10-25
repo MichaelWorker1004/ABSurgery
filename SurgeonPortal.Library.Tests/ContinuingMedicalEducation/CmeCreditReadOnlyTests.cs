@@ -32,7 +32,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeCreditReadOnlyFactory();
-            var sut = await factory.GetByIdAsync(expectedCmeId);
+            var sut = await factory.GetByIdAsync(It.IsAny<int>());
         
             mockDal.VerifyAll();
         }

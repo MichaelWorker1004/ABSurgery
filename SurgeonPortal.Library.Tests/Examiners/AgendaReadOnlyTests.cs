@@ -35,7 +35,9 @@ namespace SurgeonPortal.Library.Tests.Examiners
                 .Build();
         
             var factory = new AgendaReadOnlyFactory();
-            var sut = await factory.GetByExamHeaderIdAsync(expectedExamHeaderId);
+            var sut = await factory.GetByExamHeaderIdAsync(
+                It.IsAny<int>(),
+                It.IsAny<int>());
         
             mockDal.VerifyAll();
         }
