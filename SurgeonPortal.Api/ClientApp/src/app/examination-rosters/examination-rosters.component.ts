@@ -146,26 +146,28 @@ export class ExaminationRostersComponent implements OnInit {
   }
 
   getCaseList() {
-    this._store
-      .dispatch(
-        new GetCaseRoster(
-          this.selectedRoster.session1Id,
-          this.selectedRoster.session2Id
+    if (this.selectedRoster?.session1Id && this.selectedRoster?.session2Id) {
+      this._store
+        .dispatch(
+          new GetCaseRoster(
+            this.selectedRoster.session1Id,
+            this.selectedRoster.session2Id
+          )
         )
-      )
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        this.cases = this._store.selectSnapshot(
-          ExamScoringSelectors.slices.caseRoster
-        ) as ICaseRosterReadOnlyModel[];
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.cases = this._store.selectSnapshot(
+            ExamScoringSelectors.slices.caseRoster
+          ) as ICaseRosterReadOnlyModel[];
 
-        if (this.cases?.length > 0) {
-          this.selectCase(this.cases[0]);
-        } else {
-          this.selectedCaseId = undefined;
-          this.selectedCaseDetails = undefined;
-        }
-      });
+          if (this.cases?.length > 0) {
+            this.selectCase(this.cases[0]);
+          } else {
+            this.selectedCaseId = undefined;
+            this.selectedCaseDetails = undefined;
+          }
+        });
+    }
   }
 
   confirmRosterSelection(event: any) {
