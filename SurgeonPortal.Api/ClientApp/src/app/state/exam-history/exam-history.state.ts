@@ -31,9 +31,9 @@ export class ExamHistoryState {
   getExamHistory(
     ctx: StateContext<IExamHistory>
   ): Observable<IExamHistoryReadOnlyModel[] | undefined> {
-    // if (ctx.getState()?.examHistory) {
-    //   return of(ctx.getState()?.examHistory);
-    // }
+    if (ctx.getState()?.examHistory.length) {
+      return of(ctx.getState()?.examHistory);
+    }
 
     return this.examinationService
       .retrieveExamHistoryReadOnly_GetByUserId()

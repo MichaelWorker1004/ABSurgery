@@ -80,6 +80,9 @@ export class DashboardState {
   @Action(GetDashboardCertificationInformation)
   getDashboardCertificationInformation(ctx: StateContext<IDashboardState>) {
     const state = ctx.getState();
+    if (state.certificates.length > 0) {
+      return state.certificates;
+    }
     this.globalDialogService.showLoading();
     return this.certificationsService
       .retrieveCertificationReadOnly_GetByUserId()
