@@ -55,7 +55,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
                 .Build();
         
             var factory = new ExamTitleReadOnlyFactory();
-            var sut = await factory.GetByExamIdAsync(Create<int>());
+            var sut = await factory.GetByExamIdAsync(It.IsAny<int>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

@@ -63,8 +63,8 @@ namespace SurgeonPortal.Library.Tests.Examiners
         
             var factory = new ConflictReadOnlyFactory();
             var sut = await factory.GetByExamHeaderIdAsync(
-                Create<int>(),
-                Create<int>());
+                It.IsAny<int>(),
+                It.IsAny<int>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

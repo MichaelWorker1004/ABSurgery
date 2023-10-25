@@ -61,8 +61,8 @@ namespace SurgeonPortal.Library.Tests.Users
         
             var factory = new AppUserReadOnlyFactory();
             var sut = await factory.GetByCredentialsAsync(
-                Create<string>(),
-                Create<string>());
+                It.IsAny<string>(),
+                It.IsAny<string>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -110,7 +110,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new AppUserReadOnlyFactory();
-            var sut = await factory.GetByTokenAsync(Create<string>());
+            var sut = await factory.GetByTokenAsync(It.IsAny<string>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

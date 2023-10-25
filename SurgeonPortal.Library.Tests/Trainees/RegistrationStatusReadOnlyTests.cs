@@ -55,7 +55,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
                 .Build();
         
             var factory = new RegistrationStatusReadOnlyFactory();
-            var sut = await factory.GetByExamCodeAsync(Create<string>());
+            var sut = await factory.GetByExamCodeAsync(It.IsAny<string>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

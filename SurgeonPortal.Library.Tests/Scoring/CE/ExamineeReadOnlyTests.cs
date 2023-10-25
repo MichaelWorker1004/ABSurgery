@@ -55,7 +55,7 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
                 .Build();
         
             var factory = new ExamineeReadOnlyFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(It.IsAny<int>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
