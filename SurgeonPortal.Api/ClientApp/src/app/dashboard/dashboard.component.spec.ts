@@ -42,6 +42,11 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should set isSurgeon', () => {
+    component.initDashboardData();
+    expect(component.isSurgeon).toBeDefined();
+  });
+
   it('should set userActionCards based on isSurgeon', () => {
     // Set isSurgeon to true and check if userActionCards is set accordingly
     component.isSurgeon = true;
