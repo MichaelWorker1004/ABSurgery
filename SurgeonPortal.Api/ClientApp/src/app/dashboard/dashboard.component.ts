@@ -74,7 +74,7 @@ export class DashboardComponent {
 
   userData: IUserProfile | undefined;
   userActionCards: IActionCardReadOnlyModel[] | undefined;
-  isSurgeon: boolean | undefined;
+  isSurgeon = false;
   userInformation!: IProgramReadOnlyModel | ICertificationReadOnlyModel[];
 
   alertsAndNotices: any | undefined;
