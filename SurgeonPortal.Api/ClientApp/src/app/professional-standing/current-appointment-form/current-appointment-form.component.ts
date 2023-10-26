@@ -61,9 +61,9 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
   @Input() clearErrors?: any;
 
   optionLists: OptionList = {
-    primaryPracticeOptions: [],
+    primaryPracticeOptions: [] as any[],
 
-    organizationTypeOptions: [],
+    organizationTypeOptions: [] as any[],
   };
 
   originalFormValues: any;
@@ -71,13 +71,15 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
 
   currentAppointmentForm = new FormGroup({
     clinicallyActive: new FormControl({ value: false, disabled: true }),
-    primaryPracticeId: new FormControl({ value: null, disabled: true }, [
-      Validators.required,
-    ]),
+    primaryPracticeId: new FormControl<number | null>(
+      { value: null, disabled: true },
+      [Validators.required]
+    ),
 
-    organizationTypeId: new FormControl({ value: null, disabled: true }, [
-      Validators.required,
-    ]),
+    organizationTypeId: new FormControl<number | null>(
+      { value: null, disabled: true },
+      [Validators.required]
+    ),
 
     explanationOfNonPrivileges: new FormControl({ value: '', disabled: false }),
 

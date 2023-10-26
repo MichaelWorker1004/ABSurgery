@@ -269,7 +269,7 @@ export class ProfessionalStandingComponent implements OnInit {
   getCurrentAppointmentDetails() {
     this._store
       .dispatch(new GetUserProfessionalStandingDetails())
-      .pipe(untilDestroyed(this))
+      ?.pipe(untilDestroyed(this))
       .subscribe(() => {
         this.currentAppointments$
           ?.pipe(untilDestroyed(this))
@@ -285,7 +285,7 @@ export class ProfessionalStandingComponent implements OnInit {
   getSanctionsAndEthicsDetails() {
     this._store
       .dispatch(new GetProfessionalStandingSanctionsDetails())
-      .pipe(untilDestroyed(this))
+      ?.pipe(untilDestroyed(this))
       .subscribe(() => {
         this.sanctionsAndEthics$
           ?.pipe(untilDestroyed(this))
