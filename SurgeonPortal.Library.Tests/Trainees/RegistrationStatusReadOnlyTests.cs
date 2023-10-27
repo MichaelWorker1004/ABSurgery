@@ -41,6 +41,7 @@ namespace SurgeonPortal.Library.Tests.Trainees
         public async Task GetByExamCodeAsync_LoadsSelfCorrectly()
         {
             var dto = Create<RegistrationStatusReadOnlyDto>();
+            var expectedExamCode = Create<string>();
         
             var mockDal = new Mock<IRegistrationStatusReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamCodeAsync(expectedExamCode))

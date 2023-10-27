@@ -45,9 +45,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             UserCertificateDto passedDto = null;
         
             var mockDal = new Mock<IUserCertificateDal>();
-            mockDal.Setup(m => m.GetByIdAsync(
-                expectedCertificateId,
-                expectedUserId))
+            mockDal.Setup(m => m.GetByIdAsync(expectedCertificateId))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<UserCertificateDto>()))

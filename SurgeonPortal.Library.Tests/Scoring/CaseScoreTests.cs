@@ -48,7 +48,9 @@ namespace SurgeonPortal.Library.Tests.Scoring
             CaseScoreDto passedDto = null;
         
             var mockDal = new Mock<ICaseScoreDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScoringId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScoringId,
+                1234))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<CaseScoreDto>()))

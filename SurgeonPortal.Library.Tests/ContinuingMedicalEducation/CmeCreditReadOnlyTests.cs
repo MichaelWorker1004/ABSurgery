@@ -41,7 +41,8 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
         public async Task GetByIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<CmeCreditReadOnlyDto>();
-        
+            var expectedCmeId = Create<int>();
+            
             var mockDal = new Mock<ICmeCreditReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedCmeId))
                 .ReturnsAsync(dto);

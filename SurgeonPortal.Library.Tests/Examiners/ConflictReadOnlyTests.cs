@@ -35,9 +35,7 @@ namespace SurgeonPortal.Library.Tests.Examiners
                 .Build();
         
             var factory = new ConflictReadOnlyFactory();
-            var sut = await factory.GetByExamHeaderIdAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>());
+            var sut = await factory.GetByExamHeaderIdAsync(It.IsAny<int>());
         
             mockDal.VerifyAll();
         }
@@ -46,7 +44,9 @@ namespace SurgeonPortal.Library.Tests.Examiners
         public async Task GetByExamHeaderIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<ConflictReadOnlyDto>();
-        
+            var expectedExamHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
+            
             var mockDal = new Mock<IConflictReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamHeaderIdAsync(
                 expectedExaminerUserId,
@@ -62,9 +62,7 @@ namespace SurgeonPortal.Library.Tests.Examiners
                 .Build();
         
             var factory = new ConflictReadOnlyFactory();
-            var sut = await factory.GetByExamHeaderIdAsync(
-                It.IsAny<int>(),
-                It.IsAny<int>());
+            var sut = await factory.GetByExamHeaderIdAsync(It.IsAny<int>());
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

@@ -44,9 +44,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             MedicalLicenseDto passedDto = null;
         
             var mockDal = new Mock<IMedicalLicenseDal>();
-            mockDal.Setup(m => m.GetByIdAsync(
-                expectedLicenseId,
-                expectedUserId))
+            mockDal.Setup(m => m.GetByIdAsync(expectedLicenseId))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<MedicalLicenseDto>()))

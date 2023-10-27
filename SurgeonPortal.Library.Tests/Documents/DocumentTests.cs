@@ -186,7 +186,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             var mockDal = new Mock<IDocumentDal>();
             mockDal.Setup(m => m.GetByIdAsync(
                 expectedId,
-                expectedUserId))
+                1234))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<DocumentDto>()))

@@ -40,7 +40,7 @@ namespace SurgeonPortal.Library.Tests.Examinations
         public async Task GetAsync_LoadsSelfCorrectly()
         {
             var dto = Create<QualifyingExamReadOnlyDto>();
-        
+            
             var mockDal = new Mock<IQualifyingExamReadOnlyDal>();
             mockDal.Setup(m => m.GetAsync())
                 .ReturnsAsync(dto);

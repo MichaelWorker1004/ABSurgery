@@ -16,6 +16,7 @@ namespace SurgeonPortal.Library.Tests.Users
         {
             var dto = Create<UserCredentialDto>();
         
+            dto.UserId = 1234;
             dto.EmailAddress = Create<string>();
             dto.Password = Create<string>();
         
@@ -103,6 +104,7 @@ namespace SurgeonPortal.Library.Tests.Users
             var factory = new UserCredentialFactory();
             var sut = await factory.GetByUserIdAsync();
             
+            sut.UserId = dto.UserId;
             sut.EmailAddress = dto.EmailAddress;
             sut.Password = dto.Password;
         
@@ -110,6 +112,7 @@ namespace SurgeonPortal.Library.Tests.Users
             // or the SaveAsync() will not be called. :)
             dto = CreateValidDto();
         
+            sut.UserId = dto.UserId;
             sut.EmailAddress = dto.EmailAddress;
             sut.Password = dto.Password;
         
@@ -123,6 +126,7 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
+                    .Excluding(m => m.UserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

@@ -45,7 +45,9 @@ namespace SurgeonPortal.Library.Tests.Users
         public async Task GetByCredentialsAsync_LoadsSelfCorrectly()
         {
             var dto = Create<AppUserReadOnlyDto>();
-        
+            var expectedUserName = Create<string>();
+            var expectedPassword = Create<string>();
+            
             var mockDal = new Mock<IAppUserReadOnlyDal>();
             mockDal.Setup(m => m.GetByCredentialsAsync(
                 expectedUserName,
@@ -97,7 +99,8 @@ namespace SurgeonPortal.Library.Tests.Users
         public async Task GetByTokenAsync_LoadsSelfCorrectly()
         {
             var dto = Create<AppUserReadOnlyDto>();
-        
+            var expectedToken = Create<string>();
+            
             var mockDal = new Mock<IAppUserReadOnlyDal>();
             mockDal.Setup(m => m.GetByTokenAsync(expectedToken))
                 .ReturnsAsync(dto);
