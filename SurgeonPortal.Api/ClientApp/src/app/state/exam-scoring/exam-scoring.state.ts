@@ -46,6 +46,7 @@ import {
   GetExaminerAgenda,
   GetExaminerConflict,
   GetExamHeaderId,
+  ClearExamineeData,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -329,7 +330,6 @@ export class ExamScoringState {
     payload: { examScheduleId: number }
   ) {
     const examScheduleId = payload.examScheduleId;
-    this.globalDialogService.showLoading();
     return this.sessionService
       .retrieveExamineeReadOnly_GetById(examScheduleId)
       .pipe(
@@ -339,7 +339,6 @@ export class ExamScoringState {
             errors: null,
             examErrors: null,
           });
-          this.globalDialogService.closeOpenDialog();
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
@@ -840,5 +839,12 @@ export class ExamScoringState {
     }
 
     return of(state.examHeaderId);
+  }
+
+  @Action(ClearExamineeData)
+  clearExamineeData(ctx: StateContext<IExamScoring>) {
+    ctx.patchState({
+      examinee: undefined,
+    });
   }
 }

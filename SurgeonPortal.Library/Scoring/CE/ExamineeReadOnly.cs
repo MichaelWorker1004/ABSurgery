@@ -91,7 +91,7 @@ namespace SurgeonPortal.Library.Scoring.CE
             LoadProperty(ExamScheduleIdProperty, dto.ExamScheduleId);
             LoadProperty(FullNameProperty, dto.FullName);
             LoadProperty(ExamDateProperty, dto.ExamDate);
-			LoadProperty(CasesProperty, await DataPortal.FetchAsync<TitleReadOnlyList>(new TitleReadOnlyListFactory.GetByIdCriteria(dto.ExamScheduleId)));
+			LoadProperty(CasesProperty, await DataPortal.FetchAsync<TitleReadOnlyList>(new TitleReadOnlyListFactory.GetByIdCriteria(dto.ExamScheduleId, dto.ExamineeUserId)));
             LoadProperty(ExamineeUserIdProperty, dto.ExamineeUserId);
             LoadProperty(ExamScoringIdProperty, dto.ExamScoringId);
 		} 

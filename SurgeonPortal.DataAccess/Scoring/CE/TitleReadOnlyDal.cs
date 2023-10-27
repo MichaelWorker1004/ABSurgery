@@ -15,7 +15,9 @@ namespace SurgeonPortal.DataAccess.Scoring.CE
 
 
 
-        public async Task<IEnumerable<TitleReadOnlyDto>> GetByIdAsync(int examScheduleId)
+        public async Task<IEnumerable<TitleReadOnlyDto>> GetByIdAsync(
+            int examScheduleId,
+            int examineeUserId)
         {
             using (var connection = CreateConnection())
             {
@@ -24,6 +26,8 @@ namespace SurgeonPortal.DataAccess.Scoring.CE
                         new
                         {
                             ExamScheduleId = examScheduleId,
+                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExamineeUserId = examineeUserId,
                         });
                         
             }
