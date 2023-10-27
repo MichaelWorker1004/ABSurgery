@@ -196,7 +196,6 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
       if (ungradedCase !== -1) {
         this.activeCase = ungradedCase;
         this.currentIncrement = ungradedCase + 1;
-        console.log('currentIncrement', this.currentIncrement);
       } else {
         this.activeCase = cases.length;
         this.currentIncrement = cases.length + 1;
