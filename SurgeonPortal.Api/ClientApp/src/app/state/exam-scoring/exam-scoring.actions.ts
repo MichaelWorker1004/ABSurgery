@@ -176,3 +176,7 @@ export class GetExamHeaderId {
 
   constructor(public isCeScoreTesting = false) {}
 }
+
+export class ClearExamineeData {
+  static readonly type = '[Exam-Scoring] Clear examinee data';
+}

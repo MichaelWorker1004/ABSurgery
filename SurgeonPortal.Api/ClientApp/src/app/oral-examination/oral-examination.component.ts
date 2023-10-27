@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import { BehaviorSubject, Observable, distinctUntilChanged, take } from 'rxjs';
 import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
 import { IExamScoreModel } from '../api/models/ce/exam-score.model';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
@@ -27,6 +27,7 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   ApplicationSelectors,
   ClearExamScoringErrors,
+  ClearExamineeData,
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
@@ -40,6 +41,7 @@ import {
   UserProfileSelectors,
 } from '../state';
 import { SetExamInProgress } from '../state/application/application.actions';
+import { s } from '@fullcalendar/core/internal-common';
 
 @UntilDestroy()
 @Component({
@@ -141,34 +143,66 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.globalDialogService.showLoading();
     this._store.dispatch(new SetExamInProgress(true));
 
     this.activatedRoute.params.subscribe((params) => {
       this.examScheduleId = params['examinationId'];
-      this._store.dispatch(new GetExaminee(params['examinationId']));
-    });
 
-    this.userId$?.pipe(untilDestroyed(this)).subscribe((userId: number) => {
-      this.userId = userId;
-    });
+      this._store
+        .dispatch(new ClearExamineeData())
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this._store
+            .dispatch(new GetExaminee(params['examinationId']))
+            .pipe(take(1))
+            .subscribe(() => {
+              this.userId$
+                ?.pipe(untilDestroyed(this))
+                .subscribe((userId: number) => {
+                  this.userId = userId;
+                });
 
-    this.getExaminationData();
+              this.getExaminationData();
+            });
+        });
+    });
   }
 
   getExaminationData() {
     this.examinee$
-      ?.pipe(untilDestroyed(this))
+      ?.pipe(untilDestroyed(this), distinctUntilChanged())
       .subscribe((examinee: IExamineeReadOnlyModel) => {
         if (examinee) {
+          this.setActiveExam(examinee.cases);
           this.candidateName = examinee?.fullName;
           this.dayTime = examinee?.examDate;
           this.cases$.next(examinee.cases);
           this.casesLength = examinee.cases?.length;
           this.examScoringId = examinee?.examScoringId;
           this.examineeUserId = examinee?.examineeUserId;
+          setTimeout(() => {
+            this.globalDialogService.closeOpenDialog();
+          }, 0);
           this.showTimer = true;
         }
       });
+  }
+
+  setActiveExam(cases: any[]) {
+    const ungradedCase = cases.findIndex((c) => !c.score);
+
+    if (ungradedCase !== 0) {
+      if (ungradedCase !== -1) {
+        this.activeCase = ungradedCase;
+        this.currentIncrement = ungradedCase + 1;
+        console.log('currentIncrement', this.currentIncrement);
+      } else {
+        this.activeCase = cases.length;
+        this.currentIncrement = cases.length + 1;
+        this.setReviewExpand();
+      }
+    }
   }
 
   handleChange(event: any) {
@@ -204,17 +238,25 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     this.currentIncrement += 1;
     this.disable = true;
 
-    if (this.currentIncrement > this.casesLength) {
-      this.scrollToElementById('expandableHeader' + this.casesLength);
-      this.ExamTimerComponent.stopTimers();
-      this.globalDialogService.showLoading();
-      this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
-      this.disable = true;
+    if (this.currentIncrement === this.casesLength) {
+      this.setReviewExpand();
     } else {
       this.scrollToElementById(
         'expandableHeader' + (this.currentIncrement - 1)
       );
     }
+  }
+
+  setReviewExpand() {
+    this._store
+      .dispatch(new GetSelectedExamScores(this.examScheduleId))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.scrollToElementById('expandableHeader' + this.casesLength);
+        this.ExamTimerComponent?.stopTimers();
+
+        this.disable = true;
+      });
   }
 
   handleSave(examCaseId: number, skipped = false) {
@@ -234,6 +276,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
         .dispatch(new CreateCaseScore(model))
         .pipe(untilDestroyed(this))
         .subscribe(() => {
+          this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
           this.handleNextCase();
         });
     } else {
