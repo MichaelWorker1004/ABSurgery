@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.16.0" />
-    <PackageReference Include="Ytg.Framework" Version="6.0.22" />
-    <PackageReference Include="Ytg.Framework.Sql" Version="6.0.19" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.18.0" />
+    <PackageReference Include="Ytg.Framework" Version="6.0.23" />
+    <PackageReference Include="Ytg.Framework.Sql" Version="6.0.20" />
   </ItemGroup>
 
   <ItemGroup>
