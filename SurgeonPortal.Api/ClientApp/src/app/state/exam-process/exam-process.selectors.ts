@@ -10,6 +10,7 @@ export class ExamProcessSelectors {
     if (state) {
       return {
         examDirectory: state.examDirectory,
+        examFees: state.examFees,
       };
     }
 

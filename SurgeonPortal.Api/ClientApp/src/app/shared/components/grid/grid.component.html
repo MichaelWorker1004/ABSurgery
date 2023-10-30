@@ -74,6 +74,9 @@
               <div *ngIf="!c.cellRenderer">
                 {{ r[c.fieldName] }}
               </div>
+              <div *ngIf="c.cellRenderer === AbsGridCellRendererType.Currency">
+                {{ r[c.field] | currency : 'USD' : true : '1.2-2' }}
+              </div>
               <div *ngIf="c.cellRenderer === AbsGridCellRendererType.YesNo">
                 {{ r[c.fieldName] ? 'Yes' : 'No' }}
               </div>

@@ -9,7 +9,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { GridComponent } from '../grid/grid.component';
 import { PAY_FEE_COLS } from './pay-fee-cols';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { GetStateList, PicklistsSelectors } from 'src/app/state/picklists';
@@ -18,6 +23,8 @@ import { IStateReadOnlyModel } from 'src/app/api';
 import { Select, Store } from '@ngxs/store';
 import { IFormFields } from '../../models/form-fields/form-fields';
 import { ButtonModule } from 'primeng/button';
+import { IUserProfile, UserProfileSelectors } from 'src/app/state';
+import { PAY_FEE_FORM_FIELDS } from './pay-fee-form-fields';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -31,6 +38,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
     InputTextModule,
     DropdownModule,
     ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './pay-fee.component.html',
   styleUrls: ['./pay-fee.component.scss'],
@@ -41,103 +50,20 @@ export class PayFeeComponent implements OnInit {
     | Observable<IStateReadOnlyModel[]>
     | undefined;
 
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+
   @Output() cancelAction: EventEmitter<any> = new EventEmitter();
   @Input() payFeeData: any;
   @Input() paymentGridData: any;
 
   states: IStateReadOnlyModel[] = [];
 
-  paymentInformationFormFields: IFormFields[] = [
-    {
-      label: 'First Name',
-      value: '',
-      required: true,
-      name: 'firstName',
-      placeholder: 'Enter your first name',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Last Name',
-      value: '',
-      required: true,
-      name: 'lastName',
-      placeholder: 'Enter your last name',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Email Address',
-      value: '',
-      required: true,
-      name: 'emailAddress',
-      placeholder: 'Enter your email address',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Phone Number',
-      value: '',
-      required: true,
-      name: 'phoneNumber',
-      placeholder: '_ _ _ - _ _ _ - _ _ _ _',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Street Address Line 1',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'streetAddressLine1',
-      placeholder: 'Enter your full address',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'Suite/Floor/Apt',
-      subLabel: '',
-      value: '',
-      required: false,
-      name: 'streetAddressLine2',
-      placeholder: 'ex. Suite 3',
-      type: 'text',
-      size: 'col-6',
-    },
-    {
-      label: 'City',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'city',
-      placeholder: 'Enter your city',
-      type: 'text',
-      size: 'col-4',
-    },
-    {
-      label: 'State',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'state',
-      placeholder: 'Choose your state',
-      type: 'select',
-      size: 'col-4',
-      options: [],
-    },
-    {
-      label: 'Zipcode',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'zipcode',
-      placeholder: 'Enter your zip code',
-      type: 'text',
-      size: 'col-4',
-    },
-  ];
-
+  paymentInformationFormFields: IFormFields[] = PAY_FEE_FORM_FIELDS;
   payFeeCols = PAY_FEE_COLS;
+
+  paymentInformationForm: FormGroup = new FormGroup({});
 
   constructor(private _store: Store) {
     this._store.dispatch(new GetStateList('500'));
@@ -145,6 +71,33 @@ export class PayFeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPicklists();
+    this.setUpFormFields();
+  }
+
+  async setUpFormFields() {
+    const promises = this.paymentInformationFormFields.map((field) => {
+      return new Promise<void>((resolve, reject) => {
+        this.paymentInformationForm.addControl(
+          field.name,
+          new FormControl(
+            { value: field.value, disabled: true },
+            field.validators
+          )
+        );
+        resolve();
+      });
+    });
+
+    await Promise.all(promises);
+    this.populateFormFields();
+  }
+
+  populateFormFields() {
+    this.user$?.subscribe((user) => {
+      for (const [key, value] of Object.entries(user)) {
+        this.paymentInformationForm.get(key)?.setValue(value);
+      }
+    });
   }
 
   setPicklists() {
