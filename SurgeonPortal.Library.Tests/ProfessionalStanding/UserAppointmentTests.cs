@@ -126,7 +126,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .Build();
         
             var factory = new UserAppointmentFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(expectedApptId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -176,15 +176,15 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.ApptId)
                 .Excluding(m => m.PracticeType)
                 .Excluding(m => m.AppointmentType)
                 .Excluding(m => m.OrganizationType)
                 .Excluding(m => m.OrganizationName)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -289,14 +289,14 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.PracticeType)
                     .Excluding(m => m.AppointmentType)
                     .Excluding(m => m.OrganizationType)
                     .Excluding(m => m.OrganizationName)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

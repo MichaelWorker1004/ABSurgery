@@ -43,9 +43,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var expectedId = Create<int>();
             
             var mockDal = new Mock<IAdvancedTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByTrainingIdAsync(expectedId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<AdvancedTrainingDto>()))
                 .ReturnsAsync(dto);
-            
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -53,14 +53,14 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new AdvancedTrainingFactory();
-            var sut = await factory.GetByTrainingIdAsync(expectedId);
+            var sut = factory.Create();
             
             sut.UserId = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
             Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
             Assert.That(sut.GetBrokenRules()[0].Description == "UserId is required", $"Expected the rule description to be 'UserId is required', have {sut.GetBrokenRules()[0].Description}");
             Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -98,9 +98,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var expectedId = Create<int>();
             
             var mockDal = new Mock<IAdvancedTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByTrainingIdAsync(expectedId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<AdvancedTrainingDto>()))
                 .ReturnsAsync(dto);
-            
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -108,14 +108,14 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new AdvancedTrainingFactory();
-            var sut = await factory.GetByTrainingIdAsync(expectedId);
+            var sut = factory.Create();
             
             sut.TrainingTypeId = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
             Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
             Assert.That(sut.GetBrokenRules()[0].Description == "TrainingTypeId is required", $"Expected the rule description to be 'TrainingTypeId is required', have {sut.GetBrokenRules()[0].Description}");
             Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -153,9 +153,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var expectedId = Create<int>();
             
             var mockDal = new Mock<IAdvancedTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByTrainingIdAsync(expectedId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<AdvancedTrainingDto>()))
                 .ReturnsAsync(dto);
-            
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -163,14 +163,14 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new AdvancedTrainingFactory();
-            var sut = await factory.GetByTrainingIdAsync(expectedId);
+            var sut = factory.Create();
             
             sut.StartDate = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
             Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
             Assert.That(sut.GetBrokenRules()[0].Description == "StartDate is required", $"Expected the rule description to be 'StartDate is required', have {sut.GetBrokenRules()[0].Description}");
             Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -208,9 +208,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var expectedId = Create<int>();
             
             var mockDal = new Mock<IAdvancedTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByTrainingIdAsync(expectedId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<AdvancedTrainingDto>()))
                 .ReturnsAsync(dto);
-            
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -218,14 +218,14 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new AdvancedTrainingFactory();
-            var sut = await factory.GetByTrainingIdAsync(expectedId);
+            var sut = factory.Create();
             
             sut.EndDate = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
             Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
             Assert.That(sut.GetBrokenRules()[0].Description == "EndDate is required", $"Expected the rule description to be 'EndDate is required', have {sut.GetBrokenRules()[0].Description}");
             Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -300,7 +300,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new AdvancedTrainingFactory();
-            var sut = await factory.GetByTrainingIdAsync(Create<int>());
+            var sut = await factory.GetByTrainingIdAsync(expectedId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -347,10 +347,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
                 .Excluding(m => m.TrainingType)
                 .Excluding(m => m.InstitutionName)
@@ -359,6 +355,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.CreatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -457,17 +454,14 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.TrainingType)
-                    .Excluding(m => m.InstitutionName)
-                    .Excluding(m => m.City)
-                    .Excluding(m => m.State)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.TrainingType)
+                .Excluding(m => m.InstitutionName)
+                .Excluding(m => m.City)
+                .Excluding(m => m.State)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

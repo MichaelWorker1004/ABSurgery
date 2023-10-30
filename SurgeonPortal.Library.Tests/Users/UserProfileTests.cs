@@ -63,7 +63,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -73,14 +73,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.FirstName = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "FirstName is required", $"Expected the rule description to be 'FirstName is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -118,7 +118,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -128,14 +128,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.LastName = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "LastName is required", $"Expected the rule description to be 'LastName is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -173,7 +173,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -183,14 +183,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.DisplayName = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "DisplayName is required", $"Expected the rule description to be 'DisplayName is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -228,7 +228,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -238,14 +238,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.OfficePhoneNumber = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "OfficePhoneNumber is required", $"Expected the rule description to be 'OfficePhoneNumber is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -283,7 +283,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -293,14 +293,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.BirthCity = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "BirthCity is required", $"Expected the rule description to be 'BirthCity is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -338,7 +338,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -348,14 +348,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.BirthCountry = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "BirthCountry is required", $"Expected the rule description to be 'BirthCountry is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -393,7 +393,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -403,14 +403,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.CountryCitizenship = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "CountryCitizenship is required", $"Expected the rule description to be 'CountryCitizenship is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -448,7 +448,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -458,14 +458,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.GenderId = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "GenderId is required", $"Expected the rule description to be 'GenderId is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -503,7 +503,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -513,14 +513,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.BirthDate = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "BirthDate is required", $"Expected the rule description to be 'BirthDate is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -558,7 +558,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -568,14 +568,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.Race = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "Race is required", $"Expected the rule description to be 'Race is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -613,7 +613,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -623,14 +623,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.Ethnicity = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "Ethnicity is required", $"Expected the rule description to be 'Ethnicity is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -668,7 +668,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -678,14 +678,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.FirstLanguageId = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "FirstLanguageId is required", $"Expected the rule description to be 'FirstLanguageId is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -723,7 +723,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -733,14 +733,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.BestLanguageId = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "BestLanguageId is required", $"Expected the rule description to be 'BestLanguageId is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -778,7 +778,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -788,14 +788,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.ReceiveComms = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "ReceiveComms is required", $"Expected the rule description to be 'ReceiveComms is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -833,7 +833,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -843,14 +843,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.UserConfirmed = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "UserConfirmed is required", $"Expected the rule description to be 'UserConfirmed is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -888,7 +888,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -898,14 +898,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.Street1 = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "Street1 is required", $"Expected the rule description to be 'Street1 is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -943,7 +943,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -953,14 +953,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.City = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "City is required", $"Expected the rule description to be 'City is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -998,7 +998,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -1008,14 +1008,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.ZipCode = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "ZipCode is required", $"Expected the rule description to be 'ZipCode is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -1053,7 +1053,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var expectedUserId = Create<int>();
             
                 var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-                mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfileDto>()))
                     .ReturnsAsync(dto);
             
                 UseMockServiceProvider()
@@ -1063,14 +1063,14 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Build();
             
                 var factory = new UserProfileFactory();
-                var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = factory.Create();
                 
                 sut.Country = default;
             
-                Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
                 //Ensure that the save fails...
-                var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(() => sut.SaveAsync());
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
                 Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
                 Assert.That(sut.GetBrokenRules()[0].Description == "Country is required", $"Expected the rule description to be 'Country is required', have {sut.GetBrokenRules()[0].Description}");
                 Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
@@ -1145,7 +1145,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new UserProfileFactory();
-            var sut = await factory.GetByUserIdAsync(Create<int>());
+            var sut = await factory.GetByUserIdAsync(expectedUserId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -1213,12 +1213,12 @@ namespace SurgeonPortal.Library.Tests.Users
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.UserProfileId)
+                .Excluding(m => m.CertificationStatus)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
-                .Excluding(m => m.UserProfileId)
-                .Excluding(m => m.CertificationStatus)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -1359,11 +1359,11 @@ namespace SurgeonPortal.Library.Tests.Users
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.CertificationStatus)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.CertificationStatus)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

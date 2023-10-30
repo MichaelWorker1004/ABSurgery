@@ -67,7 +67,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Build();
         
             var factory = new UserTokenFactory();
-            var sut = await factory.GetActiveAsync(Create<string>());
+            var sut = await factory.GetActiveAsync(expectedToken);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

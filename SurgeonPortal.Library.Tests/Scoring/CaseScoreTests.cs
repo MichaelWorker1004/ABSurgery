@@ -135,7 +135,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .Build();
         
             var factory = new CaseScoreFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(expectedExamScoringId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -187,10 +187,6 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.ExamScoringId)
                 .Excluding(m => m.ExamineeFirstName)
                 .Excluding(m => m.ExamineeMiddleName)
@@ -311,10 +307,6 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.ExamScoringId)
                     .Excluding(m => m.ExamineeFirstName)
                     .Excluding(m => m.ExamineeMiddleName)

@@ -123,7 +123,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .Build();
         
             var factory = new MedicalLicenseFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(expectedLicenseId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -170,13 +170,13 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.LicenseId)
+                .Excluding(m => m.IssuingState)
+                .Excluding(m => m.LicenseType)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
-                .Excluding(m => m.LicenseId)
-                .Excluding(m => m.IssuingState)
-                .Excluding(m => m.LicenseType)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -275,12 +275,12 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.IssuingState)
+                .Excluding(m => m.LicenseType)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.IssuingState)
-                    .Excluding(m => m.LicenseType)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

@@ -32,7 +32,7 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
                 .Build();
         
             var factory = new ExamineeReadOnlyFactory();
-            var sut = await factory.GetByIdAsync(It.IsAny<int>());
+            var sut = await factory.GetByIdAsync(expectedExamScheduleId);
         
             mockDal.VerifyAll();
         }
@@ -56,7 +56,7 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
                 .Build();
         
             var factory = new ExamineeReadOnlyFactory();
-            var sut = await factory.GetByIdAsync(It.IsAny<int>());
+            var sut = await factory.GetByIdAsync(expectedExamScheduleId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

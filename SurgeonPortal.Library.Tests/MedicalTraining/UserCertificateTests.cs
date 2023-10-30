@@ -121,7 +121,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new UserCertificateFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(expectedCertificateId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -168,15 +168,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.CertificateId)
                 .Excluding(m => m.CertificateType)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.CreatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

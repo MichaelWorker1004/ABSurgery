@@ -22,8 +22,6 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var expectedLoginUserAgent = Create<string>();
             var expectedLoginSuccess = Create<bool>();
             var expectedLoginFailureReason = Create<string>();
-            var expectedCreatedByUserId = Create<int>();
-            var expectedLastUpdatedByUserId = Create<int>();
             var expectedParams = 
                 new
                 {
@@ -34,8 +32,8 @@ namespace SurgeonPortal.DataAccess.Tests.Users
                     LoginUserAgent = expectedLoginUserAgent,
                     LoginSuccess = expectedLoginSuccess,
                     LoginFailureReason = expectedLoginFailureReason,
-                    CreatedByUserId = expectedCreatedByUserId,
-                    LastUpdatedByUserId = expectedLastUpdatedByUserId,
+                    CreatedByUserId = expectedUserId,
+                    LastUpdatedByUserId = expectedUserId,
                 };
         
             var sqlManager = new MockSqlConnectionManager();

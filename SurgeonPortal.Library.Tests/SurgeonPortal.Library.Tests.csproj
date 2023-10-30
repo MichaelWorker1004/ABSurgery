@@ -11,12 +11,12 @@
 	<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
 	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
 	<PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-	<PackageReference Include="Ytg.Analyzers" Version="1.0.14">
+	<PackageReference Include="Ytg.Analyzers" Version="1.0.17">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Ytg.Framework" Version="6.0.23" />
-	<PackageReference Include="Ytg.UnitTest" Version="6.0.2" />
+	<PackageReference Include="Ytg.UnitTest" Version="6.0.3" />
   </ItemGroup>
 
   <ItemGroup>

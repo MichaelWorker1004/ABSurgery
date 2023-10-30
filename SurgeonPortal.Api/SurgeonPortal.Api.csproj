@@ -26,9 +26,9 @@
     <PackageReference Include="Csla" Version="5.5.3" />
     <PackageReference Include="Csla.AspNetCore" Version="5.5.3" />
 	<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.14" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.24" />
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
-	<PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.14" />
+	<PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.24" />
 	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 	<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
@@ -37,7 +37,7 @@
 	<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
-	<PackageReference Include="Ytg.AspNetCore" Version="6.0.3" />
+	<PackageReference Include="Ytg.AspNetCore" Version="6.0.5" />
 	<PackageReference Include="Ytg.Framework" Version="6.0.23" />
 	<PackageReference Include="Ytg.Framework.Sql" Version="6.0.20" />
   </ItemGroup>

@@ -32,7 +32,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeCreditReadOnlyFactory();
-            var sut = await factory.GetByIdAsync(It.IsAny<int>());
+            var sut = await factory.GetByIdAsync(expectedCmeId);
         
             mockDal.VerifyAll();
         }
@@ -56,7 +56,7 @@ namespace SurgeonPortal.Library.Tests.ContinuingMedicalEducation
                 .Build();
         
             var factory = new CmeCreditReadOnlyFactory();
-            var sut = await factory.GetByIdAsync(It.IsAny<int>());
+            var sut = await factory.GetByIdAsync(expectedCmeId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

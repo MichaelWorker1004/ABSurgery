@@ -77,7 +77,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
                 .Build();
         
             var factory = new AdditionalTrainingFactory();
-            var sut = await factory.GetByTrainingIdAsync(Create<int>());
+            var sut = await factory.GetByTrainingIdAsync(expectedTrainingId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -124,13 +124,13 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.TrainingId)
+                .Excluding(m => m.InstitutionName)
+                .Excluding(m => m.State)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
-                .Excluding(m => m.TrainingId)
-                .Excluding(m => m.InstitutionName)
-                .Excluding(m => m.State)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -229,12 +229,12 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.InstitutionName)
+                .Excluding(m => m.State)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.InstitutionName)
-                    .Excluding(m => m.State)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

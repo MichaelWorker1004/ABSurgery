@@ -82,7 +82,7 @@ namespace SurgeonPortal.Library.Tests.CE
                 .Build();
         
             var factory = new ExamScoreFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(expectedExamScheduleScoreId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -128,10 +128,6 @@ namespace SurgeonPortal.Library.Tests.CE
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.ExamScheduleScoreId)
                 .Excluding(m => m.ExaminerScore)
                 .Excluding(m => m.Submitted)
@@ -239,17 +235,13 @@ namespace SurgeonPortal.Library.Tests.CE
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.ExamScheduleId)
-                    .Excluding(m => m.Submitted)
-                    .Excluding(m => m.SubmittedDateTimeUTC)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.ExamScheduleId)
+                .Excluding(m => m.Submitted)
+                .Excluding(m => m.SubmittedDateTimeUTC)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.LastUpdatedAtUtc)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

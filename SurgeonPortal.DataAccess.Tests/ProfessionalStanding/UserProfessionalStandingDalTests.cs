@@ -68,7 +68,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                 new
                 {
                     UserId = expectedDto.UserId,
-                    PrimaryPracticeId = expectedDto.PrimaryPracticeId,
+                    PrimaryPracticeID = expectedDto.PrimaryPracticeId,
                     OrganizationTypeId = expectedDto.OrganizationTypeId,
                     ExplanationOfNonPrivileges = expectedDto.ExplanationOfNonPrivileges,
                     ExplanationOfNonClinicalActivities = expectedDto.ExplanationOfNonClinicalActivities,
@@ -115,7 +115,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                 new
                 {
                     UserId = expectedDto.UserId,
-                    PrimaryPracticeId = expectedDto.PrimaryPracticeId,
+                    PrimaryPracticeID = expectedDto.PrimaryPracticeId,
                     OrganizationTypeId = expectedDto.OrganizationTypeId,
                     ExplanationOfNonPrivileges = expectedDto.ExplanationOfNonPrivileges,
                     ExplanationOfNonClinicalActivities = expectedDto.ExplanationOfNonClinicalActivities,

@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,
-                    ExamDate = expectedExamDate,
+                    ExamDate = expectedExamDate.ToString("yyyy-MM-dd"),
                 };
         
             var sqlManager = new MockSqlConnectionManager();
