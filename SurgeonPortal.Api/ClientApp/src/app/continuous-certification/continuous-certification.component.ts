@@ -17,6 +17,13 @@ import { GetStateList } from '../state/picklists';
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
 import { LegendComponent } from '../shared/components/legend/legend.component';
+import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
+import {
+  UserProfileSelectors,
+  IUserProfile,
+  ExamProcessSelectors,
+  GetExamFees,
+} from '../state';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -46,6 +53,14 @@ export class ContinuousCertificationComponent implements OnInit {
     | Observable<IFeatureFlags>
     | undefined;
 
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+
+  @Select(ExamProcessSelectors.slices.examFees) examFees$:
+    | Observable<IExamFeeReadOnlyModel[]>
+    | undefined;
+
   userData!: any;
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
@@ -54,14 +69,6 @@ export class ContinuousCertificationComponent implements OnInit {
   payFeeModal = false;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
-
-  paymentGridData = [
-    {
-      paymentDate: new Date('09/18/2015'),
-      paymentAmount: '$100',
-      balanceRemaining: '$285.00',
-    },
-  ];
 
   legendItems = [
     {
@@ -97,6 +104,7 @@ export class ContinuousCertificationComponent implements OnInit {
 
   constructor(private _store: Store) {
     this._store.dispatch(new GetStateList('500'));
+    this._store.dispatch(new GetExamFees());
     this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.featureFlags = featureFlags;
@@ -105,24 +113,28 @@ export class ContinuousCertificationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserData();
     this.getContinuousCertificationData();
     this.getPayFeeData();
   }
 
-  getUserData() {
-    this.userData = {
-      name: 'John Doe, M.D',
-    };
-  }
-
   getPayFeeData() {
-    this.payFeeData = {
-      totalAmountOfFee: '$285.00',
-      totalAmountPaidDate: new Date('11/5/2022'),
-      totalAmountPaid: '$0.00',
-      remainingBalance: '$285.00',
-    };
+    this.examFees$?.subscribe((examFees) => {
+      const payFeeData = {
+        totalAmountOfFee: 0,
+        totalAmountPaidDate: new Date(),
+        totalAmountPaid: 0,
+        remainingBalance: 0,
+      };
+
+      examFees.forEach((examFee: any) => {
+        console.log(examFee);
+        payFeeData.totalAmountOfFee += examFee.subTotal;
+        payFeeData.totalAmountPaid += examFee.paidTotal;
+        payFeeData.remainingBalance += examFee.balanceDue;
+      });
+
+      this.payFeeData = payFeeData;
+    });
   }
 
   getContinuousCertificationData() {

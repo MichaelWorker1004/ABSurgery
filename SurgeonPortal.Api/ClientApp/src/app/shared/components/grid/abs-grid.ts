@@ -15,6 +15,23 @@ const AbsGrid = {
     return colDef;
   },
 
+  setCurrencyDisplayCol(
+    headerName: string,
+    fieldName: string,
+    sortable?: boolean,
+    width?: number
+  ) {
+    const colDef = {
+      headerName: headerName,
+      field: fieldName,
+      cellRenderer: 'currency',
+      sortable,
+      width,
+    };
+
+    return colDef;
+  },
+
   setYesNoDisplayCol(
     headerName: string,
     fieldName: string,

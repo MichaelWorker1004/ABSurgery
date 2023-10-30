@@ -3540,29 +3540,29 @@
   "\\SurgeonPortal.DataAccess.Tests\\ProfessionalStanding\\GetClinicallyActiveCommandDalTests.cs": {
     "lastGeneratedHash": "060D3BBEB5E2CF71824C6D8AF335D62C"
   },
-  "\\SurgeonPortal.Library.Contracts\\Users\\IPasswordResetCommand.cs": {
-    "lastGeneratedHash": "FDA639BB3DC3E931439A1F4DD22CE811"
+  "\\SurgeonPortal.Library.Contracts\\Billing\\IExamFeeReadOnly.cs": {
+    "lastGeneratedHash": "C7942FE93EC8A5183880A22CF3A112A2"
   },
-  "\\SurgeonPortal.Models\\Users\\PasswordResetCommandModel.cs": {
-    "lastGeneratedHash": "631EF9B5C9FE356205D474CBD1E2E583"
+  "\\SurgeonPortal.Library.Contracts\\Billing\\IExamFeeReadOnlyList.cs": {
+    "lastGeneratedHash": "D281DBE27349A283DBABF8CE3694E2FE"
   },
-  "\\SurgeonPortal.Library\\Users\\PasswordResetCommand.cs": {
-    "lastGeneratedHash": "7991B064B2F8CC797E3C8C3BB8C8581C"
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\billing\\exam-fee-read-only.model.ts": {
+    "lastGeneratedHash": "3257E8770E1D4501565F43D2C1060D6B"
   },
-  "\\SurgeonPortal.DataAccess\\Users\\PasswordResetCommandDal.cs": {
-    "lastGeneratedHash": "EC302BB2E49CB7166686C71E9C97EF2D"
+  "\\SurgeonPortal.DataAccess.Contracts\\Billing\\ExamFeeReadOnlyDto.cs": {
+    "lastGeneratedHash": "DA15D4A30FC766C452975802D31F85BA"
   },
-  "\\SurgeonPortal.Library\\Users\\PasswordResetCommandFactory.cs": {
-    "lastGeneratedHash": "F48CEEC5CB18CB2B390232D2368CB0B1"
+  "\\SurgeonPortal.Models\\Billing\\ExamFeeReadOnlyModel.cs": {
+    "lastGeneratedHash": "75551EEB492DAC5B8A8F5526D8AF55C9"
   },
-  "\\SurgeonPortal.DataAccess.Contracts\\Users\\IPasswordResetCommandDal.cs": {
-    "lastGeneratedHash": "3EB20B6C36ED6BCC8F43A2200784B744"
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\billing\\exam-fee.service.ts": {
+    "lastGeneratedHash": "7873BEB56AFF3B56CBDC4B57A2F679B2"
   },
-  "\\SurgeonPortal.Library.Contracts\\Users\\IPasswordResetCommandFactory.cs": {
-    "lastGeneratedHash": "AB65C44A2DADA8D4B9C3B1646AF73BB3"
+  "\\SurgeonPortal.Api\\Controllers\\Billing\\ExamFeeController.cs": {
+    "lastGeneratedHash": "3A38F876F6E6224F04A87DE6DB76966B"
   },
-  "\\SurgeonPortal.Library.Tests\\Users\\PasswordResetCommandTests.cs": {
-    "lastGeneratedHash": "4A0EBDF3A4D9A49308AE8FEB0621B7DB"
+  "\\SurgeonPortal.Library\\Billing\\ExamFeeReadOnly.cs": {
+    "lastGeneratedHash": "C42A17D0DB04FE97F057CAEF8F03B63A"
   },
   "\\SurgeonPortal.DataAccess.Tests\\Users\\PasswordResetCommandDalTests.cs": {
     "lastGeneratedHash": "247E474AD52EE1F837750F5934E23BD9"

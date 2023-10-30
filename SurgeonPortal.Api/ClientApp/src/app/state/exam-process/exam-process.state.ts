@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { IFormErrors } from '../../shared/common';
-import { GetExamDirectory } from './exam-process.actions';
+import { GetExamDirectory, GetExamFees } from './exam-process.actions';
 import { IExamOverviewReadOnlyModel } from 'src/app/api/models/examinations/exam-overview-read-only.model';
 import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { IExamFeeReadOnlyModel } from 'src/app/api/models/billing/exam-fee-read-only.model';
+import { ExamFeeService } from 'src/app/api/services/billing/exam-fee.service';
 
 export interface IExamProcess {
   examDirectory: IExamOverviewReadOnlyModel[];
+  examFees: IExamFeeReadOnlyModel[];
   errors?: IFormErrors | null;
 }
 
@@ -22,6 +24,7 @@ export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
   name: EXAM_PROCESS_STATE_TOKEN,
   defaults: {
     examDirectory: [],
+    examFees: [],
     errors: null,
   },
 })
@@ -29,6 +32,7 @@ export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
 export class ExamProcessState {
   constructor(
     private examinationsService: ExaminationsService,
+    private examFeeService: ExamFeeService,
     private globalDialogService: GlobalDialogService
   ) {}
 
@@ -46,6 +50,32 @@ export class ExamProcessState {
       tap((examDirectory) => {
         ctx.patchState({
           examDirectory,
+        });
+        this.globalDialogService.closeOpenDialog();
+      }),
+      catchError((error) => {
+        console.error('------- In Exam Process', error);
+        console.error(error);
+        this.globalDialogService.closeOpenDialog();
+        return of(error);
+      })
+    );
+  }
+
+  @Action(GetExamFees)
+  getExamFees(
+    ctx: StateContext<IExamProcess>
+  ): Observable<IExamFeeReadOnlyModel[]> {
+    this.globalDialogService.showLoading();
+    const state = ctx.getState();
+    if (state && state.examFees?.length > 0) {
+      this.globalDialogService.closeOpenDialog();
+      return of(ctx.getState().examFees);
+    }
+    return this.examFeeService.retrieveExamFeeReadOnly_GetByUserId().pipe(
+      tap((examFees) => {
+        ctx.patchState({
+          examFees,
         });
         this.globalDialogService.closeOpenDialog();
       }),
