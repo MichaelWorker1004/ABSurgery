@@ -1,5 +1,5 @@
 <header>
-  <h1>Personal Profile</h1>
+  <h1>{{ 'PROFILE.TITLE' | translate }}</h1>
 </header>
 <ng-container *ngIf="user">
   <section>
@@ -14,11 +14,7 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-          erat, egestas sit amet tortor at, condimentum tempor erat.
-        </p>
+        <p>{{ 'PROFILE.SUBTITLE' | translate }}</p>
         <div class="mb-3">
           <abs-form-errors
             *ngIf="errors$ | async as error"
@@ -558,7 +554,7 @@
             </div>
           </div>
 
-          <div class="col-12">
+          <div class="col-12" *ngIf="canEditProfile">
             <div class="flex justify-content-end" *ngIf="!isEdit">
               <p-button [style]="{ width: '200px' }" (onClick)="toggleEdit()">
                 Edit

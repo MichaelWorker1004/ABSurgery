@@ -1,5 +1,9 @@
-<h1>{{ (examTitle$ | async)?.examName || 'Certifying Examation' }}</h1>
-<div class="text-xl">Please read carefully the instructions below.</div>
+<h1>
+  {{ (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM' | translate }}
+</h1>
+<div class="text-xl">
+  {{ 'EXAMSCORING.EXAMINATION.INSTRUCTIONS' | translate }}
+</div>
 <abs-exam-timer
   *ngIf="showTimer"
   [totalIncrements]="casesLength"
@@ -7,19 +11,30 @@
   incrementLabel="Case"
 ></abs-exam-timer>
 <sl-card class="w-11 mt-5 no-highlight">
-  <h3 class="mt-0 mb-2" header>Examination</h3>
+  <h3 class="mt-0 mb-2" header>
+    {{ 'EXAMSCORING.EXAMINATION.TITLE' | translate }}
+  </h3>
   <hr />
   <div class="grid">
-    <p class="col-12">
-      Begin the oral examination process by first selecting the desired exam day
-      from the first dropdown. You can then select the specific candidate times
-      lot from the next dropdown. Finally, confirm your examiner user ID and you
-      may begin the exam process.
+    <p
+      class="col-12"
+      *ngIf="('EXAMSCORING.EXAMINATION.SUBTITLE' | translate) !== ''"
+    >
+      {{ 'EXAMSCORING.EXAMINATION.SUBTITLE' | translate }}
     </p>
 
     <div class="flex gap-5 view-header col-12">
-      <div><strong>Candidate Name:</strong> {{ candidateName }}</div>
-      <div><strong>Day/Time:</strong> {{ dayTime }}</div>
+      <div
+        [innerHTML]="
+          'EXAMSCORING.EXAMINATION.CANDIDATE'
+            | translate : { name: candidateName }
+        "
+      ></div>
+      <div
+        [innerHTML]="
+          'EXAMSCORING.EXAMINATION.TIME' | translate : { time: dayTime }
+        "
+      ></div>
     </div>
 
     <abs-expandable
@@ -33,7 +48,7 @@
     >
       <div class="grid">
         <div class="col-12" *ngFor="let section of case.sections">
-          <p class="font-bold m-0">{{ section.heading }}:</p>
+          <p class="font-bold m-0">{{ section.heading }}</p>
           <div class="section-details" [innerHTML]="section?.content"></div>
 
           <div *ngIf="section.comments || section.editComment">
@@ -85,6 +100,13 @@
       [checked]="casesLength === activeCase"
       class="w-full"
     >
+      <div id="exam-score-errors">
+        <abs-form-errors
+          *ngIf="errors"
+          [errors]="errors"
+          [clearErrors]="clearErrors"
+        ></abs-form-errors>
+      </div>
       <div class="grid w-full">
         <ng-template
           ngFor

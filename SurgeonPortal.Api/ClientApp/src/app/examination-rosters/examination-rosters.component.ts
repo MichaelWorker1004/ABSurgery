@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -20,6 +21,7 @@ import {
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import {
+  ApplicationSelectors,
   CreateCaseComment,
   CreateCaseFeedback,
   DeleteCaseComment,
@@ -27,7 +29,9 @@ import {
   ExamScoringSelectors,
   GetCaseDetailsAndFeedback,
   GetCaseRoster,
+  GetExamHeaderId,
   GetExamTitle,
+  IFeatureFlags,
   UpdateCaseComment,
   UpdateCaseFeedback,
   UserProfileSelectors,
@@ -50,6 +54,7 @@ interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   imports: [
     FormsModule,
     CommonModule,
+    TranslateModule,
     DropdownModule,
     InputTextareaModule,
     ButtonModule,
@@ -66,6 +71,10 @@ export class ExaminationRostersComponent implements OnInit {
 
   @Select(UserProfileSelectors.userId) user$: Observable<number> | undefined;
 
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
+
   @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
@@ -73,9 +82,12 @@ export class ExaminationRostersComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.selectedCaseFeedback)
   selectedCaseFeedback$: Observable<ICaseFeedbackModel> | undefined;
 
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
   userId!: number;
 
-  examHeaderId = 491;
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
   rosters: any = [];
@@ -97,12 +109,20 @@ export class ExaminationRostersComponent implements OnInit {
     private _store: Store,
     private _globalDialogService: GlobalDialogService
   ) {
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      if (featureFlags?.ceScoreTesting) {
+        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
+      }
+    });
+
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+    });
   }
 
   ngOnInit(): void {
     this.initPicklistValues();
-    this.user$?.subscribe((userId) => {
+    this.user$?.pipe(untilDestroyed(this)).subscribe((userId) => {
       this.userId = userId;
     });
   }
@@ -126,26 +146,28 @@ export class ExaminationRostersComponent implements OnInit {
   }
 
   getCaseList() {
-    this._store
-      .dispatch(
-        new GetCaseRoster(
-          this.selectedRoster.session1Id,
-          this.selectedRoster.session2Id
+    if (this.selectedRoster?.session1Id && this.selectedRoster?.session2Id) {
+      this._store
+        .dispatch(
+          new GetCaseRoster(
+            this.selectedRoster.session1Id,
+            this.selectedRoster.session2Id
+          )
         )
-      )
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        this.cases = this._store.selectSnapshot(
-          ExamScoringSelectors.slices.caseRoster
-        ) as ICaseRosterReadOnlyModel[];
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.cases = this._store.selectSnapshot(
+            ExamScoringSelectors.slices.caseRoster
+          ) as ICaseRosterReadOnlyModel[];
 
-        if (this.cases?.length > 0) {
-          this.selectCase(this.cases[0]);
-        } else {
-          this.selectedCaseId = undefined;
-          this.selectedCaseDetails = undefined;
-        }
-      });
+          if (this.cases?.length > 0) {
+            this.selectCase(this.cases[0]);
+          } else {
+            this.selectedCaseId = undefined;
+            this.selectedCaseDetails = undefined;
+          }
+        });
+    }
   }
 
   confirmRosterSelection(event: any) {
@@ -187,10 +209,12 @@ export class ExaminationRostersComponent implements OnInit {
         .then((result) => {
           if (result) {
             this.editActive = false;
+            this.selectedCaseDetails = undefined;
             this.selectCase(caseData);
           }
         });
     } else {
+      this.selectedCaseDetails = undefined;
       this.selectCase(caseData);
     }
   }

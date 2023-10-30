@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "CE\\GetExamCasesScoredCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CasesScored",
+      "dataType": "bool",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s CE\\GetExamCasesScoredCommand -sp [dbo].[get_cases_scored] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-09-27T17:26:11.3077613Z"
+  },
+  "version": 1
+}

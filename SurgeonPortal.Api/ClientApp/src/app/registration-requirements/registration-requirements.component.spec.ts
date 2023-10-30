@@ -5,6 +5,7 @@ import { NgxsModule } from '@ngxs/store';
 import { surgeonPortalState } from '../state/surgeon-portal.state';
 
 import { RegistrationRequirementsComponent } from './registration-requirements.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RegistrationRequirementsComponent', () => {
   let component: RegistrationRequirementsComponent;
@@ -17,6 +18,7 @@ describe('RegistrationRequirementsComponent', () => {
         HttpClientTestingModule,
         RegistrationRequirementsComponent,
         NgxsModule.forRoot(surgeonPortalState),
+        TranslateModule.forRoot(),
       ],
     }).compileComponents();
 

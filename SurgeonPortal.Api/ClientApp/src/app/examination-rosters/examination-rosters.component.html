@@ -1,11 +1,17 @@
 <header>
-  <h1>{{ (examTitle$ | async)?.examName || 'Certifying Examation' }}</h1>
+  <h1>
+    {{
+      (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM' | translate
+    }}
+  </h1>
 </header>
 <ng-container>
   <section>
     <sl-card class="col-12">
       <div slot="header">
-        <span class="text-3xl">Examination Rosters</span>
+        <span class="text-3xl">{{
+          'EXAMSCORING.EXAMROSTERS.TITLE' | translate
+        }}</span>
       </div>
       <div class="grid">
         <div class="col-12 lg:col-4 md:col-5">
@@ -127,12 +133,12 @@
             </div>
 
             <div class="col-12 case-feedback-container" id="case-feedback">
-              <label for="case-feedback-comment"
-                >Case Feedback for Exam Development</label
-              >
-              <small class="text-muted block"
-                >Please provide any feedback for the exam writers here.</small
-              >
+              <label for="case-feedback-comment">{{
+                'EXAMSCORING.EXAMROSTERS.CASE_FEEDBACK_TITLE' | translate
+              }}</label>
+              <small class="text-muted block">{{
+                'EXAMSCORING.EXAMROSTERS.CASE_FEEDBACK_SUBTITLE' | translate
+              }}</small>
               <div
                 *ngIf="
                   selectedCaseDetails.feedback ||

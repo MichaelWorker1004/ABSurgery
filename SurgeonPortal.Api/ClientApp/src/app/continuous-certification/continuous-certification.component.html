@@ -3,20 +3,7 @@
     <h1>Continuous Certification</h1>
     <h4 class="thin">For {{ user.displayName }}</h4>
   </div>
-  <div class="legend flex flex-wrap">
-    <div class="l flex align-items-center completed">
-      <div class="i"></div>
-      Completed
-    </div>
-    <div class="l flex align-items-center in-progress">
-      <div class="i"></div>
-      In Progress
-    </div>
-    <div class="l flex align-items-center contingent">
-      <div class="i"></div>
-      Contingent
-    </div>
-  </div>
+  <abs-legend [legendItems]="legendItems"></abs-legend>
 </div>
 
 <div class="grid">
@@ -24,7 +11,17 @@
     class="col-12 md:col-6 lg:col-4"
     *ngFor="let actionCard of continousCertificationData"
     [actionCard]="actionCard"
+    [title]="actionCard.title"
+    [description]="actionCard.description"
+    [icon]="actionCard.icon"
+    [actionType]="actionCard?.action?.type"
+    [actionAction]="actionCard?.action?.action"
+    [actionStyle]="actionCard?.actionStyle"
     (cardAction)="handleCardAction(actionCard.action.action)"
+    [actionDisplayKey]="actionCard?.actionDisplay"
+    [status]="actionCard?.status"
+    [disabled]="actionCard.disabled"
+    [displayStatusText]="actionCard?.displayStatusText"
   ></abs-action-card>
 </div>
 

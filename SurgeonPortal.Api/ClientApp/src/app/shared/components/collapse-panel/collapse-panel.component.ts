@@ -1,15 +1,6 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-@UntilDestroy()
 @Component({
   selector: 'abs-collapse-panel',
   standalone: true,
@@ -17,7 +8,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   templateUrl: './collapse-panel.component.html',
   styleUrls: ['./collapse-panel.component.scss'],
 })
-export class CollapsePanelComponent implements OnInit, OnChanges {
+export class CollapsePanelComponent implements OnInit {
   /**
    * the panel id, used to find the correct panel to expand/collapse when multiple are used on a page
    * @type {number}
@@ -30,34 +21,10 @@ export class CollapsePanelComponent implements OnInit, OnChanges {
    */
   @Input() startExpanded = false;
 
-  /**
-   * a bit flag that tells the component that the content within the panel has changed
-   * and it should recalculate the height of the uncollapsed panel
-   * @type {Subject<boolean>}
-   */
-  @Input() heightToggle: Subject<boolean> = new Subject();
-
-  /**
-   * TODO - implement this instead of the heightToggle
-   * a bit flag that tells the component that the content within the panel has changed
-   * and it should recalculate the height of the uncollapsed panel
-   * @type {boolean}
-   */
-  @Input() contentToggle = false;
-
   ngOnInit() {
-    this.heightToggle.pipe(untilDestroyed(this)).subscribe(() => {
-      this.resetHeight();
-    });
     if (this.startExpanded) {
       // setTimeout is needed to wait for the DOM to be ready
       setTimeout(() => this.togglePanel(), 0);
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['contentToggle']) {
-      this.resetHeight();
     }
   }
 
@@ -69,21 +36,19 @@ export class CollapsePanelComponent implements OnInit, OnChanges {
 
     panel?.classList.toggle('active');
     if (panelBody!.style.maxHeight && panelBody!.style.maxHeight !== '0px') {
-      panelBody!.style.maxHeight = '0px';
-    } else {
-      panelBody!.style.maxHeight = panelBody!.scrollHeight + 200 + 'px';
-    }
-  }
-
-  resetHeight() {
-    const panelBody = document.querySelector<HTMLElement>(
-      '#panel-body-' + this.panelId
-    );
-    if (panelBody?.style.maxHeight && panelBody?.style.maxHeight !== '0px') {
-      // setTimeout is needed to wait for the DOM to update with new content
+      // reset the panel maxHeight since the css animation will not work with a maxHeight = unset
+      panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
       setTimeout(() => {
-        panelBody!.style.maxHeight = panelBody!.scrollHeight + 200 + 'px';
+        // set the height to 0 to trigger the collapse animation
+        panelBody!.style.maxHeight = '0px';
       }, 0);
+    } else {
+      // set the maxHeight to the scrollHeight to allow for the animation to expand the panel
+      panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
+      setTimeout(() => {
+        // set the maxHeight to unset after the animation to account for future content changes
+        panelBody!.style.maxHeight = 'unset';
+      }, 501);
     }
   }
 }

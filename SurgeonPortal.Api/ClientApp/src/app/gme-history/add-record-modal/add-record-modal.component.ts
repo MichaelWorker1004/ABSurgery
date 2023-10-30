@@ -29,7 +29,6 @@ import { FormErrorsComponent } from '../../shared/components/form-errors/form-er
 
 import {
   GraduateMedicalEducationSelectors,
-  GetGraduateMedicalEducationDetails,
   UpdateGraduateMedicalEducation,
   CreateGraduateMedicalEducation,
   ClearGraduateMedicalEducationErrors,
@@ -182,8 +181,9 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
     this._store.dispatch(new GetClinicalActivityList());
     this._store.dispatch(new GetAccreditedProgramInstitutionsList());
 
-    this.accreditedInstitutionsSubscription =
-      this.accreditedInstitutions$?.subscribe((accreditedInstitutions) => {
+    this.accreditedInstitutionsSubscription = this.accreditedInstitutions$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((accreditedInstitutions) => {
         if (accreditedInstitutions) {
           this.addEditRecordFields.filter((field) => {
             if (field.name === 'programName') {
@@ -195,8 +195,9 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.clinicalLevelsSubscription = this.clinicalLevels$?.subscribe(
-      (clinicalLevels) => {
+    this.clinicalLevelsSubscription = this.clinicalLevels$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((clinicalLevels) => {
         if (clinicalLevels) {
           this.addEditRecordFields.filter((field) => {
             if (field.name === 'clinicalLevelId') {
@@ -209,10 +210,10 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
             }
           });
         }
-      }
-    );
-    this.clinicalActivitiesSubscription = this.clinicalActivities$?.subscribe(
-      (clinicalActivities) => {
+      });
+    this.clinicalActivitiesSubscription = this.clinicalActivities$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((clinicalActivities) => {
         this.clinicalActivitiesList = clinicalActivities;
         if (clinicalActivities) {
           this.nonClinicalActivities = clinicalActivities.filter((activity) => {
@@ -254,8 +255,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
             }
           });
         }
-      }
-    );
+      });
   }
 
   fetchFormData() {

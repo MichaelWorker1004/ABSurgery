@@ -89,11 +89,7 @@
       </sl-card> -->
 
       <sl-card class="col-12">
-        <abs-collapse-panel
-          [panelId]="2"
-          [startExpanded]="true"
-          [heightToggle]="tableHeightChanged$"
-        >
+        <abs-collapse-panel [panelId]="2" [startExpanded]="true">
           <h5 class="mt-0 mb-2" panel-header>Examination History</h5>
           <div class="grid">
             <div class="col-12">
@@ -105,7 +101,7 @@
                 [columns]="examHistoryCols"
                 [data]="examHistory$"
                 [pagination]="true"
-                [itemsPerPage]="10"
+                [itemsPerPage]="20"
                 (action)="handleGridAction($event)"
                 class="margin-bottom-2"
               ></abs-grid>

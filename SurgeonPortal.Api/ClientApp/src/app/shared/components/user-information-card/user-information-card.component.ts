@@ -7,18 +7,32 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'abs-user-information-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './user-information-card.component.html',
   styleUrls: ['./user-information-card.component.scss'],
 })
 export class UserInformationCardComponent implements OnInit, OnChanges {
+  /**
+   *  User information to display. See Examples below
+   */
   @Input() userInformation: any;
+
+  /**
+   * Current status of the user
+   * @type {string}
+   */
   @Input() currentStatus!: string;
+
+  /**
+   * Whether the user is a surgeon or not
+   * @type {boolean}
+   */
   @Input() isSurgeon: boolean | undefined;
 
   localIsSurgeon!: boolean;

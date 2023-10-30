@@ -17,6 +17,7 @@ import { SpecialAccommodationsModalComponent } from './special-accommodations-mo
 import { Action } from '../shared/components/action-card/action.enum';
 import { ProfessionalActivitiesAndPrivilegesModalComponent } from './professional-activities-and-privileges-modal/professional-activities-and-privileges-modal.component';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { LegendComponent } from '../shared/components/legend/legend.component';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -36,6 +37,7 @@ interface ActionMap {
     GraduateMedicalEducationModalComponent,
     SpecialAccommodationsModalComponent,
     ProfessionalActivitiesAndPrivilegesModalComponent,
+    LegendComponent,
   ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
@@ -53,6 +55,25 @@ export class RegistrationRequirementsComponent implements OnInit {
   showSpecialAccommodations = false;
   showProfessionalActivitiesAndPrivileges = false;
 
+  legendItems = [
+    {
+      text: 'Completed',
+      color: '#1c827c',
+    },
+    {
+      text: 'In Progress',
+      color: '#dbad69',
+    },
+    {
+      text: 'Alert',
+      color: '#8b0d0a',
+    },
+    {
+      text: 'Contingent',
+      color: '#a0a0a0',
+    },
+  ];
+
   constructor(
     private _globalDialogService: GlobalDialogService,
     public viewContainerRef: ViewContainerRef
@@ -63,11 +84,6 @@ export class RegistrationRequirementsComponent implements OnInit {
   private actionMap: ActionMap = {
     surgeonProfileModal: () => {
       this.showSurgeonProfile = !this.showSurgeonProfile;
-      // this._globalDialogService.showComponentModal(
-      //   SurgeonProfileModalComponent,
-      //   'Surgeon Profile',
-      //   'in-progress'
-      // );
     },
     medicalLicenseModal: () => {
       this.showMedicalLicense = !this.showMedicalLicense;

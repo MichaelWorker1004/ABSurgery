@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import {
@@ -36,6 +37,7 @@ import { matchFields, validatePassword } from '../shared/validators/validators';
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     FormsModule,
     ReactiveFormsModule,
     InputTextModule,
@@ -49,6 +51,8 @@ export class LoginComponent {
    * The version of the application
    */
   @Input() version = '';
+
+  now = new Date();
   @Select(AuthSelectors.slices.errors) errors$?: Observable<IError> | undefined;
   @Select(AuthSelectors.slices.isAuthenticated) isAuthenticated$?:
     | Observable<boolean>

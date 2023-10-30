@@ -57,6 +57,7 @@ export class DashboardState {
     private globalDialogService: GlobalDialogService,
     private qualifyingExamService: QualifyingExamService
   ) {}
+  // trainee
   @Action(GetDashboardProgramInformation) getDashboardProgramInformation(
     ctx: StateContext<IDashboardState>
   ) {
@@ -75,9 +76,13 @@ export class DashboardState {
     );
   }
 
+  // surgeon
   @Action(GetDashboardCertificationInformation)
   getDashboardCertificationInformation(ctx: StateContext<IDashboardState>) {
     const state = ctx.getState();
+    if (state.certificates.length > 0) {
+      return state.certificates;
+    }
     this.globalDialogService.showLoading();
     return this.certificationsService
       .retrieveCertificationReadOnly_GetByUserId()
@@ -107,6 +112,7 @@ export class DashboardState {
       );
   }
 
+  // trainee
   @Action(GetTraineeRegistrationStatus)
   getTraineeRegistrationStatus(
     ctx: StateContext<IDashboardState>,
@@ -117,8 +123,7 @@ export class DashboardState {
       .retrieveRegistrationStatusReadOnly_GetByExamCode(payload.examCode)
       .pipe(
         tap((result: IRegistrationStatusReadOnlyModel) => {
-          ctx.setState({
-            ...state,
+          ctx.patchState({
             registrationStatus: result,
           });
           this.globalDialogService.closeOpenDialog();
@@ -131,6 +136,7 @@ export class DashboardState {
       );
   }
 
+  // trainee
   @Action(GetAlertsAndNotices)
   getAlertsAndNotices(ctx: StateContext<IDashboardState>) {
     const state = ctx.getState();
@@ -138,8 +144,7 @@ export class DashboardState {
     return this.qualifyingExamService.retrieveQualifyingExamReadOnly_Get().pipe(
       tap((result: IQualifyingExamReadOnlyModel) => {
         const alertsAndNotices = result as IQualifyingExamReadOnlyModel;
-        ctx.setState({
-          ...state,
+        ctx.patchState({
           alertsAndNotices: alertsAndNotices,
         });
         this.globalDialogService.closeOpenDialog();

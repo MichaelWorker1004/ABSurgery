@@ -5,6 +5,7 @@ import { NgxsModule } from '@ngxs/store';
 import { surgeonPortalState } from '../state/surgeon-portal.state';
 
 import { ContinuousCertificationComponent } from './continuous-certification.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContinuousCertificationComponent', () => {
   let component: ContinuousCertificationComponent;
@@ -17,6 +18,7 @@ describe('ContinuousCertificationComponent', () => {
         ContinuousCertificationComponent,
         NgxsModule.forRoot(surgeonPortalState),
         HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
     }).compileComponents();
 

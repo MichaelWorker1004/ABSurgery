@@ -163,8 +163,12 @@ export class MedicalTrainingState {
 
   @Action(GetAdvancedTrainingData)
   getAdvancedTrainingData(
-    ctx: StateContext<IMedicalTraining>
+    ctx: StateContext<IMedicalTraining>,
+    payload: GetAdvancedTrainingData
   ): Observable<IAdvancedTrainingReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.additionalTraining && !payload?.isUpdate) {
+      return of(ctx.getState()?.additionalTraining);
+    }
     return this.advancedTrainingService
       .retrieveAdvancedTrainingReadOnly_GetByUserId()
       .pipe(
@@ -410,7 +414,7 @@ export class MedicalTrainingState {
       .createAdvancedTraining(payload.model)
       .pipe(
         tap(() => {
-          ctx.dispatch(new GetAdvancedTrainingData());
+          ctx.dispatch(new GetAdvancedTrainingData(true));
           this.globalDialogService.showSuccessError(
             'Success',
             'Created successfully',
@@ -439,7 +443,7 @@ export class MedicalTrainingState {
       .updateAdvancedTraining(payload.model.id, payload.model)
       .pipe(
         tap(() => {
-          ctx.dispatch(new GetAdvancedTrainingData());
+          ctx.dispatch(new GetAdvancedTrainingData(true));
           this.globalDialogService.showSuccessError(
             'Success',
             'Updated successfully',

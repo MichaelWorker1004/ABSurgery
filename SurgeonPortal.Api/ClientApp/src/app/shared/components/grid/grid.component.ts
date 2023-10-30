@@ -10,10 +10,11 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbsFilterType, AbsGridCellRendererType } from './abs-grid.enum';
-import { IGridOptions } from './grid-options.model';
 import { isObservable } from 'rxjs';
-
+import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { IGridColumns } from './abs-grid-col.interface';
 
 interface GridAction {
   data: any;
@@ -24,42 +25,123 @@ interface GridAction {
 @Component({
   selector: 'abs-grid',
   standalone: true,
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, InputTextModule, DropdownModule],
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GridComponent implements OnInit, OnChanges {
+  /**
+   * Data to display in the grid
+   */
   @Input() data!: any;
-  @Input() columns!: any;
-  @Input() actions!: any;
+
+  /**
+   * Columns to display in the grid
+   * @type {IGridColumns}
+   */
+  @Input() columns!: IGridColumns[] | any;
+
+  /**
+   * Title to display in the grid
+   * @type {string}
+   */
   @Input() title!: string;
-  @Input() subTitle!: string;
-  @Input() gridOptions: IGridOptions = {
-    showFilter: false,
-    filterOn: '',
-    filterType: AbsFilterType.Text,
-    filterOptions: [],
-    noFilteredResultsMessage: 'There are no results to display.',
-  };
+
+  /**
+   * Whether or not to display filter
+   * @type {boolean}
+   */
+  @Input() showFilter!: boolean;
+
+  /**
+   * Type of filter to display
+   *
+   */
+  @Input() filterType: 'text' | 'dropdown' = 'text';
+
+  /**
+   * Placeholder for filter
+   * @type {string}
+   */
+  @Input() filterPlaceholder = 'Search';
+
+  /**
+   * Field to filter on
+   * @type {string}
+   */
+  @Input() filterOn = '';
+
+  /**
+   * Array of options to filter on for dropdown
+   * @type {string}
+   */
+  @Input() filterOptions: any[] = [];
+
+  /**
+   * Message when there are no filtered results
+   * @type {string}
+   */
+  @Input() noFilteredResultsMessage = 'There are no results to display.';
+
+  /**
+   * Whether or not to display pagination
+   * @type {boolean}
+   */
   @Input() pagination = false;
-  @Input() expandTemplate!: any;
+
+  /**
+   * Controls current page of the grid
+   * @type {number}
+   */
   @Input() currentPage = 1;
+
+  /**
+   * Controls how many items to display per page
+   * @type {number}
+   */
   @Input() itemsPerPage = 5;
+
+  /**
+   * Whether or not to show grid lines
+   * @type {boolean}
+   */
   @Input() showGridLines = true;
+
+  /**
+   * Message for when there are no results to display
+   * @type {string}
+   */
   @Input() noResultsMessage = 'There are no results to display.';
 
+  /**
+   * Template to display when row is expanded
+   * @type {any}
+   */
+  @Input() expandTemplate!: any;
+
+  /**
+   * Parent component action to handle
+   * @type {EventEmitter<unknown>}
+   */
   @Output() action: EventEmitter<unknown> = new EventEmitter();
 
   pages: number[] = [];
+
   AbsGridCellRendererType = AbsGridCellRendererType;
+
   searchText!: string;
+
   localData: Array<any> = [];
+
   filteredData: Array<any> = [];
 
   previousPageDisabled!: boolean;
+
   firstPageDisabled!: boolean;
+
   nextPageDisabled!: boolean;
+
   lastPageDisabled!: boolean;
 
   ngOnInit() {
@@ -70,11 +152,6 @@ export class GridComponent implements OnInit, OnChanges {
         this.initPagintion(this.localData);
       });
     }
-    // else {
-    // this.localData = this.data;
-    // this.filteredData = this.data ?? [];
-    // this.initPagintion(this.data);
-    // }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -87,6 +164,11 @@ export class GridComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   *
+   * Initializes pagination
+   */
+
   initPagintion(data: any[]) {
     if (this.pagination) {
       const total = data?.length ?? 0;
@@ -97,6 +179,10 @@ export class GridComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   *
+   * Sets pagination actions
+   */
   setPaginationActions() {
     this.previousPageDisabled = this.currentPage === 1;
     this.firstPageDisabled =
@@ -114,6 +200,10 @@ export class GridComponent implements OnInit, OnChanges {
     this.setPaginationActions();
   }
 
+  /**
+   *
+   * Sets the data to display in the grid
+   */
   getPagedData(data: any[]) {
     let sortedData = data;
     if (data?.length > 0) {
@@ -130,20 +220,32 @@ export class GridComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   *
+   * Handles grid action
+   */
   handleAction(action: GridAction, data: unknown) {
     action['data'] = data;
     this.action.emit(action);
   }
 
+  /**
+   *
+   * Handles grid expand action
+   */
   handleExpand(action: GridAction, data: any) {
     data.expanded = !data.expanded;
     action['data'] = data;
     this.action.emit(action);
   }
 
+  /**
+   *
+   * Sets up column sorting functionality
+   */
   setColumnSort(column: any) {
     this.columns.forEach((col: any) => {
-      if (col.field === column.field) {
+      if (col.fieldName === column.fieldName) {
         col.sort =
           column.sort === 'asc'
             ? 'desc'
@@ -156,29 +258,35 @@ export class GridComponent implements OnInit, OnChanges {
     });
   }
 
+  /**
+   *
+   * Functionality for sorting columns
+   */
   sortColumn(a: any, b: any) {
     const sortColumn = this.columns?.find((col: any) => col.sort);
     if (sortColumn) {
       if (sortColumn.sort === 'asc') {
-        return a[sortColumn.field] > b[sortColumn.field] ? 1 : -1;
+        return a[sortColumn.fieldName] > b[sortColumn.fieldName] ? 1 : -1;
       } else {
-        return a[sortColumn.field] < b[sortColumn.field] ? 1 : -1;
+        return a[sortColumn.fieldName] < b[sortColumn.fieldName] ? 1 : -1;
       }
     } else {
       return 0;
     }
   }
 
-  onGridFilterChange($event: any) {
+  /**
+   *
+   * Handles filter change
+   */
+  whenGridFilterChange($event: any) {
     const value =
-      this.gridOptions.filterType === AbsFilterType.Text
+      this.filterType === AbsFilterType.Text
         ? $event?.target.value
-        : $event?.target.displayLabel;
+        : $event?.value?.value;
 
     this.filteredData = this.localData.filter((item: any) =>
-      item[this.gridOptions.filterOn]
-        .toLowerCase()
-        .includes(value.toLowerCase())
+      item[this.filterOn].toLowerCase().includes(value?.toLowerCase() ?? '')
     );
 
     if (this.pagination) {

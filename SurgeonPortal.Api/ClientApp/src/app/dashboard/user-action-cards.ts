@@ -1,23 +1,30 @@
 export const TRAINEE_ACTION_CARDS = [
   {
-    title: 'Graduate Medical Education (GME)',
-    description:
-      'Add rotations to your GME history. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: '',
+    titleKey: 'DASHBOARD.ACTION_CARDS.GME_TITLE',
+    description: '',
+    descriptionKey: 'DASHBOARD.ACTION_CARDS.GME_SUBTITLE',
+    actionType: 'component',
+    actionAction: '/gme-history',
     action: {
       type: 'component',
       action: '/gme-history',
     },
-    actionDisplay: 'View Your GME',
+    actionDisplay: '',
+    actionDisplayKey: 'DASHBOARD.ACTION_CARDS.GME_BTN',
     icon: 'fa-sharp fa-solid fa-file-waveform',
   },
   {
-    title: 'Apply for a Qualified Exam',
-    description: 'QE applications are not yet available. Check back on ',
+    title: '',
+    titleKey: 'DASHBOARD.ACTION_CARDS.APPLY_TITLE',
+    description: '',
+    descriptionKey: 'DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE',
     action: {
       type: 'component',
       action: '/exam-process/exam-registration',
     },
-    actionDisplay: 'Coming Soon',
+    actionDisplay: '',
+    actionDisplayKey: 'DASHBOARD.ACTION_CARDS.APPLY_BTN',
     icon: 'fa-solid fa-user-graduate',
     disabled: true,
   },
@@ -25,36 +32,42 @@ export const TRAINEE_ACTION_CARDS = [
 
 export const CERTIFIED_ACTION_CARDS = [
   {
-    title: 'Continuous Certification Requirements',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    title: '',
+    titleKey: 'DASHBOARD.ACTION_CARDS.CCR_TITLE',
+    description: '',
+    descriptionKey: 'DASHBOARD.ACTION_CARDS.CCR_SUBTITLE',
     action: {
       type: 'component',
       action: '/continuous-certification',
     },
-    actionDisplay: 'See Requirements',
+    actionDisplay: '',
+    actionDisplayKey: 'DASHBOARD.ACTION_CARDS.CCR_BTN',
     icon: 'fa-solid fa-user-graduate',
   },
   {
-    title: 'Apply and Register',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    title: '',
+    titleKey: 'DASHBOARD.ACTION_CARDS.REGISTER_TITLE',
+    description: '',
+    descriptionKey: 'DASHBOARD.ACTION_CARDS.REGISTER_SUBTITLE',
     action: {
       type: 'component',
       action: '/apply-and-resgister',
     },
-    actionDisplay: 'Apply Now',
+    actionDisplay: '',
+    actionDisplayKey: 'DASHBOARD.ACTION_CARDS.REGISTER_BTN',
     icon: 'fa-solid fa-list-check',
   },
   {
-    title: 'Continuous Medical Education (CME)',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    title: '',
+    titleKey: 'DASHBOARD.ACTION_CARDS.CME_TITLE',
+    description: '',
+    descriptionKey: 'DASHBOARD.ACTION_CARDS.CME_SUBTITLE',
     action: {
       type: 'component',
       action: '/cme-repository',
     },
-    actionDisplay: 'View CME Repository',
+    actionDisplay: '',
+    actionDisplayKey: 'DASHBOARD.ACTION_CARDS.CME_BTN',
     icon: 'fa-sharp fa-solid fa-file-waveform',
   },
 ];

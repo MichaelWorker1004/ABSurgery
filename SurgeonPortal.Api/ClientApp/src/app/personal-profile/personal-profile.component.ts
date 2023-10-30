@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { debounceTime, Observable, take } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -13,9 +18,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
+import { TranslateModule } from '@ngx-translate/core';
+
 import {
+  ApplicationSelectors,
   ClearUserProfileErrors,
-  GetUserProfile,
+  IFeatureFlags,
   UpdateUserProfile,
   UserProfileSelectors,
 } from '../state';
@@ -44,8 +52,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IFormErrors } from '../shared/common';
 import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
+import { SetUnsavedChanges } from '../state/application/application.actions';
 
-interface IDisplayUserProfile extends IUserProfile {
+export interface IDisplayUserProfile extends IUserProfile {
   gender: string;
   countryDisplay: string;
   birthCountryDisplay: string;
@@ -67,6 +76,7 @@ interface IDisplayUserProfile extends IUserProfile {
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
     ProfileHeaderComponent,
     SuccessFailModalComponent,
     NgxMaskDirective,
@@ -80,9 +90,12 @@ interface IDisplayUserProfile extends IUserProfile {
   ],
   providers: [provideNgxMask()],
 })
-export class PersonalProfileComponent implements OnInit {
+export class PersonalProfileComponent implements OnInit, OnDestroy {
   // TODO: [Joe] set up national provider identifier (NPI) report button
 
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
@@ -154,13 +167,19 @@ export class PersonalProfileComponent implements OnInit {
     zipCode: new FormControl('', [Validators.required]),
   });
 
-  hasUnsavedChanges = false;
   isSubmitted = false;
+  canEditProfile = true;
 
   constructor(
     private _store: Store,
     public globalDialogService: GlobalDialogService
   ) {
+    this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      if (featureFlags) {
+        this.canEditProfile = <boolean>featureFlags.personalProfileEdit;
+      }
+    });
+
     this.userProfileForm.controls['state'].disable();
     this.userProfileForm.controls['birthState'].disable();
     this.user$
@@ -256,7 +275,8 @@ export class PersonalProfileComponent implements OnInit {
 
     this.userProfileForm
       .get('birthCountry')
-      ?.valueChanges.subscribe((value) => {
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((value) => {
         this._store
           .dispatch(new GetStateList(value))
           .pipe(take(1))
@@ -272,16 +292,21 @@ export class PersonalProfileComponent implements OnInit {
           });
       });
   }
+  ngOnDestroy(): void {
+    this._store.dispatch(new SetUnsavedChanges(false));
+  }
 
   ngOnInit(): void {
-    this.userProfileForm.valueChanges.subscribe(() => {
-      const isDirty = this.userProfileForm.dirty;
-      if (isDirty && !this.isSubmitted) {
-        this.hasUnsavedChanges = true;
-      } else {
-        this.hasUnsavedChanges = false;
-      }
-    });
+    this._store.dispatch(new SetUnsavedChanges(false));
+
+    this.userProfileForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        const isDirty = this.userProfileForm.dirty;
+        this._store.dispatch(
+          new SetUnsavedChanges(isDirty && !this.isSubmitted)
+        );
+      });
   }
 
   resetFormDefaults() {
@@ -297,22 +322,23 @@ export class PersonalProfileComponent implements OnInit {
   toggleEdit() {
     this.isEdit = !this.isEdit;
     this.resetFormDefaults();
-    this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetUnsavedChanges(false));
     this._store.dispatch(new ClearUserProfileErrors());
   }
 
   onSubmit() {
     const model = this.userProfileForm.value;
+    console.log(model);
     model.birthDate = new Date(model.birthDate).toISOString();
 
     this._store
       .dispatch(new UpdateUserProfile(model))
       .pipe(take(1))
       .subscribe((res) => {
-        if (!res.userProfile.errors) {
+        if (res.userProfile && !res.userProfile.errors) {
           this.isSubmitted = true;
           this.isEdit = false;
-          this.hasUnsavedChanges = false;
+          this._store.dispatch(new SetUnsavedChanges(false));
         } else {
           this.userProfileForm.get('userConfrimed')?.setValue(false);
         }

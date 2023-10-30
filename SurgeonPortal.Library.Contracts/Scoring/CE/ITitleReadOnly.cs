@@ -7,7 +7,9 @@ namespace SurgeonPortal.Library.Contracts.Scoring.CE
         string Title { get; }
         int CaseHeaderId { get; }
         int? ExamCaseId { get; }
-
         ICaseDetailReadOnlyList Sections { get; }
+        int? Score { get; }
+        bool? CriticalFail { get; }
+        string Remarks { get; }
     }
 }

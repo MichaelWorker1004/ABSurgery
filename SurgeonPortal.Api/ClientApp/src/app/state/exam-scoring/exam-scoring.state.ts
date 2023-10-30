@@ -45,6 +45,8 @@ import {
   GetCaseDetailsAndFeedback,
   GetExaminerAgenda,
   GetExaminerConflict,
+  GetExamHeaderId,
+  ClearExamineeData,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -64,6 +66,7 @@ import { IAgendaReadOnlyModel } from 'src/app/api/models/examiners/agenda-read-o
 import { AgendaService } from 'src/app/api/services/examiners/agenda.service';
 import { ConflictService } from 'src/app/api/services/examiners/conflict.service';
 import { IConflictReadOnlyModel } from 'src/app/api/models/examiners/conflict-read-only.model';
+import { ICaseFeedbackReadOnlyModel } from 'src/app/api/models/scoring/case-feedback-read-only.model';
 
 export interface IExamScoring {
   examTitle: IExamTitleReadOnlyModel | undefined;
@@ -71,14 +74,14 @@ export interface IExamScoring {
   caseRoster: ICaseRosterReadOnlyModel[] | undefined; // examination rosters page list values
   selectedCaseContents: ICaseDetailReadOnlyModel[] | undefined; // examination rosters page details values
   selectedCaseComment: ICaseCommentModel | undefined; // examination rosters page selected comment value
-  selectedCaseFeedback: ICaseFeedbackModel | undefined; // examination rosters page selected feedback value
+  selectedCaseFeedback: ICaseFeedbackReadOnlyModel | undefined; // examination rosters page selected feedback value
   // oral-examinations list page values
   examineeList: IExamSessionReadOnlyModel[] | undefined; // oral-examinations list page grid values
   // oral-examination actual exam page values
   activeExamination: any[] | undefined; // oral-examination actual exam (includes all cases for selected exam) (no api call)
-  //examination scores page values
-  examScoresList: IRosterReadOnlyModel[] | undefined; // examination scores page grid values
-  selectedExamScores: ICaseScoreReadOnlyModel[] | undefined; // examination scores page details values (no api call)
+  //Daily Exam Scores page values
+  examScoresList: IRosterReadOnlyModel[] | undefined; // Daily Exam Scores page grid values
+  selectedExamScores: ICaseScoreReadOnlyModel[] | undefined; // Daily Exam Scores page details values (no api call)
   // misc values
 
   roster: IRosterReadOnlyModel[] | undefined;
@@ -87,6 +90,8 @@ export interface IExamScoring {
   examinerAgenda: IAgendaReadOnlyModel | undefined;
   examinerConflict: IConflictReadOnlyModel | undefined;
   errors: IFormErrors | null;
+  examErrors: IFormErrors | null;
+  examHeaderId: number | null;
 }
 
 export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
@@ -111,6 +116,8 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
     examinerAgenda: undefined,
     examinerConflict: undefined,
     errors: null,
+    examErrors: null,
+    examHeaderId: 482,
   },
 })
 @Injectable()
@@ -150,6 +157,7 @@ export class ExamScoringState {
           ctx.patchState({
             examTitle: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -175,6 +183,7 @@ export class ExamScoringState {
           ctx.patchState({
             caseRoster: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -196,6 +205,7 @@ export class ExamScoringState {
           ctx.patchState({
             selectedCaseContents: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -215,6 +225,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -237,6 +248,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -259,6 +271,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -278,6 +291,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -299,6 +313,7 @@ export class ExamScoringState {
           ctx.patchState({
             examineeList: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -315,7 +330,6 @@ export class ExamScoringState {
     payload: { examScheduleId: number }
   ) {
     const examScheduleId = payload.examScheduleId;
-    this.globalDialogService.showLoading();
     return this.sessionService
       .retrieveExamineeReadOnly_GetById(examScheduleId)
       .pipe(
@@ -323,8 +337,8 @@ export class ExamScoringState {
           ctx.patchState({
             examinee,
             errors: null,
+            examErrors: null,
           });
-          this.globalDialogService.closeOpenDialog();
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
@@ -346,6 +360,7 @@ export class ExamScoringState {
           ctx.patchState({
             examScoresList: result,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -359,23 +374,31 @@ export class ExamScoringState {
   @Action(CreateCaseScore)
   createCaseScore(
     ctx: StateContext<IExamScoring>,
-    payload: { score: ICaseScoreModel }
+    payload: { score: ICaseScoreModel; showLoading: boolean }
   ) {
     const score = payload.score;
-    this.globalDialogService.showLoading();
+    if (payload.showLoading) {
+      this.globalDialogService.showLoading();
+    }
+
     return this.caseScoresService.createCaseScore(score).pipe(
-      tap((result: ICaseScoreModel) => {
+      tap(() => {
         // figure out how to update the store here
         ctx.patchState({
           // selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
-        this.globalDialogService.closeOpenDialog();
+        if (payload.showLoading) {
+          this.globalDialogService.closeOpenDialog();
+        }
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
         ctx.patchState({ errors });
-        this.globalDialogService.closeOpenDialog();
+        if (payload.showLoading) {
+          this.globalDialogService.closeOpenDialog();
+        }
         return of(errors);
       })
     );
@@ -396,6 +419,7 @@ export class ExamScoringState {
         tap(() => {
           ctx.patchState({
             errors: null,
+            examErrors: null,
           });
           if (payload.showLoading) {
             this.globalDialogService.showSuccessError(
@@ -430,6 +454,7 @@ export class ExamScoringState {
         ctx.patchState({
           // selectedCaseComment: result,
           errors: null,
+          examErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
@@ -455,6 +480,7 @@ export class ExamScoringState {
           ctx.patchState({
             selectedExamScores: result,
             errors: null,
+            examErrors: null,
           });
           this.globalDialogService.closeOpenDialog();
         }),
@@ -476,25 +502,20 @@ export class ExamScoringState {
     return this.examScoreService.createExamScore(payload.model).pipe(
       tap(async (result: IExamScoreModel) => {
         ctx.patchState({
+          selectedExamScores: undefined,
           errors: null,
+          examErrors: null,
         });
-        await this.globalDialogService.showSuccessError(
+        this.globalDialogService.showSuccessError(
           'Success',
           'Exam Submitted Successfully',
           true
         );
-        if (payload.navigate) {
-          this.router.navigate(['/ce-scoring/oral-examinations']);
-        }
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
-        ctx.patchState({ errors });
-        this.globalDialogService.showSuccessError(
-          'Error',
-          'Exam Submission Failed',
-          false
-        );
+        ctx.patchState({ examErrors: errors });
+        this.globalDialogService.closeOpenDialog();
         return of(errors);
       })
     );
@@ -514,6 +535,7 @@ export class ExamScoringState {
           ctx.patchState({
             dashboardRoster: dashboardRoster,
             errors: null,
+            examErrors: null,
           });
           this.globalDialogService.closeOpenDialog();
         }),
@@ -529,15 +551,25 @@ export class ExamScoringState {
   @Action(SkipExam)
   skipExam(
     ctx: StateContext<IExamScoring>,
-    payload: { examScheduleId: number; examDate: string }
+    payload: { examScheduleId: number; examDate: string; showLoading: boolean }
   ) {
-    this.globalDialogService.showLoading();
+    if (payload.showLoading) {
+      this.globalDialogService.showLoading();
+    }
+
     return this.examSessionsService
       .skipExamSessionReadOnly_SkipByExamScheduleId(payload.examScheduleId)
       .pipe(
         tap(() => {
+          ctx.patchState({
+            selectedExamScores: undefined,
+            examErrors: null,
+            errors: null,
+          });
           ctx.dispatch(new GetExamineeList(payload.examDate));
-          this.globalDialogService.closeOpenDialog();
+          if (payload.showLoading) {
+            this.globalDialogService.closeOpenDialog();
+          }
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
@@ -609,6 +641,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseFeedback: result,
           errors: null,
+          examErrors: null,
         });
         await this.globalDialogService.showSuccessError(
           'Success',
@@ -633,12 +666,13 @@ export class ExamScoringState {
   getCaseFeedback(ctx: StateContext<IExamScoring>, payload: { id: number }) {
     this.globalDialogService.showLoading();
     return this.caseFeedbackService
-      .retrieveCaseFeedback_GetByExaminerId(payload.id)
+      .retrieveCaseFeedbackReadOnly_GetByExaminerId(payload.id)
       .pipe(
-        tap((result: ICaseFeedbackModel) => {
+        tap((result: ICaseFeedbackReadOnlyModel) => {
           ctx.patchState({
             selectedCaseFeedback: result,
             errors: null,
+            examErrors: null,
           });
           this.globalDialogService.closeOpenDialog();
         }),
@@ -669,6 +703,7 @@ export class ExamScoringState {
           ctx.patchState({
             selectedCaseFeedback: result,
             errors: null,
+            examErrors: null,
           });
           await this.globalDialogService.showSuccessError(
             'Success',
@@ -697,6 +732,7 @@ export class ExamScoringState {
         ctx.patchState({
           selectedCaseFeedback: result,
           errors: null,
+          examErrors: null,
         });
         await this.globalDialogService.showSuccessError(
           'Success',
@@ -741,7 +777,7 @@ export class ExamScoringState {
 
   @Action(ClearExamScoringErrors)
   clearGraduateMedicalEducationErrors(ctx: StateContext<IExamScoring>) {
-    ctx.patchState({ errors: null });
+    ctx.patchState({ errors: null, examErrors: null });
   }
 
   @Action(GetExaminerAgenda)
@@ -756,6 +792,7 @@ export class ExamScoringState {
           ctx.patchState({
             examinerAgenda,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -778,6 +815,7 @@ export class ExamScoringState {
           ctx.patchState({
             examinerConflict,
             errors: null,
+            examErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -786,5 +824,27 @@ export class ExamScoringState {
           return of(errors);
         })
       );
+  }
+
+  @Action(GetExamHeaderId)
+  getExamHeaderId(
+    ctx: StateContext<IExamScoring>,
+    payload: { isCeScoreTesting: boolean }
+  ) {
+    const state = ctx.getState();
+    if (payload.isCeScoreTesting) {
+      ctx.patchState({
+        examHeaderId: 494,
+      });
+    }
+
+    return of(state.examHeaderId);
+  }
+
+  @Action(ClearExamineeData)
+  clearExamineeData(ctx: StateContext<IExamScoring>) {
+    ctx.patchState({
+      examinee: undefined,
+    });
   }
 }

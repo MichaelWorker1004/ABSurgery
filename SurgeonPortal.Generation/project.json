@@ -7,6 +7,23 @@
         "Title": "SurgeonPortal",
         "Language" : "C#"
     },
+    "identityConfiguration" :
+    {
+        "userIdDataType": "int"
+    },
+    "inputParameterTransforms":
+    {
+        "substitutions" : 
+        {
+            "$UserId": "_identity.GetUserId<int>()",
+            "$UserName": "_identity.GetUserName()"
+        },
+        "fieldMappings" :
+        {
+            "ExaminerUserId": "$UserId",
+            "UserId": "$UserId"
+        }
+    },
     "claimsInfo" :
     {
         "claimSets" :

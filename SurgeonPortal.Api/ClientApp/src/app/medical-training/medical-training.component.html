@@ -157,10 +157,12 @@
                   [maxDate]="maxYear"
                   view="year"
                   dateFormat="yy"
+                  dataType="string"
                   inputId="yearpicker"
                   formControlName="medicalSchoolCompletionYear"
                   placeholder="YYYY"
                   appendTo="body"
+                  dataType="string"
                 ></p-calendar>
                 <small
                   *ngIf="
@@ -239,9 +241,11 @@
                       view="year"
                       dateFormat="yy"
                       inputId="yearpicker"
+                      dataType="string"
                       formControlName="residencyCompletionYear"
                       placeholder="YYYY"
                       appendTo="body"
+                      dataType="string"
                     ></p-calendar>
                     <small
                       *ngIf="
@@ -342,7 +346,7 @@
             [dropdownPlaceholder]="'Select a certificate type'"
             [dropdownLabel]="'name'"
             [dropdownValue]="'id'"
-            [filterOn]="'documentType'"
+            [filterOn]="'documentName'"
             [showFilter]="true"
             [userId]="userId"
             (documentsAction)="handleGridAction($event, 'certificates')"

@@ -5,6 +5,7 @@ import { ExaminationScoreCardComponent } from 'src/app/shared/components/examina
 import { BehaviorSubject, isObservable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import {
+  ClearExamScoringErrors,
   CreateCaseScore,
   CreateExamScore,
   UpdateCaseScore,
@@ -13,12 +14,19 @@ import { ICaseScoreModel } from 'src/app/api';
 import { Status } from './status.enum';
 import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IFormErrors } from 'src/app/shared/common';
+import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 
 @UntilDestroy()
 @Component({
   selector: 'abs-examination-score-modal',
   standalone: true,
-  imports: [CommonModule, ButtonModule, ExaminationScoreCardComponent],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    ExaminationScoreCardComponent,
+    FormErrorsComponent,
+  ],
   templateUrl: './examination-score-modal.component.html',
   styleUrls: ['./examination-score-modal.component.scss'],
 })
@@ -40,6 +48,9 @@ export class ExaminationScoreModalComponent implements OnInit {
 
   scoredExams = 0;
 
+  errors: IFormErrors | null = null;
+  clearErrors = new ClearExamScoringErrors();
+
   constructor(private _store: Store) {}
 
   ngOnInit(): void {
@@ -53,7 +64,7 @@ export class ExaminationScoreModalComponent implements OnInit {
       this.localCandidateData = this.candidateData;
     }
 
-    this.selectedStatusOption.subscribe((status: string) => {
+    this.selectedStatusOption?.subscribe((status: string) => {
       this.examStatus = status;
     });
   }
@@ -86,9 +97,23 @@ export class ExaminationScoreModalComponent implements OnInit {
     this._store
       .dispatch(new CreateExamScore(model, false))
       .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        this.resetData();
-        this.closeDialog.emit(true);
+      .subscribe((results) => {
+        if (results.examScoring.examErrors) {
+          this.errors = results.examScoring.examErrors;
+          const element = document.getElementById(
+            'exam-score-errors-container'
+          );
+          if (element) {
+            element.focus();
+            element.scrollIntoView({
+              behavior: 'smooth',
+            });
+          }
+        } else {
+          this.errors = null;
+          this.resetData();
+          this.closeDialog.emit(true);
+        }
       });
   }
 
@@ -109,11 +134,8 @@ export class ExaminationScoreModalComponent implements OnInit {
 
       if (model?.examScoringId) {
         promises.push(
-          this._store.dispatch(new UpdateCaseScore(model)).toPromise()
+          this._store.dispatch(new UpdateCaseScore(model, false)).toPromise()
         );
-
-        this.resetData();
-        this.closeDialog.emit();
       } else if ((model?.score && model.score > 0) || model?.remarks) {
         promises.push(
           this._store.dispatch(new CreateCaseScore(model)).toPromise()
@@ -121,12 +143,12 @@ export class ExaminationScoreModalComponent implements OnInit {
       }
     });
 
-    await Promise.all(promises);
-
-    if (closeDialog) {
-      this.resetData();
-      this.closeDialog.emit();
-    }
+    await Promise.all(promises).then(() => {
+      if (closeDialog) {
+        this.resetData();
+        this.closeDialog.emit();
+      }
+    });
   }
 
   cancel() {
@@ -135,6 +157,7 @@ export class ExaminationScoreModalComponent implements OnInit {
   }
 
   resetData() {
+    this.errors = null;
     this.disableSubmitExamScore = true;
     this.candidateCaseScores = {};
     this.localCandidateData = {};

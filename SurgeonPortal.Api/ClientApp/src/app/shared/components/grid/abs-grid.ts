@@ -7,7 +7,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName: headerName,
-      field: fieldName,
+      fieldName,
       sortable,
       width,
     };
@@ -40,7 +40,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName: headerName,
-      field: fieldName,
+      fieldName,
       cellRenderer: 'yesNo',
       sortable,
       width,
@@ -59,7 +59,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName: headerName,
-      field: fieldName,
+      fieldName,
       icon: icon,
       cellRenderer: 'button',
       cellRendererParams: {
@@ -83,7 +83,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName: headerName,
-      field: fieldName,
+      fieldName,
       icon: icon,
       cellRenderer: 'conditionalButton',
       cellRendererParams: {
@@ -108,7 +108,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName: headerName,
-      field: fieldName,
+      fieldName,
       icon: icon,
       buttonClass: buttonClass,
       cellRenderer: 'primeButton',
@@ -133,7 +133,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName: headerName,
-      field: fieldName,
+      fieldName,
       fileType: fileType,
       cellRenderer: 'fileLink',
       cellRendererParams: {
@@ -156,7 +156,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName: headerName,
-      field: fieldName,
+      fieldName,
       cellRenderer: 'expandToggle',
       cellRendererParams: {
         fieldKey: fieldName,
@@ -177,7 +177,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName,
-      field: fieldName,
+      fieldName,
       cellRenderer: 'dateFormatter',
       sortable,
       width,
@@ -194,7 +194,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName,
-      field: fieldName,
+      fieldName,
       cellRenderer: 'customClass',
       cellClass: (fieldName: string) => {
         return className ?? fieldName;
@@ -214,7 +214,7 @@ const AbsGrid = {
   ) {
     const colDef = {
       headerName,
-      field: fieldName,
+      fieldName,
       cellRenderer: 'customStyle',
       style: () => {
         return style ?? {};

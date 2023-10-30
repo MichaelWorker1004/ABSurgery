@@ -82,27 +82,35 @@ export class AppointmentsFormComponent implements OnInit, OnChanges {
   localEdit = false;
 
   hospitalAppointmentForm = new FormGroup({
-    practiceTypeId: new FormControl({ value: null, disabled: false }, [
-      Validators.required,
-    ]),
+    practiceTypeId: new FormControl<number | null>(
+      { value: null, disabled: false },
+      [Validators.required]
+    ),
 
-    appointmentTypeId: new FormControl({ value: null, disabled: false }, [
-      Validators.required,
-    ]),
+    appointmentTypeId: new FormControl<number | null>(
+      { value: null, disabled: false },
+      [Validators.required]
+    ),
 
-    organizationTypeId: new FormControl({ value: null, disabled: false }, [
-      Validators.required,
-    ]),
+    organizationTypeId: new FormControl<number | null>(
+      { value: null, disabled: false },
+      [Validators.required]
+    ),
 
-    stateCode: new FormControl({ value: null, disabled: false }, [
-      Validators.required,
-    ]),
+    stateCode: new FormControl<number | string | null>(
+      { value: null, disabled: false },
+      [Validators.required]
+    ),
 
-    organizationId: new FormControl({ value: '', disabled: false }, [
-      Validators.required,
-    ]),
+    organizationId: new FormControl<number | string | null>(
+      { value: '', disabled: false },
+      [Validators.required]
+    ),
 
-    other: new FormControl({ value: '', disabled: false }),
+    other: new FormControl({
+      value: '',
+      disabled: false,
+    }),
 
     authorizingOfficial: new FormControl({ value: '', disabled: false }, [
       Validators.required,

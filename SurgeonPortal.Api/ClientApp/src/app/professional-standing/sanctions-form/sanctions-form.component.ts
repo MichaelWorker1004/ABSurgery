@@ -62,33 +62,33 @@ export class SanctionsFormComponent implements OnInit, OnChanges {
 
   sanctionsEthicsForm = new FormGroup({
     hadDrugAlchoholTreatment: new FormControl(
-      { value: null, disabled: false },
+      { value: false, disabled: false },
       [Validators.required]
     ),
 
     hadHospitalPrivilegesDenied: new FormControl(
-      { value: null, disabled: false },
+      { value: false, disabled: false },
       [Validators.required]
     ),
 
-    hadLicenseRestricted: new FormControl({ value: null, disabled: false }, [
+    hadLicenseRestricted: new FormControl({ value: false, disabled: false }, [
       Validators.required,
     ]),
 
     hadHospitalPrivilegesRestricted: new FormControl(
-      { value: null, disabled: false },
+      { value: false, disabled: false },
       [Validators.required]
     ),
 
-    hadFelonyConviction: new FormControl({ value: null, disabled: false }, [
+    hadFelonyConviction: new FormControl({ value: false, disabled: false }, [
       Validators.required,
     ]),
 
-    hadCensure: new FormControl({ value: null, disabled: false }, [
+    hadCensure: new FormControl({ value: false, disabled: false }, [
       Validators.required,
     ]),
 
-    explanation: new FormControl({ value: null, disabled: false }, [
+    explanation: new FormControl({ value: '', disabled: false }, [
       Validators.required,
     ]),
   });

@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -31,7 +32,7 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
 import { IFellowshipTypeReadOnlyModel } from 'src/app/api/models/picklists/fellowship-type-read-only.model';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { IFormErrors } from 'src/app/shared/common';
-import { ClearMedicalTrainingErrors } from 'src/app/state';
+import { ClearMedicalTrainingErrors, SetUnsavedChanges } from 'src/app/state';
 import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -55,7 +56,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./fellowship-add-edit-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class FellowshipAddEditModalComponent implements OnInit {
+export class FellowshipAddEditModalComponent implements OnInit, OnDestroy {
   @Select(PicklistsSelectors.slices.fellowshipPrograms) fellowshipPrograms$:
     | Observable<IFellowshipProgramReadOnlyModel[]>
     | undefined;
@@ -98,6 +99,9 @@ export class FellowshipAddEditModalComponent implements OnInit {
   ) {
     this._store.dispatch(new GetFellowshipTypes());
   }
+  ngOnDestroy(): void {
+    this._store.dispatch(new SetUnsavedChanges(false));
+  }
 
   ngOnInit(): void {
     this.maxYear.setFullYear(this.year);
@@ -108,22 +112,25 @@ export class FellowshipAddEditModalComponent implements OnInit {
     this.setPicklistData();
     this.subscribeToRowData();
 
-    this.fellowshipForm.valueChanges.subscribe(() => {
-      const isDirty = this.fellowshipForm.dirty;
-      if (isDirty && !this.hasUnsavedChanges) {
-        this.hasUnsavedChanges = true;
-      }
-    });
+    this.fellowshipForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        const isDirty = this.fellowshipForm.dirty;
+        if (isDirty && !this.hasUnsavedChanges) {
+          this.hasUnsavedChanges = true;
+          this._store.dispatch(new SetUnsavedChanges(true));
+        }
+      });
 
-    this.fellowshipPrograms$?.subscribe(
-      (fellowshipPrograms: IFellowshipProgramReadOnlyModel[]) => {
+    this.fellowshipPrograms$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((fellowshipPrograms: IFellowshipProgramReadOnlyModel[]) => {
         this.fellowshipPrograms = [];
         fellowshipPrograms.forEach((fellowshipProgram) => {
           this.fellowshipPrograms.push(fellowshipProgram.programName);
         });
         this.fellowshipForm.get('programName')?.enable();
-      }
-    );
+      });
   }
 
   getFellowshipPrograms(fellowshipType: string) {
@@ -163,11 +170,11 @@ export class FellowshipAddEditModalComponent implements OnInit {
   }
 
   setPicklistData() {
-    this.fellowshipTypes$?.subscribe(
-      (fellowshipTypes: IFellowshipTypeReadOnlyModel[]) => {
+    this.fellowshipTypes$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((fellowshipTypes: IFellowshipTypeReadOnlyModel[]) => {
         this.fellowshipTypes = fellowshipTypes;
-      }
-    );
+      });
   }
 
   onInstitutionSelect() {
@@ -194,10 +201,12 @@ export class FellowshipAddEditModalComponent implements OnInit {
         .then((result) => {
           if (result) {
             this.cancelDialog.emit({ show: false });
+            this._store.dispatch(new SetUnsavedChanges(false));
           }
         });
     } else {
       this.cancelDialog.emit({ show: false });
+      this._store.dispatch(new SetUnsavedChanges(false));
     }
   }
 
@@ -209,5 +218,6 @@ export class FellowshipAddEditModalComponent implements OnInit {
       fellowshipId: this.fellowshipId,
     });
     this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetUnsavedChanges(false));
   }
 }

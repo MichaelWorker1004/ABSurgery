@@ -458,6 +458,9 @@ export class PicklistsState {
     payload: { fellowshipType: string }
   ): Observable<IFellowshipProgramReadOnlyModel[] | undefined> {
     this.globalDialogService.showLoading();
+    if (!payload.fellowshipType) {
+      return of([]);
+    }
     return this.picklistsService
       .retrieveFellowshipProgramReadOnly_GetAll(payload.fellowshipType)
       .pipe(

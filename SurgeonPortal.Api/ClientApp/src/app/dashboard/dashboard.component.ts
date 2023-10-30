@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, skipWhile, take } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';
 import { UserInformationCardComponent } from '../shared/components/user-information-card/user-information-card.component';
@@ -25,7 +28,8 @@ import {
 } from './user-action-cards';
 import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.model';
 import { ICertificationReadOnlyModel } from '../api/models/surgeons/certification-read-only.model';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ApplicationSelectors } from '../state/application/application.selectors';
+import { IFeatureFlags } from '../state/application/application.state';
 
 @UntilDestroy()
 @Component({
@@ -35,6 +39,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     ActionCardComponent,
     UserInformationCardComponent,
     HighlightCardComponent,
@@ -47,6 +52,10 @@ export class DashboardComponent {
 
   @Select(UserProfileSelectors.userClaims) userClaims$:
     | Observable<string[]>
+    | undefined;
+
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
     | undefined;
 
   @Select(DashboardSelectors.dashboardProgramInformation) programInformation$:
@@ -65,131 +74,279 @@ export class DashboardComponent {
 
   userData: IUserProfile | undefined;
   userActionCards: IActionCardReadOnlyModel[] | undefined;
-  isSurgeon: boolean | undefined;
+  isSurgeon = false;
   userInformation!: IProgramReadOnlyModel | ICertificationReadOnlyModel[];
 
   alertsAndNotices: any | undefined;
 
   upcomingExams: any[] | undefined;
 
-  constructor(private _store: Store) {
+  featureFlags: IFeatureFlags = {};
+
+  certifiedCards: IActionCardReadOnlyModel[] = CERTIFIED_ACTION_CARDS;
+  traineeCards: IActionCardReadOnlyModel[] = TRAINEE_ACTION_CARDS;
+
+  constructor(
+    private _store: Store,
+    private _translateService: TranslateService
+  ) {
+    this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
+      if (featureFlags) {
+        this.featureFlags = featureFlags;
+
+        // TODO - since we are assuming content and order for these lists we should just define them in the page rather than fetching a pre-defined list
+        this.traineeCards[0].disabled = !this.featureFlags.gmeHistoryPage;
+        this.traineeCards[0].actionDisplay = this.featureFlags.gmeHistoryPage
+          ? 'View Your GME'
+          : 'Coming Soon';
+
+        this.traineeCards[1].disabled = !this.featureFlags.applyRegisterPage;
+        this.traineeCards[1].actionDisplay = this.featureFlags.applyRegisterPage
+          ? 'Apply Now'
+          : 'Coming Soon';
+
+        this.certifiedCards[0].disabled =
+          !this.featureFlags.continuousCertificationPage;
+        this.certifiedCards[0].actionDisplay = this.featureFlags
+          .continuousCertificationPage
+          ? 'See Requirements'
+          : 'Coming Soon';
+
+        this.certifiedCards[1].disabled = !this.featureFlags.applyRegisterPage;
+        this.certifiedCards[1].actionDisplay = this.featureFlags
+          .applyRegisterPage
+          ? 'Apply Now'
+          : 'Coming Soon';
+
+        this.certifiedCards[2].disabled = !this.featureFlags.cmeRepositoryPage;
+        this.certifiedCards[2].actionDisplay = this.featureFlags
+          .cmeRepositoryPage
+          ? 'View CME Repository'
+          : 'Coming Soon';
+      }
+    });
     this.initDashboardData();
   }
 
   initDashboardData() {
-    this.userClaims$?.pipe(untilDestroyed(this)).subscribe((userClaims) => {
-      const isSurgeon = userClaims?.includes(UserClaims.surgeon);
-      this.isSurgeon = isSurgeon;
+    this.userClaims$
+      ?.pipe(
+        skipWhile((userClaims) => !userClaims),
+        untilDestroyed(this)
+      )
+      .subscribe((userClaims) => {
+        const isSurgeon = userClaims?.includes(UserClaims.surgeon);
+        const isTrainee = userClaims?.includes(UserClaims.trainee);
+        this.isSurgeon = isSurgeon;
 
-      if (isSurgeon) {
-        this._store.dispatch(new GetDashboardCertificationInformation());
-        this.certificateInformation$?.subscribe((userInformation) => {
-          if (userInformation?.certificates?.length > 0) {
-            this.userInformation = userInformation.certificates;
-          }
-        });
-      } else {
-        this._store.dispatch(new GetDashboardProgramInformation());
-        this._store.dispatch(new GetTraineeRegistrationStatus('2022GO6'));
-        this._store.dispatch(new GetAlertsAndNotices());
-        this.registrationStatus$?.subscribe((userInformation) => {
-          const registrationInformation = userInformation?.registrationStatus;
-          const todaysDate = new Date();
-          const regOpenDate = new Date(
-            registrationInformation?.regOpenDate ?? ''
-          );
-          const regCloseDate = new Date(
-            registrationInformation?.regEndDate ?? ''
-          );
-          const isRegisterDates = () => {
-            if (todaysDate >= regOpenDate && todaysDate <= regCloseDate) {
-              return true;
-            }
-            return false;
-          };
+        if (isSurgeon) {
+          this._store.dispatch(new GetDashboardCertificationInformation());
+          this.certificateInformation$
+            ?.pipe(untilDestroyed(this))
+            .subscribe((userInformation) => {
+              if (userInformation?.certificates?.length > 0) {
+                this.userInformation = userInformation.certificates;
+              }
+            });
+        } else if (isTrainee) {
+          this._store.dispatch(new GetDashboardProgramInformation());
+          this._store.dispatch(new GetTraineeRegistrationStatus('2022GO6'));
+          this._store.dispatch(new GetAlertsAndNotices());
+          this.registrationStatus$
+            ?.pipe(untilDestroyed(this))
+            .subscribe((userInformation) => {
+              const registrationInformation =
+                userInformation?.registrationStatus;
+              const todaysDate = new Date();
+              const regOpenDate = new Date(
+                registrationInformation?.regOpenDate ?? ''
+              );
+              const regCloseDate = new Date(
+                registrationInformation?.regEndDate ?? ''
+              );
+              const isRegisterDates = () => {
+                if (todaysDate >= regOpenDate && todaysDate <= regCloseDate) {
+                  return true;
+                }
+                return false;
+              };
 
-          const applyForQECard = TRAINEE_ACTION_CARDS[1];
-          if (
-            (registrationInformation?.isRegOpen ||
-              registrationInformation?.isRegLate) &&
-            isRegisterDates()
-          ) {
-            applyForQECard.disabled = false;
-          } else {
-            applyForQECard.disabled = true;
-            applyForQECard.description = `QE applications are not yet available. Check back on ${new Date(
-              registrationInformation?.regOpenDate ?? ''
-            ).toLocaleDateString()}`;
-          }
-        });
-        this.programInformation$?.subscribe((userInformation) => {
-          if (userInformation?.programs?.programName.length > 0) {
-            this.userInformation = userInformation.programs;
-          }
-        });
-      }
+              const applyForQECard = this.traineeCards[1];
+              if (
+                (registrationInformation?.isRegOpen ||
+                  registrationInformation?.isRegLate) &&
+                isRegisterDates()
+              ) {
+                applyForQECard.disabled = !this.featureFlags.applyRegisterPage;
+                if (this.featureFlags.applyRegisterPage) {
+                  this._translateService
+                    .get('DASHBOARD.ACTION_CARDS.REGISTER_BTN')
+                    .pipe(untilDestroyed(this))
+                    .subscribe((res) => {
+                      applyForQECard.actionDisplay = res;
+                    });
+                } else {
+                  applyForQECard.actionDisplay = 'Coming Soon';
+                }
+              } else {
+                applyForQECard.disabled = true;
+                this._translateService
+                  .get('DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE', {
+                    date: new Date(
+                      registrationInformation?.regOpenDate ?? ''
+                    ).toLocaleDateString(),
+                  })
+                  .pipe(untilDestroyed(this))
+                  .subscribe((res) => {
+                    applyForQECard.description = res;
+                  });
+              }
+            });
+          this.programInformation$
+            ?.pipe(untilDestroyed(this))
+            .subscribe((userInformation) => {
+              if (userInformation?.programs?.programName.length > 0) {
+                this.userInformation = userInformation.programs;
+              }
+            });
+        }
 
-      this.setActionCardsByUserClaims(isSurgeon);
-      this.fetchAlertsAndNoticesByUserId(isSurgeon);
-    });
+        this.setActionCardsByUserClaims(isSurgeon);
+        this.fetchAlertsAndNoticesByUserId(isSurgeon);
+      });
   }
 
   fetchAlertsAndNoticesByUserId(isSurgeon: boolean) {
     const alertsAndNoticesTrainee = [
       {
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+        content: '',
+        contentKey: 'DASHBOARD.HIGHLIGHT_CARDS.UPCOMINGEXAMS_SUBTITLE',
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
       },
       {
-        title: 'Documents',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+        title: '',
+        titleKey: 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_TITLE',
+        content: '',
+        contentKey: 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_SUBTITLE',
         action: {
-          type: 'component',
-          action: '/documents',
+          type: this.featureFlags.documentsPage ? 'component' : null,
+          action: this.featureFlags.documentsPage ? '/documents' : null,
         },
+        actionText: this.featureFlags.documentsPage ? '' : 'Coming Soon',
+        actionTextKey: this.featureFlags.documentsPage
+          ? 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_BTN'
+          : undefined,
         alert: false,
         image:
           'https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg',
       },
     ];
 
-    this.alertsAndNotices$?.subscribe((alertsAndNotices) => {
-      let date;
-
-      if (alertsAndNotices?.alertsAndNotices?.examStartDate) {
-        date = new Date(
-          alertsAndNotices?.alertsAndNotices?.examStartDate ?? ''
-        ).toLocaleDateString();
-        alertsAndNoticesTrainee[0].title = `Next General Surgery QE -  ${date}`;
+    alertsAndNoticesTrainee.forEach((card) => {
+      if (card.titleKey) {
+        this._translateService
+          .get(card.titleKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.title = res;
+          });
+      }
+      if (card.contentKey) {
+        this._translateService
+          .get(card.contentKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.content = res;
+          });
+      }
+      if (card.actionTextKey) {
+        this._translateService
+          .get(card.actionTextKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.actionText = res;
+          });
       }
     });
 
+    this.alertsAndNotices$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((alertsAndNotices) => {
+        let date;
+
+        if (alertsAndNotices?.alertsAndNotices?.examStartDate) {
+          date = new Date(
+            alertsAndNotices?.alertsAndNotices?.examStartDate ?? ''
+          ).toLocaleDateString();
+
+          this._translateService
+            .get('DASHBOARD.HIGHLIGHT_CARDS.UPCOMINGEXAMS_TITLE', {
+              date: date,
+            })
+            .pipe(untilDestroyed(this))
+            .subscribe((res) => {
+              alertsAndNoticesTrainee[0].title = res;
+            });
+        }
+      });
+
     const alertsAndNoticesCertfiied = [
       {
-        title: 'Upcoming Exam Registration',
-        content: this.upcomingExams?.join('<br>'),
+        title: '',
+        titleKey: 'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_TITLE',
+        content: '',
+        contentKey: 'DASHBOARD.HIGHLIGHT_CARDS.EXAMREGISTRATION_SUBTITLE',
         alert: true,
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
       },
       {
-        title: 'Documents',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas maximus turpis id pulvinar.',
+        title: '',
+        titleKey: 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_TITLE',
+        content: '',
+        contentKey: 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_SUBTITLE',
         action: {
-          type: 'component',
-          action: '/documents',
+          type: this.featureFlags.documentsPage ? 'component' : null,
+          action: this.featureFlags.documentsPage ? '/documents' : null,
         },
-        actionText: 'View Your Documents',
+        actionText: this.featureFlags.documentsPage ? '' : 'Coming Soon',
+        actionTextKey: this.featureFlags.documentsPage
+          ? 'DASHBOARD.HIGHLIGHT_CARDS.DOCUMENTS_BTN'
+          : undefined,
         alert: false,
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
     ];
+
+    alertsAndNoticesCertfiied.forEach((card) => {
+      if (card.titleKey) {
+        this._translateService
+          .get(card.titleKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.title = res;
+          });
+      }
+      if (card.contentKey) {
+        this._translateService
+          .get(card.contentKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.content = res;
+          });
+      }
+      if (card.actionTextKey) {
+        this._translateService
+          .get(card.actionTextKey)
+          .pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            card.actionText = res;
+          });
+      }
+    });
 
     if (isSurgeon) {
       this._store
@@ -206,8 +363,10 @@ export class DashboardComponent {
                 <br>${regOpenDate.toLocaleDateString()} - ${regCloseDate.toLocaleDateString()}`;
             });
 
-          alertsAndNoticesCertfiied[0].content =
-            this.upcomingExams?.join('<br><br>');
+          if (this.featureFlags.applyRegisterPage) {
+            alertsAndNoticesCertfiied[0].content =
+              this.upcomingExams?.join('<br><br>') || '';
+          }
         });
     }
 

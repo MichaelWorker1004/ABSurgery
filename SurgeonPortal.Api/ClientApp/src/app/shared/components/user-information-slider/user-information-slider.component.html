@@ -1,6 +1,9 @@
 <div class="user-information-card">
   <div class="status-container">
-    <strong>Certifying Examinations for {{ examinationWeek }}</strong>
+    <strong>{{
+      'EXAMSCORING.DASHBOARD.CERTIFYING_TITLE'
+        | translate : { date: examinationWeek }
+    }}</strong>
   </div>
 
   <div class="info-container">
@@ -27,8 +30,7 @@
     </p-carousel>
     <ng-template #noResults>
       <div class="no-results">
-        Links to certifying examinations and examinee scoring pages can be found
-        here on the day of the exam.
+        {{ 'EXAMSCORING.DASHBOARD.CERTIFYING_NORESULTS' | translate }}
       </div>
     </ng-template>
   </div>

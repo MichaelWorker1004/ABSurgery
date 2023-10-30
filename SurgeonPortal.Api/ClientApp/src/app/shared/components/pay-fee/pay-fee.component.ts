@@ -25,7 +25,9 @@ import { IFormFields } from '../../models/form-fields/form-fields';
 import { ButtonModule } from 'primeng/button';
 import { IUserProfile, UserProfileSelectors } from 'src/app/state';
 import { PAY_FEE_FORM_FIELDS } from './pay-fee-form-fields';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-pay-fee',
   standalone: true,
@@ -99,7 +101,7 @@ export class PayFeeComponent implements OnInit {
   }
 
   setPicklists() {
-    this.states$?.subscribe((states) => {
+    this.states$?.pipe(untilDestroyed(this)).subscribe((states) => {
       this.states = states;
       this.paymentInformationFormFields.filter((fields) => {
         if (fields.name === 'state') {

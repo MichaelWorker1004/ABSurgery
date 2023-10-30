@@ -1,33 +1,26 @@
 <div class="abs-grid">
-  <div
-    class="flex justify-content-between"
-    *ngIf="title || gridOptions.showFilter"
-  >
+  <div class="flex justify-content-between" *ngIf="title || showFilter">
     <h4>{{ title }}</h4>
-    <div class="search-container mb-3" *ngIf="gridOptions.showFilter">
-      <div class="text-search" *ngIf="gridOptions.filterType === 'text'">
-        <sl-input
-          [placeholder]="gridOptions.placeholder ?? 'Search'"
-          (keyup)="onGridFilterChange($event)"
-        ></sl-input>
+    <div class="search-container mb-3" *ngIf="showFilter">
+      <div class="text-search" *ngIf="filterType === 'text'">
+        <input
+          type="text"
+          pInputText
+          [placeholder]="filterPlaceholder"
+          (keyup)="whenGridFilterChange($event)"
+        />
         <i class="fa-solid fa-search"></i>
       </div>
-      <div
-        class="dropdown-search"
-        *ngIf="gridOptions.filterType === 'dropdown'"
-      >
-        <sl-select
-          (sl-change)="onGridFilterChange($event)"
-          [placeholder]="gridOptions.placeholder ?? 'Search'"
-          clearable
+      <div class="dropdown-search" *ngIf="filterType === 'dropdown'">
+        <p-dropdown
+          [options]="filterOptions"
+          [placeholder]="filterPlaceholder"
+          (onChange)="whenGridFilterChange($event)"
+          [optionLabel]="'label'"
+          [showClear]="true"
+          [style]="{ minWidth: '237px' }"
         >
-          <sl-option
-            [value]="option.value"
-            *ngFor="let option of gridOptions.filterOptions"
-          >
-            {{ option.label }}
-          </sl-option>
-        </sl-select>
+        </p-dropdown>
       </div>
     </div>
   </div>
@@ -79,20 +72,20 @@
               [style.min-width]="c.width ? 'unset' : ''"
             >
               <div *ngIf="!c.cellRenderer">
-                {{ r[c.field] }}
+                {{ r[c.fieldName] }}
               </div>
               <div *ngIf="c.cellRenderer === AbsGridCellRendererType.Currency">
                 {{ r[c.field] | currency : 'USD' : true : '1.2-2' }}
               </div>
               <div *ngIf="c.cellRenderer === AbsGridCellRendererType.YesNo">
-                {{ r[c.field] ? 'Yes' : 'No' }}
+                {{ r[c.fieldName] ? 'Yes' : 'No' }}
               </div>
               <div
                 *ngIf="
                   (c.cellRenderer === AbsGridCellRendererType.Button &&
-                    r[c.field]) ||
+                    r[c.fieldName]) ||
                   (c.cellRenderer === AbsGridCellRendererType.Button &&
-                    c.field.toLowerCase() === c.headerName.toLowerCase())
+                    c.fieldName.toLowerCase() === c.headerName.toLowerCase())
                 "
                 class="action"
               >
@@ -110,7 +103,7 @@
               >
                 <button
                   (click)="handleAction(c.cellRendererParams, r)"
-                  *ngIf="r[c.field]"
+                  *ngIf="r[c.fieldName]"
                 >
                   <i [class]="c.icon" *ngIf="c.icon"></i>
                   {{ c.headerName }}
@@ -123,8 +116,8 @@
               >
                 <p-button
                   [label]="c.headerName"
-                  [icon]="c.icon"
-                  [styleClass]="c.buttonClass"
+                  [icon]="c.icon ?? ''"
+                  [styleClass]="c.buttonClass ?? ''"
                   class="prime-button"
                   [style]="{ width: c.width + 'px' }"
                   (onClick)="handleAction(c.cellRendererParams, r)"
@@ -142,27 +135,27 @@
                     *ngIf="c.fileType"
                   ></i>
                   <i class="fa-solid fa-file" *ngIf="!c.fileType"></i>
-                  {{ r[c.field] }}
+                  {{ r[c.fieldName] }}
                 </button>
               </div>
               <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.DateFormatter"
                 [class]="c.cellClass"
               >
-                {{ r[c.field] | date : 'MM/dd/yyyy' }}
+                {{ r[c.fieldName] | date : 'MM/dd/yyyy' }}
               </div>
               <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
-                [class]="c.cellClass(r[c.field]).toLowerCase()"
+                [class]="c.cellClass(r[c.fieldName]).toLowerCase()"
               >
-                {{ r[c.field] }}
+                {{ r[c.fieldName] }}
               </div>
               <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomStyle"
-                [style]="c.style(r[c.field])"
+                [style]="c.style(r[c.fieldName])"
               >
                 {{ c.cellStyle }}
-                {{ r[c.field] }}
+                {{ r[c.fieldName] }}
               </div>
               <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.ExpandToggle"
@@ -198,7 +191,7 @@
                 noResultsMessage
               }}</span>
               <span *ngIf="localData && localData.length > 0">{{
-                gridOptions.noFilteredResultsMessage
+                noFilteredResultsMessage
               }}</span>
             </div>
           </td>

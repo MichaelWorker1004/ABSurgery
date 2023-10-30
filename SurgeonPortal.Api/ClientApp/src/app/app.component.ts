@@ -1,31 +1,33 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-  RouterOutlet,
-  RouterStateSnapshot,
-} from '@angular/router';
-import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
-import { Observable, Subscription, take } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterOutlet, RouterStateSnapshot } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { NgxsModule, Select, Store } from '@ngxs/store';
-import packageInfo from '../../package.json';
 import { MessagesModule } from 'primeng/messages';
+import { Observable } from 'rxjs';
+import packageInfo from '../../package.json';
+import { LoginComponent } from './login/login.component';
 
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Message } from 'primeng/api';
+import { IMenuItem } from 'src/web-components/menuItem';
+import { IAppUserReadOnlyModel } from './api';
+import { AlertComponent } from './shared/components/alert/alert.component';
+import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
+import { SideNavigationComponent } from './side-navigation/side-navigation.component';
+import { UserClaims } from './side-navigation/user-status.enum';
 import {
   AuthSelectors,
   GetUserProfile,
   IUserProfile,
   UserProfileSelectors,
 } from './state';
-import { SideNavigationComponent } from './side-navigation/side-navigation.component';
-import { DashboardHeaderComponent } from './shared/components/dashboard-header/dashboard-header.component';
-import { UserClaims } from './side-navigation/user-status.enum';
-import { Message } from 'primeng/api';
-import { AlertComponent } from './shared/components/alert/alert.component';
 import { LoadApplication } from './state/application/application.actions';
-import { IAppUserReadOnlyModel } from './api';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {
+  CERTIFIED_NAV_ITEMS,
+  EXAMINER_NAV_ITEMS,
+  TRAINEE_NAV_ITEMS,
+} from './nav-items';
 
 @UntilDestroy()
 @Component({
@@ -37,6 +39,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
     RouterOutlet,
     LoginComponent,
     CommonModule,
+    TranslateModule,
     NgxsModule,
     SideNavigationComponent,
     DashboardHeaderComponent,
@@ -59,9 +62,32 @@ export class AppComponent implements OnInit {
 
   isAuthenticated = false;
   isPasswordReset = false;
+
   isSurgeon = false;
   isExaminer = false;
   isSideNavOpen = false;
+  sideNavLogoPath = '../../assets/img/abs-logo.svg';
+  applicationName = 'The American Board Of Surgery';
+
+  navItems: Array<IMenuItem> = [];
+  headerLinks = [
+    {
+      display: 'News',
+      action: 'https://www.absurgery.org/default.jsp?news_home_mb',
+    },
+    {
+      display: 'EPAs',
+      action: 'https://www.absurgery.org/default.jsp?epahome',
+    },
+    {
+      display: 'About',
+      action: 'https://www.absurgery.org/default.jsp?abouthome',
+    },
+    {
+      display: 'Contact',
+      action: 'https://www.absurgery.org/default.jsp?aboutcontact',
+    },
+  ];
 
   currentYear = new Date().getFullYear();
 
@@ -70,11 +96,7 @@ export class AppComponent implements OnInit {
   preventScreenshot = false;
   messages!: Message[];
 
-  constructor(
-    private _store: Store,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor(private _store: Store, private router: Router) {
     this.isAuthenticated$?.pipe(untilDestroyed(this)).subscribe((isAuthed) => {
       this.isAuthenticated = isAuthed;
       this.isPasswordReset = this._store.selectSnapshot(
@@ -89,13 +111,23 @@ export class AppComponent implements OnInit {
         this.isSurgeon =
           claims.includes(UserClaims.surgeon) &&
           !claims.includes(UserClaims.trainee);
+        this.navItems = this.isSurgeon
+          ? CERTIFIED_NAV_ITEMS
+          : TRAINEE_NAV_ITEMS;
         this.isExaminer = claims.includes(UserClaims.examiner);
+
+        if (this.isExaminer) {
+          this.navItems = this.navItems.concat(EXAMINER_NAV_ITEMS);
+        }
+
         this._store.dispatch(new GetUserProfile(loginUser, claims));
       }
 
       if (!isAuthed) {
         const returnUrl = routerStateSnapshot.url
-          ? routerStateSnapshot.url
+          ? routerStateSnapshot.url.includes('oral-examinations/exam/')
+            ? '/dashboard'
+            : routerStateSnapshot.url
           : '/dashboard';
         this.router.navigate(['/login'], {
           queryParams: { returnUrl: returnUrl },

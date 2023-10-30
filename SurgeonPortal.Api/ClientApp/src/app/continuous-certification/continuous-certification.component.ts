@@ -11,16 +11,19 @@ import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outc
 import { AttestationModalComponent } from './attestation-modal/attestation-modal.component';
 import { ReferenceFormModalComponent } from './reference-form-modal/reference-form-modal.component';
 import { Action } from '../shared/components/action-card/action.enum';
+import { Observable, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { GetStateList } from '../state/picklists';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ApplicationSelectors } from '../state/application/application.selectors';
+import { IFeatureFlags } from '../state/application/application.state';
+import { LegendComponent } from '../shared/components/legend/legend.component';
+import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
 import {
   UserProfileSelectors,
   IUserProfile,
-  GetExamFees,
   ExamProcessSelectors,
+  GetExamFees,
 } from '../state';
-import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -40,11 +43,16 @@ interface ActionMap {
     OutcomeRegistriesModalComponent,
     AttestationModalComponent,
     ReferenceFormModalComponent,
+    LegendComponent,
   ],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ContinuousCertificationComponent implements OnInit {
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
+
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
@@ -53,6 +61,7 @@ export class ContinuousCertificationComponent implements OnInit {
     | Observable<IExamFeeReadOnlyModel[]>
     | undefined;
 
+  userData!: any;
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
   attestationModal = false;
@@ -60,6 +69,23 @@ export class ContinuousCertificationComponent implements OnInit {
   payFeeModal = false;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
+
+  legendItems = [
+    {
+      text: 'Completed',
+      color: '#1c827c',
+    },
+    {
+      text: 'In Progress',
+      color: '#dbad69',
+    },
+    {
+      text: 'Contingent',
+      color: '#a0a0a0',
+    },
+  ];
+
+  featureFlags: IFeatureFlags = {};
 
   private actionMap: ActionMap = {
     outcomeRegistriesModal: () => {
@@ -79,6 +105,11 @@ export class ContinuousCertificationComponent implements OnInit {
   constructor(private _store: Store) {
     this._store.dispatch(new GetStateList('500'));
     this._store.dispatch(new GetExamFees());
+    this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
+      if (featureFlags) {
+        this.featureFlags = featureFlags;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -116,9 +147,13 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.component,
           action: '/personal-profile',
         },
-        actionDisplay: 'View / Update my information',
+        actionDisplay: this.featureFlags.personalProfilePage
+          ? 'View / Update my information'
+          : 'Coming Soon',
         icon: 'fa-solid fa-address-card',
         status: Status.Completed,
+        disabled: !this.featureFlags.personalProfilePage,
+        displayStatusText: false,
       },
       {
         title: 'Outcomes Registries / Quality Assessment Programs',
@@ -131,6 +166,7 @@ export class ContinuousCertificationComponent implements OnInit {
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-stethoscope',
         status: Status.Completed,
+        displayStatusText: false,
       },
       {
         title: 'Medical Training',
@@ -140,9 +176,13 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.component,
           action: '/medical-training',
         },
-        actionDisplay: 'View / Update my training',
+        actionDisplay: this.featureFlags.medicalTrainingPage
+          ? 'View / Update my training'
+          : 'Coming Soon',
         icon: 'fa-solid fa-language',
         status: Status.Completed,
+        disabled: !this.featureFlags.medicalTrainingPage,
+        displayStatusText: false,
       },
       {
         title: 'Professional Standing',
@@ -152,9 +192,13 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.component,
           action: '/professional-standing',
         },
-        actionDisplay: 'View / Update my activities',
+        actionDisplay: this.featureFlags.professionalStandingPage
+          ? 'View / Update my activities'
+          : 'Coming Soon',
         icon: 'fa-solid fa-certificate',
         status: Status.InProgress,
+        disabled: !this.featureFlags.professionalStandingPage,
+        displayStatusText: false,
       },
       {
         title: 'CME Repository',
@@ -164,9 +208,13 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.component,
           action: '/cme-repository',
         },
-        actionDisplay: 'View CMEs',
+        actionDisplay: this.featureFlags.cmeRepositoryPage
+          ? 'View CMEs'
+          : 'Coming Soon',
         icon: 'fa-solid fa-id-card-clip',
         status: Status.InProgress,
+        disabled: !this.featureFlags.cmeRepositoryPage,
+        displayStatusText: false,
       },
       {
         title: 'Pay Fee',
@@ -179,6 +227,7 @@ export class ContinuousCertificationComponent implements OnInit {
         actionDisplay: 'View / Pay Fee',
         icon: 'fa-solid fa-language',
         status: Status.InProgress,
+        displayStatusText: false,
       },
       {
         title: 'Reference Forms',
@@ -191,6 +240,7 @@ export class ContinuousCertificationComponent implements OnInit {
         actionDisplay: 'View / Update my activities',
         icon: 'fa-solid fa-rectangle-list',
         status: Status.InProgress,
+        displayStatusText: false,
       },
       {
         title: 'Attestation',
@@ -204,17 +254,17 @@ export class ContinuousCertificationComponent implements OnInit {
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-user-check',
         status: Status.InProgress,
+        displayStatusText: false,
       },
       {
         title: 'Apply for an Exam',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          style: 2,
-        },
+        actionStyle: 'button',
         disabled: true,
         actionDisplay: 'Apply Now',
         icon: 'fa-solid fa-language',
+        displayStatusText: false,
       },
     ];
   }

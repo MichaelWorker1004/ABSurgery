@@ -1,4 +1,5 @@
 using Csla;
+using Csla.Rules;
 using SurgeonPortal.DataAccess.Contracts.CE;
 using SurgeonPortal.Library.Contracts.CE;
 using System;
@@ -99,7 +100,12 @@ namespace SurgeonPortal.Library.CE
 
         }
 
+		protected override void AddBusinessRules()
+		{
+			base.AddBusinessRules();
 
+            BusinessRules.AddRule(new ExamCasesScoredRule(2));
+		}
 
 
         [Fetch]
@@ -190,6 +196,27 @@ namespace SurgeonPortal.Library.CE
 			return dto;
 		}
 
+        private class ExamCasesScoredRule : BusinessRule
+        {
+            private IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
 
+            public ExamCasesScoredRule(int priority)
+            {
+                Priority = priority;
+                _getExamCasesScoredCommandFactory = new GetExamCasesScoredCommandFactory();
+            }
+
+			protected override void Execute(IRuleContext context)
+			{
+                var target = context.Target as ExamScore;
+
+                var command = _getExamCasesScoredCommandFactory.GetExamCasesScored(target.ExamScheduleId);
+
+                if(!command.CasesScored)
+                {
+                    context.AddErrorResult("All exam cases must be scored before saving the exam score.");
+                }
+			}
+		}
     }
 }

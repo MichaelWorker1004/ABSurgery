@@ -1,0 +1,110 @@
+{
+  "name": "CaseFeedbackReadOnly",
+  "implementationName": "Scoring\\CaseFeedbackReadOnly.GetByExaminerId",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_case_feedback_by_examinerid",
+    "ControllerName": "Scoring\\CaseFeedbackController",
+    "ControllerRoute": "api/cases/feedback",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExaminerId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Scoring\\CaseFeedbackReadOnly",
+    "ModelGroup": "CaseFeedbackReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-examiner-id"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_case_feedback_by_examinerid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_case_feedback_by_examinerId]",
+        "parameters": [
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "CaseHeaderId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CaseHeaderId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Scoring\\CaseFeedback",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "CaseHeaderId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CaseHeaderId"
+              },
+              {
+                "name": "Feedback",
+                "dataType": "string",
+                "maxLength": 5000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Feedback"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "CaseHeaderId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Scoring\\CaseFeedback.GetByExaminerId CaseFeedback -t=ytg-framework/editable-get -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[get_case_feedback_by_examinerId] -p:FetchMethodName=GetByExaminerId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route=by-examiner-id -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Scoring\\CaseFeedback.GetByExaminerId CaseFeedback -t=ytg-framework/editable-get -p:Model=Scoring\\CaseFeedback -p:Adapter=sp:ABSSP-[dbo].[get_case_feedback_by_examinerId] -p:FetchMethodName=GetByExaminerId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=CaseFeedback -p:Route=by-examiner-id -p:ControllerName=Scoring\\CaseFeedbackController -p:ControllerRoute=api/cases/feedback -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-08-23T15:19:23.4737218Z"
+  },
+  "version": 1
+}

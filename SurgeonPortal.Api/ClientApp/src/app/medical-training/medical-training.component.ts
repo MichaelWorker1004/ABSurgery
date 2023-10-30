@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -72,6 +77,7 @@ import { FormErrorsComponent } from '../shared/components/form-errors/form-error
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFormErrors } from '../shared/common';
 import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-training.model';
+import { SetUnsavedChanges } from '../state/application/application.actions';
 
 @UntilDestroy()
 @Component({
@@ -99,7 +105,7 @@ import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-t
     FormErrorsComponent,
   ],
 })
-export class MedicalTrainingComponent implements OnInit {
+export class MedicalTrainingComponent implements OnInit, OnDestroy {
   //TODO: [Joe] - add form-errors shared component
 
   @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
@@ -218,7 +224,6 @@ export class MedicalTrainingComponent implements OnInit {
     residencyProgramOther: new FormControl('', Validators.max(8000)),
   });
 
-  hasUnsavedChanges = false;
   isSubmitted = false;
 
   constructor(
@@ -236,10 +241,15 @@ export class MedicalTrainingComponent implements OnInit {
     this._store.dispatch(new GetOtherCertifications());
     this._store.dispatch(new GetFellowships());
   }
+  ngOnDestroy(): void {
+    this._store.dispatch(new SetUnsavedChanges(false));
+  }
 
   ngOnInit(): void {
+    this._store.dispatch(new SetUnsavedChanges(false));
+
     this.maxYear.setFullYear(this.year);
-    this.userId$?.subscribe((id) => {
+    this.userId$?.pipe(untilDestroyed(this)).subscribe((id) => {
       this.userId = id;
     });
     this.setPicklists();
@@ -247,50 +257,55 @@ export class MedicalTrainingComponent implements OnInit {
     this.getMedicalTraining();
     this.getRPVICertificates();
 
-    this.medicalTrainingForm.valueChanges.subscribe(() => {
-      this._store.dispatch(this.clearErrors);
-      const isDirty = this.medicalTrainingForm.dirty;
-      if (isDirty && !this.isSubmitted) {
-        this.hasUnsavedChanges = true;
-      } else {
-        this.hasUnsavedChanges = false;
-      }
-    });
+    this.medicalTrainingForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this._store.dispatch(this.clearErrors);
+        const isDirty = this.medicalTrainingForm.dirty;
+        this._store.dispatch(
+          new SetUnsavedChanges(isDirty && !this.isSubmitted)
+        );
+      });
     this.setStates();
   }
 
   setPicklists() {
-    this.countries$?.subscribe((countries: IPickListItem[]) => {
-      this.countries = countries;
-    });
-    this.graduateProfiles$?.subscribe(
-      (graduateProfiles: IGraduateProfileReadOnlyModel[]) => {
+    this.countries$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((countries: IPickListItem[]) => {
+        this.countries = countries;
+      });
+    this.graduateProfiles$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((graduateProfiles: IGraduateProfileReadOnlyModel[]) => {
         this.graduateProfiles = graduateProfiles;
-      }
-    );
-    this.degrees$?.subscribe((degrees: IDegreeReadOnlyModel[]) => {
-      this.degrees = degrees;
-    });
-    this.residencyPrograms$?.subscribe(
-      (residencyPrograms: IResidencyProgramReadOnlyModel[]) => {
+      });
+    this.degrees$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((degrees: IDegreeReadOnlyModel[]) => {
+        this.degrees = degrees;
+      });
+    this.residencyPrograms$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((residencyPrograms: IResidencyProgramReadOnlyModel[]) => {
         this.residencyPrograms = residencyPrograms;
-      }
-    );
-    this.documentTypes$?.subscribe(
-      (documentTypes: IDocumentTypeReadOnlyModel[]) => {
+      });
+    this.documentTypes$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((documentTypes: IDocumentTypeReadOnlyModel[]) => {
         this.documentTypes = documentTypes;
-      }
-    );
-    this.certificateTypes$?.subscribe(
-      (certificateTypes: ICertificateTypeReadOnlyModel[]) => {
+      });
+    this.certificateTypes$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((certificateTypes: ICertificateTypeReadOnlyModel[]) => {
         this.certificateTypes = certificateTypes;
-      }
-    );
+      });
   }
 
   getMedicalTraining() {
-    this.medicalTraining$?.subscribe(
-      (medicalTraining: IMedicalTrainingModel) => {
+    this.medicalTraining$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((medicalTraining: IMedicalTrainingModel) => {
         if (medicalTraining) {
           this.createMode = false;
           this.medicalTrainingId = medicalTraining.id;
@@ -315,18 +330,17 @@ export class MedicalTrainingComponent implements OnInit {
         } else {
           this.createMode = true;
         }
-      }
-    );
+      });
   }
 
   getRPVICertificates() {
-    this.otherCertifications$?.subscribe(
-      (otherCertifications: IOtherCertificationsModel[]) => {
+    this.otherCertifications$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((otherCertifications: IOtherCertificationsModel[]) => {
         if (otherCertifications?.length > 0) {
           this.canAddRPVI = false;
         }
-      }
-    );
+      });
   }
 
   onCountryChange(event: any) {
@@ -364,22 +378,24 @@ export class MedicalTrainingComponent implements OnInit {
 
   setStates(countryId?: string) {
     this._store.dispatch(new GetStateList(countryId ?? '500'));
-    this.states$?.subscribe((states: IStateReadOnlyModel[]) => {
-      this.states = states;
-      if (states.length > 0) {
-        this.medicalTrainingForm.get('medicalSchoolStateId')?.enable();
-      } else {
-        this.medicalTrainingForm.get('medicalSchoolStateId')?.disable();
-      }
-    });
+    this.states$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((states: IStateReadOnlyModel[]) => {
+        this.states = states;
+        if (states.length > 0) {
+          this.medicalTrainingForm.get('medicalSchoolStateId')?.enable();
+        } else {
+          this.medicalTrainingForm.get('medicalSchoolStateId')?.disable();
+        }
+      });
   }
 
   getDocumentsData() {
-    this.userCertificates$?.subscribe(
-      (userCertificates: IUserCertificateReadOnlyModel[]) => {
+    this.userCertificates$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((userCertificates: IUserCertificateReadOnlyModel[]) => {
         this.documentsData$.next(userCertificates);
-      }
-    );
+      });
   }
 
   handleDocumentUpload(event: any) {
@@ -565,7 +581,8 @@ export class MedicalTrainingComponent implements OnInit {
 
   toggleFormEdit(toggle: boolean) {
     this.isEdit = toggle;
-    this.hasUnsavedChanges = toggle;
+    // this.hasUnsavedChanges = toggle;
+    this._store.dispatch(new SetUnsavedChanges(toggle));
   }
 
   save() {

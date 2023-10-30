@@ -1,0 +1,76 @@
+{
+  "name": "GetExamCasesScoredCommand",
+  "implementationName": "CE\\GetExamCasesScoredCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.get_cases_scored",
+    "CommandMethodName": "GetExamCasesScored",
+    "ExecuteAsynchronously": "false",
+    "IncludeControllerInGeneration": "false",
+    "Model": "CE\\GetExamCasesScoredCommand",
+    "ModelGroup": "GetExamCasesScoredCommand",
+    "ReturnsPayload": "true",
+    "RootNamespace": "$project.RootNamespace"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_cases_scored",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_cases_scored]",
+        "parameters": [
+          {
+            "name": "ExamScheduleId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamScheduleId"
+          },
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "CE\\GetExamCasesScoredCommand",
+            "fields": [
+              {
+                "name": "CasesScored",
+                "dataType": "bool",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CasesScored"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ExamScheduleId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s CE\\GetExamCasesScoredCommand GetExamCasesScoredCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_cases_scored] -p:Model=CE\\GetExamCasesScoredCommand -p:ModelGroup=GetExamCasesScoredCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=GetExamCasesScored -p:ReturnsPayload=true -p:InlcudeControllerInGeneration=false ",
+    "inferredCommand": "ytgim generate i  CE\\GetExamCasesScoredCommand GetExamCasesScoredCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_cases_scored] -p:Model=CE\\GetExamCasesScoredCommand -p:ModelGroup=GetExamCasesScoredCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=GetExamCasesScored -p:ReturnsPayload=true -p:ExecuteAsynchronously=true -p:IncludeControllerInGeneration=false",
+    "generatedDateUtc": "2023-09-27T17:26:33.8288802Z"
+  },
+  "version": 1
+}

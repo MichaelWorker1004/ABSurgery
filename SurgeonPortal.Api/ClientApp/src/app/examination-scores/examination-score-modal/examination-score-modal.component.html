@@ -1,3 +1,11 @@
+<div id="exam-score-errors-container">
+  <abs-form-errors
+    *ngIf="errors"
+    [errors]="errors"
+    [clearErrors]="clearErrors"
+  ></abs-form-errors>
+</div>
+
 <div class="flex gap-5 view-header col-12">
   <div>
     <strong>Candidate Name:</strong> {{ localCandidateData?.candidateName }}
@@ -25,7 +33,7 @@
   <div
     class="flex justify-content-between mt-4"
     slot="footer"
-    *ngIf="!localCandidateData.allLocked"
+    *ngIf="!localCandidateData?.allLocked"
   >
     <p-button styleClass="p-button-link p-button-primary" (click)="cancel()"
       >Cancel</p-button
@@ -52,13 +60,13 @@
   <div
     class="flex justify-content-end mt-4"
     slot="footer"
-    *ngIf="!localCandidateData.allLocked"
+    *ngIf="!localCandidateData?.allLocked"
   >
     <p-button styleClass="p-button-link p-button-primary" (click)="cancel()"
       >Cancel</p-button
     >
     <p-button
-      (onClick)="saveScores()"
+      (onClick)="saveScores(true)"
       [style]="{ width: '337px' }"
       variant="primary"
       >Save

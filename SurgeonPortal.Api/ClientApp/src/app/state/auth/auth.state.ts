@@ -16,6 +16,7 @@ import {
   IAuthCredentials,
   IRefreshToken,
 } from './auth.interfaces';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 /**
  * The state token for the auth state
@@ -74,7 +75,11 @@ export class AuthState {
     return returnObj;
   }
 
-  constructor(private authService: AuthService, private store: Store) {}
+  constructor(
+    private authService: AuthService,
+    private store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {}
 
   /**
    * Login to the application
@@ -189,7 +194,6 @@ export class AuthState {
       clearTimeout(this.refreshTimer);
     }
     sessionStorage.clear();
-    this.store.reset({});
     ctx.setState({
       access_token: '',
       refresh_token: '',

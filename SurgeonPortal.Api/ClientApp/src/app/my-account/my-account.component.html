@@ -1,5 +1,5 @@
 <header>
-  <h1>My Account</h1>
+  <h1>{{ 'MYACCOUNT.TITLE' | translate }}</h1>
 </header>
 <ng-container *ngIf="user$ | async as user; else loading">
   <section>
@@ -15,11 +15,7 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-          erat, egestas sit amet tortor at, condimentum tempor erat.
-        </p>
+        <p>{{ 'MYACCOUNT.SUBTITLE' | translate }}</p>
         <ng-container *ngIf="isEdit">
           <abs-form-errors
             *ngIf="errors$ | async as error"
@@ -36,7 +32,7 @@
             <label>Password</label>
             <div>********</div>
           </div>
-          <div class="col-12 md:col-6 flex align-items-center gap-2">
+          <!-- <div class="col-12 md:col-6 flex align-items-center gap-2">
             <p-checkbox
               inputId="mailingList"
               name="mailingList"
@@ -45,7 +41,7 @@
               [readonly]="true"
             ></p-checkbox>
             <label for="mailingList">Receive ABS Emails / Newsletters?</label>
-          </div>
+          </div> -->
           <div class="col-12 flex justify-content-end">
             <p-button
               variant="primary"
@@ -101,7 +97,7 @@
                 [toggleMask]="true"
               ></p-password>
             </div>
-            <div class="col-12 md:col-6 flex align-items-center gap-2">
+            <!-- <div class="col-12 md:col-6 flex align-items-center gap-2">
               <p-checkbox
                 inputId="mailingList"
                 name="mailingList"
@@ -109,7 +105,7 @@
                 [binary]="true"
               ></p-checkbox>
               <label for="mailingList">Receive ABS Emails / Newsletters?</label>
-            </div>
+            </div> -->
             <div class="col-12 flex justify-content-end">
               <p-button
                 styleClass="p-button-link p-button-primary"

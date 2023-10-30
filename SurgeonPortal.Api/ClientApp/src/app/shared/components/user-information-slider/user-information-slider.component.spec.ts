@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsModule } from '@ngxs/store';
 import { surgeonPortalState } from 'src/app/state/surgeon-portal.state';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('UserInformationSliderComponent', () => {
   let component: UserInformationSliderComponent;
@@ -17,6 +18,7 @@ describe('UserInformationSliderComponent', () => {
         RouterTestingModule,
         NgxsModule.forRoot(surgeonPortalState),
         HttpClientTestingModule,
+        TranslateModule.forRoot(),
       ],
     }).compileComponents();
 

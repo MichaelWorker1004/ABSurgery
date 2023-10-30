@@ -118,7 +118,6 @@ export class ProfessionalStandingComponent implements OnInit {
   medicalLicenses$: Observable<IMedicalLicense[]> | undefined;
   @Select(ProfessionalStandingSelectors.slices.selectedMedicalLicense)
   selectedMedicalLicense$: Observable<IMedicalLicenseModel> | undefined;
-  editStateMedicalLiscense$: Subject<boolean> = new BehaviorSubject(true);
 
   extendedMedicalLicenses$: Subject<IMedicalLicense[]> | undefined =
     new BehaviorSubject([] as any);
@@ -147,9 +146,6 @@ export class ProfessionalStandingComponent implements OnInit {
     organizationTypeOptions: [],
     primaryPracticeOptions: [],
   };
-
-  hospitalAppointmentsHeightChange$: BehaviorSubject<boolean> =
-    new BehaviorSubject(true);
 
   /* Appointments and Privileges variables */
   @Select(ProfessionalStandingSelectors.slices.allAppointments)
@@ -180,29 +176,21 @@ export class ProfessionalStandingComponent implements OnInit {
 
   ngOnInit() {
     this.initPicklistValues();
-
-    //handle resize on edit for appointments panel
-    this.editHospitalAppointmentsAndPrivileges$
-      .pipe(untilDestroyed(this))
-      .subscribe((edit) => {
-        this.hospitalAppointmentsHeightChange$.next(
-          !this.hospitalAppointmentsHeightChange$.getValue()
-        );
-      });
-
     this.setStateMedicalLicenseEdit();
   }
 
   setStateMedicalLicenseEdit() {
-    this.medicalLicenses$?.subscribe((medicalLicenses: IMedicalLicense[]) => {
-      const extendedLicenses: IMedicalLicense[] = medicalLicenses.map(
-        (license) => ({
-          ...license,
-          showEdit: license.reportingOrganization === 'Self',
-        })
-      );
-      this.extendedMedicalLicenses$?.next(extendedLicenses);
-    });
+    this.medicalLicenses$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((medicalLicenses: IMedicalLicense[]) => {
+        const extendedLicenses: IMedicalLicense[] = medicalLicenses.map(
+          (license) => ({
+            ...license,
+            showEdit: license.reportingOrganization === 'Self',
+          })
+        );
+        this.extendedMedicalLicenses$?.next(extendedLicenses);
+      });
   }
 
   initPicklistValues() {
@@ -281,38 +269,37 @@ export class ProfessionalStandingComponent implements OnInit {
   getCurrentAppointmentDetails() {
     this._store
       .dispatch(new GetUserProfessionalStandingDetails())
-      .pipe(untilDestroyed(this))
+      ?.pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.currentAppointments$?.subscribe((res) => {
-          this.currentAppointments = res;
-          if (!res) {
-            this.editHospitalAppointmentsAndPrivileges$.next(true);
-          }
-        });
+        this.currentAppointments$
+          ?.pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            this.currentAppointments = res;
+            if (!res) {
+              this.editHospitalAppointmentsAndPrivileges$.next(true);
+            }
+          });
       });
   }
 
   getSanctionsAndEthicsDetails() {
     this._store
       .dispatch(new GetProfessionalStandingSanctionsDetails())
-      .pipe(untilDestroyed(this))
+      ?.pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.sanctionsAndEthics$?.subscribe((res) => {
-          this.sanctionsAndEthics = res;
-          if (!res) {
-            this.editSanctionsAndEthics$.next(true);
-          }
-        });
+        this.sanctionsAndEthics$
+          ?.pipe(untilDestroyed(this))
+          .subscribe((res) => {
+            this.sanctionsAndEthics = res;
+            if (!res) {
+              this.editSanctionsAndEthics$.next(true);
+            }
+          });
       });
   }
 
   getPreviousAppointmentsAndPrivileges() {
     this._store.dispatch(new GetPSAppointmentsAndPrivilegesList());
-    this.allAppointments$?.pipe(untilDestroyed(this)).subscribe(() => {
-      this.hospitalAppointmentsHeightChange$.next(
-        !this.hospitalAppointmentsHeightChange$.getValue()
-      );
-    });
   }
 
   getAppointmentDetails(appointment: IUserAppointmentModel) {

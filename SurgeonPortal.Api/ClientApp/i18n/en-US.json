@@ -1,0 +1,212 @@
+{
+  "CME": {
+    "HELPTEXT": "Credits and ABS Waivers dropping off are those that were earned more than five years ago from today. You may see an increase in the number of credits needed the next time you login if you have CME that is expiring between now and the end of the year. Refer to the itemized CME section for specific CME activities that may drop off soon.",
+    "ITEMIZED_CME": {
+      "TITLE": "Itemized CME"
+    },
+    "SUBTITLE": "CME requirements for the Continuous Certification (CC) Program are <strong>150 category 1 CME credits</strong> earned over the last five calendar years, <strong>50 of which must be self-assesment credits.</strong>",
+    "TITLE": "CME Repository",
+    "TOOLTIP": "Stay on track with CME requirements by averaging 30 credits per year.",
+    "WAIVERS": {
+      "SUBTITLE": "Listed below are activities you completed (e.g., a CCA module) during the current five-year period that have reduced your overall CME requirements.",
+      "TITLE": "Itemized ABS Waivers that Reduce Your CME Requirements"
+    }
+  },
+  "DASHBOARD": {
+    "ACTION_CARDS": {
+      "APPLY_BTN": "Apply for Exam",
+      "APPLY_SUBTITLE": "QE applications are not yet available. Check back on {{date}}",
+      "APPLY_TITLE": "Apply for a Qualified Exam",
+      "CCR_BTN": "See Requirements",
+      "CCR_SUBTITLE": "Click here to view your current Continuous Certification progress and complete any remaining requirements.",
+      "CCR_TITLE": "Continuous Certification Requirements",
+      "CME_BTN": "View Your CME",
+      "CME_SUBTITLE": "Click here to view your current CME Credits and keep track of your requirements for the Continuous Certification Program.",
+      "CME_TITLE": "Continuing Medical Education (CME)",
+      "GME_BTN": "View Your GME",
+      "GME_SUBTITLE": "Click here to view your current GME progress and to add rotations to your GME history.",
+      "GME_TITLE": "Graduate Medical Education (GME)",
+      "REGISTER_BTN": "Apply Now",
+      "REGISTER_SUBTITLE": "Click here to view and apply or register for any eligible exams.",
+      "REGISTER_TITLE": "Apply and Register"
+    },
+    "HIGHLIGHT_CARDS": {
+      "DOCUMENTS_BTN": "View Your Documents",
+      "DOCUMENTS_SUBTITLE": "Click here to view all of your current document and certificate uploads.",
+      "DOCUMENTS_TITLE": "Documents",
+      "EXAMREGISTRATION_TITLE": "Upcoming Exam Registration",
+      "EXAMREGISTRATION_SUBTITLE": "<strong>Coming soon.</strong><br>You will be able to find more information about upcoming exams and registration windows here.",
+      "UPCOMINGEXAMS_SUBTITLE": "You will be able to find more information about upcoming exams here as that information becomes available.",
+      "UPCOMINGEXAMS_TITLE": "Next General Surgery QE -  {{date}}"
+    },
+    "LASTLOGIN": "<strong>Last Login:</strong> {{lastLogin}}",
+    "STATUS": "<strong>Current Status:</strong> {{status}}",
+    "SUBTITLE": "Hello, {{user}}!",
+    "TITLE": "Dashboard"
+  },
+  "DOCUMENTS": {
+    "SUBTITLE": "View all of your uploaded documents and certifications.",
+    "TITLE": "Documents"
+  },
+  "EXAMSCORING": {
+    "DASHBOARD": {
+      "AGENDA_BTN": "Download Agenda",
+      "AGENDA_SUBTITLE": "Your agenda can be found here once it has been finalized.",
+      "AGENDA_TITLE": "Your Examination Agenda",
+      "CERTIFYING_NORESULTS": "Links to certifying examinations and examinee scoring pages can be found here on the day of the exam.",
+      "CERTIFYING_TITLE": "Certifying Examinations for {{date}}",
+      "CONFLICTS_BTN": "Download Conflicts",
+      "CONFLICTS_SUBTITLE": "Your conflicts report can be found here once is has been finalized.",
+      "CONFLICTS_TITLE": "Your Conflicts",
+      "DELIVER_BTN": "Begin Certifying Examinations",
+      "DELIVER_SUBTITLE": "Certifying examinations along with scoring capability can be found here on exam day.",
+      "DELIVER_TITLE": "Deliver Certifying Examinations",
+      "ROSTER_BTN": "Review Exam Case Rosters",
+      "ROSTER_SUBTITLE": "Review the cases for the next certifying examination and add personal notes as needed. Your personal notes will display each time you present the case.",
+      "ROSTER_TITLE": "Exam Case Rosters",
+      "SCORE_BTN": "Review Exam Scores",
+      "SCORE_SUBTITLE": "Check the status of submitted scores and edit any that remain incomplete as soon as possible.",
+      "SCORE_TITLE": "Daily Exam Scores",
+      "SUBTITLE": "Welcome to your examiner's dashboard. Information on the dashboard will change based on proximity to the exam adminstration. You will be able to review cases, score examinations, and access other documentation as applicable during the exam administration process."
+    },
+    "DEFAULT_EXAM": "Certifying Examination",
+    "EXAMINATION": {
+      "CANDIDATE": "<strong>Candidate Name:</strong> {{name}}",
+      "LIST_DATE": "<strong>Date:</strong> {{date}}",
+      "LIST_TITLE": "Start CE Exams",
+      "SCORE_CARD": {
+        "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseNumber}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
+        "REMARKS_TITLE_NO_CASE": "Remarks for Case {{caseNumber}}",
+        "SCORE": "Score Case {{caseNumber}}"
+      },
+      "SKIP": {
+        "SUBTITLE": "You will be able to score this exam later if needed (e.g., after reviewing a recording)",
+        "TITLE": "Click YES to skip this exam and move to the next session"
+      },
+      "START": {
+        "SUBTITLE": "Start the clock and begin examination for {{name}}? <br/> Once you start the clock, you cannot undo this action and return to this session",
+        "TITLE": "Clicking YES will start the exam timer"
+      },
+      "TIME": "<strong>Day/Time:</strong> {{time}}",
+      "TITLE": "Examination"
+    },
+    "EXAMROSTERS": {
+      "CASE_FEEDBACK_SUBTITLE": "Comments entered in this section will be shared with the exam writers.  Your feedback to the writers will only appear here and will not be displayed during the exam.  You may return to this section to revise your comments throughout the current CE administration.",
+      "CASE_FEEDBACK_TITLE": "Case Feedback for Exam Development",
+      "TITLE": "Exam Case Rosters"
+    },
+    "EXAMSCORES": {
+      "SUBTITLE": "All Exams Must be Scored by End of Day! Scores will be locked down at the end of each day.  If you need to modify locked scores, please email the ABS IT Team at IT@absurgery.org.",
+      "TITLE": "Daily Exam Scores"
+    }
+  },
+  "GME": {
+    "ITEMIZED_GME": {
+      "SUBTITLE": "Document all GME rotations completely, without any gaps throughout your training years. Your program director must attest to the accuracy of your rotations, and you will be able to request an attestation from your PD upon completion of this section.",
+      "TITLE": "Itemized GME"
+    },
+    "ROTATIONS": {
+      "SUBTITLE": "Date Range Covered: {{ fromDate }} through {{ toDate }}",
+      "TITLE": "My GME Rotations"
+    },
+    "SUMMARY": {
+      "SUBTITLE": "The table below is a summary, by residency level, of your clinical experience based on the dates you entered in the table above. Columns 2 through 4 summarize the number of weeks of clinical experience during each year of residency. Column 5 is a total of weeks per residency year, of rotations devoted to the content areas of surgery. Column 6 summarizes chief resident year rotations also devoted to the content areas of surgery.",
+      "TITLE": "GME Summary"
+    },
+    "TITLE": "Graduate Medical Education (GME)"
+  },
+  "LOGIN": {
+    "PASSWORD": "Password",
+    "PASSWORD_ERROR": "The Password field is required.",
+    "SUBMIT_BTN": "Login",
+    "SUBTITLE": "Please enter your username and password to login.",
+    "TITLE": "Welcome to The American Board of Surgery Surgeon Portal",
+    "USERNAME": "Username",
+    "USERNAME_ERROR": "The Username field is required."
+  },
+  "MEDICAL_TRAINING": {
+    "ADVANCED_TRAINING": {
+      "TITLE": "Additional / Advanced Medical Training"
+    },
+    "CERTIFICATES": {
+      "OTHER_CERTS_TITLE": "RPVI Certificate",
+      "TITLE": "Certificates"
+    },
+    "FELLOWSHIP": {
+      "SUBTITLE": "Enter and review your fellowship information here to ensure that it is accurate and up to date.",
+      "TITLE": "Fellowship"
+    },
+    "MEDICAL_SCHOOL": {
+      "SUBTITLE": "Enter and review your medical school informatuon here to ensure that it is accurate and up to date.",
+      "TITLE": "Medical School"
+    },
+    "RESIDENCY": {
+      "SUBTITLE": "Enter and review your residency information here to ensure that it is accurate and up to date.",
+      "TITLE": "Residency"
+    },
+    "TITLE": "Medical Training"
+  },
+  "meta": {
+    "locale": "en-US"
+  },
+  "MYACCOUNT": {
+    "SUBTITLE": "Enter and review your Email Address and Password here to ensure that they are accurate and up to date.",
+    "TITLE": "My Account"
+  },
+  "PROFESSIONAL_STANDING": {
+    "APPOINTMENTS": {
+      "ALL_APPOINTMENTS_TITLE": "All Hospital Appointments / Privileges",
+      "SUBTITLE": "If you are clinically active please provide your current practice and organization type. If you are not currently clinically active please explain why as well as providing information about any current non-clinical activities.",
+      "TITLE": "Current Hospital Appointments / Privileges"
+    },
+    "MEDICAL_LICENSE": {
+      "SUBTITLE": "Enter and review your State Medical License information here to ensure that it is accurate and up to date.",
+      "TITLE": "State Medical License"
+    },
+    "SANCTIONS": {
+      "TITLE": "Sanctions and Ethics"
+    },
+    "TITLE": "Professional Standing"
+  },
+  "PROFILE": {
+    "SUBTITLE": "Enter and review your Personal Information, Contact Information, Citizenship Information, and Demographic information here to ensure that it is accurate and up to date.",
+    "TITLE": "Personal Profile"
+  },
+  "SHELL": {
+    "ADD_BTN": "Add",
+    "CANCEL_BTN": "Cancel",
+    "CLOSE_BTN": "Close",
+    "CONTINUE_BTN": "Continue",
+    "COPYRIGHT": "@{{year}} All Rights Reserved. The American Board of Surgery",
+    "DELETE_BTN": "Delete",
+    "EDIT_BTN": "Edit",
+    "NO_BTN": "No",
+    "SAVE_BTN": "Save",
+    "SUBMIT_BTN": "Submit",
+    "YES_BTN": "Yes"
+  },
+  "SIDENAV": {
+    "APPLY_REGISTER": {
+      "MAIN": "Apply and Register",
+      "REGISTRATION": "Exam Registration",
+      "REQUIREMENTS": "Registration Requirements"
+    },
+    "CME": "CME Repository",
+    "CONTINUOUS_CERTIFICATION": "Continuous Certification",
+    "DASHBOARD": "Dashboard",
+    "DOCUMENTS": "Documents",
+    "EXAM_HISTORY": "Exam History",
+    "EXAM_SCORING": {
+      "CASE_ROSTER": "Exam Case Rosters",
+      "EXAMINATION": "Start CE Exams",
+      "MAIN": "CE Examiner Home",
+      "SCORES": "Daily Exam Scores"
+    },
+    "GME": "GME",
+    "MEDICAL_TRAINING": "Medical Training",
+    "MYACCOUNT": "My Account",
+    "PAYMENT_HISTORY": "Payment History",
+    "PROFESSIONAL_STANDING": "Professional Standing",
+    "PROFILE": "Personal Profile"
+  }
+}

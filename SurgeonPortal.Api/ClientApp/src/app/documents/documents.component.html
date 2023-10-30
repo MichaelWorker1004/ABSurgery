@@ -9,10 +9,11 @@
   </div>
   <abs-documents-upload
     [allowUpload]="false"
-    [documentsData$]="documentsData$"
+    [documentsData]="documentsData$ | async"
     [gridCols]="documentsCols"
-    [showFilter]="true"
-    [filterOn]="'documentName'"
+    [showFilter]="gridOptions.showFilter"
+    [filterOn]="gridOptions.filterOn"
+    [filterType]="gridOptions.filterType"
     (documentsAction)="handleGridAction($event)"
   ></abs-documents-upload>
 </sl-card>

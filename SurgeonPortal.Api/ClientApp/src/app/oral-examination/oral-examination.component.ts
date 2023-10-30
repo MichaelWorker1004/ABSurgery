@@ -1,36 +1,47 @@
+import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   HostListener,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExpandableComponent } from '../shared/components/expandable/expandable.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TranslateModule } from '@ngx-translate/core';
+import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { BehaviorSubject, Observable, distinctUntilChanged, take } from 'rxjs';
+import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
+import { IExamScoreModel } from '../api/models/ce/exam-score.model';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { IExamineeReadOnlyModel } from '../api/models/scoring/ce/examinee-read-only.model';
+import { IFormErrors } from '../shared/common';
+import { ExamTimerComponent } from '../shared/components/exam-timer-component/exam-timer.component';
 import { ExaminationScoreCardComponent } from '../shared/components/examination-score-card/examination-score-card.component';
-import { BehaviorSubject, Observable, take } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
+import { ExpandableComponent } from '../shared/components/expandable/expandable.component';
+import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
+  ApplicationSelectors,
+  ClearExamScoringErrors,
+  ClearExamineeData,
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
+  GetExamHeaderId,
   GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
+  IFeatureFlags,
   SkipExam,
   UpdateCaseScore,
   UserProfileSelectors,
 } from '../state';
-import { IExamineeReadOnlyModel } from '../api/models/scoring/ce/examinee-read-only.model';
-import { ExamTimerComponent } from '../shared/components/exam-timer-component/exam-timer.component';
-import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
-import { IExamScoreModel } from '../api/models/ce/exam-score.model';
-import { GlobalDialogService } from '../shared/services/global-dialog.service';
-import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { SetExamInProgress } from '../state/application/application.actions';
+import { s } from '@fullcalendar/core/internal-common';
 
 @UntilDestroy()
 @Component({
@@ -38,21 +49,27 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule,
     ExpandableComponent,
     ButtonModule,
     InputTextareaModule,
     ExaminationScoreCardComponent,
     ExamTimerComponent,
+    FormErrorsComponent,
   ],
   templateUrl: './oral-examination.component.html',
   styleUrls: ['./oral-examination.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class OralExaminationsComponent implements OnInit {
+export class OralExaminationsComponent implements OnInit, OnDestroy {
   @HostListener('contextmenu', ['$event'])
   onRightClick(event: any) {
     event.preventDefault();
   }
+
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
 
   @Select(ExamScoringSelectors.slices.examinee) examinee$:
     | Observable<IExamineeReadOnlyModel>
@@ -70,9 +87,11 @@ export class OralExaminationsComponent implements OnInit {
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
-  @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
 
-  examHeaderId = 491; // TODO - remove hard coded value
+  @ViewChild(ExamTimerComponent) ExamTimerComponent!: ExamTimerComponent;
 
   cases$: BehaviorSubject<any> = new BehaviorSubject([]);
   userId!: number;
@@ -94,9 +113,10 @@ export class OralExaminationsComponent implements OnInit {
   disable = true;
   submitDisable = true;
 
-  hasUnsavedChanges = true;
-
   disableSubmit = true;
+
+  errors: IFormErrors | null = null;
+  clearErrors = new ClearExamScoringErrors();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -104,34 +124,84 @@ export class OralExaminationsComponent implements OnInit {
     private router: Router,
     public globalDialogService: GlobalDialogService
   ) {
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      if (featureFlags?.ceScoreTesting) {
+        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
+      }
+    });
+
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+    });
+
+    window.onbeforeunload = (e) => {
+      e.returnValue = true;
+    };
+  }
+  ngOnDestroy(): void {
+    this._store.dispatch(new SetExamInProgress(false));
   }
 
   ngOnInit(): void {
+    this.globalDialogService.showLoading();
+    this._store.dispatch(new SetExamInProgress(true));
+
     this.activatedRoute.params.subscribe((params) => {
       this.examScheduleId = params['examinationId'];
-      this._store.dispatch(new GetExaminee(params['examinationId']));
-    });
 
-    this.userId$?.subscribe((userId: number) => {
-      this.userId = userId;
-    });
+      this._store
+        .dispatch(new ClearExamineeData())
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this._store
+            .dispatch(new GetExaminee(params['examinationId']))
+            .pipe(take(1))
+            .subscribe(() => {
+              this.userId$
+                ?.pipe(untilDestroyed(this))
+                .subscribe((userId: number) => {
+                  this.userId = userId;
+                });
 
-    this.getExaminationData();
+              this.getExaminationData();
+            });
+        });
+    });
   }
 
   getExaminationData() {
-    this.examinee$?.subscribe((examinee: IExamineeReadOnlyModel) => {
-      if (examinee) {
-        this.candidateName = examinee?.fullName;
-        this.dayTime = examinee?.examDate;
-        this.cases$.next(examinee.cases);
-        this.casesLength = examinee.cases?.length;
-        this.examScoringId = examinee?.examScoringId;
-        this.examineeUserId = examinee?.examineeUserId;
-        this.showTimer = true;
+    this.examinee$
+      ?.pipe(untilDestroyed(this), distinctUntilChanged())
+      .subscribe((examinee: IExamineeReadOnlyModel) => {
+        if (examinee) {
+          this.setActiveExam(examinee.cases);
+          this.candidateName = examinee?.fullName;
+          this.dayTime = examinee?.examDate;
+          this.cases$.next(examinee.cases);
+          this.casesLength = examinee.cases?.length;
+          this.examScoringId = examinee?.examScoringId;
+          this.examineeUserId = examinee?.examineeUserId;
+          setTimeout(() => {
+            this.globalDialogService.closeOpenDialog();
+          }, 0);
+          this.showTimer = true;
+        }
+      });
+  }
+
+  setActiveExam(cases: any[]) {
+    const ungradedCase = cases.findIndex((c) => !c.score);
+
+    if (ungradedCase !== 0) {
+      if (ungradedCase !== -1) {
+        this.activeCase = ungradedCase;
+        this.currentIncrement = ungradedCase + 1;
+      } else {
+        this.activeCase = cases.length;
+        this.currentIncrement = cases.length + 1;
+        this.setReviewExpand();
       }
-    });
+    }
   }
 
   handleChange(event: any) {
@@ -167,17 +237,25 @@ export class OralExaminationsComponent implements OnInit {
     this.currentIncrement += 1;
     this.disable = true;
 
-    if (this.currentIncrement > this.casesLength) {
-      this.scrollToElementById('expandableHeader' + this.casesLength);
-      this.ExamTimerComponent.stopTimers();
-      this.globalDialogService.showLoading();
-      this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
-      this.disable = true;
+    if (this.currentIncrement === this.casesLength) {
+      this.setReviewExpand();
     } else {
       this.scrollToElementById(
         'expandableHeader' + (this.currentIncrement - 1)
       );
     }
+  }
+
+  setReviewExpand() {
+    this._store
+      .dispatch(new GetSelectedExamScores(this.examScheduleId))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.scrollToElementById('expandableHeader' + this.casesLength);
+        this.ExamTimerComponent?.stopTimers();
+
+        this.disable = true;
+      });
   }
 
   handleSave(examCaseId: number, skipped = false) {
@@ -197,6 +275,7 @@ export class OralExaminationsComponent implements OnInit {
         .dispatch(new CreateCaseScore(model))
         .pipe(untilDestroyed(this))
         .subscribe(() => {
+          this._store.dispatch(new GetSelectedExamScores(this.examScheduleId));
           this.handleNextCase();
         });
     } else {
@@ -205,11 +284,11 @@ export class OralExaminationsComponent implements OnInit {
   }
 
   skipCase(examCaseId: number) {
-    let message = 'Are you sure you want to skip this case?';
+    let message = 'Skip scoring for now.  (I will score later.)';
     const currentCase = this.candidateCaseScores[examCaseId];
     if (currentCase?.score > 0) {
       message =
-        'Are you sure you want to skip this case? This will remove the selected case score.';
+        'Skip scoring for now.  (I will score later.) <br> This will remove the selected case score.';
     }
     this.globalDialogService
       ?.showConfirmation('Skip Case', message)
@@ -232,7 +311,7 @@ export class OralExaminationsComponent implements OnInit {
   async handleSaveAndSubmitLater() {
     await this.updateScores();
 
-    this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetExamInProgress(false));
 
     const dateParts = this.dayTime.replace(/\s+/g, ' ').trim().split(' ');
     const formattedDate = `${dateParts[1]} ${dateParts[0]} ${dateParts[2]}`;
@@ -242,52 +321,39 @@ export class OralExaminationsComponent implements OnInit {
       .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
       .pipe(take(1))
       .subscribe(() => {
-        this.submitExamFunctionality();
         this.router.navigate(['/ce-scoring/oral-examinations']);
       });
   }
 
   async handleSubmit() {
+    this.globalDialogService.showLoading();
     await this.updateScores();
     const model = {
       examScheduleId: this.examScheduleId,
     } as IExamScoreModel;
 
-    this.hasUnsavedChanges = false;
+    this._store.dispatch(new SetExamInProgress(false));
 
-    const caseCount = Object.keys(this.gradedCandidateCaseCores).length;
     let currentCase = 0;
-    const dateParts = this.dayTime.replace(/\s+/g, ' ').trim().split(' ');
-    const formattedDate = `${dateParts[1]} ${dateParts[0]} ${dateParts[2]}`;
-    const examDate = new Date(formattedDate);
 
     if (Object.entries(this.gradedCandidateCaseCores).length > 0) {
       Object.entries(this.gradedCandidateCaseCores).forEach(() => {
         currentCase += 1;
       });
     }
-
     this._store
-      .dispatch(new CreateExamScore(model))
+      .dispatch(new CreateExamScore(model, false))
       .pipe(take(1))
-      .subscribe(() => {
-        if (currentCase === caseCount) {
-          this._store
-            .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
-            .pipe(take(1))
-            .subscribe(() => {
-              this.submitExamFunctionality();
-            });
+      .subscribe((results) => {
+        if (results.examScoring.examErrors) {
+          // handle exam submission error
+          this.errors = results.examScoring.examErrors;
+          this.scrollToElementById('exam-score-errors');
+        } else {
+          this.errors = null;
+          this.router.navigate(['/ce-scoring/oral-examinations']);
         }
       });
-  }
-
-  submitExamFunctionality() {
-    this.globalDialogService.showSuccessError(
-      'Success',
-      'Scores updated successfully',
-      true
-    );
   }
 
   async updateScores() {
@@ -304,7 +370,7 @@ export class OralExaminationsComponent implements OnInit {
           criticalFail: data?.criticalFail,
           remarks: data?.remarks,
         } as ICaseScoreModel;
-        this.hasUnsavedChanges = false;
+        this._store.dispatch(new SetExamInProgress(false));
 
         if (data?.examScoringId) {
           promise.push(
@@ -312,7 +378,7 @@ export class OralExaminationsComponent implements OnInit {
           );
         } else if ((model?.score && model.score > 0) || model?.remarks) {
           promise.push(
-            this._store.dispatch(new CreateCaseScore(model)).toPromise()
+            this._store.dispatch(new CreateCaseScore(model, false)).toPromise()
           );
         }
       });

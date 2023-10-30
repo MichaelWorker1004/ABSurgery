@@ -1,13 +1,18 @@
 <div class="app" *ngIf="user$ | async as user">
   <div class="flex justify-content-between align-items-end">
     <div>
-      <h1>Dashboard</h1>
-      <h4 class="thin">Hello, {{ user.displayName }}!</h4>
+      <h1>{{ 'DASHBOARD.TITLE' | translate }}</h1>
+      <h4 class="thin">
+        {{ 'DASHBOARD.SUBTITLE' | translate : { user: user.displayName } }}
+      </h4>
     </div>
-    <div class="last-login">
-      <strong>Last Login:</strong>
-      {{ user.lastLoginDateUtc | date }}
-    </div>
+    <div
+      class="last-login"
+      [innerHTML]="
+        'DASHBOARD.LASTLOGIN'
+          | translate : { lastLogin: user.lastLoginDateUtc | date }
+      "
+    ></div>
   </div>
 
   <div class="grid">
@@ -21,7 +26,13 @@
     <abs-highlight-card
       class="col-12 md:col-6"
       *ngFor="let alert of alertsAndNotices"
-      [alert]="alert"
+      [title]="alert.title"
+      [content]="alert.content"
+      [alert]="alert.alert"
+      [image]="alert.image"
+      [actionType]="alert?.action?.type"
+      [actionAction]="alert?.action?.action"
+      [actionText]="alert.actionText"
     ></abs-highlight-card>
 
     <abs-action-card
@@ -30,6 +41,14 @@
       }} "
       *ngFor="let actionCard of userActionCards"
       [actionCard]="actionCard"
+      [titleKey]="actionCard.titleKey"
+      [description]="actionCard.description"
+      [descriptionKey]="actionCard.descriptionKey"
+      [icon]="actionCard.icon"
+      [actionType]="actionCard?.action?.type ?? ''"
+      [actionAction]="actionCard?.action?.action ?? ''"
+      [actionDisplayKey]="actionCard?.actionDisplayKey"
+      [disabled]="actionCard.disabled"
     ></abs-action-card>
   </div>
 </div>

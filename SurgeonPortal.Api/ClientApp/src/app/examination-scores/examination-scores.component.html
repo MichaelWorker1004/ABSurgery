@@ -1,22 +1,23 @@
-<h1>{{ (examTitle$ | async)?.examName || 'Certifying Examation' }}</h1>
+<h1>
+  {{ (examTitle$ | async)?.examName || 'EXAMSCORING.DEFAULT_EXAM' | translate }}
+</h1>
 <sl-card class="w-full">
-  <div slot="header">Examination Scores</div>
-  <div class="mt-2 mb-5">
-    Review and submit exam scores here. We kindly request that all exams are
-    scored by the end of the exam day, at which point they will be locked down.
-    If you need to complete or edit scores after the current exam day, please
-    contact the psychometricians.
+  <div slot="header">{{ 'EXAMSCORING.EXAMSCORES.TITLE' | translate }}</div>
+  <div class="mt-2 mb-5" [style.fontWeight]="'bold'">
+    <i class="fa-solid fa-triangle-exclamation text-warning"></i>
+    {{ 'EXAMSCORING.EXAMSCORES.SUBTITLE' | translate }}
   </div>
 
   <form [formGroup]="filterForm" class="dropdown-container flex gap-2 absolute">
-    <p-dropdown
+    <!-- TODO: [Joe] uncomment this or remove it based on intended behavior from feature/1811 -->
+    <!-- <p-dropdown
       placeholder="Filter by Day"
       [showClear]="true"
       [style]="{ minWidth: '250px' }"
       [options]="dayOptions"
       formControlName="day"
     >
-    </p-dropdown>
+    </p-dropdown> -->
 
     <p-dropdown
       placeholder="Filter by Status"
@@ -31,6 +32,8 @@
   <abs-grid
     [columns]="examinationScoresCols"
     [gridOptions]="gridOptions"
+    [showFilter]="gridOptions.showFilter"
+    [filterOn]="gridOptions.filterOn"
     [data]="filteredExaminationScoresData$"
     (action)="handleView($event)"
     [pagination]="true"
@@ -43,7 +46,7 @@
   [preventOverlayClose]="!lockedCases"
   [hideClose]="!lockedCases"
   (closeDialog)="closeDialog($event)"
-  title="Examination Scores"
+  title="Daily Exam Scores"
 >
   <abs-examination-score-modal
     [candidateData]="candidateData$"

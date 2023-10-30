@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import { ORAL_EXAMINATION_COLS } from './oral-examination-cols';
@@ -10,15 +11,19 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-read-only.model';
 import {
+  ApplicationSelectors,
   ExamScoringSelectors,
+  GetExamHeaderId,
   GetExamTitle,
   GetExamineeList,
+  IFeatureFlags,
   SkipExam,
 } from '../state';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { LegendComponent } from '../shared/components/legend/legend.component';
 
 @UntilDestroy()
 @Component({
@@ -27,15 +32,20 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
   imports: [
     FormsModule,
     CommonModule,
+    TranslateModule,
     GridComponent,
     InputTextModule,
     ButtonModule,
+    LegendComponent,
   ],
   templateUrl: './oral-examinations.component.html',
   styleUrls: ['./oral-examinations.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class OralExaminationsComponent implements OnInit {
+  @Select(ApplicationSelectors.slices.featureFlags) featureFlags$:
+    | Observable<IFeatureFlags>
+    | undefined;
   @Select(ExamScoringSelectors.slices.examineeList)
   examineeList$: Observable<IExamSessionReadOnlyModel[]> | undefined;
 
@@ -43,21 +53,55 @@ export class OralExaminationsComponent implements OnInit {
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
-  examHeaderId = 491; // TODO - remove hard coded value
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
 
-  examDate: Date = new Date('01/01/24');
+  examDate: Date = new Date();
+
   examDateDisplay: Date = new Date();
   zoomLink: string | undefined = '';
   oralExaminations$: BehaviorSubject<IExamSessionReadOnlyModel[]> =
     new BehaviorSubject<IExamSessionReadOnlyModel[]>([]);
   oralExaminationCols = ORAL_EXAMINATION_COLS;
 
+  legendItems = [
+    {
+      text: 'Not Submitted',
+      color: '#7f7f7f',
+    },
+    {
+      text: 'Current Session',
+      color: '#dbad6a',
+    },
+    {
+      text: 'Submitted',
+      color: '#1c827d',
+    },
+  ];
+
   constructor(
     private _route: Router,
     private _globalDialogService: GlobalDialogService,
-    private _store: Store
+    private _store: Store,
+    private _translateService: TranslateService
   ) {
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this.featureFlags$?.pipe().subscribe((featureFlags) => {
+      if (featureFlags) {
+        if (featureFlags.ceScoreTesting) {
+          this._store.dispatch(
+            new GetExamHeaderId(featureFlags.ceScoreTesting)
+          );
+        }
+        if (featureFlags.ceScoreTestingDate) {
+          this.examDate = new Date('10/16/2023');
+        }
+      }
+    });
+
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+    });
   }
 
   ngOnInit(): void {
@@ -65,6 +109,8 @@ export class OralExaminationsComponent implements OnInit {
   }
 
   getOralExaminations() {
+    console.log('getOralExaminations', this.examDate.toString());
+    console.log('getOralExaminations', this.examDate.toISOString());
     this._store.dispatch(new GetExamineeList(this.examDate.toISOString()));
 
     this.examineeList$
@@ -126,10 +172,14 @@ export class OralExaminationsComponent implements OnInit {
       // add any store logic required to start the exam here
       // add any checks to prevent the exam from being started incorrectly here
       this._globalDialogService
-        .showConfirmationWithWarning(
-          'Examination Confirmation',
-          `Are you sure you want to start the examination for ${data.fullName}?`,
-          'Clicking confirm will start the timer and begin the exam.'
+        .showConfirmation(
+          this._translateService.instant('EXAMSCORING.EXAMINATION.START.TITLE'),
+          this._translateService.instant(
+            'EXAMSCORING.EXAMINATION.START.SUBTITLE',
+            {
+              name: data.fullName,
+            }
+          )
         )
         .then((result) => {
           if (result) {
@@ -143,8 +193,10 @@ export class OralExaminationsComponent implements OnInit {
     } else if ($event.fieldKey === 'skipExam') {
       this._globalDialogService
         .showConfirmation(
-          'Are you sure you want to skip this examination?',
-          'Clicking confirm will permanantly skip this examination '
+          this._translateService.instant('EXAMSCORING.EXAMINATION.SKIP.TITLE'),
+          this._translateService.instant(
+            'EXAMSCORING.EXAMINATION.SKIP.SUBTITLE'
+          )
         )
         .then((result) => {
           if (result) {

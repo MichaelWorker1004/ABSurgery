@@ -2,15 +2,9 @@
   <div class="nav-header">
     <div class="flex">
       <div class="logo">
-        <img
-          src="../../assets/img/abs-logo.svg"
-          alt="The American Board Of Surgery"
-        />
+        <img *ngIf="logoPath" [src]="logoPath" [alt]="applicationName" />
       </div>
-      <h3>
-        The American <br />
-        Board of Surgery
-      </h3>
+      <h3>{{ applicationName }}</h3>
     </div>
     <div class="nav-toggle">
       <div class="hamburger" (click)="toggleSideNav()">
@@ -21,45 +15,48 @@
   </div>
 
   <nav>
-    <ul class="main-navigation">
-      <li class="left-padding" *ngFor="let item of navItems">
-        <a
-          [routerLink]="item.action"
-          routerLinkActive="active"
-          (click)="toggleSideNav()"
-          *ngIf="!item.children"
-          ><i [ngClass]="item.icon"></i>{{ item.display }}</a
-        >
-        <a
-          (click)="toggleSubNav(item)"
-          *ngIf="item.children"
-          [routerLink]="item.action"
-          routerLinkActive="active"
-          class="has-sub-menu"
-        >
-          <i [ngClass]="item.icon"></i>{{ item.display }}
-        </a>
-        <div class="sub-menu" *ngIf="item.children">
-          <ul>
-            <li *ngFor="let child of item.children">
-              <a
-                [routerLink]="[item.action, child.action]"
-                routerLinkActive="active"
-                (click)="toggleSideNav()"
-                ><i [ngClass]="child.icon"></i>{{ child.display }}</a
-              >
-            </li>
-          </ul>
-        </div>
-      </li>
+    <ul class="main-navigation pb-5">
+      <div *ngFor="let item of navItems">
+        <li class="left-padding" *ngIf="featureToggle(item)">
+          <a
+            [routerLink]="item.action"
+            routerLinkActive="active"
+            (click)="toggleSideNav()"
+            *ngIf="!item.children"
+            ><i [ngClass]="item.icon"></i>{{ item.display }}</a
+          >
+          <a
+            *ngIf="item.children"
+            [routerLink]="item.action"
+            routerLinkActive="active"
+            class="has-sub-menu"
+          >
+            <i [ngClass]="item.icon"></i>{{ item.display }}
+          </a>
+          <div class="sub-menu" *ngIf="item.children">
+            <ul>
+              <li *ngFor="let child of item.children">
+                <a
+                  [routerLink]="[item.action, child.action]"
+                  routerLinkActive="active"
+                  (click)="toggleSideNav()"
+                  ><i [ngClass]="child.icon"></i>{{ child.display }}</a
+                >
+              </li>
+            </ul>
+          </div>
+        </li>
+      </div>
     </ul>
   </nav>
 
   <nav class="lower-nav">
-    <button (click)="router.navigateByUrl('my-account')">
-      <i class="fa-solid fa-user-doctor"></i>My Account
-    </button>
-    |
+    <ng-container *ngIf="featureToggle({ feature: 'myAccountPage' })">
+      <button (click)="router.navigateByUrl('my-account')">
+        <i class="fa-solid fa-user-doctor"></i>My Account
+      </button>
+      |
+    </ng-container>
     <button (click)="logout()">
       Logout<i class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i>
     </button>

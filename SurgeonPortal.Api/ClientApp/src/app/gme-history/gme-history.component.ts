@@ -116,7 +116,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   gmeErrors$: Observable<any> | undefined;
 
   gmeRotationsSubscription: Subscription | undefined;
-  gmeSummarySubscription: Subscription | undefined;
   createGmeRotationSubscription: Subscription | undefined;
   updateGmeRotationSubscription: Subscription | undefined;
   gmeAllSubscription: Subscription | undefined;
@@ -222,12 +221,10 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     filterOn: 'clinicalLevel',
     filterOptions: [],
   };
-  itemizedGme$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   itemizedGmeCols = ITEMIZED_GME_COLS;
   itemizedGmeData!: IRotationReadOnlyModel[];
 
   gmeSummaryCols = GME_SUMMARY_COLS;
-  summaryGme$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   gmeSummaryData!: any[];
 
   selectedGmeRotation: IRotationReadOnlyModel | undefined;
@@ -254,7 +251,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     private globalDialogService: GlobalDialogService
   ) {
     this.initRotationsData();
-    this.initSummaryData();
     this.initPicklistOptions();
 
     this.selectedRotation$?.pipe(untilDestroyed(this)).subscribe((rotation) => {
@@ -361,201 +357,194 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   initRotationsData() {
     this._store.dispatch(new GetAllGraduateMedicalEducation());
 
-    this.gmeAllSubscription = this.gmeAll$?.subscribe((gmeAll) => {
-      this.clinicalActivity = [];
-      this.nonClinicalActivity = [];
-      this.conflicts = [];
+    this.gmeAllSubscription = this.gmeAll$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((gmeAll) => {
+        this.clinicalActivity = [];
+        this.nonClinicalActivity = [];
+        this.conflicts = [];
 
-      if (gmeAll && (gmeAll.gmeRotations || gmeAll.gmeGaps)) {
-        this.calendarFilterOptions = [
-          {
-            label: 'Activity Types',
-            items: [
-              {
-                label: 'Clinical',
-                value: { value: 'clinical', field: 'type' },
-              },
-              {
-                label: 'Non-Clinical',
-                value: { value: 'non-clinical', field: 'type' },
-              },
-              {
-                label: 'Conflicts',
-                value: { value: 'conflict', field: 'type' },
-              },
-            ],
-          },
-          {
-            label: 'Clinical Levels',
-            items: [],
-          },
-        ];
+        if (gmeAll && (gmeAll.gmeRotations || gmeAll.gmeGaps)) {
+          this.calendarFilterOptions = [
+            {
+              label: 'Activity Types',
+              items: [
+                {
+                  label: 'Clinical',
+                  value: { value: 'clinical', field: 'type' },
+                },
+                {
+                  label: 'Non-Clinical',
+                  value: { value: 'non-clinical', field: 'type' },
+                },
+                {
+                  label: 'Conflicts',
+                  value: { value: 'conflict', field: 'type' },
+                },
+              ],
+            },
+            {
+              label: 'Clinical Levels',
+              items: [],
+            },
+          ];
 
-        // set filter options for grid
-        const clinicalFilterOptions: { value: string; label: string }[] = [];
-        const yearFilterOptions: ICalendarFilter[] = [];
-        this.maxEndDate = undefined;
-        this.minStartDate = undefined;
-        gmeAll.gmeGaps.forEach((item, index) => {
-          // build calendar items
-          if (item.startDate === item.endDate) {
-            // single day event
-          }
+          // set filter options for grid
+          const clinicalFilterOptions: { value: string; label: string }[] = [];
+          const yearFilterOptions: ICalendarFilter[] = [];
+          this.maxEndDate = undefined;
+          this.minStartDate = undefined;
+          gmeAll.gmeGaps.forEach((item, index) => {
+            // build calendar items
+            if (item.startDate === item.endDate) {
+              // single day event
+            }
 
-          const endDate = new Date(item.endDate);
-          endDate.setDate(endDate.getDate() + 1);
-          const conflictItem: any = {
-            id: 'conflict-' + index,
-            start: item.startDate,
-            class: 'conflict',
-            classNames: ['clickable-event'],
-            color: 'rgba(139, 4, 10, 0.25)',
-            highlightColor: 'rgba(139, 4, 10, 1)',
-            type: 'conflict',
-            eventTitle: 'Rotation Conflict',
-            allDay: true,
-            rawData: item,
-          };
+            const endDate = new Date(item.endDate);
+            endDate.setDate(endDate.getDate() + 1);
+            const conflictItem: any = {
+              id: 'conflict-' + index,
+              start: item.startDate,
+              class: 'conflict',
+              classNames: ['clickable-event'],
+              color: 'rgba(139, 4, 10, 0.25)',
+              highlightColor: 'rgba(139, 4, 10, 1)',
+              type: 'conflict',
+              eventTitle: 'Rotation Conflict',
+              allDay: true,
+              rawData: item,
+            };
 
-          if (item.startDate !== item.endDate) {
-            conflictItem.end = endDate;
-          }
-          this.conflicts.push(conflictItem);
-        });
-        gmeAll.gmeRotations.forEach((item) => {
-          //get min start date
-          if (this.minStartDate) {
-            if (new Date(item.startDate) < new Date(this.minStartDate)) {
+            if (item.startDate !== item.endDate) {
+              conflictItem.end = endDate;
+            }
+            this.conflicts.push(conflictItem);
+          });
+          gmeAll.gmeRotations.forEach((item) => {
+            //get min start date
+            if (this.minStartDate) {
+              if (new Date(item.startDate) < new Date(this.minStartDate)) {
+                this.minStartDate = new Date(item.startDate);
+              }
+            } else {
               this.minStartDate = new Date(item.startDate);
             }
-          } else {
-            this.minStartDate = new Date(item.startDate);
-          }
 
-          //get max end date
-          if (this.maxEndDate) {
-            if (new Date(item.endDate) > new Date(this.maxEndDate)) {
+            //get max end date
+            if (this.maxEndDate) {
+              if (new Date(item.endDate) > new Date(this.maxEndDate)) {
+                this.maxEndDate = new Date(item.endDate);
+              }
+            } else {
               this.maxEndDate = new Date(item.endDate);
             }
-          } else {
-            this.maxEndDate = new Date(item.endDate);
-          }
-          this.maxEndDate = new Date(
-            this.maxEndDate.setDate(this.maxEndDate.getDate() + 1)
-          );
+            this.maxEndDate = new Date(
+              this.maxEndDate.setDate(this.maxEndDate.getDate() + 1)
+            );
 
-          // build filter options for grid
-          if (
-            !clinicalFilterOptions.some(
-              (x) => x.value === item.clinicalLevel?.replaceAll(' ', '_').trim()
-            )
-          ) {
-            clinicalFilterOptions.push({
-              value: item.clinicalLevel?.replaceAll(' ', '_').trim(),
-              label: item.clinicalLevel,
-            });
-            this.calendarFilterOptions[1].items.push({
-              label: item.clinicalLevel,
-              value: {
+            // build filter options for grid
+            if (
+              !clinicalFilterOptions.some(
+                (x) =>
+                  x.value === item.clinicalLevel?.replaceAll(' ', '_').trim()
+              )
+            ) {
+              clinicalFilterOptions.push({
                 value: item.clinicalLevel?.replaceAll(' ', '_').trim(),
-                field: 'clinicalLevel',
-              },
-            });
-          }
+                label: item.clinicalLevel,
+              });
+              this.calendarFilterOptions[1].items.push({
+                label: item.clinicalLevel,
+                value: {
+                  value: item.clinicalLevel?.replaceAll(' ', '_').trim(),
+                  field: 'clinicalLevel',
+                },
+              });
+            }
 
-          const itemMonth = new Date(item.startDate).getMonth();
-          const itemYear = new Date(item.startDate).getFullYear().toString();
-          let yearFilter = '';
-          // hardcoded to 5 for June
-          if (itemMonth >= 5) {
-            yearFilter = itemYear.concat(
-              ' - ',
-              (parseInt(itemYear) + 1).toString()
-            );
-          } else {
-            yearFilter = (parseInt(itemYear) - 1)
-              .toString()
-              .concat(' - ', itemYear);
-          }
-          if (!yearFilterOptions.some((x) => x.label === yearFilter)) {
-            yearFilterOptions.push({
-              label: yearFilter,
-              value: {
-                value: yearFilter?.replaceAll(' ', '_').trim(),
-                field: 'year',
-              },
-            });
-          }
+            const itemMonth = new Date(item.startDate).getMonth();
+            const itemYear = new Date(item.startDate).getFullYear().toString();
+            let yearFilter = '';
+            // hardcoded to 5 for June
+            if (itemMonth >= 5) {
+              yearFilter = itemYear.concat(
+                ' - ',
+                (parseInt(itemYear) + 1).toString()
+              );
+            } else {
+              yearFilter = (parseInt(itemYear) - 1)
+                .toString()
+                .concat(' - ', itemYear);
+            }
+            if (!yearFilterOptions.some((x) => x.label === yearFilter)) {
+              yearFilterOptions.push({
+                label: yearFilter,
+                value: {
+                  value: yearFilter?.replaceAll(' ', '_').trim(),
+                  field: 'year',
+                },
+              });
+            }
 
-          // build calendar items
-          const endDate = new Date(item.endDate);
-          endDate.setDate(endDate.getDate() + 1);
-          const calendarItem = {
-            id: item.id,
-            start: item.startDate,
-            end: endDate,
-            class: '',
-            color: '',
-            highlightColor: '',
-            eventTitle: item.clinicalActivity,
-            programName: item.programName,
-            type: '',
-            year: yearFilter.replaceAll(' ', '_').trim(),
-            clinicalLevel: item.clinicalLevel?.replaceAll(' ', '_').trim(),
-            allDay: true,
-            rawData: item,
-          };
+            // build calendar items
+            const endDate = new Date(item.endDate);
+            endDate.setDate(endDate.getDate() + 1);
+            const calendarItem = {
+              id: item.id,
+              start: item.startDate,
+              end: endDate,
+              class: '',
+              color: '',
+              highlightColor: '',
+              eventTitle: item.clinicalActivity,
+              programName: item.programName,
+              type: '',
+              year: yearFilter.replaceAll(' ', '_').trim(),
+              clinicalLevel: item.clinicalLevel?.replaceAll(' ', '_').trim(),
+              allDay: true,
+              rawData: item,
+            };
 
-          //if (item.isCredit) {
-          if (!item.clinicalActivity.includes('Non-Clinical')) {
-            // clinical activity
-            calendarItem.class = 'clinical';
-            calendarItem.color = 'rgba(28, 130, 125, 0.25)';
-            calendarItem.highlightColor = 'rgba(28, 130, 125, 1)';
-            calendarItem.type = 'clinical';
-            this.clinicalActivity.push(calendarItem);
-          } else {
-            // non clinical activity
-            calendarItem.class = 'non-clinical';
-            calendarItem.color = 'rgba(219, 173, 106, 0.25)';
-            calendarItem.highlightColor = 'rgba(219, 173, 106, 1)';
-            calendarItem.type = 'non-clinical';
-            this.nonClinicalActivity.push(calendarItem);
-          }
-        });
+            //if (item.isCredit) {
+            if (!item.clinicalActivity.includes('Non-Clinical')) {
+              // clinical activity
+              calendarItem.class = 'clinical';
+              calendarItem.color = 'rgba(28, 130, 125, 0.25)';
+              calendarItem.highlightColor = 'rgba(28, 130, 125, 1)';
+              calendarItem.type = 'clinical';
+              this.clinicalActivity.push(calendarItem);
+            } else {
+              // non clinical activity
+              calendarItem.class = 'non-clinical';
+              calendarItem.color = 'rgba(219, 173, 106, 0.25)';
+              calendarItem.highlightColor = 'rgba(219, 173, 106, 1)';
+              calendarItem.type = 'non-clinical';
+              this.nonClinicalActivity.push(calendarItem);
+            }
+          });
 
-        clinicalFilterOptions.sort((a, b) => {
-          return a.label > b.label ? 1 : -1;
-        });
-        this.calendarFilterOptions.push({
-          label: 'Years',
-          items: yearFilterOptions,
-        });
-        this.calendarFilterOptions.forEach((filterOption) => {
-          if (filterOption.label !== 'Activity Types') {
-            filterOption.items.sort(
-              (a: ICalendarFilter, b: ICalendarFilter) => {
-                return a.label > b.label ? 1 : -1;
-              }
-            );
-          }
-        });
+          clinicalFilterOptions.sort((a, b) => {
+            return a.label > b.label ? 1 : -1;
+          });
+          this.calendarFilterOptions.push({
+            label: 'Years',
+            items: yearFilterOptions,
+          });
+          this.calendarFilterOptions.forEach((filterOption) => {
+            if (filterOption.label !== 'Activity Types') {
+              filterOption.items.sort(
+                (a: ICalendarFilter, b: ICalendarFilter) => {
+                  return a.label > b.label ? 1 : -1;
+                }
+              );
+            }
+          });
 
-        this.itemizedGridOptions.filterOptions = clinicalFilterOptions;
+          this.itemizedGridOptions.filterOptions = clinicalFilterOptions;
+        }
 
-        this.itemizedGme$.next(!this.itemizedGme$.getValue());
-      }
-
-      this.applyCalendarFilters();
-    });
-  }
-
-  initSummaryData() {
-    this.gmeSummarySubscription = this.gmeSummary$?.subscribe((gmeSummary) => {
-      if (gmeSummary) {
-        this.summaryGme$.next(!this.summaryGme$.getValue());
-      }
-    });
+        this.applyCalendarFilters();
+      });
   }
 
   ngOnInit(): void {
@@ -571,7 +560,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.gmeRotationsSubscription?.unsubscribe();
-    this.gmeSummarySubscription?.unsubscribe();
     this.gmeAllSubscription?.unsubscribe();
   }
 
@@ -621,7 +609,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     if (this.showAddEditGmeRotation) {
       this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
     }
-    this.itemizedGme$.next(!this.itemizedGme$.getValue());
     if ($event) {
       this.isEditGmeRotation$.next(true);
       this._store.dispatch(new GetGraduateMedicalEducationDetails($event));
@@ -643,7 +630,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
     }
 
     this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
-    this.itemizedGme$.next(!this.itemizedGme$.getValue());
   }
 
   handleAddGmeGapRotation($event: any) {
@@ -661,7 +647,6 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
         usingAffiliateOrganization: false,
       } as unknown as IRotationReadOnlyModel;
       this.showAddEditGmeRotation = !this.showAddEditGmeRotation;
-      this.itemizedGme$.next(!this.itemizedGme$.getValue());
     }
   }
 
