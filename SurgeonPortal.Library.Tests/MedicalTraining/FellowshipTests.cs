@@ -19,7 +19,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             dto.Id = Create<int>();
             dto.UserId = 1234;
             dto.ProgramName = Create<string>();
-            dto.CompletionYear = Create<string>();
+            dto.CompletionYear = "1999";
             dto.ProgramOther = Create<string>();
             dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();

@@ -156,6 +156,7 @@ namespace SurgeonPortal.Library.Examinations.GQ
         [Create]
         private void Create()
         {
+            base.DataPortal_Create();
         }
         
         [RunLocal]

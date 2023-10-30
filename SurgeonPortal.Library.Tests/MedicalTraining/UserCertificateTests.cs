@@ -2,6 +2,7 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
+using SurgeonPortal.Library.Contracts.Documents;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
 using SurgeonPortal.Library.MedicalTraining;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
 	public class UserCertificateTests : TestBase<int>
     {
         private UserCertificateDto CreateValidDto()
-        {     
+        {
             var dto = Create<UserCertificateDto>();
-
+        
             dto.CertificateId = Create<int>();
             dto.UserId = 1234;
             dto.DocumentId = Create<int>();
@@ -27,11 +28,11 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedByUserId = Create<int>();
-    
+        
             return dto;
         }
-
-            
+        
+        
 
         #region DeleteAsync
         
@@ -52,9 +53,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Callback<UserCertificateDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
         
+            var mockDocumentFactory = new Mock<IDocumentFactory>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockDocumentFactory)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
         
@@ -89,11 +93,13 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var mockDal = new Mock<IUserCertificateDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedCertificateId))
                 .ReturnsAsync(Create<UserCertificateDto>());
-        
+            
+            var mockDocumentFactory = new Mock<IDocumentFactory>();
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockDocumentFactory)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
         
@@ -108,15 +114,17 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         {
             var dto = CreateValidDto();
             var expectedCertificateId = Create<int>();
-        
+            
             var mockDal = new Mock<IUserCertificateDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedCertificateId))
                 .ReturnsAsync(dto);
-        
+            
+            var mockDocumentFactory = new Mock<IDocumentFactory>();
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockDocumentFactory)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
         
@@ -141,9 +149,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Callback<UserCertificateDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
         
+            var mockDocumentFactory = new Mock<IDocumentFactory>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockDocumentFactory)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
         
@@ -188,9 +199,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             mockDal.Setup(m => m.InsertAsync(It.IsAny<UserCertificateDto>()))
                 .ReturnsAsync(dto);
         
+            var mockDocumentFactory = new Mock<IDocumentFactory>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockDocumentFactory)
                 .WithBusinessObject<IUserCertificate, UserCertificate>()
                 .Build();
         

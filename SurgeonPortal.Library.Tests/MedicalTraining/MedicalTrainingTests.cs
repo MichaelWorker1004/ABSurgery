@@ -21,17 +21,17 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             dto.UserId = 1234;
             dto.GraduateProfileId = Create<int>();
             dto.GraduateProfileDescription = Create<string>();
-            dto.MedicalSchoolName = Create<string>();
-            dto.MedicalSchoolCity = Create<string>();
+            dto.MedicalSchoolName = Create<string>().Substring(0, 29);
+            dto.MedicalSchoolCity = Create<string>().Substring(0, 29);
             dto.MedicalSchoolStateId = Create<string>();
             dto.MedicalSchoolStateName = Create<string>();
             dto.MedicalSchoolCountryId = Create<string>();
             dto.MedicalSchoolCountryName = Create<string>();
             dto.DegreeId = Create<int>();
             dto.DegreeName = Create<string>();
-            dto.MedicalSchoolCompletionYear = Create<string>();
+            dto.MedicalSchoolCompletionYear = "2005";
             dto.ResidencyProgramName = Create<string>();
-            dto.ResidencyCompletionYear = Create<string>();
+            dto.ResidencyCompletionYear = "2010";
             dto.ResidencyProgramOther = Create<string>();
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.CreatedByUserId = 1234;
@@ -61,6 +61,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.Id = dto.Id;
             sut.Id = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -116,6 +117,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.UserId = dto.UserId;
             sut.UserId = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -171,6 +173,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.GraduateProfileId = dto.GraduateProfileId;
             sut.GraduateProfileId = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -226,6 +229,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.MedicalSchoolName = dto.MedicalSchoolName;
             sut.MedicalSchoolName = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -281,6 +285,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.MedicalSchoolCity = dto.MedicalSchoolCity;
             sut.MedicalSchoolCity = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -336,6 +341,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.MedicalSchoolCountryId = dto.MedicalSchoolCountryId;
             sut.MedicalSchoolCountryId = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -391,6 +397,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.DegreeId = dto.DegreeId;
             sut.DegreeId = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -446,6 +453,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.MedicalSchoolCompletionYear = dto.MedicalSchoolCompletionYear;
             sut.MedicalSchoolCompletionYear = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -501,6 +509,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.ResidencyProgramName = dto.ResidencyProgramName;
             sut.ResidencyProgramName = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -556,6 +565,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.ResidencyCompletionYear = dto.ResidencyCompletionYear;
             sut.ResidencyCompletionYear = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -611,6 +621,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = factory.Create();
             
+            sut.ResidencyProgramOther = dto.ResidencyProgramOther;
             sut.ResidencyProgramOther = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");

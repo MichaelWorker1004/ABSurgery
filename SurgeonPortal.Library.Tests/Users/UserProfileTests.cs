@@ -75,6 +75,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.FirstName = dto.FirstName;
                 sut.FirstName = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -130,6 +131,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.LastName = dto.LastName;
                 sut.LastName = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -185,6 +187,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.DisplayName = dto.DisplayName;
                 sut.DisplayName = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -240,6 +243,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.OfficePhoneNumber = dto.OfficePhoneNumber;
                 sut.OfficePhoneNumber = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -295,6 +299,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.BirthCity = dto.BirthCity;
                 sut.BirthCity = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -350,6 +355,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.BirthCountry = dto.BirthCountry;
                 sut.BirthCountry = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -405,6 +411,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.CountryCitizenship = dto.CountryCitizenship;
                 sut.CountryCitizenship = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -460,6 +467,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.GenderId = dto.GenderId;
                 sut.GenderId = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -515,6 +523,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.BirthDate = dto.BirthDate;
                 sut.BirthDate = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -570,6 +579,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.Race = dto.Race;
                 sut.Race = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -625,6 +635,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.Ethnicity = dto.Ethnicity;
                 sut.Ethnicity = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -680,6 +691,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.FirstLanguageId = dto.FirstLanguageId;
                 sut.FirstLanguageId = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -735,6 +747,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.BestLanguageId = dto.BestLanguageId;
                 sut.BestLanguageId = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -790,6 +803,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.ReceiveComms = dto.ReceiveComms;
                 sut.ReceiveComms = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -845,6 +859,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.UserConfirmed = dto.UserConfirmed;
                 sut.UserConfirmed = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -900,6 +915,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.Street1 = dto.Street1;
                 sut.Street1 = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -955,6 +971,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.City = dto.City;
                 sut.City = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -1010,6 +1027,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.ZipCode = dto.ZipCode;
                 sut.ZipCode = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -1065,6 +1083,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
             var sut = factory.Create();
                 
+            sut.Country = dto.Country;
                 sut.Country = default;
             
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");

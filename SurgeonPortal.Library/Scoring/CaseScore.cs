@@ -193,6 +193,7 @@ namespace SurgeonPortal.Library.Scoring
         [Create]
         private void Create()
         {
+            base.DataPortal_Create();
             LoadProperty(ExaminerUserIdProperty, _identity.GetUserId<int>());
         }
         

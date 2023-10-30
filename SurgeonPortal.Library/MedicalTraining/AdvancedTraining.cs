@@ -180,6 +180,7 @@ namespace SurgeonPortal.Library.MedicalTraining
         [Create]
         private void Create()
         {
+            base.DataPortal_Create();
             LoadProperty(UserIdProperty, _identity.GetUserId<int>());
             LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
         }

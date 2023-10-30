@@ -132,6 +132,7 @@ namespace SurgeonPortal.Library.CE
         [Create]
         private void Create()
         {
+            base.DataPortal_Create();
             LoadProperty(ExaminerUserIdProperty, _identity.GetUserId<int>());
         }
         

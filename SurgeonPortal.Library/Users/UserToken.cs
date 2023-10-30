@@ -91,6 +91,7 @@ namespace SurgeonPortal.Library.Users
         [Create]
         private void Create()
         {
+            base.DataPortal_Create();
         }
         
         [RunLocal]

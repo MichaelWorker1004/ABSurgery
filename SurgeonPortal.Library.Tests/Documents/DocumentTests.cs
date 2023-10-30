@@ -50,7 +50,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             mockDal.Setup(m => m.InsertAsync(It.IsAny<DocumentDto>()))
                 .ReturnsAsync(dto);
         
-                var mockStorageDal = new Mock<IStorageDal>();
+            var mockStorageDal = new Mock<IStorageDal>();
 
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -62,6 +62,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             var factory = new DocumentFactory();
             var sut = factory.Create();
             
+            sut.Id = dto.Id;
             sut.Id = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -114,16 +115,20 @@ namespace SurgeonPortal.Library.Tests.Documents
             var mockDal = new Mock<IDocumentDal>(MockBehavior.Strict);
             mockDal.Setup(m => m.InsertAsync(It.IsAny<DocumentDto>()))
                 .ReturnsAsync(dto);
-        
+
+            var mockStorageDal = new Mock<IStorageDal>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockStorageDal)
                 .WithBusinessObject<IDocument, Document>()
                 .Build();
         
             var factory = new DocumentFactory();
             var sut = factory.Create();
             
+            sut.UserId = dto.UserId;
             sut.UserId = default;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
@@ -332,6 +337,7 @@ namespace SurgeonPortal.Library.Tests.Documents
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.StreamId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

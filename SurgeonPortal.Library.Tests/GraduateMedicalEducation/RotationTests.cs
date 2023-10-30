@@ -19,8 +19,8 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             dto.Id = Create<int>();
             dto.UserId = 1234;
-            dto.StartDate = Create<System.DateTime>();
-            dto.EndDate = Create<System.DateTime>();
+            dto.StartDate = DateTime.Now.AddDays(1);
+            dto.EndDate = DateTime.Now.AddDays(5);
             dto.ClinicalLevelId = Create<int>();
             dto.ClinicalLevel = Create<string>();
             dto.ClinicalActivityId = Create<int>();
@@ -157,11 +157,22 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             mockDal.Setup(m => m.InsertAsync(It.IsAny<RotationDto>()))
                 .Callback<RotationDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-        
+
+            var mockCommandDal = new Mock<IOverlapConflictCommandDal>();
+            mockCommandDal.Setup(m => m.CheckOverlapConflicts(It.IsAny<int>(),
+                It.IsAny<DateTime>(),
+                It.IsAny<DateTime>(),
+                It.IsAny<int?>()))
+                .Returns(new OverlapConflictCommandDto { OverlapConflict = false });
+
+            var mockCommand = new Mock<IOverlapConflictCommand>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockCommandDal)
+                .WithRegisteredInstance(mockCommand)
                 .WithBusinessObject<IRotation, Rotation>()
                 .WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();

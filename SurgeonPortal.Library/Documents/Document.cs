@@ -134,14 +134,7 @@ namespace SurgeonPortal.Library.Documents
         public static void AddObjectAuthorizationRules()
         {
             
-
-            
-
-            
-
         }
-
-
 
         /// <summary>
         /// This method is used to add business rules to the Csla 
@@ -155,7 +148,6 @@ namespace SurgeonPortal.Library.Documents
             BusinessRules.AddRule(new Required(IdProperty, "Id is required"));
             BusinessRules.AddRule(new Required(UserIdProperty, "UserId is required"));
         }
-
 
         [RunLocal]
         [DeleteSelf]
@@ -208,6 +200,7 @@ namespace SurgeonPortal.Library.Documents
         [Create]
         private void Create()
         {
+            base.DataPortal_Create();
             LoadProperty(UserIdProperty, _identity.GetUserId<int>());
             LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
             LoadProperty(StreamIdProperty, Guid.NewGuid());
@@ -232,8 +225,6 @@ namespace SurgeonPortal.Library.Documents
                 MarkIdle();
             }
         }
-
-
 
         private void FetchData(DocumentDto dto)
 		{

@@ -2,6 +2,7 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
+using SurgeonPortal.Library.Contracts.Identity;
 using SurgeonPortal.Library.Contracts.Scoring;
 using SurgeonPortal.Library.Scoring;
 using System.Threading.Tasks;
@@ -13,20 +14,20 @@ namespace SurgeonPortal.Library.Tests.Scoring
 	public class CaseFeedbackTests : TestBase<int>
     {
         private CaseFeedbackDto CreateValidDto()
-        {     
+        {
             var dto = Create<CaseFeedbackDto>();
-
+        
             dto.Id = Create<int>();
             dto.UserId = 1234;
             dto.CaseHeaderId = Create<int>();
             dto.Feedback = Create<string>();
             dto.CreatedByUserId = 1234;
             dto.LastUpdatedByUserId = 1234;
-    
+        
             return dto;
         }
-
-            
+        
+        
 
         #region DeleteAsync
         
@@ -87,10 +88,11 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedExaminerUserId,
                 expectedCaseHeaderId))
                 .ReturnsAsync(Create<CaseFeedbackDto>());
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
                 .Build();
@@ -107,16 +109,17 @@ namespace SurgeonPortal.Library.Tests.Scoring
             var dto = CreateValidDto();
             var expectedCaseHeaderId = Create<int>();
             var expectedExaminerUserId = 1234;
-        
+            
             var mockDal = new Mock<ICaseFeedbackDal>();
             mockDal.Setup(m => m.GetByExaminerIdAsync(
                 expectedExaminerUserId,
                 expectedCaseHeaderId))
                 .ReturnsAsync(dto);
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedback, CaseFeedback>()
                 .Build();
@@ -139,7 +142,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             var mockDal = new Mock<ICaseFeedbackDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(Create<CaseFeedbackDto>());
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -159,11 +162,11 @@ namespace SurgeonPortal.Library.Tests.Scoring
         {
             var dto = CreateValidDto();
             var expectedId = Create<int>();
-        
+            
             var mockDal = new Mock<ICaseFeedbackDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -271,7 +274,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             var mockDal = new Mock<ICaseFeedbackDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(dto);
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseFeedbackDto>()))
                 .Callback<CaseFeedbackDto>((p) => passedDto = p)
@@ -312,10 +315,10 @@ namespace SurgeonPortal.Library.Tests.Scoring
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
                 .Excluding(m => m.UserId)
-                    .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -330,7 +333,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             var mockDal = new Mock<ICaseFeedbackDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(Create<CaseFeedbackDto>());
+                .ReturnsAsync(Create<CaseFeedbackDto>());
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseFeedbackDto>()))
                 .ReturnsAsync(dto);
