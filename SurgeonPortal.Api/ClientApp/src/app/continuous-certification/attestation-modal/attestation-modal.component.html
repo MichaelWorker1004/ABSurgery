@@ -4,24 +4,29 @@
     dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
     amet tortor at, condimentum tempor erat. All fields are required.
   </div>
-  <h6>{{ userData.name }}</h6>
-  <div class="grid">
-    <div
-      *ngFor="let formField of attestationFormFields"
-      class="flex align-items-center gap-2 {{ formField.size }}"
-    >
-      <p-checkbox
-        [value]="formField.value"
-        [name]="formField.name"
-        [id]="formField.name"
-      ></p-checkbox>
-      <label [for]="formField.name">{{ formField.label }}</label>
-    </div>
+  <h6 *ngIf="user$ | async as user">{{ user.displayName }}</h6>
+  <div class="grid" *ngIf="attestations$ | async as attestations">
+    <form [formGroup]="attestationForm">
+      <div
+        *ngFor="let formField of attestations"
+        class="flex align-items-center gap-2 col-12"
+      >
+        <p-checkbox
+          [value]="true"
+          [name]="formField.name"
+          [binary]="true"
+          [checked]="formField.checked"
+          [inputId]="formField.name"
+          [formControlName]="formField.name"
+        ></p-checkbox>
+        <label [for]="formField.name">{{ formField.label }}</label>
+      </div>
+    </form>
     <div class="col-12 flex justify-content-end btn-container mt-3">
       <p-button styleClass="p-button-link p-button-primary" (click)="close()"
         >Cancel</p-button
       >
-      <p-button [style]="{ width: '337px' }">Save</p-button>
+      <p-button (click)="onSave()" [style]="{ width: '337px' }">Save</p-button>
     </div>
   </div>
 </form>
