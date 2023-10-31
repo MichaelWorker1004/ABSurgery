@@ -71,17 +71,17 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         [Execute]
         protected void ExecuteCommand()
         {
-            var dto = _overlapConflictCommandDal.CheckOverlapConflicts(
-                UserId,
-                StartDate,
-                EndDate,
-                RotationId);
+                var dto = _overlapConflictCommandDal.CheckOverlapConflicts(
+                    UserId,
+                    StartDate,
+                    EndDate,
+                    RotationId);
             
-            this.UserId = dto.UserId;
-        	this.StartDate = dto.StartDate;
-        	this.EndDate = dto.EndDate;
-        	this.OverlapConflict = dto.OverlapConflict;
-        	this.RotationId = dto.RotationId;
+            			this.UserId = dto.UserId;
+        			this.StartDate = dto.StartDate;
+        			this.EndDate = dto.EndDate;
+        			this.OverlapConflict = dto.OverlapConflict;
+        			this.RotationId = dto.RotationId;
         }
 
 

@@ -68,7 +68,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
-				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -109,7 +108,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
-				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -134,7 +132,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
-				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -157,7 +154,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             mockDal.Setup(m => m.InsertAsync(It.IsAny<RotationDto>()))
                 .Callback<RotationDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
@@ -194,7 +191,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
             sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
             sut.ClinicalActivity = dto.ClinicalActivity;
-
+        
             await sut.SaveAsync();
         
             Assert.That(passedDto, Is.Not.Null);
@@ -227,7 +224,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
-				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -291,7 +287,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRotation, Rotation>()
-				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -377,7 +372,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<RotationDto>()))
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
@@ -387,7 +382,6 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
                 .WithRegisteredInstance(mocks.MockCommand)
                 .WithRegisteredInstance(mocks.MockCommandFactory)
                 .WithBusinessObject<IRotation, Rotation>()
-				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();

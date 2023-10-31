@@ -106,7 +106,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.FirstName = Create<string>();
+            sut.FirstName = dto.FirstName;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -161,7 +161,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.LastName = Create<string>();
+            sut.LastName = dto.LastName;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -216,7 +216,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.DisplayName = Create<string>();
+            sut.DisplayName = dto.DisplayName;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -271,7 +271,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.OfficePhoneNumber = Create<string>();
+            sut.OfficePhoneNumber = dto.OfficePhoneNumber;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -326,7 +326,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.BirthCity = Create<string>();
+            sut.BirthCity = dto.BirthCity;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -381,7 +381,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.BirthCountry = Create<string>();
+            sut.BirthCountry = dto.BirthCountry;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -436,7 +436,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.CountryCitizenship = Create<string>();
+            sut.CountryCitizenship = dto.CountryCitizenship;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -491,7 +491,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.GenderId = Create<int?>();
+            sut.GenderId = dto.GenderId;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -546,7 +546,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.BirthDate = Create<System.DateTime?>();
+            sut.BirthDate = dto.BirthDate;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -601,7 +601,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.Race = Create<string>();
+            sut.Race = dto.Race;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -656,7 +656,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.Ethnicity = Create<string>();
+            sut.Ethnicity = dto.Ethnicity;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -711,7 +711,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.FirstLanguageId = Create<int?>();
+            sut.FirstLanguageId = dto.FirstLanguageId;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -766,7 +766,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.BestLanguageId = Create<int?>();
+            sut.BestLanguageId = dto.BestLanguageId;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -821,7 +821,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.ReceiveComms = Create<bool?>();
+            sut.ReceiveComms = dto.ReceiveComms;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -876,7 +876,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.UserConfirmed = Create<bool?>();
+            sut.UserConfirmed = dto.UserConfirmed;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -931,7 +931,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.Street1 = Create<string>();
+            sut.Street1 = dto.Street1;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -986,7 +986,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.City = Create<string>();
+            sut.City = dto.City;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -1041,7 +1041,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.ZipCode = Create<string>();
+            sut.ZipCode = dto.ZipCode;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             
@@ -1096,7 +1096,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 var factory = new UserProfileFactory();
                 var sut = await factory.GetByUserIdAsync(expectedUserId);
                 
-                sut.Country = Create<string>();
+            sut.Country = dto.Country;
             
                 Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
             

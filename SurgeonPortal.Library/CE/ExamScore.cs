@@ -60,8 +60,7 @@ namespace SurgeonPortal.Library.CE
 		public int ExaminerScore
 		{
 			get { return GetProperty(ExaminerScoreProperty); }
-			set 
-            { SetProperty(ExaminerScoreProperty, value); }
+			set { SetProperty(ExaminerScoreProperty, value); }
 		}
 		public static readonly PropertyInfo<int> ExaminerScoreProperty = RegisterProperty<int>(c => c.ExaminerScore);
 
@@ -92,11 +91,9 @@ namespace SurgeonPortal.Library.CE
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
@@ -109,7 +106,8 @@ namespace SurgeonPortal.Library.CE
         protected override void AddBusinessRules()
 		{
 			base.AddBusinessRules();    
-		}
+        }
+
 
         [Fetch]
         [RunLocal]

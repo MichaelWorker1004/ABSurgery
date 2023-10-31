@@ -25,11 +25,10 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 	public class Rotation : YtgBusinessBase<Rotation>, IRotation
     {
         private readonly IRotationDal _rotationDal;
-		private readonly IOverlapConflictCommandFactory _overlapConflictCommandFactory;
-
-        public Rotation(IIdentityProvider identityProvider,
-            IRotationDal rotationDal,
-			IOverlapConflictCommandFactory overlapConflictCommandFactory)
+		readonly IOverlapConflictCommandFactory _overlapConflictCommandFactory;
+        public Rotation(IOverlapConflictCommandFactory overlapConflictCommandFactory,
+            IIdentityProvider identityProvider,
+            IRotationDal rotationDal)
             : base(identityProvider)
         {
             _rotationDal = rotationDal;

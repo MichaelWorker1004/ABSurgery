@@ -45,9 +45,9 @@ namespace SurgeonPortal.Library.Tests.CE
                 expectedExamScheduleScoreId,
                 expectedExaminerUserId))
                 .ReturnsAsync(Create<ExamScoreDto>());
-
+            
             var mocks = GetMockedCommand(true);
-
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
@@ -75,9 +75,9 @@ namespace SurgeonPortal.Library.Tests.CE
                 expectedExamScheduleScoreId,
                 expectedExaminerUserId))
                 .ReturnsAsync(dto);
-
+            
             var mocks = GetMockedCommand(true);
-
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
@@ -107,7 +107,7 @@ namespace SurgeonPortal.Library.Tests.CE
             mockDal.Setup(m => m.InsertAsync(It.IsAny<ExamScoreDto>()))
                 .Callback<ExamScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(true);
 
             UseMockServiceProvider()
@@ -159,7 +159,7 @@ namespace SurgeonPortal.Library.Tests.CE
             var mockDal = new Mock<IExamScoreDal>();
             mockDal.Setup(m => m.InsertAsync(It.IsAny<ExamScoreDto>()))
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(true);
 
             UseMockServiceProvider()
@@ -173,7 +173,15 @@ namespace SurgeonPortal.Library.Tests.CE
         
             var factory = new ExamScoreFactory();
             var sut = factory.Create();
-            sut.ExamScheduleId = Create<int>();
+            sut.ExamScheduleScoreId = dto.ExamScheduleScoreId;
+            sut.ExamScheduleId = dto.ExamScheduleId;
+            sut.ExaminerScore = dto.ExaminerScore;
+            sut.Submitted = dto.Submitted;
+            sut.SubmittedDateTimeUTC = dto.SubmittedDateTimeUTC;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
         
             await sut.SaveAsync();
             
@@ -208,7 +216,7 @@ namespace SurgeonPortal.Library.Tests.CE
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<ExamScoreDto>()))
                 .Callback<ExamScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(true);
 
             UseMockServiceProvider()
@@ -281,7 +289,7 @@ namespace SurgeonPortal.Library.Tests.CE
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<ExamScoreDto>()))
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(true);
 
             UseMockServiceProvider()
@@ -307,7 +315,7 @@ namespace SurgeonPortal.Library.Tests.CE
                     .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         }
-
+        
         #endregion
 
         (Mock<IGetExamCasesScoredCommand> MockCommand, Mock<IGetExamCasesScoredCommandFactory> MockCommandFactory) GetMockedCommand(bool caseScored)
@@ -322,5 +330,5 @@ namespace SurgeonPortal.Library.Tests.CE
 
             return (mockCommand, mockCommandFactory);
         }
-    }
+	}
 }

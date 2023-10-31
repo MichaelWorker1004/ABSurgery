@@ -23,7 +23,8 @@ namespace SurgeonPortal.Library.Scoring
     {
         private readonly ICaseScoreDal _caseScoreDal;
 
-        public CaseScore(IIdentityProvider identityProvider,
+        public CaseScore(
+            IIdentityProvider identityProvider,
             ICaseScoreDal caseScoreDal)
             : base(identityProvider)
         {

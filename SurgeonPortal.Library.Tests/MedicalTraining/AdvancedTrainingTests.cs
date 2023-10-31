@@ -4,6 +4,7 @@ using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
 using SurgeonPortal.Library.MedicalTraining;
+using System;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 
@@ -25,8 +26,8 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             dto.City = Create<string>();
             dto.State = Create<string>();
             dto.Other = Create<string>();
-            dto.StartDate = Create<System.DateTime?>();
-            dto.EndDate = Create<System.DateTime?>();
+            dto.StartDate = DateTime.Now.AddDays(1);
+            dto.EndDate = DateTime.Now.AddDays(5);
             dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
@@ -86,7 +87,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.TrainingTypeId = Create<int?>();
+            sut.TrainingTypeId = dto.TrainingTypeId;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -112,11 +113,11 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             
             sut.StartDate = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 2, $"Expected 2 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
             var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 2, $"Expected 2 broken rule, have {sut.GetBrokenRules().Count} ");
             Assert.That(sut.GetBrokenRules()[0].Description == "StartDate is required", $"Expected the rule description to be 'StartDate is required', have {sut.GetBrokenRules()[0].Description}");
             Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
             Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
@@ -141,7 +142,8 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.StartDate = Create<System.DateTime?>();
+            sut.StartDate = dto.StartDate;
+            sut.EndDate = dto.EndDate;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -167,11 +169,11 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             
             sut.EndDate = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 2, $"Expected 2 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
             var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 2, $"Expected 2 broken rules, have {sut.GetBrokenRules().Count} ");
             Assert.That(sut.GetBrokenRules()[0].Description == "EndDate is required", $"Expected the rule description to be 'EndDate is required', have {sut.GetBrokenRules()[0].Description}");
             Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
             Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
@@ -196,7 +198,8 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.EndDate = Create<System.DateTime?>();
+            sut.EndDate = dto.EndDate;
+            sut.StartDate = dto.StartDate;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -409,6 +412,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.Id)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

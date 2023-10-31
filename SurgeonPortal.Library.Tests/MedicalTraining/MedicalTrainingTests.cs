@@ -92,7 +92,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.GraduateProfileId = Create<int?>();
+            sut.GraduateProfileId = dto.GraduateProfileId;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -147,7 +147,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.MedicalSchoolName = Create<string>();
+            sut.MedicalSchoolName = dto.MedicalSchoolName;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -202,7 +202,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.MedicalSchoolCity = Create<string>();
+            sut.MedicalSchoolCity = dto.MedicalSchoolCity;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -257,7 +257,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.MedicalSchoolCountryId = Create<string>();
+            sut.MedicalSchoolCountryId = dto.MedicalSchoolCountryId;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -312,7 +312,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.DegreeId = Create<int?>();
+            sut.DegreeId = dto.DegreeId;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -367,7 +367,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.MedicalSchoolCompletionYear = Create<string>();
+            sut.MedicalSchoolCompletionYear = dto.MedicalSchoolCompletionYear;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -422,7 +422,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.ResidencyProgramName = Create<string>();
+            sut.ResidencyProgramName = dto.ResidencyProgramName;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -477,7 +477,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.ResidencyCompletionYear = Create<string>();
+            sut.ResidencyCompletionYear = dto.ResidencyCompletionYear;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -532,7 +532,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new MedicalTrainingFactory();
             var sut = await factory.GetByUserIdAsync();
             
-            sut.ResidencyProgramOther = Create<string>();
+            sut.ResidencyProgramOther = dto.ResidencyProgramOther;
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
