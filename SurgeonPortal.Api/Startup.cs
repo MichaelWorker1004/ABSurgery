@@ -275,7 +275,7 @@ namespace SurgeonPortal.Api
         {
             return new MapperConfiguration(config =>
             {
-                config.AddProfile<ConventionAutoMapperProfile<LibraryConventionProvider, ModelConventionResolver>>();
+                config.AddProfile<ConventionAutoMapperProfile<int, LibraryConventionProvider, ModelConventionResolver>>();
                 config.CreateMap<FeatureFlagConfiguration, FeatureFlagsModel>();
             });
         }
