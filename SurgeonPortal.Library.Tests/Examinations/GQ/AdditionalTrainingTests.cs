@@ -4,7 +4,6 @@ using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Examinations.GQ;
 using SurgeonPortal.Library.Contracts.Examinations.GQ;
 using SurgeonPortal.Library.Examinations.GQ;
-using System;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 
@@ -154,7 +153,16 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             var factory = new AdditionalTrainingFactory();
             var sut = factory.Create();
-            sut.DateEnded = Create<DateTime>();
+            sut.TrainingId = dto.TrainingId;
+            sut.DateEnded = dto.DateEnded;
+            sut.DateStarted = dto.DateStarted;
+            sut.Other = dto.Other;
+            sut.InstitutionId = dto.InstitutionId;
+            sut.InstitutionName = dto.InstitutionName;
+            sut.City = dto.City;
+            sut.StateId = dto.StateId;
+            sut.State = dto.State;
+            sut.TypeOfTraining = dto.TypeOfTraining;
         
             await sut.SaveAsync();
             

@@ -41,7 +41,7 @@ namespace SurgeonPortal.Library.Documents
 		public int Id
 		{
 			get { return GetProperty(IdProperty); }
-			set { SetProperty(IdProperty, value); }
+			 private set { SetProperty(IdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
 
@@ -49,7 +49,7 @@ namespace SurgeonPortal.Library.Documents
 		public int UserId
 		{
 			get { return GetProperty(UserIdProperty); }
-			set { SetProperty(UserIdProperty, value); }
+			 private set { SetProperty(UserIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
@@ -135,7 +135,7 @@ namespace SurgeonPortal.Library.Documents
         {
             
         }
-
+            
         /// <summary>
         /// This method is used to add business rules to the Csla 
         /// business rule engine
@@ -144,10 +144,11 @@ namespace SurgeonPortal.Library.Documents
         {
             // Only process priority 5 and higher if all 4 and lower completed first
             BusinessRules.ProcessThroughPriority = 4;
-
+            
             BusinessRules.AddRule(new Required(IdProperty, "Id is required"));
             BusinessRules.AddRule(new Required(UserIdProperty, "UserId is required"));
         }
+
 
         [RunLocal]
         [DeleteSelf]
@@ -190,7 +191,7 @@ namespace SurgeonPortal.Library.Documents
                 {
                     File = await _storageDal.LoadAsync(FileName);
                 }
-                catch(Exception ex)
+                catch
                 {
                     throw new DataNotFoundException($"Unable to find the document named: {FileName}");
                 }
@@ -225,6 +226,8 @@ namespace SurgeonPortal.Library.Documents
                 MarkIdle();
             }
         }
+
+
 
         private void FetchData(DocumentDto dto)
 		{

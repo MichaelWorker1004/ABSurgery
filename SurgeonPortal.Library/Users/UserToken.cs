@@ -61,12 +61,8 @@ namespace SurgeonPortal.Library.Users
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
         }
-
-
 
 
         [Fetch]

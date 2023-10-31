@@ -35,7 +35,6 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             Csla.Rules.BusinessRules.AddRule(typeof(UserAppointmentReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
         [Fetch]

@@ -5,8 +5,8 @@ namespace SurgeonPortal.Library.Contracts.Documents
 {
     public interface IDocument : IYtgBusinessBase
     {
-        int Id { get; set; }
-        int UserId { get; set; }
+        int Id { get;  }
+        int UserId { get;  }
         Guid StreamId { get;  }
         int DocumentTypeId { get; set; }
         string DocumentName { get; set; }

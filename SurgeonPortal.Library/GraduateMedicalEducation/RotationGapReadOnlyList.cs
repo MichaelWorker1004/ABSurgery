@@ -35,7 +35,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             Csla.Rules.BusinessRules.AddRule(typeof(RotationGapReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
         }
 
         [Fetch]

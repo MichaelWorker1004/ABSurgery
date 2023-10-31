@@ -193,7 +193,16 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var factory = new OtherCertificationsFactory();
             var sut = factory.Create();
-            sut.CertificateTypeId = Create<int>();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
+            sut.CertificateTypeId = dto.CertificateTypeId;
+            sut.CertificateTypeName = dto.CertificateTypeName;
+            sut.IssueDate = dto.IssueDate;
+            sut.CertificateNumber = dto.CertificateNumber;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             

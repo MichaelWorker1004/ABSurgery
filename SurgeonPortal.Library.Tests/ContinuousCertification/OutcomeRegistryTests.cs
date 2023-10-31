@@ -174,7 +174,28 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             var factory = new OutcomeRegistryFactory();
             var sut = factory.Create();
-            sut.SurgeonSpecificRegistry = Create<bool>();
+            sut.SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry;
+            sut.RegistryComments = dto.RegistryComments;
+            sut.RegisteredWithACHQC = dto.RegisteredWithACHQC;
+            sut.RegisteredWithCESQIP = dto.RegisteredWithCESQIP;
+            sut.RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP;
+            sut.RegisteredWithABA = dto.RegisteredWithABA;
+            sut.RegisteredWithASBS = dto.RegisteredWithASBS;
+            sut.RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives;
+            sut.RegisteredWithABMS = dto.RegisteredWithABMS;
+            sut.RegisteredWithNCDB = dto.RegisteredWithNCDB;
+            sut.RegisteredWithRQRS = dto.RegisteredWithRQRS;
+            sut.RegisteredWithNSQIP = dto.RegisteredWithNSQIP;
+            sut.RegisteredWithNTDB = dto.RegisteredWithNTDB;
+            sut.RegisteredWithSTS = dto.RegisteredWithSTS;
+            sut.RegisteredWithTQIP = dto.RegisteredWithTQIP;
+            sut.RegisteredWithUNOS = dto.RegisteredWithUNOS;
+            sut.RegisteredWithNCDR = dto.RegisteredWithNCDR;
+            sut.RegisteredWithSVS = dto.RegisteredWithSVS;
+            sut.RegisteredWithELSO = dto.RegisteredWithELSO;
+            sut.UserConfirmed = dto.UserConfirmed;
+            sut.UserConfirmedDateUtc = dto.UserConfirmedDateUtc;
+            sut.UserId = dto.UserId;
         
             await sut.SaveAsync();
             

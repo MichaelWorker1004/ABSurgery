@@ -112,18 +112,13 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             Csla.Rules.BusinessRules.AddRule(typeof(Sanctions),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(Sanctions),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(Sanctions),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
-
-
 
 
         [Fetch]

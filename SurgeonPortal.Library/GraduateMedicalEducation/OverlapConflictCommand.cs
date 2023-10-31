@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Csla;
 using SurgeonPortal.DataAccess.Contracts.GraduateMedicalEducation;
 using SurgeonPortal.Library.Contracts.GraduateMedicalEducation;
-using System;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
 

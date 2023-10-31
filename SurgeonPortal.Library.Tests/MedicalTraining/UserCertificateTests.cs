@@ -40,7 +40,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         public async Task Delete_CallsDalCorrectly()
         {
             var expectedCertificateId = Create<int>();
-            var expectedUserId = 1234;
             
             var dto = CreateValidDto();
             UserCertificateDto passedDto = null;
@@ -210,7 +209,17 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var factory = new UserCertificateFactory();
             var sut = factory.Create();
-            sut.DocumentId = Create<int>();
+            sut.CertificateId = dto.CertificateId;
+            sut.UserId = dto.UserId;
+            sut.DocumentId = dto.DocumentId;
+            sut.CertificateTypeId = dto.CertificateTypeId;
+            sut.CertificateType = dto.CertificateType;
+            sut.IssueDate = dto.IssueDate;
+            sut.CertificateNumber = dto.CertificateNumber;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             

@@ -34,7 +34,7 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public int Id
 		{
 			get { return GetProperty(IdProperty); }
-			set { SetProperty(IdProperty, value); }
+			 private set { SetProperty(IdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
 
@@ -43,17 +43,17 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public int UserId
 		{
 			get { return GetProperty(UserIdProperty); }
-			set { SetProperty(UserIdProperty, value); }
+			 private set { SetProperty(UserIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
         [DisplayName(nameof(GraduateProfileId))]
-		public int GraduateProfileId
+		public int? GraduateProfileId
 		{
 			get { return GetProperty(GraduateProfileIdProperty); }
 			set { SetProperty(GraduateProfileIdProperty, value); }
 		}
-		public static readonly PropertyInfo<int> GraduateProfileIdProperty = RegisterProperty<int>(c => c.GraduateProfileId);
+		public static readonly PropertyInfo<int?> GraduateProfileIdProperty = RegisterProperty<int?>(c => c.GraduateProfileId);
 
         [DisplayName(nameof(GraduateProfileDescription))]
 		public string GraduateProfileDescription
@@ -112,12 +112,12 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public static readonly PropertyInfo<string> MedicalSchoolCountryNameProperty = RegisterProperty<string>(c => c.MedicalSchoolCountryName);
 
         [DisplayName(nameof(DegreeId))]
-		public int DegreeId
+		public int? DegreeId
 		{
 			get { return GetProperty(DegreeIdProperty); }
 			set { SetProperty(DegreeIdProperty, value); }
 		}
-		public static readonly PropertyInfo<int> DegreeIdProperty = RegisterProperty<int>(c => c.DegreeId);
+		public static readonly PropertyInfo<int?> DegreeIdProperty = RegisterProperty<int?>(c => c.DegreeId);
 
         [DisplayName(nameof(DegreeName))]
 		public string DegreeName
@@ -168,14 +168,9 @@ namespace SurgeonPortal.Library.MedicalTraining
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
             
-
         }
-
-
 
         /// <summary>
         /// This method is used to add business rules to the Csla 
@@ -186,8 +181,6 @@ namespace SurgeonPortal.Library.MedicalTraining
             // Only process priority 5 and higher if all 4 and lower completed first
             BusinessRules.ProcessThroughPriority = 4;
 
-            BusinessRules.AddRule(new Required(IdProperty, "Id is required"));
-            BusinessRules.AddRule(new Required(UserIdProperty, "UserId is required"));
             BusinessRules.AddRule(new Required(GraduateProfileIdProperty, "GraduateProfileId is required"));
             BusinessRules.AddRule(new Required(MedicalSchoolNameProperty, "MedicalSchoolName is required"));
             BusinessRules.AddRule(new MaxLength(MedicalSchoolNameProperty, 30, @"The MedicalSchoolName cannot be more than 30 characters"));

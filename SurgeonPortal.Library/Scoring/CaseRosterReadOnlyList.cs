@@ -35,7 +35,6 @@ namespace SurgeonPortal.Library.Scoring
             Csla.Rules.BusinessRules.AddRule(typeof(CaseRosterReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
         [Fetch]

@@ -189,7 +189,12 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             var factory = new CaseCommentFactory();
             var sut = factory.Create();
-            sut.CaseContentId = Create<int>();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
+            sut.CaseContentId = dto.CaseContentId;
+            sut.Comments = dto.Comments;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             

@@ -35,7 +35,6 @@ namespace SurgeonPortal.Library.Examinations.GQ
             Csla.Rules.BusinessRules.AddRule(typeof(AdditionalTrainingReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
         [Fetch]

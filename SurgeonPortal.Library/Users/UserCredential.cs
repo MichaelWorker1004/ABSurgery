@@ -67,12 +67,8 @@ namespace SurgeonPortal.Library.Users
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
         }
-
-
 
         /// <summary>
         /// This method is used to add business rules to the Csla 
@@ -89,7 +85,7 @@ namespace SurgeonPortal.Library.Users
         }
         private void InitializeInjectionDependentRules()
         {
-            BusinessRules.AddRule(new PasswordMatchesCurrentRule(_passwordValidationCommandFactory, PasswordProperty, 2));
+            BusinessRules.AddRule(new PasswordMatchesCurrentRule(_passwordValidationCommandFactory, PasswordProperty, UserIdProperty, 2));
         }
 
 

@@ -80,16 +80,10 @@ namespace SurgeonPortal.Library.MedicalTraining
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
             
-
             
-
         }
-
-
 
         /// <summary>
         /// This method is used to add business rules to the Csla 

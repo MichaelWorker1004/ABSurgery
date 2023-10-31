@@ -33,7 +33,6 @@ namespace SurgeonPortal.Library.MedicalTraining
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [Fetch]

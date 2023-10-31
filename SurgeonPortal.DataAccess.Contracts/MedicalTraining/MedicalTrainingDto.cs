@@ -6,7 +6,7 @@ namespace SurgeonPortal.DataAccess.Contracts.MedicalTraining
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int GraduateProfileId { get; set; }
+        public int? GraduateProfileId { get; set; }
         public string GraduateProfileDescription { get; set; }
         public string MedicalSchoolName { get; set; }
         public string MedicalSchoolCity { get; set; }
@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.Contracts.MedicalTraining
         public string MedicalSchoolStateName { get; set; }
         public string MedicalSchoolCountryId { get; set; }
         public string MedicalSchoolCountryName { get; set; }
-        public int DegreeId { get; set; }
+        public int? DegreeId { get; set; }
         public string DegreeName { get; set; }
         public string MedicalSchoolCompletionYear { get; set; }
         public string ResidencyProgramName { get; set; }

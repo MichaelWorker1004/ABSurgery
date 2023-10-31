@@ -27,8 +27,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         private readonly IRotationDal _rotationDal;
 		private readonly IOverlapConflictCommandFactory _overlapConflictCommandFactory;
 
-        public Rotation(
-            IIdentityProvider identityProvider,
+        public Rotation(IIdentityProvider identityProvider,
             IRotationDal rotationDal,
 			IOverlapConflictCommandFactory overlapConflictCommandFactory)
             : base(identityProvider)
@@ -193,19 +192,15 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
         }
 
         /// <summary>
@@ -221,7 +216,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
 			BusinessRules.AddRule(new MaxDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 364, 1));
 			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));
-			BusinessRules.AddRule(new OverlapConflictRule(StartDateProperty, EndDateProperty, 5));
+			BusinessRules.AddRule(new OverlapConflictRule(StartDateProperty, EndDateProperty, UserIdProperty, 5));
 			BusinessRules.AddRule(new ExplainRequiredWhen(OtherProperty, 4));
 			BusinessRules.AddRule(new FourMonthRotationExplainRequiredWhen(FourMonthRotationExplainProperty, 4));
 			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhen(NonPrimaryExplainProperty, 4));

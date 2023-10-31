@@ -41,7 +41,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         public async Task Delete_CallsDalCorrectly()
         {
             var expectedApptId = Create<int>();
-            var expectedUserId = 1234;
             
             var dto = CreateValidDto();
             UserAppointmentDto passedDto = null;
@@ -208,7 +207,19 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var factory = new UserAppointmentFactory();
             var sut = factory.Create();
-            sut.PracticeTypeId = Create<int>();
+            sut.ApptId = dto.ApptId;
+            sut.UserId = dto.UserId;
+            sut.PracticeTypeId = dto.PracticeTypeId;
+            sut.PracticeType = dto.PracticeType;
+            sut.AppointmentTypeId = dto.AppointmentTypeId;
+            sut.AppointmentType = dto.AppointmentType;
+            sut.OrganizationTypeId = dto.OrganizationTypeId;
+            sut.AuthorizingOfficial = dto.AuthorizingOfficial;
+            sut.OrganizationType = dto.OrganizationType;
+            sut.OrganizationId = dto.OrganizationId;
+            sut.StateCode = dto.StateCode;
+            sut.Other = dto.Other;
+            sut.OrganizationName = dto.OrganizationName;
         
             await sut.SaveAsync();
             

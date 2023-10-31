@@ -95,10 +95,7 @@ namespace SurgeonPortal.Library.Trainees
             Csla.Rules.BusinessRules.AddRule(typeof(ProgramReadOnly),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
         }
-
-
 
 
         [Fetch]

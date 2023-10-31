@@ -191,7 +191,15 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var factory = new FellowshipFactory();
             var sut = factory.Create();
-            sut.ProgramName = Create<string>();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
+            sut.ProgramName = dto.ProgramName;
+            sut.CompletionYear = dto.CompletionYear;
+            sut.ProgramOther = dto.ProgramOther;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             

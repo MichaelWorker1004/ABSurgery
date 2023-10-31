@@ -37,7 +37,7 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public int Id
 		{
 			get { return GetProperty(IdProperty); }
-			set { SetProperty(IdProperty, value); }
+			 private set { SetProperty(IdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
 
@@ -45,17 +45,17 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public int UserId
 		{
 			get { return GetProperty(UserIdProperty); }
-			set { SetProperty(UserIdProperty, value); }
+			 private set { SetProperty(UserIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
         [DisplayName(nameof(TrainingTypeId))]
-		public int TrainingTypeId
+		public int? TrainingTypeId
 		{
 			get { return GetProperty(TrainingTypeIdProperty); }
 			set { SetProperty(TrainingTypeIdProperty, value); }
 		}
-		public static readonly PropertyInfo<int> TrainingTypeIdProperty = RegisterProperty<int>(c => c.TrainingTypeId);
+		public static readonly PropertyInfo<int?> TrainingTypeIdProperty = RegisterProperty<int?>(c => c.TrainingTypeId);
 
         [DisplayName(nameof(TrainingType))]
 		public string TrainingType
@@ -106,20 +106,20 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public static readonly PropertyInfo<string> OtherProperty = RegisterProperty<string>(c => c.Other);
 
         [DisplayName(nameof(StartDate))]
-		public DateTime StartDate
+		public DateTime? StartDate
 		{
 			get { return GetProperty(StartDateProperty); }
 			set { SetProperty(StartDateProperty, value); }
 		}
-		public static readonly PropertyInfo<DateTime> StartDateProperty = RegisterProperty<DateTime>(c => c.StartDate);
+		public static readonly PropertyInfo<DateTime?> StartDateProperty = RegisterProperty<DateTime?>(c => c.StartDate);
 
         [DisplayName(nameof(EndDate))]
-		public DateTime EndDate
+		public DateTime? EndDate
 		{
 			get { return GetProperty(EndDateProperty); }
 			set { SetProperty(EndDateProperty, value); }
 		}
-		public static readonly PropertyInfo<DateTime> EndDateProperty = RegisterProperty<DateTime>(c => c.EndDate);
+		public static readonly PropertyInfo<DateTime?> EndDateProperty = RegisterProperty<DateTime?>(c => c.EndDate);
 
 
 
@@ -130,14 +130,9 @@ namespace SurgeonPortal.Library.MedicalTraining
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
             
-
         }
-
-
 
         /// <summary>
         /// This method is used to add business rules to the Csla 
@@ -148,7 +143,6 @@ namespace SurgeonPortal.Library.MedicalTraining
             // Only process priority 5 and higher if all 4 and lower completed first
             BusinessRules.ProcessThroughPriority = 4;
 
-            BusinessRules.AddRule(new Required(UserIdProperty, "UserId is required"));
             BusinessRules.AddRule(new Required(TrainingTypeIdProperty, "TrainingTypeId is required"));
             BusinessRules.AddRule(new Required(StartDateProperty, "StartDate is required"));
             BusinessRules.AddRule(new Required(EndDateProperty, "EndDate is required"));

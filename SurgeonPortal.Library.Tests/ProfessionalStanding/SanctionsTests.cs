@@ -157,7 +157,19 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var factory = new SanctionsFactory();
             var sut = factory.Create();
-            sut.HadDrugAlchoholTreatment = Create<bool>();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
+            sut.HadDrugAlchoholTreatment = dto.HadDrugAlchoholTreatment;
+            sut.HadHospitalPrivilegesDenied = dto.HadHospitalPrivilegesDenied;
+            sut.HadLicenseRestricted = dto.HadLicenseRestricted;
+            sut.HadHospitalPrivilegesRestricted = dto.HadHospitalPrivilegesRestricted;
+            sut.HadFelonyConviction = dto.HadFelonyConviction;
+            sut.HadCensure = dto.HadCensure;
+            sut.Explanation = dto.Explanation;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             

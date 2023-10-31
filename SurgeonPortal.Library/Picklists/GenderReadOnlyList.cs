@@ -33,7 +33,6 @@ namespace SurgeonPortal.Library.Picklists
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [Fetch]

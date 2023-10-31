@@ -38,7 +38,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         public async Task Delete_CallsDalCorrectly()
         {
             var expectedLicenseId = Create<int>();
-            var expectedUserId = 1234;
             
             var dto = CreateValidDto();
             MedicalLicenseDto passedDto = null;
@@ -200,7 +199,16 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var factory = new MedicalLicenseFactory();
             var sut = factory.Create();
-            sut.IssuingStateId = Create<string>();
+            sut.LicenseId = dto.LicenseId;
+            sut.UserId = dto.UserId;
+            sut.IssuingStateId = dto.IssuingStateId;
+            sut.IssuingState = dto.IssuingState;
+            sut.LicenseNumber = dto.LicenseNumber;
+            sut.LicenseTypeId = dto.LicenseTypeId;
+            sut.LicenseType = dto.LicenseType;
+            sut.IssueDate = dto.IssueDate;
+            sut.ExpireDate = dto.ExpireDate;
+            sut.ReportingOrganization = dto.ReportingOrganization;
         
             await sut.SaveAsync();
             

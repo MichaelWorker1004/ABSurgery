@@ -34,7 +34,6 @@ namespace SurgeonPortal.Library.Users
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

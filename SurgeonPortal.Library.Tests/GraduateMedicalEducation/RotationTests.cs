@@ -157,7 +157,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             mockDal.Setup(m => m.InsertAsync(It.IsAny<RotationDto>()))
                 .Callback<RotationDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-
+        
             var mockCommandDal = new Mock<IOverlapConflictCommandDal>();
             mockCommandDal.Setup(m => m.CheckOverlapConflicts(It.IsAny<int>(),
                 It.IsAny<DateTime>(),
@@ -240,7 +240,28 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             var factory = new RotationFactory();
             var sut = factory.Create();
-            sut.StartDate = Create<DateTime>();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
+            sut.StartDate = dto.StartDate;
+            sut.EndDate = dto.EndDate;
+            sut.ClinicalLevelId = dto.ClinicalLevelId;
+            sut.ClinicalLevel = dto.ClinicalLevel;
+            sut.ClinicalActivityId = dto.ClinicalActivityId;
+            sut.ProgramName = dto.ProgramName;
+            sut.NonSurgicalActivity = dto.NonSurgicalActivity;
+            sut.AlternateInstitutionName = dto.AlternateInstitutionName;
+            sut.IsInternationalRotation = dto.IsInternationalRotation;
+            sut.IsEssential = dto.IsEssential;
+            sut.IsCredit = dto.IsCredit;
+            sut.Other = dto.Other;
+            sut.FourMonthRotationExplain = dto.FourMonthRotationExplain;
+            sut.NonPrimaryExplain = dto.NonPrimaryExplain;
+            sut.NonClinicalExplain = dto.NonClinicalExplain;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
+            sut.ClinicalActivity = dto.ClinicalActivity;
         
             await sut.SaveAsync();
             

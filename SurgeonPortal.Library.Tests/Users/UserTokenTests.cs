@@ -132,7 +132,9 @@ namespace SurgeonPortal.Library.Tests.Users
         
             var factory = new UserTokenFactory();
             var sut = factory.Create();
-            sut.UserId = Create<int>();
+            sut.UserId = dto.UserId;
+            sut.Token = dto.Token;
+            sut.ExpiresAt = dto.ExpiresAt;
         
             await sut.SaveAsync();
             

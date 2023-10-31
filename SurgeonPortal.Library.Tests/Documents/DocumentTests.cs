@@ -38,140 +38,7 @@ namespace SurgeonPortal.Library.Tests.Documents
             return dto;
         }
         
-        #region Document Business Rules
-        [Test]
-        public async Task IsRequired_GetById_Id_Fails()
-        {
-            var dto = CreateValidDto();
-            var expectedId = Create<int>();
-            var expectedUserId = 1234;
-            
-            var mockDal = new Mock<IDocumentDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.InsertAsync(It.IsAny<DocumentDto>()))
-                .ReturnsAsync(dto);
         
-            var mockStorageDal = new Mock<IStorageDal>();
-
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-				.WithRegisteredInstance(mockStorageDal)
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IDocument, Document>()
-                .Build();
-        
-            var factory = new DocumentFactory();
-            var sut = factory.Create();
-            
-            sut.Id = dto.Id;
-            sut.Id = default;
-        
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-            //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-            Assert.That(sut.GetBrokenRules()[0].Description == "Id is required", $"Expected the rule description to be 'Id is required', have {sut.GetBrokenRules()[0].Description}");
-            Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
-            Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
-        }
-        
-        [Test]
-        public async Task IsRequired_GetById_Id_Passes()
-        {
-            var dto = CreateValidDto();
-            var expectedId = Create<int>();
-            var expectedUserId = 1234;
-            
-            var mockDal = new Mock<IDocumentDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByIdAsync(
-                expectedId,
-                expectedUserId))
-                .ReturnsAsync(dto);
-            
-            var mockStorageDal = new Mock<IStorageDal>();
-
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockDal)
-                .WithRegisteredInstance(mockStorageDal)
-                .WithBusinessObject<IDocument, Document>()
-                .Build();
-        
-            var factory = new DocumentFactory();
-            var sut = await factory.GetByIdAsync(expectedId);
-            
-            sut.Id = Create<int>();
-        
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-        }
-        [Test]
-        public async Task IsRequired_GetById_UserId_Fails()
-        {
-            var dto = CreateValidDto();
-            var expectedId = Create<int>();
-            var expectedUserId = 1234;
-            
-            var mockDal = new Mock<IDocumentDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.InsertAsync(It.IsAny<DocumentDto>()))
-                .ReturnsAsync(dto);
-
-            var mockStorageDal = new Mock<IStorageDal>();
-
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockDal)
-                .WithRegisteredInstance(mockStorageDal)
-                .WithBusinessObject<IDocument, Document>()
-                .Build();
-        
-            var factory = new DocumentFactory();
-            var sut = factory.Create();
-            
-            sut.UserId = dto.UserId;
-            sut.UserId = default;
-        
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-            //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-            Assert.That(sut.GetBrokenRules()[0].Description == "UserId is required", $"Expected the rule description to be 'UserId is required', have {sut.GetBrokenRules()[0].Description}");
-            Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
-            Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
-        }
-        
-        [Test]
-        public async Task IsRequired_GetById_UserId_Passes()
-        {
-            var dto = CreateValidDto();
-            var expectedId = Create<int>();
-            var expectedUserId = 1234;
-            
-            var mockDal = new Mock<IDocumentDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByIdAsync(
-                expectedId,
-                expectedUserId))
-                .ReturnsAsync(dto);
-            
-            var mockStorageDal = new Mock<IStorageDal>();
-    
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockStorageDal)
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IDocument, Document>()
-                .Build();
-        
-            var factory = new DocumentFactory();
-            var sut = await factory.GetByIdAsync(expectedId);
-            
-            sut.UserId = Create<int>();
-        
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-        }
-        #endregion
 
         #region DeleteAsync
         
@@ -179,7 +46,6 @@ namespace SurgeonPortal.Library.Tests.Documents
         public async Task Delete_CallsDalCorrectly()
         {
             var expectedId = Create<int>();
-            var expectedUserId = 1234;
             
             var dto = CreateValidDto();
             DocumentDto passedDto = null;
@@ -310,8 +176,6 @@ namespace SurgeonPortal.Library.Tests.Documents
             var factory = new DocumentFactory();
             var sut = factory.Create();
             
-            sut.Id = dto.Id;
-            sut.UserId = dto.UserId;
             sut.DocumentTypeId = dto.DocumentTypeId;
             sut.DocumentName = dto.DocumentName;
             sut.DocumentType = dto.DocumentType;
@@ -363,7 +227,16 @@ namespace SurgeonPortal.Library.Tests.Documents
         
             var factory = new DocumentFactory();
             var sut = factory.Create();
-            sut.DocumentName = Create<string>();
+            sut.DocumentTypeId = dto.DocumentTypeId;
+            sut.DocumentName = dto.DocumentName;
+            sut.DocumentType = dto.DocumentType;
+            sut.InternalViewOnly = dto.InternalViewOnly;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.UploadedBy = dto.UploadedBy;
+            sut.UploadedDateUtc = dto.UploadedDateUtc;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             

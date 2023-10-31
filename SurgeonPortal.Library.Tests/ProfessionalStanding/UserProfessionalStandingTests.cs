@@ -160,7 +160,19 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var factory = new UserProfessionalStandingFactory();
             var sut = factory.Create();
-            sut.PrimaryPracticeId = Create<int>();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
+            sut.PrimaryPracticeId = dto.PrimaryPracticeId;
+            sut.PrimaryPractice = dto.PrimaryPractice;
+            sut.OrganizationTypeId = dto.OrganizationTypeId;
+            sut.OrganizationType = dto.OrganizationType;
+            sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
+            sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
+            sut.ClinicallyActive = dto.ClinicallyActive;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             

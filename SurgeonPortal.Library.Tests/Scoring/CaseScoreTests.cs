@@ -219,7 +219,21 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             var factory = new CaseScoreFactory();
             var sut = factory.Create();
-            sut.ExamineeUserId = Create<int>();
+            sut.ExamScoringId = dto.ExamScoringId;
+            sut.ExamCaseId = dto.ExamCaseId;
+            sut.ExaminerUserId = dto.ExaminerUserId;
+            sut.ExamineeUserId = dto.ExamineeUserId;
+            sut.ExamineeFirstName = dto.ExamineeFirstName;
+            sut.ExamineeMiddleName = dto.ExamineeMiddleName;
+            sut.ExamineeLastName = dto.ExamineeLastName;
+            sut.ExamineeSuffix = dto.ExamineeSuffix;
+            sut.Score = dto.Score;
+            sut.CriticalFail = dto.CriticalFail;
+            sut.Remarks = dto.Remarks;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             

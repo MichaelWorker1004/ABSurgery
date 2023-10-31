@@ -44,8 +44,8 @@ namespace SurgeonPortal.Library.Examinations
             Csla.Rules.BusinessRules.AddRule(typeof(ExamTitleReadOnly),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
+
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

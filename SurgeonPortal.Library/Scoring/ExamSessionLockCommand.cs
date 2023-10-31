@@ -41,7 +41,7 @@ namespace SurgeonPortal.Library.Scoring
 
 
         [Execute]
-        protected new async Task ExecuteCommand()
+        protected async Task ExecuteCommand()
         {
                 await _examSessionLockCommandDal.LockExamSessionAsync(ExamscheduleId);
             }

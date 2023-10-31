@@ -83,7 +83,7 @@ namespace SurgeonPortal.Library.Users
 
 
         [Execute]
-        protected new async Task ExecuteCommand()
+        protected async Task ExecuteCommand()
         {
                 await _userLoginAuditCommandDal.AuditAsync(
                     UserId,

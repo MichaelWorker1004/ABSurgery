@@ -121,19 +121,15 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicense),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicense),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicense),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicense),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
 		protected override void AddBusinessRules()

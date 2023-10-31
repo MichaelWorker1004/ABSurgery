@@ -108,14 +108,9 @@ namespace SurgeonPortal.Library.MedicalTraining
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
             
-
         }
-
-
 
 
         [RunLocal]
@@ -234,7 +229,6 @@ namespace SurgeonPortal.Library.MedicalTraining
         public void LoadDocument(Stream file)
         {
             var document = _documentFactory.Create();
-            document.UserId = _identity.GetUserId<int>();
             document.DocumentTypeId = (int)DocumentTypes.Certificate;
             document.DocumentName = $"Certificate-{Enum.GetName(typeof(CertificateTypes), CertificateTypeId)}-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}";
             document.InternalViewOnly = false;

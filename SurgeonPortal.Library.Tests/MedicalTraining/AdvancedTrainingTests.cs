@@ -18,15 +18,15 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             dto.Id = Create<int>();
             dto.UserId = 1234;
-            dto.TrainingTypeId = Create<int>();
+            dto.TrainingTypeId = Create<int?>();
             dto.TrainingType = Create<string>();
             dto.ProgramId = Create<int?>();
             dto.InstitutionName = Create<string>();
             dto.City = Create<string>();
             dto.State = Create<string>();
             dto.Other = Create<string>();
-            dto.StartDate = Create<System.DateTime>();
-            dto.EndDate = Create<System.DateTime>();
+            dto.StartDate = Create<System.DateTime?>();
+            dto.EndDate = Create<System.DateTime?>();
             dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
@@ -37,39 +37,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
         #region AdvancedTraining Business Rules
         [Test]
-        public async Task IsRequired_GetByTrainingId_UserId_Fails()
-        {
-            var dto = CreateValidDto();
-            var expectedId = Create<int>();
-            
-            var mockDal = new Mock<IAdvancedTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.InsertAsync(It.IsAny<AdvancedTrainingDto>()))
-                .ReturnsAsync(dto);
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
-                .Build();
-        
-            var factory = new AdvancedTrainingFactory();
-            var sut = factory.Create();
-            
-            sut.UserId = dto.UserId;
-            sut.UserId = default;
-        
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-            //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-            Assert.That(sut.GetBrokenRules()[0].Description == "UserId is required", $"Expected the rule description to be 'UserId is required', have {sut.GetBrokenRules()[0].Description}");
-            Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
-            Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
-        }
-        
-        [Test]
-        public async Task IsRequired_GetByTrainingId_UserId_Passes()
+        public async Task IsRequired_GetByTrainingId_TrainingTypeId_Fails()
         {
             var dto = CreateValidDto();
             var expectedId = Create<int>();
@@ -87,34 +55,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.UserId = Create<int>();
-        
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-        }
-        [Test]
-        public async Task IsRequired_GetByTrainingId_TrainingTypeId_Fails()
-        {
-            var dto = CreateValidDto();
-            var expectedId = Create<int>();
-            
-            var mockDal = new Mock<IAdvancedTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.InsertAsync(It.IsAny<AdvancedTrainingDto>()))
-                .ReturnsAsync(dto);
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IAdvancedTraining, AdvancedTraining>()
-                .Build();
-        
-            var factory = new AdvancedTrainingFactory();
-            var sut = factory.Create();
-            
-            sut.TrainingTypeId = dto.TrainingTypeId;
             sut.TrainingTypeId = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
             var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
@@ -143,7 +86,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.TrainingTypeId = Create<int>();
+            sut.TrainingTypeId = Create<int?>();
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -155,9 +98,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var expectedId = Create<int>();
             
             var mockDal = new Mock<IAdvancedTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.InsertAsync(It.IsAny<AdvancedTrainingDto>()))
+            mockDal.Setup(m => m.GetByTrainingIdAsync(expectedId))
                 .ReturnsAsync(dto);
-        
+            
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -165,12 +108,11 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new AdvancedTrainingFactory();
-            var sut = factory.Create();
+            var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.StartDate = dto.StartDate;
             sut.StartDate = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
             var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
@@ -199,7 +141,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.StartDate = Create<System.DateTime>();
+            sut.StartDate = Create<System.DateTime?>();
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -211,9 +153,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var expectedId = Create<int>();
             
             var mockDal = new Mock<IAdvancedTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.InsertAsync(It.IsAny<AdvancedTrainingDto>()))
+            mockDal.Setup(m => m.GetByTrainingIdAsync(expectedId))
                 .ReturnsAsync(dto);
-        
+            
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -221,12 +163,11 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Build();
         
             var factory = new AdvancedTrainingFactory();
-            var sut = factory.Create();
+            var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.EndDate = dto.EndDate;
             sut.EndDate = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
             var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
@@ -255,7 +196,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.EndDate = Create<System.DateTime>();
+            sut.EndDate = Create<System.DateTime?>();
         
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
@@ -333,8 +274,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = factory.Create();
             
-            sut.Id = dto.Id;
-            sut.UserId = dto.UserId;
             sut.TrainingTypeId = dto.TrainingTypeId;
             sut.ProgramId = dto.ProgramId;
             sut.Other = dto.Other;
@@ -382,7 +321,15 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var factory = new AdvancedTrainingFactory();
             var sut = factory.Create();
-            sut.TrainingTypeId = Create<int>();
+            sut.TrainingTypeId = dto.TrainingTypeId;
+            sut.ProgramId = dto.ProgramId;
+            sut.Other = dto.Other;
+            sut.StartDate = dto.StartDate;
+            sut.EndDate = dto.EndDate;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             
@@ -424,8 +371,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
             
-            sut.Id = dto.Id;
-            sut.UserId = dto.UserId;
             sut.TrainingTypeId = dto.TrainingTypeId;
             sut.ProgramId = dto.ProgramId;
             sut.Other = dto.Other;
@@ -440,8 +385,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             // or the SaveAsync() will not be called. :)
             dto = CreateValidDto();
         
-            sut.Id = dto.Id;
-            sut.UserId = dto.UserId;
             sut.TrainingTypeId = dto.TrainingTypeId;
             sut.ProgramId = dto.ProgramId;
             sut.Other = dto.Other;
@@ -493,7 +436,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var factory = new AdvancedTrainingFactory();
             var sut = await factory.GetByTrainingIdAsync(expectedId);
-            sut.Id = Create<int>();
+            sut.Other = Create<string>();
         
             await sut.SaveAsync();
             
