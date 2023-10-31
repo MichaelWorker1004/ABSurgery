@@ -4,7 +4,6 @@ using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
 using SurgeonPortal.Library.Users;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 

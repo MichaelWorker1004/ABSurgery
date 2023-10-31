@@ -55,7 +55,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new FellowshipProgramReadOnlyListFactory();
-            var sut = await factory.GetAllAsync(Create<string>());
+            var sut = await factory.GetAllAsync(It.IsAny<string>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

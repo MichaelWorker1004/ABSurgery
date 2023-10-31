@@ -62,7 +62,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new ScoringSessionReadOnlyListFactory();
-            var sut = await factory.GetByKeysAsync(Create<DateTime>());
+            var sut = await factory.GetByKeysAsync(It.IsAny<DateTime>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

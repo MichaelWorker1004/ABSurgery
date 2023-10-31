@@ -63,7 +63,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .Build();
         
             var factory = new CaseDetailReadOnlyListFactory();
-            var sut = await factory.GetByCaseHeaderIdAsync(Create<int>());
+            var sut = await factory.GetByCaseHeaderIdAsync(It.IsAny<int>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

@@ -338,11 +338,11 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             
             sut.MedicalSchoolCompletionYear = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 2, $"Expected 2 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
             var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 2, $"Expected 2 broken rule, have {sut.GetBrokenRules().Count} ");
             Assert.That(sut.GetBrokenRules()[0].Description == "MedicalSchoolCompletionYear is required", $"Expected the rule description to be 'MedicalSchoolCompletionYear is required', have {sut.GetBrokenRules()[0].Description}");
             Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
             Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
@@ -448,11 +448,11 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             
             sut.ResidencyCompletionYear = default;
         
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 2, $"Expected 2 broken rule, have {sut.GetBrokenRules().Count} ");
         
             //Ensure that the save fails...
             var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules().Count == 2, $"Expected 2 broken rule, have {sut.GetBrokenRules().Count} ");
             Assert.That(sut.GetBrokenRules()[0].Description == "ResidencyCompletionYear is required", $"Expected the rule description to be 'ResidencyCompletionYear is required', have {sut.GetBrokenRules()[0].Description}");
             Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
             Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
@@ -781,6 +781,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.Id)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

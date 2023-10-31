@@ -57,7 +57,7 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
                 .Build();
         
             var factory = new TitleReadOnlyListFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(It.IsAny<int>());
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 
