@@ -1219,6 +1219,8 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.AbsId)
+                .Excluding(m => m.NPI)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -1395,6 +1397,8 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
+                    .Excluding(m => m.AbsId)
+                    .Excluding(m => m.NPI)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();

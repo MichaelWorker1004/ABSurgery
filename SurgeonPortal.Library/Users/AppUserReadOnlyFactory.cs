@@ -42,34 +42,31 @@ namespace SurgeonPortal.Library.Users
 
 
         
-            [Serializable]
-            internal class GetByCredentialsCriteria
+        [Serializable]
+        public class GetByCredentialsCriteria
+        {
+            public string UserName { get; set; }
+            public string Password { get; set; }
+            
+            public GetByCredentialsCriteria(
+            string userName,
+            string password)
             {
-                public string UserName { get; set; }
-                public string Password { get; set; }
-            
-                public GetByCredentialsCriteria(
-                string userName,
-                string password)
-             {
-                    UserName = userName;
-                    Password = password;
-              }
+                UserName = userName;
+                Password = password;
             }
+        }
             
 
-            [Serializable]
-            internal class GetByTokenCriteria
+        [Serializable]
+        public class GetByTokenCriteria
+        {
+            public string Token { get; set; }
+            
+            public GetByTokenCriteria(string token)
             {
-                public string Token { get; set; }
-            
-                public GetByTokenCriteria(string token)
-             {
-                    Token = token;
-              }
+                Token = token;
             }
-            
-
-
+        }
     }
 }

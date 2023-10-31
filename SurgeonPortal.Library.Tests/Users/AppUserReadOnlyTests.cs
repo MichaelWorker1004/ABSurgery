@@ -25,12 +25,18 @@ namespace SurgeonPortal.Library.Tests.Users
                 expectedUserName,
                 expectedPassword))
                 .ReturnsAsync(Create<AppUserReadOnlyDto>());
-            
+
+            var mockClaimsDal = new Mock<IUserClaimReadOnlyDal>();
+            mockClaimsDal.Setup(m => m.GetByIdsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(CreateMany<UserClaimReadOnlyDto>());
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockClaimsDal)
                 .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
+                .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
+                .WithBusinessObject<IUserClaimReadOnly, UserClaimReadOnly>()
                 .Build();
         
             var factory = new AppUserReadOnlyFactory();
@@ -53,12 +59,18 @@ namespace SurgeonPortal.Library.Tests.Users
                 expectedUserName,
                 expectedPassword))
                 .ReturnsAsync(dto);
-            
-        
+
+            var mockClaimsDal = new Mock<IUserClaimReadOnlyDal>();
+            mockClaimsDal.Setup(m => m.GetByIdsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(CreateMany<UserClaimReadOnlyDto>());
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockClaimsDal)
                 .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
+                .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
+                .WithBusinessObject<IUserClaimReadOnly, UserClaimReadOnly>()
                 .Build();
         
             var factory = new AppUserReadOnlyFactory();
@@ -81,12 +93,18 @@ namespace SurgeonPortal.Library.Tests.Users
             var mockDal = new Mock<IAppUserReadOnlyDal>();
             mockDal.Setup(m => m.GetByTokenAsync(expectedToken))
                 .ReturnsAsync(Create<AppUserReadOnlyDto>());
-            
-        
+
+            var mockClaimsDal = new Mock<IUserClaimReadOnlyDal>();
+            mockClaimsDal.Setup(m => m.GetByIdsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(CreateMany<UserClaimReadOnlyDto>());
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockClaimsDal)
                 .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
+                .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
+                .WithBusinessObject<IUserClaimReadOnly, UserClaimReadOnly>()
                 .Build();
         
             var factory = new AppUserReadOnlyFactory();
@@ -104,12 +122,18 @@ namespace SurgeonPortal.Library.Tests.Users
             var mockDal = new Mock<IAppUserReadOnlyDal>();
             mockDal.Setup(m => m.GetByTokenAsync(expectedToken))
                 .ReturnsAsync(dto);
-            
-        
+
+            var mockClaimsDal = new Mock<IUserClaimReadOnlyDal>();
+            mockClaimsDal.Setup(m => m.GetByIdsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(CreateMany<UserClaimReadOnlyDto>());
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockClaimsDal)
                 .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
+                .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
+                .WithBusinessObject<IUserClaimReadOnly, UserClaimReadOnly>()
                 .Build();
         
             var factory = new AppUserReadOnlyFactory();

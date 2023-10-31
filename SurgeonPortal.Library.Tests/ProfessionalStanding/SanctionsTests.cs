@@ -293,6 +293,9 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
+                    .Excluding(m => m.UserId)
+                    .Excluding(m => m.Id)
+                    .Excluding(m => m.Explanation)
                 .ExcludingMissingMembers());
         }
         

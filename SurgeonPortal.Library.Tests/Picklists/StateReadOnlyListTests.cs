@@ -55,7 +55,7 @@ namespace SurgeonPortal.Library.Tests.Picklists
                 .Build();
         
             var factory = new StateReadOnlyListFactory();
-            var sut = await factory.GetByCountryAsync(It.IsAny<string>());
+            var sut = await factory.GetByCountryAsync(expectedCountryCode);
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

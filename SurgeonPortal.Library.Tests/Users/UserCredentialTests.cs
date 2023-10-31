@@ -17,8 +17,8 @@ namespace SurgeonPortal.Library.Tests.Users
             var dto = Create<UserCredentialDto>();
         
             dto.UserId = 1234;
-            dto.EmailAddress = Create<string>();
-            dto.Password = Create<string>();
+            dto.EmailAddress = "test@test1.com";
+            dto.Password = "Abc1234!6";
         
             return dto;
         }
@@ -94,10 +94,13 @@ namespace SurgeonPortal.Library.Tests.Users
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserCredentialDto>()))
                 .Callback<UserCredentialDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-        
+
+            var mocks = GetMockedCommand(false);
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mocks.MockCommand)
+                .WithRegisteredInstance(mocks.MockCommandFactory)
                 .WithBusinessObject<IUserCredential, UserCredential>()
                 .Build();
         
@@ -108,13 +111,7 @@ namespace SurgeonPortal.Library.Tests.Users
             sut.EmailAddress = dto.EmailAddress;
             sut.Password = dto.Password;
         
-            // We now change all properties on the SUT to make it Dirty
-            // or the SaveAsync() will not be called. :)
-            dto = CreateValidDto();
-        
-            sut.UserId = dto.UserId;
-            sut.EmailAddress = dto.EmailAddress;
-            sut.Password = dto.Password;
+            sut.EmailAddress = "test2@test.com";
         
             await sut.SaveAsync();
         
@@ -127,6 +124,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.EmailAddress)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -145,16 +143,20 @@ namespace SurgeonPortal.Library.Tests.Users
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserCredentialDto>()))
                 .ReturnsAsync(dto);
-        
+
+            var mocks = GetMockedCommand(false);
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mocks.MockCommand)
+                .WithRegisteredInstance(mocks.MockCommandFactory)
                 .WithBusinessObject<IUserCredential, UserCredential>()
                 .Build();
         
             var factory = new UserCredentialFactory();
             var sut = await factory.GetByUserIdAsync();
-            sut.EmailAddress = Create<string>();
+            sut.EmailAddress = "test2@tst.com";
         
             await sut.SaveAsync();
             
@@ -166,7 +168,21 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         }
-        
+
         #endregion
-	}
+
+        (Mock<IPasswordValidationCommand> MockCommand, Mock<IPasswordValidationCommandFactory> MockCommandFactory) GetMockedCommand(bool passwordsMatch)
+        {
+            var mockCommandFactory = new Mock<IPasswordValidationCommandFactory>();
+            var mockCommand = new Mock<IPasswordValidationCommand>();
+            mockCommand.SetupGet(p => p.PasswordsMatch).Returns(passwordsMatch);
+
+            mockCommandFactory
+                .Setup(f => f.Validate(It.IsAny<int>(),
+                        It.IsAny<string>()))
+                .Returns(mockCommand.Object);
+
+            return (mockCommand, mockCommandFactory);
+        }
+    }
 }

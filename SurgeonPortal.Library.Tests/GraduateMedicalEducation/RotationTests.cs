@@ -62,7 +62,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<RotationDto>()))
                 .Callback<RotationDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
@@ -105,7 +105,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var mockDal = new Mock<IRotationDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(Create<RotationDto>());
-
+            
             var mocks = GetMockedCommand(false);
         
             UseMockServiceProvider()
@@ -132,7 +132,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var mockDal = new Mock<IRotationDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
-
+            
             var mocks = GetMockedCommand(false);
         
             UseMockServiceProvider()
@@ -228,7 +228,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             var mockDal = new Mock<IRotationDal>();
             mockDal.Setup(m => m.InsertAsync(It.IsAny<RotationDto>()))
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
@@ -295,7 +295,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<RotationDto>()))
                 .Callback<RotationDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()

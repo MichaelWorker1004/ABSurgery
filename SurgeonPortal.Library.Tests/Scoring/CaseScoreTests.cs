@@ -154,11 +154,15 @@ namespace SurgeonPortal.Library.Tests.Scoring
             mockDal.Setup(m => m.InsertAsync(It.IsAny<CaseScoreDto>()))
                 .Callback<CaseScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-        
+
+            var mocks = GetMockedCommand(false);
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mocks.MockCommand)
+                .WithRegisteredInstance(mocks.MockCommandFactory)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
         
@@ -209,11 +213,15 @@ namespace SurgeonPortal.Library.Tests.Scoring
             var mockDal = new Mock<ICaseScoreDal>();
             mockDal.Setup(m => m.InsertAsync(It.IsAny<CaseScoreDto>()))
                 .ReturnsAsync(dto);
+
+            var mocks = GetMockedCommand(false);
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mocks.MockCommand)
+                .WithRegisteredInstance(mocks.MockCommandFactory)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
         
@@ -268,11 +276,15 @@ namespace SurgeonPortal.Library.Tests.Scoring
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseScoreDto>()))
                 .Callback<CaseScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-        
+
+            var mocks = GetMockedCommand(false);
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mocks.MockCommand)
+                .WithRegisteredInstance(mocks.MockCommandFactory)
                 .WithBusinessObject<ICaseScore, CaseScore>()
                 .Build();
         
@@ -373,7 +385,21 @@ namespace SurgeonPortal.Library.Tests.Scoring
                     .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         }
-        
+
         #endregion
-	}
+
+        (Mock<IIsExamSessionLockedCommand> MockCommand, Mock<IIsExamSessionLockedCommandFactory> MockCommandFactory) GetMockedCommand(bool isLocked)
+        {
+            var mockCommandFactory = new Mock<IIsExamSessionLockedCommandFactory>();
+            var mockCommand = new Mock<IIsExamSessionLockedCommand>();
+            mockCommand.SetupGet(p => p.IsLocked).Returns(isLocked);
+
+            mockCommandFactory
+                .Setup(f => f.IsExamSessionLocked(It.IsAny<int>()))
+                .Returns(mockCommand.Object);
+
+            return (mockCommand, mockCommandFactory);
+        }
+        
+    }
 }

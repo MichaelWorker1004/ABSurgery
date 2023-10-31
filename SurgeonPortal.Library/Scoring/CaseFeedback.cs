@@ -76,9 +76,6 @@ namespace SurgeonPortal.Library.Scoring
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
             Csla.Rules.BusinessRules.AddRule(typeof(CaseFeedback),
-                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
-                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-            Csla.Rules.BusinessRules.AddRule(typeof(CaseFeedback),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
             Csla.Rules.BusinessRules.AddRule(typeof(CaseFeedback),

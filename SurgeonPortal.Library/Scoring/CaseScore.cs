@@ -22,13 +22,15 @@ namespace SurgeonPortal.Library.Scoring
 	public class CaseScore : YtgBusinessBase<CaseScore>, ICaseScore
     {
         private readonly ICaseScoreDal _caseScoreDal;
+		readonly IIsExamSessionLockedCommandFactory _isExamSessionLockedCommandFactory;
 
-        public CaseScore(
+        public CaseScore(IIsExamSessionLockedCommandFactory isExamSessionLockedCommandFactory,
             IIdentityProvider identityProvider,
             ICaseScoreDal caseScoreDal)
             : base(identityProvider)
         {
             _caseScoreDal = caseScoreDal;
+			_isExamSessionLockedCommandFactory = isExamSessionLockedCommandFactory;
         }
 
         [Key] 
@@ -142,12 +144,10 @@ namespace SurgeonPortal.Library.Scoring
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
         }
 
-		protected override void AddBusinessRules()
-		{
-			BusinessRules.AddRule(new ExamLockedRule(ExamCaseIdProperty, 1));
+        protected override void AddInjectedBusinessRules()
+        {
+			BusinessRules.AddRule(new ExamLockedRule(_isExamSessionLockedCommandFactory, ExamCaseIdProperty, 1));
 		}
-
-
 
         [RunLocal]
         [DeleteSelf]
@@ -279,11 +279,12 @@ namespace SurgeonPortal.Library.Scoring
 	{
 		private IIsExamSessionLockedCommandFactory _isExamSessionLockedCommandFactory;
 
-		public ExamLockedRule(IPropertyInfo primaryProperty,
+		public ExamLockedRule(IIsExamSessionLockedCommandFactory isExamSessionLockedCommandFactory,
+			IPropertyInfo primaryProperty,
 			int priority)
 			: base(primaryProperty)
 		{
-			_isExamSessionLockedCommandFactory = new IsExamSessionLockedCommandFactory();
+			_isExamSessionLockedCommandFactory = isExamSessionLockedCommandFactory;
 			InputProperties = new List<IPropertyInfo> { primaryProperty };
 			Priority = priority;
 		}

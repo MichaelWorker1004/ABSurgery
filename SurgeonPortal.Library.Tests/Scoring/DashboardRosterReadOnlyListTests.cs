@@ -64,7 +64,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .Build();
         
             var factory = new DashboardRosterReadOnlyListFactory();
-            var sut = await factory.GetByUserIdAsync(It.IsAny<DateTime>());
+            var sut = await factory.GetByUserIdAsync(expectedExamDate);
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

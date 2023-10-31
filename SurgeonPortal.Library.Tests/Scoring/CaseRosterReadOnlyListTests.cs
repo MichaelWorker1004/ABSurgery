@@ -66,8 +66,8 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             var factory = new CaseRosterReadOnlyListFactory();
             var sut = await factory.GetByScheduleIdAsync(
-                It.IsAny<int>(),
-                It.IsAny<int?>());
+                expectedScheduleId1,
+                expectedScheduleId2);
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 
