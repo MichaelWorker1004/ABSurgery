@@ -64,7 +64,7 @@ namespace SurgeonPortal.Library.Examiners
             
             if (dto == null)
             {
-                throw new DataNotFoundException("ConflictReadOnly not found based on criteria.");
+                return;
             }
             
             FetchData(dto);

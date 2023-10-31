@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
+  AfterContentInit,
   Component,
   ElementRef,
   Input,
@@ -8,7 +9,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'abs-tooltip',
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './tooltip.component.html',
   styleUrls: ['./tooltip.component.scss'],
 })
-export class TooltipComponent implements OnInit, AfterViewInit, OnChanges {
+export class TooltipComponent implements OnInit, AfterContentInit, OnChanges {
   @ViewChild('tooltip', { static: false }) tooltipRef!: ElementRef;
   @ViewChild('icon', { static: false }) iconRef!: ElementRef;
 
@@ -31,7 +31,7 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnChanges {
     this.localPosition = this.position;
   }
 
-  ngAfterViewInit(): void {
+  ngAfterContentInit(): void {
     this.adjustPosition();
   }
 
@@ -49,19 +49,19 @@ export class TooltipComponent implements OnInit, AfterViewInit, OnChanges {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
-    const tooltipRect = this.tooltipRef.nativeElement.getBoundingClientRect();
-    const iconRect = this.iconRef.nativeElement.getBoundingClientRect();
+    const tooltipRect = this.tooltipRef?.nativeElement.getBoundingClientRect();
+    const iconRect = this.iconRef?.nativeElement.getBoundingClientRect();
 
-    if (iconRect.top - tooltipRect.height < 0) {
+    if (iconRect?.top - tooltipRect?.height < 0) {
       //tooltip spills over top of page
       this.localPosition = 'bottom';
-    } else if (iconRect.bottom + tooltipRect.height > windowHeight) {
+    } else if (iconRect?.bottom + tooltipRect?.height > windowHeight) {
       //tooltip spills over bottom of page
       this.localPosition = 'top';
-    } else if (iconRect.left - tooltipRect.width < 0) {
+    } else if (iconRect?.left - tooltipRect?.width < 0) {
       //tooltip spills over left of page
       this.localPosition = 'right';
-    } else if (iconRect.right + tooltipRect.width > windowWidth) {
+    } else if (iconRect?.right + tooltipRect?.width > windowWidth) {
       //tooltip spills over right of page
       this.localPosition = 'left';
     }

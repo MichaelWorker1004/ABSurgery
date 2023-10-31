@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxsModule, Store } from '@ngxs/store';
 import { IMenuItem } from 'src/web-components/menuItem';
 import { CloseApplication } from '../state/application/application.actions';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { distinctUntilChanged } from 'rxjs';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-side-navigation',
   standalone: true,
@@ -13,7 +16,7 @@ import { CloseApplication } from '../state/application/application.actions';
   templateUrl: './side-navigation.component.html',
   styleUrls: ['./side-navigation.component.scss'],
 })
-export class SideNavigationComponent {
+export class SideNavigationComponent implements OnInit {
   /**
    * Emits an event when the side navigation is toggled
    * @type {EventEmitter<any>}
@@ -38,11 +41,16 @@ export class SideNavigationComponent {
    */
   @Input() navItems: Array<IMenuItem> = [];
 
+  localNavItems: Array<IMenuItem> = [];
+
   constructor(
     private _router: Router,
     private _store: Store,
     private _translateService: TranslateService
   ) {}
+  ngOnInit(): void {
+    this.localNavItems = this.translateNavItem(this.navItems);
+  }
 
   logout() {
     this._store.dispatch(new CloseApplication());
@@ -77,12 +85,15 @@ export class SideNavigationComponent {
   private translateNavItem(navItems: any[]): any[] {
     return navItems.map((navItem) => {
       if (navItem.displayKey) {
-        // this safeguards against the timing issue of the page loading before the translations are ready
-        // TODO: [Joe] address this timing issue in a way that does not rely on a timeout
-        const newDisplay = this._translateService.instant(navItem.displayKey);
-        if (newDisplay !== navItem.displayKey) {
-          navItem.display = newDisplay;
-        }
+        this._translateService
+          .get(navItem.displayKey)
+          .pipe(distinctUntilChanged(), untilDestroyed(this))
+          .subscribe((res) => {
+            const newDisplay = res;
+            if (newDisplay !== navItem.displayKey) {
+              navItem.display = newDisplay;
+            }
+          });
       }
       if (navItem.children) {
         navItem.children = this.translateNavItem(navItem.children);

@@ -17,7 +17,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, isObservable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, isObservable, take } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -50,9 +50,9 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
   disabledCriticalFail = true;
 
   scoreOptions = [
-    { label: 'Pass', value: '1' },
+    { label: 'Pass', value: '3' },
     { label: 'Equivocal', value: '2' },
-    { label: 'Fail', value: '3' },
+    { label: 'Fail', value: '1' },
   ];
 
   scoringForm = new FormGroup({
@@ -84,33 +84,38 @@ export class ExaminationScoreCardComponent implements OnInit, OnChanges {
       });
     } else {
       const localData = { ...this.case };
-
       localData['caseNumber'] = this.case?.sections
         ? this.case?.sections[0].caseNumber
         : this.case?.caseNumber;
-      localData['remarksTitle'] = this.case?.sections
-        ? this._translateService.instant(
-            'EXAMSCORING.EXAMINATION.SCORE_CARD.REMARKS_TITLE',
-            {
-              caseTitle: this.case?.sections[0].caseTitle,
-              caseNumber: this.case?.sections[0].caseNumber,
-            }
-          )
-        : this._translateService.instant(
-            'EXAMSCORING.EXAMINATION.SCORE_CARD.REMARKS_TITLE_NO_CASE',
-            {
-              caseNumber: this.case?.caseNumber,
-            }
-          );
+
+      if (this.case?.sections) {
+        this._translateService
+          .get('EXAMSCORING.EXAMINATION.SCORE_CARD.REMARKS_TITLE', {
+            caseTitle: this.case?.sections[0].caseTitle,
+            caseNumber: this.case?.sections[0].caseNumber,
+          })
+          .pipe(distinctUntilChanged(), untilDestroyed(this))
+          .subscribe((res) => {
+            localData['remarksTitle'] = res;
+          });
+      } else {
+        this._translateService
+          .get('EXAMSCORING.EXAMINATION.SCORE_CARD.REMARKS_TITLE_NO_CASE', {
+            caseNumber: this.case?.caseNumber,
+          })
+          .pipe(distinctUntilChanged(), untilDestroyed(this))
+          .subscribe((res) => {
+            localData['remarksTitle'] = res;
+          });
+      }
 
       this.localData = localData;
-      console.log('data reg', this.localData);
       this.setLocalData();
     }
   }
 
   handleScoreSelect(value: any) {
-    if (value === '3' || value === 3) {
+    if (value === '1' || value === 1) {
       this.scoringForm.get('criticalFail')?.enable();
       this.disabledCriticalFail = false;
     } else {

@@ -8,7 +8,7 @@ import {
 export class GetPSMedicalLicenseList {
   static readonly type = '[Professional Standing] get list of medical licenses';
 
-  //constructor() {}
+  constructor(public isUpdate = false) {}
 }
 
 export class GetPSMedicalLicenseDetails {

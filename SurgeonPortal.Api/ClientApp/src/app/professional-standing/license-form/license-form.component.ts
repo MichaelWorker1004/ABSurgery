@@ -52,25 +52,27 @@ export class LicenseFormComponent implements OnInit, OnChanges {
   @Input() clearErrors?: any;
 
   optionLists = {
-    licenseStateOptions: [],
-    licenseTypeOptions: [],
+    licenseStateOptions: [] as any[],
+    licenseTypeOptions: [] as any[],
   };
 
   originalFormValues: any;
   localEdit = false;
 
   medicalLicenseForm = new FormGroup({
-    issuingStateId: new FormControl({ value: null, disabled: false }, [
-      Validators.required,
-    ]),
+    issuingStateId: new FormControl<number | null>(
+      { value: null, disabled: false },
+      [Validators.required]
+    ),
 
     licenseNumber: new FormControl({ value: '', disabled: false }, [
       Validators.required,
     ]),
 
-    licenseTypeId: new FormControl({ value: null, disabled: false }, [
-      Validators.required,
-    ]),
+    licenseTypeId: new FormControl<number | null>(
+      { value: null, disabled: false },
+      [Validators.required]
+    ),
 
     issueDate: new FormControl({ value: '', disabled: false }, [
       Validators.required,

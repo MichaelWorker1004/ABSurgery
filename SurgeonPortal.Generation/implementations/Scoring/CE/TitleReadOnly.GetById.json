@@ -38,6 +38,24 @@
             "scale": 0,
             "required": true,
             "mapsTo": "ExamScheduleId"
+          },
+          {
+            "name": "ExaminerUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+          },
+          {
+            "name": "ExamineeUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamineeUserId"
           }
         ],
         "recordsets": [
@@ -62,7 +80,7 @@
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": true,
-                "mapsTo": ""
+                "mapsTo": "model.CaseHeaderId"
               },
               {
                 "name": "ExamCaseId",
@@ -73,6 +91,36 @@
                 "isNullable": true,
                 "isIdentityColumn": true,
                 "mapsTo": "model.ExamCaseId"
+              },
+              {
+                "name": "Score",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Score"
+              },
+              {
+                "name": "CriticalFail",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CriticalFail"
+              },
+              {
+                "name": "Remarks",
+                "dataType": "string",
+                "maxLength": 2000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Remarks"
               }
             ]
           }
@@ -83,6 +131,11 @@
   "inputParameters": [
     {
       "name": "ExamScheduleId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ExamineeUserId",
       "dataType": "int",
       "required": true
     }

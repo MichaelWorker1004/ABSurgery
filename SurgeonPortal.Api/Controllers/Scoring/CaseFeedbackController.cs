@@ -49,40 +49,6 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CaseFeedbackModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [HttpGet("by-examiner-id")]
-        public async Task<ActionResult<CaseFeedbackModel>> GetCaseFeedback_GetByExaminerIdAsync(
-            [FromServices] ICaseFeedbackFactory caseFeedbackFactory,
-            int caseHeaderId)
-        {
-            var item = await caseFeedbackFactory.GetByExaminerIdAsync(caseHeaderId);
-        
-            return Ok(_mapper.Map<CaseFeedbackModel>(item));
-        } 
-
-        ///<summary>
-        /// YtgIm
-        ///<summary>
-        [MapToApiVersion("1")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CaseFeedbackModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [HttpGet("by-id")]
-        public async Task<ActionResult<CaseFeedbackModel>> GetCaseFeedback_GetByIdAsync(
-            [FromServices] ICaseFeedbackFactory caseFeedbackFactory,
-            int id)
-        {
-            var item = await caseFeedbackFactory.GetByIdAsync(id);
-        
-            return Ok(_mapper.Map<CaseFeedbackModel>(item));
-        } 
-
-        ///<summary>
-        /// YtgIm
-        ///<summary>
-        [MapToApiVersion("1")]
         [ProducesResponseType(201)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -118,6 +84,23 @@ namespace SurgeonPortal.Api.Controllers.Scoring
             AssignEditProperties(item, model);
             
             return await UpdateAsync<CaseFeedbackModel>(_mapper, item);
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CaseFeedbackReadOnlyModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("by-examiner-id")]
+        public async Task<ActionResult<CaseFeedbackReadOnlyModel>> GetCaseFeedbackReadOnly_GetByExaminerIdAsync(
+            [FromServices] ICaseFeedbackReadOnlyFactory caseFeedbackReadOnlyFactory,
+            int caseHeaderId)
+        {
+            var item = await caseFeedbackReadOnlyFactory.GetByExaminerIdAsync(caseHeaderId);
+        
+            return Ok(_mapper.Map<CaseFeedbackReadOnlyModel>(item));
         } 
 
         private void AssignCreateProperties(ICaseFeedback entity, CaseFeedbackModel model)

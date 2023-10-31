@@ -245,7 +245,7 @@ export class GridComponent implements OnInit, OnChanges {
    */
   setColumnSort(column: any) {
     this.columns.forEach((col: any) => {
-      if (col.field === column.field) {
+      if (col.fieldName === column.fieldName) {
         col.sort =
           column.sort === 'asc'
             ? 'desc'

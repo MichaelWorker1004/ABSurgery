@@ -19,6 +19,8 @@ export class UpdateMedicalTraining {
 
 export class GetAdvancedTrainingData {
   static readonly type = '[Medical Training] Get advanced training data';
+
+  constructor(public isUpdate = false) {}
 }
 
 export class UpdateAdvancedTrainingData {

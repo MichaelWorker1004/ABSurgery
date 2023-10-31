@@ -3,20 +3,26 @@
 </div>
 
 <div class="flex flex-wrap">
-  <div class="col-12 md:col-3">Total Amount of Fee:</div>
+  <div class="col-12 md:col-3">Total Amount of Fees:</div>
   <div class="col-12 md:col-9">
-    <strong>{{ payFeeData?.totalAmountOfFee }}</strong>
+    <strong>{{
+      payFeeData?.totalAmountOfFee | currency : 'USD' : true : '1.2-2'
+    }}</strong>
   </div>
   <div class="col-12 md:col-3">
     Total Amount Paid as of
     {{ payFeeData?.totalAmountPaidDate | date : 'MM/dd/yyyy' }}:
   </div>
   <div class="col-12 md:col-9">
-    <strong>{{ payFeeData?.totalAmountPaid }}</strong>
+    <strong>{{
+      payFeeData?.totalAmountPaid | currency : 'USD' : true : '1.2-2'
+    }}</strong>
   </div>
   <div class="col-12 md:col-3">Remaining Balance:</div>
   <div class="col-12 md:col-9 danger">
-    <strong style="color: #8b040a">{{ payFeeData?.remainingBalance }}</strong>
+    <strong style="color: #8b040a">{{
+      payFeeData?.remainingBalance | currency : 'USD' : true : '1.2-2'
+    }}</strong>
   </div>
 </div>
 
@@ -30,7 +36,7 @@
 
 <h5 class="mt-5">Payment Information</h5>
 
-<form class="mt-5">
+<form class="mt-5" [formGroup]="paymentInformationForm">
   <div class="grid">
     <div
       *ngFor="let formField of paymentInformationFormFields"
@@ -45,6 +51,7 @@
         [name]="formField.name"
         [id]="formField.name"
         [required]="formField.required"
+        [formControlName]="formField.name"
         pInputText
       />
       <p-dropdown
@@ -54,6 +61,7 @@
         [name]="formField.name"
         [id]="formField.name"
         [editable]="true"
+        [formControlName]="formField.name"
         appendTo="body"
         optionLabel="itemDescription"
         optionValue="itemValue"

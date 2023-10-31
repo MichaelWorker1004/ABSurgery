@@ -1,15 +1,24 @@
-import { Component, OnInit, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Select, Store } from '@ngxs/store';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
-import { ACTION_CARDS } from './user-action-cards';
 import { HighlightCardComponent } from '../shared/components/highlight-card/highlight-card.component';
 import { UserInformationSliderComponent } from '../shared/components/user-information-slider/user-information-slider.component';
-import { Select, Store } from '@ngxs/store';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ACTION_CARDS } from './user-action-cards';
 
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ButtonModule } from 'primeng/button';
+import { Observable, take } from 'rxjs';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';
+import { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';
+import { IDashboardRosterReadOnlyModel } from '../api/models/scoring/dashboard-roster-read-only.model';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   DownloadDocument,
   ExamScoringSelectors,
+  GetExamHeaderId,
   GetExamTitle,
   GetExaminerAgenda,
   GetExaminerConflict,
@@ -18,17 +27,8 @@ import {
   ResetExamScoringData,
   UserProfileSelectors,
 } from '../state';
-import { IRosterReadOnlyModel } from '../api/models/scoring/roster-read-only.model';
-import { Observable, map } from 'rxjs';
-import { ButtonModule } from 'primeng/button';
-import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';
-import { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';
-import { GlobalDialogService } from '../shared/services/global-dialog.service';
-import { IDashboardRosterReadOnlyModel } from '../api/models/scoring/dashboard-roster-read-only.model';
 
 @UntilDestroy()
 @Component({
@@ -65,7 +65,10 @@ export class CeScoringAppComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.examinerConflict)
   examinerConflict$: Observable<IConflictReadOnlyModel> | undefined;
 
-  examHeaderId = 481; // TODO - remove hard coded value
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
   examinationDate = new Date().toISOString().split('T')[0];
 
   currentYear = new Date().getFullYear();
@@ -81,23 +84,30 @@ export class CeScoringAppComponent implements OnInit {
     private globalDialogService: GlobalDialogService,
     private _translateService: TranslateService
   ) {
+    this, _store.dispatch(new GetExamHeaderId());
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
         if (featureFlags.ceScoreTesting) {
-          this.examHeaderId = 491;
+          this._store.dispatch(
+            new GetExamHeaderId(featureFlags.ceScoreTesting)
+          );
         }
         if (featureFlags.ceScoreTestingDate) {
-          this.examinationDate = new Date('10/13/2023')
+          this.examinationDate = new Date('10/16/2023')
             .toISOString()
             .split('T')[0];
         }
       }
-    });
 
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
-    this._store.dispatch(new GetExaminerAgenda(this.examHeaderId));
-    this._store.dispatch(new GetExaminerConflict(this.examHeaderId));
+      this.examHeaderId$
+        ?.pipe(untilDestroyed(this))
+        .subscribe((examHeaderId) => {
+          this._store.dispatch(new GetExamTitle(examHeaderId));
+          this._store.dispatch(new GetExaminerAgenda(examHeaderId));
+          this._store.dispatch(new GetExaminerConflict(examHeaderId));
+        });
+    });
   }
 
   ngOnInit(): void {
@@ -109,36 +119,50 @@ export class CeScoringAppComponent implements OnInit {
   }
 
   fetchCEDashboardDate() {
-    this.globalDialogService.showLoading();
     const alertsAndNotices = [
       {
-        title: this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.AGENDA_TITLE'
-        ),
-        content: this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.AGENDA_SUBTITLE'
-        ),
+        title: '',
+        titleKey: 'EXAMSCORING.DASHBOARD.AGENDA_TITLE',
+        content: '',
+        contentKey: 'EXAMSCORING.DASHBOARD.AGENDA_SUBTITLE',
         alert: false,
-        actionText: 'Not Available',
+        actionText: '',
         action: {},
         image:
           'https://images.pexels.com/photos/13548722/pexels-photo-13548722.jpeg',
       },
       {
-        title: this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.CONFLICTS_TITLE'
-        ),
-        content: this._translateService.instant(
-          'EXAMSCORING.DASHBOARD.CONFLICTS_SUBTITLE'
-        ),
+        title: '',
+        titleKey: 'EXAMSCORING.DASHBOARD.CONFLICTS_TITLE',
+        content: '',
+        contentKey: 'EXAMSCORING.DASHBOARD.CONFLICTS_SUBTITLE',
         alert: false,
-        actionText: 'Not Available',
+        actionText: '',
         image:
           'https://images.pexels.com/photos/6098057/pexels-photo-6098057.jpeg',
         downloadLink:
           '../../assets/files/examiner_056246_daythree_ce_agenda_dr_barnhart.pdf',
       },
     ];
+
+    alertsAndNotices.forEach((item) => {
+      if (item.titleKey) {
+        this._translateService
+          .get(item.titleKey)
+          .pipe(take(1))
+          .subscribe((res) => {
+            item.title = res;
+          });
+      }
+      if (item.contentKey) {
+        this._translateService
+          .get(item.contentKey)
+          .pipe(take(1))
+          .subscribe((res) => {
+            item.content = res;
+          });
+      }
+    });
 
     this.examinerAgenda$
       ?.pipe(untilDestroyed(this))
@@ -149,9 +173,14 @@ export class CeScoringAppComponent implements OnInit {
             documentId: examinerAgenda.id,
             documentName: examinerAgenda.documentName,
           };
-          alertsAndNotices[0].actionText = this._translateService.instant(
-            'EXAMSCORING.DASHBOARD.AGENDA_BTN'
-          );
+          this._translateService
+            .get('EXAMSCORING.DASHBOARD.AGENDA_BTN')
+            .pipe(take(1))
+            .subscribe((res) => {
+              alertsAndNotices[0].actionText = res;
+            });
+        } else {
+          alertsAndNotices[0].actionText = 'Not Available';
         }
         this.globalDialogService.closeOpenDialog();
       });
@@ -165,9 +194,14 @@ export class CeScoringAppComponent implements OnInit {
             documentId: examinerConflict.id,
             documentName: examinerConflict.documentName,
           };
-          alertsAndNotices[1].actionText = this._translateService.instant(
-            'EXAMSCORING.DASHBOARD.CONFLICTS_BTN'
-          );
+          this._translateService
+            .get('EXAMSCORING.DASHBOARD.CONFLICTS_BTN')
+            .pipe(take(1))
+            .subscribe((res) => {
+              alertsAndNotices[1].actionText = res;
+            });
+        } else {
+          alertsAndNotices[1].actionText = 'Not Available';
         }
         this.globalDialogService.closeOpenDialog();
       });

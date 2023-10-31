@@ -64,7 +64,7 @@ export class ExaminationScoreModalComponent implements OnInit {
       this.localCandidateData = this.candidateData;
     }
 
-    this.selectedStatusOption.subscribe((status: string) => {
+    this.selectedStatusOption?.subscribe((status: string) => {
       this.examStatus = status;
     });
   }

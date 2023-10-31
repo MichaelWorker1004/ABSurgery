@@ -29,6 +29,7 @@ import {
   ExamScoringSelectors,
   GetCaseDetailsAndFeedback,
   GetCaseRoster,
+  GetExamHeaderId,
   GetExamTitle,
   IFeatureFlags,
   UpdateCaseComment,
@@ -40,7 +41,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
 import { Observable } from 'rxjs';
 import { ICaseFeedbackModel } from '../api/models/scoring/case-feedback.model';
 
-interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
+export interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   editComment: boolean;
   newComment?: string;
   newFeedback?: string;
@@ -81,9 +82,12 @@ export class ExaminationRostersComponent implements OnInit {
   @Select(ExamScoringSelectors.slices.selectedCaseFeedback)
   selectedCaseFeedback$: Observable<ICaseFeedbackModel> | undefined;
 
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
   userId!: number;
 
-  examHeaderId = 481; // TODO - remove hard coded value
   selectedRoster: any = undefined;
   selectedCaseId: number | undefined = undefined;
   rosters: any = [];
@@ -107,11 +111,13 @@ export class ExaminationRostersComponent implements OnInit {
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags?.ceScoreTesting) {
-        this.examHeaderId = 491;
+        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
       }
     });
 
-    this._store.dispatch(new GetExamTitle(this.examHeaderId));
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+    });
   }
 
   ngOnInit(): void {
@@ -140,26 +146,28 @@ export class ExaminationRostersComponent implements OnInit {
   }
 
   getCaseList() {
-    this._store
-      .dispatch(
-        new GetCaseRoster(
-          this.selectedRoster.session1Id,
-          this.selectedRoster.session2Id
+    if (this.selectedRoster?.session1Id && this.selectedRoster?.session2Id) {
+      this._store
+        .dispatch(
+          new GetCaseRoster(
+            this.selectedRoster.session1Id,
+            this.selectedRoster.session2Id
+          )
         )
-      )
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        this.cases = this._store.selectSnapshot(
-          ExamScoringSelectors.slices.caseRoster
-        ) as ICaseRosterReadOnlyModel[];
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.cases = this._store.selectSnapshot(
+            ExamScoringSelectors.slices.caseRoster
+          ) as ICaseRosterReadOnlyModel[];
 
-        if (this.cases?.length > 0) {
-          this.selectCase(this.cases[0]);
-        } else {
-          this.selectedCaseId = undefined;
-          this.selectedCaseDetails = undefined;
-        }
-      });
+          if (this.cases?.length > 0) {
+            this.selectCase(this.cases[0]);
+          } else {
+            this.selectedCaseId = undefined;
+            this.selectedCaseDetails = undefined;
+          }
+        });
+    }
   }
 
   confirmRosterSelection(event: any) {
@@ -201,10 +209,12 @@ export class ExaminationRostersComponent implements OnInit {
         .then((result) => {
           if (result) {
             this.editActive = false;
+            this.selectedCaseDetails = undefined;
             this.selectCase(caseData);
           }
         });
     } else {
+      this.selectedCaseDetails = undefined;
       this.selectCase(caseData);
     }
   }
@@ -277,7 +287,7 @@ export class ExaminationRostersComponent implements OnInit {
       // call update case comment store action
       this._store
         .dispatch(new UpdateCaseComment(newComment))
-        .pipe(untilDestroyed(this))
+        ?.pipe(untilDestroyed(this))
         .subscribe(() => {
           const caseComment = this._store.selectSnapshot(
             ExamScoringSelectors.slices.selectedCaseComment
@@ -338,7 +348,7 @@ export class ExaminationRostersComponent implements OnInit {
       model.id = this.selectedCaseDetails.caseFeedbackId;
       this._store
         .dispatch(new UpdateCaseFeedback(model))
-        .pipe(untilDestroyed(this))
+        ?.pipe(untilDestroyed(this))
         .subscribe(() => {
           const caseFeedback = this._store.selectSnapshot(
             ExamScoringSelectors.slices.selectedCaseFeedback
@@ -354,7 +364,7 @@ export class ExaminationRostersComponent implements OnInit {
     } else {
       this._store
         .dispatch(new CreateCaseFeedback(model))
-        .pipe(untilDestroyed(this))
+        ?.pipe(untilDestroyed(this))
         .subscribe(() => {
           const caseFeedback = this._store.selectSnapshot(
             ExamScoringSelectors.slices.selectedCaseFeedback

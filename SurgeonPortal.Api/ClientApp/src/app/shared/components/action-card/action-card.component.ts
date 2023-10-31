@@ -9,7 +9,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { distinctUntilChanged } from 'rxjs';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-action-card',
   standalone: true,
@@ -142,15 +145,28 @@ export class ActionCardComponent implements OnInit {
    */
   private translateActionCard(): any {
     if (this.titleKey) {
-      this.title = this._translateService.instant(this.titleKey);
+      this._translateService
+        .get(this.titleKey)
+        .pipe(distinctUntilChanged(), untilDestroyed(this))
+        .subscribe((res) => {
+          this.title = res;
+        });
     }
     if (this.descriptionKey) {
-      this.description = this._translateService.instant(this.descriptionKey);
+      this._translateService
+        .get(this.descriptionKey)
+        .pipe(distinctUntilChanged(), untilDestroyed(this))
+        .subscribe((res) => {
+          this.description = res;
+        });
     }
     if (this.actionDisplayKey) {
-      this.actionDisplay = this._translateService.instant(
-        this.actionDisplayKey
-      );
+      this._translateService
+        .get(this.actionDisplayKey)
+        .pipe(distinctUntilChanged(), untilDestroyed(this))
+        .subscribe((res) => {
+          this.actionDisplay = res;
+        });
     }
   }
 }

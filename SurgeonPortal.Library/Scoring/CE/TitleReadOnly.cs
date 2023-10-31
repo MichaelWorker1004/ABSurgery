@@ -47,6 +47,21 @@ namespace SurgeonPortal.Library.Scoring.CE
             get => GetProperty(SectionsProperty);
             private set => LoadProperty(SectionsProperty, value);
         }
+        
+        [DataMember]
+		[DisplayName(nameof(Score))]
+        public int? Score => ReadProperty(ScoreProperty);
+		public static readonly PropertyInfo<int?> ScoreProperty = RegisterProperty<int?>(c => c.Score);
+
+        [DataMember]
+		[DisplayName(nameof(CriticalFail))]
+        public bool? CriticalFail => ReadProperty(CriticalFailProperty);
+		public static readonly PropertyInfo<bool?> CriticalFailProperty = RegisterProperty<bool?>(c => c.CriticalFail);
+
+        [DataMember]
+		[DisplayName(nameof(Remarks))]
+        public string Remarks => ReadProperty(RemarksProperty);
+		public static readonly PropertyInfo<string> RemarksProperty = RegisterProperty<string>(c => c.Remarks);
 
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -63,6 +78,9 @@ namespace SurgeonPortal.Library.Scoring.CE
             LoadProperty(CaseHeaderIdProperty, dto.CaseHeaderId);
             LoadProperty(ExamCaseIdProperty, dto.ExamCaseId);
             LoadProperty(SectionsProperty, await DataPortal.FetchAsync<CaseDetailReadOnlyList>(new GetByCaseHeaderIdCriteria(dto.CaseHeaderId)));
+            LoadProperty(ScoreProperty, dto.Score);
+            LoadProperty(CriticalFailProperty, dto.CriticalFail);
+            LoadProperty(RemarksProperty, dto.Remarks);
 		} 
         
     }

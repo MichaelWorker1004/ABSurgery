@@ -19,9 +19,12 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         public async Task GetByIdAsync_CallsDalCorrectly()
         {
             var expectedExamScheduleId = Create<int>();
+            var expectedExamineeUserId = Create<int>();
             
             var mockDal = new Mock<ITitleReadOnlyDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScheduleId,
+                expectedExamineeUserId))
                 .ReturnsAsync(CreateMany<TitleReadOnlyDto>());
             
             var mockCaseDetailDal = new Mock<ICaseDetailReadOnlyDal>();
@@ -39,7 +42,9 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
                 .Build();
         
             var factory = new TitleReadOnlyListFactory();
-            var sut = await factory.GetByIdAsync(expectedExamScheduleId);
+            var sut = await factory.GetByIdAsync(
+                expectedExamScheduleId,
+                expectedExamineeUserId);
         
             mockDal.VerifyAll();
         }

@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxsModule, Store } from '@ngxs/store';
 
 import { surgeonPortalState } from '../state/surgeon-portal.state';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('MyAccountComponent', () => {
   let component: MyAccountComponent;
@@ -16,6 +17,7 @@ describe('MyAccountComponent', () => {
         HttpClientModule,
         NgxsModule.forRoot(surgeonPortalState),
         MyAccountComponent,
+        TranslateModule.forRoot(),
       ],
       providers: [Store],
     }).compileComponents();
