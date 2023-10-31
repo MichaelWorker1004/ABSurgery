@@ -14,14 +14,14 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         private IPropertyInfo _userIdProperty;
         private IPropertyInfo SecondaryProperty { get; set; }
 
-		public OverlapConflictRule(IPropertyInfo primaryProperty,
+		public OverlapConflictRule(IOverlapConflictCommandFactory overlapConflictCommandFactory,
+			IPropertyInfo primaryProperty,
 			IPropertyInfo secondaryProperty,
             IPropertyInfo userIdProperty,
-
             int priority)
 			: base(primaryProperty)
 		{
-			_overlapConflictCommandFactory = new OverlapConflictCommandFactory();
+			_overlapConflictCommandFactory = overlapConflictCommandFactory;
             _userIdProperty = userIdProperty;
             InputProperties = new List<IPropertyInfo> { primaryProperty, secondaryProperty, userIdProperty };
 			SecondaryProperty = secondaryProperty;

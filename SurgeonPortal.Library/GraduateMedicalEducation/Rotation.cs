@@ -57,7 +57,11 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		public DateTime StartDate
 		{
 			get { return GetProperty(StartDateProperty); }
-			set { SetProperty(StartDateProperty, value); }
+			set
+            {
+                SetProperty(StartDateProperty, value);
+                BusinessRules.CheckObjectRules();
+            }
 		}
 		public static readonly PropertyInfo<DateTime> StartDateProperty = RegisterProperty<DateTime>(c => c.StartDate);
 
@@ -65,7 +69,11 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		public DateTime EndDate
 		{
 			get { return GetProperty(EndDateProperty); }
-			set { SetProperty(EndDateProperty, value); }
+			set 
+			{ 
+				SetProperty(EndDateProperty, value);
+                BusinessRules.CheckObjectRules();
+            }
 		}
 		public static readonly PropertyInfo<DateTime> EndDateProperty = RegisterProperty<DateTime>(c => c.EndDate);
 
@@ -202,7 +210,10 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
         }
-
+        protected override void AddInjectedBusinessRules()
+        {
+            BusinessRules.AddRule(new OverlapConflictRule(_overlapConflictCommandFactory, StartDateProperty, EndDateProperty, UserIdProperty, 5));
+        }
         /// <summary>
         /// This method is used to add business rules to the Csla 
         /// business rule engine
@@ -216,7 +227,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
 			BusinessRules.AddRule(new MaxDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 364, 1));
 			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));
-			BusinessRules.AddRule(new OverlapConflictRule(StartDateProperty, EndDateProperty, UserIdProperty, 5));
 			BusinessRules.AddRule(new ExplainRequiredWhen(OtherProperty, 4));
 			BusinessRules.AddRule(new FourMonthRotationExplainRequiredWhen(FourMonthRotationExplainProperty, 4));
 			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhen(NonPrimaryExplainProperty, 4));

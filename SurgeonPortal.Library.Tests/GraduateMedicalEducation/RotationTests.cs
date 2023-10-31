@@ -157,24 +157,16 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             mockDal.Setup(m => m.InsertAsync(It.IsAny<RotationDto>()))
                 .Callback<RotationDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-        
-            var mockCommandDal = new Mock<IOverlapConflictCommandDal>();
-            mockCommandDal.Setup(m => m.CheckOverlapConflicts(It.IsAny<int>(),
-                It.IsAny<DateTime>(),
-                It.IsAny<DateTime>(),
-                It.IsAny<int?>()))
-                .Returns(new OverlapConflictCommandDto { OverlapConflict = false });
 
-            var mockCommand = new Mock<IOverlapConflictCommand>();
+            var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
-                .WithRegisteredInstance(mockCommandDal)
-                .WithRegisteredInstance(mockCommand)
+                .WithRegisteredInstance(mocks.MockCommand)
+                .WithRegisteredInstance(mocks.MockCommandFactory)
                 .WithBusinessObject<IRotation, Rotation>()
-                .WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
         
             var factory = new RotationFactory();
@@ -202,7 +194,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
             sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
             sut.ClinicalActivity = dto.ClinicalActivity;
-        
+
             await sut.SaveAsync();
         
             Assert.That(passedDto, Is.Not.Null);
@@ -385,11 +377,15 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<RotationDto>()))
                 .ReturnsAsync(dto);
-        
+
+            var mocks = GetMockedCommand(false);
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mocks.MockCommand)
+                .WithRegisteredInstance(mocks.MockCommandFactory)
                 .WithBusinessObject<IRotation, Rotation>()
 				.WithBusinessObject<IOverlapConflictCommandFactory, OverlapConflictCommandFactory>()
                 .Build();
@@ -410,5 +406,25 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         }
         
         #endregion
+
+        (Mock<IOverlapConflictCommand> MockCommand, Mock<IOverlapConflictCommandFactory> MockCommandFactory) GetMockedCommand(bool hasConflict)
+        {
+            var mockCommandFactory = new Mock<IOverlapConflictCommandFactory>();
+            var mockCommand = new Mock<IOverlapConflictCommand>();
+            mockCommand.SetupGet(p => p.OverlapConflict).Returns(false);
+            mockCommand.SetupGet(p => p.StartDate).Returns(new DateTime(2023, 10, 31));
+            mockCommand.SetupGet(p => p.EndDate).Returns(new DateTime(2023, 11, 15));
+            mockCommand.SetupGet(p => p.UserId).Returns(1234);
+            mockCommand.SetupGet(p => p.RotationId).Returns(It.IsAny<int>());
+
+            mockCommandFactory
+                .Setup(f => f.CheckOverlapConflicts(It.IsAny<int>(),
+                        It.IsAny<DateTime>(),
+                        It.IsAny<DateTime>(),
+                        It.IsAny<int?>()))
+                .Returns(mockCommand.Object);
+
+            return (mockCommand, mockCommandFactory);
+        }
 	}
 }
