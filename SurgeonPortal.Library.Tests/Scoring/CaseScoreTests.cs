@@ -13,9 +13,9 @@ namespace SurgeonPortal.Library.Tests.Scoring
 	public class CaseScoreTests : TestBase<int>
     {
         private CaseScoreDto CreateValidDto()
-        {     
+        {
             var dto = Create<CaseScoreDto>();
-
+        
             dto.ExamScoringId = Create<int>();
             dto.ExamCaseId = Create<int>();
             dto.ExaminerUserId = 1234;
@@ -31,11 +31,11 @@ namespace SurgeonPortal.Library.Tests.Scoring
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedByUserId = Create<int>();
-    
+        
             return dto;
         }
-
-            
+        
+        
 
         #region DeleteAsync
         
@@ -98,7 +98,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedExamScoringId,
                 expectedExaminerUserId))
                 .ReturnsAsync(Create<CaseScoreDto>());
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -119,13 +119,13 @@ namespace SurgeonPortal.Library.Tests.Scoring
             var dto = CreateValidDto();
             var expectedExamScoringId = Create<int>();
             var expectedExaminerUserId = 1234;
-        
+            
             var mockDal = new Mock<ICaseScoreDal>();
             mockDal.Setup(m => m.GetByIdAsync(
                 expectedExamScoringId,
                 expectedExaminerUserId))
                 .ReturnsAsync(dto);
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -154,7 +154,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             mockDal.Setup(m => m.InsertAsync(It.IsAny<CaseScoreDto>()))
                 .Callback<CaseScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
@@ -213,7 +213,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             var mockDal = new Mock<ICaseScoreDal>();
             mockDal.Setup(m => m.InsertAsync(It.IsAny<CaseScoreDto>()))
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
         
             UseMockServiceProvider()
@@ -271,12 +271,12 @@ namespace SurgeonPortal.Library.Tests.Scoring
             mockDal.Setup(m => m.GetByIdAsync(
                 expectedExamScoringId,
                 expectedExaminerUserId))
-                        .ReturnsAsync(dto);
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseScoreDto>()))
                 .Callback<CaseScoreDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
@@ -333,15 +333,15 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.ExamScoringId)
-                    .Excluding(m => m.ExamineeFirstName)
-                    .Excluding(m => m.ExamineeMiddleName)
-                    .Excluding(m => m.ExamineeLastName)
-                    .Excluding(m => m.ExamineeSuffix)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.ExamScoringId)
+                .Excluding(m => m.ExamineeFirstName)
+                .Excluding(m => m.ExamineeMiddleName)
+                .Excluding(m => m.ExamineeLastName)
+                .Excluding(m => m.ExamineeSuffix)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -359,7 +359,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             mockDal.Setup(m => m.GetByIdAsync(
                 expectedExamScoringId,
                 expectedExaminerUserId))
-                        .ReturnsAsync(Create<CaseScoreDto>());
+                .ReturnsAsync(Create<CaseScoreDto>());
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseScoreDto>()))
                 .ReturnsAsync(dto);
@@ -385,7 +385,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                     .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         }
-
+        
         #endregion
 
         (Mock<IIsExamSessionLockedCommand> MockCommand, Mock<IIsExamSessionLockedCommandFactory> MockCommandFactory) GetMockedCommand(bool isLocked)
@@ -401,5 +401,5 @@ namespace SurgeonPortal.Library.Tests.Scoring
             return (mockCommand, mockCommandFactory);
         }
         
-    }
+	}
 }

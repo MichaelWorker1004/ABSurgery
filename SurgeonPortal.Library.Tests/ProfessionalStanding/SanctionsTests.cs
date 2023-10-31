@@ -13,9 +13,9 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 	public class SanctionsTests : TestBase<int>
     {
         private SanctionsDto CreateValidDto()
-        {     
+        {
             var dto = Create<SanctionsDto>();
-
+        
             dto.Id = Create<int>();
             dto.UserId = 1234;
             dto.HadDrugAlchoholTreatment = Create<bool>();
@@ -29,11 +29,11 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedByUserId = 1234;
-    
+        
             return dto;
         }
-
-            
+        
+        
 
         #region GetByUserIdAsync Sanctions
         
@@ -45,7 +45,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var mockDal = new Mock<ISanctionsDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<SanctionsDto>());
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -65,11 +65,11 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         {
             var dto = CreateValidDto();
             var expectedUserId = 1234;
-        
+            
             var mockDal = new Mock<ISanctionsDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -196,7 +196,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var mockDal = new Mock<ISanctionsDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                        .ReturnsAsync(dto);
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<SanctionsDto>()))
                 .Callback<SanctionsDto>((p) => passedDto = p)
@@ -250,10 +250,10 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.Id)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.Id)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
@@ -269,7 +269,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var mockDal = new Mock<ISanctionsDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                        .ReturnsAsync(Create<SanctionsDto>());
+                .ReturnsAsync(Create<SanctionsDto>());
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<SanctionsDto>()))
                 .ReturnsAsync(dto);

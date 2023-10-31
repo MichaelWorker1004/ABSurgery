@@ -43,7 +43,7 @@ namespace SurgeonPortal.Library.Users
 
         
         [Serializable]
-        public class GetByCredentialsCriteria
+            internal class GetByCredentialsCriteria
         {
             public string UserName { get; set; }
             public string Password { get; set; }
@@ -59,7 +59,7 @@ namespace SurgeonPortal.Library.Users
             
 
         [Serializable]
-        public class GetByTokenCriteria
+            internal class GetByTokenCriteria
         {
             public string Token { get; set; }
             
@@ -68,5 +68,8 @@ namespace SurgeonPortal.Library.Users
                 Token = token;
             }
         }
+            
+
+
     }
 }

@@ -94,7 +94,7 @@ namespace SurgeonPortal.Library.Tests.Users
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserCredentialDto>()))
                 .Callback<UserCredentialDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -143,7 +143,7 @@ namespace SurgeonPortal.Library.Tests.Users
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserCredentialDto>()))
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
@@ -168,7 +168,7 @@ namespace SurgeonPortal.Library.Tests.Users
                     .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         }
-
+        
         #endregion
 
         (Mock<IPasswordValidationCommand> MockCommand, Mock<IPasswordValidationCommandFactory> MockCommandFactory) GetMockedCommand(bool passwordsMatch)
@@ -184,5 +184,5 @@ namespace SurgeonPortal.Library.Tests.Users
 
             return (mockCommand, mockCommandFactory);
         }
-    }
+	}
 }

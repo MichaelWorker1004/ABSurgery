@@ -23,12 +23,12 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
             var mockDal = new Mock<IExamineeReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(Create<ExamineeReadOnlyDto>());
-
+            
             var titleDto = CreateMany<TitleReadOnlyDto>();
             var mockTitleDal = new Mock<ITitleReadOnlyDal>();
             mockTitleDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(titleDto);
-
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
@@ -48,16 +48,16 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         {
             var dto = Create<ExamineeReadOnlyDto>();
             var expectedExamScheduleId = Create<int>();
-        
+            
             var mockDal = new Mock<IExamineeReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(dto);
-
+            
             var titleDto = CreateMany<TitleReadOnlyDto>();
             var mockTitleDal = new Mock<ITitleReadOnlyDal>();
             mockTitleDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(titleDto);
-
+        
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
@@ -71,8 +71,7 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
-
+        
         #endregion
-
-    }
+	}
 }
