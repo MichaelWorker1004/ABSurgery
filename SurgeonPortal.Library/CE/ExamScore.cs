@@ -20,13 +20,15 @@ namespace SurgeonPortal.Library.CE
 	public class ExamScore : YtgBusinessBase<ExamScore>, IExamScore
     {
         private readonly IExamScoreDal _examScoreDal;
+        readonly IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
 
-        public ExamScore(
+        public ExamScore(IGetExamCasesScoredCommandFactory getExamCasesScoredCommandFactory,
             IIdentityProvider identityProvider,
             IExamScoreDal examScoreDal)
             : base(identityProvider)
         {
             _examScoreDal = examScoreDal;
+            _getExamCasesScoredCommandFactory = getExamCasesScoredCommandFactory;
         }
 
         [Key] 
@@ -58,7 +60,8 @@ namespace SurgeonPortal.Library.CE
 		public int ExaminerScore
 		{
 			get { return GetProperty(ExaminerScoreProperty); }
-			set { SetProperty(ExaminerScoreProperty, value); }
+			set 
+            { SetProperty(ExaminerScoreProperty, value); }
 		}
 		public static readonly PropertyInfo<int> ExaminerScoreProperty = RegisterProperty<int>(c => c.ExaminerScore);
 
@@ -99,14 +102,14 @@ namespace SurgeonPortal.Library.CE
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
 
         }
-
-		protected override void AddBusinessRules()
+        protected override void AddInjectedBusinessRules()
+        {
+            BusinessRules.AddRule(new ExamCasesScoredRule(_getExamCasesScoredCommandFactory, 2));
+        }
+        protected override void AddBusinessRules()
 		{
-			base.AddBusinessRules();
-
-            BusinessRules.AddRule(new ExamCasesScoredRule(2));
+			base.AddBusinessRules();    
 		}
-
 
         [Fetch]
         [RunLocal]
@@ -209,10 +212,10 @@ namespace SurgeonPortal.Library.CE
         {
             private IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
 
-            public ExamCasesScoredRule(int priority)
+            public ExamCasesScoredRule(IGetExamCasesScoredCommandFactory factory, int priority)
             {
                 Priority = priority;
-                _getExamCasesScoredCommandFactory = new GetExamCasesScoredCommandFactory();
+                _getExamCasesScoredCommandFactory = factory;
             }
 
 			protected override void Execute(IRuleContext context)
