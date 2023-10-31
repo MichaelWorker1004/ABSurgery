@@ -20,10 +20,12 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         {
             var expectedExamScheduleId = Create<int>();
             var expectedExamineeUserId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<ITitleReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(
                 expectedExamScheduleId,
+                expectedExaminerUserId,
                 expectedExamineeUserId))
                 .ReturnsAsync(CreateMany<TitleReadOnlyDto>());
             
@@ -54,9 +56,15 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         {
             var expectedDtos = CreateMany<TitleReadOnlyDto>();
             var expectedExamScheduleId = Create<int>();
+            var expectedExamineeUserId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
+        
             var mockDal = new Mock<ITitleReadOnlyDal>();
-            mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
+            mockDal.Setup(m => m.GetByIdAsync(
+                expectedExamScheduleId,
+                expectedExaminerUserId,
+                expectedExamineeUserId))
                 .ReturnsAsync(expectedDtos);
             
             var mockCaseDetailDal = new Mock<ICaseDetailReadOnlyDal>();
@@ -74,7 +82,9 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
                 .Build();
         
             var factory = new TitleReadOnlyListFactory();
-            var sut = await factory.GetByIdAsync(expectedExamScheduleId);
+            var sut = await factory.GetByIdAsync(
+                expectedExamScheduleId,
+                expectedExamineeUserId);
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

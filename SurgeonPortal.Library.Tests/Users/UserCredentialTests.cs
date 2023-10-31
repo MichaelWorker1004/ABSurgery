@@ -36,7 +36,7 @@ namespace SurgeonPortal.Library.Tests.Users
             var mockDal = new Mock<IUserCredentialDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<UserCredentialDto>());
-
+            
             var mocks = GetMockedCommand(false);
         
             UseMockServiceProvider()
@@ -62,15 +62,15 @@ namespace SurgeonPortal.Library.Tests.Users
             var mockDal = new Mock<IUserCredentialDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
-
+            
 			var mocks = GetMockedCommand(false);
-
-			UseMockServiceProvider()
+        
+            UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
 				.WithRegisteredInstance(mocks.MockCommand)
 				.WithRegisteredInstance(mocks.MockCommandFactory)
-				.WithBusinessObject<IUserCredential, UserCredential>()
+                .WithBusinessObject<IUserCredential, UserCredential>()
                 .Build();
         
             var factory = new UserCredentialFactory();
@@ -78,7 +78,7 @@ namespace SurgeonPortal.Library.Tests.Users
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
-
+        
         #endregion
 
         #region Update
@@ -179,7 +179,7 @@ namespace SurgeonPortal.Library.Tests.Users
     //    }
         
         #endregion
-
+        
         (Mock<IPasswordValidationCommand> MockCommand, Mock<IPasswordValidationCommandFactory> MockCommandFactory) GetMockedCommand(bool passwordsMatch)
         {
             var mockCommandFactory = new Mock<IPasswordValidationCommandFactory>();
@@ -192,7 +192,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Setup(f => f.Validate(It.IsAny<int>(),
                         It.IsAny<string>()))
                 .Returns(mockCommand.Object);
-
+        
             return (mockCommand, mockCommandFactory);
         }
 	}

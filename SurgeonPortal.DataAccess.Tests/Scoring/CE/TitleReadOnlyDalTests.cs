@@ -17,6 +17,8 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
         {
             var expectedSprocName = "[dbo].[get_examinee_case_titles]";
             var expectedExamScheduleId = Create<int>();
+            var expectedExaminerUserId = Create<int>();
+            var expectedExamineeUserId = Create<int>();
             var expectedParams = 
                 new
                 {
@@ -31,6 +33,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
             var sut = new TitleReadOnlyDal(sqlManager);
             await sut.GetByIdAsync(
                 expectedExamScheduleId,
+                expectedExaminerUserId,
                 expectedExamineeUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -47,6 +50,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
         
             var sut = new TitleReadOnlyDal(sqlManager);
             var result = await sut.GetByIdAsync(
+                Create<int>(),
                 Create<int>(),
                 Create<int>());
         

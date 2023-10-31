@@ -19,6 +19,8 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         public async Task GetByIdAsync_CallsDalCorrectly()
         {
             var expectedExamScheduleId = Create<int>();
+            var expectedExaminerUserId = 1234;
+            var expectedExamineeUserId = Create<int>();
             
             var mockDal = new Mock<IExamineeReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
@@ -26,7 +28,7 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
             
             var titleDto = CreateMany<TitleReadOnlyDto>();
             var mockTitleDal = new Mock<ITitleReadOnlyDal>();
-            mockTitleDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
+            mockTitleDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId, expectedExaminerUserId, expectedExamineeUserId))
                 .ReturnsAsync(titleDto);
         
             UseMockServiceProvider()
@@ -48,14 +50,16 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
         {
             var dto = Create<ExamineeReadOnlyDto>();
             var expectedExamScheduleId = Create<int>();
-            
-            var mockDal = new Mock<IExamineeReadOnlyDal>();
+			var expectedExaminerUserId = 1234;
+			var expectedExamineeUserId = Create<int>();
+
+			var mockDal = new Mock<IExamineeReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(dto);
             
             var titleDto = CreateMany<TitleReadOnlyDto>();
             var mockTitleDal = new Mock<ITitleReadOnlyDal>();
-            mockTitleDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
+            mockTitleDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId, expectedExaminerUserId, expectedExamineeUserId))
                 .ReturnsAsync(titleDto);
         
             UseMockServiceProvider()

@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class CaseFeedbackReadOnlyDalTests : TestBase<string>
+	public class CaseFeedbackReadOnlyDalTests : TestBase<int>
     {
         #region GetByExaminerIdAsync
         
@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecord(Create<CaseFeedbackReadOnlyDto>());
         
             var sut = new CaseFeedbackReadOnlyDal(sqlManager);
-            await sut.GetByExaminerIdAsync(expectedCaseHeaderId);
+            await sut.GetByExaminerIdAsync(
+                expectedExaminerUserId,
+                expectedCaseHeaderId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +46,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecord(expectedDto);
         
             var sut = new CaseFeedbackReadOnlyDal(sqlManager);
-            var result = await sut.GetByExaminerIdAsync(Create<int>());
+            var result = await sut.GetByExaminerIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());

@@ -46,6 +46,7 @@ namespace SurgeonPortal.Library.Scoring.CE
         {
             var dtos = await _titleReadOnlyDal.GetByIdAsync(
                 criteria.ExamScheduleId,
+                _identity.GetUserId<int>(),
                 criteria.ExamineeUserId);
         			
             FetchChildren(dtos);

@@ -104,27 +104,6 @@ namespace SurgeonPortal.Library.Scoring
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
-        private async Task GetByExaminerId(GetByExaminerIdCriteria criteria)
-        
-        {
-            using (BypassPropertyChecks)
-            {
-                var dto = await _caseFeedbackDal.GetByExaminerIdAsync(
-                    _identity.GetUserId<int>(),
-                    criteria.CaseHeaderId);
-        
-                if(dto == null)
-                {
-                    throw new Ytg.Framework.Exceptions.DataNotFoundException("CaseFeedback not found based on criteria");
-                }
-                FetchData(dto);
-            }
-        }
-
-        [Fetch]
-        [RunLocal]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
-           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
         private async Task GetById(GetByIdCriteria criteria)
         
         {

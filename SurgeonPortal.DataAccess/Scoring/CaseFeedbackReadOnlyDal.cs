@@ -14,7 +14,9 @@ namespace SurgeonPortal.DataAccess.Scoring
 
 
 
-        public async Task<CaseFeedbackReadOnlyDto> GetByExaminerIdAsync(int caseHeaderId)
+        public async Task<CaseFeedbackReadOnlyDto> GetByExaminerIdAsync(
+            int examinerUserId,
+            int caseHeaderId)
         {
             using (var connection = CreateConnection())
             {
@@ -22,7 +24,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                     "[dbo].[get_case_feedback_by_examinerId]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                             CaseHeaderId = caseHeaderId,
                         });
                         

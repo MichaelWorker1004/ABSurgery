@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.Billing;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.Billing
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.Billing
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class ExamFeeReadOnly : ReadOnlyBase<ExamFeeReadOnly>, IExamFeeReadOnly
+    public class ExamFeeReadOnly : YtgReadOnlyBase<ExamFeeReadOnly, int>, IExamFeeReadOnly
     {
+
+
+        public ExamFeeReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(SubTotal))]
         public decimal? SubTotal => ReadProperty(SubTotalProperty);

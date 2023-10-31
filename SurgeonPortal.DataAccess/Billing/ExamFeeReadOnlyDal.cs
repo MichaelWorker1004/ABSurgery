@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Billing
 
 
 
-        public async Task<IEnumerable<ExamFeeReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<ExamFeeReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Billing
                     "[dbo].[Get_Exam_Fees_byUserId]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

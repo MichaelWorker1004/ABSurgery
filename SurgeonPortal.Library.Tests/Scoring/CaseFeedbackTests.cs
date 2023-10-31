@@ -75,63 +75,6 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
         #endregion
 
-        #region GetByExaminerIdAsync CaseFeedback
-        
-        [Test]
-        public async Task GetByExaminerIdAsync_CallsDalCorrectly()
-        {
-            var expectedCaseHeaderId = Create<int>();
-            var expectedExaminerUserId = 1234;
-            
-            var mockDal = new Mock<ICaseFeedbackDal>();
-            mockDal.Setup(m => m.GetByExaminerIdAsync(
-                expectedExaminerUserId,
-                expectedCaseHeaderId))
-                .ReturnsAsync(Create<CaseFeedbackDto>());
-            
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<ICaseFeedback, CaseFeedback>()
-                .Build();
-        
-            var factory = new CaseFeedbackFactory();
-            var sut = await factory.GetByExaminerIdAsync(expectedCaseHeaderId);
-        
-            mockDal.VerifyAll();
-        }
-        
-        [Test]
-        public async Task GetByExaminerId_YieldsCorrectResult()
-        {
-            var dto = CreateValidDto();
-            var expectedCaseHeaderId = Create<int>();
-            var expectedExaminerUserId = 1234;
-            
-            var mockDal = new Mock<ICaseFeedbackDal>();
-            mockDal.Setup(m => m.GetByExaminerIdAsync(
-                expectedExaminerUserId,
-                expectedCaseHeaderId))
-                .ReturnsAsync(dto);
-            
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<ICaseFeedback, CaseFeedback>()
-                .Build();
-        
-            var factory = new CaseFeedbackFactory();
-            var sut = await factory.GetByExaminerIdAsync(expectedCaseHeaderId);
-        
-            dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
-        }
-        
-        #endregion
-
         #region GetByIdAsync CaseFeedback
         
         [Test]

@@ -56,7 +56,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<CaseScoreDto>()))
                 .Callback<CaseScoreDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
@@ -102,7 +102,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedExamScoringId,
                 expectedExaminerUserId))
                 .ReturnsAsync(Create<CaseScoreDto>());
-
+            
             var mocks = GetMockedCommand(false);
         
             UseMockServiceProvider()
@@ -132,7 +132,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedExamScoringId,
                 expectedExaminerUserId))
                 .ReturnsAsync(dto);
-
+            
             var mocks = GetMockedCommand(false);
         
             UseMockServiceProvider()
@@ -373,7 +373,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseScoreDto>()))
                 .ReturnsAsync(dto);
-
+        
             var mocks = GetMockedCommand(false);
 
             UseMockServiceProvider()
