@@ -30,7 +30,6 @@ namespace SurgeonPortal.Library.Users
         {
             _userCredentialDal = userCredentialDal;
             _passwordValidationCommandFactory = passwordValidationCommandFactory;
-            InitializeInjectionDependentRules();
         }
 
         [Key] 
@@ -83,8 +82,9 @@ namespace SurgeonPortal.Library.Users
             BusinessRules.AddRule(new RegExMatch(PasswordProperty, @"^$|^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$", @"The password does not meet the minimum requirements.  Passwords must be a minimum length of 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character"));
             BusinessRules.AddRule(new EitherOrRequiredRule(PasswordProperty, EmailAddressProperty, 1));
         }
-        private void InitializeInjectionDependentRules()
-        {
+
+		protected override void AddInjectedBusinessRules()
+		{
             BusinessRules.AddRule(new PasswordMatchesCurrentRule(_passwordValidationCommandFactory, PasswordProperty, UserIdProperty, 2));
         }
 

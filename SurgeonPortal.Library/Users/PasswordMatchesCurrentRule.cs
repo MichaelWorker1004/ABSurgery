@@ -35,7 +35,6 @@ namespace SurgeonPortal.Library.Users
         {
             var propertyValue = context.InputPropertyValues[PrimaryProperty];
             var userIdValue = context.InputPropertyValues[_userIdProperty];
-            var target = (IBusinessBase)context.Target;
             
             if (propertyValue != null &&
                 userIdValue != null)

@@ -21,15 +21,15 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
             dto.UserId = 1234;
             dto.StartDate = DateTime.Now.AddDays(1);
             dto.EndDate = DateTime.Now.AddDays(5);
-            dto.ClinicalLevelId = Create<int>();
+            dto.ClinicalLevelId = 1;
             dto.ClinicalLevel = Create<string>();
             dto.ClinicalActivityId = Create<int>();
             dto.ProgramName = Create<string>();
             dto.NonSurgicalActivity = Create<string>();
             dto.AlternateInstitutionName = Create<string>();
             dto.IsInternationalRotation = Create<bool>();
-            dto.IsEssential = Create<bool>();
-            dto.IsCredit = Create<bool>();
+            dto.IsEssential = true;
+            dto.IsCredit = true;
             dto.Other = Create<string>();
             dto.FourMonthRotationExplain = Create<string>();
             dto.NonPrimaryExplain = Create<string>();
@@ -386,7 +386,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             var mockDal = new Mock<IRotationDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                .ReturnsAsync(Create<RotationDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<RotationDto>()))
                 .ReturnsAsync(dto);
@@ -404,7 +404,7 @@ namespace SurgeonPortal.Library.Tests.GraduateMedicalEducation
         
             var factory = new RotationFactory();
             var sut = await factory.GetByIdAsync(expectedId);
-            sut.Id = Create<int>();
+            sut.StartDate = DateTime.Now.AddDays(2);
         
             await sut.SaveAsync();
             
