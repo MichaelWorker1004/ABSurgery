@@ -257,7 +257,7 @@ namespace SurgeonPortal.Library.Tests.Examinations.GQ
         
             var mockDal = new Mock<IAdditionalTrainingDal>();
             mockDal.Setup(m => m.GetByTrainingIdAsync(expectedTrainingId))
-                        .ReturnsAsync(Create<AdditionalTrainingDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<AdditionalTrainingDto>()))
                 .ReturnsAsync(dto);

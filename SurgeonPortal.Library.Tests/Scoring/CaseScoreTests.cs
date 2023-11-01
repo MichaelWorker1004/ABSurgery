@@ -369,7 +369,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
             mockDal.Setup(m => m.GetByIdAsync(
                 expectedExamScoringId,
                 expectedExaminerUserId))
-                .ReturnsAsync(Create<CaseScoreDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseScoreDto>()))
                 .ReturnsAsync(dto);

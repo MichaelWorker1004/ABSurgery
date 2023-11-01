@@ -285,7 +285,7 @@ namespace SurgeonPortal.Library.Tests.CE
             mockDal.Setup(m => m.GetByIdAsync(
                 expectedExamScheduleScoreId,
                 expectedExaminerUserId))
-                .ReturnsAsync(Create<ExamScoreDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<ExamScoreDto>()))
                 .ReturnsAsync(dto);

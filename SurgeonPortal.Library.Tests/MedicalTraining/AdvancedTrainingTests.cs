@@ -427,7 +427,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var mockDal = new Mock<IAdvancedTrainingDal>();
             mockDal.Setup(m => m.GetByTrainingIdAsync(expectedId))
-                .ReturnsAsync(Create<AdvancedTrainingDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<AdvancedTrainingDto>()))
                 .ReturnsAsync(dto);

@@ -312,7 +312,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             var mockDal = new Mock<IOutcomeRegistryDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                .ReturnsAsync(Create<OutcomeRegistryDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OutcomeRegistryDto>()))
                 .ReturnsAsync(dto);

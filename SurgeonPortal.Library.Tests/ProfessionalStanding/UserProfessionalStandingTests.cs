@@ -275,7 +275,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var mockDal = new Mock<IUserProfessionalStandingDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                        .ReturnsAsync(Create<UserProfessionalStandingDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfessionalStandingDto>()))
                 .ReturnsAsync(dto);

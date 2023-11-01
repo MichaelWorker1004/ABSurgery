@@ -2,7 +2,6 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
-using SurgeonPortal.Library.Contracts.Identity;
 using SurgeonPortal.Library.Contracts.Scoring;
 using SurgeonPortal.Library.Scoring;
 using System.Threading.Tasks;
@@ -281,7 +280,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             var mockDal = new Mock<ICaseFeedbackDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                .ReturnsAsync(Create<CaseFeedbackDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseFeedbackDto>()))
                 .ReturnsAsync(dto);

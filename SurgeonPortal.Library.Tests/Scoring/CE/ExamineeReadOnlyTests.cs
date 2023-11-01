@@ -52,8 +52,8 @@ namespace SurgeonPortal.Library.Tests.Scoring.CE
             var expectedExamScheduleId = Create<int>();
 			var expectedExaminerUserId = 1234;
 			var expectedExamineeUserId = Create<int>();
-
-			var mockDal = new Mock<IExamineeReadOnlyDal>();
+            
+            var mockDal = new Mock<IExamineeReadOnlyDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedExamScheduleId))
                 .ReturnsAsync(dto);
             

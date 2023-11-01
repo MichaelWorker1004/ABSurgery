@@ -296,7 +296,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var mockDal = new Mock<IOtherCertificationsDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(Create<OtherCertificationsDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OtherCertificationsDto>()))
                 .ReturnsAsync(dto);

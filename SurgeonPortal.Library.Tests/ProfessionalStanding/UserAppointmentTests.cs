@@ -322,7 +322,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var mockDal = new Mock<IUserAppointmentDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
-                        .ReturnsAsync(Create<UserAppointmentDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserAppointmentDto>()))
                 .ReturnsAsync(dto);

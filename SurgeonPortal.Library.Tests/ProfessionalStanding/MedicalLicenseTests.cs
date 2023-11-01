@@ -303,7 +303,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var mockDal = new Mock<IMedicalLicenseDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedLicenseId))
-                        .ReturnsAsync(Create<MedicalLicenseDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<MedicalLicenseDto>()))
                 .ReturnsAsync(dto);

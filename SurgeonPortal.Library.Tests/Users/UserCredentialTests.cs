@@ -192,7 +192,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .Setup(f => f.Validate(It.IsAny<int>(),
                         It.IsAny<string>()))
                 .Returns(mockCommand.Object);
-        
+            
             return (mockCommand, mockCommandFactory);
         }
 	}

@@ -289,7 +289,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             var mockDal = new Mock<IFellowshipDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                .ReturnsAsync(Create<FellowshipDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<FellowshipDto>()))
                 .ReturnsAsync(dto);

@@ -1413,7 +1413,7 @@ namespace SurgeonPortal.Library.Tests.Users
         
             var mockDal = new Mock<IUserProfileDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                .ReturnsAsync(Create<UserProfileDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfileDto>()))
                 .ReturnsAsync(dto);

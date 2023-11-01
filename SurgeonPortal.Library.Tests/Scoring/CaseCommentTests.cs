@@ -280,7 +280,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             var mockDal = new Mock<ICaseCommentDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(Create<CaseCommentDto>());
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<CaseCommentDto>()))
                 .ReturnsAsync(dto);
