@@ -366,3 +366,5 @@ FodyWeavers.xsd
 /SurgeonPortal.Api/appsettingsDev.json
 SurgeonPortal.Api/ClientApp/documentation.json
 /SurgeonPortal.Api/appsettings.Development.json
+
+nuget.config
