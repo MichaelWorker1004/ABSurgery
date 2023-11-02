@@ -148,7 +148,6 @@ describe('ExaminationRostersComponent', () => {
 
     expect(spy).toHaveBeenCalledWith(
       new UpdateCaseFeedback({
-        userId: component.userId,
         id: 1,
         feedback: component.selectedCaseDetails.newFeedback,
         caseHeaderId: component.selectedCaseDetails.id,
