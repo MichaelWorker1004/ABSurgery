@@ -4,6 +4,8 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
 {
     public interface IExamSessionSkipCommandDal
     {
-        Task SkipExamSessionAsync(int examScheduleId);
+        Task SkipExamSessionAsync(
+            int examScheduleId,
+            int examinerUserId);
     }
 }

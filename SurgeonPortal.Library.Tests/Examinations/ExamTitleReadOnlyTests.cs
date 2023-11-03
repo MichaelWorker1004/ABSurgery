@@ -10,9 +10,8 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Examinations
 {
     [TestFixture] 
-	public class ExamTitleReadOnlyTests : TestBase<string>
+	public class ExamTitleReadOnlyTests : TestBase<int>
     {
-
         #region GetByExamIdAsync
         
         [Test]
@@ -23,8 +22,10 @@ namespace SurgeonPortal.Library.Tests.Examinations
             var mockDal = new Mock<IExamTitleReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamIdAsync(expectedExamId))
                 .ReturnsAsync(Create<ExamTitleReadOnlyDto>());
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamTitleReadOnly, ExamTitleReadOnly>()
@@ -40,19 +41,22 @@ namespace SurgeonPortal.Library.Tests.Examinations
         public async Task GetByExamIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<ExamTitleReadOnlyDto>();
-        
+            var expectedExamId = Create<int>();
+            
             var mockDal = new Mock<IExamTitleReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExamIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByExamIdAsync(expectedExamId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamTitleReadOnly, ExamTitleReadOnly>()
                 .Build();
         
             var factory = new ExamTitleReadOnlyFactory();
-            var sut = await factory.GetByExamIdAsync(Create<int>());
+            var sut = await factory.GetByExamIdAsync(expectedExamId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

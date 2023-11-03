@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
 {
-	public class ExamineeReadOnlyDalTests : TestBase<string>
+	public class ExamineeReadOnlyDalTests : TestBase<int>
     {
         #region GetByIdAsync
         
@@ -17,12 +17,12 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
         {
             var expectedSprocName = "[dbo].[get_examinee_session_byid]";
             var expectedExamScheduleId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamScheduleId = expectedExamScheduleId,
                 };
-        
+            
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(Create<ExamineeReadOnlyDto>());
         

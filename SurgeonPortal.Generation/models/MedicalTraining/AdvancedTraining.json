@@ -9,7 +9,7 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
-      "isAlwaysReadOnly": false,
+      "isAlwaysReadOnly": true,
       "isNullable": false,
       "isIdentityColumn": true,
       "rules": {}
@@ -20,24 +20,19 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
-      "isAlwaysReadOnly": false,
+      "isAlwaysReadOnly": true,
       "isNullable": false,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "UserId is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "TrainingTypeId",
-      "dataType": "int",
+      "dataType": "int?",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {
         "required": {
@@ -114,12 +109,12 @@
     },
     {
       "name": "StartDate",
-      "dataType": "datetime",
+      "dataType": "datetime?",
       "maxLength": 3,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {
         "required": {
@@ -130,12 +125,12 @@
     },
     {
       "name": "EndDate",
-      "dataType": "datetime",
+      "dataType": "datetime?",
       "maxLength": 3,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {
         "required": {

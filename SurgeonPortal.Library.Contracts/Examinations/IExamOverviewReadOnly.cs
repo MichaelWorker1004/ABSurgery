@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Examinations
 {
-    public interface IExamOverviewReadOnly : IYtgReadOnlyBase
+    public interface IExamOverviewReadOnly : IYtgReadOnlyBase<int>
     {
         string ExamName { get; }
         DateTime? RegOpenDate { get; }

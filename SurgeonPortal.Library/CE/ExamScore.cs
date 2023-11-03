@@ -20,13 +20,15 @@ namespace SurgeonPortal.Library.CE
 	public class ExamScore : YtgBusinessBase<ExamScore>, IExamScore
     {
         private readonly IExamScoreDal _examScoreDal;
+        readonly IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
 
-        public ExamScore(
+        public ExamScore(IGetExamCasesScoredCommandFactory getExamCasesScoredCommandFactory,
             IIdentityProvider identityProvider,
             IExamScoreDal examScoreDal)
             : base(identityProvider)
         {
             _examScoreDal = examScoreDal;
+            _getExamCasesScoredCommandFactory = getExamCasesScoredCommandFactory;
         }
 
         [Key] 
@@ -50,7 +52,7 @@ namespace SurgeonPortal.Library.CE
 		public int ExaminerUserId
 		{
 			get { return GetProperty(ExaminerUserIdProperty); }
-			set { SetProperty(ExaminerUserIdProperty, value); }
+			 private set { SetProperty(ExaminerUserIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> ExaminerUserIdProperty = RegisterProperty<int>(c => c.ExaminerUserId);
 
@@ -89,23 +91,22 @@ namespace SurgeonPortal.Library.CE
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
 
         }
-
-		protected override void AddBusinessRules()
+        protected override void AddInjectedBusinessRules()
+        {
+            BusinessRules.AddRule(new ExamCasesScoredRule(_getExamCasesScoredCommandFactory, 2));
+        }
+        protected override void AddBusinessRules()
 		{
-			base.AddBusinessRules();
-
-            BusinessRules.AddRule(new ExamCasesScoredRule(2));
-		}
+			base.AddBusinessRules();    
+        }
 
 
         [Fetch]
@@ -117,7 +118,9 @@ namespace SurgeonPortal.Library.CE
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _examScoreDal.GetByIdAsync(criteria.ExamScheduleScoreId);
+                var dto = await _examScoreDal.GetByIdAsync(
+                    criteria.ExamScheduleScoreId,
+                    _identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -127,6 +130,13 @@ namespace SurgeonPortal.Library.CE
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(ExaminerUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -200,10 +210,10 @@ namespace SurgeonPortal.Library.CE
         {
             private IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
 
-            public ExamCasesScoredRule(int priority)
+            public ExamCasesScoredRule(IGetExamCasesScoredCommandFactory factory, int priority)
             {
                 Priority = priority;
-                _getExamCasesScoredCommandFactory = new GetExamCasesScoredCommandFactory();
+                _getExamCasesScoredCommandFactory = factory;
             }
 
 			protected override void Execute(IRuleContext context)

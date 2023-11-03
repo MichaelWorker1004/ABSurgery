@@ -29,7 +29,7 @@ namespace SurgeonPortal.DataAccess.Identity
             }
         }
 
-        public string GetUserName() => ClaimsPrincipal.Current.FindFirst(ApplicationClaims.EmailAddress)?.Value;
+        public string GetUserName() => ClaimsPrincipal.Current.FindFirst(YtgClaimType.EmailAddress)?.Value;
 
         #endregion
     }

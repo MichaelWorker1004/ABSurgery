@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Picklists
 {
-	public class FellowshipProgramReadOnlyDalTests : TestBase<string>
+	public class FellowshipProgramReadOnlyDalTests : TestBase<int>
     {
         #region GetAllAsync
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         {
             var expectedSprocName = "[dbo].[get_fellowship_program]";
             var expectedFellowshipType = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     FellowshipType = expectedFellowshipType,

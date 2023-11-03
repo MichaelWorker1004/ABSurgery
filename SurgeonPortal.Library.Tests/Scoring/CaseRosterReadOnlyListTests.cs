@@ -10,9 +10,8 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Scoring
 {
     [TestFixture] 
-	public class CaseRosterReadOnlyListTests : TestBase<string>
+	public class CaseRosterReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByScheduleIdAsync_CallsDalCorrectly()
         {
@@ -25,7 +24,9 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedScheduleId2))
                 .ReturnsAsync(CreateMany<CaseRosterReadOnlyDto>());
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseRosterReadOnlyList, CaseRosterReadOnlyList>()
@@ -44,14 +45,19 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task GetByScheduleIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<CaseRosterReadOnlyDto>();
+            var expectedScheduleId1 = Create<int>();
+            var expectedScheduleId2 = Create<int?>();
+            
         
             var mockDal = new Mock<ICaseRosterReadOnlyDal>();
             mockDal.Setup(m => m.GetByScheduleIdAsync(
-                It.IsAny<int>(),
-                It.IsAny<int?>()))
+                expectedScheduleId1,
+                expectedScheduleId2))
                 .ReturnsAsync(expectedDtos);
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseRosterReadOnlyList, CaseRosterReadOnlyList>()
@@ -60,8 +66,8 @@ namespace SurgeonPortal.Library.Tests.Scoring
         
             var factory = new CaseRosterReadOnlyListFactory();
             var sut = await factory.GetByScheduleIdAsync(
-                Create<int>(),
-                Create<int?>());
+                expectedScheduleId1,
+                expectedScheduleId2);
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

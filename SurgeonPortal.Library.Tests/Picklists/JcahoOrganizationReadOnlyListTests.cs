@@ -10,9 +10,8 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Picklists
 {
     [TestFixture] 
-	public class JcahoOrganizationReadOnlyListTests : TestBase<string>
+	public class JcahoOrganizationReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
@@ -21,8 +20,9 @@ namespace SurgeonPortal.Library.Tests.Picklists
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(CreateMany<JcahoOrganizationReadOnlyDto>());
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IJcahoOrganizationReadOnlyList, JcahoOrganizationReadOnlyList>()
                 .WithBusinessObject<IJcahoOrganizationReadOnly, JcahoOrganizationReadOnly>()
@@ -39,12 +39,14 @@ namespace SurgeonPortal.Library.Tests.Picklists
         {
             var expectedDtos = CreateMany<JcahoOrganizationReadOnlyDto>();
         
+        
             var mockDal = new Mock<IJcahoOrganizationReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(expectedDtos);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IJcahoOrganizationReadOnlyList, JcahoOrganizationReadOnlyList>()
                 .WithBusinessObject<IJcahoOrganizationReadOnly, JcahoOrganizationReadOnly>()

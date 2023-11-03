@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.GraduateMedicalEducation.GmeSummaryReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.GraduateMedicalEducation
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class GmeSummaryReadOnlyList : YtgReadOnlyListBase<IGmeSummaryReadOnlyList, IGmeSummaryReadOnly>, IGmeSummaryReadOnlyList
+	public class GmeSummaryReadOnlyList : YtgReadOnlyListBase<IGmeSummaryReadOnlyList, IGmeSummaryReadOnly, int>, IGmeSummaryReadOnlyList
     {
         private readonly IGmeSummaryReadOnlyDal _gmeSummaryReadOnlyDal;
 
-        public GmeSummaryReadOnlyList(IGmeSummaryReadOnlyDal gmeSummaryReadOnlyDal)
+        public GmeSummaryReadOnlyList(
+            IIdentityProvider identityProvider,
+            IGmeSummaryReadOnlyDal gmeSummaryReadOnlyDal)
+            : base(identityProvider)
         {
             _gmeSummaryReadOnlyDal = gmeSummaryReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             Csla.Rules.BusinessRules.AddRule(typeof(GmeSummaryReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         private async Task GetByUserId()
         
         {
-            var dtos = await _gmeSummaryReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _gmeSummaryReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

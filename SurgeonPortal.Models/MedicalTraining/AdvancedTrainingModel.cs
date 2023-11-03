@@ -6,10 +6,9 @@ namespace SurgeonPortal.Models.MedicalTraining
     public class AdvancedTrainingModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "UserId is required")]
         public int UserId { get; set; }
         [Required(ErrorMessage = "TrainingTypeId is required")]
-        public int TrainingTypeId { get; set; }
+        public int? TrainingTypeId { get; set; }
         public string TrainingType { get; set; }
         public int? ProgramId { get; set; }
         public string InstitutionName { get; set; }
@@ -17,9 +16,9 @@ namespace SurgeonPortal.Models.MedicalTraining
         public string State { get; set; }
         public string Other { get; set; }
         [Required(ErrorMessage = "StartDate is required")]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         [Required(ErrorMessage = "EndDate is required")]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public int CreatedByUserId { get; set; }
         public DateTime CreatedAtUtc { get; set; }
         public DateTime LastUpdatedAtUtc { get; set; }

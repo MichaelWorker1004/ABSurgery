@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Documents
 
 
 
-        public async Task<IEnumerable<DocumentReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<DocumentReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Documents
                     "[dbo].[get_documents_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

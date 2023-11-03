@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class CaseScoreDalTests : TestBase<string>
+	public class CaseScoreDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -43,7 +43,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var expectedSprocName = "[dbo].[get_examcasescore_byid]";
             var expectedExamScoringId = Create<int>();
             var expectedExaminerUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamScoringId = expectedExamScoringId,
@@ -54,7 +54,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecord(Create<CaseScoreDto>());
         
             var sut = new CaseScoreDal(sqlManager);
-            await sut.GetByIdAsync(expectedExamScoringId);
+            await sut.GetByIdAsync(
+                expectedExamScoringId,
+                expectedExaminerUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -69,7 +71,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecord(expectedDto);
         
             var sut = new CaseScoreDal(sqlManager);
-            var result = await sut.GetByIdAsync(Create<int>());
+            var result = await sut.GetByIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -94,6 +98,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var p =
                 new
                 {
+                    ExaminerUserId = expectedDto.ExaminerUserId,
                     ExamineeUserId = expectedDto.ExamineeUserId,
                     ExamCaseId = expectedDto.ExamCaseId,
                     Score = expectedDto.Score,
@@ -139,6 +144,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var p =
                 new
                 {
+                    ExaminerUserId = expectedDto.ExaminerUserId,
                     ExamineeUserId = expectedDto.ExamineeUserId,
                     ExamCaseId = expectedDto.ExamCaseId,
                     Score = expectedDto.Score,

@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Billing
 {
-	public class ExamFeeReadOnlyDalTests : TestBase<string>
+	public class ExamFeeReadOnlyDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         
@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.Billing
             sqlManager.AddRecords(CreateMany<ExamFeeReadOnlyDto>());
         
             var sut = new ExamFeeReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Billing
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new ExamFeeReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

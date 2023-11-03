@@ -46,7 +46,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "ExaminerUserId"
           },
           {
             "name": "ExamineeUserId",
@@ -133,6 +133,12 @@
       "name": "ExamScheduleId",
       "dataType": "int",
       "required": true
+    },
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     },
     {
       "name": "ExamineeUserId",

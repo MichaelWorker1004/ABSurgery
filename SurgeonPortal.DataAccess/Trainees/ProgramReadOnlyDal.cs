@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.Trainees
 
 
 
-        public async Task<ProgramReadOnlyDto> GetByUserIdAsync()
+        public async Task<ProgramReadOnlyDto> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -22,7 +22,7 @@ namespace SurgeonPortal.DataAccess.Trainees
                     "[dbo].[get_user_programs]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

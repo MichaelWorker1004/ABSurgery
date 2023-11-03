@@ -4,6 +4,8 @@ namespace SurgeonPortal.Library.Contracts.Users
 {
     public interface IPasswordValidationCommandFactory
     {
-        IPasswordValidationCommand Validate(int userId, string password);
+        IPasswordValidationCommand Validate(
+            int userId,
+            string password);
     }
 }

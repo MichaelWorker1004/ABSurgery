@@ -10,14 +10,14 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 {
     [TestFixture] 
-	public class UserAppointmentTests : TestBase<string>
+	public class UserAppointmentTests : TestBase<int>
     {
         private UserAppointmentDto CreateValidDto()
         {     
             var dto = Create<UserAppointmentDto>();
 
             dto.ApptId = Create<decimal>();
-            dto.UserId = Create<int?>();
+            dto.UserId = 1234;
             dto.PracticeTypeId = Create<int?>();
             dto.PracticeType = Create<string>();
             dto.AppointmentTypeId = Create<int?>();
@@ -48,12 +48,13 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var mockDal = new Mock<IUserAppointmentDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
                 .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<UserAppointmentDto>()))
                 .Callback<UserAppointmentDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -91,8 +92,9 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
                 .ReturnsAsync(Create<UserAppointmentDto>());
         
+        
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -108,20 +110,22 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedApptId = Create<int>();
         
             var mockDal = new Mock<IUserAppointmentDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
                 .ReturnsAsync(dto);
         
+        
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
                 .Build();
         
             var factory = new UserAppointmentFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(expectedApptId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -142,7 +146,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -171,16 +175,15 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.ApptId)
-                .Excluding(m => m.UserId)
                 .Excluding(m => m.PracticeType)
                 .Excluding(m => m.AppointmentType)
                 .Excluding(m => m.OrganizationType)
                 .Excluding(m => m.OrganizationName)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -196,7 +199,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -204,7 +207,19 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var factory = new UserAppointmentFactory();
             var sut = factory.Create();
-            sut.PracticeTypeId = Create<int>();
+            sut.ApptId = dto.ApptId;
+            sut.UserId = dto.UserId;
+            sut.PracticeTypeId = dto.PracticeTypeId;
+            sut.PracticeType = dto.PracticeType;
+            sut.AppointmentTypeId = dto.AppointmentTypeId;
+            sut.AppointmentType = dto.AppointmentType;
+            sut.OrganizationTypeId = dto.OrganizationTypeId;
+            sut.AuthorizingOfficial = dto.AuthorizingOfficial;
+            sut.OrganizationType = dto.OrganizationType;
+            sut.OrganizationId = dto.OrganizationId;
+            sut.StateCode = dto.StateCode;
+            sut.Other = dto.Other;
+            sut.OrganizationName = dto.OrganizationName;
         
             await sut.SaveAsync();
             
@@ -226,18 +241,19 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         {
             var expectedApptId = Create<int>();
             
-            var dto = Create<UserAppointmentDto>();
+            var dto = CreateValidDto();
             UserAppointmentDto passedDto = null;
         
             var mockDal = new Mock<IUserAppointmentDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserAppointmentDto>()))
                 .Callback<UserAppointmentDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()
@@ -284,15 +300,14 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.UserId)
                     .Excluding(m => m.PracticeType)
                     .Excluding(m => m.AppointmentType)
                     .Excluding(m => m.OrganizationType)
                     .Excluding(m => m.OrganizationName)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -303,16 +318,17 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         {
             var expectedApptId = Create<int>();
             
-            var dto = Create<UserAppointmentDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IUserAppointmentDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
-                        .ReturnsAsync(Create<UserAppointmentDto>());
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserAppointmentDto>()))
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserAppointment, UserAppointment>()

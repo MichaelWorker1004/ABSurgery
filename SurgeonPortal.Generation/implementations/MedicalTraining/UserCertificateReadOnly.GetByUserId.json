@@ -33,7 +33,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -136,7 +136,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s MedicalTraining\\UserCertificateReadOnly.GetByUserId UserCertificateReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\UserCertificateReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_usercertificates_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=UserCertificateReadOnly -p:Route=by-userid -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  MedicalTraining\\UserCertificateReadOnly.GetByUserId UserCertificateReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\UserCertificateReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_usercertificates_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=UserCertificateReadOnly -p:Route=by-userid -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

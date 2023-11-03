@@ -32,14 +32,22 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "ExaminerUserId"
           }
         ],
         "recordsets": []
       }
     }
   ],
-  "inputParameters": [ ],
+  "inputParameters":
+  [
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s Dev\\ResetCaseCommentsCommand ResetCaseCommentsCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[dev_reset_case_comments_by_ExaminerId] -p:Model=Dev\\ResetCaseCommentsCommand -p:ModelGroup=ResetCaseCommentsCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=ResetCaseComments -p:Route=case-comments -p:ControllerName=Dev\\ResetDataController -p:ControllerRoute=api/dev/reset -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  Dev\\ResetCaseCommentsCommand ResetCaseCommentsCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[dev_reset_case_comments_by_ExaminerId] -p:Model=Dev\\ResetCaseCommentsCommand -p:ModelGroup=ResetCaseCommentsCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=ResetCaseComments -p:Route=case-comments -p:ControllerName=Dev\\ResetDataController -p:ControllerRoute=api/dev/reset -p:ControllerVersion=1 -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",

@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
 
 
 
-        public async Task<IEnumerable<MedicalLicenseReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<MedicalLicenseReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                     "[dbo].[get_userlicenses_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

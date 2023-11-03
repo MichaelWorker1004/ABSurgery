@@ -10,9 +10,8 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Picklists
 {
     [TestFixture] 
-	public class AccreditedProgramInstitutionReadOnlyListTests : TestBase<string>
+	public class AccreditedProgramInstitutionReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
@@ -21,8 +20,9 @@ namespace SurgeonPortal.Library.Tests.Picklists
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(CreateMany<AccreditedProgramInstitutionReadOnlyDto>());
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAccreditedProgramInstitutionReadOnlyList, AccreditedProgramInstitutionReadOnlyList>()
                 .WithBusinessObject<IAccreditedProgramInstitutionReadOnly, AccreditedProgramInstitutionReadOnly>()
@@ -39,12 +39,14 @@ namespace SurgeonPortal.Library.Tests.Picklists
         {
             var expectedDtos = CreateMany<AccreditedProgramInstitutionReadOnlyDto>();
         
+        
             var mockDal = new Mock<IAccreditedProgramInstitutionReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(expectedDtos);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IAccreditedProgramInstitutionReadOnlyList, AccreditedProgramInstitutionReadOnlyList>()
                 .WithBusinessObject<IAccreditedProgramInstitutionReadOnly, AccreditedProgramInstitutionReadOnly>()

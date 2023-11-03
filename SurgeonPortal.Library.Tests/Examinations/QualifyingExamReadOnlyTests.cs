@@ -10,9 +10,8 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Examinations
 {
     [TestFixture] 
-	public class QualifyingExamReadOnlyTests : TestBase<string>
+	public class QualifyingExamReadOnlyTests : TestBase<int>
     {
-
         #region GetAsync
         
         [Test]
@@ -22,8 +21,10 @@ namespace SurgeonPortal.Library.Tests.Examinations
             var mockDal = new Mock<IQualifyingExamReadOnlyDal>();
             mockDal.Setup(m => m.GetAsync())
                 .ReturnsAsync(Create<QualifyingExamReadOnlyDto>());
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IQualifyingExamReadOnly, QualifyingExamReadOnly>()
@@ -39,12 +40,14 @@ namespace SurgeonPortal.Library.Tests.Examinations
         public async Task GetAsync_LoadsSelfCorrectly()
         {
             var dto = Create<QualifyingExamReadOnlyDto>();
-        
+            
             var mockDal = new Mock<IQualifyingExamReadOnlyDal>();
             mockDal.Setup(m => m.GetAsync())
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IQualifyingExamReadOnly, QualifyingExamReadOnly>()

@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Billing.ExamFeeReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Billing
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Billing
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class ExamFeeReadOnlyList : YtgReadOnlyListBase<IExamFeeReadOnlyList, IExamFeeReadOnly>, IExamFeeReadOnlyList
+	public class ExamFeeReadOnlyList : YtgReadOnlyListBase<IExamFeeReadOnlyList, IExamFeeReadOnly, int>, IExamFeeReadOnlyList
     {
         private readonly IExamFeeReadOnlyDal _examFeeReadOnlyDal;
 
-        public ExamFeeReadOnlyList(IExamFeeReadOnlyDal examFeeReadOnlyDal)
+        public ExamFeeReadOnlyList(
+            IIdentityProvider identityProvider,
+            IExamFeeReadOnlyDal examFeeReadOnlyDal)
+            : base(identityProvider)
         {
             _examFeeReadOnlyDal = examFeeReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.Billing
             Csla.Rules.BusinessRules.AddRule(typeof(ExamFeeReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,7 @@ namespace SurgeonPortal.Library.Billing
         private async Task GetByUserId()
         
         {
-            var dtos = await _examFeeReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _examFeeReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

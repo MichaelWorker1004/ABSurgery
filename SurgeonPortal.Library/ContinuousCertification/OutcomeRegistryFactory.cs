@@ -22,6 +22,14 @@ namespace SurgeonPortal.Library.ContinuousCertification
 
 
         
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+            
+                public GetByUserIdCriteria()
+             {
+              }
+            }
             
 
 

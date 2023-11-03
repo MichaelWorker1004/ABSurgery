@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -124,7 +124,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s Examinations\\ExamHistoryReadOnly.GetByUserId ExamHistoryReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\ExamHistoryReadOnly -p:Adapter=sp:abssp-[dbo].[get_userexamhistory] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamHistoryReadOnly -p:Route=history -p:ControllerName=Examinations\\ExaminationsController -p:ControllerRoute=api/examinations -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -f ",
     "inferredCommand": "",

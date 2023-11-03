@@ -2,7 +2,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.MedicalTraining
 {
-    public interface IFellowshipReadOnlyList : IYtgReadOnlyListBase<IFellowshipReadOnly>
+    public interface IFellowshipReadOnlyList : IYtgReadOnlyListBase<IFellowshipReadOnly, int>
     {
     }
 }

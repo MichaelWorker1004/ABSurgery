@@ -55,7 +55,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                                 UserId = dto.UserId,
                                 CaseHeaderId = dto.CaseHeaderId,
                                 Feedback = dto.Feedback,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.CreatedByUserId,
                             });
                             
                 }
@@ -84,7 +84,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                             Id = dto.Id,
                             CaseHeaderId = dto.CaseHeaderId,
                             Feedback = dto.Feedback,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            LastUpdatedByUserId = dto.UserId,
                         });
                         
             }

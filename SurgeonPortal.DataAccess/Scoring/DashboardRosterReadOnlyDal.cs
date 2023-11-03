@@ -15,7 +15,9 @@ namespace SurgeonPortal.DataAccess.Scoring
 
 
 
-        public async Task<IEnumerable<DashboardRosterReadOnlyDto>> GetByUserIdAsync(System.DateTime examDate)
+        public async Task<IEnumerable<DashboardRosterReadOnlyDto>> GetByUserIdAsync(
+            int examinerUserId,
+            System.DateTime examDate)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +25,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                     "[dbo].[get_examinerschedule_byuserid]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                             ExamDate = examDate,
                         });
                         

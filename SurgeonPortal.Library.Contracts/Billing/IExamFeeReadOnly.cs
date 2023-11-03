@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Billing
 {
-    public interface IExamFeeReadOnly : IYtgReadOnlyBase
+    public interface IExamFeeReadOnly : IYtgReadOnlyBase<int>
     {
         decimal? SubTotal { get; }
         string InvoiceNumber { get; }

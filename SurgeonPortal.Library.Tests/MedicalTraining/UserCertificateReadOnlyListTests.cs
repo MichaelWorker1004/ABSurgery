@@ -10,19 +10,20 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.MedicalTraining
 {
     [TestFixture] 
-	public class UserCertificateReadOnlyListTests : TestBase<string>
+	public class UserCertificateReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IUserCertificateReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(CreateMany<UserCertificateReadOnlyDto>());
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCertificateReadOnlyList, UserCertificateReadOnlyList>()
                 .WithBusinessObject<IUserCertificateReadOnly, UserCertificateReadOnly>()
@@ -38,13 +39,16 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         public async Task GetByUserIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<UserCertificateReadOnlyDto>();
+            var expectedUserId = 1234;
+            
         
             var mockDal = new Mock<IUserCertificateReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(expectedDtos);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserCertificateReadOnlyList, UserCertificateReadOnlyList>()
                 .WithBusinessObject<IUserCertificateReadOnly, UserCertificateReadOnly>()

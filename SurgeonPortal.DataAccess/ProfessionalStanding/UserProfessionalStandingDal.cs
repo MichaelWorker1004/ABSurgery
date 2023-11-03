@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
 
 
 
-        public async Task<UserProfessionalStandingDto> GetByUserIdAsync()
+        public async Task<UserProfessionalStandingDto> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -22,7 +22,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                     "[dbo].[get_user_professional_standing_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }
@@ -38,13 +38,13 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         "[dbo].[ins_user_sanctions]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.UserId,
                                 PrimaryPracticeID = dto.PrimaryPracticeId,
                                 OrganizationTypeId = dto.OrganizationTypeId,
                                 ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges,
                                 ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                                LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.UserId,
+                                LastUpdatedByUserId = dto.UserId,
                             });
                             
                 }
@@ -70,12 +70,12 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                     "[dbo].[update_user_professional_standing_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                             PrimaryPracticeID = dto.PrimaryPracticeId,
                             OrganizationTypeId = dto.OrganizationTypeId,
                             ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges,
                             ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            LastUpdatedByUserId = dto.UserId,
                         });
                         
             }

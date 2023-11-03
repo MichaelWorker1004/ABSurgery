@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class UserClaimReadOnlyDalTests : TestBase<string>
+	public class UserClaimReadOnlyDalTests : TestBase<int>
     {
         #region GetByIdsAsync
         
@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var expectedSprocName = "[dbo].[get_user_claims]";
             var expectedUserId = Create<int>();
             var expectedApplicationId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

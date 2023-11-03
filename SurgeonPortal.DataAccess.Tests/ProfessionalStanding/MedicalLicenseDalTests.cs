@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
 {
-	public class MedicalLicenseDalTests : TestBase<string>
+	public class MedicalLicenseDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -43,7 +43,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         {
             var expectedSprocName = "[dbo].[get_userlicenses_byid]";
             var expectedLicenseId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     LicenseId = expectedLicenseId,
@@ -93,6 +93,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     IssuingStateId = expectedDto.IssuingStateId,
                     LicenseNumber = expectedDto.LicenseNumber,
                     LicenseTypeId = expectedDto.LicenseTypeId,
@@ -140,6 +141,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                 new
                 {
                     LicenseId = expectedDto.LicenseId,
+                    UserId = expectedDto.UserId,
                     IssuingStateId = expectedDto.IssuingStateId,
                     LicenseNumber = expectedDto.LicenseNumber,
                     LicenseTypeId = expectedDto.LicenseTypeId,

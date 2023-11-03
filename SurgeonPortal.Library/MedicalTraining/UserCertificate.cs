@@ -108,14 +108,9 @@ namespace SurgeonPortal.Library.MedicalTraining
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
             
-
         }
-
-
 
 
         [RunLocal]
@@ -163,6 +158,14 @@ namespace SurgeonPortal.Library.MedicalTraining
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -226,11 +229,10 @@ namespace SurgeonPortal.Library.MedicalTraining
         public void LoadDocument(Stream file)
         {
             var document = _documentFactory.Create();
-            document.UserId = IdentityHelper.UserId;
             document.DocumentTypeId = (int)DocumentTypes.Certificate;
             document.DocumentName = $"Certificate-{Enum.GetName(typeof(CertificateTypes), CertificateTypeId)}-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}";
             document.InternalViewOnly = false;
-            document.UploadedBy = IdentityHelper.UserName;
+            document.UploadedBy = _identity.GetUserName();
             document.File = file;
             LoadProperty(DocumentProperty, document);
         }

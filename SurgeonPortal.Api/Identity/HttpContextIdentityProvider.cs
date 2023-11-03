@@ -33,7 +33,7 @@ namespace SurgeonPortal.Api.Identity
             }
         }
 
-        public string GetUserName() => ClaimsPrincipal.Current?.FindFirst(ApplicationClaims.EmailAddress)?.Value ?? "Unknown";
+        public string GetUserName() => ClaimsPrincipal.Current?.FindFirst(YtgClaimType.EmailAddress)?.Value ?? "Unknown";
 
         #endregion
     }

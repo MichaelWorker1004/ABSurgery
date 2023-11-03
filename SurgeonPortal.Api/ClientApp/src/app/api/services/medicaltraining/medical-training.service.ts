@@ -216,7 +216,6 @@ export class MedicalTrainingService {
             /**
             * Required Parameters
             * id:Number
-            * userId:Number
             * graduateProfileId:Number
             * medicalSchoolName:String
             * medicalSchoolCity:String
