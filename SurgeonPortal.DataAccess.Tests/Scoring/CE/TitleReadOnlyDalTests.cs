@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
 {
-	public class TitleReadOnlyDalTests : TestBase<string>
+	public class TitleReadOnlyDalTests : TestBase<int>
     {
         #region GetByIdAsync
         
@@ -19,7 +19,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
             var expectedExamScheduleId = Create<int>();
             var expectedExaminerUserId = Create<int>();
             var expectedExamineeUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamScheduleId = expectedExamScheduleId,
@@ -33,6 +33,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
             var sut = new TitleReadOnlyDal(sqlManager);
             await sut.GetByIdAsync(
                 expectedExamScheduleId,
+                expectedExaminerUserId,
                 expectedExamineeUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -49,6 +50,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring.CE
         
             var sut = new TitleReadOnlyDal(sqlManager);
             var result = await sut.GetByIdAsync(
+                Create<int>(),
                 Create<int>(),
                 Create<int>());
         

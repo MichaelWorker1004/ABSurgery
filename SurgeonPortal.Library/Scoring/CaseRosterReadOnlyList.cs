@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.CaseRosterReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CaseRosterReadOnlyList : YtgReadOnlyListBase<ICaseRosterReadOnlyList, ICaseRosterReadOnly>, ICaseRosterReadOnlyList
+	public class CaseRosterReadOnlyList : YtgReadOnlyListBase<ICaseRosterReadOnlyList, ICaseRosterReadOnly, int>, ICaseRosterReadOnlyList
     {
         private readonly ICaseRosterReadOnlyDal _caseRosterReadOnlyDal;
 
-        public CaseRosterReadOnlyList(ICaseRosterReadOnlyDal caseRosterReadOnlyDal)
+        public CaseRosterReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICaseRosterReadOnlyDal caseRosterReadOnlyDal)
+            : base(identityProvider)
         {
             _caseRosterReadOnlyDal = caseRosterReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.Scoring
             Csla.Rules.BusinessRules.AddRule(typeof(CaseRosterReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
         [Fetch]

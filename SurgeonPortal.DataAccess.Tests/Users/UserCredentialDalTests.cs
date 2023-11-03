@@ -2,37 +2,36 @@ using FluentAssertions;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.DataAccess.Users;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class UserCredentialDalTests : TestBase<string>
+	public class UserCredentialDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         
-        //[Test]
-        //public async Task GetByUserIdAsync_ExecutesSprocCorrectly()
-        //{
-        //    var expectedSprocName = "[dbo].[get_user_account]";
-        //    var expectedUserId = Create<int>();
-        //    var expectedParams =
-        //        new
-        //        {
-        //            UserId = expectedUserId,
-        //        };
+        [Test]
+        public async Task GetByUserIdAsync_ExecutesSprocCorrectly()
+        {
+            var expectedSprocName = "[dbo].[get_user_account]";
+            var expectedUserId = Create<int>();
+            var expectedParams = 
+                new
+                {
+                    UserId = expectedUserId,
+                };
         
-        //    var sqlManager = new MockSqlConnectionManager();
-        //    sqlManager.AddRecord(Create<UserCredentialDto>());
+            var sqlManager = new MockSqlConnectionManager();
+            sqlManager.AddRecord(Create<UserCredentialDto>());
         
-        //    var sut = new UserCredentialDal(sqlManager);
-        //    await sut.GetByUserIdAsync();
+            var sut = new UserCredentialDal(sqlManager);
+            await sut.GetByUserIdAsync(expectedUserId);
         
-        //    Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
-        //    Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
-        //}
+            Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
+            Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
+        }
         
         [Test]
         public async Task GetByUserIdAsync_YieldsCorrectResult()
@@ -43,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             sqlManager.AddRecord(expectedDto);
         
             var sut = new UserCredentialDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -68,7 +67,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var p =
                 new
                 {
-                    UserId = IdentityHelper.UserId,
+                    UserId = expectedDto.UserId,
                     EmailAddress = expectedDto.EmailAddress,
                     Password = expectedDto.Password,
                     LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,

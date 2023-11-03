@@ -10,9 +10,8 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Examinations
 {
     [TestFixture] 
-	public class ExamOverviewReadOnlyListTests : TestBase<string>
+	public class ExamOverviewReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
@@ -20,8 +19,10 @@ namespace SurgeonPortal.Library.Tests.Examinations
             var mockDal = new Mock<IExamOverviewReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(CreateMany<ExamOverviewReadOnlyDto>());
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamOverviewReadOnlyList, ExamOverviewReadOnlyList>()
@@ -38,12 +39,15 @@ namespace SurgeonPortal.Library.Tests.Examinations
         public async Task GetAllAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<ExamOverviewReadOnlyDto>();
+            
         
             var mockDal = new Mock<IExamOverviewReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(expectedDtos);
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamOverviewReadOnlyList, ExamOverviewReadOnlyList>()

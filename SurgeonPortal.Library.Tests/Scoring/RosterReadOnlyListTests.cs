@@ -10,19 +10,23 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Scoring
 {
     [TestFixture] 
-	public class RosterReadOnlyListTests : TestBase<string>
+	public class RosterReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByExaminationHeaderIdAsync_CallsDalCorrectly()
         {
             var expectedExamHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<IRosterReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExaminationHeaderIdAsync(expectedExamHeaderId))
+            mockDal.Setup(m => m.GetByExaminationHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId))
                 .ReturnsAsync(CreateMany<RosterReadOnlyDto>());
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRosterReadOnlyList, RosterReadOnlyList>()
@@ -39,12 +43,19 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task GetByExaminationHeaderIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<RosterReadOnlyDto>();
+            var expectedExamHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
+            
         
             var mockDal = new Mock<IRosterReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExaminationHeaderIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByExaminationHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId))
                 .ReturnsAsync(expectedDtos);
         
+        
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IRosterReadOnlyList, RosterReadOnlyList>()
@@ -52,7 +63,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 .Build();
         
             var factory = new RosterReadOnlyListFactory();
-            var sut = await factory.GetByExaminationHeaderIdAsync(Create<int>());
+            var sut = await factory.GetByExaminationHeaderIdAsync(expectedExamHeaderId);
         
             Assert.That(sut, Has.Count.EqualTo(3));
             expectedDtos.Should().BeEquivalentTo(sut, options => 

@@ -5,7 +5,9 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Ytg.Framework.Csla;
 using Ytg.Framework.Exceptions;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.CE.ExamineeReadOnlyFactory;
 
 namespace SurgeonPortal.Library.Scoring.CE
@@ -14,12 +16,15 @@ namespace SurgeonPortal.Library.Scoring.CE
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class ExamineeReadOnly : ReadOnlyBase<ExamineeReadOnly>, IExamineeReadOnly
+    public class ExamineeReadOnly : YtgReadOnlyBase<ExamineeReadOnly, int>, IExamineeReadOnly
     {
         private readonly IExamineeReadOnlyDal _examineeReadOnlyDal;
 
 
-        public ExamineeReadOnly(IExamineeReadOnlyDal examineeReadOnlyDal)
+        public ExamineeReadOnly(
+            IIdentityProvider identityProvider,
+            IExamineeReadOnlyDal examineeReadOnlyDal)
+            : base(identityProvider)
         {
             _examineeReadOnlyDal = examineeReadOnlyDal;
         }
@@ -67,8 +72,8 @@ namespace SurgeonPortal.Library.Scoring.CE
             Csla.Rules.BusinessRules.AddRule(typeof(ExamineeReadOnly),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
+
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

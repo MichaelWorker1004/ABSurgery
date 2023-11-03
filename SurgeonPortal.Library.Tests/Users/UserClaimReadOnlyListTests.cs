@@ -4,16 +4,15 @@ using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
 using SurgeonPortal.Library.Users;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class UserClaimReadOnlyListTests : TestBase<string>
+	public class UserClaimReadOnlyListTests : TestBase<int>
     {
-
+        
         //[Test]
         //public async Task GetByIdsAsync_CallsDalCorrectly()
         //{

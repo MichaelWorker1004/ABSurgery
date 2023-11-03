@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.GraduateMedicalEducation
 {
     public interface IRotationReadOnlyDal
     {
-        Task<IEnumerable<RotationReadOnlyDto>> GetByUserIdAsync();
+        Task<IEnumerable<RotationReadOnlyDto>> GetByUserIdAsync(int userId);
     }
 }

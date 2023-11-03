@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -154,7 +154,14 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+    "name": "UserId",
+    "dataType": "int",
+    "required": true,
+    "substitution": "$UserId"
+  }],
   "metadata": {
     "command": "ytgim g i s ProfessionalStanding\\MedicalLicenseReadOnly.GetByUserId MedicalLicenseReadOnly -t=ytg-framework/readonly-getlist -p:Model=ProfessionalStanding\\MedicalLicenseReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_userlicenses_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=MedicalLicenseReadOnly -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\MedicalLicenseController -p:ControllerRoute=api/medical-license -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  ProfessionalStanding\\MedicalLicenseReadOnly.GetByUserId MedicalLicenseReadOnly -t=ytg-framework/readonly-getlist -p:Model=ProfessionalStanding\\MedicalLicenseReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_userlicenses_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=MedicalLicenseReadOnly -p:Route=by-userid -p:ControllerName=ProfessionalStanding\\MedicalLicenseController -p:ControllerRoute=api/medical-license -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

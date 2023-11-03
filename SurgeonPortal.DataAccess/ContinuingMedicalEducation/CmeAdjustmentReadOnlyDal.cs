@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.ContinuingMedicalEducation
 
 
 
-        public async Task<IEnumerable<CmeAdjustmentReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<CmeAdjustmentReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.ContinuingMedicalEducation
                     "[dbo].[get_usercme_waivers_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

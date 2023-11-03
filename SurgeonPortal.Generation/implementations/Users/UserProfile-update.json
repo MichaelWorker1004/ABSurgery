@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           },
           {
             "name": "FirstName",
@@ -302,7 +302,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "CreatedByUserId"
           },
           {
             "name": "CreatedAtUtc",
@@ -329,7 +329,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "LastUpdatedByUserId"
           }
         ],
         "recordsets": [
@@ -699,6 +699,12 @@
       "required": true
     },
     {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
       "name": "FirstName",
       "dataType": "string",
       "required": true
@@ -839,6 +845,12 @@
       "required": true
     },
     {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
       "name": "CreatedAtUtc",
       "dataType": "datetime",
       "required": true
@@ -847,6 +859,12 @@
       "name": "LastUpdatedAtUtc",
       "dataType": "datetime",
       "required": true
+    },
+    {
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

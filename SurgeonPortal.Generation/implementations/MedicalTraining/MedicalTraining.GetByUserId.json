@@ -32,7 +32,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -245,7 +245,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s MedicalTraining\\MedicalTraining.GetByUserId MedicalTraining -t=ytg-framework/editable-get -p:Model=MedicalTraining\\MedicalTraining -p:Adapter=sp:ABSSP-[dbo].[get_medical_training_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=MedicalTraining -p:Route=by-userid -p:ControllerName=MedicalTraining\\MedicalTrainingController -p:ControllerRoute=api/medical-training -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  MedicalTraining\\MedicalTraining.GetByUserId MedicalTraining -t=ytg-framework/editable-get -p:Model=MedicalTraining\\MedicalTraining -p:Adapter=sp:ABSSP-[dbo].[get_medical_training_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=MedicalTraining -p:Route=by-userid -p:ControllerName=MedicalTraining\\MedicalTrainingController -p:ControllerRoute=api/medical-training -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

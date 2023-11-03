@@ -5,9 +5,7 @@ namespace SurgeonPortal.Models.Documents
 {
     public class DocumentModel
     {
-        [Required(ErrorMessage = "Id is required")]
         public int Id { get; set; }
-        [Required(ErrorMessage = "UserId is required")]
         public int UserId { get; set; }
         public Guid StreamId { get; set; }
         public int DocumentTypeId { get; set; }

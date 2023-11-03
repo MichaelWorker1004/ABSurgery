@@ -33,7 +33,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -86,7 +86,15 @@
       }
     }
   ],
-  "inputParameters": [ ],
+  "inputParameters":  
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s MedicalTraining\\FellowshipReadOnly.GetByUserId FellowshipReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\FellowshipReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_userfellowships_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=FellowshipReadOnly -p:Route=by-userid -p:ControllerName=MedicalTraining\\FellowshipController -p:ControllerRoute=api/fellowships -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  MedicalTraining\\FellowshipReadOnly.GetByUserId FellowshipReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\FellowshipReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_userfellowships_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=FellowshipReadOnly -p:Route=by-userid -p:ControllerName=MedicalTraining\\FellowshipController -p:ControllerRoute=api/fellowships -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

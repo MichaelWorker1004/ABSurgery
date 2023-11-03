@@ -121,19 +121,15 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicense),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicense),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicense),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicense),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
 		protected override void AddBusinessRules()
@@ -144,7 +140,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 		}
 
 
-		[RunLocal]
+        [RunLocal]
         [DeleteSelf]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
@@ -179,6 +175,13 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -275,5 +278,5 @@ namespace SurgeonPortal.Library.ProfessionalStanding
                 }
 			}
 		}
-	}
+    }
 }

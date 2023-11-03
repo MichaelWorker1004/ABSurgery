@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.ExamSessionReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class ExamSessionReadOnlyList : YtgReadOnlyListBase<IExamSessionReadOnlyList, IExamSessionReadOnly>, IExamSessionReadOnlyList
+	public class ExamSessionReadOnlyList : YtgReadOnlyListBase<IExamSessionReadOnlyList, IExamSessionReadOnly, int>, IExamSessionReadOnlyList
     {
         private readonly IExamSessionReadOnlyDal _examSessionReadOnlyDal;
 
-        public ExamSessionReadOnlyList(IExamSessionReadOnlyDal examSessionReadOnlyDal)
+        public ExamSessionReadOnlyList(
+            IIdentityProvider identityProvider,
+            IExamSessionReadOnlyDal examSessionReadOnlyDal)
+            : base(identityProvider)
         {
             _examSessionReadOnlyDal = examSessionReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.Scoring
             Csla.Rules.BusinessRules.AddRule(typeof(ExamSessionReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,9 @@ namespace SurgeonPortal.Library.Scoring
         private async Task GetByUserId(GetByUserIdCriteria criteria)
         
         {
-            var dtos = await _examSessionReadOnlyDal.GetByUserIdAsync(criteria.ExamDate);
+            var dtos = await _examSessionReadOnlyDal.GetByUserIdAsync(
+                _identity.GetUserId<int>(),
+                criteria.ExamDate);
         			
             FetchChildren(dtos);
         }

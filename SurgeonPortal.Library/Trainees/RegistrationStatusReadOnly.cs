@@ -5,7 +5,9 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Ytg.Framework.Csla;
 using Ytg.Framework.Exceptions;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Trainees.RegistrationStatusReadOnlyFactory;
 
 namespace SurgeonPortal.Library.Trainees
@@ -14,12 +16,15 @@ namespace SurgeonPortal.Library.Trainees
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class RegistrationStatusReadOnly : ReadOnlyBase<RegistrationStatusReadOnly>, IRegistrationStatusReadOnly
+    public class RegistrationStatusReadOnly : YtgReadOnlyBase<RegistrationStatusReadOnly, int>, IRegistrationStatusReadOnly
     {
         private readonly IRegistrationStatusReadOnlyDal _registrationStatusReadOnlyDal;
 
 
-        public RegistrationStatusReadOnly(IRegistrationStatusReadOnlyDal registrationStatusReadOnlyDal)
+        public RegistrationStatusReadOnly(
+            IIdentityProvider identityProvider,
+            IRegistrationStatusReadOnlyDal registrationStatusReadOnlyDal)
+            : base(identityProvider)
         {
             _registrationStatusReadOnlyDal = registrationStatusReadOnlyDal;
         }
@@ -59,8 +64,8 @@ namespace SurgeonPortal.Library.Trainees
             Csla.Rules.BusinessRules.AddRule(typeof(RegistrationStatusReadOnly),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
         }
+
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

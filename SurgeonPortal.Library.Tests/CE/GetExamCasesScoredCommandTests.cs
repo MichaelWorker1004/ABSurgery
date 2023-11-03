@@ -10,33 +10,37 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.CE
 {
     [TestFixture] 
-	public class GetExamCasesScoredCommandTests : TestBase<string>
+	public class GetExamCasesScoredCommandTests : TestBase<int>
     {
         private GetExamCasesScoredCommandDto CreateValidDto()
-        {     
+        {
             var dto = Create<GetExamCasesScoredCommandDto>();
-
+        
             dto.ExamScheduleId = Create<int>();
             dto.CasesScored = Create<bool>();
-    
+        
             return dto;
         }
-
+        
         #region GetExamCasesScored
         
         [Test]
         public void GetExamCasesScored_CallsDalCorrectly()
         {
             var expectedExamScheduleId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
-            var dto = Create<GetExamCasesScoredCommandDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IGetExamCasesScoredCommandDal>();
-            mockDal.Setup(m => m.GetExamCasesScored(expectedExamScheduleId))
+            mockDal.Setup(m => m.GetExamCasesScored(
+                expectedExamScheduleId,
+                expectedExaminerUserId))
                 .Returns(dto);
+            
         
             UseMockServiceProvider()
-                
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IGetExamCasesScoredCommand, GetExamCasesScoredCommand>()
                 .Build();

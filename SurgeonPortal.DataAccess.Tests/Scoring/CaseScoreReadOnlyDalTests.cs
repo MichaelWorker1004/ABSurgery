@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class CaseScoreReadOnlyDalTests : TestBase<string>
+	public class CaseScoreReadOnlyDalTests : TestBase<int>
     {
         #region GetByExamScheduleIdAsync
         
@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var expectedSprocName = "[dbo].[get_examinerscores_byexamscheduleId]";
             var expectedExaminerUserId = Create<int>();
             var expectedExamScheduleId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,
@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecords(CreateMany<CaseScoreReadOnlyDto>());
         
             var sut = new CaseScoreReadOnlyDal(sqlManager);
-            await sut.GetByExamScheduleIdAsync(expectedExamScheduleId);
+            await sut.GetByExamScheduleIdAsync(
+                expectedExaminerUserId,
+                expectedExamScheduleId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +46,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new CaseScoreReadOnlyDal(sqlManager);
-            var result = await sut.GetByExamScheduleIdAsync(Create<int>());
+            var result = await sut.GetByExamScheduleIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
 {
-    public interface IOverlapConflictCommand : IYtgCommandBase
+    public interface IOverlapConflictCommand : IYtgCommandBase<int>
     {
         int UserId { get; }
         DateTime StartDate { get; }

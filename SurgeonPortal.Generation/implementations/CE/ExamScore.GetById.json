@@ -48,8 +48,7 @@
             "maxLength": 4,
             "precision": 10,
             "scale": 0,
-            "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "required": true
           }
         ],
         "recordsets": [
@@ -167,6 +166,12 @@
       "name": "ExamScheduleScoreId",
       "dataType": "int",
       "required": true
+    },
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

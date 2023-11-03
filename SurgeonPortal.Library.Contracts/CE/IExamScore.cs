@@ -7,7 +7,7 @@ namespace SurgeonPortal.Library.Contracts.CE
     {
         int ExamScheduleScoreId { get; set; }
         int ExamScheduleId { get; set; }
-        int ExaminerUserId { get; set; }
+        int ExaminerUserId { get;  }
         int ExaminerScore { get; set; }
         bool? Submitted { get; set; }
         DateTime? SubmittedDateTimeUTC { get; set; }

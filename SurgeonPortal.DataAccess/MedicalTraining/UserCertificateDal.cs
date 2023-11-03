@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         new
                         {
                             CertificateId = dto.CertificateId,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                         });
                         
             }
@@ -53,12 +53,12 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                         "[dbo].[insert_usercertificates]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.UserId,
                                 DocumentId = dto.DocumentId,
                                 CertificateTypeId = dto.CertificateTypeId,
                                 IssueDate = dto.IssueDate,
                                 CertificateNumber = dto.CertificateNumber,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.UserId,
                             });
                             
                 }

@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Examiners
 {
-	public class AgendaReadOnlyDalTests : TestBase<string>
+	public class AgendaReadOnlyDalTests : TestBase<int>
     {
         #region GetByExamHeaderIdAsync
         
@@ -18,18 +18,20 @@ namespace SurgeonPortal.DataAccess.Tests.Examiners
             var expectedSprocName = "[dbo].[get_examiner_agenda]";
             var expectedExaminerUserId = Create<int>();
             var expectedExamHeaderId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,
                     ExamHeaderId = expectedExamHeaderId,
                 };
-        
+            
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(Create<AgendaReadOnlyDto>());
         
             var sut = new AgendaReadOnlyDal(sqlManager);
-            await sut.GetByExamHeaderIdAsync(expectedExamHeaderId);
+            await sut.GetByExamHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +46,9 @@ namespace SurgeonPortal.DataAccess.Tests.Examiners
             sqlManager.AddRecord(expectedDto);
         
             var sut = new AgendaReadOnlyDal(sqlManager);
-            var result = await sut.GetByExamHeaderIdAsync(Create<int>());
+            var result = await sut.GetByExamHeaderIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());

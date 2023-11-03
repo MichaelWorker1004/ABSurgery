@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class PasswordResetCommandDalTests : TestBase<string>
+	public class PasswordResetCommandDalTests : TestBase<int>
     {
         #region ResetPasswordAsync
         
@@ -19,7 +19,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var expectedUserId = Create<int>();
             var expectedOldPassword = Create<string>();
             var expectedNewPassword = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,
@@ -32,6 +32,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
         
             var sut = new PasswordResetCommandDal(sqlManager);
             await sut.ResetPasswordAsync(
+                expectedUserId,
                 expectedOldPassword,
                 expectedNewPassword);
         

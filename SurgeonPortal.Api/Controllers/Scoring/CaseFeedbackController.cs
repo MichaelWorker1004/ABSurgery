@@ -105,7 +105,6 @@ namespace SurgeonPortal.Api.Controllers.Scoring
 
         private void AssignCreateProperties(ICaseFeedback entity, CaseFeedbackModel model)
         {
-            entity.UserId = model.UserId;
             entity.CaseHeaderId = model.CaseHeaderId;
             entity.Feedback = model.Feedback;
         }

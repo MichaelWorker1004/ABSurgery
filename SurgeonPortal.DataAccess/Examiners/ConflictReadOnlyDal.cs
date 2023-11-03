@@ -14,7 +14,9 @@ namespace SurgeonPortal.DataAccess.Examiners
 
 
 
-        public async Task<ConflictReadOnlyDto> GetByExamHeaderIdAsync(int examHeaderId)
+        public async Task<ConflictReadOnlyDto> GetByExamHeaderIdAsync(
+            int examinerUserId,
+            int examHeaderId)
         {
             using (var connection = CreateConnection())
             {
@@ -22,7 +24,7 @@ namespace SurgeonPortal.DataAccess.Examiners
                     "[dbo].[get_examiner_conflicts]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                             ExamHeaderId = examHeaderId,
                         });
                         

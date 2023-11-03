@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Csla;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
 using SurgeonPortal.Library.Contracts.Scoring;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 
 namespace SurgeonPortal.Library.Scoring
@@ -10,12 +12,15 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0003", Justification = "Direct Injection.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
-    public class ExamSessionSkipCommand : CommandBase<ExamSessionSkipCommand>, IExamSessionSkipCommand
+    public class ExamSessionSkipCommand : YtgCommandBase<ExamSessionSkipCommand, int>, IExamSessionSkipCommand
     {
         private readonly IExamSessionSkipCommandDal _examSessionSkipCommandDal;
 
 
-        public ExamSessionSkipCommand(IExamSessionSkipCommandDal examSessionSkipCommandDal)
+        public ExamSessionSkipCommand(
+            IIdentityProvider identityProvider,
+            IExamSessionSkipCommandDal examSessionSkipCommandDal)
+            : base(identityProvider)
         {
             _examSessionSkipCommandDal = examSessionSkipCommandDal;
         }
@@ -43,9 +48,11 @@ namespace SurgeonPortal.Library.Scoring
 
 
         [Execute]
-        protected new async Task ExecuteCommand()
+        protected async Task ExecuteCommand()
         {
-                await _examSessionSkipCommandDal.SkipExamSessionAsync(ExamScheduleId);
+                await _examSessionSkipCommandDal.SkipExamSessionAsync(
+                    ExamScheduleId,
+                    _identity.GetUserId<int>());
             }
 
 

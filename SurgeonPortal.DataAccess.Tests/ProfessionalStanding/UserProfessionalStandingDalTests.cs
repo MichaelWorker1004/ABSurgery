@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
 {
-	public class UserProfessionalStandingDalTests : TestBase<string>
+	public class UserProfessionalStandingDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         {
             var expectedSprocName = "[dbo].[get_user_professional_standing_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,
@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecord(Create<UserProfessionalStandingDto>());
         
             var sut = new UserProfessionalStandingDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecord(expectedDto);
         
             var sut = new UserProfessionalStandingDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -67,10 +67,13 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
-                    PrimaryPracticeId = expectedDto.PrimaryPracticeId,
+                    UserId = expectedDto.UserId,
+                    PrimaryPracticeID = expectedDto.PrimaryPracticeId,
                     OrganizationTypeId = expectedDto.OrganizationTypeId,
                     ExplanationOfNonPrivileges = expectedDto.ExplanationOfNonPrivileges,
                     ExplanationOfNonClinicalActivities = expectedDto.ExplanationOfNonClinicalActivities,
+                    CreatedByUserId = expectedDto.UserId,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -111,10 +114,12 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
-                    PrimaryPracticeId = expectedDto.PrimaryPracticeId,
+                    UserId = expectedDto.UserId,
+                    PrimaryPracticeID = expectedDto.PrimaryPracticeId,
                     OrganizationTypeId = expectedDto.OrganizationTypeId,
                     ExplanationOfNonPrivileges = expectedDto.ExplanationOfNonPrivileges,
                     ExplanationOfNonClinicalActivities = expectedDto.ExplanationOfNonClinicalActivities,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

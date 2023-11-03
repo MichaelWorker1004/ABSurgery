@@ -9,7 +9,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class ExamSessionReadOnlyDalTests : TestBase<string>
+	public class ExamSessionReadOnlyDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         
@@ -19,18 +19,20 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var expectedSprocName = "[dbo].[get_examinee_sessions]";
             var expectedExaminerUserId = Create<int>();
             var expectedExamDate = Create<DateTime>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExaminerUserId = expectedExaminerUserId,
-                    ExamDate = expectedExamDate,
+                    ExamDate = expectedExamDate.ToString("yyyy-MM-dd"),
                 };
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecords(CreateMany<ExamSessionReadOnlyDto>());
         
             var sut = new ExamSessionReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync(expectedExamDate);
+            await sut.GetByUserIdAsync(
+                expectedExaminerUserId,
+                expectedExamDate);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -45,7 +47,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new ExamSessionReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync(Create<DateTime>());
+            var result = await sut.GetByUserIdAsync(
+                Create<int>(),
+                Create<DateTime>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

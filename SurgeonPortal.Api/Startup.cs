@@ -108,7 +108,7 @@ namespace SurgeonPortal.Api
             var sqlConfig = new SqlConfiguration(Configuration.GetConnectionString("DefaultConnection"));
             services.AddTransient<ISqlConnectionManager>(provider => new SqlServerConnectionManager(sqlConfig));
             services.AddSingleton<AutoMapper.IConfigurationProvider>(GetAutoMapperConfiguration());
-            services.AddTransient<IPagination, Pagination>();
+            services.AddTransient<IPagination<int>, Pagination<int>>();
             services.AddTransient<IMapper, Mapper>();
             services.AddTransient<IAbsIdentityProvider, AbsIdentityProvider>();
             services.AddTransient<IIdentityProvider, AspNetCoreIdentityProvider>();
@@ -275,7 +275,7 @@ namespace SurgeonPortal.Api
         {
             return new MapperConfiguration(config =>
             {
-                config.AddProfile<ConventionAutoMapperProfile<LibraryConventionProvider, ModelConventionResolver>>();
+                config.AddProfile<ConventionAutoMapperProfile<int, LibraryConventionProvider, ModelConventionResolver>>();
                 config.CreateMap<FeatureFlagConfiguration, FeatureFlagsModel>();
             });
         }

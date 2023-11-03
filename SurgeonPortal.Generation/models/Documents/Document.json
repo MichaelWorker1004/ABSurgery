@@ -9,15 +9,10 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
-      "isAlwaysReadOnly": false,
+      "isAlwaysReadOnly": true,
       "isNullable": false,
       "isIdentityColumn": true,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "Id is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "UserId",
@@ -25,15 +20,10 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
-      "isAlwaysReadOnly": false,
+      "isAlwaysReadOnly": true,
       "isNullable": false,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "UserId is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "StreamId",
@@ -41,7 +31,7 @@
       "maxLength": 16,
       "precision": 0,
       "scale": 0,
-      "isAlwaysReadOnly": false,
+      "isAlwaysReadOnly": true,
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {}

@@ -10,22 +10,22 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.MedicalTraining
 {
     [TestFixture] 
-	public class OtherCertificationsTests : TestBase<string>
+	public class OtherCertificationsTests : TestBase<int>
     {
         private OtherCertificationsDto CreateValidDto()
         {     
             var dto = Create<OtherCertificationsDto>();
 
             dto.Id = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.CertificateTypeId = Create<int>();
             dto.CertificateTypeName = Create<string>();
             dto.IssueDate = Create<System.DateTime>();
             dto.CertificateNumber = Create<string>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
     
             return dto;
         }
@@ -45,12 +45,13 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var mockDal = new Mock<IOtherCertificationsDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<OtherCertificationsDto>()))
                 .Callback<OtherCertificationsDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOtherCertifications, OtherCertifications>()
                 .Build();
@@ -87,8 +88,9 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(Create<OtherCertificationsDto>());
         
+        
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOtherCertifications, OtherCertifications>()
                 .Build();
@@ -103,19 +105,21 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedId = Create<int>();
         
             var mockDal = new Mock<IOtherCertificationsDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
         
+        
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOtherCertifications, OtherCertifications>()
                 .Build();
         
             var factory = new OtherCertificationsFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(expectedId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -136,7 +140,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOtherCertifications, OtherCertifications>()
                 .Build();
@@ -161,17 +165,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
-                .Excluding(m => m.UserId)
                 .Excluding(m => m.CertificateTypeName)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.CreatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -187,14 +186,23 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOtherCertifications, OtherCertifications>()
                 .Build();
         
             var factory = new OtherCertificationsFactory();
             var sut = factory.Create();
-            sut.CertificateTypeId = Create<int>();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
+            sut.CertificateTypeId = dto.CertificateTypeId;
+            sut.CertificateTypeName = dto.CertificateTypeName;
+            sut.IssueDate = dto.IssueDate;
+            sut.CertificateNumber = dto.CertificateNumber;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             
@@ -216,18 +224,19 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         {
             var expectedId = Create<int>();
             
-            var dto = Create<OtherCertificationsDto>();
+            var dto = CreateValidDto();
             OtherCertificationsDto passedDto = null;
         
             var mockDal = new Mock<IOtherCertificationsDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OtherCertificationsDto>()))
                 .Callback<OtherCertificationsDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOtherCertifications, OtherCertifications>()
                 .Build();
@@ -267,16 +276,12 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.UserId)
                     .Excluding(m => m.CertificateTypeName)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -287,16 +292,17 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
         {
             var expectedId = Create<int>();
             
-            var dto = Create<OtherCertificationsDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IOtherCertificationsDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
-                        .ReturnsAsync(Create<OtherCertificationsDto>());
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OtherCertificationsDto>()))
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOtherCertifications, OtherCertifications>()
                 .Build();

@@ -14,7 +14,9 @@ namespace SurgeonPortal.DataAccess.CE
 
 
 
-        public async Task<ExamScoreDto> GetByIdAsync(int examScheduleScoreId)
+        public async Task<ExamScoreDto> GetByIdAsync(
+            int examScheduleScoreId,
+            int examinerUserId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +25,7 @@ namespace SurgeonPortal.DataAccess.CE
                         new
                         {
                             ExamScheduleScoreId = examScheduleScoreId,
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                         });
                         
             }
@@ -40,7 +42,7 @@ namespace SurgeonPortal.DataAccess.CE
                             new
                             {
                                 ExamScheduleId = dto.ExamScheduleId,
-                                ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                ExaminerUserId = dto.ExaminerUserId,
                             });
                             
                 }
@@ -68,7 +70,7 @@ namespace SurgeonPortal.DataAccess.CE
                         {
                             ExamScheduleScoreId = dto.ExamScheduleScoreId,
                             ExaminerScore = dto.ExaminerScore,
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = dto.ExaminerUserId,
                         });
                         
             }

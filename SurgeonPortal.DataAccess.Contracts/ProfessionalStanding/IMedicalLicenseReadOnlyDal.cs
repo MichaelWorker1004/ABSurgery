@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.ProfessionalStanding
 {
     public interface IMedicalLicenseReadOnlyDal
     {
-        Task<IEnumerable<MedicalLicenseReadOnlyDto>> GetByUserIdAsync();
+        Task<IEnumerable<MedicalLicenseReadOnlyDto>> GetByUserIdAsync(int userId);
     }
 }

@@ -9,15 +9,10 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
-      "isAlwaysReadOnly": false,
+      "isAlwaysReadOnly": true,
       "isNullable": false,
       "isIdentityColumn": true,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "Id is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "UserId",
@@ -25,24 +20,19 @@
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
-      "isAlwaysReadOnly": false,
+      "isAlwaysReadOnly": true,
       "isNullable": false,
       "isIdentityColumn": true,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "UserId is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "GraduateProfileId",
-      "dataType": "int",
+      "dataType": "int?",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {
         "required": {
@@ -109,7 +99,7 @@
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
     },
@@ -153,12 +143,12 @@
     },
     {
       "name": "DegreeId",
-      "dataType": "int",
+      "dataType": "int?",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {
         "required": {

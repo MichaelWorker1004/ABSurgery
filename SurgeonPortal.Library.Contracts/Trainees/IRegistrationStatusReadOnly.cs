@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Trainees
 {
-    public interface IRegistrationStatusReadOnly : IYtgReadOnlyBase
+    public interface IRegistrationStatusReadOnly : IYtgReadOnlyBase<int>
     {
         DateTime? RegOpenDate { get; }
         DateTime? RegEndDate { get; }

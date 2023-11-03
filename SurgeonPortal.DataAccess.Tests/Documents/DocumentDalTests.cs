@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Documents
 {
-	public class DocumentDalTests : TestBase<string>
+	public class DocumentDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -44,7 +44,7 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             var expectedSprocName = "[dbo].[get_document_byid]";
             var expectedId = Create<int>();
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     Id = expectedId,
@@ -55,7 +55,9 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             sqlManager.AddRecord(Create<DocumentDto>());
         
             var sut = new DocumentDal(sqlManager);
-            await sut.GetByIdAsync(expectedId);
+            await sut.GetByIdAsync(
+                expectedId,
+                expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -70,7 +72,9 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             sqlManager.AddRecord(expectedDto);
         
             var sut = new DocumentDal(sqlManager);
-            var result = await sut.GetByIdAsync(Create<int>());
+            var result = await sut.GetByIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -95,10 +99,12 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     StreamId = expectedDto.StreamId,
                     DocumentName = expectedDto.DocumentName,
                     DocumentTypeId = expectedDto.DocumentTypeId,
                     InternalViewOnly = expectedDto.InternalViewOnly,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

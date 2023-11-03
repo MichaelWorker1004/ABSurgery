@@ -2,7 +2,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.ProfessionalStanding
 {
-    public interface IUserAppointmentReadOnly : IYtgReadOnlyBase
+    public interface IUserAppointmentReadOnly : IYtgReadOnlyBase<int>
     {
         decimal ApptId { get; }
         int? UserId { get; }

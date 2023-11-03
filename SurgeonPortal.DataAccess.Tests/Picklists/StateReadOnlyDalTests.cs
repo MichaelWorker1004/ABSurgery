@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Picklists
 {
-	public class StateReadOnlyDalTests : TestBase<string>
+	public class StateReadOnlyDalTests : TestBase<int>
     {
         #region GetByCountryAsync
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         {
             var expectedSprocName = "[dbo].[get_picklist_states_bycountry]";
             var expectedCountryCode = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     CountryCode = expectedCountryCode,

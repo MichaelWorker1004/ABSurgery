@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.Documents;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.Documents
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.Documents
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class DocumentReadOnly : ReadOnlyBase<DocumentReadOnly>, IDocumentReadOnly
+    public class DocumentReadOnly : YtgReadOnlyBase<DocumentReadOnly, int>, IDocumentReadOnly
     {
+
+
+        public DocumentReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(Id))]
         public int Id => ReadProperty(IdProperty);

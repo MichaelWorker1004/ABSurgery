@@ -61,12 +61,8 @@ namespace SurgeonPortal.Library.Users
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
         }
-
-
 
 
         [Fetch]
@@ -88,6 +84,12 @@ namespace SurgeonPortal.Library.Users
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

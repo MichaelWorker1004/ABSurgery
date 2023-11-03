@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Documents.DocumentReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Documents
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Documents
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class DocumentReadOnlyList : YtgReadOnlyListBase<IDocumentReadOnlyList, IDocumentReadOnly>, IDocumentReadOnlyList
+	public class DocumentReadOnlyList : YtgReadOnlyListBase<IDocumentReadOnlyList, IDocumentReadOnly, int>, IDocumentReadOnlyList
     {
         private readonly IDocumentReadOnlyDal _documentReadOnlyDal;
 
-        public DocumentReadOnlyList(IDocumentReadOnlyDal documentReadOnlyDal)
+        public DocumentReadOnlyList(
+            IIdentityProvider identityProvider,
+            IDocumentReadOnlyDal documentReadOnlyDal)
+            : base(identityProvider)
         {
             _documentReadOnlyDal = documentReadOnlyDal;
         }
@@ -29,7 +33,6 @@ namespace SurgeonPortal.Library.Documents
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [Fetch]
@@ -39,7 +42,7 @@ namespace SurgeonPortal.Library.Documents
         private async Task GetByUserId()
         
         {
-            var dtos = await _documentReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _documentReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

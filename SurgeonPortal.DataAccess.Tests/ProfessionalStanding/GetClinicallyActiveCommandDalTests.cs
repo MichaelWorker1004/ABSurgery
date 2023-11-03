@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
 {
-	public class GetClinicallyActiveCommandDalTests : TestBase<string>
+	public class GetClinicallyActiveCommandDalTests : TestBase<int>
     {
         #region GetClinicallyActiveByUserId
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         {
             var expectedSprocName = "[dbo].[get_user_clinically_active_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,
@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecord(Create<GetClinicallyActiveCommandDto>());
         
             var sut = new GetClinicallyActiveCommandDal(sqlManager);
-            sut.GetClinicallyActiveByUserId();
+            sut.GetClinicallyActiveByUserId(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

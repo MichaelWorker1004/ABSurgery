@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.Users
 {
@@ -12,8 +13,15 @@ namespace SurgeonPortal.Library.Users
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class UserClaimReadOnly : ReadOnlyBase<UserClaimReadOnly>, IUserClaimReadOnly
+    public class UserClaimReadOnly : YtgReadOnlyBase<UserClaimReadOnly, int>, IUserClaimReadOnly
     {
+
+
+        public UserClaimReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(ClaimName))]
         public string ClaimName => ReadProperty(ClaimNameProperty);

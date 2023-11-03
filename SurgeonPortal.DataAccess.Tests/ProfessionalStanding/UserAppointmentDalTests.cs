@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
 {
-	public class UserAppointmentDalTests : TestBase<string>
+	public class UserAppointmentDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -43,7 +43,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         {
             var expectedSprocName = "[dbo].[get_userhospappts_byid]";
             var expectedApptId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ApptId = expectedApptId,
@@ -93,6 +93,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     PracticeTypeId = expectedDto.PracticeTypeId,
                     AppointmentTypeId = expectedDto.AppointmentTypeId,
                     OrganizationTypeId = expectedDto.OrganizationTypeId,
@@ -100,6 +101,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                     OrganizationId = expectedDto.OrganizationId,
                     AuthorizingOfficial = expectedDto.AuthorizingOfficial,
                     Other = expectedDto.Other,
+                    CreatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -141,6 +143,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                 new
                 {
                     ApptId = expectedDto.ApptId,
+                    UserId = expectedDto.UserId,
                     PracticeTypeId = expectedDto.PracticeTypeId,
                     AppointmentTypeId = expectedDto.AppointmentTypeId,
                     OrganizationTypeId = expectedDto.OrganizationTypeId,
@@ -148,6 +151,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
                     OrganizationId = expectedDto.OrganizationId,
                     AuthorizingOfficial = expectedDto.AuthorizingOfficial,
                     Other = expectedDto.Other,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

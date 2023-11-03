@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Csla;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
 using SurgeonPortal.Library.Contracts.Scoring;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 
 namespace SurgeonPortal.Library.Scoring
@@ -10,12 +12,15 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0003", Justification = "Direct Injection.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
-    public class IsExamSessionLockedCommand : CommandBase<IsExamSessionLockedCommand>, IIsExamSessionLockedCommand
+    public class IsExamSessionLockedCommand : YtgCommandBase<IsExamSessionLockedCommand, int>, IIsExamSessionLockedCommand
     {
         private readonly IIsExamSessionLockedCommandDal _isExamSessionLockedCommandDal;
 
 
-        public IsExamSessionLockedCommand(IIsExamSessionLockedCommandDal isExamSessionLockedCommandDal)
+        public IsExamSessionLockedCommand(
+            IIdentityProvider identityProvider,
+            IIsExamSessionLockedCommandDal isExamSessionLockedCommandDal)
+            : base(identityProvider)
         {
             _isExamSessionLockedCommandDal = isExamSessionLockedCommandDal;
         }

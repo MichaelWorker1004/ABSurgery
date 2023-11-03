@@ -32,14 +32,22 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "ExaminerUserId"
           }
         ],
         "recordsets": []
       }
     }
   ],
-  "inputParameters": [ ],
+  "inputParameters": 
+  [
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s Dev\\ResetScoresCommand ResetScoresCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[dev_reset_scoring_by_ExaminerId] -p:Model=Dev\\ResetScoresCommand -p:ModelGroup=ResetScoresCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=ResetExamScores -p:Route=exam-scores -p:ControllerName=Dev\\ResetDataController -p:ControllerRoute=api/dev/reset -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  Dev\\ResetScoresCommand ResetScoresCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[dev_reset_scoring_by_ExaminerId] -p:Model=Dev\\ResetScoresCommand -p:ModelGroup=ResetScoresCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=ResetExamScores -p:Route=exam-scores -p:ControllerName=Dev\\ResetDataController -p:ControllerRoute=api/dev/reset -p:ControllerVersion=1 -p:ExecuteAsynchronously=true -p:ReturnsPayload=false",

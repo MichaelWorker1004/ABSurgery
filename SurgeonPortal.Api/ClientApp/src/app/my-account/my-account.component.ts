@@ -137,6 +137,7 @@ export class MyAccountComponent implements OnDestroy {
       : null;
     const password = this.myAccountForm.value.password;
     const userCreds: IUserCredential = {
+      userId: this.user?.userId || null,
       emailAddress,
       password,
     };

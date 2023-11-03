@@ -61,8 +61,8 @@ export class ExamRegistrationComponent implements OnInit {
   paymentGridData = [
     {
       paymentDate: new Date('09/18/2015'),
-      paymentAmount: '$100',
-      balanceRemaining: '$285.00',
+      paymentAmount: 100,
+      balanceRemaining: 285.0,
     },
   ];
 
@@ -80,10 +80,10 @@ export class ExamRegistrationComponent implements OnInit {
 
   getPayFeeData() {
     this.payFeeData = {
-      totalAmountOfFee: '$285.00',
+      totalAmountOfFee: 285.0,
       totalAmountPaidDate: new Date('11/5/2022'),
-      totalAmountPaid: '$0.00',
-      remainingBalance: '$285.00',
+      totalAmountPaid: 0.0,
+      remainingBalance: 285.0,
     };
   }
 
