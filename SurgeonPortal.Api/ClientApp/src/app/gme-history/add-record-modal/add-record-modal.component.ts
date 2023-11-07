@@ -135,8 +135,12 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
       weeks: new FormControl(''),
       programName: new FormControl('', [Validators.required]),
       alternateInstitutionName: new FormControl('', [Validators.required]),
-      clinicalLevelId: new FormControl(null, [Validators.required]),
-      clinicalActivityId: new FormControl(null, [Validators.required]),
+      clinicalLevelId: new FormControl<number | null>(null, [
+        Validators.required,
+      ]),
+      clinicalActivityId: new FormControl<number | null>(null, [
+        Validators.required,
+      ]),
       other: new FormControl({ value: '', disabled: true }, [
         Validators.required,
       ]),
@@ -390,7 +394,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
         : undefined;
 
       if (startDate) {
-        this.startDateOverlap = this.localRotationsList.find((rotation) => {
+        this.startDateOverlap = this.localRotationsList?.find((rotation) => {
           // check rotation.id against this.rotationToEdit.id
           if (
             new Date(rotation.startDate) <= startDate &&
@@ -419,7 +423,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
       }
 
       if (endDate) {
-        this.endDateOverlap = this.localRotationsList.find((rotation) => {
+        this.endDateOverlap = this.localRotationsList?.find((rotation) => {
           if (
             new Date(rotation.startDate) <= endDate &&
             new Date(rotation.endDate) >= endDate &&
@@ -462,7 +466,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
 
       let index = -1;
 
-      const activity = this.clinicalActivitiesList.find(
+      const activity = this.clinicalActivitiesList?.find(
         (activity) => activity.id === clinicalActivityId
       );
       const helpTextArray: string[] = [];
@@ -716,7 +720,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
     if (this.isEditLocal) {
       this.updateActionSubscription = this._store
         .dispatch(new UpdateGraduateMedicalEducation(newRotation))
-        .subscribe((res) => {
+        ?.subscribe((res) => {
           if (!res.graduateMedicalEducation?.errors) {
             this.close();
           }
@@ -724,7 +728,7 @@ export class AddRecordModalComponent implements OnInit, OnDestroy {
     } else {
       this.createActionSubscription = this._store
         .dispatch(new CreateGraduateMedicalEducation(newRotation))
-        .subscribe((res) => {
+        ?.subscribe((res) => {
           if (!res.graduateMedicalEducation?.errors) {
             this.close();
           }
