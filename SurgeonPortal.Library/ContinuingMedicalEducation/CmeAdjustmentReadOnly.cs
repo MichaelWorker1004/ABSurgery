@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.ContinuingMedicalEducation;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.ContinuingMedicalEducation
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class CmeAdjustmentReadOnly : ReadOnlyBase<CmeAdjustmentReadOnly>, ICmeAdjustmentReadOnly
-    {
+    public class CmeAdjustmentReadOnly : YtgReadOnlyBase<CmeAdjustmentReadOnly, int>, ICmeAdjustmentReadOnly
+    {        
+
+
+        public CmeAdjustmentReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(CmeId))]
         public decimal CmeId => ReadProperty(CmeIdProperty);

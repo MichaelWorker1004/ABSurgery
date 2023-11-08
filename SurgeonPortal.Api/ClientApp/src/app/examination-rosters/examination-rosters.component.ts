@@ -341,7 +341,6 @@ export class ExaminationRostersComponent implements OnInit {
 
   saveCaseFeedback() {
     const model = {
-      userId: this.userId,
       feedback: this.selectedCaseDetails.newFeedback,
       caseHeaderId: this.selectedCaseDetails.id,
     } as unknown as ICaseFeedbackModel;

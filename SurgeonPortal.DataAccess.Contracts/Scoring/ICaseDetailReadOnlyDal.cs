@@ -5,6 +5,8 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
 {
     public interface ICaseDetailReadOnlyDal
     {
-        Task<IEnumerable<CaseDetailReadOnlyDto>> GetByCaseHeaderIdAsync(int caseHeaderId);
+        Task<IEnumerable<CaseDetailReadOnlyDto>> GetByCaseHeaderIdAsync(
+            int caseHeaderId,
+            int examinerUserId);
     }
 }

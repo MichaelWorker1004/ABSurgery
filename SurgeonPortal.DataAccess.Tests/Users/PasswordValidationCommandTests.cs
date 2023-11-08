@@ -8,12 +8,12 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class PasswordValidationCommandTests : TestBase<string>
+	public class PasswordValidationCommandTests : TestBase<int>
     {
         #region ValidateAsync
         
         [Test]
-        public async Task ValidateAsync_CallsSprocCorrectly()
+        public void Validate_CallsSprocCorrectly()
         {
             var expectedSprocName = "[dbo].[get_user_passwordvalidate]";
             var expectedUserId = Create<int>();

@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -134,7 +134,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s ContinuingMedicalEducation\\CmeCreditReadOnly.GetByUserId CmeCreditReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuingMedicalEducation\\CmeCreditReadOnly -p:Adapter=sp:abssp-[dbo].[get_usercme_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CmeCreditReadOnly -p:Route=itemized-cme -p:ControllerName=ContinuingMedicalEducation\\CmeController -p:ControllerRoute=api/cme -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  ContinuingMedicalEducation\\CmeCreditReadOnly.GetByUserId CmeCreditReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuingMedicalEducation\\CmeCreditReadOnly -p:Adapter=sp:abssp-[dbo].[get_usercme_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=CmeCreditReadOnly -p:Route=itemized-cme -p:ControllerName=ContinuingMedicalEducation\\CmeController -p:ControllerRoute=api/cme -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

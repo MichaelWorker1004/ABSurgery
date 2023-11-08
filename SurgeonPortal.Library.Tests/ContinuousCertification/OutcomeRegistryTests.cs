@@ -10,12 +10,12 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ContinuousCertification
 {
     [TestFixture] 
-	public class OutcomeRegistryTests : TestBase<string>
+	public class OutcomeRegistryTests : TestBase<int>
     {
         private OutcomeRegistryDto CreateValidDto()
-        {     
+        {
             var dto = Create<OutcomeRegistryDto>();
-
+        
             dto.SurgeonSpecificRegistry = Create<bool>();
             dto.RegistryComments = Create<string>();
             dto.RegisteredWithACHQC = Create<bool>();
@@ -37,25 +37,27 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             dto.RegisteredWithELSO = Create<bool>();
             dto.UserConfirmed = Create<bool>();
             dto.UserConfirmedDateUtc = Create<System.DateTime>();
-            dto.UserId = Create<int>();
-    
+            dto.UserId = 1234;
+        
             return dto;
         }
-
-            
+        
+        
 
         #region GetByUserIdAsync OutcomeRegistry
         
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<OutcomeRegistryDto>());
+            
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
@@ -71,13 +73,15 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
-        
+            var expectedUserId = 1234;
+            
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
@@ -105,7 +109,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
@@ -147,7 +151,6 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
-                .Excluding(m => m.UserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -163,7 +166,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
@@ -171,7 +174,28 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             var factory = new OutcomeRegistryFactory();
             var sut = factory.Create();
-            sut.SurgeonSpecificRegistry = Create<bool>();
+            sut.SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry;
+            sut.RegistryComments = dto.RegistryComments;
+            sut.RegisteredWithACHQC = dto.RegisteredWithACHQC;
+            sut.RegisteredWithCESQIP = dto.RegisteredWithCESQIP;
+            sut.RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP;
+            sut.RegisteredWithABA = dto.RegisteredWithABA;
+            sut.RegisteredWithASBS = dto.RegisteredWithASBS;
+            sut.RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives;
+            sut.RegisteredWithABMS = dto.RegisteredWithABMS;
+            sut.RegisteredWithNCDB = dto.RegisteredWithNCDB;
+            sut.RegisteredWithRQRS = dto.RegisteredWithRQRS;
+            sut.RegisteredWithNSQIP = dto.RegisteredWithNSQIP;
+            sut.RegisteredWithNTDB = dto.RegisteredWithNTDB;
+            sut.RegisteredWithSTS = dto.RegisteredWithSTS;
+            sut.RegisteredWithTQIP = dto.RegisteredWithTQIP;
+            sut.RegisteredWithUNOS = dto.RegisteredWithUNOS;
+            sut.RegisteredWithNCDR = dto.RegisteredWithNCDR;
+            sut.RegisteredWithSVS = dto.RegisteredWithSVS;
+            sut.RegisteredWithELSO = dto.RegisteredWithELSO;
+            sut.UserConfirmed = dto.UserConfirmed;
+            sut.UserConfirmedDateUtc = dto.UserConfirmedDateUtc;
+            sut.UserId = dto.UserId;
         
             await sut.SaveAsync();
             
@@ -191,19 +215,21 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task Update_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<OutcomeRegistryDto>();
+            var dto = CreateValidDto();
             OutcomeRegistryDto passedDto = null;
         
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
-                        .ReturnsAsync(dto);
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OutcomeRegistryDto>()))
                 .Callback<OutcomeRegistryDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()
@@ -268,11 +294,10 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.UserId)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -281,17 +306,19 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task Update_YieldsCorrectResult()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<OutcomeRegistryDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
-                        .ReturnsAsync(Create<OutcomeRegistryDto>());
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OutcomeRegistryDto>()))
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IOutcomeRegistry, OutcomeRegistry>()

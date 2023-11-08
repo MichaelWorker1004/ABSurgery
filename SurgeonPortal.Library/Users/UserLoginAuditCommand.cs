@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Csla;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 
 namespace SurgeonPortal.Library.Users
@@ -10,12 +12,15 @@ namespace SurgeonPortal.Library.Users
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0003", Justification = "Direct Injection.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
-    public class UserLoginAuditCommand : CommandBase<UserLoginAuditCommand>, IUserLoginAuditCommand
+    public class UserLoginAuditCommand : YtgCommandBase<UserLoginAuditCommand, int>, IUserLoginAuditCommand
     {
         private readonly IUserLoginAuditCommandDal _userLoginAuditCommandDal;
 
 
-        public UserLoginAuditCommand(IUserLoginAuditCommandDal userLoginAuditCommandDal)
+        public UserLoginAuditCommand(
+            IIdentityProvider identityProvider,
+            IUserLoginAuditCommandDal userLoginAuditCommandDal)
+            : base(identityProvider)
         {
             _userLoginAuditCommandDal = userLoginAuditCommandDal;
         }
@@ -78,7 +83,7 @@ namespace SurgeonPortal.Library.Users
 
 
         [Execute]
-        protected new async Task ExecuteCommand()
+        protected async Task ExecuteCommand()
         {
                 await _userLoginAuditCommandDal.AuditAsync(
                     UserId,

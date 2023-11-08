@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Scoring
 {
     [TestFixture] 
-	public class IsExamSessionLockedCommandTests : TestBase<string>
+	public class IsExamSessionLockedCommandTests : TestBase<int>
     {
         private IsExamSessionLockedCommandDto CreateValidDto()
         {     
@@ -29,14 +29,15 @@ namespace SurgeonPortal.Library.Tests.Scoring
         {
             var expectedExamCaseId = Create<int>();
             
-            var dto = Create<IsExamSessionLockedCommandDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IIsExamSessionLockedCommandDal>();
             mockDal.Setup(m => m.IsExamSessionLocked(expectedExamCaseId))
                 .Returns(dto);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IIsExamSessionLockedCommand, IsExamSessionLockedCommand>()
                 .Build();

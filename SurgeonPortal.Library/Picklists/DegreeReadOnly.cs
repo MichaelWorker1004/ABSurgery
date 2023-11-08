@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.Picklists;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.Picklists
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class DegreeReadOnly : ReadOnlyBase<DegreeReadOnly>, IDegreeReadOnly
+    public class DegreeReadOnly : YtgReadOnlyBase<DegreeReadOnly, int>, IDegreeReadOnly
     {
+
+
+        public DegreeReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(ItemDisplay))]
         public string ItemDisplay => ReadProperty(ItemDisplayProperty);

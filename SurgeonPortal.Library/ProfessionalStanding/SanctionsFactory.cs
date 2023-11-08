@@ -22,6 +22,14 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 
 
         
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+            
+                public GetByUserIdCriteria()
+             {
+              }
+            }
             
 
 

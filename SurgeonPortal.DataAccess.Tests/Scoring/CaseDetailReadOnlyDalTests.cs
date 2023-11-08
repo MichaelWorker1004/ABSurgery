@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class CaseDetailReadOnlyDalTests : TestBase<string>
+	public class CaseDetailReadOnlyDalTests : TestBase<int>
     {
         #region GetByCaseHeaderIdAsync
         
@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var expectedSprocName = "[dbo].[get_case_details_by_id]";
             var expectedCaseHeaderId = Create<int>();
             var expectedExaminerUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     CaseHeaderId = expectedCaseHeaderId,
@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecords(CreateMany<CaseDetailReadOnlyDto>());
         
             var sut = new CaseDetailReadOnlyDal(sqlManager);
-            await sut.GetByCaseHeaderIdAsync(expectedCaseHeaderId);
+            await sut.GetByCaseHeaderIdAsync(
+                expectedCaseHeaderId,
+                expectedExaminerUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +46,9 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new CaseDetailReadOnlyDal(sqlManager);
-            var result = await sut.GetByCaseHeaderIdAsync(Create<int>());
+            var result = await sut.GetByCaseHeaderIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.MedicalTraining.FellowshipReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.MedicalTraining
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.MedicalTraining
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class FellowshipReadOnlyList : YtgReadOnlyListBase<IFellowshipReadOnlyList, IFellowshipReadOnly>, IFellowshipReadOnlyList
+	public class FellowshipReadOnlyList : YtgReadOnlyListBase<IFellowshipReadOnlyList, IFellowshipReadOnly, int>, IFellowshipReadOnlyList
     {
         private readonly IFellowshipReadOnlyDal _fellowshipReadOnlyDal;
 
-        public FellowshipReadOnlyList(IFellowshipReadOnlyDal fellowshipReadOnlyDal)
+        public FellowshipReadOnlyList(
+            IIdentityProvider identityProvider,
+            IFellowshipReadOnlyDal fellowshipReadOnlyDal)
+            : base(identityProvider)
         {
             _fellowshipReadOnlyDal = fellowshipReadOnlyDal;
         }
@@ -29,7 +33,6 @@ namespace SurgeonPortal.Library.MedicalTraining
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [Fetch]
@@ -39,7 +42,7 @@ namespace SurgeonPortal.Library.MedicalTraining
         private async Task GetByUserId()
         
         {
-            var dtos = await _fellowshipReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _fellowshipReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

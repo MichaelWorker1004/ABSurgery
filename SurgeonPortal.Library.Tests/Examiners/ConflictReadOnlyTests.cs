@@ -10,21 +10,25 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Examiners
 {
     [TestFixture] 
-	public class ConflictReadOnlyTests : TestBase<string>
+	public class ConflictReadOnlyTests : TestBase<int>
     {
-
         #region GetByExamHeaderIdAsync
         
         [Test]
         public async Task GetByExamHeaderIdAsync_CallsDalCorrectly()
         {
             var expectedExamHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<IConflictReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExamHeaderIdAsync(expectedExamHeaderId))
+            mockDal.Setup(m => m.GetByExamHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId))
                 .ReturnsAsync(Create<ConflictReadOnlyDto>());
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IConflictReadOnly, ConflictReadOnly>()
@@ -40,19 +44,25 @@ namespace SurgeonPortal.Library.Tests.Examiners
         public async Task GetByExamHeaderIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<ConflictReadOnlyDto>();
-        
+            var expectedExamHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
+            
             var mockDal = new Mock<IConflictReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExamHeaderIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByExamHeaderIdAsync(
+                expectedExaminerUserId,
+                expectedExamHeaderId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IConflictReadOnly, ConflictReadOnly>()
                 .Build();
         
             var factory = new ConflictReadOnlyFactory();
-            var sut = await factory.GetByExamHeaderIdAsync(Create<int>());
+            var sut = await factory.GetByExamHeaderIdAsync(expectedExamHeaderId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

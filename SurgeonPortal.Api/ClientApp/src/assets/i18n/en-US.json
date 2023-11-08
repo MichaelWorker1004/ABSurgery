@@ -34,8 +34,8 @@
       "DOCUMENTS_BTN": "View Your Documents",
       "DOCUMENTS_SUBTITLE": "Click here to view all of your current document and certificate uploads.",
       "DOCUMENTS_TITLE": "Documents",
-      "EXAMREGISTRATION_TITLE": "Upcoming Exam Registration",
       "EXAMREGISTRATION_SUBTITLE": "<strong>Coming soon.</strong><br>You will be able to find more information about upcoming exams and registration windows here.",
+      "EXAMREGISTRATION_TITLE": "Upcoming Exam Registration",
       "UPCOMINGEXAMS_SUBTITLE": "You will be able to find more information about upcoming exams here as that information becomes available.",
       "UPCOMINGEXAMS_TITLE": "Next General Surgery QE -  {{date}}"
     },
@@ -72,30 +72,28 @@
     "DEFAULT_EXAM": "Certifying Examination",
     "EXAMINATION": {
       "CANDIDATE": "<strong>Candidate Name:</strong> {{name}}",
-      "INSTRUCTIONS": "",
       "LIST_DATE": "<strong>Date:</strong> {{date}}",
       "LIST_TITLE": "Start CE Exams",
-      "SUBTITLE": "",
-      "TIME": "<strong>Day/Time:</strong> {{time}}",
-      "TITLE": "Examination",
+      "SCORE_CARD": {
+        "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseNumber}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
+        "REMARKS_TITLE_NO_CASE": "Remarks for Case {{caseNumber}}",
+        "SCORE": "Score Case {{caseNumber}}"
+      },
       "SKIP": {
-        "TITLE": "Click YES to skip this exam and move to the next session",
-        "SUBTITLE": "You will be able to score this exam later if needed (e.g., after reviewing a recording)"
+        "SUBTITLE": "You will be able to score this exam later if needed (e.g., after reviewing a recording)",
+        "TITLE": "Click YES to skip this exam and move to the next session"
       },
       "START": {
-        "TITLE": "Clicking YES will start the exam timer",
-        "SUBTITLE": "Start the clock and begin examination for {{name}}? <br/> Once you start the clock, you cannot undo this action and return to this session"
+        "SUBTITLE": "Start the clock and begin examination for {{name}}? <br/> Once you start the clock, you cannot undo this action and return to this session",
+        "TITLE": "Clicking YES will start the exam timer"
       },
-      "SCORE_CARD": {
-        "SCORE": "Score Case {{caseNumber}}",
-        "REMARKS_TITLE": "Record remarks regarding this candidate's {{caseTitle}} case {{caseNumber}}.  If needed, you may enter remarks now, without selecting a score, then enter the score later.",
-        "REMARKS_TITLE_NO_CASE": "Remarks for Case {{caseNumber}}"
-      }
+      "TIME": "<strong>Day/Time:</strong> {{time}}",
+      "TITLE": "Examination"
     },
     "EXAMROSTERS": {
-      "TITLE": "Exam Case Rosters",
+      "CASE_FEEDBACK_SUBTITLE": "Comments entered in this section will be shared with the exam writers.  Your feedback to the writers will only appear here and will not be displayed during the exam.  You may return to this section to revise your comments throughout the current CE administration.",
       "CASE_FEEDBACK_TITLE": "Case Feedback for Exam Development",
-      "CASE_FEEDBACK_SUBTITLE": "Comments entered in this section will be shared with the exam writers.  Your feedback to the writers will only appear here and will not be displayed during the exam.  You may return to this section to revise your comments throughout the current CE administration."
+      "TITLE": "Exam Case Rosters"
     },
     "EXAMSCORES": {
       "SUBTITLE": "All Exams Must be Scored by End of Day! Scores will be locked down at the end of each day.  If you need to modify locked scores, please email the ABS IT Team at IT@absurgery.org.",

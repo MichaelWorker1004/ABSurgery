@@ -231,9 +231,9 @@ namespace SurgeonPortal.Api.Controllers.Users
         private List<Claim> GetClaimsFromUser(IAppUserReadOnly user)
         {
             var claims = new List<Claim>();
-            AddClaimIfHasValue(claims, ApplicationClaims.FullName, user.FullName);
-            AddClaimIfHasValue(claims, ApplicationClaims.EmailAddress, user.EmailAddress);
-            AddClaimIfHasValue(claims, ApplicationClaims.UserId, user.UserId.ToString());
+            AddClaimIfHasValue(claims, YtgClaimType.FullName, user.FullName);
+            AddClaimIfHasValue(claims, YtgClaimType.EmailAddress, user.EmailAddress);
+            AddClaimIfHasValue(claims, YtgClaimType.UserId, user.UserId.ToString());
 
             var translatedClaims = user.Claims.Select(c => MapRoleClaimNames(c.ClaimName))
                 .Where(c => !string.IsNullOrEmpty(c))

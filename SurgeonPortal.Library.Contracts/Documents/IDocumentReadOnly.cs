@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Documents
 {
-    public interface IDocumentReadOnly : IYtgReadOnlyBase
+    public interface IDocumentReadOnly : IYtgReadOnlyBase<int>
     {
         int Id { get; }
         int UserId { get; }

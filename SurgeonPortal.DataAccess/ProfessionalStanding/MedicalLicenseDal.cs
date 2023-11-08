@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         new
                         {
                             LicenseId = dto.LicenseId,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                         });
                         
             }
@@ -53,7 +53,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         "[dbo].[insert_userlicenses]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.UserId,
                                 IssuingStateId = dto.IssuingStateId,
                                 LicenseNumber = dto.LicenseNumber,
                                 LicenseTypeId = dto.LicenseTypeId,
@@ -86,7 +86,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         new
                         {
                             LicenseId = dto.LicenseId,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                             IssuingStateId = dto.IssuingStateId,
                             LicenseNumber = dto.LicenseNumber,
                             LicenseTypeId = dto.LicenseTypeId,

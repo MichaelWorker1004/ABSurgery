@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -124,7 +124,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s GraduateMedicalEducation\\GmeSummaryReadOnly.GetByUserId GmeSummaryReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\GmeSummaryReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_gmesummary_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=GmeSummaryReadOnly -p:Route=by-userid -p:ControllerName=GraduateMedicalEducation\\GmeSummaryController -p:ControllerRoute=api/gme-summary -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\GmeSummaryReadOnly.GetByUserId GmeSummaryReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\GmeSummaryReadOnly -p:Adapter=sp:ABSSP-[dbo].[get_gmesummary_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=GmeSummaryReadOnly -p:Route=by-userid -p:ControllerName=GraduateMedicalEducation\\GmeSummaryController -p:ControllerRoute=api/gme-summary -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

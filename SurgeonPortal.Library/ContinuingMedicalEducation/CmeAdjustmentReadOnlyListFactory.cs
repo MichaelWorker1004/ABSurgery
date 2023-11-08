@@ -15,6 +15,14 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
             
         }
 
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+            
+                public GetByUserIdCriteria()
+             {
+              }
+            }
             
 
 

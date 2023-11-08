@@ -52,10 +52,10 @@ namespace SurgeonPortal.DataAccess.Scoring
                         "[dbo].[ins_user_case_comments]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.UserId,
                                 CaseContentId = dto.CaseContentId,
                                 Comments = dto.Comments,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.UserId,
                             });
                             
                 }
@@ -84,7 +84,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                             Id = dto.Id,
                             CaseContentId = dto.CaseContentId,
                             Comments = dto.Comments,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            LastUpdatedByUserId = dto.UserId,
                         });
                         
             }

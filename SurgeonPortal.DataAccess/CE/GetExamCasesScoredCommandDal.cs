@@ -14,7 +14,9 @@ namespace SurgeonPortal.DataAccess.CE
 
 
 
-        public GetExamCasesScoredCommandDto GetExamCasesScored(int examScheduleId)
+        public GetExamCasesScoredCommandDto GetExamCasesScored(
+            int examScheduleId,
+            int examinerUserId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +25,7 @@ namespace SurgeonPortal.DataAccess.CE
                         new
                         {
                             ExamScheduleId = examScheduleId,
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                         });
                         
             }

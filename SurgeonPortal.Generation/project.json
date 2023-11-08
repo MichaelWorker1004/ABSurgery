@@ -9,7 +9,9 @@
     },
     "identityConfiguration" :
     {
-        "userIdDataType": "int"
+        "userIdDataType": "int",
+        "mockedUserId": "1234",
+        "mockedUserName": "SomeUser"
     },
     "inputParameterTransforms":
     {

@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Users
 {
-	public class PasswordValidationCommandDalTests : TestBase<string>
+	public class PasswordValidationCommandDalTests : TestBase<int>
     {
         #region Validate
         
@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.Users
             var expectedSprocName = "[dbo].[get_user_passwordvalidate]";
             var expectedUserId = Create<int>();
             var expectedPassword = Create<string>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

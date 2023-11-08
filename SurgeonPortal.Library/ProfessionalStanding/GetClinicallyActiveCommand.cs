@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Csla;
 using SurgeonPortal.DataAccess.Contracts.ProfessionalStanding;
 using SurgeonPortal.Library.Contracts.ProfessionalStanding;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 
 namespace SurgeonPortal.Library.ProfessionalStanding
@@ -10,12 +12,15 @@ namespace SurgeonPortal.Library.ProfessionalStanding
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0003", Justification = "Direct Injection.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
-    public class GetClinicallyActiveCommand : CommandBase<GetClinicallyActiveCommand>, IGetClinicallyActiveCommand
+    public class GetClinicallyActiveCommand : YtgCommandBase<GetClinicallyActiveCommand, int>, IGetClinicallyActiveCommand
     {
         private readonly IGetClinicallyActiveCommandDal _getClinicallyActiveCommandDal;
 
 
-        public GetClinicallyActiveCommand(IGetClinicallyActiveCommandDal getClinicallyActiveCommandDal)
+        public GetClinicallyActiveCommand(
+            IIdentityProvider identityProvider,
+            IGetClinicallyActiveCommandDal getClinicallyActiveCommandDal)
+            : base(identityProvider)
         {
             _getClinicallyActiveCommandDal = getClinicallyActiveCommandDal;
         }
@@ -45,7 +50,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
         [Execute]
         protected void ExecuteCommand()
         {
-                var dto = _getClinicallyActiveCommandDal.GetClinicallyActiveByUserId();
+                var dto = _getClinicallyActiveCommandDal.GetClinicallyActiveByUserId(_identity.GetUserId<int>());
             
             			this.UserId = dto.UserId;
         			this.ClinicallyActive = dto.ClinicallyActive;

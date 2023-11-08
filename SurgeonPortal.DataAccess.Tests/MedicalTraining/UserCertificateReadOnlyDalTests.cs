@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
 {
-	public class UserCertificateReadOnlyDalTests : TestBase<string>
+	public class UserCertificateReadOnlyDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
         {
             var expectedSprocName = "[dbo].[get_usercertificates_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,
@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
             sqlManager.AddRecords(CreateMany<UserCertificateReadOnlyDto>());
         
             var sut = new UserCertificateReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new UserCertificateReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

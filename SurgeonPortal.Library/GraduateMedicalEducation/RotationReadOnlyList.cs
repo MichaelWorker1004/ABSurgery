@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.GraduateMedicalEducation.RotationReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.GraduateMedicalEducation
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class RotationReadOnlyList : YtgReadOnlyListBase<IRotationReadOnlyList, IRotationReadOnly>, IRotationReadOnlyList
+	public class RotationReadOnlyList : YtgReadOnlyListBase<IRotationReadOnlyList, IRotationReadOnly, int>, IRotationReadOnlyList
     {
         private readonly IRotationReadOnlyDal _rotationReadOnlyDal;
 
-        public RotationReadOnlyList(IRotationReadOnlyDal rotationReadOnlyDal)
+        public RotationReadOnlyList(
+            IIdentityProvider identityProvider,
+            IRotationReadOnlyDal rotationReadOnlyDal)
+            : base(identityProvider)
         {
             _rotationReadOnlyDal = rotationReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             Csla.Rules.BusinessRules.AddRule(typeof(RotationReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
         private async Task GetByUserId()
         
         {
-            var dtos = await _rotationReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _rotationReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

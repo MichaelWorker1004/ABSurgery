@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.JcahoOrganizationReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class JcahoOrganizationReadOnlyList : YtgReadOnlyListBase<IJcahoOrganizationReadOnlyList, IJcahoOrganizationReadOnly>, IJcahoOrganizationReadOnlyList
+	public class JcahoOrganizationReadOnlyList : YtgReadOnlyListBase<IJcahoOrganizationReadOnlyList, IJcahoOrganizationReadOnly, int>, IJcahoOrganizationReadOnlyList
     {
         private readonly IJcahoOrganizationReadOnlyDal _jcahoOrganizationReadOnlyDal;
 
-        public JcahoOrganizationReadOnlyList(IJcahoOrganizationReadOnlyDal jcahoOrganizationReadOnlyDal)
+        public JcahoOrganizationReadOnlyList(
+            IIdentityProvider identityProvider,
+            IJcahoOrganizationReadOnlyDal jcahoOrganizationReadOnlyDal)
+            : base(identityProvider)
         {
             _jcahoOrganizationReadOnlyDal = jcahoOrganizationReadOnlyDal;
         }
@@ -29,7 +33,6 @@ namespace SurgeonPortal.Library.Picklists
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [Fetch]

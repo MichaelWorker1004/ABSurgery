@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "ExaminerUserId"
           },
           {
             "name": "ExamDate",
@@ -124,6 +124,12 @@
     }
   ],
   "inputParameters": [
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
     {
       "name": "ExamDate",
       "dataType": "datetime",

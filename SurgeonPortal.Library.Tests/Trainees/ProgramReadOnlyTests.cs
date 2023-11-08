@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Trainees
 {
     [TestFixture] 
-	public class ProgramReadOnlyTests : TestBase<string>
+	public class ProgramReadOnlyTests : TestBase<int>
     {
         private ProgramReadOnlyDto CreateValidDto()
         {     
@@ -34,13 +34,15 @@ namespace SurgeonPortal.Library.Tests.Trainees
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IProgramReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<ProgramReadOnlyDto>());
         
+        
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IProgramReadOnly, ProgramReadOnly>()
@@ -56,13 +58,15 @@ namespace SurgeonPortal.Library.Tests.Trainees
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedUserId = 1234;
         
             var mockDal = new Mock<IProgramReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IProgramReadOnly, ProgramReadOnly>()

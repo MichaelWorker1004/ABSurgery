@@ -25,12 +25,10 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 	public class Rotation : YtgBusinessBase<Rotation>, IRotation
     {
         private readonly IRotationDal _rotationDal;
-		private readonly IOverlapConflictCommandFactory _overlapConflictCommandFactory;
-
-        public Rotation(
+		readonly IOverlapConflictCommandFactory _overlapConflictCommandFactory;
+        public Rotation(IOverlapConflictCommandFactory overlapConflictCommandFactory,
             IIdentityProvider identityProvider,
-            IRotationDal rotationDal,
-			IOverlapConflictCommandFactory overlapConflictCommandFactory)
+            IRotationDal rotationDal)
             : base(identityProvider)
         {
             _rotationDal = rotationDal;
@@ -58,7 +56,11 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		public DateTime StartDate
 		{
 			get { return GetProperty(StartDateProperty); }
-			set { SetProperty(StartDateProperty, value); }
+			set
+            {
+                SetProperty(StartDateProperty, value);
+                BusinessRules.CheckObjectRules();
+            }
 		}
 		public static readonly PropertyInfo<DateTime> StartDateProperty = RegisterProperty<DateTime>(c => c.StartDate);
 
@@ -66,7 +68,11 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		public DateTime EndDate
 		{
 			get { return GetProperty(EndDateProperty); }
-			set { SetProperty(EndDateProperty, value); }
+			set 
+			{ 
+				SetProperty(EndDateProperty, value);
+                BusinessRules.CheckObjectRules();
+            }
 		}
 		public static readonly PropertyInfo<DateTime> EndDateProperty = RegisterProperty<DateTime>(c => c.EndDate);
 
@@ -193,21 +199,20 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(Rotation),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.TraineeClaim));
-
         }
-
+        protected override void AddInjectedBusinessRules()
+        {
+            BusinessRules.AddRule(new OverlapConflictRule(_overlapConflictCommandFactory, StartDateProperty, EndDateProperty, UserIdProperty, 5));
+        }
         /// <summary>
         /// This method is used to add business rules to the Csla 
         /// business rule engine
@@ -221,7 +226,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
 			BusinessRules.AddRule(new MaxDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 364, 1));
 			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));
-			BusinessRules.AddRule(new OverlapConflictRule(StartDateProperty, EndDateProperty, 5));
 			BusinessRules.AddRule(new ExplainRequiredWhen(OtherProperty, 4));
 			BusinessRules.AddRule(new FourMonthRotationExplainRequiredWhen(FourMonthRotationExplainProperty, 4));
 			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhen(NonPrimaryExplainProperty, 4));
@@ -263,6 +267,14 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

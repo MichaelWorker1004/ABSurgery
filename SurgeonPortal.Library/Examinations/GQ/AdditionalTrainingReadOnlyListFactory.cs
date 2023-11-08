@@ -15,6 +15,14 @@ namespace SurgeonPortal.Library.Examinations.GQ
             
         }
 
+            [Serializable]
+            internal class GetAllByUserIdCriteria
+            {
+            
+                public GetAllByUserIdCriteria()
+             {
+              }
+            }
             
 
 

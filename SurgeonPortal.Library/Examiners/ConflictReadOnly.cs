@@ -5,7 +5,9 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Ytg.Framework.Csla;
 using Ytg.Framework.Exceptions;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Examiners.ConflictReadOnlyFactory;
 
 namespace SurgeonPortal.Library.Examiners
@@ -14,12 +16,15 @@ namespace SurgeonPortal.Library.Examiners
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class ConflictReadOnly : ReadOnlyBase<ConflictReadOnly>, IConflictReadOnly
+    public class ConflictReadOnly : YtgReadOnlyBase<ConflictReadOnly, int>, IConflictReadOnly
     {
         private readonly IConflictReadOnlyDal _conflictReadOnlyDal;
 
 
-        public ConflictReadOnly(IConflictReadOnlyDal conflictReadOnlyDal)
+        public ConflictReadOnly(
+            IIdentityProvider identityProvider,
+            IConflictReadOnlyDal conflictReadOnlyDal)
+            : base(identityProvider)
         {
             _conflictReadOnlyDal = conflictReadOnlyDal;
         }
@@ -44,8 +49,8 @@ namespace SurgeonPortal.Library.Examiners
             Csla.Rules.BusinessRules.AddRule(typeof(ConflictReadOnly),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
+
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -53,11 +58,13 @@ namespace SurgeonPortal.Library.Examiners
         private async Task GetByExamHeaderId(GetByExamHeaderIdCriteria criteria)
         
         {
-            var dto = await _conflictReadOnlyDal.GetByExamHeaderIdAsync(criteria.ExamHeaderId);
+            var dto = await _conflictReadOnlyDal.GetByExamHeaderIdAsync(
+                _identity.GetUserId<int>(),
+                criteria.ExamHeaderId);
             
             if (dto == null)
             {
-                return;
+                throw new DataNotFoundException("ConflictReadOnly not found based on criteria.");
             }
             
             FetchData(dto);

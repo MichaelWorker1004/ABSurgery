@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.ContinuingMedicalEducation.CmeCreditReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.ContinuingMedicalEducation
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CmeCreditReadOnlyList : YtgReadOnlyListBase<ICmeCreditReadOnlyList, ICmeCreditReadOnly>, ICmeCreditReadOnlyList
+	public class CmeCreditReadOnlyList : YtgReadOnlyListBase<ICmeCreditReadOnlyList, ICmeCreditReadOnly, int>, ICmeCreditReadOnlyList
     {
         private readonly ICmeCreditReadOnlyDal _cmeCreditReadOnlyDal;
 
-        public CmeCreditReadOnlyList(ICmeCreditReadOnlyDal cmeCreditReadOnlyDal)
+        public CmeCreditReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICmeCreditReadOnlyDal cmeCreditReadOnlyDal)
+            : base(identityProvider)
         {
             _cmeCreditReadOnlyDal = cmeCreditReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
             Csla.Rules.BusinessRules.AddRule(typeof(CmeCreditReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,7 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
         private async Task GetByUserId()
         
         {
-            var dtos = await _cmeCreditReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _cmeCreditReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

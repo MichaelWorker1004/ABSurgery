@@ -4,6 +4,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Dev
 {
     public interface IResetScoresCommandDal
     {
-        Task ResetExamScoresAsync();
+        Task ResetExamScoresAsync(int examinerUserId);
     }
 }

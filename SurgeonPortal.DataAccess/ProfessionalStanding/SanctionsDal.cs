@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
 
 
 
-        public async Task<SanctionsDto> GetByUserIdAsync()
+        public async Task<SanctionsDto> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -22,7 +22,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                     "[dbo].[get_user_sanctions_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }
@@ -38,7 +38,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         "[dbo].[ins_user_sanctions]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.UserId,
                                 HadDrugAlchoholTreatment = dto.HadDrugAlchoholTreatment,
                                 HadHospitalPrivilegesDenied = dto.HadHospitalPrivilegesDenied,
                                 HadLicenseRestricted = dto.HadLicenseRestricted,
@@ -46,8 +46,8 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                                 HadFelonyConviction = dto.HadFelonyConviction,
                                 HadCensure = dto.HadCensure,
                                 Explanation = dto.Explanation,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
-                                LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.CreatedByUserId,
+                                LastUpdatedByUserId = dto.LastUpdatedByUserId,
                             });
                             
                 }
@@ -73,7 +73,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                     "[dbo].[update_user_sanctions_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                             HadDrugAlchoholTreatment = dto.HadDrugAlchoholTreatment,
                             HadHospitalPrivilegesDenied = dto.HadHospitalPrivilegesDenied,
                             HadLicenseRestricted = dto.HadLicenseRestricted,
@@ -81,7 +81,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                             HadFelonyConviction = dto.HadFelonyConviction,
                             HadCensure = dto.HadCensure,
                             Explanation = dto.Explanation,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            LastUpdatedByUserId = dto.UserId,
                         });
                         
             }

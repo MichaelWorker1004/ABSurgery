@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.ContinuingMedicalEducation.CmeAdjustmentReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.ContinuingMedicalEducation
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CmeAdjustmentReadOnlyList : YtgReadOnlyListBase<ICmeAdjustmentReadOnlyList, ICmeAdjustmentReadOnly>, ICmeAdjustmentReadOnlyList
+	public class CmeAdjustmentReadOnlyList : YtgReadOnlyListBase<ICmeAdjustmentReadOnlyList, ICmeAdjustmentReadOnly, int>, ICmeAdjustmentReadOnlyList
     {
         private readonly ICmeAdjustmentReadOnlyDal _cmeAdjustmentReadOnlyDal;
 
-        public CmeAdjustmentReadOnlyList(ICmeAdjustmentReadOnlyDal cmeAdjustmentReadOnlyDal)
+        public CmeAdjustmentReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICmeAdjustmentReadOnlyDal cmeAdjustmentReadOnlyDal)
+            : base(identityProvider)
         {
             _cmeAdjustmentReadOnlyDal = cmeAdjustmentReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
             Csla.Rules.BusinessRules.AddRule(typeof(CmeAdjustmentReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,7 @@ namespace SurgeonPortal.Library.ContinuingMedicalEducation
         private async Task GetByUserId()
         
         {
-            var dtos = await _cmeAdjustmentReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _cmeAdjustmentReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

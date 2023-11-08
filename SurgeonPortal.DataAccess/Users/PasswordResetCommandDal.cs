@@ -15,6 +15,7 @@ namespace SurgeonPortal.DataAccess.Users
 
 
         public async Task<PasswordResetCommandDto> ResetPasswordAsync(
+            int userId,
             string oldPassword,
             string newPassword)
         {
@@ -24,7 +25,7 @@ namespace SurgeonPortal.DataAccess.Users
                     "[dbo].[update_user_password]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                             OldPassword = oldPassword,
                             NewPassword = newPassword,
                         });

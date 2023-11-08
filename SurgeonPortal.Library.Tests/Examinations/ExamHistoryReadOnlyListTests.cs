@@ -10,18 +10,20 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Examinations
 {
     [TestFixture] 
-	public class ExamHistoryReadOnlyListTests : TestBase<string>
+	public class ExamHistoryReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IExamHistoryReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(CreateMany<ExamHistoryReadOnlyDto>());
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamHistoryReadOnlyList, ExamHistoryReadOnlyList>()
@@ -38,12 +40,16 @@ namespace SurgeonPortal.Library.Tests.Examinations
         public async Task GetByUserIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<ExamHistoryReadOnlyDto>();
+            var expectedUserId = 1234;
+            
         
             var mockDal = new Mock<IExamHistoryReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(expectedDtos);
+            
         
             UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IExamHistoryReadOnlyList, ExamHistoryReadOnlyList>()

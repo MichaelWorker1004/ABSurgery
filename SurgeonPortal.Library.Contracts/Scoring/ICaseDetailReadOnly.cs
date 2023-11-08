@@ -2,7 +2,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Scoring
 {
-    public interface ICaseDetailReadOnly : IYtgReadOnlyBase
+    public interface ICaseDetailReadOnly : IYtgReadOnlyBase<int>
     {
         string CaseNumber { get; }
         string CaseTitle { get; }

@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.CE
 {
-	public class ExamScoreDalTests : TestBase<string>
+    public class ExamScoreDalTests : TestBase<int>
     {
         #region GetByIdAsync
         
@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             var expectedSprocName = "[dbo].[get_exam_schedule_scores]";
             var expectedExamScheduleScoreId = Create<int>();
             var expectedExaminerUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamScheduleScoreId = expectedExamScheduleScoreId,
@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             sqlManager.AddRecord(Create<ExamScoreDto>());
         
             var sut = new ExamScoreDal(sqlManager);
-            await sut.GetByIdAsync(expectedExamScheduleScoreId);
+            await sut.GetByIdAsync(
+                expectedExamScheduleScoreId,
+                expectedExaminerUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -44,7 +46,9 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             sqlManager.AddRecord(expectedDto);
         
             var sut = new ExamScoreDal(sqlManager);
-            var result = await sut.GetByIdAsync(Create<int>());
+            var result = await sut.GetByIdAsync(
+                Create<int>(),
+                Create<int>());
         
             expectedDto.Should().BeEquivalentTo(result,
                 options => options.ExcludingMissingMembers());
@@ -70,6 +74,7 @@ namespace SurgeonPortal.DataAccess.Tests.CE
                 new
                 {
                     ExamScheduleId = expectedDto.ExamScheduleId,
+                    ExaminerUserId = expectedDto.ExaminerUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -112,6 +117,7 @@ namespace SurgeonPortal.DataAccess.Tests.CE
                 {
                     ExamScheduleScoreId = expectedDto.ExamScheduleScoreId,
                     ExaminerScore = expectedDto.ExaminerScore,
+                    ExaminerUserId = expectedDto.ExaminerUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

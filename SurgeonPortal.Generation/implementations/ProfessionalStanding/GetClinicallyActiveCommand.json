@@ -32,7 +32,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -65,7 +65,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s ProfessionalStanding\\GetClinicallyActiveCommand GetClinicallyActiveCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_user_clinically_active_byuserid] -p:Model=ProfessionalStanding\\GetClinicallyActiveCommand -p:ModelGroup=GetClinicallyActiveCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=GetClinicallyActiveByUserId -p:InlcudeControllerInGeneration=false -p:Route= -p:ControllerName= -p:ControllerRoute= -p:ControllerVersion=1 -p:ReturnsPayload=true ",
     "inferredCommand": "ytgim generate i  ProfessionalStanding\\GetClinicallyActiveCommand GetClinicallyActiveCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_user_clinically_active_byuserid] -p:Model=ProfessionalStanding\\GetClinicallyActiveCommand -p:ModelGroup=GetClinicallyActiveCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=GetClinicallyActiveByUserId -p:Route= -p:ControllerName= -p:ControllerRoute= -p:ControllerVersion=1 -p:ReturnsPayload=true -p:ExecuteAsynchronously=true -p:IncludeControllerInGeneration=false",

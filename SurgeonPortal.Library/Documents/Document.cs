@@ -41,7 +41,7 @@ namespace SurgeonPortal.Library.Documents
 		public int Id
 		{
 			get { return GetProperty(IdProperty); }
-			set { SetProperty(IdProperty, value); }
+			 private set { SetProperty(IdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
 
@@ -49,7 +49,7 @@ namespace SurgeonPortal.Library.Documents
 		public int UserId
 		{
 			get { return GetProperty(UserIdProperty); }
-			set { SetProperty(UserIdProperty, value); }
+			 private set { SetProperty(UserIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
@@ -57,7 +57,7 @@ namespace SurgeonPortal.Library.Documents
 		public Guid StreamId
 		{
 			get { return GetProperty(StreamIdProperty); }
-            private set { SetProperty(StreamIdProperty, value); }
+			 private set { SetProperty(StreamIdProperty, value); }
 		}
 		public static readonly PropertyInfo<Guid> StreamIdProperty = RegisterProperty<Guid>(c => c.StreamId);
 
@@ -134,11 +134,8 @@ namespace SurgeonPortal.Library.Documents
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
-
-
-
+            
         /// <summary>
         /// This method is used to add business rules to the Csla 
         /// business rule engine
@@ -147,17 +144,11 @@ namespace SurgeonPortal.Library.Documents
         {
             // Only process priority 5 and higher if all 4 and lower completed first
             BusinessRules.ProcessThroughPriority = 4;
-
+            
             BusinessRules.AddRule(new Required(IdProperty, "Id is required"));
             BusinessRules.AddRule(new Required(UserIdProperty, "UserId is required"));
         }
 
-        [Create]
-        private void Create()
-        {
-            LoadProperty(StreamIdProperty, Guid.NewGuid());
-
-        }
 
         [RunLocal]
         [DeleteSelf]
@@ -186,7 +177,9 @@ namespace SurgeonPortal.Library.Documents
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _documentDal.GetByIdAsync(criteria.Id);
+                var dto = await _documentDal.GetByIdAsync(
+                    criteria.Id,
+                    _identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -198,13 +191,22 @@ namespace SurgeonPortal.Library.Documents
                 {
                     File = await _storageDal.LoadAsync(FileName);
                 }
-                catch(Exception ex)
+                catch
                 {
                     throw new DataNotFoundException($"Unable to find the document named: {FileName}");
                 }
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(StreamIdProperty, Guid.NewGuid());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

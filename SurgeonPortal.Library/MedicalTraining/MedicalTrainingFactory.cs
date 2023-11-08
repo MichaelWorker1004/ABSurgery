@@ -22,6 +22,14 @@ namespace SurgeonPortal.Library.MedicalTraining
 
 
         
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+            
+                public GetByUserIdCriteria()
+             {
+              }
+            }
             
 
 

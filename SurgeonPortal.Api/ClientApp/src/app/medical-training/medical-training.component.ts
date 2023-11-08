@@ -597,7 +597,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     });
 
     const model = {
-      userId: this.userId,
       graduateProfileId: parseInt(formValues.graduateProfileId ?? ''),
       medicalSchoolName: formValues.medicalSchoolName,
       medicalSchoolCity: formValues.medicalSchoolCity,
@@ -611,7 +610,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
       residencyProgramName: residencyProgramName[0].programName,
       residencyCompletionYear: formValues.residencyCompletionYear,
       residencyProgramOther: formValues.residencyProgramOther,
-      createdByUserId: this.userId,
     } as unknown as IMedicalTrainingModel;
 
     this.globalDialogService

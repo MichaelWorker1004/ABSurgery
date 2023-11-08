@@ -10,19 +10,20 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Documents
 {
     [TestFixture] 
-	public class DocumentReadOnlyListTests : TestBase<string>
+	public class DocumentReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IDocumentReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(CreateMany<DocumentReadOnlyDto>());
+            
         
             UseMockServiceProvider()
-                
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocumentReadOnlyList, DocumentReadOnlyList>()
                 .WithBusinessObject<IDocumentReadOnly, DocumentReadOnly>()
@@ -38,13 +39,16 @@ namespace SurgeonPortal.Library.Tests.Documents
         public async Task GetByUserIdAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<DocumentReadOnlyDto>();
+            var expectedUserId = 1234;
+            
         
             var mockDal = new Mock<IDocumentReadOnlyDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(expectedDtos);
+            
         
             UseMockServiceProvider()
-                
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IDocumentReadOnlyList, DocumentReadOnlyList>()
                 .WithBusinessObject<IDocumentReadOnly, DocumentReadOnly>()

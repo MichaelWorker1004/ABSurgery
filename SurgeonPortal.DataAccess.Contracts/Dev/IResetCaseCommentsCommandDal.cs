@@ -4,6 +4,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Dev
 {
     public interface IResetCaseCommentsCommandDal
     {
-        Task ResetCaseCommentsAsync();
+        Task ResetCaseCommentsAsync(int examinerUserId);
     }
 }

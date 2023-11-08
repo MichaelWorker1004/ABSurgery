@@ -5,7 +5,9 @@ using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Ytg.Framework.Csla;
 using Ytg.Framework.Exceptions;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.CaseFeedbackReadOnlyFactory;
 
 namespace SurgeonPortal.Library.Scoring
@@ -14,12 +16,15 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class CaseFeedbackReadOnly : ReadOnlyBase<CaseFeedbackReadOnly>, ICaseFeedbackReadOnly
+    public class CaseFeedbackReadOnly : YtgReadOnlyBase<CaseFeedbackReadOnly, int>, ICaseFeedbackReadOnly
     {
         private readonly ICaseFeedbackReadOnlyDal _caseFeedbackReadOnlyDal;
 
 
-        public CaseFeedbackReadOnly(ICaseFeedbackReadOnlyDal caseFeedbackReadOnlyDal)
+        public CaseFeedbackReadOnly(
+            IIdentityProvider identityProvider,
+            ICaseFeedbackReadOnlyDal caseFeedbackReadOnlyDal)
+            : base(identityProvider)
         {
             _caseFeedbackReadOnlyDal = caseFeedbackReadOnlyDal;
         }
@@ -51,9 +56,11 @@ namespace SurgeonPortal.Library.Scoring
         [ObjectAuthorizationRules]
         public static void AddObjectAuthorizationRules()
         {
-            
-
+            Csla.Rules.BusinessRules.AddRule(typeof(CaseFeedbackReadOnly),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
         }
+
         [Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -61,11 +68,13 @@ namespace SurgeonPortal.Library.Scoring
         private async Task GetByExaminerId(GetByExaminerIdCriteria criteria)
         
         {
-            var dto = await _caseFeedbackReadOnlyDal.GetByExaminerIdAsync(criteria.CaseHeaderId);
+            var dto = await _caseFeedbackReadOnlyDal.GetByExaminerIdAsync(
+                _identity.GetUserId<int>(),
+                criteria.CaseHeaderId);
             
             if (dto == null)
             {
-                return;
+                throw new DataNotFoundException("CaseFeedbackReadOnly not found based on criteria.");
             }
             
             FetchData(dto);

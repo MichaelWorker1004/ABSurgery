@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.GraduateMedicalEducation
 {
-    public interface IRotationReadOnly : IYtgReadOnlyBase
+    public interface IRotationReadOnly : IYtgReadOnlyBase<int>
     {
         int Id { get; }
         DateTime StartDate { get; }

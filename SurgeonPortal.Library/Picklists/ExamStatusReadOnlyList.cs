@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.ExamStatusReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class ExamStatusReadOnlyList : YtgReadOnlyListBase<IExamStatusReadOnlyList, IExamStatusReadOnly>, IExamStatusReadOnlyList
+	public class ExamStatusReadOnlyList : YtgReadOnlyListBase<IExamStatusReadOnlyList, IExamStatusReadOnly, int>, IExamStatusReadOnlyList
     {
         private readonly IExamStatusReadOnlyDal _examStatusReadOnlyDal;
 
-        public ExamStatusReadOnlyList(IExamStatusReadOnlyDal examStatusReadOnlyDal)
+        public ExamStatusReadOnlyList(
+            IIdentityProvider identityProvider,
+            IExamStatusReadOnlyDal examStatusReadOnlyDal)
+            : base(identityProvider)
         {
             _examStatusReadOnlyDal = examStatusReadOnlyDal;
         }
@@ -29,7 +33,6 @@ namespace SurgeonPortal.Library.Picklists
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [Fetch]

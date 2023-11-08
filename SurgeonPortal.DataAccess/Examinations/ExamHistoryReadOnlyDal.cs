@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Examinations
 
 
 
-        public async Task<IEnumerable<ExamHistoryReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<ExamHistoryReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Examinations
                     "[dbo].[get_userexamhistory]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

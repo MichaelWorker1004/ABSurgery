@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Billing
 {
     public interface IExamFeeReadOnlyDal
     {
-        Task<IEnumerable<ExamFeeReadOnlyDto>> GetByUserIdAsync();
+        Task<IEnumerable<ExamFeeReadOnlyDto>> GetByUserIdAsync(int userId);
     }
 }

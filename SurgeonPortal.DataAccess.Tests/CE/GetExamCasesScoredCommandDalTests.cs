@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.CE
 {
-	public class GetExamCasesScoredCommandDalTests : TestBase<string>
+	public class GetExamCasesScoredCommandDalTests : TestBase<int>
     {
         #region GetExamCasesScored
         
@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             var expectedSprocName = "[dbo].[get_cases_scored]";
             var expectedExamScheduleId = Create<int>();
             var expectedExaminerUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamScheduleId = expectedExamScheduleId,
@@ -29,7 +29,9 @@ namespace SurgeonPortal.DataAccess.Tests.CE
             sqlManager.AddRecord(Create<GetExamCasesScoredCommandDto>());
         
             var sut = new GetExamCasesScoredCommandDal(sqlManager);
-            sut.GetExamCasesScored(expectedExamScheduleId);
+            sut.GetExamCasesScored(
+                expectedExamScheduleId,
+                expectedExaminerUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));

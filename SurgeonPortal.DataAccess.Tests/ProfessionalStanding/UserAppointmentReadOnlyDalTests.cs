@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
 {
-	public class UserAppointmentReadOnlyDalTests : TestBase<string>
+	public class UserAppointmentReadOnlyDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         {
             var expectedSprocName = "[dbo].[get_userhospappts_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,
@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecords(CreateMany<UserAppointmentReadOnlyDto>());
         
             var sut = new UserAppointmentReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new UserAppointmentReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

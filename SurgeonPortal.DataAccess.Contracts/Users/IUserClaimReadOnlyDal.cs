@@ -5,6 +5,8 @@ namespace SurgeonPortal.DataAccess.Contracts.Users
 {
     public interface IUserClaimReadOnlyDal
     {
-        Task<IEnumerable<UserClaimReadOnlyDto>> GetByIdsAsync(int userId, int applicationId);
+        Task<IEnumerable<UserClaimReadOnlyDto>> GetByIdsAsync(
+            int userId,
+            int applicationId);
     }
 }
