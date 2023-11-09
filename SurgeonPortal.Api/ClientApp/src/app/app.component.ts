@@ -28,6 +28,7 @@ import {
   EXAMINER_NAV_ITEMS,
   TRAINEE_NAV_ITEMS,
 } from './nav-items';
+import { ButtonModule } from 'primeng/button';
 
 @UntilDestroy()
 @Component({
@@ -45,6 +46,7 @@ import {
     DashboardHeaderComponent,
     MessagesModule,
     AlertComponent,
+    ButtonModule,
   ],
 })
 export class AppComponent implements OnInit {
