@@ -226,7 +226,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
 			BusinessRules.AddRule(new MaxDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 364, 1));
 			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));
-			BusinessRules.AddRule(new ExplainRequiredWhen(OtherProperty, 4));
+			BusinessRules.AddRule(new ExplainRequiredWhenRule(OtherProperty, 4));
 			BusinessRules.AddRule(new FourMonthRotationExplainRequiredWhen(FourMonthRotationExplainProperty, 4));
 			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhen(NonPrimaryExplainProperty, 4));
 			BusinessRules.AddRule(new NonClinicalExplainRequiredWhen(NonClinicalExplainProperty, 4));
@@ -366,26 +366,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			dto.ClinicalActivity = this.ClinicalActivity;
 
 			return dto;
-		}
-
-		private class ExplainRequiredWhen : BusinessRule
-		{
-			public ExplainRequiredWhen(IPropertyInfo primaryProperty, int priority) : base(primaryProperty)
-			{
-				Priority = priority;
-				InputProperties = new List<IPropertyInfo> { primaryProperty };
-			}
-
-			protected override void Execute(IRuleContext context)
-			{
-				var explain = (string)context.InputPropertyValues[PrimaryProperty];
-				var target = context.Target as Rotation;
-
-				if (target.ClinicalLevelId == (int)ClinicalLevels.OtherClinicalFellowship && string.IsNullOrEmpty(explain))
-				{
-					context.AddErrorResult(PrimaryProperty, "Explain is required when clinical level is Other Clinical Fellowship");
-				}
-			}
 		}
 
 		private class FourMonthRotationExplainRequiredWhen : BusinessRule
