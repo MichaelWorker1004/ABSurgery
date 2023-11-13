@@ -97,9 +97,10 @@ export class GmeFormComponent implements OnInit, OnChanges {
   gemRotationForm = new FormGroup(
     {
       programName: new FormControl({ value: '', disabled: false }),
-      clinicalLevelId: new FormControl({ value: null, disabled: false }, [
-        Validators.required,
-      ]),
+      clinicalLevelId: new FormControl<number | null>(
+        { value: null, disabled: false },
+        [Validators.required]
+      ),
       startDate: new FormControl({ value: '', disabled: false }, [
         Validators.required,
       ]),
