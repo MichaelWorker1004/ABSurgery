@@ -228,7 +228,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			BusinessRules.AddRule(new ExplainRequiredWhenRule(OtherProperty, 4));
 			BusinessRules.AddRule(new FourMonthRotationExplainRequiredWhenRule(FourMonthRotationExplainProperty, 4));
 			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhen(NonPrimaryExplainProperty, 4));
-			BusinessRules.AddRule(new NonClinicalExplainRequiredWhen(NonClinicalExplainProperty, 4));
+			BusinessRules.AddRule(new NonClinicalExplainRequiredWhenRule(NonClinicalExplainProperty, 4));
 		}
 
         [RunLocal]
@@ -365,36 +365,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			dto.ClinicalActivity = this.ClinicalActivity;
 
 			return dto;
-		}
-
-		private class NonClinicalExplainRequiredWhen : BusinessRule
-		{
-			public NonClinicalExplainRequiredWhen(IPropertyInfo primaryProperty,
-				int priority) : base(primaryProperty)
-			{
-				Priority = priority;
-				InputProperties = new List<IPropertyInfo> { primaryProperty };
-			}
-
-			protected override void Execute(IRuleContext context)
-			{
-				var explain = (string)context.InputPropertyValues[PrimaryProperty];
-
-				var target = context.Target as Rotation;
-				var clinicalLevelId = target.ClinicalLevelId;
-				var clinicalActivityId = target.ClinicalActivityId;
-
-				if(clinicalLevelId == (int)ClinicalLevels.ClinicalLevel4 || clinicalLevelId == (int)ClinicalLevels.ClinicalLevel5)
-				{
-					if(clinicalActivityId == (int)ClinicalActivities.NonClinicalResearch || clinicalActivityId == (int)ClinicalActivities.ClinicalNonSurgical)
-					{
-						if(string.IsNullOrEmpty(explain))
-						{
-							context.AddErrorResult(PrimaryProperty, "NonClinicalExplain is required when the clinical level is 4 or 5 and the clinical activity is Non-Clinical Research or Clinical (Non-Surgical)");
-						}
-					}
-				}
-			}
 		}
 
 		private class NonPrimaryExplainRequiredWhen : BusinessRule
