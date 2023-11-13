@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Csla;
-using Csla.Core;
+﻿using Csla.Core;
 using Csla.Rules;
-using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
-using SurgeonPortal.Shared;
+using System.Collections.Generic;
 
 namespace SurgeonPortal.Library.Users
 {
 
-    public class PasswordMatchesCurrentRule : Csla.Rules.BusinessRule
+	public class PasswordMatchesCurrentRule : BusinessRule
     {
         private readonly IPasswordValidationCommandFactory _passwordValidationCommandFactory;
         private IPropertyInfo _userIdProperty;
