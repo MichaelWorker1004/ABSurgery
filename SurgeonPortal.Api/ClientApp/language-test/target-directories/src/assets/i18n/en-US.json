@@ -122,6 +122,7 @@
     "PASSWORD_ERROR": "The Password field is required.",
     "SUBMIT_BTN": "Login",
     "SUBTITLE": "Please enter your username and password to login.",
+    "REDIRECT_LOGIN": "Go to ABS Surgery Site",
     "TITLE": "Welcome to The American Board of Surgery Surgeon Portal",
     "USERNAME": "Username",
     "USERNAME_ERROR": "The Username field is required."
