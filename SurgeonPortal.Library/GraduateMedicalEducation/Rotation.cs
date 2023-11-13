@@ -1,11 +1,8 @@
 using Csla;
-using Csla.Core;
 using Csla.Rules;
 using SurgeonPortal.DataAccess.Contracts.GraduateMedicalEducation;
 using SurgeonPortal.Library.Contracts.GraduateMedicalEducation;
-using SurgeonPortal.Shared;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -227,7 +224,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));
 			BusinessRules.AddRule(new ExplainRequiredWhenRule(OtherProperty, 4));
 			BusinessRules.AddRule(new FourMonthRotationExplainRequiredWhenRule(FourMonthRotationExplainProperty, 4));
-			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhen(NonPrimaryExplainProperty, 4));
+			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhenRule(NonPrimaryExplainProperty, 4));
 			BusinessRules.AddRule(new NonClinicalExplainRequiredWhenRule(NonClinicalExplainProperty, 4));
 		}
 
@@ -365,31 +362,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			dto.ClinicalActivity = this.ClinicalActivity;
 
 			return dto;
-		}
-
-		private class NonPrimaryExplainRequiredWhen : BusinessRule
-		{
-			public NonPrimaryExplainRequiredWhen(IPropertyInfo primaryProperty,
-				int priority) : base(primaryProperty)
-			{
-				Priority = priority;
-				InputProperties = new List<IPropertyInfo> { primaryProperty };
-			}
-
-			protected override void Execute(IRuleContext context)
-			{
-				var explain = (string)context.InputPropertyValues[PrimaryProperty];
-
-				var target = context.Target as Rotation;
-				var isEssential = target.IsEssential;
-				var clinicalLevelId = target.ClinicalLevelId;
-
-				if(string.IsNullOrEmpty(explain) && !isEssential && 
-					(clinicalLevelId == (int)ClinicalLevels.ClinicalLevel4Chief || clinicalLevelId == (int)ClinicalLevels.ClinicalLevel5Chief))
-				{
-					context.AddErrorResult(PrimaryProperty, "NonPrimaryExplain when isEssential is false and clinical level is 4 Chief or 5 Chief");
-				}
-			}
 		}
     }
 }
