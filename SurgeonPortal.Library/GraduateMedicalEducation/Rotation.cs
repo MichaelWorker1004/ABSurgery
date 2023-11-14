@@ -1,18 +1,14 @@
 using Csla;
-using Csla.Core;
 using Csla.Rules;
 using SurgeonPortal.DataAccess.Contracts.GraduateMedicalEducation;
 using SurgeonPortal.Library.Contracts.GraduateMedicalEducation;
-using SurgeonPortal.Shared;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
-using Ytg.Framework.Rules;
 using Ytg.Framework.Rules.Dates;
 using static SurgeonPortal.Library.GraduateMedicalEducation.RotationFactory;
 
@@ -226,10 +222,10 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             BusinessRules.AddRule(new DateLessThanRule(StartDateProperty, EndDateProperty));
 			BusinessRules.AddRule(new MaxDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 364, 1));
 			BusinessRules.AddRule(new MinDurationBetweenDatesRule(StartDateProperty, EndDateProperty, 2, 1));
-			BusinessRules.AddRule(new ExplainRequiredWhen(OtherProperty, 4));
-			BusinessRules.AddRule(new FourMonthRotationExplainRequiredWhen(FourMonthRotationExplainProperty, 4));
-			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhen(NonPrimaryExplainProperty, 4));
-			BusinessRules.AddRule(new NonClinicalExplainRequiredWhen(NonClinicalExplainProperty, 4));
+			BusinessRules.AddRule(new ExplainRequiredWhenRule(OtherProperty, 4));
+			BusinessRules.AddRule(new FourMonthRotationExplainRequiredWhenRule(FourMonthRotationExplainProperty, 4));
+			BusinessRules.AddRule(new NonPrimaryExplainRequiredWhenRule(NonPrimaryExplainProperty, 4));
+			BusinessRules.AddRule(new NonClinicalExplainRequiredWhenRule(NonClinicalExplainProperty, 4));
 		}
 
         [RunLocal]
@@ -344,8 +340,8 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		}
 		internal RotationDto ToDto(RotationDto dto)
 		{
-            base.ToDto(dto);
-            
+			base.ToDto(dto);
+
 			dto.Id = this.Id;
 			dto.UserId = this.UserId;
 			dto.StartDate = this.StartDate;
@@ -366,110 +362,6 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			dto.ClinicalActivity = this.ClinicalActivity;
 
 			return dto;
-		}
-
-		private class ExplainRequiredWhen : BusinessRule
-		{
-			public ExplainRequiredWhen(IPropertyInfo primaryProperty, int priority) : base(primaryProperty)
-			{
-				Priority = priority;
-				InputProperties = new List<IPropertyInfo> { primaryProperty };
-			}
-
-			protected override void Execute(IRuleContext context)
-			{
-				var explain = (string)context.InputPropertyValues[PrimaryProperty];
-				var target = context.Target as Rotation;
-
-				if (target.ClinicalLevelId == (int)ClinicalLevels.OtherClinicalFellowship && string.IsNullOrEmpty(explain))
-				{
-					context.AddErrorResult(PrimaryProperty, "Explain is required when clinical level is Other Clinical Fellowship");
-				}
-			}
-		}
-
-		private class FourMonthRotationExplainRequiredWhen : BusinessRule
-		{
-			public FourMonthRotationExplainRequiredWhen(IPropertyInfo primaryProperty,
-				int priority) : base(primaryProperty)
-			{
-				Priority = priority;
-				InputProperties = new List<IPropertyInfo> { primaryProperty };
-			}
-
-			protected override void Execute(IRuleContext context)
-			{
-				var explain = (string)context.InputPropertyValues[PrimaryProperty];
-				
-				var target = context.Target as Rotation;
-				var startDate = target.StartDate;
-				var endDate = target.EndDate;
-				var clinicalLevelId = target.ClinicalLevelId;
-
-				if(clinicalLevelId == (int)ClinicalLevels.ClinicalLevel4Chief || clinicalLevelId == (int)ClinicalLevels.ClinicalLevel5Chief)
-				{
-					var duration = endDate - startDate;
-					if(duration.Days + 1 > 120 && string.IsNullOrEmpty(explain))
-					{
-						context.AddErrorResult(PrimaryProperty, "FourMonthRotationExplain is required when the duration is over 4 months and clinical level is 4 Chief or 5 Chief");
-					}
-				}
-			}
-		}
-
-		private class NonClinicalExplainRequiredWhen : BusinessRule
-		{
-			public NonClinicalExplainRequiredWhen(IPropertyInfo primaryProperty,
-				int priority) : base(primaryProperty)
-			{
-				Priority = priority;
-				InputProperties = new List<IPropertyInfo> { primaryProperty };
-			}
-
-			protected override void Execute(IRuleContext context)
-			{
-				var explain = (string)context.InputPropertyValues[PrimaryProperty];
-
-				var target = context.Target as Rotation;
-				var clinicalLevelId = target.ClinicalLevelId;
-				var clinicalActivityId = target.ClinicalActivityId;
-
-				if(clinicalLevelId == (int)ClinicalLevels.ClinicalLevel4 || clinicalLevelId == (int)ClinicalLevels.ClinicalLevel5)
-				{
-					if(clinicalActivityId == (int)ClinicalActivities.NonClinicalResearch || clinicalActivityId == (int)ClinicalActivities.ClinicalNonSurgical)
-					{
-						if(string.IsNullOrEmpty(explain))
-						{
-							context.AddErrorResult(PrimaryProperty, "NonClinicalExplain is required when the clinical level is 4 or 5 and the clinical activity is Non-Clinical Research or Clinical (Non-Surgical)");
-						}
-					}
-				}
-			}
-		}
-
-		private class NonPrimaryExplainRequiredWhen : BusinessRule
-		{
-			public NonPrimaryExplainRequiredWhen(IPropertyInfo primaryProperty,
-				int priority) : base(primaryProperty)
-			{
-				Priority = priority;
-				InputProperties = new List<IPropertyInfo> { primaryProperty };
-			}
-
-			protected override void Execute(IRuleContext context)
-			{
-				var explain = (string)context.InputPropertyValues[PrimaryProperty];
-
-				var target = context.Target as Rotation;
-				var isEssential = target.IsEssential;
-				var clinicalLevelId = target.ClinicalLevelId;
-
-				if(string.IsNullOrEmpty(explain) && !isEssential && 
-					(clinicalLevelId == (int)ClinicalLevels.ClinicalLevel4Chief || clinicalLevelId == (int)ClinicalLevels.ClinicalLevel5Chief))
-				{
-					context.AddErrorResult(PrimaryProperty, "NonPrimaryExplain when isEssential is false and clinical level is 4 Chief or 5 Chief");
-				}
-			}
 		}
     }
 }

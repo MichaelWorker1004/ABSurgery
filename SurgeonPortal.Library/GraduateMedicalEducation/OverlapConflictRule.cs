@@ -1,8 +1,6 @@
-﻿using Csla;
-using Csla.Core;
+﻿using Csla.Core;
 using Csla.Rules;
 using SurgeonPortal.Library.Contracts.GraduateMedicalEducation;
-using SurgeonPortal.Shared;
 using System;
 using System.Collections.Generic;
 
@@ -35,7 +33,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 			var endDate = context.InputPropertyValues[SecondaryProperty];
             var userIdValue = context.InputPropertyValues[_userIdProperty];
 
-            var target = context.Target as Rotation;
+            var target = context.Target as IRotation;
 
 			if (startDate is DateTime parsedStartDate && 
 				endDate is DateTime parsedEndDate &&
