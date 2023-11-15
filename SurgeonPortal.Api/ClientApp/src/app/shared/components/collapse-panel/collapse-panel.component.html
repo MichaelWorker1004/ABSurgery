@@ -1,5 +1,9 @@
 <div [id]="'panel-' + panelId" class="panel">
-  <div class="panel-header" (click)="togglePanel()">
+  <div
+    class="panel-header"
+    [ngClass]="{ 'no-toggle': disabledHeaderToggle, 'no-border': hideBorder }"
+    (click)="!disabledHeaderToggle ? togglePanel() : null"
+  >
     <ng-content select="[panel-header]"></ng-content>
     <div class="panel-icons">
       <i class="fa-solid fa-minus fa-rotate-90 panel-icon-1"></i>

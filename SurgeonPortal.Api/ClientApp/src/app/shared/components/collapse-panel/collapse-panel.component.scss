@@ -7,6 +7,12 @@
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+    &.no-toggle {
+      cursor: default;
+    }
+    &.no-border {
+      border-bottom: none;
+    }
     .panel-icons {
       position: relative;
       height: 1.5rem;

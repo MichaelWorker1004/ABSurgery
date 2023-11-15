@@ -1,83 +1,140 @@
-<div class="dialog-intro">
-  Please provide contact information for the Authenticating Official from the
-  hospital or surgical center where you perform most of your work. If you hold
-  this position yourself, you may request another physician of comparable rank
-  to provide the reference. The reference cannot be provided by a relative, by
-  someone with whom you have a close personal relationship, or by the same
-  person who is providing you another ABS reference.
+<div *ngIf="lapsedPath">
+  <div class="dialog-intro">
+    Please provide contact information for the Authenticating Official from the
+    hospital or surgical center where you perform most of your work. If you hold
+    this position yourself, you may request another physician of comparable rank
+    to provide the reference. The reference cannot be provided by a relative, by
+    someone with whom you have a close personal relationship, or by the same
+    person who is providing you another ABS reference.
+  </div>
+  <abs-grid
+    title="Current Reference Forms"
+    [columns]="referenceFormsCols"
+    [data]="refrenceGridData"
+    (action)="handleGridAction($event)"
+    class="mb-2"
+  ></abs-grid>
+
+  <abs-collapse-panel
+    [panelId]="1"
+    [startExpanded]="false"
+    [showIcon]="false"
+    [hideBorder]="true"
+    [disabledHeaderToggle]="true"
+    (togglePanelEvent)="togglePanelHandler($event)"
+    #referenceRequestPanel
+  >
+    <div class="mt-3 mb-2" style="width: 100%" panel-header>
+      <p-button
+        class="btn-add my-2"
+        *ngIf="!formExpanded"
+        (click)="referenceRequestPanel.expandPanel()"
+      >
+        <i slot="prefix" class="fa-solid fa-plus"></i>
+        ADD REFERENCE
+      </p-button>
+      <h5 class="m-0" *ngIf="formExpanded">Add Reference</h5>
+    </div>
+    <!-- <h5 class="mt-3 mb-2" panel-header>Add Reference</h5> -->
+    <form [formGroup]="referenceLetterForm">
+      <div class="grid">
+        <div
+          *ngFor="let formField of referenceLetterFields"
+          class="col-12 md:{{
+            formField.size
+          }} flex flex-column justify-content-start"
+        >
+          <label [htmlFor]="formField.name">{{ formField.label }}</label>
+          <input
+            *ngIf="formField.type === 'text'"
+            [placeholder]="formField.placeholder ?? ''"
+            [name]="formField.name"
+            [id]="formField.name"
+            [formControlName]="formField.name"
+            [required]="formField.required"
+            pInputText
+          />
+          <p-dropdown
+            *ngIf="formField.type === 'select'"
+            [placeholder]="formField.placeholder ?? ''"
+            [options]="formField.options ?? []"
+            [name]="formField.name"
+            [id]="formField.name"
+            [formControlName]="formField.name"
+            [editable]="true"
+            appendTo="body"
+            optionLabel="itemDescription"
+            optionValue="itemValue"
+          ></p-dropdown>
+          <span>{{ formField.subLabel }}</span>
+        </div>
+
+        <div class="col-12 mb-3">
+          I hereby authorize any hospital or medical staff where I now have,
+          have had, or have applied for medical staff privileges, and any
+          medical organization of which I am a member or to which I have applied
+          for membership, and any person who may have information (including
+          medical records, patient records, and reports of committees) which is
+          deemed by ABS to be material to its evaluation of this application, to
+          provide such information to representatives of the ABS. I agree that
+          communications of any nature made to the ABS regarding this
+          application may be made in confidence and shall not be made available
+          to me under any circumstances. I hereby release from liability any
+          hospital, medical staff, medical organization or person, and ABS and
+          its representatives, for acts performed in connection with this
+          application. I authorize the ABS to transmit a reference form request
+          electronically to the above named physician at the email address
+          above, and affirm that it ultimately remains my responsibility to
+          ensure these forms are completed.
+        </div>
+        <div class="col-12 flex align-items-start gap-3">
+          <p-checkbox value="Yes" inputId="sendEmail"></p-checkbox>
+          <label for="ny"
+            >I would like my reference form sent to me via email</label
+          >
+        </div>
+        <div class="col-12 mt-5 flex justify-content-end btn-container">
+          <p-button
+            styleClass="p-button-link p-button-primary"
+            (click)="closePanel()"
+          >
+            Cancel
+          </p-button>
+          <p-button
+            [style]="{ width: '337px' }"
+            (click)="onSubmitPanel(referenceLetterFields)"
+            >Save</p-button
+          >
+        </div>
+      </div>
+    </form>
+  </abs-collapse-panel>
 </div>
-<abs-grid
-  title="Current Reference Forms"
-  [columns]="referenceFormsCols"
-  [data]="refrenceGridData"
-  (action)="handleGridAction($event)"
-  class="mb-2"
-></abs-grid>
 
-<h5>Add Reference</h5>
-
-<form>
-  <div class="grid">
-    <div
-      *ngFor="let formField of referenceFormFields"
-      class="col-12 md:{{
-        formField.size
-      }} flex flex-column justify-content-start"
-    >
-      <label [htmlFor]="formField.name">{{ formField.label }}</label>
-      <input
-        *ngIf="formField.type === 'text'"
-        [placeholder]="formField.placeholder ?? ''"
-        [name]="formField.name"
-        [id]="formField.name"
-        [required]="formField.required"
-        pInputText
-      />
-      <p-dropdown
-        *ngIf="formField.type === 'select'"
-        [placeholder]="formField.placeholder ?? ''"
-        [options]="formField.options ?? []"
-        [name]="formField.name"
-        [id]="formField.name"
-        [editable]="true"
-        appendTo="body"
-        optionLabel="itemDescription"
-        optionValue="itemValue"
-      ></p-dropdown>
-      <span>{{ formField.subLabel }}</span>
-    </div>
-    <div class="col-12 mb-3">
-      I hereby authorize any hospital or medical staff where I now have, have
-      had, or have applied for medical staff privileges, and any medical
-      organization of which I am a member or to which I have applied for
-      membership, and any person who may have information (including medical
-      records, patient records, and reports of committees) which is deemed by
-      ABS to be material to its evaluation of this application, to provide such
-      information to representatives of the ABS. I agree that communications of
-      any nature made to the ABS regarding this application may be made in
-      confidence and shall not be made available to me under any circumstances.
-      I hereby release from liability any hospital, medical staff, medical
-      organization or person, and ABS and its representatives, for acts
-      performed in connection with this application. I authorize the ABS to
-      transmit a reference form request electronically to the above named
-      physician at the email address above, and affirm that it ultimately
-      remains my responsibility to ensure these forms are completed.
-    </div>
-    <div class="col-12 md:col-6 flex align-items-start gap-3">
-      <p-checkbox value="Yes" inputId="sendEmail"></p-checkbox>
-      <label for="ny"
-        >I would like my reference form sent to me via email</label
+<div *ngIf="!lapsedPath">
+  <form>
+    <div class="col-12 flex align-items-center gap-3">
+      <p-checkbox value="Yes" inputId="attestation"></p-checkbox>
+      <label for="attestation"
+        >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quam
+        nisi, sollicitudin ac sagittis id, euismod id ipsum. Nulla facilisi.
+        Vestibulum ac purus et velit condimentum porttitor vel at ante. Etiam
+        iaculis laoreet tellus, vel auctor nulla convallis non. Duis dolor nunc,
+        finibus at pharetra nec, rhoncus ut turpis. Nullam felis nisi, vulputate
+        a laoreet eget, vehicula at massa. Sed vitae rhoncus mi. Sed aliquam
+        aliquam felis nec hendrerit. Proin pharetra mauris purus, quis mattis
+        eros congue eu.</label
       >
     </div>
-    <div class="col-12 md:col-6 mt-5 flex justify-content-end btn-container">
+    <div class="col-12 mt-5 flex justify-content-end btn-container">
       <p-button styleClass="p-button-link p-button-primary" (click)="close()">
         Cancel
       </p-button>
       <p-button
         [style]="{ width: '337px' }"
-        (click)="onSubmit(referenceFormFields)"
+        (click)="onSubmit(referenceLetterFields)"
         >Save</p-button
       >
     </div>
-  </div>
-</form>
+  </form>
+</div>

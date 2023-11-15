@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -21,10 +21,49 @@ export class CollapsePanelComponent implements OnInit {
    */
   @Input() startExpanded = false;
 
+  /**
+   * whether or not to show the +/- icon on the panel header
+   * @type {boolean}
+   */
+  @Input() showIcon = true;
+
+  /**
+   * whether or not to show the border on the panel header
+   * @type {boolean}
+   */
+  @Input() hideBorder = false;
+
+  /**
+   * whether or not the collapse panel can be toggled from the header
+   * if this is turned off the parent will need to control the panel toggle
+   * @type {boolean}
+   */
+  @Input() disabledHeaderToggle = false;
+
+  /**
+   * an event to let the parent know when the panel has been expanded or collapsed
+   * @type {EventEmitter<any>}
+   */
+  @Output() togglePanelEvent = new EventEmitter();
+
+  panelExpanded = false;
+
   ngOnInit() {
     if (this.startExpanded) {
       // setTimeout is needed to wait for the DOM to be ready
       setTimeout(() => this.togglePanel(), 0);
+    }
+  }
+
+  collaspsePanel() {
+    if (this.panelExpanded) {
+      this.togglePanel();
+    }
+  }
+
+  expandPanel() {
+    if (!this.panelExpanded) {
+      this.togglePanel();
     }
   }
 
@@ -35,6 +74,13 @@ export class CollapsePanelComponent implements OnInit {
     );
 
     panel?.classList.toggle('active');
+    if (panel?.classList.contains('active')) {
+      this.panelExpanded = true;
+      this.togglePanelEvent.emit({ panelId: this.panelId, expanded: true });
+    } else {
+      this.panelExpanded = false;
+      this.togglePanelEvent.emit({ panelId: this.panelId, expanded: false });
+    }
     if (panelBody!.style.maxHeight && panelBody!.style.maxHeight !== '0px') {
       // reset the panel maxHeight since the css animation will not work with a maxHeight = unset
       panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
