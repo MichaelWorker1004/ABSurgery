@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -21,6 +21,18 @@ export class CollapsePanelComponent implements OnInit {
    */
   @Input() startExpanded = false;
 
+  /**
+   * whether or not to show the +/- icon on the panel header
+   * @type {boolean}
+   */
+  @Input() showIcon = true;
+
+  /**
+   * an event to let the parent know when the panel has been expanded or collapsed
+   * @type {EventEmitter<any>}
+   */
+  @Output() togglePanelEvent = new EventEmitter();
+
   ngOnInit() {
     if (this.startExpanded) {
       // setTimeout is needed to wait for the DOM to be ready
@@ -35,6 +47,11 @@ export class CollapsePanelComponent implements OnInit {
     );
 
     panel?.classList.toggle('active');
+    if (panel?.classList.contains('active')) {
+      this.togglePanelEvent.emit({ panelId: this.panelId, expanded: true });
+    } else {
+      this.togglePanelEvent.emit({ panelId: this.panelId, expanded: false });
+    }
     if (panelBody!.style.maxHeight && panelBody!.style.maxHeight !== '0px') {
       // reset the panel maxHeight since the css animation will not work with a maxHeight = unset
       panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';

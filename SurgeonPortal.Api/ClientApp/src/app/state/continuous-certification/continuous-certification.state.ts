@@ -16,6 +16,7 @@ import { IContinuousCerticationStatuses } from './continuous-certification-statu
 export interface IContinuousCertication {
   outcomeRegistries?: IOutcomeRegistryModel;
   continuousCertificationStatuses?: IContinuousCerticationStatuses;
+  outcomeRegistriesErrors?: IFormErrors | null;
   errors?: IFormErrors | null;
 }
 
@@ -28,6 +29,7 @@ export const CONTCERT_STATE_TOKEN = new StateToken<IContinuousCertication>(
   defaults: {
     outcomeRegistries: undefined,
     continuousCertificationStatuses: undefined,
+    outcomeRegistriesErrors: null,
     errors: null,
   },
 })
@@ -49,10 +51,14 @@ export class ContinuousCertificationState {
         tap((outcomeRegistries: IOutcomeRegistryModel) => {
           ctx.patchState({
             outcomeRegistries,
+            outcomeRegistriesErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
+          ctx.patchState({
+            outcomeRegistriesErrors: errors,
+          });
           return of(errors);
         })
       );
@@ -71,10 +77,14 @@ export class ContinuousCertificationState {
       tap((outcomeRegistries: IOutcomeRegistryModel) => {
         ctx.patchState({
           outcomeRegistries,
+          outcomeRegistriesErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
+        ctx.patchState({
+          outcomeRegistriesErrors: errors,
+        });
         return of(errors);
       })
     );
