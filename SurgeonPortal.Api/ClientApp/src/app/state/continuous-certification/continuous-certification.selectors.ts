@@ -16,6 +16,7 @@ export class ContinuousCertificationSelectors {
     if (state) {
       return {
         outcomeRegistries: state.outcomeRegistries,
+        continuousCertificationStatuses: state.continuousCertificationStatuses,
       };
     }
     return;
