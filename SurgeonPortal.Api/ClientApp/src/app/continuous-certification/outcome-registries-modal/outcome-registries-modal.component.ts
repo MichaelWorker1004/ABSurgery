@@ -23,12 +23,12 @@ import { UserProfileSelectors } from 'src/app/state';
 import { Observable } from 'rxjs';
 import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertification/outcome-registry.model';
 import { OutcomeRegistriesFormFields } from './outcome-registries-form';
-import { SuccessFailModalComponent } from 'src/app/shared/components/success-fail-modal/success-fail-modal.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 @UntilDestroy()
 @Component({
@@ -38,7 +38,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SuccessFailModalComponent,
     RadioButtonModule,
     InputTextareaModule,
     CheckboxModule,
@@ -58,12 +57,6 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   @Select(ContinuousCertificationSelectors.GetOutcomeRegistries)
   outcomeRegistries$: Observable<IOutcomeRegistryModel> | undefined;
   outcomesandRegistriesFormFields = OutcomeRegistriesFormFields;
-
-  call = {
-    isSuccess: false,
-    message: '',
-    showDialog: false,
-  };
 
   disableSubmit = true;
 
@@ -92,7 +85,10 @@ export class OutcomeRegistriesModalComponent implements OnInit {
     userConfirmed: new FormControl(false, [Validators.requiredTrue]),
   });
 
-  constructor(private _store: Store) {
+  constructor(
+    private _store: Store,
+    private _globalDialogService: GlobalDialogService
+  ) {
     this._store.dispatch(new GetOutcomeRegistries());
   }
 
@@ -126,28 +122,22 @@ export class OutcomeRegistriesModalComponent implements OnInit {
       .dispatch(new UpdateOutcomeRegistries(<IOutcomeRegistryModel>formValues))
       .subscribe((result: any) => {
         if (!result.continuous_certification.errors) {
-          this.call = {
-            showDialog: true,
-            message:
-              'Outcome Registries / Quality Assessment Programs Saved Successfully',
-            isSuccess: true,
-          };
+          this._globalDialogService.showSuccessError(
+            'Success',
+            'Outcome Registries / Quality Assessment Programs Saved Successfully',
+            true
+          );
         } else {
-          this.call = {
-            showDialog: true,
-            message: 'An error occured while saving',
-            isSuccess: false,
-          };
+          this._globalDialogService.showSuccessError(
+            'Error',
+            'Save Failed',
+            false
+          );
         }
       });
   }
 
   close() {
     this.closeDialog.emit();
-    this.call = {
-      isSuccess: false,
-      message: '',
-      showDialog: false,
-    };
   }
 }

@@ -13,6 +13,7 @@ import { IFormErrors } from 'src/app/shared/common';
 
 export interface IContinuousCertication {
   outcomeRegistries?: IOutcomeRegistryModel;
+  outcomeRegistriesErrors?: IFormErrors | null;
   errors?: IFormErrors | null;
 }
 
@@ -24,6 +25,7 @@ export const CONTCERT_STATE_TOKEN = new StateToken<IContinuousCertication>(
   name: CONTCERT_STATE_TOKEN,
   defaults: {
     outcomeRegistries: undefined,
+    outcomeRegistriesErrors: null,
     errors: null,
   },
 })
@@ -45,10 +47,14 @@ export class ContinuousCertificationState {
         tap((outcomeRegistries: IOutcomeRegistryModel) => {
           ctx.patchState({
             outcomeRegistries,
+            outcomeRegistriesErrors: null,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
+          ctx.patchState({
+            outcomeRegistriesErrors: errors,
+          });
           return of(errors);
         })
       );
@@ -67,10 +73,14 @@ export class ContinuousCertificationState {
       tap((outcomeRegistries: IOutcomeRegistryModel) => {
         ctx.patchState({
           outcomeRegistries,
+          outcomeRegistriesErrors: null,
         });
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
+        ctx.patchState({
+          outcomeRegistriesErrors: errors,
+        });
         return of(errors);
       })
     );
