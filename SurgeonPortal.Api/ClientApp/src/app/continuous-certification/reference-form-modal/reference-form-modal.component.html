@@ -49,14 +49,23 @@
         >
           <label [htmlFor]="formField.name">{{ formField.label }}</label>
           <input
-            *ngIf="formField.type === 'text'"
+            *ngIf="formField.type === 'text' || formField.type === 'email'"
             [placeholder]="formField.placeholder ?? ''"
             [name]="formField.name"
             [id]="formField.name"
             [formControlName]="formField.name"
             [required]="formField.required"
+            [type]="formField.type"
             pInputText
           />
+          <p-inputMask
+            *ngIf="formField.type === 'tel'"
+            [inputId]="formField.name"
+            [name]="formField.name"
+            [formControlName]="formField.name"
+            [placeholder]="formField.placeholder ?? ''"
+            mask="(999) 999-9999"
+          ></p-inputMask>
           <p-dropdown
             *ngIf="formField.type === 'select'"
             [placeholder]="formField.placeholder ?? ''"
