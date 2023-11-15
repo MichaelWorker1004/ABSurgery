@@ -78,7 +78,7 @@ export class ContinuousCertificationComponent implements OnInit {
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
   attestationModal = false;
-  referenceFormsModal = true;
+  referenceFormsModal = false;
   payFeeModal = false;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
