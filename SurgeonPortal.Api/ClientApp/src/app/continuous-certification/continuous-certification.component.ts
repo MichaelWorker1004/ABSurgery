@@ -23,12 +23,17 @@ import {
   IUserProfile,
   ExamProcessSelectors,
   GetExamFees,
+  ContinuousCertificationSelectors,
+  GetContinuousCertificationStatuses,
 } from '../state';
+import { IContinuousCerticationStatuses } from '../state/continuous-certification/continuous-certification-statuses.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 interface ActionMap {
   [key: string]: () => void;
 }
 
+@UntilDestroy()
 @Component({
   selector: 'abs-continuous-certification',
   templateUrl: './continuous-certification.component.html',
@@ -59,6 +64,13 @@ export class ContinuousCertificationComponent implements OnInit {
 
   @Select(ExamProcessSelectors.slices.examFees) examFees$:
     | Observable<IExamFeeReadOnlyModel[]>
+    | undefined;
+
+  @Select(
+    ContinuousCertificationSelectors.slices.continuousCertificationStatuses
+  )
+  continuousCertificationStatuses$:
+    | Observable<IContinuousCerticationStatuses>
     | undefined;
 
   userData!: any;
@@ -105,6 +117,7 @@ export class ContinuousCertificationComponent implements OnInit {
   constructor(private _store: Store) {
     this._store.dispatch(new GetStateList('500'));
     this._store.dispatch(new GetExamFees());
+    this._store.dispatch(new GetContinuousCertificationStatuses());
     this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.featureFlags = featureFlags;
@@ -127,7 +140,6 @@ export class ContinuousCertificationComponent implements OnInit {
       };
 
       examFees.forEach((examFee: any) => {
-        console.log(examFee);
         payFeeData.totalAmountOfFee += examFee.subTotal;
         payFeeData.totalAmountPaid += examFee.paidTotal;
         payFeeData.remainingBalance += examFee.balanceDue;
@@ -138,8 +150,9 @@ export class ContinuousCertificationComponent implements OnInit {
   }
 
   getContinuousCertificationData() {
-    this.continousCertificationData = [
+    const continousCertificationData = [
       {
+        id: 'personalProfile',
         title: 'Personal Profile',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -156,6 +169,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
+        id: 'outcomeRegistries',
         title: 'Outcomes Registries / Quality Assessment Programs',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -169,6 +183,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
+        id: 'medicalTraining',
         title: 'Medical Training',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -185,6 +200,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
+        id: 'professionalStanding',
         title: 'Professional Standing',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -201,6 +217,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
+        id: 'cmeRepository',
         title: 'CME Repository',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -217,6 +234,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
+        id: 'payFee',
         title: 'Pay Fee',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -230,6 +248,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
+        id: 'referenceForms',
         title: 'Reference Forms',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -243,6 +262,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
+        id: 'attestation',
         title: 'Attestation',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -257,6 +277,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
+        id: 'applyForExam',
         title: 'Apply for an Exam',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -267,6 +288,33 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
     ];
+
+    this.continuousCertificationStatuses$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((continuousCertificationStatuses: any) => {
+        continousCertificationData.forEach((cc: any) => {
+          cc['status'] = continuousCertificationStatuses[cc.id]?.status;
+        });
+
+        continousCertificationData.find((cc) => {
+          if (cc.id === 'applyForExam') {
+            cc['disabled'] = !this.areAllItemsCompleted(
+              continousCertificationData
+            );
+          }
+        });
+
+        this.continousCertificationData = continousCertificationData;
+      });
+  }
+
+  areAllItemsCompleted(certificationData: any[]): boolean {
+    for (const item of certificationData) {
+      if (item.status !== undefined && item.status !== Status.Completed) {
+        return false;
+      }
+    }
+    return true; // All items have a status of Completed or no status at all
   }
 
   handleCardAction(action: string) {
