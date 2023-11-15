@@ -19,7 +19,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-import { InputMaskModule } from 'primeng/inputmask';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { Observable } from 'rxjs';
 import { IStateReadOnlyModel } from 'src/app/api';
@@ -39,6 +39,7 @@ import { IRefrenceFormModel } from 'src/app/state/continuous-certification/refre
 import { PicklistsSelectors } from 'src/app/state/picklists';
 import { ADD_REFERENCE_LETTER_FIELDS } from './add-reference-letter-fields';
 import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
+import { InputMask, InputMaskModule } from 'primeng/inputmask';
 
 @UntilDestroy()
 @Component({
