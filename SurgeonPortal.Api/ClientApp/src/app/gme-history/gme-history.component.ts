@@ -702,7 +702,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
       if ($event.isEdit) {
         this.updateGmeRotationSubscription = this._store
           .dispatch(new UpdateGraduateMedicalEducation(newRotation))
-          .subscribe((res) => {
+          ?.subscribe((res) => {
             if (!res.graduateMedicalEducation?.errors) {
               this.handleAddEditGmeRotation();
               this.updateGmeRotationSubscription?.unsubscribe();

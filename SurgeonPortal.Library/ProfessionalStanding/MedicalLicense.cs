@@ -136,7 +136,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 		{
             base.AddBusinessRules();
 
-            BusinessRules.AddRule(new UpdateOnlySelfReported(1));
+            BusinessRules.AddRule(new UpdateOnlySelfReportedRule(1));
 		}
 
 
@@ -257,26 +257,6 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			dto.ReportingOrganization = this.ReportingOrganization;
 
 			return dto;
-		}
-
-		private class UpdateOnlySelfReported : BusinessRule
-		{
-            private const string SelfReportingOrganization = "Self";
-
-            public UpdateOnlySelfReported(int priority)
-            {
-                Priority = priority;
-            }
-
-			protected override void Execute(IRuleContext context)
-			{
-                var target = context.Target as MedicalLicense;
-
-                if(!target.IsNew && !target.ReportingOrganization.Equals(SelfReportingOrganization, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    context.AddErrorResult("User cannot edit Medical Licenses that are not self reported.");
-                }
-			}
 		}
     }
 }

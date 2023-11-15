@@ -20,11 +20,13 @@ namespace SurgeonPortal.Library.CE
 	public class ExamScore : YtgBusinessBase<ExamScore>, IExamScore
     {
         private readonly IExamScoreDal _examScoreDal;
-        readonly IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
+        private readonly IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
 
-        public ExamScore(IGetExamCasesScoredCommandFactory getExamCasesScoredCommandFactory,
+
+		public ExamScore(
             IIdentityProvider identityProvider,
-            IExamScoreDal examScoreDal)
+            IExamScoreDal examScoreDal,
+			IGetExamCasesScoredCommandFactory getExamCasesScoredCommandFactory)
             : base(identityProvider)
         {
             _examScoreDal = examScoreDal;
@@ -99,15 +101,11 @@ namespace SurgeonPortal.Library.CE
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
 
         }
-        protected override void AddInjectedBusinessRules()
-        {
-            BusinessRules.AddRule(new ExamCasesScoredRule(_getExamCasesScoredCommandFactory, 2));
-        }
-        protected override void AddBusinessRules()
-		{
-			base.AddBusinessRules();    
-        }
 
+		protected override void AddInjectedBusinessRules()
+		{
+			BusinessRules.AddRule(new ExamCasesScoredRule(_getExamCasesScoredCommandFactory, 2));
+		}
 
         [Fetch]
         [RunLocal]
@@ -204,29 +202,6 @@ namespace SurgeonPortal.Library.CE
 			dto.SubmittedDateTimeUTC = this.SubmittedDateTimeUTC;
 
 			return dto;
-		}
-
-        private class ExamCasesScoredRule : BusinessRule
-        {
-            private IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
-
-            public ExamCasesScoredRule(IGetExamCasesScoredCommandFactory factory, int priority)
-            {
-                Priority = priority;
-                _getExamCasesScoredCommandFactory = factory;
-            }
-
-			protected override void Execute(IRuleContext context)
-			{
-                var target = context.Target as ExamScore;
-
-                var command = _getExamCasesScoredCommandFactory.GetExamCasesScored(target.ExamScheduleId);
-
-                if(!command.CasesScored)
-                {
-                    context.AddErrorResult("All exam cases must be scored before saving the exam score.");
-                }
-			}
 		}
     }
 }
