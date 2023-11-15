@@ -25,6 +25,7 @@ import {
   GetExamFees,
   ContinuousCertificationSelectors,
   GetContinuousCertificationStatuses,
+  GetRefrenceFormGridData,
 } from '../state';
 import { IContinuousCerticationStatuses } from '../state/continuous-certification/continuous-certification-statuses.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -77,7 +78,7 @@ export class ContinuousCertificationComponent implements OnInit {
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
   attestationModal = false;
-  referenceFormsModal = false;
+  referenceFormsModal = true;
   payFeeModal = false;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
@@ -118,6 +119,9 @@ export class ContinuousCertificationComponent implements OnInit {
     this._store.dispatch(new GetStateList('500'));
     this._store.dispatch(new GetExamFees());
     this._store.dispatch(new GetContinuousCertificationStatuses());
+
+    this._store.dispatch(new GetRefrenceFormGridData());
+
     this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.featureFlags = featureFlags;

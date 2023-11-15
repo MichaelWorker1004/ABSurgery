@@ -10,7 +10,7 @@
   <abs-grid
     title="Current Reference Forms"
     [columns]="referenceFormsCols"
-    [data]="refrenceGridData"
+    [data]="refrenceFormGridData$"
     (action)="handleGridAction($event)"
     class="mb-2"
   ></abs-grid>
@@ -103,9 +103,7 @@
           >
             Cancel
           </p-button>
-          <p-button
-            [style]="{ width: '337px' }"
-            (click)="onSubmit(referenceLetterFields)"
+          <p-button [style]="{ width: '337px' }" (click)="onSubmit()"
             >Save</p-button
           >
         </div>
@@ -133,9 +131,7 @@
       <p-button styleClass="p-button-link p-button-primary" (click)="close()">
         Cancel
       </p-button>
-      <p-button
-        [style]="{ width: '337px' }"
-        (click)="onSubmit(referenceLetterFields)"
+      <p-button [style]="{ width: '337px' }" (click)="onSubmit()"
         >Save</p-button
       >
     </div>
