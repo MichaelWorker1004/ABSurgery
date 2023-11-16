@@ -20,9 +20,6 @@ export class AdvancedTrainingService {
             
             /**
             * Business Rules
-            * Business rules for property: UserId
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: TrainingTypeId
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
@@ -57,9 +54,6 @@ export class AdvancedTrainingService {
             
             /**
             * Business Rules
-            * Business rules for property: UserId
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: TrainingTypeId
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
@@ -100,9 +94,6 @@ export class AdvancedTrainingService {
             
             /**
             * Business Rules
-            * Business rules for property: UserId
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: TrainingTypeId
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions

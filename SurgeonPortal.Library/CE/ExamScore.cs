@@ -22,8 +22,7 @@ namespace SurgeonPortal.Library.CE
         private readonly IExamScoreDal _examScoreDal;
         private readonly IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
 
-
-		public ExamScore(
+        public ExamScore(
             IIdentityProvider identityProvider,
             IExamScoreDal examScoreDal,
 			IGetExamCasesScoredCommandFactory getExamCasesScoredCommandFactory)
@@ -99,7 +98,6 @@ namespace SurgeonPortal.Library.CE
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
 		protected override void AddInjectedBusinessRules()

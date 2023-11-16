@@ -10,5 +10,6 @@ namespace SurgeonPortal.Library.Contracts.Scoring.CE
         ITitleReadOnlyList Cases { get; }
         int ExamineeUserId { get; }
         int ExamScoringId { get; }
+        bool? TimerBit { get; }
     }
 }

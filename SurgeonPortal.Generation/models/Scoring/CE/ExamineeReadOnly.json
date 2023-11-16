@@ -56,6 +56,17 @@
       "isAlwaysReadOnly": false,
       "isNullable": false,
       "isIdentityColumn": false
+    },
+    {
+      "name": "TimerBit",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {
