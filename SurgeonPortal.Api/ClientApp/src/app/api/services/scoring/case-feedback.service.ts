@@ -104,6 +104,7 @@ export class CaseFeedbackService {
         apiVersion = '1.0'): Observable<ICaseFeedbackReadOnlyModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

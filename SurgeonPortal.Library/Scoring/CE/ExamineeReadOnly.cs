@@ -62,6 +62,11 @@ namespace SurgeonPortal.Library.Scoring.CE
         public int ExamScoringId => ReadProperty(ExamScoringIdProperty);
 		public static readonly PropertyInfo<int> ExamScoringIdProperty = RegisterProperty<int>(c => c.ExamScoringId);
 
+        [DataMember]
+		[DisplayName(nameof(TimerBit))]
+        public bool? TimerBit => ReadProperty(TimerBitProperty);
+		public static readonly PropertyInfo<bool?> TimerBitProperty = RegisterProperty<bool?>(c => c.TimerBit);
+
 
         /// <summary>
         /// This method is used to apply authorization rules on the object
@@ -99,6 +104,7 @@ namespace SurgeonPortal.Library.Scoring.CE
 			LoadProperty(CasesProperty, await DataPortal.FetchAsync<TitleReadOnlyList>(new TitleReadOnlyListFactory.GetByIdCriteria(dto.ExamScheduleId, dto.ExamineeUserId)));
             LoadProperty(ExamineeUserIdProperty, dto.ExamineeUserId);
             LoadProperty(ExamScoringIdProperty, dto.ExamScoringId);
+            LoadProperty(TimerBitProperty, dto.TimerBit);
 		} 
         
     }

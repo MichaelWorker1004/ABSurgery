@@ -20,12 +20,7 @@ export class DocumentService {
             
             /**
             * Business Rules
-            * Business rules for property: Id
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: UserId
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * No business rules exist for this model
             */
             
             /**
@@ -51,12 +46,7 @@ export class DocumentService {
             
             /**
             * Business Rules
-            * Business rules for property: Id
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: UserId
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
+            * No business rules exist for this model
             */
             
             /**
