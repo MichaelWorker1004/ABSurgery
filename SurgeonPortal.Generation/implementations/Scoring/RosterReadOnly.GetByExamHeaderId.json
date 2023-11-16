@@ -116,6 +116,16 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.IsSubmitted"
+              },
+              {
+                "name": "ExamDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamDate"
               }
             ]
           }
