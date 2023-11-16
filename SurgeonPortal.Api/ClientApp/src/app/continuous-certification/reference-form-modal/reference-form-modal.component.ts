@@ -111,6 +111,13 @@ export class ReferenceFormModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPicklists();
+    // note to all future developers, never do this, it is stupid and hacky
+    // but also it was the only thing that worked, blame shoelace
+    document.addEventListener('sl-after-hide', ($event: any) => {
+      if ($event?.srcElement?.innerHTML.includes('Reference Form')) {
+        this.referenceRequestPanel.collaspsePanel();
+      }
+    });
   }
 
   setPicklists() {
