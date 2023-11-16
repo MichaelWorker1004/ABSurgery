@@ -41,7 +41,6 @@ import {
   UserProfileSelectors,
 } from '../state';
 import { SetExamInProgress } from '../state/application/application.actions';
-import { s } from '@fullcalendar/core/internal-common';
 
 @UntilDestroy()
 @Component({
@@ -184,7 +183,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.globalDialogService.closeOpenDialog();
           }, 0);
-          this.showTimer = true;
+          if (examinee.timerBit !== null || examinee.timerBit !== undefined) {
+            this.showTimer = examinee.timerBit;
+          } else {
+            this.showTimer = true;
+          }
         }
       });
   }
