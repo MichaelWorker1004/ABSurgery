@@ -6,17 +6,21 @@ import { catchError, tap } from 'rxjs/operators';
 import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertification/outcome-registry.model';
 import { OutcomeRegistriesService } from 'src/app/api/services/continuouscertification/outcome-registries.service';
 import { IFormErrors } from 'src/app/shared/common';
+import { IContinuousCerticationStatuses } from './continuous-certification-statuses.model';
 import {
   GetContinuousCertificationStatuses,
   GetOutcomeRegistries,
+  GetRefrenceFormGridData,
+  RequestRefrence,
   UpdateOutcomeRegistries,
 } from './continuous-certification.actions';
-import { IContinuousCerticationStatuses } from './continuous-certification-statuses.model';
+import { IRefrenceFormReadOnlyModel } from './refrence-form-read-only.model';
 
 export interface IContinuousCertication {
   outcomeRegistries?: IOutcomeRegistryModel;
   continuousCertificationStatuses?: IContinuousCerticationStatuses;
   outcomeRegistriesErrors?: IFormErrors | null;
+  refrenceFormGridData?: IRefrenceFormReadOnlyModel[] | null;
   errors?: IFormErrors | null;
 }
 
@@ -30,6 +34,7 @@ export const CONTCERT_STATE_TOKEN = new StateToken<IContinuousCertication>(
     outcomeRegistries: undefined,
     continuousCertificationStatuses: undefined,
     outcomeRegistriesErrors: null,
+    refrenceFormGridData: null,
     errors: null,
   },
 })
@@ -132,5 +137,48 @@ export class ContinuousCertificationState {
     ctx.patchState({
       continuousCertificationStatuses: response,
     });
+  }
+
+  @Action(GetRefrenceFormGridData)
+  getRefrenceFormGridData(ctx: StateContext<IContinuousCertication>) {
+    const response = [
+      {
+        referenceFormId: 'MD19143',
+        affiliatedInstitution: 'ABS',
+        authenticatingOfficial: 'John Doe, M.D.',
+        date: new Date('09/21/2019'),
+        status: 'Requested',
+      },
+      {
+        referenceFormId: 'MD08221',
+        affiliatedInstitution: 'ABS',
+        authenticatingOfficial: 'Mary Joseph',
+        date: new Date('08/12/2019'),
+        status: 'Approved',
+      },
+      {
+        referenceFormId: 'MD12345',
+        affiliatedInstitution: 'ABS',
+        authenticatingOfficial: 'John Dorian',
+        date: new Date('8/1/2019'),
+        status: 'Approved',
+      },
+    ];
+
+    ctx.patchState({
+      refrenceFormGridData: response,
+    });
+  }
+
+  @Action(RequestRefrence)
+  requestRefrence(
+    ctx: StateContext<IContinuousCertication>,
+    { model }: RequestRefrence
+  ) {
+    // API CALL TO SEND REFRENCE
+    console.log('Request Refrence', model);
+
+    // REFRESH GRID DATA
+    ctx.dispatch(new GetRefrenceFormGridData());
   }
 }

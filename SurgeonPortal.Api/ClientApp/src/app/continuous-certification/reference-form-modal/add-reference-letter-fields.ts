@@ -74,7 +74,7 @@ export const ADD_REFERENCE_LETTER_FIELDS = [
     required: true,
     name: 'authenticatingOfficialEmail',
     placeholder: 'Enter Official’s email address',
-    type: 'text',
+    type: 'email',
     size: 'col-4',
   },
   {
@@ -84,7 +84,7 @@ export const ADD_REFERENCE_LETTER_FIELDS = [
     required: true,
     name: 'confirmEmailAddress',
     placeholder: 'Enter Official’s email address again',
-    type: 'text',
+    type: 'email',
     size: 'col-4',
   },
   {
@@ -93,8 +93,8 @@ export const ADD_REFERENCE_LETTER_FIELDS = [
     value: '',
     required: true,
     name: 'authenticatingOfficialPhoneNumber',
-    placeholder: '_ _ _ - _ _ _ - _ _ _ _',
-    type: 'text',
+    placeholder: '(999) 999-9999',
+    type: 'tel',
     size: 'col-4',
   },
   {
