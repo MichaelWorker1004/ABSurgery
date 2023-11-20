@@ -34,6 +34,23 @@ namespace SurgeonPortal.Api.Controllers.Scoring
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActiveExamReadOnlyModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("active")]
+        public async Task<ActionResult<ActiveExamReadOnlyModel>> GetActiveExamReadOnly_GetByExaminerUserIdAsync(
+            [FromServices] IActiveExamReadOnlyFactory activeExamReadOnlyFactory,
+            DateTime currentDate)
+        {
+            var item = await activeExamReadOnlyFactory.GetByExaminerUserIdAsync(currentDate);
+        
+            return Ok(_mapper.Map<ActiveExamReadOnlyModel>(item));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExamSessionLockCommandModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

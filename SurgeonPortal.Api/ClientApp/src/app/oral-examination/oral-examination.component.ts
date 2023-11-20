@@ -31,7 +31,7 @@ import {
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
-  GetExamHeaderId,
+  GetActiveExamId,
   GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
@@ -124,9 +124,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     public globalDialogService: GlobalDialogService
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      if (featureFlags?.ceScoreTesting) {
-        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
-      }
+      this._store.dispatch(new GetActiveExamId());
     });
 
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {

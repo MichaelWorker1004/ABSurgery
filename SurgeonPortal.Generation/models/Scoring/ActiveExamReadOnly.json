@@ -1,0 +1,24 @@
+{
+  "refs": {},
+  "name": "Scoring\\ActiveExamReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamHeaderId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Scoring\\ActiveExamReadOnly -sp [dbo].[get_active_exam_byuserid] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-11-17T21:07:28.998849Z"
+  },
+  "version": 1
+}

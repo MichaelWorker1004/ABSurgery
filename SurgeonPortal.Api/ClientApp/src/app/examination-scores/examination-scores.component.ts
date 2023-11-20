@@ -18,7 +18,7 @@ import { ExaminationScoreModalComponent } from './examination-score-modal/examin
 import {
   ApplicationSelectors,
   ExamScoringSelectors,
-  GetExamHeaderId,
+  GetActiveExamId,
   GetExamScoresList,
   GetExamTitle,
   GetSelectedExamScores,
@@ -103,11 +103,8 @@ export class ExaminationScoresComponent implements OnInit {
   currentDay = new Date();
 
   constructor(private _store: Store) {
-    // TODO: [Joe] - remove after release 1 as part of feature/1811
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      if (featureFlags?.ceScoreTesting) {
-        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
-      }
+      this._store.dispatch(new GetActiveExamId());
       if (featureFlags?.ceScoreTestingDate) {
         this.currentDay = new Date('10/16/2023');
       }
