@@ -11,6 +11,10 @@ export class UpdateOutcomeRegistries {
   constructor(public payload: IOutcomeRegistryModel) {}
 }
 
+export class GetAttestations {
+  static readonly type = '[Continuous Certification] Get Attestations';
+}
+
 export class GetContinuousCertificationStatuses {
   static readonly type =
     '[Continuous Certification] Get Continuous Certification Statuses';
