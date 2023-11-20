@@ -45,8 +45,8 @@ import {
   GetCaseDetailsAndFeedback,
   GetExaminerAgenda,
   GetExaminerConflict,
-  GetExamHeaderId,
   ClearExamineeData,
+  GetActiveExamId,
 } from './exam-scoring.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { RostersService } from 'src/app/api/services/scoring/rosters.service';
@@ -67,6 +67,7 @@ import { AgendaService } from 'src/app/api/services/examiners/agenda.service';
 import { ConflictService } from 'src/app/api/services/examiners/conflict.service';
 import { IConflictReadOnlyModel } from 'src/app/api/models/examiners/conflict-read-only.model';
 import { ICaseFeedbackReadOnlyModel } from 'src/app/api/models/scoring/case-feedback-read-only.model';
+import { IActiveExamReadOnlyModel } from 'src/app/api/models/scoring/active-exam-read-only.model';
 
 export interface IExamScoring {
   examTitle: IExamTitleReadOnlyModel | undefined;
@@ -117,7 +118,7 @@ export const EXAM_SCORING_STATE_TOKEN = new StateToken<IExamScoring>(
     examinerConflict: undefined,
     errors: null,
     examErrors: null,
-    examHeaderId: 482,
+    examHeaderId: null,
   },
 })
 @Injectable()
@@ -141,6 +142,38 @@ export class ExamScoringState {
     private conflictSerive: ConflictService,
     private router: Router
   ) {}
+
+  @Action(GetActiveExamId)
+  getActiveExamId(
+    ctx: StateContext<IExamScoring>,
+    payload: { isCeScoreTesting: boolean }
+  ) {
+    const state = ctx.getState();
+    if (payload?.isCeScoreTesting) {
+      const testHeaderId = 494;
+      return of(testHeaderId);
+    } else if (state?.examHeaderId) {
+      return of(state.examHeaderId);
+    } else {
+      const currentDate = new Date().toISOString().split('T')[0];
+
+      return this.examSessionsService
+        .retrieveActiveExamReadOnly_GetByExaminerUserId(currentDate)
+        .pipe(
+          tap((result: IActiveExamReadOnlyModel) => {
+            ctx.patchState({
+              examHeaderId: result.examHeaderId,
+              errors: null,
+            });
+          }),
+          catchError((httpError: HttpErrorResponse) => {
+            const errors = httpError.error;
+            ctx.patchState({ errors });
+            return of(errors);
+          })
+        );
+    }
+  }
 
   @Action(GetExamTitle)
   getExamTitle(ctx: StateContext<IExamScoring>, payload: { id: number }) {
@@ -824,21 +857,6 @@ export class ExamScoringState {
           return of(errors);
         })
       );
-  }
-
-  @Action(GetExamHeaderId)
-  getExamHeaderId(
-    ctx: StateContext<IExamScoring>,
-    payload: { isCeScoreTesting: boolean }
-  ) {
-    const state = ctx.getState();
-    if (payload.isCeScoreTesting) {
-      ctx.patchState({
-        examHeaderId: 494,
-      });
-    }
-
-    return of(state.examHeaderId);
   }
 
   @Action(ClearExamineeData)

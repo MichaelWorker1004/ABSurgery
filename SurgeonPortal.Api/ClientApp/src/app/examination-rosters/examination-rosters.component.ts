@@ -27,9 +27,9 @@ import {
   DeleteCaseComment,
   DeleteCaseFeedback,
   ExamScoringSelectors,
+  GetActiveExamId,
   GetCaseDetailsAndFeedback,
   GetCaseRoster,
-  GetExamHeaderId,
   GetExamTitle,
   IFeatureFlags,
   UpdateCaseComment,
@@ -110,9 +110,7 @@ export class ExaminationRostersComponent implements OnInit {
     private _globalDialogService: GlobalDialogService
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      if (featureFlags?.ceScoreTesting) {
-        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
-      }
+      this._store.dispatch(new GetActiveExamId(featureFlags?.ceScoreTesting));
     });
 
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {

@@ -18,7 +18,7 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   DownloadDocument,
   ExamScoringSelectors,
-  GetExamHeaderId,
+  GetActiveExamId,
   GetExamTitle,
   GetExaminerAgenda,
   GetExaminerConflict,
@@ -84,15 +84,10 @@ export class CeScoringAppComponent implements OnInit {
     private globalDialogService: GlobalDialogService,
     private _translateService: TranslateService
   ) {
-    this, _store.dispatch(new GetExamHeaderId());
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      this._store.dispatch(new GetActiveExamId(featureFlags?.ceScoreTesting));
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
-        if (featureFlags.ceScoreTesting) {
-          this._store.dispatch(
-            new GetExamHeaderId(featureFlags.ceScoreTesting)
-          );
-        }
         if (featureFlags.ceScoreTestingDate) {
           this.examinationDate = new Date('10/16/2023')
             .toISOString()

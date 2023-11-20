@@ -3,6 +3,12 @@ import { ICaseCommentModel, ICaseScoreModel } from 'src/app/api';
 import { IExamScoreModel } from 'src/app/api/models/ce/exam-score.model';
 import { ICaseFeedbackModel } from 'src/app/api/models/scoring/case-feedback.model';
 
+export class GetActiveExamId {
+  static readonly type = '[Exam-Scoring] get active exam id';
+
+  constructor(public isCeScoreTesting = false) {}
+}
+
 export class GetExamTitle {
   static readonly type = '[Exam-Scoring] get title of exam by id';
 
@@ -169,12 +175,6 @@ export class GetExaminerConflict {
   static readonly type = '[Exam-Scoring] Get examiner conflict';
 
   constructor(public examHeaderId: number) {}
-}
-
-export class GetExamHeaderId {
-  static readonly type = '[Exam-Scoring] Get exam header id';
-
-  constructor(public isCeScoreTesting = false) {}
 }
 
 export class ClearExamineeData {
