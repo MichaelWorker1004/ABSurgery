@@ -6,6 +6,7 @@
   <a
     *ngIf="!disabled && actionType === 'component'"
     [routerLink]="actionAction"
+    [fragment]="actionAnchor"
     class="hotspot"
   ></a>
   <button

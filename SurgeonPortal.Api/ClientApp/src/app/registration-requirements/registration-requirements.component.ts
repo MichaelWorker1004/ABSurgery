@@ -131,8 +131,8 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: Action.dialog,
-          action: 'surgeonProfileModal',
+          type: Action.component,
+          action: '/personal-profile',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-address-card',
@@ -143,8 +143,8 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: Action.dialog,
-          action: 'trainingModal',
+          type: Action.component,
+          action: '/medical-training',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-language fa-solid',
@@ -156,8 +156,9 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: Action.dialog,
-          action: 'professionalActivitiesAndPrivilegesModal',
+          type: Action.component,
+          action: '/professional-standing',
+          anchor: 'hospital-appointments',
         },
         actionDisplay: 'View / Update my information',
         icon: 'fa-solid fa-user-doctor',
@@ -168,8 +169,9 @@ export class RegistrationRequirementsComponent implements OnInit {
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         action: {
-          type: Action.dialog,
-          action: 'medicalLicenseModal',
+          type: Action.component,
+          action: '/professional-standing',
+          anchor: 'medical-license',
         },
         actionDisplay: 'View / Update my license',
         icon: 'fa-certificate fa-solid',
