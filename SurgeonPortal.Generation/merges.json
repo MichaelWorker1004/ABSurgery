@@ -2657,19 +2657,19 @@
     "lastMergedHash": "C8FF8C04ABDEC5889677BFC0799E9CD8"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\IRosterReadOnly.cs": {
-    "lastGeneratedHash": "013382492BC838280D07E56F82ED2836"
+    "lastGeneratedHash": "0FDD7E0FCFFDF0B8B1B98C70BE75BAA2"
   },
   "\\SurgeonPortal.Library.Contracts\\Scoring\\IRosterReadOnlyList.cs": {
     "lastGeneratedHash": "F4799263BAB02BF44533E992D869DAEC"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\scoring\\roster-read-only.model.ts": {
-    "lastGeneratedHash": "35380B59DE5F6B6267D225CFB2F53922"
+    "lastGeneratedHash": "3969D384C2644025BDD0346258766910"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Scoring\\RosterReadOnlyDto.cs": {
-    "lastGeneratedHash": "DB596BF413819F7F8F212FEEEED7B273"
+    "lastGeneratedHash": "CC4A0FD09A6CAC918FB6D912EEB8D921"
   },
   "\\SurgeonPortal.Models\\Scoring\\RosterReadOnlyModel.cs": {
-    "lastGeneratedHash": "44CF5AECB0EFBA21C1C927A15729CE57"
+    "lastGeneratedHash": "612F334C9E023AB41F41F9F941F3BD7F"
   },
   "\\SurgeonPortal.Library.Contracts\\Trainees\\IRegistrationStatusReadOnly.cs": {
     "lastGeneratedHash": "BFD1B3D47454165390F8ABCB38BEA5F5"
@@ -3300,7 +3300,7 @@
     "lastGeneratedHash": "362473CA6B393DBBABD76A240CFFFC9B"
   },
   "\\SurgeonPortal.Library\\Scoring\\RosterReadOnly.cs": {
-    "lastGeneratedHash": "6A39FECB7CC9F347AA7DC7A50873838C"
+    "lastGeneratedHash": "3F40E6261061E747017296CD6AF8E4F5"
   },
   "\\SurgeonPortal.Library\\Scoring\\RosterReadOnlyList.cs": {
     "lastGeneratedHash": "A9B7839FF4CC727915E952DAFBA2AAD0"

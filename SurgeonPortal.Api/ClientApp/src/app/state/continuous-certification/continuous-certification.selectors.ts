@@ -17,6 +17,7 @@ export class ContinuousCertificationSelectors {
       return {
         outcomeRegistries: state.outcomeRegistries,
         continuousCertificationStatuses: state.continuousCertificationStatuses,
+        refrenceFormGridData: state.refrenceFormGridData,
       };
     }
     return;
