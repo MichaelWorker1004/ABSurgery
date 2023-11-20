@@ -85,7 +85,7 @@ export class CeScoringAppComponent implements OnInit {
     private _translateService: TranslateService
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      this._store.dispatch(new GetActiveExamId(featureFlags?.ceScoreTesting));
+      this._store.dispatch(new GetActiveExamId());
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
         if (featureFlags.ceScoreTestingDate) {
@@ -94,14 +94,11 @@ export class CeScoringAppComponent implements OnInit {
             .split('T')[0];
         }
       }
-
-      this.examHeaderId$
-        ?.pipe(untilDestroyed(this))
-        .subscribe((examHeaderId) => {
-          this._store.dispatch(new GetExamTitle(examHeaderId));
-          this._store.dispatch(new GetExaminerAgenda(examHeaderId));
-          this._store.dispatch(new GetExaminerConflict(examHeaderId));
-        });
+    });
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+      this._store.dispatch(new GetExaminerAgenda(examHeaderId));
+      this._store.dispatch(new GetExaminerConflict(examHeaderId));
     });
   }
 

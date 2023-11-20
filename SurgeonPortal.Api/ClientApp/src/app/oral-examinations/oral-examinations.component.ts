@@ -87,7 +87,7 @@ export class OralExaminationsComponent implements OnInit {
     private _translateService: TranslateService
   ) {
     this.featureFlags$?.pipe().subscribe((featureFlags) => {
-      this._store.dispatch(new GetActiveExamId(featureFlags?.ceScoreTesting));
+      this._store.dispatch(new GetActiveExamId());
       if (featureFlags) {
         if (featureFlags.ceScoreTestingDate) {
           this.examDate = new Date('10/16/2023');

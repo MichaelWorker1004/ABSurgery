@@ -124,7 +124,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     public globalDialogService: GlobalDialogService
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      this._store.dispatch(new GetActiveExamId(featureFlags?.ceScoreTesting));
+      this._store.dispatch(new GetActiveExamId());
     });
 
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {

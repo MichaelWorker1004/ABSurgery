@@ -110,7 +110,7 @@ export class ExaminationRostersComponent implements OnInit {
     private _globalDialogService: GlobalDialogService
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      this._store.dispatch(new GetActiveExamId(featureFlags?.ceScoreTesting));
+      this._store.dispatch(new GetActiveExamId());
     });
 
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {

@@ -144,15 +144,9 @@ export class ExamScoringState {
   ) {}
 
   @Action(GetActiveExamId)
-  getActiveExamId(
-    ctx: StateContext<IExamScoring>,
-    payload: { isCeScoreTesting: boolean }
-  ) {
+  getActiveExamId(ctx: StateContext<IExamScoring>) {
     const state = ctx.getState();
-    if (payload?.isCeScoreTesting) {
-      const testHeaderId = 494;
-      return of(testHeaderId);
-    } else if (state?.examHeaderId) {
+    if (state?.examHeaderId) {
       return of(state.examHeaderId);
     } else {
       const currentDate = new Date().toISOString().split('T')[0];

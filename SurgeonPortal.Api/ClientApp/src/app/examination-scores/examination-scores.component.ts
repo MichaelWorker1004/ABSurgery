@@ -100,13 +100,11 @@ export class ExaminationScoresComponent implements OnInit {
 
   lockedCases = false;
 
-  // TODO: [Joe] - remove after release 1 as part of feature/1811
   currentDay = new Date();
 
   constructor(private _store: Store) {
-    // TODO: [Joe] - remove after release 1 as part of feature/1811
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      this._store.dispatch(new GetActiveExamId(featureFlags?.ceScoreTesting));
+      this._store.dispatch(new GetActiveExamId());
       if (featureFlags?.ceScoreTestingDate) {
         this.currentDay = new Date('10/16/2023');
       }

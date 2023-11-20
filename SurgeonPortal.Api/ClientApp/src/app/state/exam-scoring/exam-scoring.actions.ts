@@ -5,8 +5,6 @@ import { ICaseFeedbackModel } from 'src/app/api/models/scoring/case-feedback.mod
 
 export class GetActiveExamId {
   static readonly type = '[Exam-Scoring] get active exam id';
-
-  constructor(public isCeScoreTesting = false) {}
 }
 
 export class GetExamTitle {
