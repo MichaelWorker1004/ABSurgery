@@ -27,9 +27,9 @@ import {
   DeleteCaseComment,
   DeleteCaseFeedback,
   ExamScoringSelectors,
+  GetActiveExamId,
   GetCaseDetailsAndFeedback,
   GetCaseRoster,
-  GetExamHeaderId,
   GetExamTitle,
   IFeatureFlags,
   UpdateCaseComment,
@@ -41,7 +41,7 @@ import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-r
 import { Observable } from 'rxjs';
 import { ICaseFeedbackModel } from '../api/models/scoring/case-feedback.model';
 
-interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
+export interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
   editComment: boolean;
   newComment?: string;
   newFeedback?: string;
@@ -110,9 +110,7 @@ export class ExaminationRostersComponent implements OnInit {
     private _globalDialogService: GlobalDialogService
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      if (featureFlags?.ceScoreTesting) {
-        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
-      }
+      this._store.dispatch(new GetActiveExamId());
     });
 
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
@@ -287,7 +285,7 @@ export class ExaminationRostersComponent implements OnInit {
       // call update case comment store action
       this._store
         .dispatch(new UpdateCaseComment(newComment))
-        .pipe(untilDestroyed(this))
+        ?.pipe(untilDestroyed(this))
         .subscribe(() => {
           const caseComment = this._store.selectSnapshot(
             ExamScoringSelectors.slices.selectedCaseComment
@@ -341,7 +339,6 @@ export class ExaminationRostersComponent implements OnInit {
 
   saveCaseFeedback() {
     const model = {
-      userId: this.userId,
       feedback: this.selectedCaseDetails.newFeedback,
       caseHeaderId: this.selectedCaseDetails.id,
     } as unknown as ICaseFeedbackModel;
@@ -349,7 +346,7 @@ export class ExaminationRostersComponent implements OnInit {
       model.id = this.selectedCaseDetails.caseFeedbackId;
       this._store
         .dispatch(new UpdateCaseFeedback(model))
-        .pipe(untilDestroyed(this))
+        ?.pipe(untilDestroyed(this))
         .subscribe(() => {
           const caseFeedback = this._store.selectSnapshot(
             ExamScoringSelectors.slices.selectedCaseFeedback
@@ -365,7 +362,7 @@ export class ExaminationRostersComponent implements OnInit {
     } else {
       this._store
         .dispatch(new CreateCaseFeedback(model))
-        .pipe(untilDestroyed(this))
+        ?.pipe(untilDestroyed(this))
         .subscribe(() => {
           const caseFeedback = this._store.selectSnapshot(
             ExamScoringSelectors.slices.selectedCaseFeedback

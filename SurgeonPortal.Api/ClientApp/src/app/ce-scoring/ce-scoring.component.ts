@@ -18,7 +18,7 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   DownloadDocument,
   ExamScoringSelectors,
-  GetExamHeaderId,
+  GetActiveExamId,
   GetExamTitle,
   GetExaminerAgenda,
   GetExaminerConflict,
@@ -84,29 +84,21 @@ export class CeScoringAppComponent implements OnInit {
     private globalDialogService: GlobalDialogService,
     private _translateService: TranslateService
   ) {
-    this, _store.dispatch(new GetExamHeaderId());
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
+      this._store.dispatch(new GetActiveExamId());
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
-        if (featureFlags.ceScoreTesting) {
-          this._store.dispatch(
-            new GetExamHeaderId(featureFlags.ceScoreTesting)
-          );
-        }
         if (featureFlags.ceScoreTestingDate) {
           this.examinationDate = new Date('10/16/2023')
             .toISOString()
             .split('T')[0];
         }
       }
-
-      this.examHeaderId$
-        ?.pipe(untilDestroyed(this))
-        .subscribe((examHeaderId) => {
-          this._store.dispatch(new GetExamTitle(examHeaderId));
-          this._store.dispatch(new GetExaminerAgenda(examHeaderId));
-          this._store.dispatch(new GetExaminerConflict(examHeaderId));
-        });
+    });
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
+      this._store.dispatch(new GetExamTitle(examHeaderId));
+      this._store.dispatch(new GetExaminerAgenda(examHeaderId));
+      this._store.dispatch(new GetExaminerConflict(examHeaderId));
     });
   }
 

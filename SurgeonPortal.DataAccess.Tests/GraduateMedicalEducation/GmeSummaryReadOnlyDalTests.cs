@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
 {
-	public class GmeSummaryReadOnlyDalTests : TestBase<string>
+	public class GmeSummaryReadOnlyDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
         {
             var expectedSprocName = "[dbo].[get_gmesummary_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,
@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
             sqlManager.AddRecords(CreateMany<GmeSummaryReadOnlyDto>());
         
             var sut = new GmeSummaryReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new GmeSummaryReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

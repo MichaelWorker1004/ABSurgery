@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class IsExamSessionLockedCommandDalTests : TestBase<string>
+	public class IsExamSessionLockedCommandDalTests : TestBase<int>
     {
         #region IsExamSessionLocked
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
         {
             var expectedSprocName = "[dbo].[get_isLocked_by_examId]";
             var expectedExamCaseId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ExamCaseId = expectedExamCaseId,

@@ -1,15 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
 import { of, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { SaveMyAccountChanges, ClearErrors } from './my-account.actions';
-import { IFormErrors } from '../../shared/common';
-import { IUserCredentialModel } from '../../api';
-import { UserCredentialsService } from '../../api';
-import { Logout } from '../auth';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
-import { CloseApplication } from '../application';
+import { IUserCredentialModel, UserCredentialsService } from '../../api';
+import { IFormErrors } from '../../shared/common';
+import { ClearErrors, SaveMyAccountChanges } from './my-account.actions';
 
 export interface IUserCredential extends IUserCredentialModel {
   errors?: IFormErrors | null;
@@ -19,6 +16,7 @@ const USER_ACCOUNT_STATE_TOKEN = new StateToken<IUserCredential>('userAccount');
 @State<IUserCredential>({
   name: USER_ACCOUNT_STATE_TOKEN,
   defaults: {
+    userId: null,
     emailAddress: null,
     password: null,
     errors: null,
@@ -48,6 +46,7 @@ export class MyAccountState {
         }
         // Succeeded in changing the user's credentials so logout
         ctx.setState({
+          userId: null,
           emailAddress: null,
           password: null,
           errors: null,

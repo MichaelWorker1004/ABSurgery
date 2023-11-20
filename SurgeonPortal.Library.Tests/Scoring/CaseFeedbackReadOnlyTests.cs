@@ -10,22 +10,26 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Scoring
 {
     [TestFixture] 
-	public class CaseFeedbackReadOnlyTests : TestBase<string>
+	public class CaseFeedbackReadOnlyTests : TestBase<int>
     {
-
         #region GetByExaminerIdAsync
         
         [Test]
         public async Task GetByExaminerIdAsync_CallsDalCorrectly()
         {
             var expectedCaseHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
             
             var mockDal = new Mock<ICaseFeedbackReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExaminerIdAsync(expectedCaseHeaderId))
+            mockDal.Setup(m => m.GetByExaminerIdAsync(
+                expectedExaminerUserId,
+                expectedCaseHeaderId))
                 .ReturnsAsync(Create<CaseFeedbackReadOnlyDto>());
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedbackReadOnly, CaseFeedbackReadOnly>()
                 .Build();
@@ -40,19 +44,25 @@ namespace SurgeonPortal.Library.Tests.Scoring
         public async Task GetByExaminerIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<CaseFeedbackReadOnlyDto>();
+            var expectedCaseHeaderId = Create<int>();
+            var expectedExaminerUserId = 1234;
         
             var mockDal = new Mock<ICaseFeedbackReadOnlyDal>();
-            mockDal.Setup(m => m.GetByExaminerIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByExaminerIdAsync(
+                expectedExaminerUserId,
+                expectedCaseHeaderId))
                 .ReturnsAsync(dto);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICaseFeedbackReadOnly, CaseFeedbackReadOnly>()
                 .Build();
         
             var factory = new CaseFeedbackReadOnlyFactory();
-            var sut = await factory.GetByExaminerIdAsync(Create<int>());
+            var sut = await factory.GetByExaminerIdAsync(expectedCaseHeaderId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

@@ -31,7 +31,7 @@ import {
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
-  GetExamHeaderId,
+  GetActiveExamId,
   GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
@@ -41,7 +41,6 @@ import {
   UserProfileSelectors,
 } from '../state';
 import { SetExamInProgress } from '../state/application/application.actions';
-import { s } from '@fullcalendar/core/internal-common';
 
 @UntilDestroy()
 @Component({
@@ -125,9 +124,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     public globalDialogService: GlobalDialogService
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      if (featureFlags?.ceScoreTesting) {
-        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
-      }
+      this._store.dispatch(new GetActiveExamId());
     });
 
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
@@ -151,7 +148,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
 
       this._store
         .dispatch(new ClearExamineeData())
-        .pipe(untilDestroyed(this))
+        ?.pipe(untilDestroyed(this))
         .subscribe(() => {
           this._store
             .dispatch(new GetExaminee(params['examinationId']))
@@ -184,7 +181,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.globalDialogService.closeOpenDialog();
           }, 0);
-          this.showTimer = true;
+          if (examinee.timerBit !== null || examinee.timerBit !== undefined) {
+            this.showTimer = examinee.timerBit;
+          } else {
+            this.showTimer = true;
+          }
         }
       });
   }
@@ -313,13 +314,13 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
 
     this._store.dispatch(new SetExamInProgress(false));
 
-    const dateParts = this.dayTime.replace(/\s+/g, ' ').trim().split(' ');
+    const dateParts = this.dayTime?.replace(/\s+/g, ' ').trim().split(' ');
     const formattedDate = `${dateParts[1]} ${dateParts[0]} ${dateParts[2]}`;
     const examDate = new Date(formattedDate);
 
     this._store
       .dispatch(new SkipExam(this.examScheduleId, examDate.toISOString()))
-      .pipe(take(1))
+      ?.pipe(take(1))
       .subscribe(() => {
         this.router.navigate(['/ce-scoring/oral-examinations']);
       });
@@ -343,7 +344,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     }
     this._store
       .dispatch(new CreateExamScore(model, false))
-      .pipe(take(1))
+      ?.pipe(take(1))
       .subscribe((results) => {
         if (results.examScoring.examErrors) {
           // handle exam submission error

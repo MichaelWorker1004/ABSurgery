@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Csla;
-using Csla.Core;
+﻿using Csla.Core;
 using Csla.Rules;
-using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
-using SurgeonPortal.Shared;
+using System.Collections.Generic;
 
 namespace SurgeonPortal.Library.Users
 {
 
-    public class PasswordMatchesCurrentRule : Csla.Rules.BusinessRule
+	public class PasswordMatchesCurrentRule : BusinessRule
     {
         private readonly IPasswordValidationCommandFactory _passwordValidationCommandFactory;
-
+        private IPropertyInfo _userIdProperty;
         public PasswordMatchesCurrentRule(IPasswordValidationCommandFactory passwordValidationCommandFactory,
             IPropertyInfo primaryProperty,
+            IPropertyInfo userIdProperty,
             int priority)
           : base(primaryProperty)
         {
             _passwordValidationCommandFactory = passwordValidationCommandFactory;
-            InputProperties = new List<IPropertyInfo> { primaryProperty };
+            _userIdProperty = userIdProperty;
+            InputProperties = new List<IPropertyInfo> { primaryProperty, userIdProperty };
             Priority = priority;
             IsAsync = false;
         }
@@ -32,19 +26,23 @@ namespace SurgeonPortal.Library.Users
         protected override void Execute(IRuleContext context)
         {
             var propertyValue = context.InputPropertyValues[PrimaryProperty];
-            var target = (IBusinessBase)context.Target;
+            var userIdValue = context.InputPropertyValues[_userIdProperty];
             
-            if (propertyValue != null)
+            if (propertyValue != null &&
+                userIdValue != null)
             {
-                var newPassword = propertyValue.ToString();
-                if (!string.IsNullOrWhiteSpace(newPassword))
+                if (int.TryParse(userIdValue.ToString(), out int userId))
                 {
-                    var command = _passwordValidationCommandFactory.Validate(IdentityHelper.UserId, newPassword);
-                    if (command.PasswordsMatch.HasValue)
+                    var newPassword = propertyValue.ToString();
+                    if (!string.IsNullOrWhiteSpace(newPassword))
                     {
-                        if (command.PasswordsMatch.Value == true)
+                        var command = _passwordValidationCommandFactory.Validate(userId, newPassword);
+                        if (command.PasswordsMatch.HasValue)
                         {
-                            context.AddErrorResult(PrimaryProperty, $"The new password cannot be the same as the current password.");
+                            if (command.PasswordsMatch.Value == true)
+                            {
+                                context.AddErrorResult(PrimaryProperty, $"The new password cannot be the same as the current password.");
+                            }
                         }
                     }
                 }

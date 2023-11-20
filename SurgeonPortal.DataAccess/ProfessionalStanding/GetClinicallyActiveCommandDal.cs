@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
 
 
 
-        public GetClinicallyActiveCommandDto GetClinicallyActiveByUserId()
+        public GetClinicallyActiveCommandDto GetClinicallyActiveByUserId(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -22,7 +22,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                     "[dbo].[get_user_clinically_active_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.PracticeTypeReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class PracticeTypeReadOnlyList : YtgReadOnlyListBase<IPracticeTypeReadOnlyList, IPracticeTypeReadOnly>, IPracticeTypeReadOnlyList
+	public class PracticeTypeReadOnlyList : YtgReadOnlyListBase<IPracticeTypeReadOnlyList, IPracticeTypeReadOnly, int>, IPracticeTypeReadOnlyList
     {
         private readonly IPracticeTypeReadOnlyDal _practiceTypeReadOnlyDal;
 
-        public PracticeTypeReadOnlyList(IPracticeTypeReadOnlyDal practiceTypeReadOnlyDal)
+        public PracticeTypeReadOnlyList(
+            IIdentityProvider identityProvider,
+            IPracticeTypeReadOnlyDal practiceTypeReadOnlyDal)
+            : base(identityProvider)
         {
             _practiceTypeReadOnlyDal = practiceTypeReadOnlyDal;
         }
@@ -29,7 +33,6 @@ namespace SurgeonPortal.Library.Picklists
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [Fetch]

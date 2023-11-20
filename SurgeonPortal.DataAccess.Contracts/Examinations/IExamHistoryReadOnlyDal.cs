@@ -5,6 +5,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Examinations
 {
     public interface IExamHistoryReadOnlyDal
     {
-        Task<IEnumerable<ExamHistoryReadOnlyDto>> GetByUserIdAsync();
+        Task<IEnumerable<ExamHistoryReadOnlyDto>> GetByUserIdAsync(int userId);
     }
 }

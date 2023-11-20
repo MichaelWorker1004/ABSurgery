@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -114,7 +114,14 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s Billing\\ExamFeeReadOnly.GetByUserId ExamFeeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Billing\\ExamFeeReadOnly -p:Adapter=sp:abssp-[dbo].[Get_Exam_Fees_byUserId] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamFeeReadOnly -p:Route=by-userid -p:ControllerName=Billing\\ExamFeeController -p:ControllerRoute=api/billing/exam-fee -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim ",
     "inferredCommand": "ytgim generate i  Billing\\ExamFeeReadOnly.GetByUserId ExamFeeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Billing\\ExamFeeReadOnly -p:Adapter=sp:abssp-[dbo].[Get_Exam_Fees_byUserId] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ExamFeeReadOnly -p:Route=by-userid -p:ControllerName=Billing\\ExamFeeController -p:ControllerRoute=api/billing/exam-fee -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

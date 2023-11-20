@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class UserTokenTests : TestBase<string>
+	public class UserTokenTests : TestBase<int>
     {
         private UserTokenDto CreateValidDto()
         {     
@@ -36,8 +36,9 @@ namespace SurgeonPortal.Library.Tests.Users
             mockDal.Setup(m => m.GetActiveAsync(expectedToken))
                 .ReturnsAsync(Create<UserTokenDto>());
         
+        
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserToken, UserToken>()
                 .Build();
@@ -52,19 +53,21 @@ namespace SurgeonPortal.Library.Tests.Users
         public async Task GetActive_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedToken = Create<string>();
         
             var mockDal = new Mock<IUserTokenDal>();
-            mockDal.Setup(m => m.GetActiveAsync(It.IsAny<string>()))
+            mockDal.Setup(m => m.GetActiveAsync(expectedToken))
                 .ReturnsAsync(dto);
+            
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserToken, UserToken>()
                 .Build();
         
             var factory = new UserTokenFactory();
-            var sut = await factory.GetActiveAsync(Create<string>());
+            var sut = await factory.GetActiveAsync(expectedToken);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -85,7 +88,7 @@ namespace SurgeonPortal.Library.Tests.Users
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserToken, UserToken>()
                 .Build();
@@ -122,14 +125,16 @@ namespace SurgeonPortal.Library.Tests.Users
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserToken, UserToken>()
                 .Build();
         
             var factory = new UserTokenFactory();
             var sut = factory.Create();
-            sut.UserId = Create<int>();
+            sut.UserId = dto.UserId;
+            sut.Token = dto.Token;
+            sut.ExpiresAt = dto.ExpiresAt;
         
             await sut.SaveAsync();
             

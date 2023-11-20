@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class CaseRosterReadOnlyDalTests : TestBase<string>
+	public class CaseRosterReadOnlyDalTests : TestBase<int>
     {
         #region GetByScheduleIdAsync
         
@@ -18,7 +18,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var expectedSprocName = "[dbo].[get_toc_case_list]";
             var expectedScheduleId1 = Create<int>();
             var expectedScheduleId2 = Create<int?>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     ScheduleId1 = expectedScheduleId1,

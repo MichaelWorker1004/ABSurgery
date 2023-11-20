@@ -15,6 +15,14 @@ namespace SurgeonPortal.Library.Billing
             
         }
 
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+            
+                public GetByUserIdCriteria()
+             {
+              }
+            }
             
 
 

@@ -30,9 +30,16 @@ namespace SurgeonPortal.Library.Users
         {
             _userCredentialDal = userCredentialDal;
             _passwordValidationCommandFactory = passwordValidationCommandFactory;
-
-            InitializeInjectionDependentRules();
         }
+
+        [Key] 
+        [DisplayName(nameof(UserId))]
+		public int UserId
+		{
+			get { return GetProperty(UserIdProperty); }
+			set { SetProperty(UserIdProperty, value); }
+		}
+		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
 
         [DisplayName(nameof(EmailAddress))]
 		public string EmailAddress
@@ -59,12 +66,8 @@ namespace SurgeonPortal.Library.Users
         public static void AddObjectAuthorizationRules()
         {
             
-
             
-
         }
-
-
 
         /// <summary>
         /// This method is used to add business rules to the Csla 
@@ -79,9 +82,10 @@ namespace SurgeonPortal.Library.Users
             BusinessRules.AddRule(new RegExMatch(PasswordProperty, @"^$|^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$", @"The password does not meet the minimum requirements.  Passwords must be a minimum length of 8 characters, at least one uppercase letter, one lowercase letter, one digit, and one special character"));
             BusinessRules.AddRule(new EitherOrRequiredRule(PasswordProperty, EmailAddressProperty, 1));
         }
-        private void InitializeInjectionDependentRules()
-        {
-            BusinessRules.AddRule(new PasswordMatchesCurrentRule(_passwordValidationCommandFactory, PasswordProperty, 2));
+
+		protected override void AddInjectedBusinessRules()
+		{
+            BusinessRules.AddRule(new PasswordMatchesCurrentRule(_passwordValidationCommandFactory, PasswordProperty, UserIdProperty, 2));
         }
 
 
@@ -94,7 +98,7 @@ namespace SurgeonPortal.Library.Users
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _userCredentialDal.GetByUserIdAsync();
+                var dto = await _userCredentialDal.GetByUserIdAsync(_identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -128,6 +132,7 @@ namespace SurgeonPortal.Library.Users
 		{
             base.FetchData(dto);
             
+			this.UserId = dto.UserId;
 			this.EmailAddress = dto.EmailAddress;
 			this.Password = dto.Password;
 		}
@@ -141,6 +146,7 @@ namespace SurgeonPortal.Library.Users
 		{
             base.ToDto(dto);
             
+			dto.UserId = this.UserId;
 			dto.EmailAddress = this.EmailAddress;
 			dto.Password = this.Password;
 

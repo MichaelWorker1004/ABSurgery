@@ -9,7 +9,7 @@ namespace SurgeonPortal.Shared.Storage
     [Serializable]
     public class AzureStorageConfiguration
     {
-        public string ConnectionString { get; set; }
-        public string ContainerName { get; set; }
+        public string? ConnectionString { get; set; }
+        public string? ContainerName { get; set; }
     }
 }

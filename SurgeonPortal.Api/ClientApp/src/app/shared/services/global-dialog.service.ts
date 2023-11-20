@@ -7,7 +7,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class GlobalDialogService {
-  private _dialog!: any;
+  private _dialog: any = document.createElement('sl-dialog');
   private _componentRef!: ComponentRef<any>;
 
   public viewContainerRef?: ViewContainerRef;
@@ -336,7 +336,9 @@ export class GlobalDialogService {
     // add the dialog to the DOM and show
     document.body.appendChild(this._dialog);
 
-    this._dialog.show();
+    if (typeof this._dialog.show === 'function') {
+      this._dialog.show();
+    }
   }
 
   // can be used to trigger a close from outside of dialog service

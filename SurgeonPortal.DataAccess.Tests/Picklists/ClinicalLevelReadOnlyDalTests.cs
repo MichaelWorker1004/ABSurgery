@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Picklists
 {
-	public class ClinicalLevelReadOnlyDalTests : TestBase<string>
+	public class ClinicalLevelReadOnlyDalTests : TestBase<int>
     {
         #region GetAllAsync
         
@@ -16,6 +16,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         public async Task GetAllAsync_ExecutesSprocCorrectly()
         {
             var expectedSprocName = "[dbo].[get_clinicallevel]";
+            
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecords(CreateMany<ClinicalLevelReadOnlyDto>());

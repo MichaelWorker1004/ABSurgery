@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.DashboardRosterReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class DashboardRosterReadOnlyList : YtgReadOnlyListBase<IDashboardRosterReadOnlyList, IDashboardRosterReadOnly>, IDashboardRosterReadOnlyList
+	public class DashboardRosterReadOnlyList : YtgReadOnlyListBase<IDashboardRosterReadOnlyList, IDashboardRosterReadOnly, int>, IDashboardRosterReadOnlyList
     {
         private readonly IDashboardRosterReadOnlyDal _dashboardRosterReadOnlyDal;
 
-        public DashboardRosterReadOnlyList(IDashboardRosterReadOnlyDal dashboardRosterReadOnlyDal)
+        public DashboardRosterReadOnlyList(
+            IIdentityProvider identityProvider,
+            IDashboardRosterReadOnlyDal dashboardRosterReadOnlyDal)
+            : base(identityProvider)
         {
             _dashboardRosterReadOnlyDal = dashboardRosterReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.Scoring
             Csla.Rules.BusinessRules.AddRule(typeof(DashboardRosterReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,9 @@ namespace SurgeonPortal.Library.Scoring
         private async Task GetByUserId(GetByUserIdCriteria criteria)
         
         {
-            var dtos = await _dashboardRosterReadOnlyDal.GetByUserIdAsync(criteria.ExamDate);
+            var dtos = await _dashboardRosterReadOnlyDal.GetByUserIdAsync(
+                _identity.GetUserId<int>(),
+                criteria.ExamDate);
         			
             FetchChildren(dtos);
         }

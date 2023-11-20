@@ -67,6 +67,17 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false
+    },
+    {
+      "name": "ExamDate",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {

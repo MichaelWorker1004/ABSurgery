@@ -10,14 +10,14 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 {
     [TestFixture] 
-	public class MedicalLicenseTests : TestBase<string>
+	public class MedicalLicenseTests : TestBase<int>
     {
         private MedicalLicenseDto CreateValidDto()
         {     
             var dto = Create<MedicalLicenseDto>();
 
             dto.LicenseId = Create<decimal>();
-            dto.UserId = Create<int?>();
+            dto.UserId = 1234;
             dto.IssuingStateId = Create<string>();
             dto.IssuingState = Create<string>();
             dto.LicenseNumber = Create<string>();
@@ -45,12 +45,13 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var mockDal = new Mock<IMedicalLicenseDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedLicenseId))
                 .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.DeleteAsync(It.IsAny<MedicalLicenseDto>()))
                 .Callback<MedicalLicenseDto>((p) => passedDto = p)
                 .Returns(Task.CompletedTask);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicense, MedicalLicense>()
@@ -88,8 +89,9 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             mockDal.Setup(m => m.GetByIdAsync(expectedLicenseId))
                 .ReturnsAsync(Create<MedicalLicenseDto>());
         
+        
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicense, MedicalLicense>()
@@ -105,20 +107,22 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedLicenseId = Create<int>();
         
             var mockDal = new Mock<IMedicalLicenseDal>();
-            mockDal.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+            mockDal.Setup(m => m.GetByIdAsync(expectedLicenseId))
                 .ReturnsAsync(dto);
         
+        
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicense, MedicalLicense>()
                 .Build();
         
             var factory = new MedicalLicenseFactory();
-            var sut = await factory.GetByIdAsync(Create<int>());
+            var sut = await factory.GetByIdAsync(expectedLicenseId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }
@@ -139,7 +143,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicense, MedicalLicense>()
@@ -165,14 +169,13 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.LicenseId)
+                .Excluding(m => m.IssuingState)
+                .Excluding(m => m.LicenseType)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
-                .Excluding(m => m.LicenseId)
-                .Excluding(m => m.UserId)
-                .Excluding(m => m.IssuingState)
-                .Excluding(m => m.LicenseType)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -188,7 +191,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicense, MedicalLicense>()
@@ -196,7 +199,16 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var factory = new MedicalLicenseFactory();
             var sut = factory.Create();
-            sut.IssuingStateId = Create<string>();
+            sut.LicenseId = dto.LicenseId;
+            sut.UserId = dto.UserId;
+            sut.IssuingStateId = dto.IssuingStateId;
+            sut.IssuingState = dto.IssuingState;
+            sut.LicenseNumber = dto.LicenseNumber;
+            sut.LicenseTypeId = dto.LicenseTypeId;
+            sut.LicenseType = dto.LicenseType;
+            sut.IssueDate = dto.IssueDate;
+            sut.ExpireDate = dto.ExpireDate;
+            sut.ReportingOrganization = dto.ReportingOrganization;
         
             await sut.SaveAsync();
             
@@ -218,18 +230,19 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         {
             var expectedLicenseId = Create<int>();
             
-            var dto = Create<MedicalLicenseDto>();
+            var dto = CreateValidDto();
             MedicalLicenseDto passedDto = null;
         
             var mockDal = new Mock<IMedicalLicenseDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedLicenseId))
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<MedicalLicenseDto>()))
                 .Callback<MedicalLicenseDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicense, MedicalLicense>()
@@ -270,13 +283,12 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.IssuingState)
+                .Excluding(m => m.LicenseType)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
-                    .Excluding(m => m.UserId)
-                    .Excluding(m => m.IssuingState)
-                    .Excluding(m => m.LicenseType)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -287,16 +299,17 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         {
             var expectedLicenseId = Create<int>();
             
-            var dto = Create<MedicalLicenseDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IMedicalLicenseDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedLicenseId))
-                        .ReturnsAsync(Create<MedicalLicenseDto>());
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<MedicalLicenseDto>()))
                 .ReturnsAsync(dto);
         
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IMedicalLicense, MedicalLicense>()

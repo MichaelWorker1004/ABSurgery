@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Scoring
 {
-	public class CaseCommentDalTests : TestBase<string>
+	public class CaseCommentDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
         {
             var expectedSprocName = "[dbo].[get_case_comments_byid]";
             var expectedId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     Id = expectedId,
@@ -92,8 +92,10 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     CaseContentId = expectedDto.CaseContentId,
                     Comments = expectedDto.Comments,
+                    CreatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -137,6 +139,7 @@ namespace SurgeonPortal.DataAccess.Tests.Scoring
                     Id = expectedDto.Id,
                     CaseContentId = expectedDto.CaseContentId,
                     Comments = expectedDto.Comments,
+                    LastUpdatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

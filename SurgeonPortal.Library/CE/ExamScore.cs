@@ -20,13 +20,16 @@ namespace SurgeonPortal.Library.CE
 	public class ExamScore : YtgBusinessBase<ExamScore>, IExamScore
     {
         private readonly IExamScoreDal _examScoreDal;
+        private readonly IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
 
         public ExamScore(
             IIdentityProvider identityProvider,
-            IExamScoreDal examScoreDal)
+            IExamScoreDal examScoreDal,
+			IGetExamCasesScoredCommandFactory getExamCasesScoredCommandFactory)
             : base(identityProvider)
         {
             _examScoreDal = examScoreDal;
+            _getExamCasesScoredCommandFactory = getExamCasesScoredCommandFactory;
         }
 
         [Key] 
@@ -50,7 +53,7 @@ namespace SurgeonPortal.Library.CE
 		public int ExaminerUserId
 		{
 			get { return GetProperty(ExaminerUserIdProperty); }
-			set { SetProperty(ExaminerUserIdProperty, value); }
+			 private set { SetProperty(ExaminerUserIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> ExaminerUserIdProperty = RegisterProperty<int>(c => c.ExaminerUserId);
 
@@ -89,24 +92,18 @@ namespace SurgeonPortal.Library.CE
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(ExamScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
-		protected override void AddBusinessRules()
+		protected override void AddInjectedBusinessRules()
 		{
-			base.AddBusinessRules();
-
-            BusinessRules.AddRule(new ExamCasesScoredRule(2));
+			BusinessRules.AddRule(new ExamCasesScoredRule(_getExamCasesScoredCommandFactory, 2));
 		}
-
 
         [Fetch]
         [RunLocal]
@@ -117,7 +114,9 @@ namespace SurgeonPortal.Library.CE
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _examScoreDal.GetByIdAsync(criteria.ExamScheduleScoreId);
+                var dto = await _examScoreDal.GetByIdAsync(
+                    criteria.ExamScheduleScoreId,
+                    _identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -127,6 +126,13 @@ namespace SurgeonPortal.Library.CE
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(ExaminerUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -194,29 +200,6 @@ namespace SurgeonPortal.Library.CE
 			dto.SubmittedDateTimeUTC = this.SubmittedDateTimeUTC;
 
 			return dto;
-		}
-
-        private class ExamCasesScoredRule : BusinessRule
-        {
-            private IGetExamCasesScoredCommandFactory _getExamCasesScoredCommandFactory;
-
-            public ExamCasesScoredRule(int priority)
-            {
-                Priority = priority;
-                _getExamCasesScoredCommandFactory = new GetExamCasesScoredCommandFactory();
-            }
-
-			protected override void Execute(IRuleContext context)
-			{
-                var target = context.Target as ExamScore;
-
-                var command = _getExamCasesScoredCommandFactory.GetExamCasesScored(target.ExamScheduleId);
-
-                if(!command.CasesScored)
-                {
-                    context.AddErrorResult("All exam cases must be scored before saving the exam score.");
-                }
-			}
 		}
     }
 }

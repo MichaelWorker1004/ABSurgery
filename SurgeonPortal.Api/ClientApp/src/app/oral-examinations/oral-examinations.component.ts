@@ -13,7 +13,7 @@ import { IExamSessionReadOnlyModel } from '../api/models/scoring/exam-session-re
 import {
   ApplicationSelectors,
   ExamScoringSelectors,
-  GetExamHeaderId,
+  GetActiveExamId,
   GetExamTitle,
   GetExamineeList,
   IFeatureFlags,
@@ -87,12 +87,8 @@ export class OralExaminationsComponent implements OnInit {
     private _translateService: TranslateService
   ) {
     this.featureFlags$?.pipe().subscribe((featureFlags) => {
+      this._store.dispatch(new GetActiveExamId());
       if (featureFlags) {
-        if (featureFlags.ceScoreTesting) {
-          this._store.dispatch(
-            new GetExamHeaderId(featureFlags.ceScoreTesting)
-          );
-        }
         if (featureFlags.ceScoreTestingDate) {
           this.examDate = new Date('10/16/2023');
         }
@@ -109,8 +105,6 @@ export class OralExaminationsComponent implements OnInit {
   }
 
   getOralExaminations() {
-    console.log('getOralExaminations', this.examDate.toString());
-    console.log('getOralExaminations', this.examDate.toISOString());
     this._store.dispatch(new GetExamineeList(this.examDate.toISOString()));
 
     this.examineeList$

@@ -3,7 +3,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Examinations
 {
-    public interface IExamHistoryReadOnly : IYtgReadOnlyBase
+    public interface IExamHistoryReadOnly : IYtgReadOnlyBase<int>
     {
         int? UserId { get; }
         decimal ExaminationId { get; }

@@ -7,5 +7,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring.CE
         public string ExamDate { get; set; }
         public int ExamineeUserId { get; set; }
         public int ExamScoringId { get; set; }
+        public bool? TimerBit { get; set; }
     }
 }

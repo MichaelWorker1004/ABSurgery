@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.CE.TitleReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring.CE
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Scoring.CE
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class TitleReadOnlyList : YtgReadOnlyListBase<ITitleReadOnlyList, ITitleReadOnly>, ITitleReadOnlyList
+	public class TitleReadOnlyList : YtgReadOnlyListBase<ITitleReadOnlyList, ITitleReadOnly, int>, ITitleReadOnlyList
     {
         private readonly ITitleReadOnlyDal _titleReadOnlyDal;
 
-        public TitleReadOnlyList(ITitleReadOnlyDal titleReadOnlyDal)
+        public TitleReadOnlyList(
+            IIdentityProvider identityProvider,
+            ITitleReadOnlyDal titleReadOnlyDal)
+            : base(identityProvider)
         {
             _titleReadOnlyDal = titleReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.Scoring.CE
             Csla.Rules.BusinessRules.AddRule(typeof(TitleReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
         [Fetch]
@@ -43,6 +46,7 @@ namespace SurgeonPortal.Library.Scoring.CE
         {
             var dtos = await _titleReadOnlyDal.GetByIdAsync(
                 criteria.ExamScheduleId,
+                _identity.GetUserId<int>(),
                 criteria.ExamineeUserId);
         			
             FetchChildren(dtos);

@@ -5,12 +5,10 @@ namespace SurgeonPortal.Models.MedicalTraining
 {
     public class MedicalTrainingModel
     {
-        [Required(ErrorMessage = "Id is required")]
         public int Id { get; set; }
-        [Required(ErrorMessage = "UserId is required")]
         public int UserId { get; set; }
         [Required(ErrorMessage = "GraduateProfileId is required")]
-        public int GraduateProfileId { get; set; }
+        public int? GraduateProfileId { get; set; }
         public string GraduateProfileDescription { get; set; }
         [Required(ErrorMessage = "MedicalSchoolName is required")]
         [MaxLength(30, ErrorMessage = "The MedicalSchoolName cannot be more than 30 characters")]
@@ -24,7 +22,7 @@ namespace SurgeonPortal.Models.MedicalTraining
         public string MedicalSchoolCountryId { get; set; }
         public string MedicalSchoolCountryName { get; set; }
         [Required(ErrorMessage = "DegreeId is required")]
-        public int DegreeId { get; set; }
+        public int? DegreeId { get; set; }
         public string DegreeName { get; set; }
         [Required(ErrorMessage = "MedicalSchoolCompletionYear is required")]
         [RegularExpression(@"^\d{4}$", ErrorMessage = "The medical school completion year doesn't match the required pattern (YYYY)")]

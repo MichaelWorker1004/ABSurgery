@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Users.UserClaimReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Users
@@ -14,11 +15,14 @@ namespace SurgeonPortal.Library.Users
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class UserClaimReadOnlyList : YtgReadOnlyListBase<IUserClaimReadOnlyList, IUserClaimReadOnly>, IUserClaimReadOnlyList
+	public class UserClaimReadOnlyList : YtgReadOnlyListBase<IUserClaimReadOnlyList, IUserClaimReadOnly, int>, IUserClaimReadOnlyList
     {
         private readonly IUserClaimReadOnlyDal _userClaimReadOnlyDal;
 
-        public UserClaimReadOnlyList(IUserClaimReadOnlyDal userClaimReadOnlyDal)
+        public UserClaimReadOnlyList(
+            IIdentityProvider identityProvider,
+            IUserClaimReadOnlyDal userClaimReadOnlyDal)
+            : base(identityProvider)
         {
             _userClaimReadOnlyDal = userClaimReadOnlyDal;
         }
@@ -30,7 +34,6 @@ namespace SurgeonPortal.Library.Users
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

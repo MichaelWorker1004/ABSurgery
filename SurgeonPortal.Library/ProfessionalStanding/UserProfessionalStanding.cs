@@ -1,10 +1,8 @@
 using Csla;
-using Csla.Core;
 using Csla.Rules;
 using SurgeonPortal.DataAccess.Contracts.ProfessionalStanding;
 using SurgeonPortal.Library.Contracts.ProfessionalStanding;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -22,14 +20,18 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 	public class UserProfessionalStanding : YtgBusinessBase<UserProfessionalStanding>, IUserProfessionalStanding
     {
         private readonly IUserProfessionalStandingDal _userProfessionalStandingDal;
+        private readonly IGetClinicallyActiveCommandFactory _getClinicallyActiveCommandFactory;
 
-        public UserProfessionalStanding(
+		public UserProfessionalStanding(
             IIdentityProvider identityProvider,
-            IUserProfessionalStandingDal userProfessionalStandingDal)
+            IUserProfessionalStandingDal userProfessionalStandingDal,
+			IGetClinicallyActiveCommandFactory getClinicallyActiveCommandFactory)
             : base(identityProvider)
         {
             _userProfessionalStandingDal = userProfessionalStandingDal;
-        }
+            _getClinicallyActiveCommandFactory = getClinicallyActiveCommandFactory;
+
+		}
 
         [Key] 
         [DisplayName(nameof(Id))]
@@ -115,21 +117,20 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             Csla.Rules.BusinessRules.AddRule(typeof(UserProfessionalStanding),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(UserProfessionalStanding),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(UserProfessionalStanding),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
+		protected override void AddInjectedBusinessRules()
+		{
+            BusinessRules.AddRule(new ClinicallyActiveRequiresRule(_getClinicallyActiveCommandFactory, ClinicallyActiveProperty, 1));
+		}
 
-
-
-        [Fetch]
+		[Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
@@ -138,7 +139,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _userProfessionalStandingDal.GetByUserIdAsync();
+                var dto = await _userProfessionalStandingDal.GetByUserIdAsync(_identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -148,6 +149,15 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(LastUpdatedByUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -221,51 +231,6 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			dto.ClinicallyActive = this.ClinicallyActive;
 
 			return dto;
-		}
-
-        private class ClinicallyActiveRequiresRule : BusinessRule
-        {
-            private IGetClinicallyActiveCommandFactory _getClinicallyActiveCommandFactory;
-
-            public ClinicallyActiveRequiresRule(IPropertyInfo primaryProperty, int priority)
-                : base(primaryProperty)
-            {
-                _getClinicallyActiveCommandFactory = new GetClinicallyActiveCommandFactory();
-                Priority = priority;
-                InputProperties = new List<IPropertyInfo> { primaryProperty };
-            }
-
-			protected override void Execute(IRuleContext context)
-			{
-                var command = _getClinicallyActiveCommandFactory.GetClinicallyActiveByUserId();
-                
-                var target = context.Target as UserProfessionalStanding;
-
-                if (command.ClinicallyActive.HasValue && command.ClinicallyActive.Value)
-                {
-                    if (!target.PrimaryPracticeId.HasValue)
-                    {
-                        context.AddErrorResult(PrimaryProperty, "Primary practice is required when clinically active is true");
-                    }
-
-                    if (!target.OrganizationTypeId.HasValue)
-                    {
-                        context.AddErrorResult(PrimaryProperty, "Organization type is required when clinically active is true");
-                    }
-                }
-                else
-                {
-                    if(string.IsNullOrEmpty(target.ExplanationOfNonPrivileges))
-                    {
-                        context.AddErrorResult(PrimaryProperty, "Explanation of non-privaleges is required when clinically active is false");
-                    }
-
-                    if(string.IsNullOrEmpty(target.ExplanationOfNonClinicalActivities))
-                    {
-						context.AddErrorResult(PrimaryProperty, "Explanation of non-clinical activities is required when clinically active is false");
-					}
-                }
-			}
 		}
     }
 }

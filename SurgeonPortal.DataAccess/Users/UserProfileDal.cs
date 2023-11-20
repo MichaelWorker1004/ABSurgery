@@ -38,7 +38,7 @@ namespace SurgeonPortal.DataAccess.Users
                         "[dbo].[insert_user_profile]",
                             new
                             {
-                                UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                UserId = dto.UserId,
                                 FirstName = dto.FirstName,
                                 MiddleName = dto.MiddleName,
                                 LastName = dto.LastName,
@@ -67,10 +67,10 @@ namespace SurgeonPortal.DataAccess.Users
                                 State = dto.State,
                                 ZipCode = dto.ZipCode,
                                 Country = dto.Country,
-                                CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                CreatedByUserId = dto.CreatedByUserId,
                                 CreatedAtUtc = dto.CreatedAtUtc,
                                 LastUpdatedAtUtc = dto.LastUpdatedAtUtc,
-                                LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                LastUpdatedByUserId = dto.LastUpdatedByUserId,
                             });
                             
                 }
@@ -97,7 +97,7 @@ namespace SurgeonPortal.DataAccess.Users
                         new
                         {
                             UserProfileId = dto.UserProfileId,
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = dto.UserId,
                             FirstName = dto.FirstName,
                             MiddleName = dto.MiddleName,
                             LastName = dto.LastName,
@@ -126,10 +126,10 @@ namespace SurgeonPortal.DataAccess.Users
                             State = dto.State,
                             ZipCode = dto.ZipCode,
                             Country = dto.Country,
-                            CreatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            CreatedByUserId = dto.CreatedByUserId,
                             CreatedAtUtc = dto.CreatedAtUtc,
                             LastUpdatedAtUtc = dto.LastUpdatedAtUtc,
-                            LastUpdatedByUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            LastUpdatedByUserId = dto.LastUpdatedByUserId,
                         });
                         
             }

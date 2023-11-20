@@ -28,7 +28,9 @@ namespace SurgeonPortal.DataAccess.Scoring
             }
         }
 
-        public async Task<CaseScoreDto> GetByIdAsync(int examScoringId)
+        public async Task<CaseScoreDto> GetByIdAsync(
+            int examScoringId,
+            int examinerUserId)
         {
             using (var connection = CreateConnection())
             {
@@ -37,7 +39,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                         new
                         {
                             ExamScoringId = examScoringId,
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                         });
                         
             }
@@ -53,7 +55,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                         "[dbo].[upsert_examinerscore]",
                             new
                             {
-                                ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                                ExaminerUserId = dto.ExaminerUserId,
                                 ExamineeUserId = dto.ExamineeUserId,
                                 ExamCaseId = dto.ExamCaseId,
                                 Score = dto.Score,
@@ -84,7 +86,7 @@ namespace SurgeonPortal.DataAccess.Scoring
                     "[dbo].[upsert_examinerscore]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = dto.ExaminerUserId,
                             ExamineeUserId = dto.ExamineeUserId,
                             ExamCaseId = dto.ExamCaseId,
                             Score = dto.Score,

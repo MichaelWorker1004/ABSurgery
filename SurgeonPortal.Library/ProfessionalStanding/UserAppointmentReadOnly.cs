@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.ProfessionalStanding;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.ProfessionalStanding
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.ProfessionalStanding
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class UserAppointmentReadOnly : ReadOnlyBase<UserAppointmentReadOnly>, IUserAppointmentReadOnly
+    public class UserAppointmentReadOnly : YtgReadOnlyBase<UserAppointmentReadOnly, int>, IUserAppointmentReadOnly
     {
+
+
+        public UserAppointmentReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(ApptId))]
         public decimal ApptId => ReadProperty(ApptIdProperty);

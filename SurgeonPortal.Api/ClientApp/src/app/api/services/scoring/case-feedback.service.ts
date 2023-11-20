@@ -53,7 +53,6 @@ export class CaseFeedbackService {
             
             /**
             * Required Parameters
-            * userId:Number
             * caseHeaderId:Number
             * feedback:String
             * apiVersion
@@ -105,6 +104,7 @@ export class CaseFeedbackService {
         apiVersion = '1.0'): Observable<ICaseFeedbackReadOnlyModel> {
             /**
             * Claims
+            * SurgeonPortalClaims.ExaminerClaim
             */
             
             /**

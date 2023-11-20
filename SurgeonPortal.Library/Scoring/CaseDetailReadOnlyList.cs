@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Scoring.CaseDetailReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Scoring
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CaseDetailReadOnlyList : YtgReadOnlyListBase<ICaseDetailReadOnlyList, ICaseDetailReadOnly>, ICaseDetailReadOnlyList
+	public class CaseDetailReadOnlyList : YtgReadOnlyListBase<ICaseDetailReadOnlyList, ICaseDetailReadOnly, int>, ICaseDetailReadOnlyList
     {
         private readonly ICaseDetailReadOnlyDal _caseDetailReadOnlyDal;
 
-        public CaseDetailReadOnlyList(ICaseDetailReadOnlyDal caseDetailReadOnlyDal)
+        public CaseDetailReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICaseDetailReadOnlyDal caseDetailReadOnlyDal)
+            : base(identityProvider)
         {
             _caseDetailReadOnlyDal = caseDetailReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.Scoring
             Csla.Rules.BusinessRules.AddRule(typeof(CaseDetailReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,9 @@ namespace SurgeonPortal.Library.Scoring
         private async Task GetByCaseHeaderId(GetByCaseHeaderIdCriteria criteria)
         
         {
-            var dtos = await _caseDetailReadOnlyDal.GetByCaseHeaderIdAsync(criteria.CaseHeaderId);
+            var dtos = await _caseDetailReadOnlyDal.GetByCaseHeaderIdAsync(
+                criteria.CaseHeaderId,
+                _identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

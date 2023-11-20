@@ -17,6 +17,14 @@ namespace SurgeonPortal.Library.Users
 
 
         
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+            
+                public GetByUserIdCriteria()
+             {
+              }
+            }
             
 
 

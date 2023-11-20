@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -5,20 +6,40 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { GridComponent } from 'src/app/shared/components/grid/grid.component';
-import { FormsModule } from '@angular/forms';
-import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
-import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Select, Store } from '@ngxs/store';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { IFormFields } from 'src/app/shared/models/form-fields/form-fields';
-import { Select } from '@ngxs/store';
-import { PicklistsSelectors } from 'src/app/state/picklists';
+import { DropdownModule } from 'primeng/dropdown';
+
+import { InputTextModule } from 'primeng/inputtext';
 import { Observable } from 'rxjs';
 import { IStateReadOnlyModel } from 'src/app/api';
-import { ButtonModule } from 'primeng/button';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { CollapsePanelComponent } from 'src/app/shared/components/collapse-panel/collapse-panel.component';
+import { GridComponent } from 'src/app/shared/components/grid/grid.component';
+import { IFormFields } from 'src/app/shared/models/form-fields/form-fields';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { matchFields } from 'src/app/shared/validators/validators';
+import {
+  ContinuousCertificationSelectors,
+  IUserProfile,
+  RequestRefrence,
+  UserProfileSelectors,
+} from 'src/app/state';
+import { IRefrenceFormReadOnlyModel } from 'src/app/state/continuous-certification/refrence-form-read-only.model';
+import { IRefrenceFormModel } from 'src/app/state/continuous-certification/refrence-form.model';
+import { PicklistsSelectors } from 'src/app/state/picklists';
+import { ADD_REFERENCE_LETTER_FIELDS } from './add-reference-letter-fields';
+import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
+import { InputMask, InputMaskModule } from 'primeng/inputmask';
 
 @UntilDestroy()
 @Component({
@@ -28,11 +49,17 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
     CommonModule,
     GridComponent,
     FormsModule,
+    ReactiveFormsModule,
     InputTextModule,
     DropdownModule,
     CheckboxModule,
     ButtonModule,
+    CollapsePanelComponent,
+    InputMaskModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
+  providers: [provideNgxMask()],
   templateUrl: './reference-form-modal.component.html',
   styleUrls: ['./reference-form-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -42,186 +69,67 @@ export class ReferenceFormModalComponent implements OnInit {
     | Observable<IStateReadOnlyModel[]>
     | undefined;
 
+  @Select(ContinuousCertificationSelectors.slices.refrenceFormGridData)
+  refrenceFormGridData$:
+    | Observable<IRefrenceFormReadOnlyModel[] | undefined>
+    | undefined;
+
+  @Select(UserProfileSelectors.user) user$:
+    | Observable<IUserProfile>
+    | undefined;
+
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
-  userData = {
-    diplayName: 'John Doe, M.D',
-  };
+  lapsedPath = true; // TODO - will be set from user data
+  formExpanded = false;
+
+  referenceLetterForm = new FormGroup(
+    {
+      nameOfAuthenticatingOfficial: new FormControl('', [Validators.required]),
+      authenticatingOfficialRole: new FormControl('', [Validators.required]),
+      reasonForAlternateOfficial: new FormControl(''),
+      authenticatingOfficialTitle: new FormControl(''),
+      authenticatingOfficialEmail: new FormControl('', [Validators.required]),
+      confirmEmailAddress: new FormControl('', [Validators.required]),
+      authenticatingOfficialPhoneNumber: new FormControl('', [
+        Validators.required,
+      ]),
+      nameOfAffiliatedInstitution: new FormControl(''),
+      city: new FormControl('', [Validators.required]),
+      states: new FormControl('', [Validators.required]),
+      name: new FormControl({ value: '', disabled: true }),
+    },
+    {
+      validators: matchFields(
+        'authenticatingOfficialEmail',
+        'confirmEmailAddress'
+      ),
+    }
+  );
+
+  referenceAttestationsForm = new FormGroup({});
 
   referenceFormsCols = REFERENCE_FORMS_COLS;
-  referenceFormFields: IFormFields[] = [
-    {
-      label: 'Name of Authenticating Official',
-      subLabel: '(Must be a Physician)',
-      value: '',
-      required: true,
-      name: 'nameOfAuthenticatingOfficial',
-      placeholder: 'Enter Official’s name',
-      type: 'text',
-      size: 'col-4',
-    },
-    {
-      label: "Authenticating Official'/s Role",
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'authenticatingOfficialRole',
-      placeholder: 'Choose their role',
-      type: 'select',
-      size: 'col-4',
-      options: [
-        {
-          itemDescription: 'Chief of Staff',
-          itemValue: 'chief',
-        },
-        {
-          itemDescription: 'Medical Director',
-          itemValue: 'medical',
-        },
-        {
-          itemDescription: 'Program Director',
-          itemValue: 'program',
-        },
-      ],
-    },
-    {
-      label: 'Reason for Alternate Official',
-      subLabel: '',
-      value: '',
-      required: false,
-      name: 'reasonForAlternateOfficial',
-      placeholder: 'Enter a reason',
-      type: 'select',
-      size: 'col-4',
-      options: [
-        {
-          itemDescription: 'Option 1',
-          itemValue: 'option1',
-        },
-        {
-          itemDescription: 'Option 2',
-          itemValue: 'option2',
-        },
-        {
-          itemDescription: 'Option 3',
-          itemValue: 'option3',
-        },
-      ],
-    },
-    {
-      label: 'Authenticating Official’s Title',
-      subLabel: '',
-      value: '',
-      required: false,
-      name: 'authenticatingOfficialTitle',
-      placeholder: 'Enter Official’s title',
-      type: 'text',
-      size: 'col-12',
-    },
-    {
-      label: 'Authenticating Official’s Email Address',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'authenticatingOfficialEmail',
-      placeholder: 'Enter Official’s email address',
-      type: 'text',
-      size: 'col-4',
-    },
-    {
-      label: 'Confirm Email Address',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'confirmEmailAddress',
-      placeholder: 'Enter Official’s email address again',
-      type: 'text',
-      size: 'col-4',
-    },
-    {
-      label: 'Authenticating Official’s Phone Number',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'authenticatingOfficialPhoneNumber',
-      placeholder: '_ _ _ - _ _ _ - _ _ _ _',
-      type: 'text',
-      size: 'col-4',
-    },
-    {
-      label: 'Name of Affiliated Institution',
-      subLabel: '',
-      value: '',
-      required: false,
-      name: 'nameOfAffiliatedInstitution',
-      placeholder: 'Enter affiliated institution',
-      type: 'text',
-      size: 'col-12',
-    },
-    {
-      label: 'City',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'city',
-      placeholder: 'Enter your city',
-      type: 'text',
-      size: 'col-4',
-    },
-    {
-      label: 'State',
-      subLabel: '',
-      value: '',
-      required: true,
-      name: 'states',
-      placeholder: 'Choose your state',
-      type: 'select',
-      size: 'col-4',
-      options: [],
-    },
-    {
-      label: 'Name',
-      subLabel: '',
-      value: this.userData.diplayName,
-      required: false,
-      readonly: true,
-      name: 'name',
-      placeholder: 'Enter your full name',
-      type: 'text',
-      size: 'col-12',
-    },
-  ];
-  refrenceGridData = [
-    {
-      referenceFormId: 'MD19143',
-      affiliatedInstitution: 'ABS',
-      authenticatingOfficial: 'John Doe, M.D.',
-      date: new Date('09/21/2019'),
-      status: 'Requested',
-    },
-    {
-      referenceFormId: 'MD08221',
-      affiliatedInstitution: 'ABS',
-      authenticatingOfficial: 'Mary Joseph',
-      date: new Date('08/12/2019'),
-      status: 'Approved',
-    },
-    {
-      referenceFormId: 'MD12345',
-      affiliatedInstitution: 'ABS',
-      authenticatingOfficial: 'John Dorian',
-      date: new Date('8/1/2019'),
-      status: 'Approved',
-    },
-  ];
+  referenceLetterFields: IFormFields[] = ADD_REFERENCE_LETTER_FIELDS;
+
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {}
 
   ngOnInit(): void {
     this.setPicklists();
+
+    this.user$?.pipe(untilDestroyed(this)).subscribe((user) => {
+      this.referenceLetterForm.patchValue({
+        name: user?.fullName,
+      });
+    });
   }
 
   setPicklists() {
     this.states$?.pipe(untilDestroyed(this)).subscribe((states) => {
-      this.referenceFormFields.filter((field) => {
+      this.referenceLetterFields.filter((field) => {
         if (field.name === 'states') {
           field.options = states;
         }
@@ -233,11 +141,37 @@ export class ReferenceFormModalComponent implements OnInit {
     console.log('unhandled action', event);
   }
 
-  onSubmit(formFields: any) {
-    console.log('unhandled submit', formFields);
+  onSubmit() {
+    const form = this.referenceLetterForm.getRawValue();
+
+    const model = form as unknown as IRefrenceFormModel;
+
+    this._store
+      .dispatch(new RequestRefrence(model))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.globalDialogService.showSuccessError(
+          'Reference Requested',
+          'Your reference request has been sent successfully.',
+          true
+        );
+
+        this.close();
+      });
   }
 
   close() {
     this.closeDialog.emit();
+  }
+
+  togglePanelHandler(event: any) {
+    this.formExpanded = event.expanded;
+    if (event.expanded) {
+      // handle form reset as part of expand
+      console.log('panel expanded', event);
+    } else {
+      // handle form cancel as part of collapse
+      console.log('panel collapsed', event);
+    }
   }
 }

@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
 
 
 
-        public async Task<IEnumerable<RotationReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<RotationReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.GraduateMedicalEducation
                     "[dbo].[get_gmerotations_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

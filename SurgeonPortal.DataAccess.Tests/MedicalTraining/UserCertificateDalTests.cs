@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
 {
-	public class UserCertificateDalTests : TestBase<string>
+	public class UserCertificateDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -43,7 +43,7 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
         {
             var expectedSprocName = "[dbo].[get_usercertificates_byid]";
             var expectedCertificateId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     CertificateId = expectedCertificateId,
@@ -93,10 +93,12 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     DocumentId = expectedDto.DocumentId,
                     CertificateTypeId = expectedDto.CertificateTypeId,
                     IssueDate = expectedDto.IssueDate,
                     CertificateNumber = expectedDto.CertificateNumber,
+                    CreatedByUserId = expectedDto.UserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.Scoring;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.Scoring
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class RosterReadOnly : ReadOnlyBase<RosterReadOnly>, IRosterReadOnly
+    public class RosterReadOnly : YtgReadOnlyBase<RosterReadOnly, int>, IRosterReadOnly
     {
+
+
+        public RosterReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(ExamScheduleId))]
         public int ExamScheduleId => ReadProperty(ExamScheduleIdProperty);
@@ -43,6 +52,11 @@ namespace SurgeonPortal.Library.Scoring
         public bool? IsSubmitted => ReadProperty(IsSubmittedProperty);
 		public static readonly PropertyInfo<bool?> IsSubmittedProperty = RegisterProperty<bool?>(c => c.IsSubmitted);
 
+        [DataMember]
+		[DisplayName(nameof(ExamDate))]
+        public DateTime? ExamDate => ReadProperty(ExamDateProperty);
+		public static readonly PropertyInfo<DateTime?> ExamDateProperty = RegisterProperty<DateTime?>(c => c.ExamDate);
+
 
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -61,6 +75,7 @@ namespace SurgeonPortal.Library.Scoring
             LoadProperty(RosterProperty, dto.Roster);
             LoadProperty(DisplayNameProperty, dto.DisplayName);
             LoadProperty(IsSubmittedProperty, dto.IsSubmitted);
+            LoadProperty(ExamDateProperty, dto.ExamDate);
 		} 
         
     }

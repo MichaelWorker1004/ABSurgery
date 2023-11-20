@@ -14,7 +14,7 @@ namespace SurgeonPortal.DataAccess.Dev
 
 
 
-        public async Task ResetExamScoresAsync()
+        public async Task ResetExamScoresAsync(int examinerUserId)
         {
             using (var connection = CreateConnection())
             {
@@ -22,7 +22,7 @@ namespace SurgeonPortal.DataAccess.Dev
                     "[dbo].[dev_reset_scoring_by_ExaminerId]",
                         new
                         {
-                            ExaminerUserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            ExaminerUserId = examinerUserId,
                         });
                         
             }

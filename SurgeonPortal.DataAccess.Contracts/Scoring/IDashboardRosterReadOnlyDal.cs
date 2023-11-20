@@ -5,6 +5,8 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
 {
     public interface IDashboardRosterReadOnlyDal
     {
-        Task<IEnumerable<DashboardRosterReadOnlyDto>> GetByUserIdAsync(System.DateTime examDate);
+        Task<IEnumerable<DashboardRosterReadOnlyDto>> GetByUserIdAsync(
+            int examinerUserId,
+            System.DateTime examDate);
     }
 }

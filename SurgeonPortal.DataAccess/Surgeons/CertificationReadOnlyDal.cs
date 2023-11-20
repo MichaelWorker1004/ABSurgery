@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Surgeons
 
 
 
-        public async Task<IEnumerable<CertificationReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<CertificationReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.Surgeons
                     "[dbo].[get_user_certifications]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

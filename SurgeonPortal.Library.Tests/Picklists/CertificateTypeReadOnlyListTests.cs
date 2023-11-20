@@ -10,9 +10,8 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Picklists
 {
     [TestFixture] 
-	public class CertificateTypeReadOnlyListTests : TestBase<string>
+	public class CertificateTypeReadOnlyListTests : TestBase<int>
     {
-
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
@@ -21,8 +20,9 @@ namespace SurgeonPortal.Library.Tests.Picklists
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(CreateMany<CertificateTypeReadOnlyDto>());
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICertificateTypeReadOnlyList, CertificateTypeReadOnlyList>()
                 .WithBusinessObject<ICertificateTypeReadOnly, CertificateTypeReadOnly>()
@@ -39,12 +39,14 @@ namespace SurgeonPortal.Library.Tests.Picklists
         {
             var expectedDtos = CreateMany<CertificateTypeReadOnlyDto>();
         
+        
             var mockDal = new Mock<ICertificateTypeReadOnlyDal>();
             mockDal.Setup(m => m.GetAllAsync())
                 .ReturnsAsync(expectedDtos);
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<ICertificateTypeReadOnlyList, CertificateTypeReadOnlyList>()
                 .WithBusinessObject<ICertificateTypeReadOnly, CertificateTypeReadOnly>()

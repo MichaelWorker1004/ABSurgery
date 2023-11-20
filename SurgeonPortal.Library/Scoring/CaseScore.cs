@@ -1,10 +1,8 @@
 using Csla;
-using Csla.Core;
 using Csla.Rules;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
 using SurgeonPortal.Library.Contracts.Scoring;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -22,13 +20,15 @@ namespace SurgeonPortal.Library.Scoring
 	public class CaseScore : YtgBusinessBase<CaseScore>, ICaseScore
     {
         private readonly ICaseScoreDal _caseScoreDal;
+		readonly IIsExamSessionLockedCommandFactory _isExamSessionLockedCommandFactory;
 
-        public CaseScore(
+        public CaseScore(IIsExamSessionLockedCommandFactory isExamSessionLockedCommandFactory,
             IIdentityProvider identityProvider,
             ICaseScoreDal caseScoreDal)
             : base(identityProvider)
         {
             _caseScoreDal = caseScoreDal;
+			_isExamSessionLockedCommandFactory = isExamSessionLockedCommandFactory;
         }
 
         [Key] 
@@ -131,27 +131,21 @@ namespace SurgeonPortal.Library.Scoring
             Csla.Rules.BusinessRules.AddRule(typeof(CaseScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(CaseScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(CaseScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(CaseScore),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim));
-
         }
 
-		protected override void AddBusinessRules()
-		{
-			BusinessRules.AddRule(new ExamLockedRule(ExamCaseIdProperty, 1));
+        protected override void AddInjectedBusinessRules()
+        {
+			BusinessRules.AddRule(new ExamLockedRule(_isExamSessionLockedCommandFactory, ExamCaseIdProperty, 1));
 		}
-
-
 
         [RunLocal]
         [DeleteSelf]
@@ -178,7 +172,9 @@ namespace SurgeonPortal.Library.Scoring
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _caseScoreDal.GetByIdAsync(criteria.ExamScoringId);
+                var dto = await _caseScoreDal.GetByIdAsync(
+                    criteria.ExamScoringId,
+                    _identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -188,6 +184,13 @@ namespace SurgeonPortal.Library.Scoring
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(ExaminerUserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -269,30 +272,4 @@ namespace SurgeonPortal.Library.Scoring
 
 
     }
-
-	public class ExamLockedRule : BusinessRule
-	{
-		private IIsExamSessionLockedCommandFactory _isExamSessionLockedCommandFactory;
-
-		public ExamLockedRule(IPropertyInfo primaryProperty,
-			int priority)
-			: base(primaryProperty)
-		{
-			_isExamSessionLockedCommandFactory = new IsExamSessionLockedCommandFactory();
-			InputProperties = new List<IPropertyInfo> { primaryProperty };
-			Priority = priority;
-		}
-
-		protected override void Execute(IRuleContext context)
-		{
-			var examCaseId = (int)context.InputPropertyValues[PrimaryProperty];
-
-			var command = _isExamSessionLockedCommandFactory.IsExamSessionLocked(examCaseId);
-
-			if(command.IsLocked.HasValue && command.IsLocked.Value)
-			{
-				context.AddErrorResult("Cannot add or update score when exam is locked.");
-			}
-		}
-	}
 }

@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "ExaminerUserId"
           },
           {
             "name": "ExamHeaderId",
@@ -116,6 +116,16 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.IsSubmitted"
+              },
+              {
+                "name": "ExamDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamDate"
               }
             ]
           }
@@ -124,6 +134,12 @@
     }
   ],
   "inputParameters": [
+    {
+      "name": "ExaminerUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
     {
       "name": "ExamHeaderId",
       "dataType": "int",

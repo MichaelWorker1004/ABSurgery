@@ -41,7 +41,7 @@
             "precision": 10,
             "scale": 0,
             "required": true,
-            "static": "SurgeonPortal.Shared.IdentityHelper.UserId"
+            "mapsTo": "UserId"
           }
         ],
         "recordsets": [
@@ -94,7 +94,15 @@
       }
     }
   ],
-  "inputParameters": [],
+  "inputParameters": 
+  [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
   "metadata": {
     "command": "ytgim g i s GraduateMedicalEducation\\RotationGapReadOnly.GetByUserId RotationGapReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\RotationGapReadOnly -p:Adapter=sp:abssp-[dbo].[get_gme_conflicts] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RotationGapReadOnly -p:Route=gaps -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 ",
     "inferredCommand": "ytgim generate i  GraduateMedicalEducation\\RotationGapReadOnly.GetByUserId RotationGapReadOnly -t=ytg-framework/readonly-getlist -p:Model=GraduateMedicalEducation\\RotationGapReadOnly -p:Adapter=sp:abssp-[dbo].[get_gme_conflicts] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RotationGapReadOnly -p:Route=gaps -p:ControllerName=GraduateMedicalEducation\\RotationController -p:ControllerRoute=api/graduate-medical-education -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",

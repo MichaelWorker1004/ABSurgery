@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
 {
-	public class RotationDalTests : TestBase<string>
+	public class RotationDalTests : TestBase<int>
     {
         #region DeleteAsync
                 
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
         {
             var expectedSprocName = "[dbo].[get_gmerotations_byid]";
             var expectedId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     Id = expectedId,
@@ -92,6 +92,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     StartDate = expectedDto.StartDate,
                     EndDate = expectedDto.EndDate,
                     ClinicalLevelId = expectedDto.ClinicalLevelId,
@@ -104,6 +105,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                     FourMonthRotationExplain = expectedDto.FourMonthRotationExplain,
                     NonPrimaryExplain = expectedDto.NonPrimaryExplain,
                     NonClinicalExplain = expectedDto.NonClinicalExplain,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -145,6 +147,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                 new
                 {
                     Id = expectedDto.Id,
+                    UserId = expectedDto.UserId,
                     StartDate = expectedDto.StartDate,
                     EndDate = expectedDto.EndDate,
                     ClinicalLevelId = expectedDto.ClinicalLevelId,
@@ -157,6 +160,7 @@ namespace SurgeonPortal.DataAccess.Tests.GraduateMedicalEducation
                     FourMonthRotationExplain = expectedDto.FourMonthRotationExplain,
                     NonPrimaryExplain = expectedDto.NonPrimaryExplain,
                     NonClinicalExplain = expectedDto.NonClinicalExplain,
+                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

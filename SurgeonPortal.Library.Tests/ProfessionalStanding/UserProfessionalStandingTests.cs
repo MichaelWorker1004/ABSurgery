@@ -10,14 +10,14 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 {
     [TestFixture] 
-	public class UserProfessionalStandingTests : TestBase<string>
+	public class UserProfessionalStandingTests : TestBase<int>
     {
         private UserProfessionalStandingDto CreateValidDto()
         {     
             var dto = Create<UserProfessionalStandingDto>();
 
             dto.Id = Create<int>();
-            dto.UserId = Create<int>();
+            dto.UserId = 1234;
             dto.PrimaryPracticeId = Create<int?>();
             dto.PrimaryPractice = Create<string>();
             dto.OrganizationTypeId = Create<int?>();
@@ -25,10 +25,10 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.ExplanationOfNonPrivileges = Create<string>();
             dto.ExplanationOfNonClinicalActivities = Create<string>();
             dto.ClinicallyActive = Create<int>();
-            dto.CreatedByUserId = Create<int>();
+            dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
-            dto.LastUpdatedByUserId = Create<int>();
+            dto.LastUpdatedByUserId = 1234;
     
             return dto;
         }
@@ -40,16 +40,21 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IUserProfessionalStandingDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(Create<UserProfessionalStandingDto>());
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity()
+
+			var (mockCommand, mockCommandFactory) = GetMockedCommandFactory(true);
+
+			UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
+				.WithRegisteredInstance(mockCommand)
+				.WithRegisteredInstance(mockCommandFactory)
+				.WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
                 .Build();
         
             var factory = new UserProfessionalStandingFactory();
@@ -62,16 +67,21 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
+            var expectedUserId = 1234;
         
             var mockDal = new Mock<IUserProfessionalStandingDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity()
+
+			var (mockCommand, mockCommandFactory) = GetMockedCommandFactory(true);
+
+			UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
+				.WithRegisteredInstance(mockCommand)
+				.WithRegisteredInstance(mockCommandFactory)
+				.WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
                 .Build();
         
             var factory = new UserProfessionalStandingFactory();
@@ -94,11 +104,15 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfessionalStandingDto>()))
                 .Callback<UserProfessionalStandingDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-        
+
+            var (mockCommand, mockCommandFactory) = GetMockedCommandFactory(true);
+
             UseMockServiceProvider()
-                .WithMockedIdentity()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockCommand)
+                .WithRegisteredInstance(mockCommandFactory)
                 .WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
                 .Build();
         
@@ -125,18 +139,13 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
-                .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.LastUpdatedByUserId)
                 .Excluding(m => m.Id)
-                .Excluding(m => m.UserId)
                 .Excluding(m => m.PrimaryPractice)
                 .Excluding(m => m.OrganizationType)
                 .Excluding(m => m.ClinicallyActive)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
@@ -151,17 +160,33 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var mockDal = new Mock<IUserProfessionalStandingDal>();
             mockDal.Setup(m => m.InsertAsync(It.IsAny<UserProfessionalStandingDto>()))
                 .ReturnsAsync(dto);
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity()
+
+			var (mockCommand, mockCommandFactory) = GetMockedCommandFactory(true);
+
+			UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
+				.WithRegisteredInstance(mockCommand)
+				.WithRegisteredInstance(mockCommandFactory)
+				.WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
                 .Build();
         
             var factory = new UserProfessionalStandingFactory();
             var sut = factory.Create();
-            sut.PrimaryPracticeId = Create<int>();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
+            sut.PrimaryPracticeId = dto.PrimaryPracticeId;
+            sut.PrimaryPractice = dto.PrimaryPractice;
+            sut.OrganizationTypeId = dto.OrganizationTypeId;
+            sut.OrganizationType = dto.OrganizationType;
+            sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
+            sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
+            sut.ClinicallyActive = dto.ClinicallyActive;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             
@@ -181,22 +206,28 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task Update_CallsDalCorrectly()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<UserProfessionalStandingDto>();
+            var dto = CreateValidDto();
             UserProfessionalStandingDto passedDto = null;
         
             var mockDal = new Mock<IUserProfessionalStandingDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                         .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfessionalStandingDto>()))
                 .Callback<UserProfessionalStandingDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity()
+
+			var (mockCommand, mockCommandFactory) = GetMockedCommandFactory(true);
+
+			UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
+				.WithRegisteredInstance(mockCommand)
+				.WithRegisteredInstance(mockCommandFactory)
+				.WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
                 .Build();
         
             var factory = new UserProfessionalStandingFactory();
@@ -240,19 +271,14 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
                     .Excluding(m => m.Id)
-                    .Excluding(m => m.UserId)
                     .Excluding(m => m.PrimaryPractice)
                     .Excluding(m => m.OrganizationType)
                     .Excluding(m => m.ClinicallyActive)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.LastUpdatedAtUtc)
-                    .Excluding(m => m.LastUpdatedByUserId)
+                .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
             mockDal.VerifyAll();
@@ -261,20 +287,26 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         [Test]
         public async Task Update_YieldsCorrectResult()
         {
+            var expectedUserId = 1234;
             
-            var dto = Create<UserProfessionalStandingDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IUserProfessionalStandingDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync())
-                        .ReturnsAsync(Create<UserProfessionalStandingDto>());
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+                .ReturnsAsync(dto);
+            
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfessionalStandingDto>()))
                 .ReturnsAsync(dto);
-        
-            UseMockServiceProvider()
-                .WithMockedIdentity()
+
+			var (mockCommand, mockCommandFactory) = GetMockedCommandFactory(true);
+
+			UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
+				.WithRegisteredInstance(mockCommand)
+				.WithRegisteredInstance(mockCommandFactory)
+				.WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
                 .Build();
         
             var factory = new UserProfessionalStandingFactory();
@@ -291,7 +323,18 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
                     .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         }
-        
-        #endregion
+
+		#endregion
+
+		static (Mock<IGetClinicallyActiveCommand> mockCommand, Mock<IGetClinicallyActiveCommandFactory> mockCommandFactory) GetMockedCommandFactory(bool clinicallyActive)
+		{
+			var mockCommand = new Mock<IGetClinicallyActiveCommand>();
+			mockCommand.SetupGet(x => x.ClinicallyActive).Returns(clinicallyActive);
+
+			var mockCommandFactory = new Mock<IGetClinicallyActiveCommandFactory>();
+			mockCommandFactory.Setup(x => x.GetClinicallyActiveByUserId()).Returns(mockCommand.Object);
+
+			return (mockCommand, mockCommandFactory);
+		}
 	}
 }

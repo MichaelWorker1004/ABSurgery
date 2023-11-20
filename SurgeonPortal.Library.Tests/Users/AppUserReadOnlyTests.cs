@@ -1,126 +1,146 @@
-using Csla;
-using Csla.Configuration;
-using Csla.Server.Dashboard;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Users;
 using SurgeonPortal.Library.Contracts.Users;
 using SurgeonPortal.Library.Users;
-using System;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class AppUserReadOnlyTests : TestBase<string>
+	public class AppUserReadOnlyTests : TestBase<int>
     {
         #region GetByCredentialsAsync
         
-        //[Test]
-        //public async Task GetByCredentialsAsync_CallsDalCorrectly()
-        //{
-        //    var expectedEmailAddress = Create<string>();
-        //    var expectedPassword = Create<string>();
-
-        //    var mockDal = new Mock<IAppUserReadOnlyDal>();
-        //    mockDal.Setup(m => m.GetByCredentialsAsync(
-        //        expectedEmailAddress,
-        //        expectedPassword))
-        //        .ReturnsAsync(Create<AppUserReadOnlyDto>());
-
-        //    //Csla.Server.IChildDataPortal<Child> childDataPortal = _testDIContext.CreateChildDataPortal<Child>();
-        //    //var mockDataPortal = new Mock<Csla.Server.ChildDataPortal>();
-        //    //mockDataPortal
-        //    //    .Setup(m => m.FetchAsync<UserClaimReadOnlyList>(It.IsAny<IUserClaimReadOnly>()))
-        //    //    .ReturnsAsync(Create<UserClaimReadOnlyList>());
-
-        //    UseMockServiceProvider()
-        //        .WithRegisteredInstance(mockDal)
-        //        .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
-        //        .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
-        //        .Build();
-        
-        //    var factory = new AppUserReadOnlyFactory();
-        //    var sut = await factory.GetByCredentialsAsync(
-        //        expectedEmailAddress,
-        //        expectedPassword);
-        
-        //    mockDal.VerifyAll();
-        //}
-        
-        //[Test]
-        //public async Task GetByCredentialsAsync_LoadsSelfCorrectly()
-        //{
-        //    var dto = Create<AppUserReadOnlyDto>();
-        
-        //    var mockDal = new Mock<IAppUserReadOnlyDal>();
-        //    mockDal.Setup(m => m.GetByCredentialsAsync(
-        //        It.IsAny<string>(),
-        //        It.IsAny<string>()))
-        //        .ReturnsAsync(dto);
-        
-        //    UseMockServiceProvider()
-                
-        //        .WithRegisteredInstance(mockDal)
-        //        .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
-        //        .Build();
-        
-        //    var factory = new AppUserReadOnlyFactory();
-        //    var sut = await factory.GetByCredentialsAsync(
-        //        Create<string>(),
-        //        Create<string>());
-        
-        //    dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
-        //}
-        
-        //#endregion
-
-        //#region GetByTokenAsync
-        
-        //[Test]
-        //public async Task GetByTokenAsync_CallsDalCorrectly()
-        //{
-        //    var expectedToken = Create<string>();
+        [Test]
+        public async Task GetByCredentialsAsync_CallsDalCorrectly()
+        {
+            var expectedUserName = Create<string>();
+            var expectedPassword = Create<string>();
             
-        //    var mockDal = new Mock<IAppUserReadOnlyDal>();
-        //    mockDal.Setup(m => m.GetByTokenAsync(expectedToken))
-        //        .ReturnsAsync(Create<AppUserReadOnlyDto>());
+            var mockDal = new Mock<IAppUserReadOnlyDal>();
+            mockDal.Setup(m => m.GetByCredentialsAsync(
+                expectedUserName,
+                expectedPassword))
+                .ReturnsAsync(Create<AppUserReadOnlyDto>());
+            
+            var mockClaimsDal = new Mock<IUserClaimReadOnlyDal>();
+            mockClaimsDal.Setup(m => m.GetByIdsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(CreateMany<UserClaimReadOnlyDto>());
         
-        //    UseMockServiceProvider()
-                
-        //        .WithRegisteredInstance(mockDal)
-        //        .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
-        //        .Build();
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockClaimsDal)
+                .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
+                .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
+                .WithBusinessObject<IUserClaimReadOnly, UserClaimReadOnly>()
+                .Build();
         
-        //    var factory = new AppUserReadOnlyFactory();
-        //    var sut = await factory.GetByTokenAsync(expectedToken);
+            var factory = new AppUserReadOnlyFactory();
+            var sut = await factory.GetByCredentialsAsync(
+                expectedUserName,
+                expectedPassword);
         
-        //    mockDal.VerifyAll();
-        //}
+            mockDal.VerifyAll();
+        }
         
-        //[Test]
-        //public async Task GetByTokenAsync_LoadsSelfCorrectly()
-        //{
-        //    var dto = Create<AppUserReadOnlyDto>();
+        [Test]
+        public async Task GetByCredentialsAsync_LoadsSelfCorrectly()
+        {
+            var dto = Create<AppUserReadOnlyDto>();
+            var expectedUserName = Create<string>();
+            var expectedPassword = Create<string>();
+            
+            var mockDal = new Mock<IAppUserReadOnlyDal>();
+            mockDal.Setup(m => m.GetByCredentialsAsync(
+                expectedUserName,
+                expectedPassword))
+                .ReturnsAsync(dto);
+            
+            var mockClaimsDal = new Mock<IUserClaimReadOnlyDal>();
+            mockClaimsDal.Setup(m => m.GetByIdsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(CreateMany<UserClaimReadOnlyDto>());
         
-        //    var mockDal = new Mock<IAppUserReadOnlyDal>();
-        //    mockDal.Setup(m => m.GetByTokenAsync(It.IsAny<string>()))
-        //        .ReturnsAsync(dto);
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockClaimsDal)
+                .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
+                .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
+                .WithBusinessObject<IUserClaimReadOnly, UserClaimReadOnly>()
+                .Build();
         
-        //    UseMockServiceProvider()
-                
-        //        .WithRegisteredInstance(mockDal)
-        //        .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
-        //        .Build();
+            var factory = new AppUserReadOnlyFactory();
+            var sut = await factory.GetByCredentialsAsync(
+                expectedUserName,
+                expectedPassword);
         
-        //    var factory = new AppUserReadOnlyFactory();
-        //    var sut = await factory.GetByTokenAsync(Create<string>());
+            dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
+        }
         
-        //    dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
-        //}
+        #endregion
+
+        #region GetByTokenAsync
+        
+        [Test]
+        public async Task GetByTokenAsync_CallsDalCorrectly()
+        {
+            var expectedToken = Create<string>();
+            
+            var mockDal = new Mock<IAppUserReadOnlyDal>();
+            mockDal.Setup(m => m.GetByTokenAsync(expectedToken))
+                .ReturnsAsync(Create<AppUserReadOnlyDto>());
+            
+            var mockClaimsDal = new Mock<IUserClaimReadOnlyDal>();
+            mockClaimsDal.Setup(m => m.GetByIdsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(CreateMany<UserClaimReadOnlyDto>());
+        
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockClaimsDal)
+                .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
+                .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
+                .WithBusinessObject<IUserClaimReadOnly, UserClaimReadOnly>()
+                .Build();
+        
+            var factory = new AppUserReadOnlyFactory();
+            var sut = await factory.GetByTokenAsync(expectedToken);
+        
+            mockDal.VerifyAll();
+        }
+        
+        [Test]
+        public async Task GetByTokenAsync_LoadsSelfCorrectly()
+        {
+            var dto = Create<AppUserReadOnlyDto>();
+            var expectedToken = Create<string>();
+            
+            var mockDal = new Mock<IAppUserReadOnlyDal>();
+            mockDal.Setup(m => m.GetByTokenAsync(expectedToken))
+                .ReturnsAsync(dto);
+            
+            var mockClaimsDal = new Mock<IUserClaimReadOnlyDal>();
+            mockClaimsDal.Setup(m => m.GetByIdsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(CreateMany<UserClaimReadOnlyDto>());
+        
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockClaimsDal)
+                .WithBusinessObject<IAppUserReadOnly, AppUserReadOnly>()
+                .WithBusinessObject<IUserClaimReadOnlyList, UserClaimReadOnlyList>()
+                .WithBusinessObject<IUserClaimReadOnly, UserClaimReadOnly>()
+                .Build();
+        
+            var factory = new AppUserReadOnlyFactory();
+            var sut = await factory.GetByTokenAsync(expectedToken);
+        
+            dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
+        }
         
         #endregion
 	}

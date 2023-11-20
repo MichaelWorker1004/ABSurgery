@@ -1,5 +1,4 @@
 using SurgeonPortal.DataAccess.Contracts.Users;
-using SurgeonPortal.Shared;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
 using Ytg.Framework.SqlServer;
@@ -15,7 +14,7 @@ namespace SurgeonPortal.DataAccess.Users
 
 
 
-        public async Task<UserCredentialDto> GetByUserIdAsync()
+        public async Task<UserCredentialDto> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +22,7 @@ namespace SurgeonPortal.DataAccess.Users
                     "[dbo].[get_user_account]",
                         new
                         {
-                            UserId = IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }
@@ -37,7 +36,7 @@ namespace SurgeonPortal.DataAccess.Users
                     "[dbo].[upd_user_account]",
                         new
                         {
-                            UserId = IdentityHelper.UserId,
+                            UserId = dto.UserId,
                             EmailAddress = dto.EmailAddress,
                             Password = dto.Password,
                             LastUpdatedByUserId = dto.LastUpdatedByUserId,

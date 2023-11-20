@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.ProfessionalStanding.MedicalLicenseReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.ProfessionalStanding
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.ProfessionalStanding
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class MedicalLicenseReadOnlyList : YtgReadOnlyListBase<IMedicalLicenseReadOnlyList, IMedicalLicenseReadOnly>, IMedicalLicenseReadOnlyList
+	public class MedicalLicenseReadOnlyList : YtgReadOnlyListBase<IMedicalLicenseReadOnlyList, IMedicalLicenseReadOnly, int>, IMedicalLicenseReadOnlyList
     {
         private readonly IMedicalLicenseReadOnlyDal _medicalLicenseReadOnlyDal;
 
-        public MedicalLicenseReadOnlyList(IMedicalLicenseReadOnlyDal medicalLicenseReadOnlyDal)
+        public MedicalLicenseReadOnlyList(
+            IIdentityProvider identityProvider,
+            IMedicalLicenseReadOnlyDal medicalLicenseReadOnlyDal)
+            : base(identityProvider)
         {
             _medicalLicenseReadOnlyDal = medicalLicenseReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             Csla.Rules.BusinessRules.AddRule(typeof(MedicalLicenseReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
         private async Task GetByUserId()
         
         {
-            var dtos = await _medicalLicenseReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _medicalLicenseReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

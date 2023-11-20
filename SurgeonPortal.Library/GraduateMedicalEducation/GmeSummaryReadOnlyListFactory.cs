@@ -15,6 +15,14 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
             
         }
 
+            [Serializable]
+            internal class GetByUserIdCriteria
+            {
+            
+                public GetByUserIdCriteria()
+             {
+              }
+            }
             
 
 

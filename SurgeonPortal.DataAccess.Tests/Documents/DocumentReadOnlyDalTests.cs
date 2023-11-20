@@ -8,7 +8,7 @@ using Ytg.UnitTest.ConnectionManager;
 
 namespace SurgeonPortal.DataAccess.Tests.Documents
 {
-	public class DocumentReadOnlyDalTests : TestBase<string>
+	public class DocumentReadOnlyDalTests : TestBase<int>
     {
         #region GetByUserIdAsync
         
@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
         {
             var expectedSprocName = "[dbo].[get_documents_byuserid]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,
@@ -27,7 +27,7 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             sqlManager.AddRecords(CreateMany<DocumentReadOnlyDto>());
         
             var sut = new DocumentReadOnlyDal(sqlManager);
-            await sut.GetByUserIdAsync();
+            await sut.GetByUserIdAsync(expectedUserId);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -42,7 +42,7 @@ namespace SurgeonPortal.DataAccess.Tests.Documents
             sqlManager.AddRecords(expectedDtos);
         
             var sut = new DocumentReadOnlyDal(sqlManager);
-            var result = await sut.GetByUserIdAsync();
+            var result = await sut.GetByUserIdAsync(Create<int>());
         
             expectedDtos.Should().BeEquivalentTo(
                 result,

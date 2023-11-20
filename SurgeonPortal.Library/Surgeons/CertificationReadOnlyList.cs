@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Surgeons.CertificationReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Surgeons
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Surgeons
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class CertificationReadOnlyList : YtgReadOnlyListBase<ICertificationReadOnlyList, ICertificationReadOnly>, ICertificationReadOnlyList
+	public class CertificationReadOnlyList : YtgReadOnlyListBase<ICertificationReadOnlyList, ICertificationReadOnly, int>, ICertificationReadOnlyList
     {
         private readonly ICertificationReadOnlyDal _certificationReadOnlyDal;
 
-        public CertificationReadOnlyList(ICertificationReadOnlyDal certificationReadOnlyDal)
+        public CertificationReadOnlyList(
+            IIdentityProvider identityProvider,
+            ICertificationReadOnlyDal certificationReadOnlyDal)
+            : base(identityProvider)
         {
             _certificationReadOnlyDal = certificationReadOnlyDal;
         }
@@ -31,7 +35,6 @@ namespace SurgeonPortal.Library.Surgeons
             Csla.Rules.BusinessRules.AddRule(typeof(CertificationReadOnlyList),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
 
         [Fetch]
@@ -41,7 +44,7 @@ namespace SurgeonPortal.Library.Surgeons
         private async Task GetByUserId()
         
         {
-            var dtos = await _certificationReadOnlyDal.GetByUserIdAsync();
+            var dtos = await _certificationReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }

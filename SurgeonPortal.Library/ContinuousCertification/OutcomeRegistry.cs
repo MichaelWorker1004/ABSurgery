@@ -215,18 +215,13 @@ namespace SurgeonPortal.Library.ContinuousCertification
             Csla.Rules.BusinessRules.AddRule(typeof(OutcomeRegistry),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(OutcomeRegistry),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
             Csla.Rules.BusinessRules.AddRule(typeof(OutcomeRegistry),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-
         }
-
-
 
 
         [Fetch]
@@ -238,7 +233,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
         {
             using (BypassPropertyChecks)
             {
-                var dto = await _outcomeRegistryDal.GetByUserIdAsync();
+                var dto = await _outcomeRegistryDal.GetByUserIdAsync(_identity.GetUserId<int>());
         
                 if(dto == null)
                 {
@@ -248,6 +243,13 @@ namespace SurgeonPortal.Library.ContinuousCertification
             }
         }
 
+        [Create]
+        private void Create()
+        {
+            base.DataPortal_Create();
+            LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+        }
+        
         [RunLocal]
         [Insert]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",

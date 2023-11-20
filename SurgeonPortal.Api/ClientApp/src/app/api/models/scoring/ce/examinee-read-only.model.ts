@@ -6,4 +6,5 @@ export interface IExamineeReadOnlyModel {
     cases: any[];
     examineeUserId: number;
     examScoringId: number;
+    timerBit: boolean;
 }

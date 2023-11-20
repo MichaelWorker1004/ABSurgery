@@ -10,7 +10,7 @@ using Ytg.UnitTest;
 namespace SurgeonPortal.Library.Tests.Users
 {
     [TestFixture] 
-	public class UserLoginAuditCommandTests : TestBase<string>
+	public class UserLoginAuditCommandTests : TestBase<int>
     {
         private UserLoginAuditCommandDto CreateValidDto()
         {     
@@ -40,7 +40,7 @@ namespace SurgeonPortal.Library.Tests.Users
             var expectedLoginSuccess = Create<bool>();
             var expectedLoginFailureReason = Create<string>();
             
-            var dto = Create<UserLoginAuditCommandDto>();
+            var dto = CreateValidDto();
         
             var mockDal = new Mock<IUserLoginAuditCommandDal>();
             mockDal.Setup(m => m.AuditAsync(
@@ -52,8 +52,9 @@ namespace SurgeonPortal.Library.Tests.Users
                 expectedLoginSuccess,
                 expectedLoginFailureReason));
         
-            UseMockServiceProvider()
                 
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
                 .WithBusinessObject<IUserLoginAuditCommand, UserLoginAuditCommand>()
                 .Build();
@@ -69,6 +70,9 @@ namespace SurgeonPortal.Library.Tests.Users
                 expectedLoginFailureReason);
         
             mockDal.VerifyAll();
+        
+            Assert.That(dto, Is.Not.Null);
+        	Assert.That(dto, Is.TypeOf<UserLoginAuditCommandDto>());
         }
         
         #endregion

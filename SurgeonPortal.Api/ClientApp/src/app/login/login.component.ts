@@ -1,5 +1,10 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Inject,
+  Input,
+} from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -118,7 +123,8 @@ export class LoginComponent {
   constructor(
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.clearErrors();
     this.isBusy$?.pipe(untilDestroyed(this))?.subscribe((isBusy) => {
@@ -181,5 +187,9 @@ export class LoginComponent {
     this.passwordResetForm.reset();
     this.loginForm.reset();
     this.store.dispatch(new Logout());
+  }
+
+  navigateToAbs(): void {
+    this.document.location.href = 'https://www.absurgery.org/login.jsp';
   }
 }

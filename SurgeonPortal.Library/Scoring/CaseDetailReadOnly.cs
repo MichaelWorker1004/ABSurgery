@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.Scoring;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.Scoring
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.Scoring
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class CaseDetailReadOnly : ReadOnlyBase<CaseDetailReadOnly>, ICaseDetailReadOnly
+    public class CaseDetailReadOnly : YtgReadOnlyBase<CaseDetailReadOnly, int>, ICaseDetailReadOnly
     {
+
+
+        public CaseDetailReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(CaseNumber))]
         public string CaseNumber => ReadProperty(CaseNumberProperty);

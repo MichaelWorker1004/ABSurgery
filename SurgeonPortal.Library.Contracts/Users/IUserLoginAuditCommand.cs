@@ -2,7 +2,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Users
 {
-    public interface IUserLoginAuditCommand : IYtgCommandBase
+    public interface IUserLoginAuditCommand : IYtgCommandBase<int>
     {
         int UserId { get; }
         string EmailAddress { get; }

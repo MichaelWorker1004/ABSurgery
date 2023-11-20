@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
 
 
 
-        public async Task<IEnumerable<FellowshipReadOnlyDto>> GetByUserIdAsync()
+        public async Task<IEnumerable<FellowshipReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
@@ -23,7 +23,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                     "[dbo].[get_userfellowships_byuserid]",
                         new
                         {
-                            UserId = SurgeonPortal.Shared.IdentityHelper.UserId,
+                            UserId = userId,
                         });
                         
             }

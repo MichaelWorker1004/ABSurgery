@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 using static SurgeonPortal.Library.Picklists.ScoringSessionReadOnlyListFactory;
 
 namespace SurgeonPortal.Library.Picklists
@@ -13,11 +14,14 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-	public class ScoringSessionReadOnlyList : YtgReadOnlyListBase<IScoringSessionReadOnlyList, IScoringSessionReadOnly>, IScoringSessionReadOnlyList
+	public class ScoringSessionReadOnlyList : YtgReadOnlyListBase<IScoringSessionReadOnlyList, IScoringSessionReadOnly, int>, IScoringSessionReadOnlyList
     {
         private readonly IScoringSessionReadOnlyDal _scoringSessionReadOnlyDal;
 
-        public ScoringSessionReadOnlyList(IScoringSessionReadOnlyDal scoringSessionReadOnlyDal)
+        public ScoringSessionReadOnlyList(
+            IIdentityProvider identityProvider,
+            IScoringSessionReadOnlyDal scoringSessionReadOnlyDal)
+            : base(identityProvider)
         {
             _scoringSessionReadOnlyDal = scoringSessionReadOnlyDal;
         }
@@ -29,7 +33,6 @@ namespace SurgeonPortal.Library.Picklists
         public static void AddObjectAuthorizationRules()
         {
             
-
         }
 
         [Fetch]
@@ -39,7 +42,9 @@ namespace SurgeonPortal.Library.Picklists
         private async Task GetByKeys(GetByKeysCriteria criteria)
         
         {
-            var dtos = await _scoringSessionReadOnlyDal.GetByKeysAsync(criteria.CurrentDate);
+            var dtos = await _scoringSessionReadOnlyDal.GetByKeysAsync(
+                _identity.GetUserId<int>(),
+                criteria.CurrentDate);
         			
             FetchChildren(dtos);
         }

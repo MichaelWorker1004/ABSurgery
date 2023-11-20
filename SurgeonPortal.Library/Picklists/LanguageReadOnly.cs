@@ -4,6 +4,8 @@ using SurgeonPortal.Library.Contracts.Picklists;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using Ytg.Framework.Csla;
+using Ytg.Framework.Identity;
 
 namespace SurgeonPortal.Library.Picklists
 {
@@ -11,8 +13,15 @@ namespace SurgeonPortal.Library.Picklists
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Csla.Analyzers", "CSLA0004", Justification = "Direct Injection.")]
     [Serializable]
 	[DataContract]
-    public class LanguageReadOnly : ReadOnlyBase<LanguageReadOnly>, ILanguageReadOnly
+    public class LanguageReadOnly : YtgReadOnlyBase<LanguageReadOnly, int>, ILanguageReadOnly
     {
+
+
+        public LanguageReadOnly(IIdentityProvider identityProvider)
+            : base(identityProvider)
+        {
+        }
+        
         [DataMember]
 		[DisplayName(nameof(ItemValue))]
         public int ItemValue => ReadProperty(ItemValueProperty);

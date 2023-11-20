@@ -2,7 +2,7 @@ using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Scoring.CE
 {
-    public interface IExamineeReadOnly : IYtgReadOnlyBase
+    public interface IExamineeReadOnly : IYtgReadOnlyBase<int>
     {
         int ExamScheduleId { get; }
         string FullName { get; }
@@ -10,5 +10,6 @@ namespace SurgeonPortal.Library.Contracts.Scoring.CE
         ITitleReadOnlyList Cases { get; }
         int ExamineeUserId { get; }
         int ExamScoringId { get; }
+        bool? TimerBit { get; }
     }
 }
