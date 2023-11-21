@@ -7,7 +7,6 @@ import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertificatio
 import { OutcomeRegistriesService } from 'src/app/api/services/continuouscertification/outcome-registries.service';
 import { IFormErrors } from 'src/app/shared/common';
 import { GetAttestations } from './continuous-certification.actions';
-import { IContinuousCerticationStatuses } from './continuous-certification-statuses.model';
 import {
   GetContinuousCertificationStatuses,
   GetOutcomeRegistries,
@@ -17,11 +16,12 @@ import {
 } from './continuous-certification.actions';
 import { IAttestationModel } from './attestation.model';
 import { IRefrenceFormReadOnlyModel } from './refrence-form-read-only.model';
+import { IStatuses } from '../../api/models/users/statuses.model';
 
 export interface IContinuousCertication {
   outcomeRegistries: IOutcomeRegistryModel | undefined;
   attestations: IAttestationModel[] | undefined;
-  continuousCertificationStatuses?: IContinuousCerticationStatuses;
+  continuousCertificationStatuses?: IStatuses[];
   outcomeRegistriesErrors?: IFormErrors | null;
   refrenceFormGridData?: IRefrenceFormReadOnlyModel[] | null;
   errors?: IFormErrors | null;
@@ -128,40 +128,48 @@ export class ContinuousCertificationState {
   getContinuousCertificationStatuses(
     ctx: StateContext<IContinuousCertication>
   ) {
-    const response = {
-      personalProfile: {
+    const response: IStatuses[] = [
+      {
+        id: 'personalProfile',
         status: 'completed',
         disabled: false,
       },
-      outcomeRegistries: {
+      {
+        id: 'outcomeRegistries',
         status: 'completed',
         disabled: false,
       },
-      medicalTraining: {
+      {
+        id: 'medicalTraining',
         status: 'completed',
         disabled: false,
       },
-      professionalStanding: {
+      {
+        id: 'professionalStanding',
         status: 'completed',
         disabled: false,
       },
-      cmeRepository: {
+      {
+        id: 'cmeRepository',
         status: 'completed',
         disabled: false,
       },
-      payFee: {
+      {
+        id: 'payFee',
         status: 'completed',
         disabled: false,
       },
-      referenceForms: {
+      {
+        id: 'referenceForms',
         status: 'completed',
         disabled: false,
       },
-      attestation: {
+      {
+        id: 'attestation',
         status: 'in-progress',
         disabled: false,
       },
-    };
+    ];
 
     ctx.patchState({
       continuousCertificationStatuses: response,

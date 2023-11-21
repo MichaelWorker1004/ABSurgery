@@ -13,3 +13,4 @@ export * from './professional-standing';
 export * from './exam-scoring';
 export * from './continuingmedicaleducation';
 export * from './exam-history';
+export * from './registration-requirements';

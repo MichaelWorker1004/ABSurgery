@@ -78,6 +78,12 @@ export class ActionCardComponent implements OnInit {
   // }
 
   /**
+   * Anchor to perform the action
+   * @type {string}
+   */
+  @Input() actionAnchor: string | undefined = '';
+
+  /**
    * Action display to show in the card
    * @type {string}
    */
