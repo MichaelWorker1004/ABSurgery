@@ -1,0 +1,80 @@
+{
+  "name": "AttestationStatusReadOnly",
+  "implementationName": "ContinuousCertification\\AttestationStatusReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_cca_attestation_status_byuserid",
+    "ControllerName": "ContinuousCertification\\AttestationController",
+    "ControllerRoute": "api/attestation",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ContinuousCertification\\AttestationStatusReadOnly",
+    "ModelGroup": "AttestationStatusReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "status"
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_cca_attestation_status_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_cca_attestation_status_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ContinuousCertification\\AttestationStatusReadOnly",
+            "fields": [
+              {
+                "name": "Status",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Status"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ContinuousCertification\\AttestationStatusReadOnly.GetByUserId AttestationStatusReadOnly -t=ytg-framework/readonly-get -p:Model=ContinuousCertification\\AttestationStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_cca_attestation_status_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AttestationStatusReadOnly -p:Route=status -p:ControllerName=ContinuousCertification\\AttestationController -p:ControllerRoute=api/attestation -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim ",
+    "inferredCommand": "ytgim generate i  ContinuousCertification\\AttestationStatusReadOnly.GetByUserId AttestationStatusReadOnly -t=ytg-framework/readonly-get -p:Model=ContinuousCertification\\AttestationStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_cca_attestation_status_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AttestationStatusReadOnly -p:Route=status -p:ControllerName=ContinuousCertification\\AttestationController -p:ControllerRoute=api/attestation -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-11-21T19:34:00.6654123Z"
+  },
+  "version": 1
+}

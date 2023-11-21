@@ -1,0 +1,24 @@
+{
+  "refs": {},
+  "name": "ContinuousCertification\\AttestationStatusReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Status",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s ContinuousCertification\\AttestationStatusReadOnly -sp [dbo].[get_cca_attestation_status_byuserid] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-11-21T19:33:15.2483015Z"
+  },
+  "version": 1
+}
