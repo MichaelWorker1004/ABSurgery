@@ -5,6 +5,7 @@ import {
   EventEmitter,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import {
   FormControl,
@@ -65,6 +66,9 @@ import { InputMask, InputMaskModule } from 'primeng/inputmask';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ReferenceFormModalComponent implements OnInit {
+  @ViewChild('referenceRequestPanel')
+  referenceRequestPanel!: CollapsePanelComponent;
+
   @Select(PicklistsSelectors.slices.states) states$:
     | Observable<IStateReadOnlyModel[]>
     | undefined;
@@ -119,6 +123,13 @@ export class ReferenceFormModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPicklists();
+    // note to all future developers, never do this, it is stupid and hacky
+    // but also it was the only thing that worked, blame shoelace
+    document.addEventListener('sl-after-hide', ($event: any) => {
+      if ($event?.srcElement?.innerHTML.includes('Reference Form')) {
+        this.referenceRequestPanel.collaspsePanel();
+      }
+    });
 
     this.user$?.pipe(untilDestroyed(this)).subscribe((user) => {
       this.referenceLetterForm.patchValue({
@@ -141,7 +152,7 @@ export class ReferenceFormModalComponent implements OnInit {
     console.log('unhandled action', event);
   }
 
-  onSubmit() {
+  onSubmitPanel() {
     const form = this.referenceLetterForm.getRawValue();
 
     const model = form as unknown as IRefrenceFormModel;
@@ -156,8 +167,35 @@ export class ReferenceFormModalComponent implements OnInit {
           true
         );
 
-        this.close();
+        this.closePanel();
       });
+  }
+
+  closePanel() {
+    console.log('here');
+    this.referenceRequestPanel.collaspsePanel();
+  }
+
+  onSubmit() {
+    // this function will be the attestation version of the submit
+    console.log('unhandled submit');
+    // const form = this.referenceLetterForm.getRawValue();
+
+    // const model = form as unknown as IRefrenceFormModel;
+
+    // this._store
+    //   .dispatch(new RequestRefrence(model))
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe(() => {
+    //     this.referenceRequestPanel.collaspsePanel();
+    //     this.globalDialogService.showSuccessError(
+    //       'Reference Requested',
+    //       'Your reference request has been sent successfully.',
+    //       true
+    //     );
+
+    //     this.close();
+    //   });
   }
 
   close() {

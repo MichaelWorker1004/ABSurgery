@@ -7,6 +7,12 @@
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+    &.no-toggle {
+      cursor: default;
+    }
+    &.no-border {
+      border-bottom: none;
+    }
     .panel-icons {
       position: relative;
       height: 1.5rem;
@@ -30,7 +36,7 @@
   }
 
   .panel-body {
-    max-height: 0;
+    max-height: unset;
     overflow: hidden;
     transition: max-height 0.5s ease-out;
     .content {

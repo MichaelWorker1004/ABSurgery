@@ -19,7 +19,7 @@ export class CollapsePanelComponent implements OnInit {
    * the starting state of the panel, whether it is expanded or collapsed
    * @type {boolean}
    */
-  @Input() startExpanded = false;
+  @Input() startExpanded = true;
 
   /**
    * whether or not to show the +/- icon on the panel header
@@ -28,15 +28,44 @@ export class CollapsePanelComponent implements OnInit {
   @Input() showIcon = true;
 
   /**
+   * whether or not to show the border on the panel header
+   * @type {boolean}
+   */
+  @Input() hideBorder = false;
+
+  /**
+   * whether or not the collapse panel can be toggled from the header
+   * if this is turned off the parent will need to control the panel toggle
+   * @type {boolean}
+   */
+  @Input() disabledHeaderToggle = false;
+
+  /**
    * an event to let the parent know when the panel has been expanded or collapsed
    * @type {EventEmitter<any>}
    */
   @Output() togglePanelEvent = new EventEmitter();
 
+  panelExpanded = false;
+
   ngOnInit() {
-    if (this.startExpanded) {
+    if (!this.startExpanded) {
       // setTimeout is needed to wait for the DOM to be ready
       setTimeout(() => this.togglePanel(), 0);
+    }
+  }
+
+  collaspsePanel() {
+    console.log('collapse', this.panelExpanded);
+    if (this.panelExpanded) {
+      this.togglePanel();
+    }
+  }
+
+  expandPanel() {
+    console.log('expand', this.panelExpanded);
+    if (!this.panelExpanded) {
+      this.togglePanel();
     }
   }
 
@@ -47,12 +76,8 @@ export class CollapsePanelComponent implements OnInit {
     );
 
     panel?.classList.toggle('active');
-    if (panel?.classList.contains('active')) {
-      this.togglePanelEvent.emit({ panelId: this.panelId, expanded: true });
-    } else {
-      this.togglePanelEvent.emit({ panelId: this.panelId, expanded: false });
-    }
-    if (panelBody!.style.maxHeight && panelBody!.style.maxHeight !== '0px') {
+    if (!panelBody!.style.maxHeight || panelBody!.style.maxHeight !== '0px') {
+      console.log('panelBody collapse', panelBody!.style.maxHeight);
       // reset the panel maxHeight since the css animation will not work with a maxHeight = unset
       panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
       setTimeout(() => {
@@ -60,12 +85,21 @@ export class CollapsePanelComponent implements OnInit {
         panelBody!.style.maxHeight = '0px';
       }, 0);
     } else {
+      console.log('panelBody expand', panelBody!.style.maxHeight);
       // set the maxHeight to the scrollHeight to allow for the animation to expand the panel
       panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
       setTimeout(() => {
         // set the maxHeight to unset after the animation to account for future content changes
         panelBody!.style.maxHeight = 'unset';
       }, 501);
+    }
+
+    if (panel?.classList.contains('active')) {
+      this.panelExpanded = true;
+      this.togglePanelEvent.emit({ panelId: this.panelId, expanded: true });
+    } else {
+      this.panelExpanded = false;
+      this.togglePanelEvent.emit({ panelId: this.panelId, expanded: false });
     }
   }
 }
