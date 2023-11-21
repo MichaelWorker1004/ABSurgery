@@ -18,11 +18,31 @@ import { Action } from '../shared/components/action-card/action.enum';
 import { ProfessionalActivitiesAndPrivilegesModalComponent } from './professional-activities-and-privileges-modal/professional-activities-and-privileges-modal.component';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { LegendComponent } from '../shared/components/legend/legend.component';
+import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
+import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
+import {
+  ExamProcessSelectors,
+  GetExamFees,
+  IUserProfile,
+  UserProfileSelectors,
+} from '../state';
+import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
+import {
+  GetResgistrationRequirmentsStatuses,
+  ReqistrationRequirmentsSelectors,
+} from '../state/registration-requirements';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IStatuses } from '../api/models/users/statuses.model';
+import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-cards';
 
 interface ActionMap {
   [key: string]: () => void;
 }
 
+@UntilDestroy()
 @Component({
   selector: 'abs-registration-requirements',
   standalone: true,
@@ -38,12 +58,23 @@ interface ActionMap {
     SpecialAccommodationsModalComponent,
     ProfessionalActivitiesAndPrivilegesModalComponent,
     LegendComponent,
+    AttestationModalComponent,
+    PayFeeComponent,
   ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RegistrationRequirementsComponent implements OnInit {
+  @Select(ExamProcessSelectors.slices.examFees) examFees$:
+    | Observable<IExamFeeReadOnlyModel[]>
+    | undefined;
+
+  @Select(
+    ReqistrationRequirmentsSelectors.slices.registrationRequirementsStatuses
+  )
+  registrationRequirementsStatuses$: Observable<any> | undefined;
+
   userData!: any;
   registrationRequirementsData!: Array<any>;
   applyForAnExamActionCardData!: any;
@@ -53,7 +84,12 @@ export class RegistrationRequirementsComponent implements OnInit {
   showTraining = false;
   showGraduateMedicalEducation = false;
   showSpecialAccommodations = false;
+  attestationModal = false;
   showProfessionalActivitiesAndPrivileges = false;
+  payFeeModal = false;
+
+  payFeeCols = PAY_FEE_COLS;
+  payFeeData!: any;
 
   legendItems = [
     {
@@ -76,8 +112,11 @@ export class RegistrationRequirementsComponent implements OnInit {
 
   constructor(
     private _globalDialogService: GlobalDialogService,
-    public viewContainerRef: ViewContainerRef
+    public viewContainerRef: ViewContainerRef,
+    private _store: Store
   ) {
+    this._store.dispatch(new GetResgistrationRequirmentsStatuses());
+    this._store.dispatch(new GetExamFees());
     this._globalDialogService.setViewContainerRef = this.viewContainerRef;
   }
 
@@ -104,17 +143,16 @@ export class RegistrationRequirementsComponent implements OnInit {
       this.showProfessionalActivitiesAndPrivileges =
         !this.showProfessionalActivitiesAndPrivileges;
     },
+    attestationModal: () => {
+      this.attestationModal = !this.attestationModal;
+    },
+    payFeeModal: () => {
+      this.payFeeModal = !this.payFeeModal;
+    },
   };
 
   ngOnInit(): void {
-    this.getUserData();
     this.getRegistrationRequirementsData();
-  }
-
-  getUserData() {
-    this.userData = {
-      name: 'John Doe M.D',
-    };
   }
 
   closeModal(event: any) {
@@ -124,143 +162,65 @@ export class RegistrationRequirementsComponent implements OnInit {
     }
   }
 
+  getPayFeeData() {
+    this.examFees$?.subscribe((examFees) => {
+      const payFeeData = {
+        totalAmountOfFee: 0,
+        totalAmountPaidDate: new Date(),
+        totalAmountPaid: 0,
+        remainingBalance: 0,
+      };
+
+      examFees.forEach((examFee: any) => {
+        payFeeData.totalAmountOfFee += examFee.subTotal;
+        payFeeData.totalAmountPaid += examFee.paidTotal;
+        payFeeData.remainingBalance += examFee.balanceDue;
+      });
+
+      this.payFeeData = payFeeData;
+    });
+  }
+
   getRegistrationRequirementsData() {
-    this.registrationRequirementsData = [
-      {
-        title: 'Personal Profile',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.component,
-          action: '/personal-profile',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-solid fa-address-card',
-        status: Status.Completed,
-      },
-      {
-        title: 'Training',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.component,
-          action: '/medical-training',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-language fa-solid',
-        status: Status.InProgress,
-        recievedOn: new Date('2021-01-01'),
-      },
-      {
-        title: 'Professional Activities and Privileges',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.component,
-          action: '/professional-standing',
-          anchor: 'hospital-appointments',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-solid fa-user-doctor',
-        status: Status.Completed,
-      },
-      {
-        title: 'Medical License',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.component,
-          action: '/professional-standing',
-          anchor: 'medical-license',
-        },
-        actionDisplay: 'View / Update my license',
-        icon: 'fa-certificate fa-solid',
-        status: Status.InProgress,
-      },
-      {
-        title: 'ACGME Experience Report by Role',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.dialog,
-          action: 'ACGMEExperienceModal',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-solid fa-stethoscope',
-        status: Status.InProgress,
-      },
-      {
-        title: 'Graduate Medical Education (GME)',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.dialog,
-          action: 'graduateMedicalEducationModal',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-solid fa-stethoscope',
-        status: Status.Alert,
-      },
-      {
-        title: 'Program Director Attestation',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.component,
-          action: '/program-director-attestation',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-solid fa-user-check',
-        status: Status.Completed,
-      },
-      {
-        title: 'Certification(s) Upload',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.component,
-          action: '/certifications-upload',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-solid fa-rectangle-list',
-        status: Status.Completed,
-      },
-      {
-        title: 'Application Fee',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.component,
-          action: '/application-fee',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-solid fa-cash-register',
-        status: Status.Contingent,
-      },
-      {
-        title: 'Special Accommodations',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-        action: {
-          type: Action.dialog,
-          action: 'specialAccommodationsModal',
-        },
-        actionDisplay: 'View / Update my information',
-        icon: 'fa-solid fa-star',
-        status: Status.InProgress,
-      },
-    ];
+    this.registrationRequirementsData = REGISTRATION_REQUIRMENTS_CARDS;
+
+    this.registrationRequirementsStatuses$
+      ?.pipe(untilDestroyed(this))
+      .subscribe((registrationRequirementsStatuses: IStatuses[]) => {
+        const statuses = {} as any;
+
+        registrationRequirementsStatuses.forEach((status: any) => {
+          statuses[status.id] = status;
+        });
+
+        this.registrationRequirementsData.forEach((data: any) => {
+          data.status = statuses[data.id].status;
+          data.disabled = statuses[data.id].disabled;
+        });
+      });
+
     this.applyForAnExamActionCardData = {
       title: 'Apply for an Exam',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
       action: {
         style: 2,
+        type: Action.component,
+        action: '/apply-and-resgister/exam-registration',
       },
-      disabled: true,
+      disabled: !this.areAllItemsCompleted(this.registrationRequirementsData),
       actionDisplay: 'Apply Now',
       icon: 'fa-solid fa-language',
     };
+  }
+
+  areAllItemsCompleted(data: any[]): boolean {
+    for (const item of data) {
+      if (item.status !== undefined && item.status !== Status.Completed) {
+        return false;
+      }
+    }
+    return true; // All items have a status of Completed or no status at all
   }
 
   handleCardAction(action: string) {

@@ -131,4 +131,32 @@
     >
     </abs-professional-activities-and-privileges-modal>
   </abs-modal>
+
+  <abs-modal
+    [open]="attestationModal"
+    (closeDialog)="handleCardAction('attestationModal')"
+    title="Attestation"
+    modalName="attestationModal"
+  >
+    <abs-attestation-modal
+      (closeDialog)="handleCardAction('attestationModal')"
+    ></abs-attestation-modal>
+  </abs-modal>
+
+  <abs-modal
+    [open]="payFeeModal"
+    (closeDialog)="handleCardAction('payFeeModal')"
+    title="Pay Fee"
+    modalName="payFeeModal"
+  >
+    <abs-pay-fee
+      [payFeeData]="payFeeData"
+      [paymentGridData]="examFees$"
+      (cancelAction)="handleCardAction('payFeeModal')"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
+      nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas
+      sit amet tortor at, condimentum tempor erat.
+    </abs-pay-fee>
+  </abs-modal>
 </div>

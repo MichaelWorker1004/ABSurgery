@@ -8,7 +8,7 @@ import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outcome-registries-modal.component';
-import { AttestationModalComponent } from './attestation-modal/attestation-modal.component';
+import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
 import { ReferenceFormModalComponent } from './reference-form-modal/reference-form-modal.component';
 import { Action } from '../shared/components/action-card/action.enum';
 import { Observable, take } from 'rxjs';
@@ -27,8 +27,8 @@ import {
   GetContinuousCertificationStatuses,
   GetRefrenceFormGridData,
 } from '../state';
-import { IContinuousCerticationStatuses } from '../state/continuous-certification/continuous-certification-statuses.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IStatuses } from '../api/models/users/statuses.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -70,9 +70,7 @@ export class ContinuousCertificationComponent implements OnInit {
   @Select(
     ContinuousCertificationSelectors.slices.continuousCertificationStatuses
   )
-  continuousCertificationStatuses$:
-    | Observable<IContinuousCerticationStatuses>
-    | undefined;
+  continuousCertificationStatuses$: Observable<IStatuses[]> | undefined;
 
   userData!: any;
   continousCertificationData!: any;
@@ -295,9 +293,15 @@ export class ContinuousCertificationComponent implements OnInit {
 
     this.continuousCertificationStatuses$
       ?.pipe(untilDestroyed(this))
-      .subscribe((continuousCertificationStatuses: any) => {
+      .subscribe((continuousCertificationStatuses: IStatuses[]) => {
+        const statuses = {} as any;
+
+        continuousCertificationStatuses.forEach((ccs) => {
+          statuses[ccs.id] = ccs;
+        });
+
         continousCertificationData.forEach((cc: any) => {
-          cc['status'] = continuousCertificationStatuses[cc.id]?.status;
+          cc['status'] = statuses[cc.id]?.status;
         });
 
         continousCertificationData.find((cc) => {

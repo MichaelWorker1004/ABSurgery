@@ -14,6 +14,7 @@ import { ExamScoringState } from './exam-scoring';
 import { ContinuingMedicalEducationState } from './continuingmedicaleducation';
 import { ExamHistoryState } from './exam-history';
 import { ApplicationState } from './application/application.state';
+import { RegistrationRequirementsState } from './registration-requirements';
 
 export const surgeonPortalState = [
   ApplicationState,
@@ -33,4 +34,5 @@ export const surgeonPortalState = [
   ContinuingMedicalEducationState,
   ExamScoringState,
   ExamHistoryState,
+  RegistrationRequirementsState,
 ];
