@@ -10,5 +10,6 @@ namespace SurgeonPortal.Models.Scoring.CE
         public List<TitleReadOnlyModel> Cases { get; set; }
         public int ExamineeUserId { get; set; }
         public int ExamScoringId { get; set; }
+        public bool? TimerBit { get; set; }
     }
 }

@@ -18,7 +18,7 @@ import { ExaminationScoreModalComponent } from './examination-score-modal/examin
 import {
   ApplicationSelectors,
   ExamScoringSelectors,
-  GetExamHeaderId,
+  GetActiveExamId,
   GetExamScoresList,
   GetExamTitle,
   GetSelectedExamScores,
@@ -100,15 +100,11 @@ export class ExaminationScoresComponent implements OnInit {
 
   lockedCases = false;
 
-  // TODO: [Joe] - remove after release 1 as part of feature/1811
   currentDay = new Date();
 
   constructor(private _store: Store) {
-    // TODO: [Joe] - remove after release 1 as part of feature/1811
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      if (featureFlags?.ceScoreTesting) {
-        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
-      }
+      this._store.dispatch(new GetActiveExamId());
       if (featureFlags?.ceScoreTestingDate) {
         this.currentDay = new Date('10/16/2023');
       }
@@ -166,17 +162,14 @@ export class ExaminationScoresComponent implements OnInit {
       ?.pipe(
         untilDestroyed(this),
         map((scoreList) => {
-          // TODO: [Joe] - remove hardcoded dates after release 1 as part of feature/1811
-          const hardcodedDates = ['10/16/2023', '10/17/2023', '10/18/2023'];
           if (scoreList?.length > 0) {
             return scoreList.map((score) => {
               return {
                 ...score,
                 day: 'Day ' + score.dayNumber,
-                // TODO: [Joe] - remove date atrribute after release 1 as part of feature/1811
-                date: hardcodedDates[score.dayNumber - 1],
                 session: 'Session ' + score.sessionNumber,
                 status: score.isSubmitted ? 'Complete' : 'Incomplete',
+                date: new Date(score.examDate).toLocaleDateString(),
                 //cases: score.cases,
               };
             });
@@ -185,9 +178,6 @@ export class ExaminationScoresComponent implements OnInit {
         })
       )
       .subscribe((scoreList) => {
-        // TODO: [Joe] - after release 1 remove the filter and update the SP to handle the filtering
-        // part of feature/1811
-        // this.examinationScoresData = scoreList
         const date = this.currentDay.toLocaleDateString();
 
         this.examinationScoresData = scoreList.filter((exam) => {

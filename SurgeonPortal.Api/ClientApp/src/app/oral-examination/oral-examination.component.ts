@@ -31,7 +31,7 @@ import {
   CreateCaseScore,
   CreateExamScore,
   ExamScoringSelectors,
-  GetExamHeaderId,
+  GetActiveExamId,
   GetExamTitle,
   GetExaminee,
   GetSelectedExamScores,
@@ -41,7 +41,6 @@ import {
   UserProfileSelectors,
 } from '../state';
 import { SetExamInProgress } from '../state/application/application.actions';
-import { s } from '@fullcalendar/core/internal-common';
 
 @UntilDestroy()
 @Component({
@@ -125,9 +124,7 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     public globalDialogService: GlobalDialogService
   ) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
-      if (featureFlags?.ceScoreTesting) {
-        this._store.dispatch(new GetExamHeaderId(featureFlags.ceScoreTesting));
-      }
+      this._store.dispatch(new GetActiveExamId());
     });
 
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
@@ -184,7 +181,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.globalDialogService.closeOpenDialog();
           }, 0);
-          this.showTimer = true;
+          if (examinee.timerBit !== null || examinee.timerBit !== undefined) {
+            this.showTimer = examinee.timerBit;
+          } else {
+            this.showTimer = true;
+          }
         }
       });
   }

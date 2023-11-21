@@ -1,3 +1,5 @@
+using System;
+
 namespace SurgeonPortal.DataAccess.Contracts.Scoring
 {
     public class RosterReadOnlyDto
@@ -8,5 +10,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Scoring
         public string Roster { get; set; }
         public string DisplayName { get; set; }
         public bool? IsSubmitted { get; set; }
+        public DateTime? ExamDate { get; set; }
     }
 }
