@@ -152,16 +152,7 @@ export class ReferenceFormModalComponent implements OnInit {
     console.log('unhandled action', event);
   }
 
-  onSubmitPanel(formFields: any) {
-    console.log('unhandled submit', formFields);
-    this.referenceRequestPanel.collaspsePanel();
-  }
-
-  closePanel() {
-    this.referenceRequestPanel.collaspsePanel();
-  }
-
-  onSubmit() {
+  onSubmitPanel() {
     const form = this.referenceLetterForm.getRawValue();
 
     const model = form as unknown as IRefrenceFormModel;
@@ -176,8 +167,35 @@ export class ReferenceFormModalComponent implements OnInit {
           true
         );
 
-        this.close();
+        this.closePanel();
       });
+  }
+
+  closePanel() {
+    console.log('here');
+    this.referenceRequestPanel.collaspsePanel();
+  }
+
+  onSubmit() {
+    // this function will be the attestation version of the submit
+    console.log('unhandled submit');
+    // const form = this.referenceLetterForm.getRawValue();
+
+    // const model = form as unknown as IRefrenceFormModel;
+
+    // this._store
+    //   .dispatch(new RequestRefrence(model))
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe(() => {
+    //     this.referenceRequestPanel.collaspsePanel();
+    //     this.globalDialogService.showSuccessError(
+    //       'Reference Requested',
+    //       'Your reference request has been sent successfully.',
+    //       true
+    //     );
+
+    //     this.close();
+    //   });
   }
 
   close() {
