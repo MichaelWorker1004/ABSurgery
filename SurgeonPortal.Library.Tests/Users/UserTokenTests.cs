@@ -13,9 +13,9 @@ namespace SurgeonPortal.Library.Tests.Users
 	public class UserTokenTests : TestBase<int>
     {
         private UserTokenDto CreateValidDto()
-        {
+        {     
             var dto = Create<UserTokenDto>();
-        
+
             dto.UserId = Create<int>();
             dto.Token = Create<string>();
             dto.ExpiresAt = Create<System.DateTime>();

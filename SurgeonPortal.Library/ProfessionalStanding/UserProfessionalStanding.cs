@@ -22,7 +22,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
         private readonly IUserProfessionalStandingDal _userProfessionalStandingDal;
         private readonly IGetClinicallyActiveCommandFactory _getClinicallyActiveCommandFactory;
 
-        public UserProfessionalStanding(
+		public UserProfessionalStanding(
             IIdentityProvider identityProvider,
             IUserProfessionalStandingDal userProfessionalStandingDal,
 			IGetClinicallyActiveCommandFactory getClinicallyActiveCommandFactory)
@@ -130,7 +130,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             BusinessRules.AddRule(new ClinicallyActiveRequiresRule(_getClinicallyActiveCommandFactory, ClinicallyActiveProperty, 1));
 		}
 
-        [Fetch]
+		[Fetch]
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
@@ -232,7 +232,5 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 
 			return dto;
 		}
-
-
     }
 }
