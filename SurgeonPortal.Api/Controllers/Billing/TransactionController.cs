@@ -37,7 +37,9 @@ namespace SurgeonPortal.Api.Controllers.Billing
 
 			var command = await generateTransactionTokenCommandFactory.GenerateTransactionTokenAsync(model.Amount, model.InvoiceNumber, model.Quantity, model.Description, model.CostPerUnit, model.FirstName, model.LastName, model.Email, model.PhoneNumber, model.AddressLine1, model.AddressLine2, model.City, model.State, model.ZipCode);
 
-			return Ok(command.TransactionToken);
+			model.TransactionToken = command.TransactionToken;
+
+			return Ok(model);
 		}
 	}
 }
