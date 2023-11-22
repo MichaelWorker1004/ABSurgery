@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SurgeonPortal.Library.Contracts.Billing;
 using SurgeonPortal.Models.Billing;
 using Ytg.AspNetCore.Controllers;
@@ -12,13 +11,9 @@ namespace SurgeonPortal.Api.Controllers.Billing
 	[Route("api/billing/transaction")]
 	public class TransactionController : YtgControllerBase
 	{
-		private readonly IMapper _mapper;
-		public TransactionController(
-			IWebHostEnvironment webHostEnvironment,
-			IMapper mapper) 
+		public TransactionController(IWebHostEnvironment webHostEnvironment) 
 			: base(webHostEnvironment)
 		{
-			_mapper = mapper;
 		}
 
 		[MapToApiVersion("1")]
