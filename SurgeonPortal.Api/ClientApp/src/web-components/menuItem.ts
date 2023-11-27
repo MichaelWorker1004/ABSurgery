@@ -5,4 +5,6 @@ export interface IMenuItem {
   icon?: string;
   feature?: string;
   children?: Array<IMenuItem>;
+  allowedClaims?: Array<string>;
+  order?: number;
 }
