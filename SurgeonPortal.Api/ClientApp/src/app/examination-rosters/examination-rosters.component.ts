@@ -149,7 +149,7 @@ export class ExaminationRostersComponent implements OnInit {
   }
 
   getCaseList() {
-    if (this.selectedRoster?.session1Id && this.selectedRoster?.session2Id) {
+    if (this.selectedRoster?.session1Id) {
       this._store
         .dispatch(
           new GetCaseRoster(
