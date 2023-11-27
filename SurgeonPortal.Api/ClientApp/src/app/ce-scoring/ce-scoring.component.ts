@@ -9,7 +9,7 @@ import { ACTION_CARDS } from './user-action-cards';
 
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ButtonModule } from 'primeng/button';
-import { Observable, take } from 'rxjs';
+import { Observable, skipWhile, take } from 'rxjs';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { IAgendaReadOnlyModel } from '../api/models/examiners/agenda-read-only.model';
 import { IConflictReadOnlyModel } from '../api/models/examiners/conflict-read-only.model';
@@ -88,18 +88,23 @@ export class CeScoringAppComponent implements OnInit {
       this._store.dispatch(new GetActiveExamId());
       if (featureFlags) {
         this.ceScoreTesting = <boolean>featureFlags.ceScoreTesting;
-        if (featureFlags.ceScoreTestingDate) {
-          this.examinationDate = new Date('10/16/2023')
-            .toISOString()
-            .split('T')[0];
-        }
+        // if (featureFlags.ceScoreTestingDate) {
+        //   this.examinationDate = new Date('10/16/2023')
+        //     .toISOString()
+        //     .split('T')[0];
+        // }
       }
     });
-    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
-      this._store.dispatch(new GetExamTitle(examHeaderId));
-      this._store.dispatch(new GetExaminerAgenda(examHeaderId));
-      this._store.dispatch(new GetExaminerConflict(examHeaderId));
-    });
+    this.examHeaderId$
+      ?.pipe(
+        skipWhile((examHeaderId) => !examHeaderId),
+        untilDestroyed(this)
+      )
+      .subscribe((examHeaderId) => {
+        this._store.dispatch(new GetExamTitle(examHeaderId));
+        this._store.dispatch(new GetExaminerAgenda(examHeaderId));
+        this._store.dispatch(new GetExaminerConflict(examHeaderId));
+      });
   }
 
   ngOnInit(): void {

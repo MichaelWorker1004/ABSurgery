@@ -13,7 +13,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { BehaviorSubject, Observable, distinctUntilChanged, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  distinctUntilChanged,
+  skipWhile,
+  take,
+} from 'rxjs';
 import { ICaseScoreModel, ICaseScoreReadOnlyModel } from '../api';
 import { IExamScoreModel } from '../api/models/ce/exam-score.model';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
@@ -127,9 +133,14 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
       this._store.dispatch(new GetActiveExamId());
     });
 
-    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
-      this._store.dispatch(new GetExamTitle(examHeaderId));
-    });
+    this.examHeaderId$
+      ?.pipe(
+        skipWhile((examHeaderId) => !examHeaderId),
+        untilDestroyed(this)
+      )
+      .subscribe((examHeaderId) => {
+        this._store.dispatch(new GetExamTitle(examHeaderId));
+      });
 
     window.onbeforeunload = (e) => {
       e.returnValue = true;

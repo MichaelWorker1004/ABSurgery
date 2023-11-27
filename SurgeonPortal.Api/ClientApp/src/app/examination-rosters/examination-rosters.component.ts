@@ -38,7 +38,7 @@ import {
 } from '../state';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
-import { Observable } from 'rxjs';
+import { Observable, skipWhile } from 'rxjs';
 import { ICaseFeedbackModel } from '../api/models/scoring/case-feedback.model';
 
 export interface ICaseDetailModel extends ICaseDetailReadOnlyModel {
@@ -113,9 +113,14 @@ export class ExaminationRostersComponent implements OnInit {
       this._store.dispatch(new GetActiveExamId());
     });
 
-    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
-      this._store.dispatch(new GetExamTitle(examHeaderId));
-    });
+    this.examHeaderId$
+      ?.pipe(
+        skipWhile((examHeaderId) => !examHeaderId),
+        untilDestroyed(this)
+      )
+      .subscribe((examHeaderId) => {
+        this._store.dispatch(new GetExamTitle(examHeaderId));
+      });
   }
 
   ngOnInit(): void {

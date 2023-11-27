@@ -20,7 +20,7 @@ import {
   SkipExam,
 } from '../state';
 import { Select, Store } from '@ngxs/store';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, skipWhile } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { LegendComponent } from '../shared/components/legend/legend.component';
@@ -88,16 +88,21 @@ export class OralExaminationsComponent implements OnInit {
   ) {
     this.featureFlags$?.pipe().subscribe((featureFlags) => {
       this._store.dispatch(new GetActiveExamId());
-      if (featureFlags) {
-        if (featureFlags.ceScoreTestingDate) {
-          this.examDate = new Date('10/16/2023');
-        }
-      }
+      // if (featureFlags) {
+      //   if (featureFlags.ceScoreTestingDate) {
+      //     this.examDate = new Date('10/16/2023');
+      //   }
+      // }
     });
 
-    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
-      this._store.dispatch(new GetExamTitle(examHeaderId));
-    });
+    this.examHeaderId$
+      ?.pipe(
+        skipWhile((examHeaderId) => !examHeaderId),
+        untilDestroyed(this)
+      )
+      .subscribe((examHeaderId) => {
+        this._store.dispatch(new GetExamTitle(examHeaderId));
+      });
   }
 
   ngOnInit(): void {
