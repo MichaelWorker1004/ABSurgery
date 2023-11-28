@@ -3,16 +3,23 @@ import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { IFormErrors } from '../../shared/common';
-import { GetExamDirectory, GetExamFees } from './exam-process.actions';
+import {
+  ExamFeeTransaction,
+  GetExamDirectory,
+  GetExamFees,
+} from './exam-process.actions';
 import { IExamOverviewReadOnlyModel } from 'src/app/api/models/examinations/exam-overview-read-only.model';
 import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { IExamFeeReadOnlyModel } from 'src/app/api/models/billing/exam-fee-read-only.model';
 import { ExamFeeService } from 'src/app/api/services/billing/exam-fee.service';
+import { IExamFeeTransactionModel } from 'src/app/api/models/billing/exam-fee-transaction.mode';
+import { ExamFeeTransactionService } from 'src/app/api/services/billing/exam-fee-transaction.service';
 
 export interface IExamProcess {
   examDirectory: IExamOverviewReadOnlyModel[];
   examFees: IExamFeeReadOnlyModel[];
+  examFeeTransaction: IExamFeeTransactionModel | undefined;
   errors?: IFormErrors | null;
 }
 
@@ -25,6 +32,7 @@ export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
   defaults: {
     examDirectory: [],
     examFees: [],
+    examFeeTransaction: undefined,
     errors: null,
   },
 })
@@ -33,6 +41,7 @@ export class ExamProcessState {
   constructor(
     private examinationsService: ExaminationsService,
     private examFeeService: ExamFeeService,
+    private examFeeTransactionService: ExamFeeTransactionService,
     private globalDialogService: GlobalDialogService
   ) {}
 
@@ -86,5 +95,31 @@ export class ExamProcessState {
         return of(error);
       })
     );
+  }
+
+  @Action(ExamFeeTransaction)
+  examFeeTransaction(
+    ctx: StateContext<IExamProcess>,
+    payload: ExamFeeTransaction
+  ): Observable<IExamFeeTransactionModel> {
+    return this.examFeeTransactionService
+      .retrieveExamFeeTransactionToken(payload.model)
+      .pipe(
+        tap((examFeeTransaction) => {
+          ctx.patchState({
+            examFeeTransaction,
+          });
+        }),
+        catchError((error) => {
+          console.error('------- In Exam Process', error);
+          console.error(error);
+          this.globalDialogService.showSuccessError(
+            error.status,
+            'There was an error processing your request. Please try again later.',
+            false
+          );
+          return of(error);
+        })
+      );
   }
 }

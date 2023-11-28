@@ -31,6 +31,7 @@
   [data]="paymentGridData"
   (action)="handleGridAction($event)"
   class="margin-bottom-2"
+  [pagination]="true"
 >
 </abs-grid>
 
@@ -74,7 +75,10 @@
         (click)="handleCancelAction()"
         >Cancel</p-button
       >
-      <p-button [style]="{ width: '337px' }" (click)="handleSubmitAction()"
+      <p-button
+        [style]="{ width: '337px' }"
+        (click)="handleSubmitAction()"
+        [disabled]="payFeeDisabled"
         >Proceed to Pay</p-button
       >
     </div>

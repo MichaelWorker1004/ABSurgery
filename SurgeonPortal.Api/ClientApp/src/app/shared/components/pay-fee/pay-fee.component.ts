@@ -23,9 +23,15 @@ import { IStateReadOnlyModel } from 'src/app/api';
 import { Select, Store } from '@ngxs/store';
 import { IFormFields } from '../../models/form-fields/form-fields';
 import { ButtonModule } from 'primeng/button';
-import { IUserProfile, UserProfileSelectors } from 'src/app/state';
+import {
+  ExamFeeTransaction,
+  IUserProfile,
+  UserProfileSelectors,
+} from 'src/app/state';
 import { PAY_FEE_FORM_FIELDS } from './pay-fee-form-fields';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IExamFeeTransactionModel } from 'src/app/api/models/billing/exam-fee-transaction.mode';
+import { GlobalDialogService } from '../../services/global-dialog.service';
 
 @UntilDestroy()
 @Component({
@@ -65,7 +71,12 @@ export class PayFeeComponent implements OnInit {
 
   paymentInformationForm: FormGroup = new FormGroup({});
 
-  constructor(private _store: Store) {
+  payFeeDisabled = true;
+
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {
     this._store.dispatch(new GetStateList('500'));
   }
 
@@ -93,10 +104,16 @@ export class PayFeeComponent implements OnInit {
   }
 
   populateFormFields() {
-    this.user$?.subscribe((user) => {
+    this.user$?.pipe(untilDestroyed(this)).subscribe((user) => {
       for (const [key, value] of Object.entries(user)) {
         this.paymentInformationForm.get(key)?.setValue(value);
       }
+      this.paymentInformationForm.get('email')?.setValue(user.emailAddress);
+      this.paymentInformationForm.get('addressLine1')?.setValue(user.street1);
+      this.paymentInformationForm.get('addressLine2')?.setValue(user.street2);
+      this.paymentInformationForm
+        .get('phoneNumber')
+        ?.setValue(user.officePhoneNumber);
     });
   }
 
@@ -112,7 +129,12 @@ export class PayFeeComponent implements OnInit {
   }
 
   handleGridAction(event: any) {
-    console.log('unhandled grid action', event);
+    const invoiceData = event.data;
+    this.paymentInformationForm
+      .get('invoiceNumber')
+      ?.setValue(invoiceData.invoiceNumber);
+    this.paymentInformationForm.get('amount')?.setValue(invoiceData.balanceDue);
+    this.payFeeDisabled = false;
   }
 
   handleCancelAction() {
@@ -120,6 +142,26 @@ export class PayFeeComponent implements OnInit {
   }
 
   handleSubmitAction() {
-    console.log('Submit');
+    this.globalDialogService.showLoading();
+    const formFields = this.paymentInformationForm.getRawValue();
+    const model: IExamFeeTransactionModel = {
+      ...formFields,
+      invoiceNumber: formFields.invoiceNumber,
+      zipCode: formFields.zipCode.toString().replace(/\s/g, ''),
+      quantity: '1',
+      phoneNumber: formFields.phoneNumber.replace(/\D/g, ''),
+      description: formFields.invoiceNumber,
+      costPerUnit: formFields.amount.toString(),
+      amount: formFields.amount.toString(),
+    };
+
+    this._store
+      .dispatch(new ExamFeeTransaction(model))
+      .pipe(untilDestroyed(this))
+      .subscribe((response) => {
+        //window.location.href = response.url;
+      });
+
+    console.log('submit action', model);
   }
 }
