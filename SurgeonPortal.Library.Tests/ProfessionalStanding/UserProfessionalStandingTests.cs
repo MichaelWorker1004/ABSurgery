@@ -13,9 +13,9 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 	public class UserProfessionalStandingTests : TestBase<int>
     {
         private UserProfessionalStandingDto CreateValidDto()
-        {     
+        {
             var dto = Create<UserProfessionalStandingDto>();
-
+        
             dto.Id = Create<int>();
             dto.UserId = 1234;
             dto.PrimaryPracticeId = Create<int?>();
@@ -29,11 +29,11 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.CreatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedAtUtc = Create<System.DateTime>();
             dto.LastUpdatedByUserId = 1234;
-    
+        
             return dto;
         }
-
-            
+        
+        
 
         #region GetByUserIdAsync UserProfessionalStanding
         
@@ -68,7 +68,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         {
             var dto = CreateValidDto();
             var expectedUserId = 1234;
-        
+            
             var mockDal = new Mock<IUserProfessionalStandingDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(dto);
@@ -213,7 +213,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var mockDal = new Mock<IUserProfessionalStandingDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                        .ReturnsAsync(dto);
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserProfessionalStandingDto>()))
                 .Callback<UserProfessionalStandingDto>((p) => passedDto = p)
@@ -271,13 +271,13 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.Id)
-                    .Excluding(m => m.PrimaryPractice)
-                    .Excluding(m => m.OrganizationType)
-                    .Excluding(m => m.ClinicallyActive)
-                    .Excluding(m => m.CreatedByUserId)
-                    .Excluding(m => m.CreatedAtUtc)
-                    .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.Id)
+                .Excluding(m => m.PrimaryPractice)
+                .Excluding(m => m.OrganizationType)
+                .Excluding(m => m.ClinicallyActive)
+                .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
