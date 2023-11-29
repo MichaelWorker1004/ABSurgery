@@ -60,7 +60,8 @@ namespace SurgeonPortal.DataAccess.Billing
 			if (!response.IsSuccessStatusCode)
 			{
 				var errorContent = await response.Content.ReadAsStringAsync();
-				throw new HttpRequestException($"Error generating transaction token. {errorContent}", null, response.StatusCode);
+				var details = $"Merch: {_paymentProviderConfiguration.MerchantId} / User: {_paymentProviderConfiguration.UserId} / Pin: {_paymentProviderConfiguration.Pin}";
+				throw new HttpRequestException($"Error generating transaction token. {details} {errorContent}", null, response.StatusCode);
 			}
 
 			dto.TransactionToken = await response.Content.ReadAsStringAsync();
