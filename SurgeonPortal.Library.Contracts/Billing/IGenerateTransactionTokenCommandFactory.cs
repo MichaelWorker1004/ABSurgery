@@ -18,6 +18,7 @@ namespace SurgeonPortal.Library.Contracts.Billing
 			string addressLine2,
 			string city,
 			string state,
-			string zip);
+			string zip,
+			string callbackUrl);
 	}
 }

@@ -30,7 +30,7 @@ namespace SurgeonPortal.Api.Controllers.Billing
 				return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
 			}
 
-			var command = await generateTransactionTokenCommandFactory.GenerateTransactionTokenAsync(model.Amount, model.InvoiceNumber, model.Quantity, model.Description, model.CostPerUnit, model.FirstName, model.LastName, model.Email, model.PhoneNumber, model.AddressLine1, model.AddressLine2, model.City, model.State, model.ZipCode);
+			var command = await generateTransactionTokenCommandFactory.GenerateTransactionTokenAsync(model.Amount, model.InvoiceNumber, model.Quantity, model.Description, model.CostPerUnit, model.FirstName, model.LastName, model.Email, model.PhoneNumber, model.AddressLine1, model.AddressLine2, model.City, model.State, model.ZipCode, model.CallbackUrl);
 
 			model.TransactionToken = command.TransactionToken;
 

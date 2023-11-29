@@ -17,7 +17,7 @@ namespace SurgeonPortal.DataAccess.Billing
 			_paymentProviderConfiguration = options.Value;
 		}
 
-		public async Task<GenerateTransactionTokenCommandDto> GenerateTransactionTokenAsync(decimal amount, string invoiceNumber, int quantity, string description, decimal costPerUnit, string firstName, string lastName, string email, string phoneNumber, string addressLine1, string addressLine2, string city, string state, string zip)
+		public async Task<GenerateTransactionTokenCommandDto> GenerateTransactionTokenAsync(decimal amount, string invoiceNumber, int quantity, string description, decimal costPerUnit, string firstName, string lastName, string email, string phoneNumber, string addressLine1, string addressLine2, string city, string state, string zip, string callbackUrl)
 		{
 			var dto = new GenerateTransactionTokenCommandDto();
 
@@ -45,7 +45,8 @@ namespace SurgeonPortal.DataAccess.Billing
 				{ "ssl_address2", addressLine2 },
 				{ "ssl_city", city },
 				{ "ssl_state", state },
-				{ "ssl_avs_zip", zip }
+				{ "ssl_avs_zip", zip },
+				{ "ssl_callback_url", callbackUrl }
 			};
 
 			var request = new HttpRequestMessage

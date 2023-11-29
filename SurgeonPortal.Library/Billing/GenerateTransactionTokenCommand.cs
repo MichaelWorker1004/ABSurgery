@@ -126,6 +126,13 @@ namespace SurgeonPortal.Library.Billing
 		}
 		public static readonly PropertyInfo<string> ZipCodeProperty = RegisterProperty<string>(c => c.ZipCode);
 
+		public string CallbackUrl
+		{
+			get { return ReadProperty(CallbackUrlProperty); }
+			internal set { LoadProperty(CallbackUrlProperty, value); }
+		}
+		public static readonly PropertyInfo<string> CallbackUrlProperty = RegisterProperty<string>(c => c.CallbackUrl);
+
 		public string TransactionToken
 		{
 			get { return ReadProperty(TransactionTokenProperty); }
@@ -136,7 +143,7 @@ namespace SurgeonPortal.Library.Billing
 		[Execute]
 		protected async Task ExecuteCommand()
 		{
-			var dto = await _generateTransactionTokenCommandDal.GenerateTransactionTokenAsync(Amount, InvoiceNumber, Quantity, Description, CostPerUnit, FirstName, LastName, Email, PhoneNumber, AddressLine1, AddressLine2, City, State, ZipCode);
+			var dto = await _generateTransactionTokenCommandDal.GenerateTransactionTokenAsync(Amount, InvoiceNumber, Quantity, Description, CostPerUnit, FirstName, LastName, Email, PhoneNumber, AddressLine1, AddressLine2, City, State, ZipCode, CallbackUrl);
 			TransactionToken = dto.TransactionToken;
 		}
 	}

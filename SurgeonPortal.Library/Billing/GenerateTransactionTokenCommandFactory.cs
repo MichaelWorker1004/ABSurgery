@@ -20,7 +20,8 @@ namespace SurgeonPortal.Library.Billing
 			string addressLine2,
 			string city,
 			string state,
-			string zip)
+			string zip,
+			string callbackUrl)
 		{
 			if(!GenerateTransactionTokenCommand.CanExecuteCommand())
 			{
@@ -44,6 +45,7 @@ namespace SurgeonPortal.Library.Billing
 			cmd.City = city;
 			cmd.State = state;
 			cmd.ZipCode = zip;
+			cmd.CallbackUrl = callbackUrl;
 
 			return await DataPortal.ExecuteAsync(cmd);
 		}
