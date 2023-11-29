@@ -14,4 +14,5 @@ export interface IExamFeeTransactionModel {
   state: string;
   zipCode: string;
   transactionToken: string;
+  callbackUrl: string;
 }
