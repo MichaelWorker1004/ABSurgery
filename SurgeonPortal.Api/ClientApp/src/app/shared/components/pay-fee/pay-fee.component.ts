@@ -153,7 +153,7 @@ export class PayFeeComponent implements OnInit {
       description: `Payment for ${formFields.invoiceNumber}`,
       costPerUnit: formFields.amount.toString(),
       amount: formFields.amount.toString(),
-      callbackUrl: 'https://www.absurgery.org',
+      callbackUrl: 'https://portal-dev.absurgery.org',
     };
 
     this._store.dispatch(new ExamFeeTransaction(model));
