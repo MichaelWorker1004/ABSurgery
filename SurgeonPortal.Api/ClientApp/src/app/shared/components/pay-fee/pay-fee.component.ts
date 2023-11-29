@@ -91,7 +91,7 @@ export class PayFeeComponent implements OnInit {
         this.paymentInformationForm.addControl(
           field.name,
           new FormControl(
-            { value: field.value, disabled: true },
+            { value: field.value, disabled: false },
             field.validators
           )
         );
@@ -150,18 +150,11 @@ export class PayFeeComponent implements OnInit {
       zipCode: formFields.zipCode.toString().replace(/\s/g, ''),
       quantity: '1',
       phoneNumber: formFields.phoneNumber.replace(/\D/g, ''),
-      description: formFields.invoiceNumber,
+      description: `Payment for ${formFields.invoiceNumber}`,
       costPerUnit: formFields.amount.toString(),
       amount: formFields.amount.toString(),
     };
 
-    this._store
-      .dispatch(new ExamFeeTransaction(model))
-      .pipe(untilDestroyed(this))
-      .subscribe((response) => {
-        //window.location.href = response.url;
-      });
-
-    console.log('submit action', model);
+    this._store.dispatch(new ExamFeeTransaction(model));
   }
 }

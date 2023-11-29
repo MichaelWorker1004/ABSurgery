@@ -109,6 +109,15 @@ export class ExamProcessState {
           ctx.patchState({
             examFeeTransaction,
           });
+
+          const transactionToken = examFeeTransaction.transactionToken;
+
+          if (transactionToken) {
+            window.open(
+              `https://demo.convergepay.com/hosted-payments?ssl_txn_auth_token=${transactionToken}`,
+              '_target'
+            );
+          }
         }),
         catchError((error) => {
           console.error('------- In Exam Process', error);

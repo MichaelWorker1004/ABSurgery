@@ -13,5 +13,5 @@ export interface IExamFeeTransactionModel {
   city: string;
   state: string;
   zipCode: string;
-  transactionNumber: string;
+  transactionToken: string;
 }
