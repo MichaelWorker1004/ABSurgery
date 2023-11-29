@@ -59,7 +59,8 @@ namespace SurgeonPortal.DataAccess.Billing
 
 			if (!response.IsSuccessStatusCode)
 			{
-				throw new HttpRequestException("Error generating transaction token.");
+				var errorContent = await response.Content.ReadAsStringAsync();
+				throw new HttpRequestException($"Error generating transaction token. {errorContent}", null, response.StatusCode);
 			}
 
 			dto.TransactionToken = await response.Content.ReadAsStringAsync();
