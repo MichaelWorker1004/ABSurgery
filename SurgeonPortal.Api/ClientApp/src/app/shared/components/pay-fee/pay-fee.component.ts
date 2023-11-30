@@ -91,7 +91,7 @@ export class PayFeeComponent implements OnInit {
         this.paymentInformationForm.addControl(
           field.name,
           new FormControl(
-            { value: field.value, disabled: false },
+            { value: field.value, disabled: field.disabled ?? false },
             field.validators
           )
         );
