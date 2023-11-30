@@ -29,8 +29,8 @@ namespace SurgeonPortal.Library.ContinuousCertification
 
         [DataMember]
 		[DisplayName(nameof(Status))]
-        public bool? Status => ReadProperty(StatusProperty);
-		public static readonly PropertyInfo<bool?> StatusProperty = RegisterProperty<bool?>(c => c.Status);
+        public int? Status => ReadProperty(StatusProperty);
+		public static readonly PropertyInfo<int?> StatusProperty = RegisterProperty<int?>(c => c.Status);
 
 
         [FetchChild]

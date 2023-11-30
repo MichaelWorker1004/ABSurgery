@@ -60,9 +60,9 @@
               },
               {
                 "name": "Status",
-                "dataType": "bool?",
-                "maxLength": 1,
-                "precision": 1,
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
