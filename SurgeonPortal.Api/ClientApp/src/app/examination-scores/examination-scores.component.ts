@@ -105,9 +105,9 @@ export class ExaminationScoresComponent implements OnInit {
   constructor(private _store: Store) {
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       this._store.dispatch(new GetActiveExamId());
-      if (featureFlags?.ceScoreTestingDate) {
-        this.currentDay = new Date('10/16/2023');
-      }
+      // if (featureFlags?.ceScoreTestingDate) {
+      //   this.currentDay = new Date('10/16/2023');
+      // }
     });
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((examHeaderId) => {
       this._store.dispatch(new GetExamTitle(examHeaderId));

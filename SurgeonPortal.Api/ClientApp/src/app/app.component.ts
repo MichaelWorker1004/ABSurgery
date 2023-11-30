@@ -23,11 +23,7 @@ import {
   UserProfileSelectors,
 } from './state';
 import { LoadApplication } from './state/application/application.actions';
-import {
-  CERTIFIED_NAV_ITEMS,
-  EXAMINER_NAV_ITEMS,
-  TRAINEE_NAV_ITEMS,
-} from './nav-items';
+import { ALL_NAV_ITEMS } from './nav-items';
 import { ButtonModule } from 'primeng/button';
 
 @UntilDestroy()
@@ -72,6 +68,8 @@ export class AppComponent implements OnInit {
   applicationName = 'The American Board Of Surgery';
 
   navItems: Array<IMenuItem> = [];
+  allNavItems: Array<IMenuItem> = ALL_NAV_ITEMS;
+  userClaims: string[] = [];
   headerLinks = [
     {
       display: 'News',
@@ -110,17 +108,41 @@ export class AppComponent implements OnInit {
       const claims = this._store.selectSnapshot(AuthSelectors.claims);
       if (isAuthed && loginUser && claims) {
         this._store.dispatch(new LoadApplication());
+        this.userClaims = claims;
         this.isSurgeon =
           claims.includes(UserClaims.surgeon) &&
           !claims.includes(UserClaims.trainee);
-        this.navItems = this.isSurgeon
-          ? CERTIFIED_NAV_ITEMS
-          : TRAINEE_NAV_ITEMS;
-        this.isExaminer = claims.includes(UserClaims.examiner);
 
-        if (this.isExaminer) {
-          this.navItems = this.navItems.concat(EXAMINER_NAV_ITEMS);
-        }
+        this.navItems = this.allNavItems.filter((item) => {
+          if (item.allowedClaims) {
+            if (item.children && item.children.length > 0) {
+              item.children = item.children.filter((child) => {
+                if (child.allowedClaims) {
+                  return child.allowedClaims.some((claim) =>
+                    this.userClaims.includes(
+                      UserClaims[claim as keyof typeof UserClaims]
+                    )
+                  );
+                }
+                return true;
+              });
+
+              item.children.sort(
+                (a, b) => (a.order ? a.order : 0) - (b.order ? b.order : 0)
+              );
+            }
+            return item.allowedClaims.some((claim) =>
+              this.userClaims.includes(
+                UserClaims[claim as keyof typeof UserClaims]
+              )
+            );
+          }
+          return true;
+        });
+
+        this.navItems.sort(
+          (a, b) => (a.order ? a.order : 0) - (b.order ? b.order : 0)
+        );
 
         this._store.dispatch(new GetUserProfile(loginUser, claims));
       }
