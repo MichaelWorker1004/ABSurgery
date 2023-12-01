@@ -38,6 +38,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using SurgeonPortal.Models.Features;
 using SurgeonPortal.Shared.PaymentProvider;
+using SurgeonPortal.Shared.Email;
+using SendGrid.Extensions.DependencyInjection;
 
 namespace SurgeonPortal.Api
 {
@@ -65,6 +67,7 @@ namespace SurgeonPortal.Api
             services.Configure<AzureStorageConfiguration>(Configuration.GetSection(ConfigurationSections.AzureStorageConfiguration));
             services.Configure<FeatureFlagConfiguration>(Configuration.GetSection(ConfigurationSections.FeatureFlags));
             services.Configure<PaymentProviderConfiguration>(Configuration.GetSection(ConfigurationSections.PaymentProvider));
+            services.Configure<EmailConfiguration>(Configuration.GetSection(ConfigurationSections.Email));
 
             services.AddCsla();
 
@@ -121,6 +124,12 @@ namespace SurgeonPortal.Api
             services.RegisterByConvention<DataAccessConventionProvider, DataAccessConventionResolver>();
 
             var tokenConfig = Configuration.GetSection(ConfigurationSections.Tokens).Get<TokensConfiguration>();
+
+            services.AddSendGrid((services, options) =>
+            {
+                var emailConfig = services.GetRequiredService<IOptions<EmailConfiguration>>();
+                options.ApiKey = emailConfig.Value.ApiKey;
+            });
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

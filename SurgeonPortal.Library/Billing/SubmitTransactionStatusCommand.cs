@@ -1,6 +1,7 @@
 ﻿using Csla;
 using SurgeonPortal.DataAccess.Contracts.Billing;
 using SurgeonPortal.Library.Contracts.Billing;
+using SurgeonPortal.Library.Contracts.Email;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,12 +16,15 @@ namespace SurgeonPortal.Library.Billing
 	public class SubmitTransactionStatusCommand : YtgCommandBase<SubmitTransactionStatusCommand, int>, ISubmitTransactionStatusCommand
 	{
 		private readonly ISubmitTransactionStatusCommandDal _submitTransactionStatusCommandDal;
+		private readonly IEmailFactory _emailFactory;
 
 		public SubmitTransactionStatusCommand(
 			IIdentityProvider identity,
-			ISubmitTransactionStatusCommandDal submitTransactionStatusCommandDal) : base(identity)
+			ISubmitTransactionStatusCommandDal submitTransactionStatusCommandDal,
+			IEmailFactory emailFactory) : base(identity)
 		{
 			_submitTransactionStatusCommandDal = submitTransactionStatusCommandDal;
+			_emailFactory = emailFactory;
 		}
 
 		public static bool CanExecuteCommand()
