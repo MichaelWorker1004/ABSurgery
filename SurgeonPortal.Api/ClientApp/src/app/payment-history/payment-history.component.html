@@ -10,23 +10,38 @@
     </p>
   </div>
 
-  <abs-grid [columns]="paymentHistoryCols" [data]="paymentHistoryData">
-    <div class="pb-5 pl-5 pr-5">
+  <abs-grid
+    [columns]="paymentHistoryCols"
+    [data]="paymentHistoryData"
+    (action)="handlePaymentClick($event)"
+  >
+    <div class="pt-5">
       <abs-alert alertType="info" [hideIcon]="true">
         <div class="div flex justify-content-end footer">
           <strong>Total Unpaid balance</strong> as of
           {{ paymentFooterData.date | date : 'shortDate' }}:
           <div class="amount">
-            {{ paymentFooterData.amount }}
+            {{ paymentFooterData.amount | currency : 'USD' : true : '1.2-2' }}
           </div>
         </div>
       </abs-alert>
     </div>
   </abs-grid>
-
-  <div class="flex justify-content-end mt-3">
-    <p-button type="primary" (click)="handlePaymentClick()"
-      >Make a Payment</p-button
-    >
-  </div>
 </sl-card>
+
+<!-- Pay Fee -->
+<abs-modal
+  [open]="payFeeModal"
+  (closeDialog)="handleClosePayFee()"
+  title="Pay Fee"
+  modalName="payFeeModal"
+>
+  <abs-pay-fee
+    (cancelAction)="handleClosePayFee()"
+    [showGrid]="false"
+    [amount$]="amount$"
+    [invoiceNumber$]="invoiceNumber$"
+  >
+    Please insure that your payment information is accurate
+  </abs-pay-fee>
+</abs-modal>

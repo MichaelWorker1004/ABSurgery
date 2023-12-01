@@ -29,7 +29,6 @@ import {
 } from '../state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IStatuses } from '../api/models/users/statuses.model';
-import { ActivatedRoute } from '@angular/router';
 
 interface ActionMap {
   [key: string]: () => void;
