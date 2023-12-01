@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import {
+  ClearOutcomeRegistriesErrors,
   ContinuousCertificationSelectors,
   GetOutcomeRegistries,
   UpdateOutcomeRegistries,
@@ -29,6 +30,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { IFormErrors } from 'src/app/shared/common';
+import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 
 @UntilDestroy()
 @Component({
@@ -42,6 +45,7 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
     InputTextareaModule,
     CheckboxModule,
     ButtonModule,
+    FormErrorsComponent,
   ],
   templateUrl: './outcome-registries-modal.component.html',
   styleUrls: ['./outcome-registries-modal.component.scss'],
@@ -57,6 +61,9 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   @Select(ContinuousCertificationSelectors.GetOutcomeRegistries)
   outcomeRegistries$: Observable<IOutcomeRegistryModel> | undefined;
   outcomesandRegistriesFormFields = OutcomeRegistriesFormFields;
+
+  errors: IFormErrors | null = null;
+  clearErrors = new ClearOutcomeRegistriesErrors();
 
   disableSubmit = true;
 
@@ -115,19 +122,24 @@ export class OutcomeRegistriesModalComponent implements OnInit {
     const formValues = {
       ...this.outcomeRegistriesForm.value,
       userId: this.userId,
-      userConfirmedDateUtc: new Date().toDateString(),
+      userConfirmedDateUtc: new Date().toISOString(),
     };
+
+    console.log(formValues);
 
     this._store
       .dispatch(new UpdateOutcomeRegistries(<IOutcomeRegistryModel>formValues))
       .subscribe((result: any) => {
-        if (!result.continuous_certification.errors) {
+        if (!result.continuous_certification.outcomeRegistriesErrors) {
+          this.errors = null;
           this._globalDialogService.showSuccessError(
             'Success',
             'Outcome Registries / Quality Assessment Programs Saved Successfully',
             true
           );
+          this.close();
         } else {
+          this.errors = result.continuous_certification.outcomeRegistriesErrors;
           this._globalDialogService.showSuccessError(
             'Error',
             'Save Failed',
@@ -138,6 +150,7 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   }
 
   close() {
+    this.errors = null;
     this.closeDialog.emit();
   }
 }

@@ -56,14 +56,12 @@ export class CollapsePanelComponent implements OnInit {
   }
 
   collaspsePanel() {
-    console.log('collapse', this.panelExpanded);
     if (this.panelExpanded) {
       this.togglePanel();
     }
   }
 
   expandPanel() {
-    console.log('expand', this.panelExpanded);
     if (!this.panelExpanded) {
       this.togglePanel();
     }
@@ -77,7 +75,6 @@ export class CollapsePanelComponent implements OnInit {
 
     panel?.classList.toggle('active');
     if (!panelBody!.style.maxHeight || panelBody!.style.maxHeight !== '0px') {
-      console.log('panelBody collapse', panelBody!.style.maxHeight);
       // reset the panel maxHeight since the css animation will not work with a maxHeight = unset
       panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
       setTimeout(() => {
@@ -85,7 +82,6 @@ export class CollapsePanelComponent implements OnInit {
         panelBody!.style.maxHeight = '0px';
       }, 0);
     } else {
-      console.log('panelBody expand', panelBody!.style.maxHeight);
       // set the maxHeight to the scrollHeight to allow for the animation to expand the panel
       panelBody!.style.maxHeight = panelBody!.scrollHeight + 'px';
       setTimeout(() => {

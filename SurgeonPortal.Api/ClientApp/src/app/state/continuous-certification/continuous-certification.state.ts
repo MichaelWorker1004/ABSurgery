@@ -6,7 +6,10 @@ import { catchError, tap } from 'rxjs/operators';
 import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertification/outcome-registry.model';
 import { OutcomeRegistriesService } from 'src/app/api/services/continuouscertification/outcome-registries.service';
 import { IFormErrors } from 'src/app/shared/common';
-import { GetAttestations } from './continuous-certification.actions';
+import {
+  ClearOutcomeRegistriesErrors,
+  GetAttestations,
+} from './continuous-certification.actions';
 import {
   GetContinuousCertificationStatuses,
   GetOutcomeRegistries,
@@ -63,9 +66,9 @@ export class ContinuousCertificationState {
   getOutcomeRegistries(
     ctx: StateContext<IContinuousCertication>
   ): Observable<IOutcomeRegistryModel | undefined> {
-    if (ctx.getState().outcomeRegistries) {
-      return of(ctx.getState()?.outcomeRegistries);
-    }
+    // if (ctx.getState().outcomeRegistries) {
+    //   return of(ctx.getState()?.outcomeRegistries);
+    // }
 
     return this.outcomeRegistriesService
       .retrieveOutcomeRegistry_GetByUserId()
@@ -209,5 +212,12 @@ export class ContinuousCertificationState {
 
     // REFRESH GRID DATA
     ctx.dispatch(new GetRefrenceFormGridData());
+  }
+
+  @Action(ClearOutcomeRegistriesErrors)
+  clearOutcomeRegistriesErrors(ctx: StateContext<IContinuousCertication>) {
+    ctx.patchState({
+      outcomeRegistriesErrors: null,
+    });
   }
 }
