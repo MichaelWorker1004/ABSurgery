@@ -1,42 +1,37 @@
+import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   OnInit,
   ViewContainerRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
-import { Status } from '../shared/components/action-card/status.enum';
-import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
-import { MedicalLicenseModalComponent } from './medical-license-modal/medical-license-modal.component';
-import { TrainingModalComponent } from './training-modal/training-modal.component';
-import { ModalComponent } from '../shared/components/modal/modal.component';
-import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-experience-modal.component';
-import { GraduateMedicalEducationModalComponent } from './graduate-medical-education-modal/graduate-medical-education-modal.component';
-import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
-import { Action } from '../shared/components/action-card/action.enum';
-import { ProfessionalActivitiesAndPrivilegesModalComponent } from './professional-activities-and-privileges-modal/professional-activities-and-privileges-modal.component';
-import { GlobalDialogService } from '../shared/services/global-dialog.service';
-import { LegendComponent } from '../shared/components/legend/legend.component';
-import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
-import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
-import {
-  ExamProcessSelectors,
-  GetExamFees,
-  IUserProfile,
-  UserProfileSelectors,
-} from '../state';
+import { IStatuses } from '../api/models/users/statuses.model';
+import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
+import { Action } from '../shared/components/action-card/action.enum';
+import { Status } from '../shared/components/action-card/status.enum';
+import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
+import { LegendComponent } from '../shared/components/legend/legend.component';
+import { ModalComponent } from '../shared/components/modal/modal.component';
 import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
+import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { ExamProcessSelectors, GetExamFees } from '../state';
 import {
   GetResgistrationRequirmentsStatuses,
   ReqistrationRequirmentsSelectors,
 } from '../state/registration-requirements';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IStatuses } from '../api/models/users/statuses.model';
+import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-experience-modal.component';
+import { GraduateMedicalEducationModalComponent } from './graduate-medical-education-modal/graduate-medical-education-modal.component';
+import { MedicalLicenseModalComponent } from './medical-license-modal/medical-license-modal.component';
+import { ProfessionalActivitiesAndPrivilegesModalComponent } from './professional-activities-and-privileges-modal/professional-activities-and-privileges-modal.component';
 import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-cards';
+import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
+import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
+import { TrainingModalComponent } from './training-modal/training-modal.component';
 
 interface ActionMap {
   [key: string]: () => void;
