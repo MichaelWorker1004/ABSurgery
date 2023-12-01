@@ -4,7 +4,7 @@
   "description": "",
   "properties": [
     {
-      "name": "label",
+      "name": "Label",
       "dataType": "string",
       "maxLength": 1134,
       "precision": 0,
@@ -15,7 +15,7 @@
       "rules": {}
     },
     {
-      "name": "name",
+      "name": "Name",
       "dataType": "string",
       "maxLength": 18,
       "precision": 0,
@@ -26,7 +26,7 @@
       "rules": {}
     },
     {
-      "name": "checked",
+      "name": "Checked",
       "dataType": "int",
       "maxLength": 4,
       "precision": 10,

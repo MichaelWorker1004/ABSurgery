@@ -49,34 +49,34 @@
             "model": "ContinuousCertification\\AttestationReadOnly",
             "fields": [
               {
-                "name": "label",
+                "name": "Label",
                 "dataType": "string",
                 "maxLength": 1134,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.label"
+                "mapsTo": "model.Label"
               },
               {
-                "name": "name",
+                "name": "Name",
                 "dataType": "string",
                 "maxLength": 18,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.name"
+                "mapsTo": "model.Name"
               },
               {
-                "name": "checked",
+                "name": "Checked",
                 "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.checked"
+                "mapsTo": "model.Checked"
               }
             ]
           }

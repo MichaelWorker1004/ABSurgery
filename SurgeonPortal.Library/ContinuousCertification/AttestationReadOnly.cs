@@ -23,19 +23,19 @@ namespace SurgeonPortal.Library.ContinuousCertification
         }
         
         [DataMember]
-		[DisplayName(nameof(label))]
-        public string label => ReadProperty(labelProperty);
-		public static readonly PropertyInfo<string> labelProperty = RegisterProperty<string>(c => c.label);
+		[DisplayName(nameof(Label))]
+        public string Label => ReadProperty(LabelProperty);
+		public static readonly PropertyInfo<string> LabelProperty = RegisterProperty<string>(c => c.Label);
 
         [DataMember]
-		[DisplayName(nameof(name))]
-        public string name => ReadProperty(nameProperty);
-		public static readonly PropertyInfo<string> nameProperty = RegisterProperty<string>(c => c.name);
+		[DisplayName(nameof(Name))]
+        public string Name => ReadProperty(NameProperty);
+		public static readonly PropertyInfo<string> NameProperty = RegisterProperty<string>(c => c.Name);
 
         [DataMember]
-		[DisplayName(nameof(checked))]
-        public int checked => ReadProperty(checkedProperty);
-		public static readonly PropertyInfo<int> checkedProperty = RegisterProperty<int>(c => c.checked);
+		[DisplayName(nameof(Checked))]
+        public int Checked => ReadProperty(CheckedProperty);
+		public static readonly PropertyInfo<int> CheckedProperty = RegisterProperty<int>(c => c.Checked);
 
 
         [FetchChild]
@@ -49,9 +49,9 @@ namespace SurgeonPortal.Library.ContinuousCertification
         
 		private void FetchData(AttestationReadOnlyDto dto)
 		{
-            LoadProperty(labelProperty, dto.Label);
-            LoadProperty(nameProperty, dto.Name);
-            LoadProperty(checkedProperty, dto.Checked);
+            LoadProperty(LabelProperty, dto.Label);
+            LoadProperty(NameProperty, dto.Name);
+            LoadProperty(CheckedProperty, dto.Checked);
 		} 
         
     }
