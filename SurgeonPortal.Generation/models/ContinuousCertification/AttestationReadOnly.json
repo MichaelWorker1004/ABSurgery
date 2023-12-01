@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "ContinuousCertification\\AttestationReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "label",
+      "dataType": "string",
+      "maxLength": 1134,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "name",
+      "dataType": "string",
+      "maxLength": 18,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "checked",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s ContinuousCertification\\AttestationReadOnly -sp [dbo].[get_cca_attestation_items_byuserid] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-01T15:26:39.9876968Z"
+  },
+  "version": 1
+}

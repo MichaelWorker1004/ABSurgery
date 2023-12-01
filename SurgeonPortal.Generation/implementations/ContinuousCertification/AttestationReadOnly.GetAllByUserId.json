@@ -1,0 +1,101 @@
+{
+  "name": "AttestationReadOnly",
+  "implementationName": "ContinuousCertification\\AttestationReadOnly.GetAllByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_cca_attestation_items_byuserid",
+    "ControllerName": "AttestationController",
+    "ControllerRoute": "api/continuous-certification/attestation",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAllByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ContinuousCertification\\AttestationReadOnly",
+    "ModelGroup": "AttestationReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-user-id",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_cca_attestation_items_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_cca_attestation_items_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ContinuousCertification\\AttestationReadOnly",
+            "fields": [
+              {
+                "name": "label",
+                "dataType": "string",
+                "maxLength": 1134,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.label"
+              },
+              {
+                "name": "name",
+                "dataType": "string",
+                "maxLength": 18,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.name"
+              },
+              {
+                "name": "checked",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.checked"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ContinuousCertification\\AttestationReadOnly.GetAllByUserId AttestationReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuousCertification\\AttestationReadOnly -p:Adapter=sp:abssp-[dbo].[get_cca_attestation_items_byuserid] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AttestationReadOnly -p:Route=by-user-id -p:ControllerName=AttestationController -p:ControllerRoute=api/continuous-certification/attestation -cl:SurgeonPortalClaims.SurgeonClaim -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  ContinuousCertification\\AttestationReadOnly.GetAllByUserId AttestationReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuousCertification\\AttestationReadOnly -p:Adapter=sp:abssp-[dbo].[get_cca_attestation_items_byuserid] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AttestationReadOnly -p:Route=by-user-id -p:ControllerName=AttestationController -p:ControllerRoute=api/continuous-certification/attestation -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-01T15:26:50.8027106Z"
+  },
+  "version": 1
+}

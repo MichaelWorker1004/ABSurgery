@@ -340,8 +340,8 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 		}
 		internal RotationDto ToDto(RotationDto dto)
 		{
-			base.ToDto(dto);
-
+            base.ToDto(dto);
+            
 			dto.Id = this.Id;
 			dto.UserId = this.UserId;
 			dto.StartDate = this.StartDate;
@@ -363,5 +363,7 @@ namespace SurgeonPortal.Library.GraduateMedicalEducation
 
 			return dto;
 		}
+
+
     }
 }
