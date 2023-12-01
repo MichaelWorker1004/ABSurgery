@@ -17,6 +17,16 @@ import {
 import { IAttestationModel } from './attestation.model';
 import { IRefrenceFormReadOnlyModel } from './refrence-form-read-only.model';
 import { IStatuses } from '../../api/models/users/statuses.model';
+import { DashboardStatusService } from 'src/app/api/services/continuouscertification/dashboard-status.service';
+import { IDashboardStatusReadOnlyModel } from 'src/app/api/models/continuouscertification/dashboard-status-read-only.model';
+import { Status } from 'src/app/shared/components/action-card/status.enum';
+
+const statusTypes = [
+  Status.InProgress, //0
+  Status.Completed, //1
+  Status.Contingent, //2
+  Status.Alert, //3
+];
 
 export interface IContinuousCertication {
   outcomeRegistries: IOutcomeRegistryModel | undefined;
@@ -44,7 +54,10 @@ export const CONTCERT_STATE_TOKEN = new StateToken<IContinuousCertication>(
 })
 @Injectable()
 export class ContinuousCertificationState {
-  constructor(private outcomeRegistriesService: OutcomeRegistriesService) {}
+  constructor(
+    private outcomeRegistriesService: OutcomeRegistriesService,
+    private dashboardStatusService: DashboardStatusService
+  ) {}
 
   @Action(GetOutcomeRegistries)
   getOutcomeRegistries(
@@ -128,52 +141,31 @@ export class ContinuousCertificationState {
   getContinuousCertificationStatuses(
     ctx: StateContext<IContinuousCertication>
   ) {
-    const response: IStatuses[] = [
-      {
-        id: 'personalProfile',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'outcomeRegistries',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'medicalTraining',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'professionalStanding',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'cmeRepository',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'payFee',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'referenceForms',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'attestation',
-        status: 'in-progress',
-        disabled: false,
-      },
-    ];
-
-    ctx.patchState({
-      continuousCertificationStatuses: response,
-    });
+    return this.dashboardStatusService
+      .retrieveDashboardStatusReadOnly_GetAllByUserId()
+      .pipe(
+        tap((dashboardStati: IDashboardStatusReadOnlyModel[]) => {
+          const stati: IStatuses[] = [];
+          dashboardStati.forEach((status) => {
+            stati.push({
+              id: status.statusType,
+              status: statusTypes[status.status],
+              disabled: status.status === 3 ? true : false,
+            });
+          });
+          ctx.patchState({
+            continuousCertificationStatuses: stati,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
   }
 
   @Action(GetRefrenceFormGridData)
