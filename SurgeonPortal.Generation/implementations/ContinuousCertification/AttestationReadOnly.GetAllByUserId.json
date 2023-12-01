@@ -4,7 +4,7 @@
   "template": "ytg-framework/readonly-getlist",
   "parameters": {
     "Adapter": "dbo.get_cca_attestation_items_byuserid",
-    "ControllerName": "AttestationController",
+    "ControllerName": "ContinuousCertification\\AttestationController",
     "ControllerRoute": "api/continuous-certification/attestation",
     "ControllerVersion": "1",
     "FetchMethodName": "GetAllByUserId",

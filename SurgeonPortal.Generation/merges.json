@@ -3915,7 +3915,7 @@
     "lastGeneratedHash": "E05F9120A0CBC972ABA0BD6662B3C412"
   },
   "\\SurgeonPortal.Api\\Controllers\\AttestationController.cs": {
-    "lastGeneratedHash": "4EC866659ACA22F79B3A71F1E060D39D"
+    "lastGeneratedHash": "FE9372BCB527223545075E0041D80E2B"
   },
   "\\SurgeonPortal.Library\\ContinuousCertification\\AttestationReadOnly.cs": {
     "lastGeneratedHash": "9A217616DD3731D6F22096DB07954D71"
@@ -3940,5 +3940,33 @@
   },
   "\\SurgeonPortal.DataAccess.Tests\\ContinuousCertification\\AttestationReadOnlyDalTests.cs": {
     "lastGeneratedHash": "808520DAF2751EC943FBDFB3024B9B46"
+  },
+  "\\SurgeonPortal.Library.Contracts\\ContinuousCertification\\ISubmitAttestationsCommand.cs": {
+    "lastGeneratedHash": "A5F6397E5322724855BAD70804A0FE22"
+  },
+  "\\SurgeonPortal.Models\\ContinuousCertification\\SubmitAttestationsCommandModel.cs": {
+    "lastGeneratedHash": "0652086BBF050F636FC6EE6EAEB8115F"
+  },
+  "\\SurgeonPortal.Library\\ContinuousCertification\\SubmitAttestationsCommand.cs": {
+    "lastGeneratedHash": "1D44BCF47B3EC7E04979D13504E798DD",
+    "lastMergedHash": "092EFAA330101157CC90CCE01FE1AF79"
+  },
+  "\\SurgeonPortal.DataAccess\\ContinuousCertification\\SubmitAttestationsCommandDal.cs": {
+    "lastGeneratedHash": "6855B9A83D783D8BA96167B26A3D09DB"
+  },
+  "\\SurgeonPortal.Library\\ContinuousCertification\\SubmitAttestationsCommandFactory.cs": {
+    "lastGeneratedHash": "C42EF4AB3496816E0942571C439581A9"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\ContinuousCertification\\ISubmitAttestationsCommandDal.cs": {
+    "lastGeneratedHash": "878B3EDB331A9D1D00EA8BBEFF9108DB"
+  },
+  "\\SurgeonPortal.Library.Contracts\\ContinuousCertification\\ISubmitAttestationsCommandFactory.cs": {
+    "lastGeneratedHash": "A3D2917664771F20C34ACD6BB0C57BEA"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\continuouscertification\\attestation.service.ts": {
+    "lastGeneratedHash": "E05F9120A0CBC972ABA0BD6662B3C412"
+  },
+  "\\SurgeonPortal.Api\\Controllers\\ContinuousCertification\\AttestationController.cs": {
+    "lastGeneratedHash": "6E5FD6EEAE9737721E363AB36D4CA699"
   }
 }
