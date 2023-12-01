@@ -1,0 +1,91 @@
+{
+  "name": "DashboardStatusReadOnly",
+  "implementationName": "ContinuousCertification\\DashboardStatusReadOnly.GetAllByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_all_status",
+    "ControllerName": "DashboardStatusController",
+    "ControllerRoute": "api/continuous-certification/dashboard-status",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAllByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ContinuousCertification\\DashboardStatusReadOnly",
+    "ModelGroup": "DashboardStatusReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-user-id",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_all_status",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_all_status]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ContinuousCertification\\DashboardStatusReadOnly",
+            "fields": [
+              {
+                "name": "StatusType",
+                "dataType": "string",
+                "maxLength": 13,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StatusType"
+              },
+              {
+                "name": "Status",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Status"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ContinuousCertification\\DashboardStatusReadOnly.GetAllByUserId DashboardStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuousCertification\\DashboardStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_all_status] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=DashboardStatusReadOnly -p:Route=by-user-id -p:ControllerName=DashboardStatusController -p:ControllerRoute=api/continuous-certification/dashboard-status -cl:SurgeonPortalClaims.SurgeonClaim -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  ContinuousCertification\\DashboardStatusReadOnly.GetAllByUserId DashboardStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuousCertification\\DashboardStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_all_status] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=DashboardStatusReadOnly -p:Route=by-user-id -p:ControllerName=DashboardStatusController -p:ControllerRoute=api/continuous-certification/dashboard-status -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-11-28T19:39:35.2602879Z"
+  },
+  "version": 1
+}

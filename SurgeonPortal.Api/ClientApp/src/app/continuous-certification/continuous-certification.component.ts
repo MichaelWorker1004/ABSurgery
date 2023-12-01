@@ -11,7 +11,7 @@ import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outc
 import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
 import { ReferenceFormModalComponent } from './reference-form-modal/reference-form-modal.component';
 import { Action } from '../shared/components/action-card/action.enum';
-import { Observable, take } from 'rxjs';
+import { Observable, skipWhile, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { GetStateList } from '../state/picklists';
 import { ApplicationSelectors } from '../state/application/application.selectors';
@@ -152,7 +152,7 @@ export class ContinuousCertificationComponent implements OnInit {
   getContinuousCertificationData() {
     const continousCertificationData = [
       {
-        id: 'personalProfile',
+        id: 'Pers_Info',
         title: 'Personal Profile',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -169,7 +169,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
-        id: 'outcomeRegistries',
+        id: 'Outcomes',
         title: 'Outcomes Registries / Quality Assessment Programs',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -183,7 +183,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
-        id: 'medicalTraining',
+        id: 'Med_Training',
         title: 'Medical Training',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -200,7 +200,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
-        id: 'professionalStanding',
+        id: 'Prof_Standing',
         title: 'Professional Standing',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -217,7 +217,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
-        id: 'cmeRepository',
+        id: 'CME',
         title: 'CME Repository',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -290,16 +290,20 @@ export class ContinuousCertificationComponent implements OnInit {
     ];
 
     this.continuousCertificationStatuses$
-      ?.pipe(untilDestroyed(this))
-      .subscribe((continuousCertificationStatuses: IStatuses[]) => {
+      ?.pipe(
+        skipWhile((stati) => !stati || stati.length < 0),
+        untilDestroyed(this)
+      )
+      .subscribe((stati: IStatuses[]) => {
         const statuses = {} as any;
 
-        continuousCertificationStatuses.forEach((ccs) => {
+        stati.forEach((ccs) => {
           statuses[ccs.id] = ccs;
         });
+        console.log(statuses);
 
         continousCertificationData.forEach((cc: any) => {
-          cc['status'] = statuses[cc.id]?.status;
+          cc['status'] = statuses[cc.id]?.status || Status.InProgress;
         });
 
         continousCertificationData.find((cc) => {
@@ -307,6 +311,9 @@ export class ContinuousCertificationComponent implements OnInit {
             cc['disabled'] = !this.areAllItemsCompleted(
               continousCertificationData
             );
+            if (cc['disabled']) {
+              cc['status'] = Status.Contingent;
+            }
           }
         });
 
@@ -315,6 +322,7 @@ export class ContinuousCertificationComponent implements OnInit {
   }
 
   areAllItemsCompleted(certificationData: any[]): boolean {
+    console.log(certificationData);
     for (const item of certificationData) {
       if (item.status !== undefined && item.status !== Status.Completed) {
         return false;
