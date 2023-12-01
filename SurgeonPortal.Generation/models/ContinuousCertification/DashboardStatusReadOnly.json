@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "ContinuousCertification\\DashboardStatusReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "StatusType",
+      "dataType": "string",
+      "maxLength": 13,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Status",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s ContinuousCertification\\DashboardStatusReadOnly -sp [dbo].[get_all_status] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-11-28T19:39:31.2946289Z"
+  },
+  "version": 1
+}
