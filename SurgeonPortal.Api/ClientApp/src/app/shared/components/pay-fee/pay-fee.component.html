@@ -2,38 +2,40 @@
   <ng-content></ng-content>
 </div>
 
-<div class="flex flex-wrap">
-  <div class="col-12 md:col-3">Total Amount of Fees:</div>
-  <div class="col-12 md:col-9">
-    <strong>{{
-      payFeeData?.totalAmountOfFee | currency : 'USD' : true : '1.2-2'
-    }}</strong>
+<div *ngIf="showGrid">
+  <div class="flex flex-wrap">
+    <div class="col-12 md:col-3">Total Amount of Fees:</div>
+    <div class="col-12 md:col-9">
+      <strong>{{
+        payFeeData?.totalAmountOfFee | currency : 'USD' : true : '1.2-2'
+      }}</strong>
+    </div>
+    <div class="col-12 md:col-3">
+      Total Amount Paid as of
+      {{ payFeeData?.totalAmountPaidDate | date : 'MM/dd/yyyy' }}:
+    </div>
+    <div class="col-12 md:col-9">
+      <strong>{{
+        payFeeData?.totalAmountPaid | currency : 'USD' : true : '1.2-2'
+      }}</strong>
+    </div>
+    <div class="col-12 md:col-3">Remaining Balance:</div>
+    <div class="col-12 md:col-9 danger">
+      <strong style="color: #8b040a">{{
+        payFeeData?.remainingBalance | currency : 'USD' : true : '1.2-2'
+      }}</strong>
+    </div>
   </div>
-  <div class="col-12 md:col-3">
-    Total Amount Paid as of
-    {{ payFeeData?.totalAmountPaidDate | date : 'MM/dd/yyyy' }}:
-  </div>
-  <div class="col-12 md:col-9">
-    <strong>{{
-      payFeeData?.totalAmountPaid | currency : 'USD' : true : '1.2-2'
-    }}</strong>
-  </div>
-  <div class="col-12 md:col-3">Remaining Balance:</div>
-  <div class="col-12 md:col-9 danger">
-    <strong style="color: #8b040a">{{
-      payFeeData?.remainingBalance | currency : 'USD' : true : '1.2-2'
-    }}</strong>
-  </div>
-</div>
 
-<abs-grid
-  [columns]="payFeeCols"
-  [data]="paymentGridData"
-  (action)="handleGridAction($event)"
-  class="margin-bottom-2"
-  [pagination]="true"
->
-</abs-grid>
+  <abs-grid
+    [columns]="payFeeCols"
+    [data]="paymentGridData"
+    (action)="handleGridAction($event)"
+    class="margin-bottom-2"
+    [pagination]="true"
+  >
+  </abs-grid>
+</div>
 
 <h5 class="mt-5">Payment Information</h5>
 
@@ -77,7 +79,7 @@
       >
       <p-button
         [style]="{ width: '337px' }"
-        (click)="handleSubmitAction()"
+        (onClick)="handleSubmitAction()"
         [disabled]="payFeeDisabled"
         >Proceed to Pay</p-button
       >

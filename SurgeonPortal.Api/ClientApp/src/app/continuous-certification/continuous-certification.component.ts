@@ -77,7 +77,7 @@ export class ContinuousCertificationComponent implements OnInit {
   outcomeRegistriesModal = false;
   attestationModal = false;
   referenceFormsModal = false;
-  payFeeModal = true;
+  payFeeModal = false;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
 
@@ -109,17 +109,15 @@ export class ContinuousCertificationComponent implements OnInit {
       this.referenceFormsModal = !this.referenceFormsModal;
     },
     payFeeModal: () => {
+      this._store.dispatch(new GetExamFees());
       this.payFeeModal = !this.payFeeModal;
     },
   };
 
   constructor(private _store: Store) {
     this._store.dispatch(new GetStateList('500'));
-    this._store.dispatch(new GetExamFees());
     this._store.dispatch(new GetContinuousCertificationStatuses());
-
     this._store.dispatch(new GetRefrenceFormGridData());
-
     this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.featureFlags = featureFlags;
