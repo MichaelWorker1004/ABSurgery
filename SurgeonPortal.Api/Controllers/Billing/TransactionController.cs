@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SurgeonPortal.Library.Contracts.Billing;
 using SurgeonPortal.Models.Billing;
 using Ytg.AspNetCore.Controllers;
@@ -37,6 +38,7 @@ namespace SurgeonPortal.Api.Controllers.Billing
 			return Ok(model);
 		}
 
+		[AllowAnonymous]
 		[MapToApiVersion("1")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
