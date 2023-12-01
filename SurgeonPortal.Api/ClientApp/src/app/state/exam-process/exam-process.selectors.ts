@@ -11,6 +11,7 @@ export class ExamProcessSelectors {
       return {
         examDirectory: state.examDirectory,
         examFees: state.examFees,
+        examFeeTransaction: state.examFeeTransaction,
       };
     }
 
