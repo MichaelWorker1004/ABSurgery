@@ -29,7 +29,7 @@ export class OutcomeRegistriesService {
             
             /**
             * Calls Sp(s)
-            * [get_outcomeregistry_getbyuserid]
+            * [get_outcome_registries]
             */
             
             
@@ -50,14 +50,14 @@ export class OutcomeRegistriesService {
             
             /**
             * Required Parameters
-            * surgeonSpecificRegistry:Boolean
+            * surgeonSpecificRegistry:String
             * registryComments:String
             * registeredWithACHQC:Boolean
             * registeredWithCESQIP:Boolean
             * registeredWithMBSAQIP:Boolean
             * registeredWithABA:Boolean
             * registeredWithASBS:Boolean
-            * registeredWithStatewideCollaboratives:Boolean
+            * registeredWithMSQC:Boolean
             * registeredWithABMS:Boolean
             * registeredWithNCDB:Boolean
             * registeredWithRQRS:Boolean
@@ -69,6 +69,7 @@ export class OutcomeRegistriesService {
             * registeredWithNCDR:Boolean
             * registeredWithSVS:Boolean
             * registeredWithELSO:Boolean
+            * registeredWithSSR:Boolean
             * userConfirmed:Boolean
             * userConfirmedDateUtc:String
             * apiVersion
@@ -76,7 +77,7 @@ export class OutcomeRegistriesService {
             
             /**
             * Calls Sp(s)
-            * [ins_outcomeregistry_getbyuserid]
+            * [insert_outcome_registries]
             */
             
             
@@ -98,14 +99,14 @@ export class OutcomeRegistriesService {
             
             /**
             * Required Parameters
-            * surgeonSpecificRegistry:Boolean
+            * surgeonSpecificRegistry:String
             * registryComments:String
             * registeredWithACHQC:Boolean
             * registeredWithCESQIP:Boolean
             * registeredWithMBSAQIP:Boolean
             * registeredWithABA:Boolean
             * registeredWithASBS:Boolean
-            * registeredWithStatewideCollaboratives:Boolean
+            * registeredWithMSQC:Boolean
             * registeredWithABMS:Boolean
             * registeredWithNCDB:Boolean
             * registeredWithRQRS:Boolean
@@ -117,6 +118,7 @@ export class OutcomeRegistriesService {
             * registeredWithNCDR:Boolean
             * registeredWithSVS:Boolean
             * registeredWithELSO:Boolean
+            * registeredWithSSR:Boolean
             * userConfirmed:Boolean
             * userConfirmedDateUtc:String
             * apiVersion
@@ -124,7 +126,7 @@ export class OutcomeRegistriesService {
             
             /**
             * Calls Sp(s)
-            * [update_outcomeregistry_getbyuserid]
+            * [update_outcome_registries]
             */
             
             

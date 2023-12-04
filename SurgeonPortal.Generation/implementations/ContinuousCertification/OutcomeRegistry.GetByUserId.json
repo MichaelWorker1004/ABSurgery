@@ -1,9 +1,9 @@
 {
   "name": "OutcomeRegistry",
-  "implementationName": "ContinuousCertification\\OutcomeRegistry-getgetbyuserid",
+  "implementationName": "ContinuousCertification\\OutcomeRegistry.GetByUserId",
   "template": "ytg-framework/editable-get",
   "parameters": {
-    "Adapter": "dbo.get_outcomeregistry_getbyuserid",
+    "Adapter": "dbo.get_outcome_registries",
     "ControllerName": "ContinuousCertification\\OutcomeRegistriesController",
     "ControllerRoute": "api/continuous-certification/outcome-registries",
     "ControllerVersion": "1",
@@ -28,19 +28,19 @@
   "adapters": [
     {
       "type": "storedProcedure",
-      "name": "dbo.get_outcomeregistry_getbyuserid",
+      "name": "dbo.get_outcome_registries",
       "storedProcedure": {
         "schema": "[dbo]",
-        "procedureName": "[get_outcomeregistry_getbyuserid]",
+        "procedureName": "[get_outcome_registries]",
         "parameters": [
           {
-            "name": "UserId",
+            "name": "UserID",
             "dataType": "int",
             "maxLength": 4,
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "mapsTo": "UserID"
           }
         ],
         "recordsets": [
@@ -48,22 +48,42 @@
             "model": "ContinuousCertification\\OutcomeRegistry",
             "fields": [
               {
-                "name": "SurgeonSpecificRegistry",
-                "dataType": "bool",
-                "maxLength": 1,
-                "precision": 1,
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "SurgeonSpecificRegistry",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.SurgeonSpecificRegistry"
               },
               {
                 "name": "RegistryComments",
-                "dataType": "bool",
-                "maxLength": 1,
-                "precision": 1,
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
                 "scale": 0,
-                "isNullable": false,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.RegistryComments"
               },
@@ -118,14 +138,14 @@
                 "mapsTo": "model.RegisteredWithASBS"
               },
               {
-                "name": "RegisteredWithStatewideCollaboratives",
+                "name": "RegisteredWithMSQC",
                 "dataType": "bool",
                 "maxLength": 1,
                 "precision": 1,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.RegisteredWithStatewideCollaboratives"
+                "mapsTo": "model.RegisteredWithMSQC"
               },
               {
                 "name": "RegisteredWithABMS",
@@ -238,34 +258,74 @@
                 "mapsTo": "model.RegisteredWithELSO"
               },
               {
-                "name": "UserConfirmed",
+                "name": "RegisteredWithSSR",
                 "dataType": "bool",
                 "maxLength": 1,
                 "precision": 1,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithSSR"
+              },
+              {
+                "name": "UserConfirmed",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
                 "mapsTo": "model.UserConfirmed"
               },
               {
                 "name": "UserConfirmedDateUtc",
-                "dataType": "datetime",
-                "maxLength": 10,
-                "precision": 0,
-                "scale": 0,
-                "isNullable": false,
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.UserConfirmedDateUtc"
               },
               {
-                "name": "UserId",
-                "dataType": "int?",
+                "name": "CreatedByUserId",
+                "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isNullable": true,
+                "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.UserId"
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
               }
             ]
           }
@@ -273,20 +333,18 @@
       }
     }
   ],
-  "inputParameters": 
-  [
+  "inputParameters": [
     {
-      "name": "UserId",
+      "name": "UserID",
       "dataType": "int",
       "required": true,
       "substitution": "$UserId"
     }
   ],
   "metadata": {
-    "command": "ytgim g i s ContinuousCertification\\OutcomeRegistry-getgetbyuserid OutcomeRegistry -t=ytg-framework/readonly-get -p:Model=ContinuousCertification\\OutcomeRegistry -p:Adapter=sp:ABSSP-[dbo].[get_outcomeregistry_getbyuserid] -p:ModelGroup=OutcomeRegistry -p:RootNamespace=$project.RootNamespace -p:FetchMethodName=GetByUserId -p:IncludeControllerInGeneration=true ",
-    "inferredCommand": "ytgim generate i  ContinuousCertification\\OutcomeRegistry-getgetbyuserid OutcomeRegistry -t=ytg-framework/readonly-get -p:Model=ContinuousCertification\\OutcomeRegistry -p:Adapter=sp:ABSSP-[dbo].[get_outcomeregistry_getbyuserid] -p:ModelGroup=OutcomeRegistry -p:RootNamespace=$project.RootNamespace -p:FetchMethodName=GetByUserId -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:ApiRoot=$project.ApiRoot -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=continuous-certification/outcome-registries -p:ControllerVersion=1 -p:Route=",
-    "generatedDateUtc": "2023-04-21T19:38:32.5384502Z"
+    "command": "ytgim g i s ContinuousCertification\\OutcomeRegistry.GetByUserId OutcomeRegistry -t=ytg-framework/editable-get -p:Model=ContinuousCertification\\OutcomeRegistry -p:Adapter=sp:ABSSP-[dbo].[get_outcome_registries] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=api/continuous-certification/outcome-registries -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  ContinuousCertification\\OutcomeRegistry.GetByUserId OutcomeRegistry -t=ytg-framework/editable-get -p:Model=ContinuousCertification\\OutcomeRegistry -p:Adapter=sp:ABSSP-[dbo].[get_outcome_registries] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=api/continuous-certification/outcome-registries -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-04T17:44:45.7120743Z"
   },
-  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\ContinuousCertification\\OutcomeRegistry-getgetbyuserid.json",
   "version": 1
 }

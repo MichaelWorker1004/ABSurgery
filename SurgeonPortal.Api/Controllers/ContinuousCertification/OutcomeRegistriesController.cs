@@ -95,7 +95,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
             entity.RegisteredWithMBSAQIP = model.RegisteredWithMBSAQIP;
             entity.RegisteredWithABA = model.RegisteredWithABA;
             entity.RegisteredWithASBS = model.RegisteredWithASBS;
-            entity.RegisteredWithStatewideCollaboratives = model.RegisteredWithStatewideCollaboratives;
+            entity.RegisteredWithMSQC = model.RegisteredWithMSQC;
             entity.RegisteredWithABMS = model.RegisteredWithABMS;
             entity.RegisteredWithNCDB = model.RegisteredWithNCDB;
             entity.RegisteredWithRQRS = model.RegisteredWithRQRS;
@@ -107,6 +107,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
             entity.RegisteredWithNCDR = model.RegisteredWithNCDR;
             entity.RegisteredWithSVS = model.RegisteredWithSVS;
             entity.RegisteredWithELSO = model.RegisteredWithELSO;
+            entity.RegisteredWithSSR = model.RegisteredWithSSR;
             entity.UserConfirmed = model.UserConfirmed;
             entity.UserConfirmedDateUtc = model.UserConfirmedDateUtc;
         }
@@ -120,7 +121,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
             entity.RegisteredWithMBSAQIP = model.RegisteredWithMBSAQIP;
             entity.RegisteredWithABA = model.RegisteredWithABA;
             entity.RegisteredWithASBS = model.RegisteredWithASBS;
-            entity.RegisteredWithStatewideCollaboratives = model.RegisteredWithStatewideCollaboratives;
+            entity.RegisteredWithMSQC = model.RegisteredWithMSQC;
             entity.RegisteredWithABMS = model.RegisteredWithABMS;
             entity.RegisteredWithNCDB = model.RegisteredWithNCDB;
             entity.RegisteredWithRQRS = model.RegisteredWithRQRS;
@@ -132,6 +133,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
             entity.RegisteredWithNCDR = model.RegisteredWithNCDR;
             entity.RegisteredWithSVS = model.RegisteredWithSVS;
             entity.RegisteredWithELSO = model.RegisteredWithELSO;
+            entity.RegisteredWithSSR = model.RegisteredWithSSR;
             entity.UserConfirmed = model.UserConfirmed;
             entity.UserConfirmedDateUtc = model.UserConfirmedDateUtc;
         }

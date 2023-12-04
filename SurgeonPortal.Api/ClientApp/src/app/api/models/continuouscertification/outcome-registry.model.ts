@@ -1,13 +1,15 @@
 
 export interface IOutcomeRegistryModel {
-    surgeonSpecificRegistry: boolean;
+    id: number;
+    userId: number;
+    surgeonSpecificRegistry: string;
     registryComments: string;
     registeredWithACHQC: boolean;
     registeredWithCESQIP: boolean;
     registeredWithMBSAQIP: boolean;
     registeredWithABA: boolean;
     registeredWithASBS: boolean;
-    registeredWithStatewideCollaboratives: boolean;
+    registeredWithMSQC: boolean;
     registeredWithABMS: boolean;
     registeredWithNCDB: boolean;
     registeredWithRQRS: boolean;
@@ -19,7 +21,11 @@ export interface IOutcomeRegistryModel {
     registeredWithNCDR: boolean;
     registeredWithSVS: boolean;
     registeredWithELSO: boolean;
+    registeredWithSSR: boolean;
     userConfirmed: boolean;
     userConfirmedDateUtc: string;
-    userId: number;
+    createdByUserId: number;
+    createdAtUtc: string;
+    lastUpdatedAtUtc: string;
+    lastUpdatedByUserId: number;
 }
