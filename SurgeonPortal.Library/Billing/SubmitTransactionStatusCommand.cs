@@ -1,7 +1,9 @@
 ﻿using Csla;
+using Microsoft.Extensions.Options;
 using SurgeonPortal.DataAccess.Contracts.Billing;
 using SurgeonPortal.Library.Contracts.Billing;
 using SurgeonPortal.Library.Contracts.Email;
+using SurgeonPortal.Shared.PaymentProvider;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,16 +17,19 @@ namespace SurgeonPortal.Library.Billing
 	[Serializable]
 	public class SubmitTransactionStatusCommand : YtgCommandBase<SubmitTransactionStatusCommand, int>, ISubmitTransactionStatusCommand
 	{
+		private readonly PaymentProviderConfiguration _paymentProviderConfiguration;
 		private readonly ISubmitTransactionStatusCommandDal _submitTransactionStatusCommandDal;
 		private readonly IEmailFactory _emailFactory;
 
 		public SubmitTransactionStatusCommand(
 			IIdentityProvider identity,
 			ISubmitTransactionStatusCommandDal submitTransactionStatusCommandDal,
-			IEmailFactory emailFactory) : base(identity)
+			IEmailFactory emailFactory,
+			IOptions<PaymentProviderConfiguration> paymentProviderConfiguration) : base(identity)
 		{
 			_submitTransactionStatusCommandDal = submitTransactionStatusCommandDal;
 			_emailFactory = emailFactory;
+			_paymentProviderConfiguration = paymentProviderConfiguration.Value;
 		}
 
 		public static bool CanExecuteCommand()
@@ -259,10 +264,42 @@ namespace SurgeonPortal.Library.Billing
 		[Execute]
 		protected async Task ExecuteCommand()
 		{
-			if (ResultMessage == "APPROVAL")
+			var email = _emailFactory.Create();
+
+			if (ResultMessage.Equals("approval", StringComparison.InvariantCultureIgnoreCase))
 			{
 				var allFields = JsonSerializer.Serialize(this);
 				await _submitTransactionStatusCommandDal.SubmitTransactionTokenAsync(TransactionId, InvoiceNumber, LastName, FirstName, Amount, TransactionTime, allFields);
+
+				string subject;
+				string templateId;
+
+				if(TransactionType.Equals("return", StringComparison.InvariantCultureIgnoreCase))
+				{
+					subject = $"Receipt for Credit-Card Refund of ABS Invoice #{InvoiceNumber}";
+					templateId = "return"; // TBD
+				}
+				else
+				{
+					subject = $"Receipt for Credit-Card Payment of ABS Invoice #{InvoiceNumber}";
+					templateId = "payment"; // TBD
+				}
+
+				email.To = Email;
+				email.Subject = subject;
+				email.TemplateId = templateId;
+
+				await email.SendAsync();
+			}
+			else
+			{
+				// TODO - create data to include in email
+
+				email.To = _paymentProviderConfiguration.ErrorEmailRecipient;
+				email.Subject = "Transaction Failed";
+				email.TemplateId = "error"; //TBD
+
+				await email.SendAsync();
 			}
 		}
 	}
