@@ -131,8 +131,6 @@ export class OutcomeRegistriesModalComponent implements OnInit {
       userConfirmedDateUtc: new Date(),
     } as unknown as IOutcomeRegistryModel;
 
-    console.log('OUTCOME REGISTRIES!', this.outcomeRegistries);
-
     if (this.outcomeRegistries) {
       this._store
         .dispatch(new UpdateOutcomeRegistries(formValues))
