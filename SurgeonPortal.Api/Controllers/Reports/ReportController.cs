@@ -18,7 +18,7 @@ namespace SurgeonPortal.Api.Controllers.Reports
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[HttpGet("invoice")]
-		public async Task<ActionResult<FileContentResult>> GetReport(
+		public async Task<ActionResult> GetReport(
 			[FromServices] IReportReadOnlyFactory reportReadOnlyFactory,
 			[FromQuery] string invoiceNumber)
 		{
