@@ -26,9 +26,12 @@ import {
   ContinuousCertificationSelectors,
   GetContinuousCertificationStatuses,
   GetRefrenceFormGridData,
+  SubmitAttestation,
 } from '../state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IStatuses } from '../api/models/users/statuses.model';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { IAttestationSubmitModel } from '../api/models/continuouscertification/attestation-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -114,7 +117,10 @@ export class ContinuousCertificationComponent implements OnInit {
     },
   };
 
-  constructor(private _store: Store) {
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {
     this._store.dispatch(new GetStateList('500'));
     this._store.dispatch(new GetContinuousCertificationStatuses());
     this._store.dispatch(new GetRefrenceFormGridData());
@@ -334,5 +340,20 @@ export class ContinuousCertificationComponent implements OnInit {
     if (actionFunction) {
       actionFunction();
     }
+  }
+
+  handleAttestationSave() {
+    this.globalDialogService.showLoading();
+    const model: IAttestationSubmitModel = {
+      SigReceive: new Date(),
+      CertnoticeReceive: new Date(),
+    };
+
+    this._store
+      .dispatch(new SubmitAttestation(model))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.handleCardAction('attestationModal');
+      });
   }
 }
