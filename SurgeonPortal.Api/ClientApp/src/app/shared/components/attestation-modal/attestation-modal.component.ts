@@ -18,12 +18,17 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Observable } from 'rxjs';
 import {
+  IAttestationReadOnlyModel,
+  IAttestationSubmitModel,
+} from 'src/app/api/models/continuouscertification/attestation-read-only.model';
+import {
   ContinuousCertificationSelectors,
   GetAttestations,
   IUserProfile,
+  SubmitAttestation,
   UserProfileSelectors,
 } from 'src/app/state';
-import { IAttestationModel } from 'src/app/state/continuous-certification/attestation.model';
+import { GlobalDialogService } from '../../services/global-dialog.service';
 
 @UntilDestroy()
 @Component({
@@ -48,11 +53,15 @@ export class AttestationModalComponent implements OnInit {
     | undefined;
 
   @Select(ContinuousCertificationSelectors.slices.attestations)
-  attestations$!: Observable<IAttestationModel[]> | undefined;
-
+  attestations$!: Observable<IAttestationReadOnlyModel[]> | undefined;
   attestationForm: FormGroup = new FormGroup({});
 
-  constructor(private _store: Store) {
+  disabledSubmit = true;
+
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {
     this._store.dispatch(new GetAttestations());
   }
 
@@ -60,26 +69,44 @@ export class AttestationModalComponent implements OnInit {
     this.attestations$?.pipe(untilDestroyed(this)).subscribe((attestations) => {
       this.setUpFormFields(attestations);
     });
+
+    this.attestationForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((values) => {
+        this.disabledSubmit = !Object.values(values).every((x) => x === true);
+      });
   }
 
-  async setUpFormFields(attestations: IAttestationModel[]) {
-    const promises = attestations.map((attestation: IAttestationModel) => {
-      return new Promise<void>((resolve) => {
-        this.attestationForm.addControl(
-          attestation.name,
-          new FormControl(attestation.checked)
-        );
-        resolve();
-      });
-    });
+  async setUpFormFields(attestations: IAttestationReadOnlyModel[]) {
+    if (!attestations) return;
+    const promises = attestations.map(
+      (attestation: IAttestationReadOnlyModel) => {
+        return new Promise<void>((resolve) => {
+          this.attestationForm.addControl(
+            attestation.name,
+            new FormControl(attestation.checked ? true : false)
+          );
+          resolve();
+        });
+      }
+    );
 
     await Promise.all(promises);
   }
 
   onSave() {
-    const formValues = this.attestationForm.getRawValue();
+    this.globalDialogService.showLoading();
+    const model: IAttestationSubmitModel = {
+      SigReceive: new Date(),
+      CertnoticeReceive: new Date(),
+    };
 
-    console.log(formValues);
+    this._store
+      .dispatch(new SubmitAttestation(model))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.close();
+      });
   }
 
   close() {

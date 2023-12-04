@@ -26,7 +26,12 @@
       <p-button styleClass="p-button-link p-button-primary" (click)="close()"
         >Cancel</p-button
       >
-      <p-button (click)="onSave()" [style]="{ width: '337px' }">Save</p-button>
+      <p-button
+        (click)="onSave()"
+        [style]="{ width: '337px' }"
+        [disabled]="disabledSubmit"
+        >Save</p-button
+      >
     </div>
   </div>
 </form>
