@@ -17,18 +17,13 @@ import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Observable } from 'rxjs';
-import {
-  IAttestationReadOnlyModel,
-  IAttestationSubmitModel,
-} from 'src/app/api/models/continuouscertification/attestation-read-only.model';
+import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
 import {
   ContinuousCertificationSelectors,
   GetAttestations,
   IUserProfile,
-  SubmitAttestation,
   UserProfileSelectors,
 } from 'src/app/state';
-import { GlobalDialogService } from '../../services/global-dialog.service';
 
 @UntilDestroy()
 @Component({
@@ -59,10 +54,7 @@ export class AttestationModalComponent implements OnInit {
 
   disabledSubmit = true;
 
-  constructor(
-    private _store: Store,
-    private globalDialogService: GlobalDialogService
-  ) {
+  constructor(private _store: Store) {
     this._store.dispatch(new GetAttestations());
   }
 
