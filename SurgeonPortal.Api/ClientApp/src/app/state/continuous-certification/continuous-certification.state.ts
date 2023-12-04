@@ -8,6 +8,7 @@ import { OutcomeRegistriesService } from 'src/app/api/services/continuouscertifi
 import { IFormErrors } from 'src/app/shared/common';
 import {
   ClearOutcomeRegistriesErrors,
+  CreateOutcomeRegistries,
   GetAttestations,
   SubmitAttestation,
 } from './continuous-certification.actions';
@@ -68,6 +69,35 @@ export class ContinuousCertificationState {
     private globalDialogService: GlobalDialogService
   ) {}
 
+  @Action(CreateOutcomeRegistries)
+  createOutcomeRegistries(
+    ctx: StateContext<IContinuousCertication>,
+    { payload }: CreateOutcomeRegistries
+  ) {
+    console.log(payload);
+    return this.outcomeRegistriesService.createOutcomeRegistry(payload).pipe(
+      tap((outcomeRegistries: IOutcomeRegistryModel) => {
+        ctx.patchState({
+          outcomeRegistries,
+          outcomeRegistriesErrors: null,
+        });
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Outcome Registry saved successfully',
+          true
+        );
+      }),
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        ctx.patchState({
+          outcomeRegistriesErrors: errors,
+        });
+        this.globalDialogService.showSuccessError('Error', errors, false);
+        return of(errors);
+      })
+    );
+  }
+
   @Action(GetOutcomeRegistries)
   getOutcomeRegistries(
     ctx: StateContext<IContinuousCertication>
@@ -100,22 +130,25 @@ export class ContinuousCertificationState {
     ctx: StateContext<IContinuousCertication>,
     { payload }: UpdateOutcomeRegistries
   ) {
-    ctx.patchState({
-      outcomeRegistries: payload,
-    });
-
     return this.outcomeRegistriesService.updateOutcomeRegistry(payload).pipe(
       tap((outcomeRegistries: IOutcomeRegistryModel) => {
         ctx.patchState({
           outcomeRegistries,
           outcomeRegistriesErrors: null,
         });
+        ctx.dispatch(new GetOutcomeRegistries());
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Outcome Registry saved successfully',
+          true
+        );
       }),
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
         ctx.patchState({
           outcomeRegistriesErrors: errors,
         });
+        this.globalDialogService.showSuccessError('Error', errors, false);
         return of(errors);
       })
     );

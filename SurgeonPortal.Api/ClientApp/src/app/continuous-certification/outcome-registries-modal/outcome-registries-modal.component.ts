@@ -17,6 +17,7 @@ import { Select, Store } from '@ngxs/store';
 import {
   ClearOutcomeRegistriesErrors,
   ContinuousCertificationSelectors,
+  CreateOutcomeRegistries,
   GetOutcomeRegistries,
   UpdateOutcomeRegistries,
 } from 'src/app/state/continuous-certification';
@@ -60,6 +61,7 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
   @Select(ContinuousCertificationSelectors.GetOutcomeRegistries)
   outcomeRegistries$: Observable<IOutcomeRegistryModel> | undefined;
+  outcomeRegistries: IOutcomeRegistryModel | undefined;
   outcomesandRegistriesFormFields = OutcomeRegistriesFormFields;
 
   errors: IFormErrors | null = null;
@@ -68,16 +70,14 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   disableSubmit = true;
 
   outcomeRegistriesForm = new FormGroup({
-    surgeonSpecificRegistry: new FormControl(false, [Validators.required]),
+    surgeonSpecificRegistry: new FormControl('', [Validators.required]),
     registryComments: new FormControl('', [Validators.required]),
     registeredWithACHQC: new FormControl(false, [Validators.required]),
     registeredWithCESQIP: new FormControl(false, [Validators.required]),
     registeredWithMBSAQIP: new FormControl(false, [Validators.required]),
     registeredWithABA: new FormControl(false, [Validators.required]),
     registeredWithASBS: new FormControl(false, [Validators.required]),
-    registeredWithStatewideCollaboratives: new FormControl(false, [
-      Validators.required,
-    ]),
+    registeredWithMSQC: new FormControl(false, [Validators.required]),
     registeredWithABMS: new FormControl(false, [Validators.required]),
     registeredWithNCDB: new FormControl(false, [Validators.required]),
     registeredWithRQRS: new FormControl(false, [Validators.required]),
@@ -113,6 +113,7 @@ export class OutcomeRegistriesModalComponent implements OnInit {
       ?.pipe(untilDestroyed(this))
       .subscribe((res: any) => {
         const outcomeRegistries = res.outcomeRegistries;
+        this.outcomeRegistries = outcomeRegistries;
         if (outcomeRegistries) {
           for (const [key, value] of Object.entries(outcomeRegistries)) {
             this.outcomeRegistriesForm.patchValue({
@@ -127,33 +128,26 @@ export class OutcomeRegistriesModalComponent implements OnInit {
     console.log(this.outcomeRegistriesForm.getRawValue());
     const formValues = {
       ...this.outcomeRegistriesForm.getRawValue(),
-      userId: this.userId,
-      userConfirmedDateUtc: new Date().toISOString(),
-    };
+      userConfirmedDateUtc: new Date(),
+    } as unknown as IOutcomeRegistryModel;
 
-    console.log(formValues);
+    console.log('OUTCOME REGISTRIES!', this.outcomeRegistries);
 
-    this._store
-      .dispatch(new UpdateOutcomeRegistries(<IOutcomeRegistryModel>formValues))
-      .subscribe((result: any) => {
-        if (!result.continuous_certification.outcomeRegistriesErrors) {
-          this.errors = null;
-          this._globalDialogService.showSuccessError(
-            'Success',
-            'Outcome Registries / Quality Assessment Programs Saved Successfully',
-            true
-          );
+    if (this.outcomeRegistries) {
+      this._store
+        .dispatch(new UpdateOutcomeRegistries(formValues))
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
           this.close();
-          this.getOutcomeRegistriesData();
-        } else {
-          this.errors = result.continuous_certification.outcomeRegistriesErrors;
-          this._globalDialogService.showSuccessError(
-            'Error',
-            'Save Failed',
-            false
-          );
-        }
-      });
+        });
+    } else {
+      this._store
+        .dispatch(new CreateOutcomeRegistries(formValues))
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.close();
+        });
+    }
   }
 
   close() {
