@@ -47,6 +47,7 @@ import { GlobalDialogService } from '../../services/global-dialog.service';
 })
 export class AttestationModalComponent implements OnInit {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
+  @Output() saveAttestation: EventEmitter<any> = new EventEmitter();
 
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
@@ -95,18 +96,7 @@ export class AttestationModalComponent implements OnInit {
   }
 
   onSave() {
-    this.globalDialogService.showLoading();
-    const model: IAttestationSubmitModel = {
-      SigReceive: new Date(),
-      CertnoticeReceive: new Date(),
-    };
-
-    this._store
-      .dispatch(new SubmitAttestation(model))
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        this.close();
-      });
+    this.saveAttestation.emit();
   }
 
   close() {
