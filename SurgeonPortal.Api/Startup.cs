@@ -38,6 +38,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using SurgeonPortal.Models.Features;
 using SurgeonPortal.Shared.PaymentProvider;
+using SurgeonPortal.Shared.Reports;
 
 namespace SurgeonPortal.Api
 {
@@ -65,6 +66,8 @@ namespace SurgeonPortal.Api
             services.Configure<AzureStorageConfiguration>(Configuration.GetSection(ConfigurationSections.AzureStorageConfiguration));
             services.Configure<FeatureFlagConfiguration>(Configuration.GetSection(ConfigurationSections.FeatureFlags));
             services.Configure<PaymentProviderConfiguration>(Configuration.GetSection(ConfigurationSections.PaymentProvider));
+            services.Configure<ReportConfiguration>(Configuration.GetSection(ConfigurationSections.Reports));
+
 
             services.AddCsla();
 
