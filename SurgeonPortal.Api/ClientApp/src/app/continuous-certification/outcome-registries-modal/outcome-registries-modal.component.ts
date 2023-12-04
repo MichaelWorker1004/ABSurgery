@@ -101,6 +101,11 @@ export class OutcomeRegistriesModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOutcomeRegistriesData();
+    this.outcomeRegistriesForm.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((value) => {
+        this.disableSubmit = !value.userConfirmed;
+      });
   }
 
   getOutcomeRegistriesData() {
@@ -119,8 +124,9 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.outcomeRegistriesForm.getRawValue());
     const formValues = {
-      ...this.outcomeRegistriesForm.value,
+      ...this.outcomeRegistriesForm.getRawValue(),
       userId: this.userId,
       userConfirmedDateUtc: new Date().toISOString(),
     };
@@ -138,6 +144,7 @@ export class OutcomeRegistriesModalComponent implements OnInit {
             true
           );
           this.close();
+          this.getOutcomeRegistriesData();
         } else {
           this.errors = result.continuous_certification.outcomeRegistriesErrors;
           this._globalDialogService.showSuccessError(
