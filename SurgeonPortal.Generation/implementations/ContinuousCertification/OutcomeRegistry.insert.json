@@ -1,13 +1,13 @@
 {
   "name": "OutcomeRegistry",
-  "implementationName": "ContinuousCertification\\OutcomeRegistry-update",
-  "template": "ytg-framework/editable-edit",
+  "implementationName": "ContinuousCertification\\OutcomeRegistry.insert",
+  "template": "ytg-framework/editable-create",
   "parameters": {
-    "Adapter": "dbo.update_outcomeregistry_getbyuserid",
+    "Adapter": "dbo.insert_outcome_registries",
     "ControllerName": "ContinuousCertification\\OutcomeRegistriesController",
     "ControllerRoute": "api/continuous-certification/outcome-registries",
     "ControllerVersion": "1",
-    "FetchImplementation": "ContinuousCertification\\OutcomeRegistry-getgetbyuserid",
+    "FetchImplementation": "ContinuousCertification\\OutcomeRegistry.GetByUserId",
     "IncludeControllerInGeneration": "true",
     "IsChild": "false",
     "IsRoot": "true",
@@ -28,16 +28,25 @@
   "adapters": [
     {
       "type": "storedProcedure",
-      "name": "dbo.update_outcomeregistry_getbyuserid",
+      "name": "dbo.insert_outcome_registries",
       "storedProcedure": {
         "schema": "[dbo]",
-        "procedureName": "[update_outcomeregistry_getbyuserid]",
+        "procedureName": "[insert_outcome_registries]",
         "parameters": [
           {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
             "name": "SurgeonSpecificRegistry",
-            "dataType": "bool",
-            "maxLength": 1,
-            "precision": 1,
+            "dataType": "string",
+            "maxLength": 8000,
+            "precision": 8000,
             "scale": 0,
             "required": true,
             "mapsTo": "SurgeonSpecificRegistry"
@@ -45,8 +54,8 @@
           {
             "name": "RegistryComments",
             "dataType": "string",
-            "maxLength": 50,
-            "precision": 50,
+            "maxLength": 8000,
+            "precision": 8000,
             "scale": 0,
             "required": true,
             "mapsTo": "RegistryComments"
@@ -97,13 +106,13 @@
             "mapsTo": "RegisteredWithASBS"
           },
           {
-            "name": "RegisteredWithStatewideCollaboratives",
+            "name": "RegisteredWithMSQC",
             "dataType": "bool",
             "maxLength": 1,
             "precision": 1,
             "scale": 0,
             "required": true,
-            "mapsTo": "RegisteredWithStatewideCollaboratives"
+            "mapsTo": "RegisteredWithMSQC"
           },
           {
             "name": "RegisteredWithABMS",
@@ -205,6 +214,15 @@
             "mapsTo": "RegisteredWithELSO"
           },
           {
+            "name": "RegisteredWithSSR",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "RegisteredWithSSR"
+          },
+          {
             "name": "UserConfirmed",
             "dataType": "bool",
             "maxLength": 1,
@@ -223,13 +241,22 @@
             "mapsTo": "UserConfirmedDateUtc"
           },
           {
-            "name": "UserId",
+            "name": "LastUpdatedByUserId",
             "dataType": "int",
             "maxLength": 4,
             "precision": 10,
             "scale": 0,
             "required": true,
-            "mapsTo": "UserId"
+            "mapsTo": "LastUpdatedByUserId"
+          },
+          {
+            "name": "CreatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CreatedByUserId"
           }
         ],
         "recordsets": [
@@ -237,22 +264,42 @@
             "model": "ContinuousCertification\\OutcomeRegistry",
             "fields": [
               {
-                "name": "SurgeonSpecificRegistry",
-                "dataType": "bool",
-                "maxLength": 1,
-                "precision": 1,
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
                 "scale": 0,
                 "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "SurgeonSpecificRegistry",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.SurgeonSpecificRegistry"
               },
               {
                 "name": "RegistryComments",
                 "dataType": "string",
-                "maxLength": 50,
+                "maxLength": 8000,
                 "precision": 0,
                 "scale": 0,
-                "isNullable": false,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.RegistryComments"
               },
@@ -307,14 +354,14 @@
                 "mapsTo": "model.RegisteredWithASBS"
               },
               {
-                "name": "RegisteredWithStatewideCollaboratives",
+                "name": "RegisteredWithMSQC",
                 "dataType": "bool",
                 "maxLength": 1,
                 "precision": 1,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.RegisteredWithStatewideCollaboratives"
+                "mapsTo": "model.RegisteredWithMSQC"
               },
               {
                 "name": "RegisteredWithABMS",
@@ -427,34 +474,74 @@
                 "mapsTo": "model.RegisteredWithELSO"
               },
               {
-                "name": "UserConfirmed",
+                "name": "RegisteredWithSSR",
                 "dataType": "bool",
                 "maxLength": 1,
                 "precision": 1,
                 "scale": 0,
                 "isNullable": false,
                 "isIdentityColumn": false,
+                "mapsTo": "model.RegisteredWithSSR"
+              },
+              {
+                "name": "UserConfirmed",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
                 "mapsTo": "model.UserConfirmed"
               },
               {
                 "name": "UserConfirmedDateUtc",
-                "dataType": "datetime",
-                "maxLength": 10,
-                "precision": 0,
-                "scale": 0,
-                "isNullable": false,
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.UserConfirmedDateUtc"
               },
               {
-                "name": "UserId",
-                "dataType": "int?",
+                "name": "CreatedByUserId",
+                "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isNullable": true,
+                "isNullable": false,
                 "isIdentityColumn": false,
-                "mapsTo": "model.UserId"
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
               }
             ]
           }
@@ -464,8 +551,14 @@
   ],
   "inputParameters": [
     {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
       "name": "SurgeonSpecificRegistry",
-      "dataType": "bool",
+      "dataType": "string",
       "required": true
     },
     {
@@ -499,7 +592,7 @@
       "required": true
     },
     {
-      "name": "RegisteredWithStatewideCollaboratives",
+      "name": "RegisteredWithMSQC",
       "dataType": "bool",
       "required": true
     },
@@ -559,6 +652,11 @@
       "required": true
     },
     {
+      "name": "RegisteredWithSSR",
+      "dataType": "bool",
+      "required": true
+    },
+    {
       "name": "UserConfirmed",
       "dataType": "bool",
       "required": true
@@ -569,17 +667,22 @@
       "required": true
     },
     {
-      "name": "UserId",
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "CreatedByUserId",
       "dataType": "int",
       "required": true,
       "substitution": "$UserId"
     }
   ],
   "metadata": {
-    "command": "ytgim g i s ContinuousCertification\\OutcomeRegistry-update OutcomeRegistry -t=ytg-framework/editable-edit -p:Adapter=sp:ABSSP-[dbo].[update_outcomeregistry_getbyuserid] -p:Model=ContinuousCertification\\OutcomeRegistry -p:FetchImplementation=ContinuousCertification\\OutcomeRegistry-getgetbyuserid -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= ",
-    "inferredCommand": "ytgim generate i  ContinuousCertification\\OutcomeRegistry-update OutcomeRegistry -t=ytg-framework/editable-edit -p:Adapter=sp:ABSSP-[dbo].[update_outcomeregistry_getbyuserid] -p:Model=ContinuousCertification\\OutcomeRegistry -p:FetchImplementation=ContinuousCertification\\OutcomeRegistry-getgetbyuserid -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false -p:ApiRoot=$project.ApiRoot -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=continuous-certification/outcome-registries -p:ControllerVersion=1",
-    "generatedDateUtc": "2023-04-21T19:38:52.8691466Z"
+    "command": "ytgim g i s ContinuousCertification\\OutcomeRegistry.insert OutcomeRegistry -t=ytg-framework/editable-create -p:Model=ContinuousCertification\\OutcomeRegistry -p:Adapter=sp:ABSSP-[dbo].[insert_outcome_registries] -p:FetchImplementation=ContinuousCertification\\OutcomeRegistry.GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=api/continuous-certification/outcome-registries -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  ContinuousCertification\\OutcomeRegistry.insert OutcomeRegistry -t=ytg-framework/editable-create -p:Model=ContinuousCertification\\OutcomeRegistry -p:Adapter=sp:ABSSP-[dbo].[insert_outcome_registries] -p:FetchImplementation=ContinuousCertification\\OutcomeRegistry.GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=OutcomeRegistry -p:Route= -p:ControllerName=ContinuousCertification\\OutcomeRegistriesController -p:ControllerRoute=api/continuous-certification/outcome-registries -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-04T17:44:53.6258771Z"
   },
-  "fileName": "C:\\Repos\\ABS\\SurgeonPortal\\SurgeonPortal.Generation\\implementations\\ContinuousCertification\\OutcomeRegistry-update.json",
   "version": 1
 }

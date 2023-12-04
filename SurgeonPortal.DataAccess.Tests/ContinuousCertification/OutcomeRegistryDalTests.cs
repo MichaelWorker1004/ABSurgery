@@ -15,19 +15,19 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
         [Test]
         public async Task GetByUserIdAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[get_outcomeregistry_getbyuserid]";
-            var expectedUserId = Create<int>();
+            var expectedSprocName = "[dbo].[get_outcome_registries]";
+            var expectedUserID = Create<int>();
             var expectedParams = 
                 new
                 {
-                    UserId = expectedUserId,
+                    UserID = expectedUserID,
                 };
         
             var sqlManager = new MockSqlConnectionManager();
             sqlManager.AddRecord(Create<OutcomeRegistryDto>());
         
             var sut = new OutcomeRegistryDal(sqlManager);
-            await sut.GetByUserIdAsync(expectedUserId);
+            await sut.GetByUserIdAsync(expectedUserID);
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
             Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
@@ -55,7 +55,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
         [Test]
         public async Task InsertAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[ins_outcomeregistry_getbyuserid]";
+            var expectedSprocName = "[dbo].[insert_outcome_registries]";
             var expectedDto = Create<OutcomeRegistryDto>();
         
             var sqlManager = new MockSqlConnectionManager();
@@ -75,7 +75,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
                     RegisteredWithMBSAQIP = expectedDto.RegisteredWithMBSAQIP,
                     RegisteredWithABA = expectedDto.RegisteredWithABA,
                     RegisteredWithASBS = expectedDto.RegisteredWithASBS,
-                    RegisteredWithStatewideCollaboratives = expectedDto.RegisteredWithStatewideCollaboratives,
+                    RegisteredWithMSQC = expectedDto.RegisteredWithMSQC,
                     RegisteredWithABMS = expectedDto.RegisteredWithABMS,
                     RegisteredWithNCDB = expectedDto.RegisteredWithNCDB,
                     RegisteredWithRQRS = expectedDto.RegisteredWithRQRS,
@@ -87,8 +87,11 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
                     RegisteredWithNCDR = expectedDto.RegisteredWithNCDR,
                     RegisteredWithSVS = expectedDto.RegisteredWithSVS,
                     RegisteredWithELSO = expectedDto.RegisteredWithELSO,
+                    RegisteredWithSSR = expectedDto.RegisteredWithSSR,
                     UserConfirmed = expectedDto.UserConfirmed,
                     UserConfirmedDateUtc = expectedDto.UserConfirmedDateUtc,
+                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
+                    CreatedByUserId = expectedDto.CreatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
@@ -117,7 +120,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
         [Test]
         public async Task UpdateAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[update_outcomeregistry_getbyuserid]";
+            var expectedSprocName = "[dbo].[update_outcome_registries]";
             var expectedDto = Create<OutcomeRegistryDto>();
         
             var sqlManager = new MockSqlConnectionManager();
@@ -129,6 +132,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
             var p =
                 new
                 {
+                    UserId = expectedDto.UserId,
                     SurgeonSpecificRegistry = expectedDto.SurgeonSpecificRegistry,
                     RegistryComments = expectedDto.RegistryComments,
                     RegisteredWithACHQC = expectedDto.RegisteredWithACHQC,
@@ -136,7 +140,7 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
                     RegisteredWithMBSAQIP = expectedDto.RegisteredWithMBSAQIP,
                     RegisteredWithABA = expectedDto.RegisteredWithABA,
                     RegisteredWithASBS = expectedDto.RegisteredWithASBS,
-                    RegisteredWithStatewideCollaboratives = expectedDto.RegisteredWithStatewideCollaboratives,
+                    RegisteredWithMSQC = expectedDto.RegisteredWithMSQC,
                     RegisteredWithABMS = expectedDto.RegisteredWithABMS,
                     RegisteredWithNCDB = expectedDto.RegisteredWithNCDB,
                     RegisteredWithRQRS = expectedDto.RegisteredWithRQRS,
@@ -148,9 +152,10 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
                     RegisteredWithNCDR = expectedDto.RegisteredWithNCDR,
                     RegisteredWithSVS = expectedDto.RegisteredWithSVS,
                     RegisteredWithELSO = expectedDto.RegisteredWithELSO,
+                    RegisteredWithSSR = expectedDto.RegisteredWithSSR,
                     UserConfirmed = expectedDto.UserConfirmed,
                     UserConfirmedDateUtc = expectedDto.UserConfirmedDateUtc,
-                    UserId = expectedDto.UserId,
+                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));

@@ -2,6 +2,12 @@ import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertificatio
 import { IRefrenceFormModel } from './refrence-form.model';
 import { IAttestationSubmitModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
 
+export class CreateOutcomeRegistries {
+  static readonly type = '[Continuous Certification] Create Outcome Registries';
+
+  constructor(public payload: IOutcomeRegistryModel) {}
+}
+
 export class GetOutcomeRegistries {
   static readonly type = '[Continuous Certification] Get Outcome Registries';
 }

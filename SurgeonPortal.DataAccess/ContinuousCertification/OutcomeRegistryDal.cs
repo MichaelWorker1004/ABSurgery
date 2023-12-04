@@ -14,15 +14,15 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
 
 
 
-        public async Task<OutcomeRegistryDto> GetByUserIdAsync(int userId)
+        public async Task<OutcomeRegistryDto> GetByUserIdAsync(int userID)
         {
             using (var connection = CreateConnection())
             {
                 return await connection.ExecFirstOrDefaultAsync<OutcomeRegistryDto>(
-                    "[dbo].[get_outcomeregistry_getbyuserid]",
+                    "[dbo].[get_outcome_registries]",
                         new
                         {
-                            UserId = userId,
+                            UserID = userID,
                         });
                         
             }
@@ -35,7 +35,7 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                 using (var connection = CreateConnection())
                 {
                     return await connection.ExecFirstOrDefaultAsync<OutcomeRegistryDto>(
-                        "[dbo].[ins_outcomeregistry_getbyuserid]",
+                        "[dbo].[insert_outcome_registries]",
                             new
                             {
                                 UserId = dto.UserId,
@@ -46,7 +46,7 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                                 RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP,
                                 RegisteredWithABA = dto.RegisteredWithABA,
                                 RegisteredWithASBS = dto.RegisteredWithASBS,
-                                RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives,
+                                RegisteredWithMSQC = dto.RegisteredWithMSQC,
                                 RegisteredWithABMS = dto.RegisteredWithABMS,
                                 RegisteredWithNCDB = dto.RegisteredWithNCDB,
                                 RegisteredWithRQRS = dto.RegisteredWithRQRS,
@@ -58,8 +58,11 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                                 RegisteredWithNCDR = dto.RegisteredWithNCDR,
                                 RegisteredWithSVS = dto.RegisteredWithSVS,
                                 RegisteredWithELSO = dto.RegisteredWithELSO,
+                                RegisteredWithSSR = dto.RegisteredWithSSR,
                                 UserConfirmed = dto.UserConfirmed,
                                 UserConfirmedDateUtc = dto.UserConfirmedDateUtc,
+                                LastUpdatedByUserId = dto.LastUpdatedByUserId,
+                                CreatedByUserId = dto.CreatedByUserId,
                             });
                             
                 }
@@ -82,9 +85,10 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
             using (var connection = CreateConnection())
             {
                 return await connection.ExecFirstOrDefaultAsync<OutcomeRegistryDto>(
-                    "[dbo].[update_outcomeregistry_getbyuserid]",
+                    "[dbo].[update_outcome_registries]",
                         new
                         {
+                            UserId = dto.UserId,
                             SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry,
                             RegistryComments = dto.RegistryComments,
                             RegisteredWithACHQC = dto.RegisteredWithACHQC,
@@ -92,7 +96,7 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                             RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP,
                             RegisteredWithABA = dto.RegisteredWithABA,
                             RegisteredWithASBS = dto.RegisteredWithASBS,
-                            RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives,
+                            RegisteredWithMSQC = dto.RegisteredWithMSQC,
                             RegisteredWithABMS = dto.RegisteredWithABMS,
                             RegisteredWithNCDB = dto.RegisteredWithNCDB,
                             RegisteredWithRQRS = dto.RegisteredWithRQRS,
@@ -104,9 +108,10 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                             RegisteredWithNCDR = dto.RegisteredWithNCDR,
                             RegisteredWithSVS = dto.RegisteredWithSVS,
                             RegisteredWithELSO = dto.RegisteredWithELSO,
+                            RegisteredWithSSR = dto.RegisteredWithSSR,
                             UserConfirmed = dto.UserConfirmed,
                             UserConfirmedDateUtc = dto.UserConfirmedDateUtc,
-                            UserId = dto.UserId,
+                            LastUpdatedByUserId = dto.LastUpdatedByUserId,
                         });
                         
             }

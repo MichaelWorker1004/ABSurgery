@@ -64,9 +64,7 @@
       <p-button
         [style]="{ width: '337px' }"
         type="submit"
-        [disabled]="
-          outcomeRegistriesForm.untouched && !outcomeRegistriesForm.valid
-        "
+        [disabled]="disableSubmit && !outcomeRegistriesForm.valid"
         >Save</p-button
       >
     </div>
