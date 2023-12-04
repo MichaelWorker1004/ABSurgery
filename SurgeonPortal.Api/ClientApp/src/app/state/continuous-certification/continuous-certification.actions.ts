@@ -31,3 +31,8 @@ export class RequestRefrence {
 
   constructor(public model: IRefrenceFormModel) {}
 }
+
+export class ClearOutcomeRegistriesErrors {
+  static readonly type =
+    '[Continuous Certification] Clear Outcome Registries Errors';
+}

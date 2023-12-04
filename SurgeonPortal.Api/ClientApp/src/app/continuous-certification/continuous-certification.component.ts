@@ -300,7 +300,6 @@ export class ContinuousCertificationComponent implements OnInit {
         stati.forEach((ccs) => {
           statuses[ccs.id] = ccs;
         });
-        console.log(statuses);
 
         continousCertificationData.forEach((cc: any) => {
           cc['status'] = statuses[cc.id]?.status || Status.InProgress;
@@ -322,7 +321,6 @@ export class ContinuousCertificationComponent implements OnInit {
   }
 
   areAllItemsCompleted(certificationData: any[]): boolean {
-    console.log(certificationData);
     for (const item of certificationData) {
       if (item.status !== undefined && item.status !== Status.Completed) {
         return false;
