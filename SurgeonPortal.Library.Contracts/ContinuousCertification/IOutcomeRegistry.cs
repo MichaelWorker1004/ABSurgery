@@ -5,14 +5,16 @@ namespace SurgeonPortal.Library.Contracts.ContinuousCertification
 {
     public interface IOutcomeRegistry : IYtgBusinessBase
     {
-        bool SurgeonSpecificRegistry { get; set; }
+        int Id { get; set; }
+        int UserId { get; set; }
+        string SurgeonSpecificRegistry { get; set; }
         string RegistryComments { get; set; }
         bool RegisteredWithACHQC { get; set; }
         bool RegisteredWithCESQIP { get; set; }
         bool RegisteredWithMBSAQIP { get; set; }
         bool RegisteredWithABA { get; set; }
         bool RegisteredWithASBS { get; set; }
-        bool RegisteredWithStatewideCollaboratives { get; set; }
+        bool RegisteredWithMSQC { get; set; }
         bool RegisteredWithABMS { get; set; }
         bool RegisteredWithNCDB { get; set; }
         bool RegisteredWithRQRS { get; set; }
@@ -24,8 +26,8 @@ namespace SurgeonPortal.Library.Contracts.ContinuousCertification
         bool RegisteredWithNCDR { get; set; }
         bool RegisteredWithSVS { get; set; }
         bool RegisteredWithELSO { get; set; }
-        bool UserConfirmed { get; set; }
-        DateTime UserConfirmedDateUtc { get; set; }
-        int UserId { get; set; }
+        bool RegisteredWithSSR { get; set; }
+        bool? UserConfirmed { get; set; }
+        DateTime? UserConfirmedDateUtc { get; set; }
     }
 }

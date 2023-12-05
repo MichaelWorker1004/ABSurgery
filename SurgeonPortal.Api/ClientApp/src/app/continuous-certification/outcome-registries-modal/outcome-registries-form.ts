@@ -122,7 +122,7 @@ export const OutcomeRegistriesFormFields = [
     subLabel: '(MSQC, SCOAP, etc.)',
     value: '',
     required: false,
-    name: 'registeredWithStatewideCollaboratives',
+    name: 'registeredWithMSQC',
     type: 'radio',
     size: 'col-6',
     options: [

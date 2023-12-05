@@ -65,6 +65,19 @@
     ></abs-acgme-experience-modal>
   </abs-modal>
 
+  <abs-modal
+    [open]="programDirectorAttestationModal"
+    (closeDialog)="handleCardAction('programDirectorAttestationModal')"
+    title="Program Director Attestation"
+    modalName="programDirectorAttestationModal"
+    status="in-progress"
+    [hideClose]="true"
+  >
+    <abs-program-director-attestations
+      (closeDialog)="handleCardAction('programDirectorAttestationModal')"
+    ></abs-program-director-attestations>
+  </abs-modal>
+
   <!-- <abs-modal
     [open]="showSurgeonProfile"
     title="Surgeon Profile"

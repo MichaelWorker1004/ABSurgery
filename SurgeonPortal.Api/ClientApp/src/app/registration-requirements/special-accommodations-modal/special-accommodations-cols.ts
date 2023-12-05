@@ -7,5 +7,4 @@ export const SPECIAL_ACCOMMODATIONS_COLS = [
   AbsGrid.setFormattedDateCol('Upload Date', 'uploadDate'),
   AbsGrid.setTextDisplayCol('Type', 'type'),
   AbsGrid.setCustomButtonCol('Download', 'download', 'fa fa-download'),
-  AbsGrid.setCustomButtonCol('Delete', 'delete', 'fa fa-trash'),
 ];
