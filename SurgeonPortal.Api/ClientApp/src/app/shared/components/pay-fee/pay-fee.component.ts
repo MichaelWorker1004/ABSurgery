@@ -150,12 +150,21 @@ export class PayFeeComponent implements OnInit {
   }
 
   handleGridAction(event: any) {
-    const invoiceData = event.data;
-    this.paymentInformationForm
-      .get('invoiceNumber')
-      ?.setValue(invoiceData.invoiceNumber);
-    this.paymentInformationForm.get('amount')?.setValue(invoiceData.balanceDue);
-    this.payFeeDisabled = false;
+    if (event.fieldKey === 'pay balance') {
+      const invoiceData = event.data;
+      this.paymentInformationForm
+        .get('invoiceNumber')
+        ?.setValue(invoiceData.invoiceNumber);
+      this.paymentInformationForm
+        .get('amount')
+        ?.setValue(invoiceData.balanceDue);
+      this.payFeeDisabled = false;
+    } else if (event.fieldKey === 'receipt') {
+      window.open(
+        `api/reports/invoice?invoiceNumber=${event.data.invoiceNumber}`,
+        '_blank'
+      );
+    }
   }
 
   handleCancelAction() {
