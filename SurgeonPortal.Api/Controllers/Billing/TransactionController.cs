@@ -57,5 +57,24 @@ namespace SurgeonPortal.Api.Controllers.Billing
 
 			return Ok();
 		}
+
+		[MapToApiVersion("1")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[HttpGet("getip")]
+		public async Task<ActionResult> GetIp()
+		{
+			var client = new HttpClient()
+			{
+				BaseAddress = new Uri("https://www.convergepay.com/hosted-payments/myip")
+			};
+
+			var response = await client.GetAsync("");
+
+			var content = await response.Content.ReadAsStringAsync();
+
+			return Ok(content);
+		}
 	}
 }
