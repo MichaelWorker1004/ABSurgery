@@ -84,7 +84,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
     action: {
       type: Action.dialog,
-      action: 'attestationModal',
+      action: 'programDirectorAttestationModal',
     },
     actionDisplay: 'View / Update my information',
     icon: 'fa-solid fa-user-check',

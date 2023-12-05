@@ -1,0 +1,47 @@
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro consectetur
+officiis voluptas possimus odio corrupti quas iste commodi unde. Dolores, iste
+nisi facilis quas iure sequi reiciendis velit amet dolorem.
+
+<form
+  id="program-director-attestations"
+  class="mt-5"
+  [formGroup]="programDirectorAttestationsFrom"
+>
+  <div class="grid">
+    <div class="col-12 md:col-6 flex flex-column gap-1">
+      <label class="block" for="name">Program Director Name</label>
+      <input
+        id="programDirectorName"
+        pInputText
+        type="text"
+        formControlName="programDirectorName"
+      />
+    </div>
+    <div class="col-12 md:col-6 flex flex-column gap-1">
+      <label class="block" for="emailAddress">Email Address</label>
+      <input
+        id="emailAddress"
+        pInputText
+        type="text"
+        formControlName="emailAddress"
+      />
+    </div>
+    <div class="w-full flex justify-content-end mt-5 pb-3">
+      <p-button
+        variant="text"
+        styleClass="p-button-link p-button-primary"
+        (click)="close()"
+      >
+        Cancel
+      </p-button>
+      <p-button
+        type="submit"
+        [style]="{ width: '337px' }"
+        (click)="saveAttestation()"
+        [disabled]="!programDirectorAttestationsFrom.valid"
+      >
+        Save
+      </p-button>
+    </div>
+  </div>
+</form>

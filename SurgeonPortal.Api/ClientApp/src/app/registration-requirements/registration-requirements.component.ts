@@ -32,6 +32,7 @@ import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-card
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
+import { ProgramDirectorAttestationsComponent } from './program-director-attestations/program-director-attestations.component';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -55,6 +56,7 @@ interface ActionMap {
     LegendComponent,
     AttestationModalComponent,
     PayFeeComponent,
+    ProgramDirectorAttestationsComponent,
   ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
@@ -82,6 +84,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   attestationModal = false;
   showProfessionalActivitiesAndPrivileges = false;
   payFeeModal = false;
+  programDirectorAttestationModal = true;
 
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
@@ -143,6 +146,10 @@ export class RegistrationRequirementsComponent implements OnInit {
     },
     payFeeModal: () => {
       this.payFeeModal = !this.payFeeModal;
+    },
+    programDirectorAttestationModal: () => {
+      this.programDirectorAttestationModal =
+        !this.programDirectorAttestationModal;
     },
   };
 
