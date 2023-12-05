@@ -80,7 +80,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   showACGMEexprience = false;
   showTraining = false;
   showGraduateMedicalEducation = false;
-  showSpecialAccommodations = false;
+  showSpecialAccommodations = true;
   attestationModal = false;
   showProfessionalActivitiesAndPrivileges = false;
   payFeeModal = false;
@@ -155,6 +155,7 @@ export class RegistrationRequirementsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRegistrationRequirementsData();
+    this.getPayFeeData();
   }
 
   closeModal(event: any) {
