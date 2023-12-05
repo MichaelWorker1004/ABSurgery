@@ -84,7 +84,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   attestationModal = false;
   showProfessionalActivitiesAndPrivileges = false;
   payFeeModal = false;
-  programDirectorAttestationModal = true;
+  programDirectorAttestationModal = false;
 
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
