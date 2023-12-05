@@ -4,7 +4,7 @@
   "template": "ytg-framework/readonly-getlist",
   "parameters": {
     "Adapter": "dbo.get_all_status",
-    "ControllerName": "DashboardStatusController",
+    "ControllerName": "ContinuousCertification\\DashboardStatusController",
     "ControllerRoute": "api/continuous-certification/dashboard-status",
     "ControllerVersion": "1",
     "FetchMethodName": "GetAllByUserId",
