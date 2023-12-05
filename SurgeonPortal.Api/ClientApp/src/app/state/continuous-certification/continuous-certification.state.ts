@@ -23,6 +23,8 @@ import { IStatuses } from '../../api/models/users/statuses.model';
 import { DashboardStatusService } from 'src/app/api/services/continuouscertification/dashboard-status.service';
 import { IDashboardStatusReadOnlyModel } from 'src/app/api/models/continuouscertification/dashboard-status-read-only.model';
 import { Status } from 'src/app/shared/components/action-card/status.enum';
+//remove this
+import { ApiService } from 'ytg-angular';
 
 const statusTypes = [
   Status.InProgress, //0
@@ -59,7 +61,9 @@ export const CONTCERT_STATE_TOKEN = new StateToken<IContinuousCertication>(
 export class ContinuousCertificationState {
   constructor(
     private outcomeRegistriesService: OutcomeRegistriesService,
-    private dashboardStatusService: DashboardStatusService
+    private dashboardStatusService: DashboardStatusService,
+    //remove this
+    private apiService: ApiService
   ) {}
 
   @Action(GetOutcomeRegistries)
@@ -144,6 +148,8 @@ export class ContinuousCertificationState {
   getContinuousCertificationStatuses(
     ctx: StateContext<IContinuousCertication>
   ) {
+    //remove this
+    this.checkAPIAddress();
     return this.dashboardStatusService
       .retrieveDashboardStatusReadOnly_GetAllByUserId()
       .pipe(
@@ -219,5 +225,14 @@ export class ContinuousCertificationState {
     ctx.patchState({
       outcomeRegistriesErrors: null,
     });
+  }
+
+  // remove this
+  private checkAPIAddress(): void {
+    this.apiService
+      .get(`api/billing/transaction/getip`)
+      .subscribe((res: any) => {
+        console.log('api-address', res);
+      });
   }
 }
