@@ -155,6 +155,7 @@ export class RegistrationRequirementsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRegistrationRequirementsData();
+    this.getPayFeeData();
   }
 
   closeModal(event: any) {
