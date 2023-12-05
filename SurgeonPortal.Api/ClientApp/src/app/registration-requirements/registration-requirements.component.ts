@@ -80,11 +80,11 @@ export class RegistrationRequirementsComponent implements OnInit {
   showACGMEexprience = false;
   showTraining = false;
   showGraduateMedicalEducation = false;
-  showSpecialAccommodations = false;
+  showSpecialAccommodations = true;
   attestationModal = false;
   showProfessionalActivitiesAndPrivileges = false;
   payFeeModal = false;
-  programDirectorAttestationModal = true;
+  programDirectorAttestationModal = false;
 
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;

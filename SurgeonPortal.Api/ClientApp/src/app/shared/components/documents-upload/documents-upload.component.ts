@@ -99,7 +99,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
    * User Id
    * @type {number}
    */
-  @Input() userId!: number;
+  @Input() userId!: number | undefined | null;
 
   /**
    * event emitter for document actions
