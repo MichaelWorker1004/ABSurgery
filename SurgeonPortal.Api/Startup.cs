@@ -39,6 +39,10 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using SurgeonPortal.Models.Features;
 using SurgeonPortal.Shared.PaymentProvider;
 using SurgeonPortal.Shared.Reports;
+using SurgeonPortal.Shared.Email;
+using SendGrid.Extensions.DependencyInjection;
+using SurgeonPortal.Library.Contracts.EmailProvider;
+using SurgeonPortal.Library.EmailProvider.SendGrid;
 
 namespace SurgeonPortal.Api
 {
@@ -67,7 +71,7 @@ namespace SurgeonPortal.Api
             services.Configure<FeatureFlagConfiguration>(Configuration.GetSection(ConfigurationSections.FeatureFlags));
             services.Configure<PaymentProviderConfiguration>(Configuration.GetSection(ConfigurationSections.PaymentProvider));
             services.Configure<ReportConfiguration>(Configuration.GetSection(ConfigurationSections.Reports));
-
+            services.Configure<EmailConfiguration>(Configuration.GetSection(ConfigurationSections.Email));
 
             services.AddCsla();
 
@@ -119,11 +123,18 @@ namespace SurgeonPortal.Api
             services.AddTransient<IIdentityProvider, AspNetCoreIdentityProvider>();
             services.AddTransient<IAbsoluteUriProvider, AbsoluteUriProvider>();
             services.AddTransient<IStorageDal, BlobStorageDal>();
+            services.AddTransient<IEmailProvider, SendGridEmailProvider>();
 
             services.RegisterByConvention<LibraryConventionProvider, LibraryConventionResolver>();
             services.RegisterByConvention<DataAccessConventionProvider, DataAccessConventionResolver>();
 
             var tokenConfig = Configuration.GetSection(ConfigurationSections.Tokens).Get<TokensConfiguration>();
+
+            services.AddSendGrid((services, options) =>
+            {
+                var emailConfig = services.GetRequiredService<IOptions<EmailConfiguration>>();
+                options.ApiKey = emailConfig.Value.ApiKey;
+            });
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
