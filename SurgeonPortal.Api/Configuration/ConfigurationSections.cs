@@ -7,6 +7,7 @@
         public static string AzureStorageConfiguration => "AzureStorageConfiguration";
         public static string FeatureFlags => "FeatureFlags";
         public static string PaymentProvider => "PaymentProviderConfiguration";
+        public static string Reports => "Reports";
         public static string Email => "EmailConfiguration";
     }
 }

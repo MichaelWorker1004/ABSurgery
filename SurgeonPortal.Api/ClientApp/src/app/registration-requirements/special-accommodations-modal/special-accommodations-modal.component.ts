@@ -11,6 +11,10 @@ import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { UserProfileSelectors, IUserProfile } from 'src/app/state';
 
 @Component({
   selector: 'abs-special-accommodations-modal',
@@ -21,6 +25,7 @@ import { ButtonModule } from 'primeng/button';
     FormsModule,
     DropdownModule,
     ButtonModule,
+    DocumentsUploadComponent,
   ],
   templateUrl: './special-accommodations-modal.component.html',
   styleUrls: ['./special-accommodations-modal.component.scss'],
@@ -28,6 +33,8 @@ import { ButtonModule } from 'primeng/button';
 })
 export class SpecialAccommodationsModalComponent implements OnInit {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
+
+  @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
 
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS;
   specialAccommodationsData!: any;
@@ -40,16 +47,16 @@ export class SpecialAccommodationsModalComponent implements OnInit {
 
   specialAccommodationsTypeOptions = [
     {
-      label: 'Other medical condition',
-      value: 'other_medical_condition',
+      itemDescription: 'Other medical condition',
+      itemValue: 'other_medical_condition',
     },
     {
-      label: 'Lactating mother',
-      value: 'lactating_mother',
+      itemDescription: 'Lactating mother',
+      itemValue: 'lactating_mother',
     },
     {
-      label: 'ADA (Learning disability)',
-      value: 'ada_learning_disability',
+      itemDescription: 'ADA (Learning disability)',
+      itemValue: 'ada_learning_disability',
     },
   ];
 

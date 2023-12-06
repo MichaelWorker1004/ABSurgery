@@ -94,6 +94,7 @@ export const PAY_FEE_FORM_FIELDS = [
     name: 'invoiceNumber',
     type: 'text',
     size: 'col-6',
+    disabled: true,
   },
   {
     label: 'Amount',
@@ -103,5 +104,6 @@ export const PAY_FEE_FORM_FIELDS = [
     name: 'amount',
     type: 'text',
     size: 'col-6',
+    disabled: true,
   },
 ];

@@ -1,13 +1,24 @@
 {
   "refs": {},
   "name": "ContinuousCertification\\OutcomeRegistry",
-  "description": "Created by ytgim CLI with the default Description.",
+  "description": "",
   "properties": [
     {
-      "name": "SurgeonSpecificRegistry",
-      "dataType": "bool",
-      "maxLength": 1,
-      "precision": 1,
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": false,
@@ -15,13 +26,24 @@
       "rules": {}
     },
     {
-      "name": "RegistryComments",
+      "name": "SurgeonSpecificRegistry",
       "dataType": "string",
-      "maxLength": 50,
+      "maxLength": 8000,
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "RegistryComments",
+      "dataType": "string",
+      "maxLength": 8000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
     },
@@ -81,7 +103,7 @@
       "rules": {}
     },
     {
-      "name": "RegisteredWithStatewideCollaboratives",
+      "name": "RegisteredWithMSQC",
       "dataType": "bool",
       "maxLength": 1,
       "precision": 1,
@@ -213,7 +235,7 @@
       "rules": {}
     },
     {
-      "name": "UserConfirmed",
+      "name": "RegisteredWithSSR",
       "dataType": "bool",
       "maxLength": 1,
       "precision": 1,
@@ -224,7 +246,40 @@
       "rules": {}
     },
     {
+      "name": "UserConfirmed",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
       "name": "UserConfirmedDateUtc",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CreatedAtUtc",
       "dataType": "datetime",
       "maxLength": 8,
       "precision": 23,
@@ -235,20 +290,32 @@
       "rules": {}
     },
     {
-      "name": "UserId",
+      "name": "LastUpdatedAtUtc",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "LastUpdatedByUserId",
       "dataType": "int",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": false,
-      "isIdentityColumn": false
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {
-    "command": "ytgim g m em ContinuousCertification\\OutcomeRegistry ",
+    "command": "ytgim g m s ContinuousCertification\\OutcomeRegistry -sp [dbo].[get_outcome_registries] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-04-21T19:42:05.7627136Z"
+    "generatedDateUtc": "2023-12-04T17:41:36.5416202Z"
   },
   "version": 1
 }

@@ -28,13 +28,30 @@ namespace SurgeonPortal.Library.ContinuousCertification
             _outcomeRegistryDal = outcomeRegistryDal;
         }
 
+        [Key] 
+        [DisplayName(nameof(Id))]
+		public int Id
+		{
+			get { return GetProperty(IdProperty); }
+			set { SetProperty(IdProperty, value); }
+		}
+		public static readonly PropertyInfo<int> IdProperty = RegisterProperty<int>(c => c.Id);
+
+        [DisplayName(nameof(UserId))]
+		public int UserId
+		{
+			get { return GetProperty(UserIdProperty); }
+			set { SetProperty(UserIdProperty, value); }
+		}
+		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
+
         [DisplayName(nameof(SurgeonSpecificRegistry))]
-		public bool SurgeonSpecificRegistry
+		public string SurgeonSpecificRegistry
 		{
 			get { return GetProperty(SurgeonSpecificRegistryProperty); }
 			set { SetProperty(SurgeonSpecificRegistryProperty, value); }
 		}
-		public static readonly PropertyInfo<bool> SurgeonSpecificRegistryProperty = RegisterProperty<bool>(c => c.SurgeonSpecificRegistry);
+		public static readonly PropertyInfo<string> SurgeonSpecificRegistryProperty = RegisterProperty<string>(c => c.SurgeonSpecificRegistry);
 
         [DisplayName(nameof(RegistryComments))]
 		public string RegistryComments
@@ -84,13 +101,13 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<bool> RegisteredWithASBSProperty = RegisterProperty<bool>(c => c.RegisteredWithASBS);
 
-        [DisplayName(nameof(RegisteredWithStatewideCollaboratives))]
-		public bool RegisteredWithStatewideCollaboratives
+        [DisplayName(nameof(RegisteredWithMSQC))]
+		public bool RegisteredWithMSQC
 		{
-			get { return GetProperty(RegisteredWithStatewideCollaborativesProperty); }
-			set { SetProperty(RegisteredWithStatewideCollaborativesProperty, value); }
+			get { return GetProperty(RegisteredWithMSQCProperty); }
+			set { SetProperty(RegisteredWithMSQCProperty, value); }
 		}
-		public static readonly PropertyInfo<bool> RegisteredWithStatewideCollaborativesProperty = RegisterProperty<bool>(c => c.RegisteredWithStatewideCollaboratives);
+		public static readonly PropertyInfo<bool> RegisteredWithMSQCProperty = RegisterProperty<bool>(c => c.RegisteredWithMSQC);
 
         [DisplayName(nameof(RegisteredWithABMS))]
 		public bool RegisteredWithABMS
@@ -180,29 +197,29 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<bool> RegisteredWithELSOProperty = RegisterProperty<bool>(c => c.RegisteredWithELSO);
 
+        [DisplayName(nameof(RegisteredWithSSR))]
+		public bool RegisteredWithSSR
+		{
+			get { return GetProperty(RegisteredWithSSRProperty); }
+			set { SetProperty(RegisteredWithSSRProperty, value); }
+		}
+		public static readonly PropertyInfo<bool> RegisteredWithSSRProperty = RegisterProperty<bool>(c => c.RegisteredWithSSR);
+
         [DisplayName(nameof(UserConfirmed))]
-		public bool UserConfirmed
+		public bool? UserConfirmed
 		{
 			get { return GetProperty(UserConfirmedProperty); }
 			set { SetProperty(UserConfirmedProperty, value); }
 		}
-		public static readonly PropertyInfo<bool> UserConfirmedProperty = RegisterProperty<bool>(c => c.UserConfirmed);
+		public static readonly PropertyInfo<bool?> UserConfirmedProperty = RegisterProperty<bool?>(c => c.UserConfirmed);
 
         [DisplayName(nameof(UserConfirmedDateUtc))]
-		public DateTime UserConfirmedDateUtc
+		public DateTime? UserConfirmedDateUtc
 		{
 			get { return GetProperty(UserConfirmedDateUtcProperty); }
 			set { SetProperty(UserConfirmedDateUtcProperty, value); }
 		}
-		public static readonly PropertyInfo<DateTime> UserConfirmedDateUtcProperty = RegisterProperty<DateTime>(c => c.UserConfirmedDateUtc);
-
-        [DisplayName(nameof(UserId))]
-		public int UserId
-		{
-			get { return GetProperty(UserIdProperty); }
-			set { SetProperty(UserIdProperty, value); }
-		}
-		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
+		public static readonly PropertyInfo<DateTime?> UserConfirmedDateUtcProperty = RegisterProperty<DateTime?>(c => c.UserConfirmedDateUtc);
 
 
 
@@ -248,6 +265,8 @@ namespace SurgeonPortal.Library.ContinuousCertification
         {
             base.DataPortal_Create();
             LoadProperty(UserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(LastUpdatedByUserIdProperty, _identity.GetUserId<int>());
+            LoadProperty(CreatedByUserIdProperty, _identity.GetUserId<int>());
         }
         
         [RunLocal]
@@ -292,6 +311,8 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		{
             base.FetchData(dto);
             
+			this.Id = dto.Id;
+			this.UserId = dto.UserId;
 			this.SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry;
 			this.RegistryComments = dto.RegistryComments;
 			this.RegisteredWithACHQC = dto.RegisteredWithACHQC;
@@ -299,7 +320,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			this.RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP;
 			this.RegisteredWithABA = dto.RegisteredWithABA;
 			this.RegisteredWithASBS = dto.RegisteredWithASBS;
-			this.RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives;
+			this.RegisteredWithMSQC = dto.RegisteredWithMSQC;
 			this.RegisteredWithABMS = dto.RegisteredWithABMS;
 			this.RegisteredWithNCDB = dto.RegisteredWithNCDB;
 			this.RegisteredWithRQRS = dto.RegisteredWithRQRS;
@@ -311,9 +332,9 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			this.RegisteredWithNCDR = dto.RegisteredWithNCDR;
 			this.RegisteredWithSVS = dto.RegisteredWithSVS;
 			this.RegisteredWithELSO = dto.RegisteredWithELSO;
+			this.RegisteredWithSSR = dto.RegisteredWithSSR;
 			this.UserConfirmed = dto.UserConfirmed;
 			this.UserConfirmedDateUtc = dto.UserConfirmedDateUtc;
-			this.UserId = dto.UserId;
 		}
 
 		internal OutcomeRegistryDto ToDto()
@@ -325,6 +346,8 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		{
             base.ToDto(dto);
             
+			dto.Id = this.Id;
+			dto.UserId = this.UserId;
 			dto.SurgeonSpecificRegistry = this.SurgeonSpecificRegistry;
 			dto.RegistryComments = this.RegistryComments;
 			dto.RegisteredWithACHQC = this.RegisteredWithACHQC;
@@ -332,7 +355,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			dto.RegisteredWithMBSAQIP = this.RegisteredWithMBSAQIP;
 			dto.RegisteredWithABA = this.RegisteredWithABA;
 			dto.RegisteredWithASBS = this.RegisteredWithASBS;
-			dto.RegisteredWithStatewideCollaboratives = this.RegisteredWithStatewideCollaboratives;
+			dto.RegisteredWithMSQC = this.RegisteredWithMSQC;
 			dto.RegisteredWithABMS = this.RegisteredWithABMS;
 			dto.RegisteredWithNCDB = this.RegisteredWithNCDB;
 			dto.RegisteredWithRQRS = this.RegisteredWithRQRS;
@@ -344,9 +367,9 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			dto.RegisteredWithNCDR = this.RegisteredWithNCDR;
 			dto.RegisteredWithSVS = this.RegisteredWithSVS;
 			dto.RegisteredWithELSO = this.RegisteredWithELSO;
+			dto.RegisteredWithSSR = this.RegisteredWithSSR;
 			dto.UserConfirmed = this.UserConfirmed;
 			dto.UserConfirmedDateUtc = this.UserConfirmedDateUtc;
-			dto.UserId = this.UserId;
 
 			return dto;
 		}

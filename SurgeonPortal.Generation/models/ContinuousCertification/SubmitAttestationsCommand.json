@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "ContinuousCertification\\SubmitAttestationsCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "SigReceive",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "CertnoticeReceive",
+      "dataType": "datetime",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m p ContinuousCertification\\SubmitAttestationsCommand -sp [dbo].[update_cca_attestation_byuserid] -cn abssp ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-01T15:49:00.7336278Z"
+  },
+  "version": 1
+}

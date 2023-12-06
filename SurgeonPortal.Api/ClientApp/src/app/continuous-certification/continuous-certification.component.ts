@@ -26,9 +26,12 @@ import {
   ContinuousCertificationSelectors,
   GetContinuousCertificationStatuses,
   GetRefrenceFormGridData,
+  SubmitAttestation,
 } from '../state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IStatuses } from '../api/models/users/statuses.model';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { IAttestationSubmitModel } from '../api/models/continuouscertification/attestation-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -77,7 +80,7 @@ export class ContinuousCertificationComponent implements OnInit {
   outcomeRegistriesModal = false;
   attestationModal = false;
   referenceFormsModal = false;
-  payFeeModal = true;
+  payFeeModal = false;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
 
@@ -109,17 +112,18 @@ export class ContinuousCertificationComponent implements OnInit {
       this.referenceFormsModal = !this.referenceFormsModal;
     },
     payFeeModal: () => {
+      this._store.dispatch(new GetExamFees());
       this.payFeeModal = !this.payFeeModal;
     },
   };
 
-  constructor(private _store: Store) {
+  constructor(
+    private _store: Store,
+    private globalDialogService: GlobalDialogService
+  ) {
     this._store.dispatch(new GetStateList('500'));
-    this._store.dispatch(new GetExamFees());
     this._store.dispatch(new GetContinuousCertificationStatuses());
-
     this._store.dispatch(new GetRefrenceFormGridData());
-
     this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.featureFlags = featureFlags;
@@ -302,7 +306,6 @@ export class ContinuousCertificationComponent implements OnInit {
         stati.forEach((ccs) => {
           statuses[ccs.id] = ccs;
         });
-        console.log(statuses);
 
         continousCertificationData.forEach((cc: any) => {
           cc['status'] = statuses[cc.id]?.status || Status.InProgress;
@@ -324,7 +327,6 @@ export class ContinuousCertificationComponent implements OnInit {
   }
 
   areAllItemsCompleted(certificationData: any[]): boolean {
-    console.log(certificationData);
     for (const item of certificationData) {
       if (item.status !== undefined && item.status !== Status.Completed) {
         return false;
@@ -338,5 +340,20 @@ export class ContinuousCertificationComponent implements OnInit {
     if (actionFunction) {
       actionFunction();
     }
+  }
+
+  handleAttestationSave() {
+    this.globalDialogService.showLoading();
+    const model: IAttestationSubmitModel = {
+      SigReceive: new Date(),
+      CertnoticeReceive: new Date(),
+    };
+
+    this._store
+      .dispatch(new SubmitAttestation(model))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.handleCardAction('attestationModal');
+      });
   }
 }

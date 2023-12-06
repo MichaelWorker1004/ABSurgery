@@ -15,4 +15,5 @@ export interface IFormFields {
   errorText?: string;
   helpTextArray?: string[];
   overlapId?: number;
+  disabled?: boolean;
 }

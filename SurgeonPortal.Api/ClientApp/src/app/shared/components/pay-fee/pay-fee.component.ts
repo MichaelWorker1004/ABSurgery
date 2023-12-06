@@ -63,6 +63,10 @@ export class PayFeeComponent implements OnInit {
   @Output() cancelAction: EventEmitter<any> = new EventEmitter();
   @Input() payFeeData: any;
   @Input() paymentGridData: any;
+  @Input() showGrid = true;
+
+  @Input() amount$: Observable<number> | undefined;
+  @Input() invoiceNumber$: Observable<string> | undefined;
 
   states: IStateReadOnlyModel[] = [];
 
@@ -91,7 +95,7 @@ export class PayFeeComponent implements OnInit {
         this.paymentInformationForm.addControl(
           field.name,
           new FormControl(
-            { value: field.value, disabled: false },
+            { value: field.value, disabled: field.disabled ?? false },
             field.validators
           )
         );
@@ -115,6 +119,23 @@ export class PayFeeComponent implements OnInit {
         .get('phoneNumber')
         ?.setValue(user.officePhoneNumber);
     });
+
+    if (this.amount$) {
+      this.amount$?.pipe(untilDestroyed(this)).subscribe((amount) => {
+        this.paymentInformationForm.get('amount')?.setValue(amount);
+      });
+    }
+
+    if (this.invoiceNumber$) {
+      this.invoiceNumber$
+        ?.pipe(untilDestroyed(this))
+        .subscribe((invoiceNumber) => {
+          this.paymentInformationForm
+            .get('invoiceNumber')
+            ?.setValue(invoiceNumber);
+          this.payFeeDisabled = false;
+        });
+    }
   }
 
   setPicklists() {
@@ -129,12 +150,21 @@ export class PayFeeComponent implements OnInit {
   }
 
   handleGridAction(event: any) {
-    const invoiceData = event.data;
-    this.paymentInformationForm
-      .get('invoiceNumber')
-      ?.setValue(invoiceData.invoiceNumber);
-    this.paymentInformationForm.get('amount')?.setValue(invoiceData.balanceDue);
-    this.payFeeDisabled = false;
+    if (event.fieldKey === 'pay balance') {
+      const invoiceData = event.data;
+      this.paymentInformationForm
+        .get('invoiceNumber')
+        ?.setValue(invoiceData.invoiceNumber);
+      this.paymentInformationForm
+        .get('amount')
+        ?.setValue(invoiceData.balanceDue);
+      this.payFeeDisabled = false;
+    } else if (event.fieldKey === 'receipt') {
+      window.open(
+        `api/reports/invoice?invoiceNumber=${event.data.invoiceNumber}`,
+        '_blank'
+      );
+    }
   }
 
   handleCancelAction() {

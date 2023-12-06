@@ -38,6 +38,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using SurgeonPortal.Models.Features;
 using SurgeonPortal.Shared.PaymentProvider;
+using SurgeonPortal.Shared.Reports;
 using SurgeonPortal.Shared.Email;
 using SendGrid.Extensions.DependencyInjection;
 
@@ -67,6 +68,7 @@ namespace SurgeonPortal.Api
             services.Configure<AzureStorageConfiguration>(Configuration.GetSection(ConfigurationSections.AzureStorageConfiguration));
             services.Configure<FeatureFlagConfiguration>(Configuration.GetSection(ConfigurationSections.FeatureFlags));
             services.Configure<PaymentProviderConfiguration>(Configuration.GetSection(ConfigurationSections.PaymentProvider));
+            services.Configure<ReportConfiguration>(Configuration.GetSection(ConfigurationSections.Reports));
             services.Configure<EmailConfiguration>(Configuration.GetSection(ConfigurationSections.Email));
 
             services.AddCsla();

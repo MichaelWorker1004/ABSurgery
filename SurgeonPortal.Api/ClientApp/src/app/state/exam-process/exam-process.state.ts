@@ -15,6 +15,7 @@ import { IExamFeeReadOnlyModel } from 'src/app/api/models/billing/exam-fee-read-
 import { ExamFeeService } from 'src/app/api/services/billing/exam-fee.service';
 import { IExamFeeTransactionModel } from 'src/app/api/models/billing/exam-fee-transaction.mode';
 import { ExamFeeTransactionService } from 'src/app/api/services/billing/exam-fee-transaction.service';
+import { environment } from 'src/environments/environment';
 
 export interface IExamProcess {
   examDirectory: IExamOverviewReadOnlyModel[];
@@ -76,11 +77,11 @@ export class ExamProcessState {
     ctx: StateContext<IExamProcess>
   ): Observable<IExamFeeReadOnlyModel[]> {
     this.globalDialogService.showLoading();
-    const state = ctx.getState();
-    if (state && state.examFees?.length > 0) {
-      this.globalDialogService.closeOpenDialog();
-      return of(ctx.getState().examFees);
-    }
+    // const state = ctx.getState();
+    // if (state && state.examFees?.length > 0) {
+    //   this.globalDialogService.closeOpenDialog();
+    //   return of(ctx.getState().examFees);
+    // }
     return this.examFeeService.retrieveExamFeeReadOnly_GetByUserId().pipe(
       tap((examFees) => {
         ctx.patchState({
@@ -114,8 +115,8 @@ export class ExamProcessState {
 
           if (transactionToken) {
             window.open(
-              `https://demo.convergepay.com/hosted-payments?ssl_txn_auth_token=${transactionToken}`,
-              '_target'
+              `${environment.convergePayBaseUrl}/hosted-payments?ssl_txn_auth_token=${transactionToken}`,
+              '_self'
             );
           }
         }),

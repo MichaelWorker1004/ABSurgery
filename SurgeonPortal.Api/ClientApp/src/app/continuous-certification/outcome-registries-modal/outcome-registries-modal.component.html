@@ -3,6 +3,13 @@
   [formGroup]="outcomeRegistriesForm"
   (ngSubmit)="onSubmit()"
 >
+  <div id="exam-score-errors-container">
+    <abs-form-errors
+      *ngIf="errors"
+      [errors]="errors"
+      [clearErrors]="clearErrors"
+    ></abs-form-errors>
+  </div>
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
     dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
@@ -41,7 +48,7 @@
 
     <div class="col-12 md:col-6 flex align-items-start gap-2">
       <p-checkbox
-        value="yes"
+        [binary]="true"
         formControlName="userConfirmed"
         ngDefaultControl
       ></p-checkbox>
@@ -57,9 +64,7 @@
       <p-button
         [style]="{ width: '337px' }"
         type="submit"
-        [disabled]="
-          outcomeRegistriesForm.untouched && !outcomeRegistriesForm.valid
-        "
+        [disabled]="disableSubmit && !outcomeRegistriesForm.valid"
         >Save</p-button
       >
     </div>

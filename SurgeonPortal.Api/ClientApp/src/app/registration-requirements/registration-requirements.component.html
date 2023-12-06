@@ -39,7 +39,7 @@
     [disabled]="applyForAnExamActionCardData.disabled"
   ></abs-action-card>
 
-  <abs-modal
+  <!-- <abs-modal
     [open]="showMedicalLicense"
     (closeDialog)="handleCardAction('medicalLicenseModal')"
     modalName="medicalLicenseModal"
@@ -50,7 +50,7 @@
     <abs-medical-license-modal
       (closeDialog)="handleCardAction('medicalLicenseModal')"
     ></abs-medical-license-modal>
-  </abs-modal>
+  </abs-modal> -->
 
   <abs-modal
     [open]="showACGMEexprience"
@@ -66,6 +66,19 @@
   </abs-modal>
 
   <abs-modal
+    [open]="programDirectorAttestationModal"
+    (closeDialog)="handleCardAction('programDirectorAttestationModal')"
+    title="Program Director Attestation"
+    modalName="programDirectorAttestationModal"
+    status="in-progress"
+    [hideClose]="true"
+  >
+    <abs-program-director-attestations
+      (closeDialog)="handleCardAction('programDirectorAttestationModal')"
+    ></abs-program-director-attestations>
+  </abs-modal>
+
+  <!-- <abs-modal
     [open]="showSurgeonProfile"
     title="Surgeon Profile"
     status="in-progress"
@@ -75,9 +88,9 @@
     <abs-surgeon-profile-modal
       (closeDialog)="handleCardAction('surgeonProfileModal')"
     ></abs-surgeon-profile-modal>
-  </abs-modal>
+  </abs-modal> -->
 
-  <abs-modal
+  <!-- <abs-modal
     [open]="showTraining"
     title="Training"
     status="in-progress"
@@ -88,9 +101,9 @@
     <abs-training-modal
       (closeDialog)="handleCardAction('trainingModal')"
     ></abs-training-modal>
-  </abs-modal>
+  </abs-modal> -->
 
-  <abs-modal
+  <!-- <abs-modal
     [open]="showGraduateMedicalEducation"
     (closeDialog)="handleCardAction('graduateMedicalEducationModal')"
     title="Graduate Medical Education"
@@ -101,7 +114,7 @@
     <abs-graduate-medical-education-modal
       (closeDialog)="handleCardAction('graduateMedicalEducationModal')"
     ></abs-graduate-medical-education-modal>
-  </abs-modal>
+  </abs-modal> -->
 
   <abs-modal
     [open]="showSpecialAccommodations"
@@ -116,7 +129,7 @@
     ></abs-special-accommodations-modal>
   </abs-modal>
 
-  <abs-modal
+  <!-- <abs-modal
     [open]="showProfessionalActivitiesAndPrivileges"
     (closeDialog)="handleCardAction('professionalActivitiesAndPrivilegesModal')"
     title="Professional Activities and Privileges"
@@ -130,7 +143,7 @@
       "
     >
     </abs-professional-activities-and-privileges-modal>
-  </abs-modal>
+  </abs-modal> -->
 
   <abs-modal
     [open]="attestationModal"

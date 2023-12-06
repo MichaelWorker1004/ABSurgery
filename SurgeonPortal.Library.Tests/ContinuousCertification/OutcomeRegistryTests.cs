@@ -16,14 +16,16 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         {
             var dto = Create<OutcomeRegistryDto>();
         
-            dto.SurgeonSpecificRegistry = Create<bool>();
+            dto.Id = Create<int>();
+            dto.UserId = 1234;
+            dto.SurgeonSpecificRegistry = Create<string>();
             dto.RegistryComments = Create<string>();
             dto.RegisteredWithACHQC = Create<bool>();
             dto.RegisteredWithCESQIP = Create<bool>();
             dto.RegisteredWithMBSAQIP = Create<bool>();
             dto.RegisteredWithABA = Create<bool>();
             dto.RegisteredWithASBS = Create<bool>();
-            dto.RegisteredWithStatewideCollaboratives = Create<bool>();
+            dto.RegisteredWithMSQC = Create<bool>();
             dto.RegisteredWithABMS = Create<bool>();
             dto.RegisteredWithNCDB = Create<bool>();
             dto.RegisteredWithRQRS = Create<bool>();
@@ -35,9 +37,13 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             dto.RegisteredWithNCDR = Create<bool>();
             dto.RegisteredWithSVS = Create<bool>();
             dto.RegisteredWithELSO = Create<bool>();
-            dto.UserConfirmed = Create<bool>();
-            dto.UserConfirmedDateUtc = Create<System.DateTime>();
-            dto.UserId = 1234;
+            dto.RegisteredWithSSR = Create<bool>();
+            dto.UserConfirmed = Create<bool?>();
+            dto.UserConfirmedDateUtc = Create<System.DateTime?>();
+            dto.CreatedByUserId = 1234;
+            dto.CreatedAtUtc = Create<System.DateTime>();
+            dto.LastUpdatedAtUtc = Create<System.DateTime>();
+            dto.LastUpdatedByUserId = 1234;
         
             return dto;
         }
@@ -49,10 +55,10 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
-            var expectedUserId = 1234;
+            var expectedUserID = 1234;
             
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserID))
                 .ReturnsAsync(Create<OutcomeRegistryDto>());
             
         
@@ -73,10 +79,10 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         public async Task GetByUserId_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
-            var expectedUserId = 1234;
+            var expectedUserID = 1234;
             
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserID))
                 .ReturnsAsync(dto);
             
         
@@ -118,6 +124,8 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             var factory = new OutcomeRegistryFactory();
             var sut = factory.Create();
             
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
             sut.SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry;
             sut.RegistryComments = dto.RegistryComments;
             sut.RegisteredWithACHQC = dto.RegisteredWithACHQC;
@@ -125,7 +133,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             sut.RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP;
             sut.RegisteredWithABA = dto.RegisteredWithABA;
             sut.RegisteredWithASBS = dto.RegisteredWithASBS;
-            sut.RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives;
+            sut.RegisteredWithMSQC = dto.RegisteredWithMSQC;
             sut.RegisteredWithABMS = dto.RegisteredWithABMS;
             sut.RegisteredWithNCDB = dto.RegisteredWithNCDB;
             sut.RegisteredWithRQRS = dto.RegisteredWithRQRS;
@@ -137,9 +145,13 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             sut.RegisteredWithNCDR = dto.RegisteredWithNCDR;
             sut.RegisteredWithSVS = dto.RegisteredWithSVS;
             sut.RegisteredWithELSO = dto.RegisteredWithELSO;
+            sut.RegisteredWithSSR = dto.RegisteredWithSSR;
             sut.UserConfirmed = dto.UserConfirmed;
             sut.UserConfirmedDateUtc = dto.UserConfirmedDateUtc;
-            sut.UserId = dto.UserId;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
         
@@ -147,9 +159,10 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.Id)
                 .Excluding(m => m.CreatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
+                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         
@@ -174,6 +187,8 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             var factory = new OutcomeRegistryFactory();
             var sut = factory.Create();
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
             sut.SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry;
             sut.RegistryComments = dto.RegistryComments;
             sut.RegisteredWithACHQC = dto.RegisteredWithACHQC;
@@ -181,7 +196,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             sut.RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP;
             sut.RegisteredWithABA = dto.RegisteredWithABA;
             sut.RegisteredWithASBS = dto.RegisteredWithASBS;
-            sut.RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives;
+            sut.RegisteredWithMSQC = dto.RegisteredWithMSQC;
             sut.RegisteredWithABMS = dto.RegisteredWithABMS;
             sut.RegisteredWithNCDB = dto.RegisteredWithNCDB;
             sut.RegisteredWithRQRS = dto.RegisteredWithRQRS;
@@ -193,9 +208,13 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             sut.RegisteredWithNCDR = dto.RegisteredWithNCDR;
             sut.RegisteredWithSVS = dto.RegisteredWithSVS;
             sut.RegisteredWithELSO = dto.RegisteredWithELSO;
+            sut.RegisteredWithSSR = dto.RegisteredWithSSR;
             sut.UserConfirmed = dto.UserConfirmed;
             sut.UserConfirmedDateUtc = dto.UserConfirmedDateUtc;
-            sut.UserId = dto.UserId;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
             
@@ -215,13 +234,13 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task Update_CallsDalCorrectly()
         {
-            var expectedUserId = 1234;
+            var expectedUserID = 1234;
             
             var dto = CreateValidDto();
             OutcomeRegistryDto passedDto = null;
         
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserID))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OutcomeRegistryDto>()))
@@ -238,6 +257,8 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             var factory = new OutcomeRegistryFactory();
             var sut = await factory.GetByUserIdAsync();
             
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
             sut.SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry;
             sut.RegistryComments = dto.RegistryComments;
             sut.RegisteredWithACHQC = dto.RegisteredWithACHQC;
@@ -245,7 +266,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             sut.RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP;
             sut.RegisteredWithABA = dto.RegisteredWithABA;
             sut.RegisteredWithASBS = dto.RegisteredWithASBS;
-            sut.RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives;
+            sut.RegisteredWithMSQC = dto.RegisteredWithMSQC;
             sut.RegisteredWithABMS = dto.RegisteredWithABMS;
             sut.RegisteredWithNCDB = dto.RegisteredWithNCDB;
             sut.RegisteredWithRQRS = dto.RegisteredWithRQRS;
@@ -257,14 +278,20 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             sut.RegisteredWithNCDR = dto.RegisteredWithNCDR;
             sut.RegisteredWithSVS = dto.RegisteredWithSVS;
             sut.RegisteredWithELSO = dto.RegisteredWithELSO;
+            sut.RegisteredWithSSR = dto.RegisteredWithSSR;
             sut.UserConfirmed = dto.UserConfirmed;
             sut.UserConfirmedDateUtc = dto.UserConfirmedDateUtc;
-            sut.UserId = dto.UserId;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             // We now change all properties on the SUT to make it Dirty
             // or the SaveAsync() will not be called. :)
             dto = CreateValidDto();
         
+            sut.Id = dto.Id;
+            sut.UserId = dto.UserId;
             sut.SurgeonSpecificRegistry = dto.SurgeonSpecificRegistry;
             sut.RegistryComments = dto.RegistryComments;
             sut.RegisteredWithACHQC = dto.RegisteredWithACHQC;
@@ -272,7 +299,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             sut.RegisteredWithMBSAQIP = dto.RegisteredWithMBSAQIP;
             sut.RegisteredWithABA = dto.RegisteredWithABA;
             sut.RegisteredWithASBS = dto.RegisteredWithASBS;
-            sut.RegisteredWithStatewideCollaboratives = dto.RegisteredWithStatewideCollaboratives;
+            sut.RegisteredWithMSQC = dto.RegisteredWithMSQC;
             sut.RegisteredWithABMS = dto.RegisteredWithABMS;
             sut.RegisteredWithNCDB = dto.RegisteredWithNCDB;
             sut.RegisteredWithRQRS = dto.RegisteredWithRQRS;
@@ -284,9 +311,13 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             sut.RegisteredWithNCDR = dto.RegisteredWithNCDR;
             sut.RegisteredWithSVS = dto.RegisteredWithSVS;
             sut.RegisteredWithELSO = dto.RegisteredWithELSO;
+            sut.RegisteredWithSSR = dto.RegisteredWithSSR;
             sut.UserConfirmed = dto.UserConfirmed;
             sut.UserConfirmedDateUtc = dto.UserConfirmedDateUtc;
-            sut.UserId = dto.UserId;
+            sut.CreatedByUserId = dto.CreatedByUserId;
+            sut.CreatedAtUtc = dto.CreatedAtUtc;
+            sut.LastUpdatedAtUtc = dto.LastUpdatedAtUtc;
+            sut.LastUpdatedByUserId = dto.LastUpdatedByUserId;
         
             await sut.SaveAsync();
         
@@ -294,8 +325,9 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
+                .Excluding(m => m.Id)
                 .Excluding(m => m.CreatedByUserId)
+                .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
@@ -306,12 +338,12 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task Update_YieldsCorrectResult()
         {
-            var expectedUserId = 1234;
+            var expectedUserID = 1234;
             
             var dto = CreateValidDto();
         
             var mockDal = new Mock<IOutcomeRegistryDal>();
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserID))
                 .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<OutcomeRegistryDto>()))
@@ -326,7 +358,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         
             var factory = new OutcomeRegistryFactory();
             var sut = await factory.GetByUserIdAsync();
-            sut.SurgeonSpecificRegistry = Create<bool>();
+            sut.SurgeonSpecificRegistry = Create<string>();
         
             await sut.SaveAsync();
             
