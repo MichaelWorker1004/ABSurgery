@@ -1,7 +1,8 @@
 ﻿using Csla;
-using SurgeonPortal.DataAccess.Contracts.Email;
 using SurgeonPortal.Library.Contracts.Email;
+using SurgeonPortal.Library.Contracts.EmailProvider;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
@@ -13,13 +14,13 @@ namespace SurgeonPortal.Library.Email
 	[Serializable]
 	public class SendEmailCommand : YtgCommandBase<SendEmailCommand, int>, ISendEmailCommand
 	{
-		private readonly ISendEmailCommandDal _sendEmailCommandDal;
+		private readonly IEmailProvider _emailProvider;
 
 		public SendEmailCommand(IIdentityProvider identity,
-			ISendEmailCommandDal sendEmailCommandDal) 
+			IEmailProvider emailProvider) 
 			: base(identity)
 		{
-			_sendEmailCommandDal = sendEmailCommandDal;
+			_emailProvider = emailProvider;
 		}
 
 		public static bool CanExecuteCommand()
@@ -37,7 +38,50 @@ namespace SurgeonPortal.Library.Email
 		[Execute]
 		protected async Task Execute()
 		{
-			await _sendEmailCommandDal.SendEmailAsync(Email.To, Email.From, Email.Subject, Email.TemplateId);
+			if(!string.IsNullOrEmpty(Email.TemplateId))
+			{
+				var emailResource = new TemplateEmailResource()
+				{
+					From = Email.From,
+					To = Email.To,
+					Subject = Email.Subject,
+					Template = Email.TemplateId
+				};
+
+				AddAttachment(emailResource);
+
+				await _emailProvider.SendTemplateEmailAsync(emailResource);
+			}
+			else
+			{
+				var emailResource = new TextEmailResource()
+				{
+					From = Email.From,
+					To = Email.To,
+					Subject = Email.Subject,
+					Text = Email.PlainTextContent
+				};
+
+				AddAttachment(emailResource);
+
+				await _emailProvider.SendEmailAsync(emailResource);
+			}
+		}
+
+		private void AddAttachment(EmailResourceBase emailResource)
+		{
+			if (Email.Attachment != null)
+			{
+				emailResource.Attachments = new List<AttachmentResource>
+				{
+					new AttachmentResource
+					{
+						Filename = Email.Attachment.Filename,
+						Content = Email.Attachment.Content,
+						ContentType = Email.Attachment.ContentType
+					}
+				};
+			}
 		}
 	}
 }

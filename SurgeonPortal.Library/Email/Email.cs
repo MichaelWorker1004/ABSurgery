@@ -1,8 +1,11 @@
 ﻿using Csla;
+using Csla.Rules;
 using Microsoft.Extensions.Options;
 using SurgeonPortal.Library.Contracts.Email;
+using SurgeonPortal.Library.Users;
 using SurgeonPortal.Shared.Email;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
@@ -27,13 +30,17 @@ namespace SurgeonPortal.Library.Email
 			_emailConfiguration = emailConfiguration.Value;
 		}
 
+		[Required]
+		[EmailAddress]
 		public string To
 		{
 			get { return GetProperty(ToProperty); }
 			set { SetProperty(ToProperty, value); }
 		}
 		public static readonly PropertyInfo<string> ToProperty = RegisterProperty<string>(c => c.To);
-		
+
+		[Required]
+		[EmailAddress]
 		public string From
 		{
 			get { return GetProperty(FromProperty); }
@@ -41,6 +48,7 @@ namespace SurgeonPortal.Library.Email
 		}
 		public static readonly PropertyInfo<string> FromProperty = RegisterProperty<string>(c => c.From);
 
+		[Required]
 		public string Subject
 		{
 			get { return GetProperty(SubjectProperty); }
@@ -62,6 +70,20 @@ namespace SurgeonPortal.Library.Email
 		}
 		public static readonly PropertyInfo<string> PlainTextContentProperty = RegisterProperty<string>(c => c.PlainTextContent);
 
+		public IAttachment Attachment
+		{
+			get { return GetProperty(AttachmentProperty); }
+			set { SetProperty(AttachmentProperty, value); }
+		}
+		public static readonly PropertyInfo<IAttachment> AttachmentProperty = RegisterProperty<IAttachment>(c => c.Attachment);
+
+		protected override void AddBusinessRules()
+		{
+			base.AddBusinessRules();
+
+			BusinessRules.AddRule(new EitherOrRequiredRule(TemplateIdProperty, PlainTextContentProperty, 1));
+		}
+
 		[Create]
 		[RunLocal]
 		private void Create()
@@ -72,6 +94,12 @@ namespace SurgeonPortal.Library.Email
 
 		public async Task SendAsync()
 		{
+			BusinessRules.CheckRules();
+			if(!IsValid)
+			{
+				throw new Csla.Rules.ValidationException("Email is not valid to send.");
+			}
+
 			await _sendEmailCommandFactory.SendEmailCommandAsync(this);
 		}
 	}

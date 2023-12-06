@@ -41,6 +41,8 @@ using SurgeonPortal.Shared.PaymentProvider;
 using SurgeonPortal.Shared.Reports;
 using SurgeonPortal.Shared.Email;
 using SendGrid.Extensions.DependencyInjection;
+using SurgeonPortal.Library.Contracts.EmailProvider;
+using SurgeonPortal.Library.EmailProvider.SendGrid;
 
 namespace SurgeonPortal.Api
 {
@@ -121,6 +123,7 @@ namespace SurgeonPortal.Api
             services.AddTransient<IIdentityProvider, AspNetCoreIdentityProvider>();
             services.AddTransient<IAbsoluteUriProvider, AbsoluteUriProvider>();
             services.AddTransient<IStorageDal, BlobStorageDal>();
+            services.AddTransient<IEmailProvider, SendGridEmailProvider>();
 
             services.RegisterByConvention<LibraryConventionProvider, LibraryConventionResolver>();
             services.RegisterByConvention<DataAccessConventionProvider, DataAccessConventionResolver>();

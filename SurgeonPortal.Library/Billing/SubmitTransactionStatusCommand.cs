@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using SurgeonPortal.DataAccess.Contracts.Billing;
 using SurgeonPortal.Library.Contracts.Billing;
 using SurgeonPortal.Library.Contracts.Email;
+using SurgeonPortal.Library.Contracts.Reports;
 using SurgeonPortal.Shared.PaymentProvider;
 using System;
 using System.Text.Json;
@@ -20,16 +21,22 @@ namespace SurgeonPortal.Library.Billing
 		private readonly PaymentProviderConfiguration _paymentProviderConfiguration;
 		private readonly ISubmitTransactionStatusCommandDal _submitTransactionStatusCommandDal;
 		private readonly IEmailFactory _emailFactory;
+		private readonly IAttachmentFactory _attachmentFactory;
+		private readonly IReportReadOnlyFactory _reportReadOnlyFactory;
 
 		public SubmitTransactionStatusCommand(
 			IIdentityProvider identity,
 			ISubmitTransactionStatusCommandDal submitTransactionStatusCommandDal,
 			IEmailFactory emailFactory,
-			IOptions<PaymentProviderConfiguration> paymentProviderConfiguration) : base(identity)
+			IAttachmentFactory attachmentFactory,
+			IOptions<PaymentProviderConfiguration> paymentProviderConfiguration,
+			IReportReadOnlyFactory reportReadOnlyFactory) : base(identity)
 		{
 			_submitTransactionStatusCommandDal = submitTransactionStatusCommandDal;
 			_emailFactory = emailFactory;
 			_paymentProviderConfiguration = paymentProviderConfiguration.Value;
+			_reportReadOnlyFactory = reportReadOnlyFactory;
+			_attachmentFactory = attachmentFactory;
 		}
 
 		public static bool CanExecuteCommand()
@@ -285,9 +292,17 @@ namespace SurgeonPortal.Library.Billing
 					text = $"Thank you for completing your payment to the American Board of Surgery. Attached, please find a receipt for your payment toward ABS Invoice #{InvoiceNumber}";
 				}
 
+				var invoice = await _reportReadOnlyFactory.GetByInvoiceNumber(InvoiceNumber);
+
+				var attachment = _attachmentFactory.Create();
+				attachment.Filename = $"Invoice_{InvoiceNumber}.pdf";
+				attachment.Content = invoice.Data;
+				attachment.ContentType = invoice.ContentType;
+
 				email.To = Email;
 				email.Subject = subject;
 				email.PlainTextContent = text;
+				email.Attachment = attachment;
 
 				await email.SendAsync();
 			}
