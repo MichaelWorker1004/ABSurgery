@@ -8,6 +8,7 @@ namespace SurgeonPortal.Library.Contracts.Email
 		string From { get; set; }
 		string Subject { get; set; }
 		string TemplateId { get; set; }
+		string PlainTextContent { get; set; }
 		Task SendAsync();
 	}
 }

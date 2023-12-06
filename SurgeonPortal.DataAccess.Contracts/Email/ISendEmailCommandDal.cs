@@ -8,6 +8,7 @@ namespace SurgeonPortal.DataAccess.Contracts.Email
 			string toEmail,
 			string fromEmail,
 			string subject,
-			string templateId);
+			string templateId,
+			string plainTextContent);
 	}
 }

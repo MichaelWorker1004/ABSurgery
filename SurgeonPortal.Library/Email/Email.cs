@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using SurgeonPortal.Library.Contracts.Email;
 using SurgeonPortal.Shared.Email;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
@@ -28,7 +27,6 @@ namespace SurgeonPortal.Library.Email
 			_emailConfiguration = emailConfiguration.Value;
 		}
 
-		[Required]
 		public string To
 		{
 			get { return GetProperty(ToProperty); }
@@ -36,7 +34,6 @@ namespace SurgeonPortal.Library.Email
 		}
 		public static readonly PropertyInfo<string> ToProperty = RegisterProperty<string>(c => c.To);
 		
-		[Required]
 		public string From
 		{
 			get { return GetProperty(FromProperty); }
@@ -44,7 +41,6 @@ namespace SurgeonPortal.Library.Email
 		}
 		public static readonly PropertyInfo<string> FromProperty = RegisterProperty<string>(c => c.From);
 
-		[Required]
 		public string Subject
 		{
 			get { return GetProperty(SubjectProperty); }
@@ -52,7 +48,6 @@ namespace SurgeonPortal.Library.Email
 		}
 		public static readonly PropertyInfo<string> SubjectProperty = RegisterProperty<string>(c => c.Subject);
 
-		[Required]
 		public string TemplateId
 		{
 			get { return GetProperty(TemplateIdProperty); }
@@ -60,7 +55,15 @@ namespace SurgeonPortal.Library.Email
 		}
 		public static readonly PropertyInfo<string> TemplateIdProperty = RegisterProperty<string>(c => c.TemplateId);
 
+		public string PlainTextContent
+		{
+			get { return GetProperty(PlainTextContentProperty); }
+			set { SetProperty(PlainTextContentProperty, value); }
+		}
+		public static readonly PropertyInfo<string> PlainTextContentProperty = RegisterProperty<string>(c => c.PlainTextContent);
+
 		[Create]
+		[RunLocal]
 		private void Create()
 		{
 			base.DataPortal_Create();

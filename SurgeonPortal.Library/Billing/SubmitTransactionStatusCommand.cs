@@ -272,32 +272,30 @@ namespace SurgeonPortal.Library.Billing
 				await _submitTransactionStatusCommandDal.SubmitTransactionTokenAsync(TransactionId, InvoiceNumber, LastName, FirstName, Amount, TransactionTime, allFields);
 
 				string subject;
-				string templateId;
+				string text;
 
 				if(TransactionType.Equals("return", StringComparison.InvariantCultureIgnoreCase))
 				{
 					subject = $"Receipt for Credit-Card Refund of ABS Invoice #{InvoiceNumber}";
-					templateId = "return"; // TBD
+					text = $"The American Board of Surgery has issued a refund of your payment toward Invoice #{InvoiceNumber}.\r\n\r\nRefunds take 7 to 10 business days to be credited to your credit card account. If you have a question or concern about your refund, please contact your credit card company directly.";
 				}
 				else
 				{
 					subject = $"Receipt for Credit-Card Payment of ABS Invoice #{InvoiceNumber}";
-					templateId = "payment"; // TBD
+					text = $"Thank you for completing your payment to the American Board of Surgery. Attached, please find a receipt for your payment toward ABS Invoice #{InvoiceNumber}";
 				}
 
 				email.To = Email;
 				email.Subject = subject;
-				email.TemplateId = templateId;
+				email.PlainTextContent = text;
 
 				await email.SendAsync();
 			}
 			else
 			{
-				// TODO - create data to include in email
-
 				email.To = _paymentProviderConfiguration.ErrorEmailRecipient;
 				email.Subject = "Transaction Failed";
-				email.TemplateId = "error"; //TBD
+				email.PlainTextContent = $"A transaction has failed.\r\n\r\n{JsonSerializer.Serialize(this)}"
 
 				await email.SendAsync();
 			}

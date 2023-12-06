@@ -13,9 +13,18 @@ namespace SurgeonPortal.DataAccess.Email
 			_sendGridClient = sendGridClient;
 		}
 
-		public async Task SendEmailAsync(string toEmail, string fromEmail, string subject, string templateId)
+		public async Task SendEmailAsync(string toEmail, string fromEmail, string subject, string templateId, string plainTextContent)
 		{
-			var msg = MailHelper.CreateSingleTemplateEmail(new EmailAddress(fromEmail), new EmailAddress(toEmail), subject, templateId);
+			SendGridMessage msg;
+
+			if (!string.IsNullOrEmpty(templateId))
+			{
+				msg = MailHelper.CreateSingleTemplateEmail(new EmailAddress(fromEmail), new EmailAddress(toEmail), subject, templateId);
+			}
+			else
+			{
+				msg = MailHelper.CreateSingleEmail(new EmailAddress(fromEmail), new EmailAddress(toEmail), subject, plainTextContent, null);
+			}
 
 			await _sendGridClient.SendEmailAsync(msg);
 		}
