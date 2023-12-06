@@ -1,0 +1,232 @@
+{
+  "name": "Accommodation",
+  "implementationName": "Examinations\\Accommodation.insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.insert_user_accommodations",
+    "ControllerName": "Examinations\\AccommodationController",
+    "ControllerRoute": "api/exam/accommodations",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Examinations\\Accommodation.GetByExamId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\Accommodation",
+    "ModelGroup": "Accommodation",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.insert_user_accommodations",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[insert_user_accommodations]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "AccommodationID",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "AccommodationID"
+          },
+          {
+            "name": "DocumentId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "DocumentId"
+          },
+          {
+            "name": "ExamID",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamID"
+          },
+          {
+            "name": "CreatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CreatedByUserId"
+          },
+          {
+            "name": "LastUpdatedByUserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "LastUpdatedByUserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\Accommodation",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "AccommodationID",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AccommodationID"
+              },
+              {
+                "name": "DocumentId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentId"
+              },
+              {
+                "name": "ExamID",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamID"
+              },
+              {
+                "name": "CreatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedByUserId"
+              },
+              {
+                "name": "CreatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CreatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedAtUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedAtUtc"
+              },
+              {
+                "name": "LastUpdatedByUserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastUpdatedByUserId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "AccommodationID",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "DocumentId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "ExamID",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "CreatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "LastUpdatedByUserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\Accommodation.insert Accommodation -t=ytg-framework/editable-create -p:Model=Examinations\\Accommodation -p:Adapter=sp:ABSSP-[dbo].[insert_user_accommodations] -p:FetchImplementation=Examinations\\Accommodation.GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Accommodation -p:Route= -p:ControllerName=Examinations\\AccommodationController -p:ControllerRoute=api/exam/accommodations -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim ",
+    "inferredCommand": "ytgim generate i  Examinations\\Accommodation.insert Accommodation -t=ytg-framework/editable-create -p:Model=Examinations\\Accommodation -p:Adapter=sp:ABSSP-[dbo].[insert_user_accommodations] -p:FetchImplementation=Examinations\\Accommodation.GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Accommodation -p:Route= -p:ControllerName=Examinations\\AccommodationController -p:ControllerRoute=api/exam/accommodations -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-06T19:19:09.8421051Z"
+  },
+  "version": 1
+}

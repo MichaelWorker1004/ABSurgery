@@ -4055,5 +4055,44 @@
   },
   "\\SurgeonPortal.DataAccess.Tests\\Picklists\\AccommodationReadOnlyDalTests.cs": {
     "lastGeneratedHash": "FCDE25F19567DA5931AD5D6FFD33ED7F"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\accommodation.model.ts": {
+    "lastGeneratedHash": "75ADB6143C7108FF12FF7C35217B2879"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\AccommodationDto.cs": {
+    "lastGeneratedHash": "54076AB20413DFBB09DCF3349A4BD9C9"
+  },
+  "\\SurgeonPortal.Models\\Examinations\\AccommodationModel.cs": {
+    "lastGeneratedHash": "503CB1C7185553F9202CDD184E764206"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\accommodation.service.ts": {
+    "lastGeneratedHash": "FC5A4C531EBC54C87BE44E5360EB2366"
+  },
+  "\\SurgeonPortal.Api\\Controllers\\Examinations\\AccommodationController.cs": {
+    "lastGeneratedHash": "BFA032C7AE509D0F409573D911B1E612"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\Accommodation.cs": {
+    "lastGeneratedHash": "5FBCCD5F8BB98DFA804D108F668E8171"
+  },
+  "\\SurgeonPortal.DataAccess\\Examinations\\AccommodationDal.cs": {
+    "lastGeneratedHash": "131390FB27A23C9A3BCD68F67AD2EF8F"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IAccommodation.cs": {
+    "lastGeneratedHash": "D761F919A1E1FC8CDDA0B590DAEDAA94"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IAccommodationDal.cs": {
+    "lastGeneratedHash": "5C23EC4CC9326907DB77C48D9B563CE9"
+  },
+  "\\SurgeonPortal.Library.Tests\\Examinations\\AccommodationTests.cs": {
+    "lastGeneratedHash": "20348DB99523CF180598A1CC9C77B6D6"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\Examinations\\AccommodationDalTests.cs": {
+    "lastGeneratedHash": "93347FBF6B6B3186C5746C89AFFE0305"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\AccommodationFactory.cs": {
+    "lastGeneratedHash": "F598D7C99EC3185F7968E27C11ADD03A"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IAccommodationFactory.cs": {
+    "lastGeneratedHash": "A433F1749C8C7782D9DFA051BC2DC19F"
   }
 }
