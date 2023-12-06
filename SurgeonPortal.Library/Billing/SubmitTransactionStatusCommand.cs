@@ -295,7 +295,7 @@ namespace SurgeonPortal.Library.Billing
 			{
 				email.To = _paymentProviderConfiguration.ErrorEmailRecipient;
 				email.Subject = "Transaction Failed";
-				email.PlainTextContent = $"A transaction has failed.\r\n\r\n{JsonSerializer.Serialize(this)}"
+				email.PlainTextContent = $"A transaction has failed.\r\n\r\n{JsonSerializer.Serialize(this)}";
 
 				await email.SendAsync();
 			}
