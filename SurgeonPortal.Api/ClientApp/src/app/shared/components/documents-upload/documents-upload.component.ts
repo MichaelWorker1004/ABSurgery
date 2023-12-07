@@ -63,7 +63,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
    * Data to display in the dropdown
    * @type {any[] | undefined}
    */
-  @Input() dropdownOptions: any[] | undefined;
+  @Input() dropdownOptions: any[] | null | undefined = [];
 
   /**
    * Placeholder to display in the dropdown

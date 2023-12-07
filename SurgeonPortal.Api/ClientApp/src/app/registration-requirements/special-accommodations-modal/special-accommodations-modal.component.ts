@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -5,17 +6,23 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
-import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { FormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
+import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
-import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
-import { Select } from '@ngxs/store';
+import { DropdownModule } from 'primeng/dropdown';
 import { Observable } from 'rxjs';
-import { UserProfileSelectors, IUserProfile } from 'src/app/state';
+import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
+import { GridComponent } from 'src/app/shared/components/grid/grid.component';
+import { UserProfileSelectors } from 'src/app/state';
+import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
+import {
+  GetAccommodationTypes,
+  PicklistsSelectors,
+} from 'src/app/state/picklists';
+import { IAccommodationReadOnlyModel } from 'src/app/api/models/picklists/accommodation-read-only.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-special-accommodations-modal',
   standalone: true,
@@ -35,6 +42,9 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
   @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
+  @Select(PicklistsSelectors.slices.accommodationTypes) accommodationTypes$:
+    | Observable<IAccommodationReadOnlyModel[]>
+    | undefined;
 
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS;
   specialAccommodationsData!: any;
@@ -45,20 +55,9 @@ export class SpecialAccommodationsModalComponent implements OnInit {
 
   selectedDocumentType: string | null | undefined;
 
-  specialAccommodationsTypeOptions = [
-    {
-      itemDescription: 'Other medical condition',
-      itemValue: 'other_medical_condition',
-    },
-    {
-      itemDescription: 'Lactating mother',
-      itemValue: 'lactating_mother',
-    },
-    {
-      itemDescription: 'ADA (Learning disability)',
-      itemValue: 'ada_learning_disability',
-    },
-  ];
+  constructor(private _store: Store) {
+    this._store.dispatch(new GetAccommodationTypes());
+  }
 
   ngOnInit(): void {
     this.getSpecialAccommodationsData();

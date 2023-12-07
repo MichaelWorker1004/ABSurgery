@@ -6,11 +6,13 @@
 </div>
 
 <abs-documents-upload
-  [dropdownOptions]="specialAccommodationsTypeOptions"
+  [dropdownOptions]="accommodationTypes$ | async"
   [dropdownPlaceholder]="'Select an Accomodation Type'"
   [showFilter]="false"
   [gridCols]="specialAccommodationsCols"
   [documentsData]="specialAccommodationsData"
+  [dropdownLabel]="'description'"
+  [dropdownValue]="'id'"
   [userId]="userId$ | async"
 ></abs-documents-upload>
 

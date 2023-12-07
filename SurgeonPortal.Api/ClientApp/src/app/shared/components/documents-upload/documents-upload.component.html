@@ -33,9 +33,7 @@
         [disabled]="
           !uploadForm.valid ||
           !fileUploadedName ||
-          (!uploadForm.value.certificateTypeId &&
-            dropdownOptions !== undefined &&
-            dropdownOptions.length > 0)
+          (!uploadForm.value.certificateTypeId && dropdownOptions !== undefined)
         "
         class="btn-add"
       >
