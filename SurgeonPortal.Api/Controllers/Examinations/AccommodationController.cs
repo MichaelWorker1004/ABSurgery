@@ -73,7 +73,7 @@ namespace SurgeonPortal.Api.Controllers.Examinations
         public async Task<IActionResult> CreateAsync(
             [FromServices] IAccommodationFactory accommodationFactory,
             [FromServices] IAbsoluteUriProvider absoluteUriProvider,
-            [FromBody] AccommodationModel model)
+            [FromForm] AccommodationModel model)
         {
             var item = accommodationFactory.Create();
             AssignCreateProperties(item, model);
@@ -94,7 +94,7 @@ namespace SurgeonPortal.Api.Controllers.Examinations
         [HttpPut("")]
         public async Task<IActionResult> EditAsync(
             [FromServices] IAccommodationFactory accommodationFactory,
-            [FromBody] AccommodationModel model,
+            [FromForm] AccommodationModel model,
             int examId)
         {
             var item = await accommodationFactory.GetByExamIdAsync(examId);
