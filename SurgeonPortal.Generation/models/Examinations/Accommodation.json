@@ -37,10 +37,32 @@
       "rules": {}
     },
     {
+      "name": "AccommodationName",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
       "name": "DocumentId",
       "dataType": "int?",
       "maxLength": 4,
       "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "DocumentName",
+      "dataType": "string",
+      "maxLength": 255,
+      "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": true,
@@ -104,9 +126,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g m s Examinations\\Accommodation -sp [dbo].[get_user_accommodations_byId] -cn abssp ",
+    "command": "ytgim g m s Examinations\\Accommodation -sp [dbo].[get_user_accommodations_byId] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-12-06T19:16:49.7119807Z"
+    "generatedDateUtc": "2023-12-07T20:13:25.9320622Z"
   },
   "version": 1
 }

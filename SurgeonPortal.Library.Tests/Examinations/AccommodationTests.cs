@@ -20,7 +20,9 @@ namespace SurgeonPortal.Library.Tests.Examinations
             dto.Id = Create<int>();
             dto.UserId = 1234;
             dto.AccommodationID = Create<int>();
+            dto.AccommodationName = Create<string>();
             dto.DocumentId = Create<int?>();
+            dto.DocumentName = Create<string>();
             dto.ExamID = Create<int?>();
             dto.CreatedByUserId = 1234;
             dto.CreatedAtUtc = Create<System.DateTime>();
@@ -168,7 +170,9 @@ namespace SurgeonPortal.Library.Tests.Examinations
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
             sut.AccommodationID = dto.AccommodationID;
+            sut.AccommodationName = dto.AccommodationName;
             sut.DocumentId = dto.DocumentId;
+            sut.DocumentName = dto.DocumentName;
             sut.ExamID = dto.ExamID;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
@@ -182,6 +186,8 @@ namespace SurgeonPortal.Library.Tests.Examinations
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
                 .Excluding(m => m.Id)
+                .Excluding(m => m.AccommodationName)
+                .Excluding(m => m.DocumentName)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
                 .Excluding(m => m.CreatedByUserId)
@@ -213,7 +219,9 @@ namespace SurgeonPortal.Library.Tests.Examinations
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
             sut.AccommodationID = dto.AccommodationID;
+            sut.AccommodationName = dto.AccommodationName;
             sut.DocumentId = dto.DocumentId;
+            sut.DocumentName = dto.DocumentName;
             sut.ExamID = dto.ExamID;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
@@ -268,7 +276,9 @@ namespace SurgeonPortal.Library.Tests.Examinations
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
             sut.AccommodationID = dto.AccommodationID;
+            sut.AccommodationName = dto.AccommodationName;
             sut.DocumentId = dto.DocumentId;
+            sut.DocumentName = dto.DocumentName;
             sut.ExamID = dto.ExamID;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
@@ -282,7 +292,9 @@ namespace SurgeonPortal.Library.Tests.Examinations
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
             sut.AccommodationID = dto.AccommodationID;
+            sut.AccommodationName = dto.AccommodationName;
             sut.DocumentId = dto.DocumentId;
+            sut.DocumentName = dto.DocumentName;
             sut.ExamID = dto.ExamID;
             sut.CreatedByUserId = dto.CreatedByUserId;
             sut.CreatedAtUtc = dto.CreatedAtUtc;
@@ -295,6 +307,8 @@ namespace SurgeonPortal.Library.Tests.Examinations
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.AccommodationName)
+                .Excluding(m => m.DocumentName)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)

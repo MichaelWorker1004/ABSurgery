@@ -59,6 +59,14 @@ namespace SurgeonPortal.Library.Examinations
 		}
 		public static readonly PropertyInfo<int> AccommodationIDProperty = RegisterProperty<int>(c => c.AccommodationID);
 
+        [DisplayName(nameof(AccommodationName))]
+		public string AccommodationName
+		{
+			get { return GetProperty(AccommodationNameProperty); }
+			set { SetProperty(AccommodationNameProperty, value); }
+		}
+		public static readonly PropertyInfo<string> AccommodationNameProperty = RegisterProperty<string>(c => c.AccommodationName);
+
         [DisplayName(nameof(DocumentId))]
 		public int? DocumentId
 		{
@@ -66,6 +74,14 @@ namespace SurgeonPortal.Library.Examinations
 			set { SetProperty(DocumentIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int?> DocumentIdProperty = RegisterProperty<int?>(c => c.DocumentId);
+
+        [DisplayName(nameof(DocumentName))]
+		public string DocumentName
+		{
+			get { return GetProperty(DocumentNameProperty); }
+			set { SetProperty(DocumentNameProperty, value); }
+		}
+		public static readonly PropertyInfo<string> DocumentNameProperty = RegisterProperty<string>(c => c.DocumentName);
 
         [DisplayName(nameof(ExamID))]
 		public int? ExamID
@@ -218,7 +234,9 @@ namespace SurgeonPortal.Library.Examinations
 			this.Id = dto.Id;
 			this.UserId = dto.UserId;
 			this.AccommodationID = dto.AccommodationID;
+			this.AccommodationName = dto.AccommodationName;
 			this.DocumentId = dto.DocumentId;
+			this.DocumentName = dto.DocumentName;
 			this.ExamID = dto.ExamID;
 		}
 
@@ -234,7 +252,9 @@ namespace SurgeonPortal.Library.Examinations
 			dto.Id = this.Id;
 			dto.UserId = this.UserId;
 			dto.AccommodationID = this.AccommodationID;
+			dto.AccommodationName = this.AccommodationName;
 			dto.DocumentId = this.DocumentId;
+			dto.DocumentName = this.DocumentName;
 			dto.ExamID = this.ExamID;
 
 			return dto;
