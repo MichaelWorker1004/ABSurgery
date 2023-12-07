@@ -13,7 +13,7 @@
         [optionLabel]="dropdownLabel"
         [optionValue]="dropdownValue"
         [showClear]="true"
-        formControlName="certificateTypeId"
+        formControlName="typeId"
       ></p-dropdown>
       <div class="input-file">
         <label>
@@ -33,7 +33,7 @@
         [disabled]="
           !uploadForm.valid ||
           !fileUploadedName ||
-          (!uploadForm.value.certificateTypeId && dropdownOptions !== undefined)
+          (!uploadForm.value.typeId && dropdownOptions !== undefined)
         "
         class="btn-add"
       >

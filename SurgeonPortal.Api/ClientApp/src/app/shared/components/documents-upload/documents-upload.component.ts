@@ -107,6 +107,8 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
    */
   @Output() documentsAction: EventEmitter<any> = new EventEmitter();
 
+  @Output() uploadAction: EventEmitter<any> = new EventEmitter();
+
   localDocumentsData: any[] = [];
 
   gridOptions: IGridOptions = {
@@ -118,7 +120,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   uploadedFile: File | undefined;
 
   uploadForm = new FormGroup({
-    certificateTypeId: new FormControl(''),
+    typeId: new FormControl(''),
     file: new FormControl(''),
   });
 
@@ -168,9 +170,8 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   }
 
   onDocumentUpload() {
-    const model: IUserCertificateModel = {
-      documentId: 1,
-      certificateTypeId: this.uploadForm.get('certificateTypeId')?.value,
+    const model = {
+      typeId: this.uploadForm.get('typeId')?.value,
       createdByUserId: this.userId,
       file: this.uploadedFile,
       issueDate: new Date().toISOString(),
@@ -178,16 +179,19 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
 
     const formData = new FormData();
 
-    Object.keys(model).forEach((key) => {
-      formData.set(key, model[key]);
-    });
+    console.log('model', model);
 
-    if (this.uploadedFile) {
-      this._store.dispatch(new UploadDocument({ model: formData }));
-    }
+    // Object.keys(model).forEach((key) => {
+    //   formData.set(key, model[key]);
+    // });
 
-    this.documentsAction.emit({
-      fieldKey: 'upload',
+    // if (this.uploadedFile) {
+    // this._store.dispatch(new UploadDocument({ model: formData }));
+    // }
+
+    this.uploadAction.emit({
+      data: model,
+      file: this.uploadedFile,
     });
 
     this.resetData();
@@ -200,7 +204,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
 
   resetData() {
     this.fileUploadedName = undefined;
-    this.uploadForm.get('certificateTypeId')?.setValue('');
+    this.uploadForm.get('typeId')?.setValue('');
     this.uploadedFile = undefined;
   }
 }

@@ -14,6 +14,7 @@
   [dropdownLabel]="'description'"
   [dropdownValue]="'id'"
   [userId]="userId$ | async"
+  (uploadAction)="onDocumentUpload($event)"
 ></abs-documents-upload>
 
 <div class="flex justify-content-end mt-5" slot="footer">

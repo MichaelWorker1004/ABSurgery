@@ -13,7 +13,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { Observable } from 'rxjs';
 import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
-import { UserProfileSelectors } from 'src/app/state';
+import {
+  CreateAccommodation,
+  ExamScoringSelectors,
+  GetActiveExamId,
+  UserProfileSelectors,
+} from 'src/app/state';
 import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
 import {
   GetAccommodationTypes,
@@ -21,6 +26,7 @@ import {
 } from 'src/app/state/picklists';
 import { IAccommodationReadOnlyModel } from 'src/app/api/models/picklists/accommodation-read-only.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
 
 @UntilDestroy()
 @Component({
@@ -42,9 +48,16 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
   @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
+
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
   @Select(PicklistsSelectors.slices.accommodationTypes) accommodationTypes$:
     | Observable<IAccommodationReadOnlyModel[]>
     | undefined;
+
+  examHeaderId!: number | undefined;
 
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS;
   specialAccommodationsData!: any;
@@ -54,13 +67,19 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   documentType!: string;
 
   selectedDocumentType: string | null | undefined;
+  $event: any;
 
   constructor(private _store: Store) {
     this._store.dispatch(new GetAccommodationTypes());
+    this._store.dispatch(new GetActiveExamId());
   }
 
   ngOnInit(): void {
     this.getSpecialAccommodationsData();
+    // this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
+    //   this.examHeaderId = id;
+    // });
+    this.examHeaderId = 496; // HARDCODDED, REMOVE FOR PROD
   }
 
   getSpecialAccommodationsData() {
@@ -82,14 +101,25 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     this.uploadedFile = $event.target.files;
   }
 
-  onDocumentUpload() {
-    if (this.uploadedFile) {
-      this.specialAccommodationsData.push({
-        fileName: this.fileUploadedName,
-        uploadDate: new Date(),
-        type: this.selectedDocumentType,
-      });
-      this.resetData();
+  onDocumentUpload($event: any) {
+    const data = $event.data;
+    const model = {
+      file: data.file,
+      accommodationID: data.typeId,
+      examID: this.examHeaderId,
+    };
+    console.log('model', model);
+
+    const formData = new FormData();
+
+    Object.keys(model).forEach((key) => {
+      formData.set(key, model[key as keyof typeof model]);
+    });
+
+    if (data.file) {
+      this._store.dispatch(
+        new CreateAccommodation(formData as unknown as IAccommodationModel)
+      );
     }
   }
 

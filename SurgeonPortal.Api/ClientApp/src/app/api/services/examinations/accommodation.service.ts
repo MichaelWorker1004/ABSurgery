@@ -35,7 +35,7 @@ export class AccommodationService {
             */
             
             
-            return this.apiService.delete<IAccommodationModel>(`api/exam/accommodations?api-version=${apiVersion}&id=${id}`);
+            return this.apiService.delete<IAccommodationModel>(`api/exam/accommodations?api-version=${apiVersion}&id=${examId}`);
         }
  
         public retrieveAccommodation_GetByExamId(examId: number,
