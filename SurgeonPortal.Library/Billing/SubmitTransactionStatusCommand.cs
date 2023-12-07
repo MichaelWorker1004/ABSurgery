@@ -1,6 +1,10 @@
 ﻿using Csla;
+using Microsoft.Extensions.Options;
 using SurgeonPortal.DataAccess.Contracts.Billing;
 using SurgeonPortal.Library.Contracts.Billing;
+using SurgeonPortal.Library.Contracts.Email;
+using SurgeonPortal.Library.Contracts.Reports;
+using SurgeonPortal.Shared.PaymentProvider;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,13 +18,25 @@ namespace SurgeonPortal.Library.Billing
 	[Serializable]
 	public class SubmitTransactionStatusCommand : YtgCommandBase<SubmitTransactionStatusCommand, int>, ISubmitTransactionStatusCommand
 	{
+		private readonly PaymentProviderConfiguration _paymentProviderConfiguration;
 		private readonly ISubmitTransactionStatusCommandDal _submitTransactionStatusCommandDal;
+		private readonly IEmailFactory _emailFactory;
+		private readonly IAttachmentFactory _attachmentFactory;
+		private readonly IReportReadOnlyFactory _reportReadOnlyFactory;
 
 		public SubmitTransactionStatusCommand(
 			IIdentityProvider identity,
-			ISubmitTransactionStatusCommandDal submitTransactionStatusCommandDal) : base(identity)
+			ISubmitTransactionStatusCommandDal submitTransactionStatusCommandDal,
+			IEmailFactory emailFactory,
+			IAttachmentFactory attachmentFactory,
+			IOptions<PaymentProviderConfiguration> paymentProviderConfiguration,
+			IReportReadOnlyFactory reportReadOnlyFactory) : base(identity)
 		{
 			_submitTransactionStatusCommandDal = submitTransactionStatusCommandDal;
+			_emailFactory = emailFactory;
+			_paymentProviderConfiguration = paymentProviderConfiguration.Value;
+			_reportReadOnlyFactory = reportReadOnlyFactory;
+			_attachmentFactory = attachmentFactory;
 		}
 
 		public static bool CanExecuteCommand()
@@ -255,10 +271,48 @@ namespace SurgeonPortal.Library.Billing
 		[Execute]
 		protected async Task ExecuteCommand()
 		{
-			if (ResultMessage == "APPROVAL")
+			var email = _emailFactory.Create();
+
+			if (ResultMessage.Equals("approval", StringComparison.InvariantCultureIgnoreCase))
 			{
 				var allFields = JsonSerializer.Serialize(this);
 				await _submitTransactionStatusCommandDal.SubmitTransactionTokenAsync(TransactionId, InvoiceNumber, LastName, FirstName, Amount, TransactionTime, allFields);
+
+				string subject;
+				string text;
+
+				if(TransactionType.Equals("return", StringComparison.InvariantCultureIgnoreCase))
+				{
+					subject = $"Receipt for Credit-Card Refund of ABS Invoice #{InvoiceNumber}";
+					text = $"The American Board of Surgery has issued a refund of your payment toward Invoice #{InvoiceNumber}.\r\n\r\nRefunds take 7 to 10 business days to be credited to your credit card account. If you have a question or concern about your refund, please contact your credit card company directly.";
+				}
+				else
+				{
+					subject = $"Receipt for Credit-Card Payment of ABS Invoice #{InvoiceNumber}";
+					text = $"Thank you for completing your payment to the American Board of Surgery. Attached, please find a receipt for your payment toward ABS Invoice #{InvoiceNumber}";
+				}
+
+				var invoice = await _reportReadOnlyFactory.GetByInvoiceNumber(InvoiceNumber);
+
+				var attachment = _attachmentFactory.Create();
+				attachment.Filename = $"Invoice_{InvoiceNumber}.pdf";
+				attachment.Content = invoice.Data;
+				attachment.ContentType = invoice.ContentType;
+
+				email.To = Email;
+				email.Subject = subject;
+				email.PlainTextContent = text;
+				email.Attachment = attachment;
+
+				await email.SendAsync();
+			}
+			else
+			{
+				email.To = _paymentProviderConfiguration.ErrorEmailRecipient;
+				email.Subject = "Transaction Failed";
+				email.PlainTextContent = $"A transaction has failed.\r\n\r\n{JsonSerializer.Serialize(this)}";
+
+				await email.SendAsync();
 			}
 		}
 	}

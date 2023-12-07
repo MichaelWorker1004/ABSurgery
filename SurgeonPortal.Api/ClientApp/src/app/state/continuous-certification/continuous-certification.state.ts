@@ -28,6 +28,8 @@ import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertific
 import { AttestationService } from 'src/app/api/services/continuouscertification/attestation.service';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { ct } from '@fullcalendar/core/internal-common';
+//remove this
+import { ApiService } from 'ytg-angular';
 
 const statusTypes = [
   Status.InProgress, //0
@@ -66,7 +68,9 @@ export class ContinuousCertificationState {
     private outcomeRegistriesService: OutcomeRegistriesService,
     private dashboardStatusService: DashboardStatusService,
     private attestationService: AttestationService,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    //remove this
+    private apiService: ApiService
   ) {}
 
   @Action(CreateOutcomeRegistries)
@@ -208,6 +212,8 @@ export class ContinuousCertificationState {
   getContinuousCertificationStatuses(
     ctx: StateContext<IContinuousCertication>
   ) {
+    //remove this
+    this.checkAPIAddress();
     return this.dashboardStatusService
       .retrieveDashboardStatusReadOnly_GetAllByUserId()
       .pipe(
@@ -283,5 +289,14 @@ export class ContinuousCertificationState {
     ctx.patchState({
       outcomeRegistriesErrors: null,
     });
+  }
+
+  // remove this
+  private checkAPIAddress(): void {
+    this.apiService
+      .get(`api/billing/transaction/getip`)
+      .subscribe((res: any) => {
+        console.log('api-address', res);
+      });
   }
 }
