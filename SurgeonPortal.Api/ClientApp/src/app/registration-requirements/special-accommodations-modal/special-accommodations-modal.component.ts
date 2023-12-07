@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -5,17 +6,29 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
-import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { FormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
+import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
-import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
-import { Select } from '@ngxs/store';
+import { DropdownModule } from 'primeng/dropdown';
 import { Observable } from 'rxjs';
-import { UserProfileSelectors, IUserProfile } from 'src/app/state';
+import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
+import { GridComponent } from 'src/app/shared/components/grid/grid.component';
+import {
+  CreateAccommodation,
+  ExamScoringSelectors,
+  GetActiveExamId,
+  UserProfileSelectors,
+} from 'src/app/state';
+import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
+import {
+  GetAccommodationTypes,
+  PicklistsSelectors,
+} from 'src/app/state/picklists';
+import { IAccommodationReadOnlyModel } from 'src/app/api/models/picklists/accommodation-read-only.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-special-accommodations-modal',
   standalone: true,
@@ -36,6 +49,16 @@ export class SpecialAccommodationsModalComponent implements OnInit {
 
   @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
 
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
+  @Select(PicklistsSelectors.slices.accommodationTypes) accommodationTypes$:
+    | Observable<IAccommodationReadOnlyModel[]>
+    | undefined;
+
+  examHeaderId!: number | undefined;
+
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS;
   specialAccommodationsData!: any;
 
@@ -44,24 +67,19 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   documentType!: string;
 
   selectedDocumentType: string | null | undefined;
+  $event: any;
 
-  specialAccommodationsTypeOptions = [
-    {
-      itemDescription: 'Other medical condition',
-      itemValue: 'other_medical_condition',
-    },
-    {
-      itemDescription: 'Lactating mother',
-      itemValue: 'lactating_mother',
-    },
-    {
-      itemDescription: 'ADA (Learning disability)',
-      itemValue: 'ada_learning_disability',
-    },
-  ];
+  constructor(private _store: Store) {
+    this._store.dispatch(new GetAccommodationTypes());
+    this._store.dispatch(new GetActiveExamId());
+  }
 
   ngOnInit(): void {
     this.getSpecialAccommodationsData();
+    // this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
+    //   this.examHeaderId = id;
+    // });
+    this.examHeaderId = 496; // HARDCODDED, REMOVE FOR PROD
   }
 
   getSpecialAccommodationsData() {
@@ -83,14 +101,25 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     this.uploadedFile = $event.target.files;
   }
 
-  onDocumentUpload() {
-    if (this.uploadedFile) {
-      this.specialAccommodationsData.push({
-        fileName: this.fileUploadedName,
-        uploadDate: new Date(),
-        type: this.selectedDocumentType,
-      });
-      this.resetData();
+  onDocumentUpload($event: any) {
+    const data = $event.data;
+    const model = {
+      file: data.file,
+      accommodationID: data.typeId,
+      examID: this.examHeaderId,
+    };
+    console.log('model', model);
+
+    const formData = new FormData();
+
+    Object.keys(model).forEach((key) => {
+      formData.set(key, model[key as keyof typeof model]);
+    });
+
+    if (data.file) {
+      this._store.dispatch(
+        new CreateAccommodation(formData as unknown as IAccommodationModel)
+      );
     }
   }
 
