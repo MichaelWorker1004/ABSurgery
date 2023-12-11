@@ -1,7 +1,9 @@
-import { Selector } from '@ngxs/store';
+import { Selector, createPropertySelectors } from '@ngxs/store';
 import { DashboardState, IDashboardState } from './dashboard.state';
 
 export class DashboardSelectors {
+  static slices = createPropertySelectors<IDashboardState>(DashboardState);
+
   @Selector([DashboardState])
   static dashboardProgramInformation(
     state: IDashboardState

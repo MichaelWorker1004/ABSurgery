@@ -7,9 +7,7 @@
     </div>
     <span
       [innerHTML]="
-        'DASHBOARD.STATUS'
-          | translate
-            : { status: localIsSurgeon ? localCurrentStatus : 'Trainee' }
+        'DASHBOARD.STATUS' | translate : { status: localCurrentStatus }
       "
     ></span>
   </div>
