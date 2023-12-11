@@ -149,7 +149,13 @@ export class ReferenceFormModalComponent implements OnInit {
   }
 
   handleGridAction(event: any) {
-    console.log('unhandled action', event);
+    if (event.fieldKey === 'view') {
+      console.log('view', event);
+    } else if (event.fieldKey === 'delete') {
+      console.log('delete', event);
+    } else {
+      console.log('unhandled action', event);
+    }
   }
 
   onSubmitPanel() {

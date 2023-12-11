@@ -4,4 +4,9 @@ export interface IRefrenceFormReadOnlyModel {
   authenticatingOfficial: string;
   date: Date;
   status: string;
+  id: number;
+  authOfficialRole: string;
+  authOfficialTitle: string;
+  authOfficialEmail: string;
+  authOfficialPhone: string;
 }

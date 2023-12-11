@@ -147,8 +147,15 @@ export class GridComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (isObservable(this.data)) {
       this.data.subscribe((data: any) => {
-        this.localData = data ?? [];
-        this.filteredData = data ?? [];
+        const mappedData = data.map((item: any) => {
+          return {
+            ...item,
+            expanded: item.expanded ?? false,
+          };
+        });
+
+        this.localData = mappedData ?? [];
+        this.filteredData = mappedData ?? [];
         this.initPagintion(this.localData);
       });
     }
@@ -157,8 +164,14 @@ export class GridComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (!isObservable(this.data)) {
       if (changes['data']) {
-        this.localData = changes['data'].currentValue;
-        this.filteredData = changes['data'].currentValue ?? [];
+        const mappedData = changes['data'].currentValue.map((item: any) => {
+          return {
+            ...item,
+            expanded: item.expanded ?? false,
+          };
+        });
+        this.localData = mappedData ?? [];
+        this.filteredData = mappedData ?? [];
         this.initPagintion(this.localData);
       }
     }
