@@ -8,6 +8,7 @@ import { CertificationsService } from 'src/app/api/services/surgeons/certificati
 import {
   GetAlertsAndNotices,
   GetDashboardCertificationInformation,
+  GetDashboardCertificationStatus,
   GetDashboardProgramInformation,
   GetTraineeRegistrationStatus,
 } from './dashboard.actions';
@@ -17,6 +18,8 @@ import { ExamService } from 'src/app/api/services/trainees/exam.service';
 import { IRegistrationStatusReadOnlyModel } from 'src/app/api/models/trainees/registration-status-read-only.model';
 import { IQualifyingExamReadOnlyModel } from 'src/app/api/models/examinations/qualifying-exam-read-only.model';
 import { QualifyingExamService } from 'src/app/api/services/examinations/qualifying-exam.service';
+import { ICertificationStatusReadOnlyModel } from 'src/app/api/models/user/certification-status-read-only.model';
+import { CertificationStatusService } from 'src/app/api/services/user/certification-status.service';
 
 export interface ICertification extends ICertificationReadOnlyModel {
   status?: string;
@@ -24,6 +27,7 @@ export interface ICertification extends ICertificationReadOnlyModel {
 
 export interface IDashboardState {
   certificates: ICertificationReadOnlyModel[];
+  certificationStatus: ICertificationStatusReadOnlyModel | null;
   registrationStatus: IRegistrationStatusReadOnlyModel | null;
   alertsAndNotices: IQualifyingExamReadOnlyModel | undefined;
   programs: IProgramReadOnlyModel;
@@ -35,6 +39,7 @@ const USER_ACCOUNT_STATE_TOKEN = new StateToken<IDashboardState>('dashboard');
   name: USER_ACCOUNT_STATE_TOKEN,
   defaults: {
     certificates: [],
+    certificationStatus: null,
     registrationStatus: null,
     alertsAndNotices: undefined,
     programs: {
@@ -55,8 +60,34 @@ export class DashboardState {
     private certificationsService: CertificationsService,
     private examService: ExamService,
     private globalDialogService: GlobalDialogService,
-    private qualifyingExamService: QualifyingExamService
+    private qualifyingExamService: QualifyingExamService,
+    private certificationStatusService: CertificationStatusService
   ) {}
+  //user
+  @Action(GetDashboardCertificationStatus) getDashboardCertificationStatus(
+    ctx: StateContext<IDashboardState>
+  ) {
+    const state = ctx.getState();
+    if (state.certificationStatus !== null) {
+      return state.certificationStatus;
+    }
+
+    return this.certificationStatusService
+      .retrieveCertificationStatusReadOnly_GetByUserId()
+      .pipe(
+        tap((result: ICertificationStatusReadOnlyModel) => {
+          const res = result as ICertificationStatusReadOnlyModel;
+          ctx.patchState({
+            certificationStatus: res,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          return of(errors);
+        })
+      );
+  }
+
   // trainee
   @Action(GetDashboardProgramInformation) getDashboardProgramInformation(
     ctx: StateContext<IDashboardState>

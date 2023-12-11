@@ -19,6 +19,7 @@ import {
   GetAlertsAndNotices,
   GetExamDirectory,
   ExamProcessSelectors,
+  GetDashboardCertificationStatus,
 } from '../state';
 import { UserClaims } from '../side-navigation/user-status.enum';
 import { IActionCardReadOnlyModel } from '../shared/components/action-card/action-card-read-only.model';
@@ -76,6 +77,7 @@ export class DashboardComponent {
   userActionCards: IActionCardReadOnlyModel[] | undefined;
   isSurgeon = false;
   userInformation!: IProgramReadOnlyModel | ICertificationReadOnlyModel[];
+  userCertificationStatus: string | undefined;
 
   alertsAndNotices: any | undefined;
 
@@ -90,6 +92,19 @@ export class DashboardComponent {
     private _store: Store,
     private _translateService: TranslateService
   ) {
+    this._store
+      .dispatch(new GetDashboardCertificationStatus())
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        const certStatus = this._store.selectSnapshot(
+          DashboardSelectors.slices.certificationStatus
+        );
+        if (certStatus?.description) {
+          this.userCertificationStatus = certStatus.description;
+        } else {
+          this.userCertificationStatus = undefined;
+        }
+      });
     this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.featureFlags = featureFlags;
