@@ -33,6 +33,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AccommodationReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("accommodations")]
+        public async Task<ActionResult<IEnumerable<AccommodationReadOnlyModel>>> GetAccommodationReadOnly_GetAllAsync(
+            [FromServices] IAccommodationReadOnlyListFactory accommodationReadOnlyListFactory)
+        {
+            var items = await accommodationReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<AccommodationReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AccreditedProgramInstitutionReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

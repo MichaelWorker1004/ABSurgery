@@ -17,7 +17,8 @@ export class ReqistrationRequirmentsSelectors {
       return {
         registrationRequirementsStatuses:
           state.registrationRequirementsStatuses,
-        erros: state.erros,
+        accommodation: state.accommodation,
+        errors: state.errors,
       };
     }
     return;

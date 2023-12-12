@@ -27,9 +27,6 @@ import { Status } from 'src/app/shared/components/action-card/status.enum';
 import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
 import { AttestationService } from 'src/app/api/services/continuouscertification/attestation.service';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
-import { ct } from '@fullcalendar/core/internal-common';
-//remove this
-import { ApiService } from 'ytg-angular';
 
 const statusTypes = [
   Status.InProgress, //0
@@ -68,9 +65,7 @@ export class ContinuousCertificationState {
     private outcomeRegistriesService: OutcomeRegistriesService,
     private dashboardStatusService: DashboardStatusService,
     private attestationService: AttestationService,
-    private globalDialogService: GlobalDialogService,
-    //remove this
-    private apiService: ApiService
+    private globalDialogService: GlobalDialogService
   ) {}
 
   @Action(CreateOutcomeRegistries)
@@ -212,8 +207,6 @@ export class ContinuousCertificationState {
   getContinuousCertificationStatuses(
     ctx: StateContext<IContinuousCertication>
   ) {
-    //remove this
-    this.checkAPIAddress();
     return this.dashboardStatusService
       .retrieveDashboardStatusReadOnly_GetAllByUserId()
       .pipe(
@@ -248,22 +241,43 @@ export class ContinuousCertificationState {
         referenceFormId: 'MD19143',
         affiliatedInstitution: 'ABS',
         authenticatingOfficial: 'John Doe, M.D.',
+        authOfficialRole: 'Role 1',
+        authOfficialTitle: 'Title 1',
+        authOfficialEmail: 'email1@email.io',
+        authOfficialPhone: '111-123-1234',
         date: new Date('09/21/2019'),
         status: 'Requested',
+        id: 1,
+        expandedDataLoading: false,
+        expandedData: null,
       },
       {
         referenceFormId: 'MD08221',
         affiliatedInstitution: 'ABS',
         authenticatingOfficial: 'Mary Joseph',
+        authOfficialRole: 'Role 2',
+        authOfficialTitle: 'Title 2',
+        authOfficialEmail: 'email2@email.io',
+        authOfficialPhone: '222-123-1234',
         date: new Date('08/12/2019'),
         status: 'Approved',
+        id: 2,
+        expandedDataLoading: false,
+        expandedData: null,
       },
       {
         referenceFormId: 'MD12345',
         affiliatedInstitution: 'ABS',
         authenticatingOfficial: 'John Dorian',
+        authOfficialRole: 'Role 3',
+        authOfficialTitle: 'Title 3',
+        authOfficialEmail: 'email3@email.io',
+        authOfficialPhone: '333-123-1234',
         date: new Date('8/1/2019'),
         status: 'Approved',
+        id: 3,
+        expandedDataLoading: false,
+        expandedData: null,
       },
     ];
 
@@ -289,14 +303,5 @@ export class ContinuousCertificationState {
     ctx.patchState({
       outcomeRegistriesErrors: null,
     });
-  }
-
-  // remove this
-  private checkAPIAddress(): void {
-    this.apiService
-      .get(`api/billing/transaction/getip`)
-      .subscribe((res: any) => {
-        console.log('api-address', res);
-      });
   }
 }

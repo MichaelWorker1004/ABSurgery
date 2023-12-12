@@ -1,12 +1,24 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
-import { IFormErrors } from 'src/app/shared/common';
-import { GetResgistrationRequirmentsStatuses } from './registration-requirements.actions';
+import { of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
 import { IStatuses } from 'src/app/api/models/users/statuses.model';
+import { AccommodationService } from 'src/app/api/services/examinations/accommodation.service';
+import { IFormErrors } from 'src/app/shared/common';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import {
+  CreateAccommodation,
+  GetAccommodations,
+  GetResgistrationRequirmentsStatuses,
+  UpdateAccommodation,
+} from './registration-requirements.actions';
 
 export interface IRegistrationRequirements {
   registrationRequirementsStatuses?: IStatuses[];
-  erros?: IFormErrors | null;
+  accommodation?: IAccommodationModel;
+  errors?: IFormErrors | null;
 }
 
 export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
@@ -17,11 +29,17 @@ export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
   name: REGREQ_STATE_TOKEN,
   defaults: {
     registrationRequirementsStatuses: undefined,
-    erros: null,
+    accommodation: undefined,
+    errors: null,
   },
 })
 @Injectable()
 export class RegistrationRequirementsState {
+  constructor(
+    private accommodationService: AccommodationService,
+    private globalDialogService: GlobalDialogService
+  ) {}
+
   @Action(GetResgistrationRequirmentsStatuses)
   getRegistrationRequirementsStatuses(
     ctx: StateContext<IRegistrationRequirements>
@@ -82,5 +100,82 @@ export class RegistrationRequirementsState {
     ctx.patchState({
       registrationRequirementsStatuses: response,
     });
+  }
+
+  @Action(CreateAccommodation)
+  createAccommodation(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: CreateAccommodation
+  ) {
+    return this.accommodationService.createAccommodation(payload.model).pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Success',
+          'Accommodation submitted successfully',
+          true
+        );
+      }),
+
+      catchError((httpError: HttpErrorResponse) => {
+        const errors = httpError.error;
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'An error has occured while uploading the file. Please try again.',
+          false
+        );
+        return of(errors);
+      })
+    );
+  }
+
+  @Action(GetAccommodations)
+  getAccommodations(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: GetAccommodations
+  ) {
+    return this.accommodationService
+      .retrieveAccommodation_GetByExamId(payload.examId)
+      .pipe(
+        tap((accommodations: IAccommodationModel) => {
+          ctx.patchState({
+            accommodation: accommodations,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(UpdateAccommodation)
+  updateAccommodations(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: UpdateAccommodation
+  ) {
+    return this.accommodationService
+      .updateAccommodation(payload.examId, payload.model)
+      .pipe(
+        tap(() => {
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Accommodation updated successfully',
+            true
+          );
+        }),
+
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'An error has occured while uploading the file. Please try again.',
+            false
+          );
+          return of(errors);
+        })
+      );
   }
 }

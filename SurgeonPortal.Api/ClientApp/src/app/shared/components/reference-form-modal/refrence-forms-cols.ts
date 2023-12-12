@@ -9,6 +9,6 @@ export const REFERENCE_FORMS_COLS = [
   ),
   AbsGrid.setFormattedDateCol('Date', 'date'),
   AbsGrid.setCellCustomClass('Status', 'status'),
-  AbsGrid.setCustomButtonCol('View', 'view', 'fa-regular fa-eye'),
   AbsGrid.setCustomButtonCol('Delete', 'delete', 'fa-solid fa-trash'),
+  AbsGrid.setExpandToggle('View', 'view'),
 ];

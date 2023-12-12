@@ -80,7 +80,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   showACGMEexprience = false;
   showTraining = false;
   showGraduateMedicalEducation = false;
-  showSpecialAccommodations = true;
+  showSpecialAccommodations = false;
   attestationModal = false;
   showProfessionalActivitiesAndPrivileges = false;
   payFeeModal = false;
