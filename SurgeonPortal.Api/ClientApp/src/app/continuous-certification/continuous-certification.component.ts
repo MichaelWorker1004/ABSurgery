@@ -9,7 +9,10 @@ import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component'
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outcome-registries-modal.component';
 import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
-import { ReferenceFormModalComponent } from './reference-form-modal/reference-form-modal.component';
+import {
+  IReferenceFormModalConfig,
+  ReferenceFormModalComponent,
+} from '../shared/components/reference-form-modal/reference-form-modal.component';
 import { Action } from '../shared/components/action-card/action.enum';
 import { Observable, skipWhile, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
@@ -27,11 +30,14 @@ import {
   GetContinuousCertificationStatuses,
   GetRefrenceFormGridData,
   SubmitAttestation,
+  GetDashboardCertificationStatus,
+  DashboardSelectors,
 } from '../state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IStatuses } from '../api/models/users/statuses.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IAttestationSubmitModel } from '../api/models/continuouscertification/attestation-read-only.model';
+import { IRefrenceFormReadOnlyModel } from '../state/continuous-certification/refrence-form-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -75,6 +81,11 @@ export class ContinuousCertificationComponent implements OnInit {
   )
   continuousCertificationStatuses$: Observable<IStatuses[]> | undefined;
 
+  @Select(ContinuousCertificationSelectors.slices.refrenceFormGridData)
+  referenceFormGridData$:
+    | Observable<IRefrenceFormReadOnlyModel[] | undefined>
+    | undefined;
+
   userData!: any;
   continousCertificationData!: any;
   outcomeRegistriesModal = false;
@@ -83,6 +94,10 @@ export class ContinuousCertificationComponent implements OnInit {
   payFeeModal = false;
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
+
+  referenceFormModalConfig: IReferenceFormModalConfig = {
+    lapsedPath: false,
+  };
 
   legendItems = [
     {
@@ -134,6 +149,21 @@ export class ContinuousCertificationComponent implements OnInit {
   ngOnInit(): void {
     this.getContinuousCertificationData();
     this.getPayFeeData();
+
+    this._store
+      .dispatch(new GetDashboardCertificationStatus())
+      .pipe(take(1))
+      .subscribe(() => {
+        const certStatus = this._store.selectSnapshot(
+          DashboardSelectors.slices.certificationStatus
+        );
+        if (certStatus) {
+          this.referenceFormModalConfig = {
+            ...this.referenceFormModalConfig,
+            lapsedPath: certStatus.lapsedPath,
+          };
+        }
+      });
   }
 
   getPayFeeData() {
