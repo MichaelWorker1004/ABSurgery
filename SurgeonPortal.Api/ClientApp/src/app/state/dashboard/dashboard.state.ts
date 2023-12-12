@@ -25,9 +25,14 @@ export interface ICertification extends ICertificationReadOnlyModel {
   status?: string;
 }
 
+export interface ICertificationStatus
+  extends ICertificationStatusReadOnlyModel {
+  lapsedPath?: boolean;
+}
+
 export interface IDashboardState {
   certificates: ICertificationReadOnlyModel[];
-  certificationStatus: ICertificationStatusReadOnlyModel | null;
+  certificationStatus: ICertificationStatus | null;
   registrationStatus: IRegistrationStatusReadOnlyModel | null;
   alertsAndNotices: IQualifyingExamReadOnlyModel | undefined;
   programs: IProgramReadOnlyModel;
@@ -76,7 +81,8 @@ export class DashboardState {
       .retrieveCertificationStatusReadOnly_GetByUserId()
       .pipe(
         tap((result: ICertificationStatusReadOnlyModel) => {
-          const res = result as ICertificationStatusReadOnlyModel;
+          const res = result as ICertificationStatus;
+          res.lapsedPath = res.certificationStatusId === 8; // set lapsed path based on status ID
           ctx.patchState({
             certificationStatus: res,
           });
