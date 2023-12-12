@@ -4,7 +4,7 @@ export interface IAccommodationModel {
     userId: number;
     accommodationID: number;
     documentId: number;
-    examID: number;
+    examId: number;
     createdByUserId: number;
     createdAtUtc: string;
     lastUpdatedAtUtc: string;

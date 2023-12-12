@@ -10,13 +10,15 @@ import { FormsModule } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import {
   CreateAccommodation,
   ExamScoringSelectors,
+  GetAccommodations,
   GetActiveExamId,
+  ReqistrationRequirmentsSelectors,
   UserProfileSelectors,
 } from 'src/app/state';
 import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
@@ -57,10 +59,13 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     | Observable<IAccommodationReadOnlyModel[]>
     | undefined;
 
+  @Select(ReqistrationRequirmentsSelectors.slices.accommodation)
+  accommodation$: Observable<IAccommodationModel> | undefined;
+
   examHeaderId!: number | undefined;
 
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS;
-  specialAccommodationsData!: any;
+  specialAccommodationsData: BehaviorSubject<any> = new BehaviorSubject([]);
 
   fileUploadedName!: string | undefined;
   uploadedFile!: File | undefined;
@@ -70,26 +75,25 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   $event: any;
 
   constructor(private _store: Store) {
-    this._store.dispatch(new GetAccommodationTypes());
     this._store.dispatch(new GetActiveExamId());
-  }
-
-  ngOnInit(): void {
-    this.getSpecialAccommodationsData();
     // this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
     //   this.examHeaderId = id;
     // });
     this.examHeaderId = 496; // HARDCODDED, REMOVE FOR PROD
+    this._store.dispatch(new GetAccommodationTypes());
+    this._store.dispatch(new GetAccommodations(this.examHeaderId));
+  }
+
+  ngOnInit(): void {
+    this.getSpecialAccommodationsData();
   }
 
   getSpecialAccommodationsData() {
-    this.specialAccommodationsData = [
-      {
-        fileName: 'ABC_Special-Accommodation-Request_1-2-22.pdf',
-        uploadDate: new Date('09/22/19'),
-        type: 'Other medical condition',
-      },
-    ];
+    this.accommodation$?.pipe(untilDestroyed(this)).subscribe((data) => {
+      if (data) {
+        this.specialAccommodationsData.next([data]);
+      }
+    });
   }
 
   handleSelectChange(event: any) {
@@ -106,7 +110,7 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     const model = {
       file: data.file,
       accommodationID: data.typeId,
-      examID: this.examHeaderId,
+      examId: this.examHeaderId,
     };
     console.log('model', model);
 

@@ -107,6 +107,10 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
    */
   @Output() documentsAction: EventEmitter<any> = new EventEmitter();
 
+  /**
+   * event emitter for upload actions
+   * @type {EventEmitter<any>}
+   */
   @Output() uploadAction: EventEmitter<any> = new EventEmitter();
 
   localDocumentsData: any[] = [];
@@ -175,19 +179,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
       createdByUserId: this.userId,
       file: this.uploadedFile,
       issueDate: new Date().toISOString(),
-    } as unknown as IUserCertificateModel;
-
-    const formData = new FormData();
-
-    console.log('model', model);
-
-    // Object.keys(model).forEach((key) => {
-    //   formData.set(key, model[key]);
-    // });
-
-    // if (this.uploadedFile) {
-    // this._store.dispatch(new UploadDocument({ model: formData }));
-    // }
+    };
 
     this.uploadAction.emit({
       data: model,

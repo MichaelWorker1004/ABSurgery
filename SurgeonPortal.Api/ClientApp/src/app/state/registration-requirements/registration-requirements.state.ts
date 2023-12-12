@@ -8,6 +8,7 @@ import { AccommodationService } from 'src/app/api/services/examinations/accommod
 import { IFormErrors } from 'src/app/shared/common';
 import {
   CreateAccommodation,
+  GetAccommodations,
   GetResgistrationRequirmentsStatuses,
 } from './registration-requirements.actions';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,8 +16,8 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
 
 export interface IRegistrationRequirements {
   registrationRequirementsStatuses?: IStatuses[];
-  accommodations?: IAccommodationModel[];
-  erros?: IFormErrors | null;
+  accommodation?: IAccommodationModel;
+  errors?: IFormErrors | null;
 }
 
 export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
@@ -27,8 +28,8 @@ export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
   name: REGREQ_STATE_TOKEN,
   defaults: {
     registrationRequirementsStatuses: undefined,
-    accommodations: undefined,
-    erros: null,
+    accommodation: undefined,
+    errors: null,
   },
 })
 @Injectable()
@@ -107,18 +108,47 @@ export class RegistrationRequirementsState {
   ) {
     return this.accommodationService.createAccommodation(payload.model).pipe(
       tap(() => {
-        // fetch accommodations again
+        // fetch accommodations
+        ctx.dispatch(new GetAccommodations(payload.model.examId));
         this.globalDialogService.showSuccessError(
           'Success',
           'Accommodation saved successfully',
           true
         );
       }),
+
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
-        this.globalDialogService.showSuccessError('Error', errors, false);
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'An error has occured while uploading the file. Please try again.',
+          false
+        );
         return of(errors);
       })
     );
+  }
+
+  @Action(GetAccommodations)
+  getAccommodations(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: GetAccommodations
+  ) {
+    return this.accommodationService
+      .retrieveAccommodation_GetByExamId(payload.examId)
+      .pipe(
+        tap((accommodations: IAccommodationModel) => {
+          ctx.patchState({
+            accommodation: accommodations,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
   }
 }

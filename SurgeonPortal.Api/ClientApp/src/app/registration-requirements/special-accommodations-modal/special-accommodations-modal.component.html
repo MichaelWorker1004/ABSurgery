@@ -10,7 +10,7 @@
   [dropdownPlaceholder]="'Select an Accomodation Type'"
   [showFilter]="false"
   [gridCols]="specialAccommodationsCols"
-  [documentsData]="specialAccommodationsData"
+  [documentsData]="specialAccommodationsData | async"
   [dropdownLabel]="'description'"
   [dropdownValue]="'id'"
   [userId]="userId$ | async"
