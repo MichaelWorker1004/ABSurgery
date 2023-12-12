@@ -1,0 +1,76 @@
+{
+  "name": "AccommodationReadOnly",
+  "implementationName": "Picklists\\AccommodationReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_accommodation_picklist",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\AccommodationReadOnly",
+    "ModelGroup": "AccommodationReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "accommodations",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_accommodation_picklist",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_accommodation_picklist]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\AccommodationReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Code",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Code"
+              },
+              {
+                "name": "Description",
+                "dataType": "string",
+                "maxLength": 200,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Description"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\AccommodationReadOnly.GetAll AccommodationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\AccommodationReadOnly -p:Adapter=sp:abssp-[dbo].[get_accommodation_picklist] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AccommodationReadOnly -p:Route=accommodations -p:ControllerName=Picklists/PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  Picklists\\AccommodationReadOnly.GetAll AccommodationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\AccommodationReadOnly -p:Adapter=sp:abssp-[dbo].[get_accommodation_picklist] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AccommodationReadOnly -p:Route=accommodations -p:ControllerName=Picklists/PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-05T18:15:57.6542906Z"
+  },
+  "version": 1
+}

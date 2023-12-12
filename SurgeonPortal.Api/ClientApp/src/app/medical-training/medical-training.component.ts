@@ -20,7 +20,11 @@ import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-trainin
 
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { ModalComponent } from '../shared/components/modal/modal.component';
-import { MedicalTrainingSelectors, UserProfileSelectors } from '../state';
+import {
+  MedicalTrainingSelectors,
+  UploadDocument,
+  UserProfileSelectors,
+} from '../state';
 import { Select, Store } from '@ngxs/store';
 import { AdvancedTrainingService } from '../api/services/medicaltraining/advanced-training.service';
 import { IAdvancedTrainingReadOnlyModel } from '../api/models/medicaltraining/advanced-training-read-only.model';
@@ -78,6 +82,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFormErrors } from '../shared/common';
 import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-training.model';
 import { SetUnsavedChanges } from '../state/application/application.actions';
+import { IUserCertificateModel } from '../api/models/medicaltraining/user-certificate.model';
 
 @UntilDestroy()
 @Component({
@@ -399,7 +404,27 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
   }
 
   handleDocumentUpload(event: any) {
-    console.log('unhandled upload', event);
+    const data = event.data;
+
+    console.log(data);
+
+    const model = {
+      documentId: 1,
+      certificateTypeId: data.typeId,
+      createdByUserId: this.userId,
+      file: data.file,
+      issueDate: new Date().toISOString(),
+    } as unknown as IUserCertificateModel;
+
+    const formData = new FormData();
+
+    Object.keys(model).forEach((key) => {
+      formData.set(key, model[key]);
+    });
+
+    if (data.file) {
+      this._store.dispatch(new UploadDocument({ model: formData }));
+    }
   }
 
   handleGridAction($event: any, form: string) {

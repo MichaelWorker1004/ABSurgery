@@ -6,12 +6,15 @@
 </div>
 
 <abs-documents-upload
-  [dropdownOptions]="specialAccommodationsTypeOptions"
+  [dropdownOptions]="accommodationTypes$ | async"
   [dropdownPlaceholder]="'Select an Accomodation Type'"
   [showFilter]="false"
   [gridCols]="specialAccommodationsCols"
-  [documentsData]="specialAccommodationsData"
+  [documentsData]="specialAccommodationsData | async"
+  [dropdownLabel]="'description'"
+  [dropdownValue]="'id'"
   [userId]="userId$ | async"
+  (uploadAction)="onDocumentUpload($event)"
 ></abs-documents-upload>
 
 <div class="flex justify-content-end mt-5" slot="footer">

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -8,22 +9,19 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { GridComponent } from 'src/app/shared/components/grid/grid.component';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Store } from '@ngxs/store';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 import { AbsFilterType } from 'src/app/shared/components/grid/abs-grid.enum';
 import { IGridOptions } from 'src/app/shared/components/grid/grid-options.model';
-import { DropdownModule } from 'primeng/dropdown';
-import { Store } from '@ngxs/store';
+import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import {
   DeleteCertificate,
   DeleteDocument,
   DownloadDocument,
-  UploadDocument,
 } from 'src/app/state';
 import { GetDocumentTypes } from 'src/app/state/picklists';
-import { IUserCertificateModel } from 'src/app/api/models/medicaltraining/user-certificate.model';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
 import { IGridColumns } from '../grid/abs-grid-col.interface';
 
 @Component({
@@ -63,7 +61,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
    * Data to display in the dropdown
    * @type {any[] | undefined}
    */
-  @Input() dropdownOptions: any[] | undefined;
+  @Input() dropdownOptions: any[] | null | undefined = [];
 
   /**
    * Placeholder to display in the dropdown
@@ -107,6 +105,12 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
    */
   @Output() documentsAction: EventEmitter<any> = new EventEmitter();
 
+  /**
+   * event emitter for upload actions
+   * @type {EventEmitter<any>}
+   */
+  @Output() uploadAction: EventEmitter<any> = new EventEmitter();
+
   localDocumentsData: any[] = [];
 
   gridOptions: IGridOptions = {
@@ -118,7 +122,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   uploadedFile: File | undefined;
 
   uploadForm = new FormGroup({
-    certificateTypeId: new FormControl(''),
+    typeId: new FormControl(''),
     file: new FormControl(''),
   });
 
@@ -168,26 +172,17 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   }
 
   onDocumentUpload() {
-    const model: IUserCertificateModel = {
-      documentId: 1,
-      certificateTypeId: this.uploadForm.get('certificateTypeId')?.value,
+    const model = {
+      typeId: this.uploadForm.get('typeId')?.value,
       createdByUserId: this.userId,
       file: this.uploadedFile,
       issueDate: new Date().toISOString(),
-    } as unknown as IUserCertificateModel;
+    };
 
-    const formData = new FormData();
-
-    Object.keys(model).forEach((key) => {
-      formData.set(key, model[key]);
-    });
-
-    if (this.uploadedFile) {
-      this._store.dispatch(new UploadDocument({ model: formData }));
-    }
-
-    this.documentsAction.emit({
-      fieldKey: 'upload',
+    this.uploadAction.emit({
+      data: model,
+      gridData: this.documentsData,
+      file: this.uploadedFile,
     });
 
     this.resetData();
@@ -200,7 +195,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
 
   resetData() {
     this.fileUploadedName = undefined;
-    this.uploadForm.get('certificateTypeId')?.setValue('');
+    this.uploadForm.get('typeId')?.setValue('');
     this.uploadedFile = undefined;
   }
 }

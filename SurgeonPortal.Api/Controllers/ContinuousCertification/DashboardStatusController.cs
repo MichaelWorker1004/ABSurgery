@@ -11,7 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Ytg.AspNetCore.Controllers;
 
-namespace SurgeonPortal.Api.Controllers
+namespace SurgeonPortal.Api.Controllers.ContinuousCertification
 {
     [ApiVersion("1")]
     [ApiController]

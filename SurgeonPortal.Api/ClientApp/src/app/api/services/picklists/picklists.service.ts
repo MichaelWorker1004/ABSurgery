@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IAccommodationReadOnlyModel } from '../../models/picklists/accommodation-read-only.model';
 import { IAccreditedProgramInstitutionReadOnlyModel } from '../../models/picklists/accredited-program-institution-read-only.model';
 import { IAppointmentTypeReadOnlyModel } from '../../models/picklists/appointment-type-read-only.model';
 import { ICertificateTypeReadOnlyModel } from '../../models/picklists/certificate-type-read-only.model';
@@ -36,6 +37,30 @@ export class PicklistsService {
 
     constructor(private apiService: ApiService) {}
 
+ 
+        public retrieveAccommodationReadOnly_GetAll(apiVersion = '1.0'): Observable<IAccommodationReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_accommodation_picklist]
+            */
+            
+            
+            return this.apiService.get<IAccommodationReadOnlyModel[]>(`api/picklists/accommodations?api-version=${apiVersion}`);
+        }
  
         public retrieveAccreditedProgramInstitutionReadOnly_GetAll(apiVersion = '1.0'): Observable<IAccreditedProgramInstitutionReadOnlyModel[]> {
             /**

@@ -1,64 +1,65 @@
 import { Injectable } from '@angular/core';
-import { catchError, share, tap } from 'rxjs/operators';
-import { forkJoin, map, Observable, of } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
+import { Observable, forkJoin, map, of } from 'rxjs';
+import { catchError, share, tap } from 'rxjs/operators';
 
+import { IAccommodationReadOnlyModel } from 'src/app/api/models/picklists/accommodation-read-only.model';
+import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
+import { ICertificateTypeReadOnlyModel } from 'src/app/api/models/picklists/certificate-type-read-only.model';
+import { IDegreeReadOnlyModel } from 'src/app/api/models/picklists/degree-read-only.model';
+import { IDocumentTypeReadOnlyModel } from 'src/app/api/models/picklists/document-type-read-only.model';
+import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fellowship-program-read-only.model';
+import { IFellowshipTypeReadOnlyModel } from 'src/app/api/models/picklists/fellowship-type-read-only.model';
+import { IGraduateProfileReadOnlyModel } from 'src/app/api/models/picklists/graduate-profile-read-only.model';
+import { IResidencyProgramReadOnlyModel } from 'src/app/api/models/picklists/residency-program-read-only.model';
+import { ITrainingTypeReadOnlyModel } from 'src/app/api/models/picklists/training-type-read-only.model';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import {
+  IAppointmentTypeReadOnlyModel,
+  IClinicalActivityReadOnlyModel,
+  IClinicalLevelReadOnlyModel,
   ICountryReadOnlyModel,
   IEthnicityReadOnlyModel,
   IGenderReadOnlyModel,
-  ILanguageReadOnlyModel,
-  IRaceReadOnlyModel,
-  IStateReadOnlyModel,
-  IClinicalLevelReadOnlyModel,
-  IClinicalActivityReadOnlyModel,
-  PicklistsService,
-  ILicenseTypeReadOnlyModel,
-  IPracticeTypeReadOnlyModel,
-  IOrganizationTypeReadOnlyModel,
-  IAppointmentTypeReadOnlyModel,
   IJcahoOrganizationReadOnlyModel,
+  ILanguageReadOnlyModel,
+  ILicenseTypeReadOnlyModel,
+  IOrganizationTypeReadOnlyModel,
+  IPracticeTypeReadOnlyModel,
   IPrimaryPracticeReadOnlyModel,
+  IRaceReadOnlyModel,
   IScoringSessionReadOnlyModel,
+  IStateReadOnlyModel,
+  PicklistsService,
 } from '../../api';
+import { IFormErrors } from '../../shared/common';
 import {
+  GetAccommodationTypes,
   GetAccreditedProgramInstitutionsList,
+  GetAppointmentTypeList,
+  GetCertificateTypes,
+  GetClinicalActivityList,
+  GetClinicalLevelList,
   GetCountryList,
   GetDegrees,
   GetEthnicityList,
   GetFellowshipPrograms,
+  GetFellowshipTypes,
   GetGenderList,
   GetGraduateProfiles,
+  GetJcahoOrganizationList,
   GetLanguageList,
+  GetLicenseTypeList,
+  GetOrganizationTypeList,
   GetPicklists,
+  GetPracticeTypeList,
+  GetPrimaryPracticeList,
   GetRaceList,
   GetResidencyPrograms,
+  GetScoringSessionList,
   GetStateList,
   GetTrainingTypeList,
-  GetClinicalLevelList,
-  GetClinicalActivityList,
-  GetCertificateTypes,
-  GetDocumentTypes,
-  GetLicenseTypeList,
-  GetPracticeTypeList,
-  GetOrganizationTypeList,
-  GetAppointmentTypeList,
-  GetJcahoOrganizationList,
-  GetPrimaryPracticeList,
-  GetScoringSessionList,
-  GetFellowshipTypes,
 } from './picklists.actions';
-import { IFormErrors } from '../../shared/common';
-import { IAccreditedProgramInstitutionReadOnlyModel } from 'src/app/api/models/picklists/accredited-program-institution-read-only.model';
-import { ITrainingTypeReadOnlyModel } from 'src/app/api/models/picklists/training-type-read-only.model';
-import { IGraduateProfileReadOnlyModel } from 'src/app/api/models/picklists/graduate-profile-read-only.model';
-import { IDegreeReadOnlyModel } from 'src/app/api/models/picklists/degree-read-only.model';
-import { IFellowshipProgramReadOnlyModel } from 'src/app/api/models/picklists/fellowship-program-read-only.model';
-import { IResidencyProgramReadOnlyModel } from 'src/app/api/models/picklists/residency-program-read-only.model';
-import { ICertificateTypeReadOnlyModel } from 'src/app/api/models/picklists/certificate-type-read-only.model';
-import { IDocumentTypeReadOnlyModel } from 'src/app/api/models/picklists/document-type-read-only.model';
-import { IFellowshipTypeReadOnlyModel } from 'src/app/api/models/picklists/fellowship-type-read-only.model';
-import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 export interface IPicklist {
   countries: ICountryReadOnlyModel[] | undefined;
   ethnicities: IEthnicityReadOnlyModel[] | undefined;
@@ -88,6 +89,7 @@ export interface IPicklist {
   primaryPractices: IPickListItemNumber[] | undefined;
   scoringSessions: IScoringSessionReadOnlyModel[] | undefined;
   fellowshipTypes: IFellowshipTypeReadOnlyModel[] | undefined;
+  accommodationTypes: IAccommodationReadOnlyModel[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -125,6 +127,7 @@ export interface IPicklistUserValues {
   residencyPrograms: IResidencyProgramReadOnlyModel[] | undefined;
   clinicalLevels: IClinicalLevelReadOnlyModel[] | undefined;
   documentTypes: IDocumentTypeReadOnlyModel[] | undefined;
+  accommodationTypes: IAccommodationReadOnlyModel[] | undefined;
 }
 
 export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
@@ -158,6 +161,7 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     primaryPractices: undefined,
     scoringSessions: undefined,
     fellowshipTypes: undefined,
+    accommodationTypes: undefined,
   },
 })
 @Injectable()
@@ -711,14 +715,9 @@ export class PicklistsState {
   @Action(GetScoringSessionList)
   getScoringSessionList(
     ctx: StateContext<IPicklist>
-    //payload: { date: string }
   ): Observable<IPickListItemNumber[] | undefined> {
-    //const examHeaderId = payload.id;
     const currentDate = new Date().toISOString();
-    // removed because we don't want to save this value in the store because it will change based on passed in id
-    // if (ctx.getState()?.primaryPractices) {
-    //   return of(ctx.getState()?.primaryPractices);
-    // }
+
     return this.picklistsService
       .retrieveScoringSessionReadOnly_GetByKeys(currentDate)
       .pipe(
@@ -732,6 +731,26 @@ export class PicklistsState {
           return of(error);
         })
       );
+  }
+
+  @Action(GetAccommodationTypes)
+  getAccomodationTypes(
+    ctx: StateContext<IPicklist>
+  ): Observable<IAccommodationReadOnlyModel[] | undefined> {
+    if (ctx.getState()?.accommodationTypes) {
+      return of(ctx.getState()?.accommodationTypes);
+    }
+    return this.picklistsService.retrieveAccommodationReadOnly_GetAll().pipe(
+      tap((accommodationTypes: IAccommodationReadOnlyModel[]) => {
+        ctx.patchState({
+          accommodationTypes,
+        });
+      }),
+      catchError((error) => {
+        console.error('------- In Picklists Store: Accommodation Types', error);
+        return of(error);
+      })
+    );
   }
 
   @Action(GetPicklists)
@@ -761,6 +780,7 @@ export class PicklistsState {
       this.getPrimaryPracticeList(ctx).pipe(catchError((error) => of(error))),
       this.getClinicalLevelList(ctx).pipe(catchError((error) => of(error))),
       this.getClinicalActivityList(ctx).pipe(catchError((error) => of(error))),
+      this.getAccomodationTypes(ctx).pipe(catchError((error) => of(error))),
     ];
 
     if (payload?.countryCode) {
