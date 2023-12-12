@@ -13,7 +13,19 @@
     [data]="refrenceFormGridData$"
     (action)="handleGridAction($event)"
     class="mb-2"
-  ></abs-grid>
+    [expandTemplate]="expandedRow"
+  >
+    <ng-template #expandedRow let-r>
+      <div>
+        <p>Authenticating Official Name: {{ r.authenticatingOfficial }}</p>
+        <p>Authenticating Official Email: {{ r.authOfficialEmail }}</p>
+        <p>Authenticating Official Phone: {{ r.authOfficialPhone }}</p>
+        <p>Authenticating Official Role: {{ r.authOfficialRole }}</p>
+        <p>Authenticating Official Title: {{ r.authOfficialTitle }}</p>
+        <p>Affiliated Institution: {{ r.affiliatedInstitution }}</p>
+      </div>
+    </ng-template>
+  </abs-grid>
 
   <abs-collapse-panel
     [panelId]="1"
