@@ -91,7 +91,7 @@ export class AccommodationService {
             */
             
             
-            return this.apiService.post<IAccommodationModel>(`api/exam/accommodations?&examId=${model.examId}&api-version=${apiVersion}`, 
+            return this.apiService.post<IAccommodationModel>(`api/exam/accommodations?&examId=${model.examID}&api-version=${apiVersion}`, 
                 model);
         }
  

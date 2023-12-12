@@ -4057,34 +4057,40 @@
     "lastGeneratedHash": "FCDE25F19567DA5931AD5D6FFD33ED7F"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\accommodation.model.ts": {
-    "lastGeneratedHash": "75ADB6143C7108FF12FF7C35217B2879"
+    "lastGeneratedHash": "0C89A15871F354443F352338E1074CFE"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\AccommodationDto.cs": {
-    "lastGeneratedHash": "54076AB20413DFBB09DCF3349A4BD9C9"
+    "lastGeneratedHash": "870CE145BE15467BD96BE24274B0F6A3"
   },
   "\\SurgeonPortal.Models\\Examinations\\AccommodationModel.cs": {
-    "lastGeneratedHash": "503CB1C7185553F9202CDD184E764206"
+    "lastGeneratedHash": "E595807A2039BE82C926D22B025F1367",
+    "lastMergedHash": "B35DDCC329CE865506A7D333A4E037C3"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\accommodation.service.ts": {
-    "lastGeneratedHash": "FC5A4C531EBC54C87BE44E5360EB2366"
+    "lastGeneratedHash": "FC5A4C531EBC54C87BE44E5360EB2366",
+    "lastMergedHash": "CEE9CEBC14EF3F57109C1CFEB1FC2C21"
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\AccommodationController.cs": {
-    "lastGeneratedHash": "BFA032C7AE509D0F409573D911B1E612"
+    "lastGeneratedHash": "BFA032C7AE509D0F409573D911B1E612",
+    "lastMergedHash": "D167D4C6A004434E54FA4FF2C67ADFAA"
   },
   "\\SurgeonPortal.Library\\Examinations\\Accommodation.cs": {
-    "lastGeneratedHash": "5FBCCD5F8BB98DFA804D108F668E8171"
+    "lastGeneratedHash": "214D5B93F235F151EF2AA00A3D6C32CF",
+    "lastMergedHash": "9B3325AD364E5461152DAC7C0B13D5FD"
   },
   "\\SurgeonPortal.DataAccess\\Examinations\\AccommodationDal.cs": {
     "lastGeneratedHash": "131390FB27A23C9A3BCD68F67AD2EF8F"
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IAccommodation.cs": {
-    "lastGeneratedHash": "D761F919A1E1FC8CDDA0B590DAEDAA94"
+    "lastGeneratedHash": "7AB6A7C47127658D2A05B15DE7F8B733",
+    "lastMergedHash": "7C753469C7ACB27031F72D7BB888364A"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IAccommodationDal.cs": {
     "lastGeneratedHash": "5C23EC4CC9326907DB77C48D9B563CE9"
   },
   "\\SurgeonPortal.Library.Tests\\Examinations\\AccommodationTests.cs": {
-    "lastGeneratedHash": "20348DB99523CF180598A1CC9C77B6D6"
+    "lastGeneratedHash": "A66E8508469387854F34ABF1EAFFFB02",
+    "lastMergedHash": "53B449158919B785B5F9CF51214B3A50"
   },
   "\\SurgeonPortal.DataAccess.Tests\\Examinations\\AccommodationDalTests.cs": {
     "lastGeneratedHash": "93347FBF6B6B3186C5746C89AFFE0305"

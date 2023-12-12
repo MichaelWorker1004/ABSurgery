@@ -110,7 +110,7 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     const model = {
       file: data.file,
       accommodationID: data.typeId,
-      examId: this.examHeaderId,
+      examID: this.examHeaderId,
     };
     console.log('model', model);
 

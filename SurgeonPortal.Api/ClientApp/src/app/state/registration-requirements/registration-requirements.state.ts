@@ -109,7 +109,7 @@ export class RegistrationRequirementsState {
     return this.accommodationService.createAccommodation(payload.model).pipe(
       tap(() => {
         // fetch accommodations
-        ctx.dispatch(new GetAccommodations(payload.model.examId));
+        ctx.dispatch(new GetAccommodations(payload.model.examID));
         this.globalDialogService.showSuccessError(
           'Success',
           'Accommodation saved successfully',
