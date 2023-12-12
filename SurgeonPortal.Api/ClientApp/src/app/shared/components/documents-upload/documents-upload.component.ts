@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -8,22 +9,19 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { GridComponent } from 'src/app/shared/components/grid/grid.component';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Store } from '@ngxs/store';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 import { AbsFilterType } from 'src/app/shared/components/grid/abs-grid.enum';
 import { IGridOptions } from 'src/app/shared/components/grid/grid-options.model';
-import { DropdownModule } from 'primeng/dropdown';
-import { Store } from '@ngxs/store';
+import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import {
   DeleteCertificate,
   DeleteDocument,
   DownloadDocument,
-  UploadDocument,
 } from 'src/app/state';
 import { GetDocumentTypes } from 'src/app/state/picklists';
-import { IUserCertificateModel } from 'src/app/api/models/medicaltraining/user-certificate.model';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
 import { IGridColumns } from '../grid/abs-grid-col.interface';
 
 @Component({
@@ -183,6 +181,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
 
     this.uploadAction.emit({
       data: model,
+      gridData: this.documentsData,
       file: this.uploadedFile,
     });
 

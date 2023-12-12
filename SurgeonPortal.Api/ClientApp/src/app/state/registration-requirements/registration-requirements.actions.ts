@@ -13,3 +13,8 @@ export class GetAccommodations {
   static readonly type = '[RegistrationRequirements] Get Accommodations';
   constructor(public examId: number) {}
 }
+
+export class UpdateAccommodation {
+  static readonly type = '[RegistrationRequirements] Update Accommodations';
+  constructor(public examId: number, public model: IAccommodationModel) {}
+}

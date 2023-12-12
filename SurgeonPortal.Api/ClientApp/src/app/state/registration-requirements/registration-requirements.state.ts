@@ -1,18 +1,19 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
 import { IStatuses } from 'src/app/api/models/users/statuses.model';
 import { AccommodationService } from 'src/app/api/services/examinations/accommodation.service';
 import { IFormErrors } from 'src/app/shared/common';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import {
   CreateAccommodation,
   GetAccommodations,
   GetResgistrationRequirmentsStatuses,
+  UpdateAccommodation,
 } from './registration-requirements.actions';
-import { HttpErrorResponse } from '@angular/common/http';
-import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 export interface IRegistrationRequirements {
   registrationRequirementsStatuses?: IStatuses[];
@@ -108,11 +109,9 @@ export class RegistrationRequirementsState {
   ) {
     return this.accommodationService.createAccommodation(payload.model).pipe(
       tap(() => {
-        // fetch accommodations
-        ctx.dispatch(new GetAccommodations(payload.model.examID));
         this.globalDialogService.showSuccessError(
           'Success',
-          'Accommodation saved successfully',
+          'Accommodation submitted successfully',
           true
         );
       }),
@@ -147,6 +146,34 @@ export class RegistrationRequirementsState {
           ctx.patchState({
             errors: errors,
           });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(UpdateAccommodation)
+  updateAccommodations(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: UpdateAccommodation
+  ) {
+    return this.accommodationService
+      .updateAccommodation(payload.examId, payload.model)
+      .pipe(
+        tap(() => {
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Accommodation updated successfully',
+            true
+          );
+        }),
+
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'An error has occured while uploading the file. Please try again.',
+            false
+          );
           return of(errors);
         })
       );

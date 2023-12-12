@@ -7,10 +7,13 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
+import { IAccommodationReadOnlyModel } from 'src/app/api/models/picklists/accommodation-read-only.model';
 import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import {
@@ -19,16 +22,14 @@ import {
   GetAccommodations,
   GetActiveExamId,
   ReqistrationRequirmentsSelectors,
+  UpdateAccommodation,
   UserProfileSelectors,
 } from 'src/app/state';
-import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
 import {
   GetAccommodationTypes,
   PicklistsSelectors,
 } from 'src/app/state/picklists';
-import { IAccommodationReadOnlyModel } from 'src/app/api/models/picklists/accommodation-read-only.model';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
+import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
 
 @UntilDestroy()
 @Component({
@@ -62,7 +63,7 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   @Select(ReqistrationRequirmentsSelectors.slices.accommodation)
   accommodation$: Observable<IAccommodationModel> | undefined;
 
-  examHeaderId!: number | undefined;
+  examHeaderId!: number;
 
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS;
   specialAccommodationsData: BehaviorSubject<any> = new BehaviorSubject([]);
@@ -74,12 +75,14 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   selectedDocumentType: string | null | undefined;
   $event: any;
 
+  allowUpload = false;
+
   constructor(private _store: Store) {
     this._store.dispatch(new GetActiveExamId());
-    // this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
-    //   this.examHeaderId = id;
-    // });
-    this.examHeaderId = 496; // HARDCODDED, REMOVE FOR PROD
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
+      this.examHeaderId = id;
+      this.allowUpload = !!id;
+    });
     this._store.dispatch(new GetAccommodationTypes());
     this._store.dispatch(new GetAccommodations(this.examHeaderId));
   }
@@ -107,12 +110,13 @@ export class SpecialAccommodationsModalComponent implements OnInit {
 
   onDocumentUpload($event: any) {
     const data = $event.data;
+    const existingAccommodation = $event.gridData[0];
     const model = {
       file: data.file,
       accommodationID: data.typeId,
       examID: this.examHeaderId,
+      id: existingAccommodation?.id,
     };
-    console.log('model', model);
 
     const formData = new FormData();
 
@@ -121,9 +125,28 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     });
 
     if (data.file) {
-      this._store.dispatch(
-        new CreateAccommodation(formData as unknown as IAccommodationModel)
-      );
+      if (!existingAccommodation) {
+        this._store
+          .dispatch(
+            new CreateAccommodation(formData as unknown as IAccommodationModel)
+          )
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this._store.dispatch(new GetAccommodations(model.examID ?? 0));
+          });
+      } else {
+        this._store
+          .dispatch(
+            new UpdateAccommodation(
+              model.examID ?? 0,
+              formData as unknown as IAccommodationModel
+            )
+          )
+          .pipe(untilDestroyed(this))
+          .subscribe(() => {
+            this._store.dispatch(new GetAccommodations(model.examID ?? 0));
+          });
+      }
     }
   }
 
