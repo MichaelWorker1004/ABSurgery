@@ -45,7 +45,8 @@ namespace SurgeonPortal.Library.Email
 					From = Email.From,
 					To = Email.To,
 					Subject = Email.Subject,
-					Template = Email.TemplateId
+					Template = Email.TemplateId,
+					TemplateData = Email.TemplateData
 				};
 
 				AddAttachment(emailResource);
