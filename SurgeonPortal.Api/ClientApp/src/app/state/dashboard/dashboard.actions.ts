@@ -1,3 +1,7 @@
+export class GetDashboardCertificationStatus {
+  static readonly type = '[Dashboard] Get the dashboard certification status';
+}
+
 export class GetDashboardProgramInformation {
   static readonly type = '[Dashboard] Get the dashboard program information';
 }

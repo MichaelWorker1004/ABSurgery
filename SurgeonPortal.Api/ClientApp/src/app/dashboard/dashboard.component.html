@@ -19,7 +19,7 @@
     <abs-user-information-card
       class="col-12"
       [userInformation]="userInformation"
-      [currentStatus]="user.certificationStatus"
+      [currentStatus]="userCertificationStatus || user.certificationStatus"
       [isSurgeon]="isSurgeon"
     ></abs-user-information-card>
 
