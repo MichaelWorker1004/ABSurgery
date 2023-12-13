@@ -6,5 +6,4 @@ export const ACGME_EXPERIENCE_GRID_COLS = [
   }),
   AbsGrid.setFormattedDateCol('Upload Date', 'uploadDate'),
   AbsGrid.setCustomButtonCol('Download', 'download', 'fa fa-download'),
-  AbsGrid.setCustomButtonCol('Delete', 'delete', 'fa fa-trash'),
 ];

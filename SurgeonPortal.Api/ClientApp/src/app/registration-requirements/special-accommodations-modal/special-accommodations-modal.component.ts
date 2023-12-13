@@ -75,16 +75,13 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   selectedDocumentType: string | null | undefined;
   $event: any;
 
-  allowUpload = false;
-
   constructor(private _store: Store) {
     this._store.dispatch(new GetActiveExamId());
     this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
       this.examHeaderId = id;
-      this.allowUpload = !!id;
+      if (id) this._store.dispatch(new GetAccommodations(this.examHeaderId));
     });
     this._store.dispatch(new GetAccommodationTypes());
-    this._store.dispatch(new GetAccommodations(this.examHeaderId));
   }
 
   ngOnInit(): void {

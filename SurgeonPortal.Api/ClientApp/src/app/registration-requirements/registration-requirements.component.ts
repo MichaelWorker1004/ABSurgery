@@ -77,7 +77,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   applyForAnExamActionCardData!: any;
   showSurgeonProfile = false;
   showMedicalLicense = false;
-  showACGMEexprience = false;
+  showACGMEexprience = true;
   showTraining = false;
   showGraduateMedicalEducation = false;
   showSpecialAccommodations = false;

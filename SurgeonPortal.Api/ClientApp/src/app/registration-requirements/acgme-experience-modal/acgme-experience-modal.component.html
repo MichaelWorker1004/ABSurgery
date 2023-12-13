@@ -8,21 +8,15 @@
     the ABS
   </p>
 </div>
-<p-button class="btn-add">
-  <i slot="prefix" class="fa-solid fa-plus"></i>
-  <span>Add ACGME Report</span>
-</p-button>
-<abs-grid
-  [columns]="AcgmeGridCols"
-  [data]="AcgmeGridData"
-  (action)="girdAction($event)"
->
-</abs-grid>
+
+<abs-documents-upload
+  [showFilter]="false"
+  [gridCols]="AcgmeGridCols"
+  [documentsData]="AcgmeGridData"
+  [userId]="userId$ | async"
+  (uploadAction)="onDocumentUpload($event)"
+></abs-documents-upload>
+
 <div class="flex justify-content-end mt-5" slot="footer">
-  <p-button styleClass="p-button-link p-button-primary" (click)="close()"
-    >Cancel</p-button
-  >
-  <p-button type="button" [style]="{ width: '337px' }" variant="primary"
-    >Save
-  </p-button>
+  <p-button styleClass="p-button-primary" (click)="close()">Cancel</p-button>
 </div>
