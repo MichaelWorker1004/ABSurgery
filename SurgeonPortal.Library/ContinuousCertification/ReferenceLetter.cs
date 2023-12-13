@@ -1,6 +1,7 @@
 using Csla;
 using SurgeonPortal.DataAccess.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.ContinuousCertification;
+using SurgeonPortal.Library.Contracts.Email;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -19,13 +20,16 @@ namespace SurgeonPortal.Library.ContinuousCertification
 	public class ReferenceLetter : YtgBusinessBase<ReferenceLetter>, IReferenceLetter
     {
         private readonly IReferenceLetterDal _referenceLetterDal;
+		private readonly IEmailFactory _emailFactory;
 
         public ReferenceLetter(
             IIdentityProvider identityProvider,
-            IReferenceLetterDal referenceLetterDal)
+            IReferenceLetterDal referenceLetterDal,
+			IEmailFactory emailFactory)
             : base(identityProvider)
         {
             _referenceLetterDal = referenceLetterDal;
+			_emailFactory = emailFactory;
         }
 
         [DisplayName(nameof(UserId))]
@@ -36,6 +40,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<int?> UserIdProperty = RegisterProperty<int?>(c => c.UserId);
 
+		[Required]
         [DisplayName(nameof(Official))]
 		public string Official
 		{
@@ -60,7 +65,8 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> AltRoleNameProperty = RegisterProperty<string>(c => c.AltRoleName);
 
-        [Key] 
+        [Key]
+        [Required]
         [DisplayName(nameof(RoleId))]
 		public int? RoleId
 		{
@@ -86,6 +92,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> ExplainProperty = RegisterProperty<string>(c => c.Explain);
 
+        [Required]
         [DisplayName(nameof(Title))]
 		public string Title
 		{
@@ -94,6 +101,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> TitleProperty = RegisterProperty<string>(c => c.Title);
 
+        [Required]
         [DisplayName(nameof(Email))]
 		public string Email
 		{
@@ -102,6 +110,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> EmailProperty = RegisterProperty<string>(c => c.Email);
 
+        [Required]
         [DisplayName(nameof(Phone))]
 		public string Phone
 		{
@@ -110,6 +119,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> PhoneProperty = RegisterProperty<string>(c => c.Phone);
 
+        [Required]
         [DisplayName(nameof(Hosp))]
 		public string Hosp
 		{
@@ -118,6 +128,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> HospProperty = RegisterProperty<string>(c => c.Hosp);
 
+        [Required]
         [DisplayName(nameof(City))]
 		public string City
 		{
@@ -126,6 +137,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> CityProperty = RegisterProperty<string>(c => c.City);
 
+        [Required]
         [DisplayName(nameof(State))]
 		public string State
 		{
@@ -195,12 +207,14 @@ namespace SurgeonPortal.Library.ContinuousCertification
         
             using (BypassPropertyChecks)
             {
-                var dto = await _referenceLetterDal.InsertAsync(ToDto());
-        
-                FetchData(dto);
-        
-                MarkIdle();
+				var dto = await _referenceLetterDal.InsertAsync(ToDto());
+
+				FetchData(dto);
+
+				MarkIdle();
             }
+
+			await SendReferenceLetter();
         }
 
 
@@ -252,6 +266,16 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			return dto;
 		}
 
+		private async Task SendReferenceLetter()
+		{
+			var email = _emailFactory.Create();
 
+			// TODO replace with template logic
+			email.To = Email;
+			email.Subject = "Mock Reference Letter";
+			email.PlainTextContent = "This is a mock reference letter.";
+
+			await email.SendAsync();
+		}
     }
 }
