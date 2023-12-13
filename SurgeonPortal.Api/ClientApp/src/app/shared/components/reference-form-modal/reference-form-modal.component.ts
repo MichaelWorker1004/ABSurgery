@@ -3,8 +3,11 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
+  Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
@@ -30,7 +33,6 @@ import { IFormFields } from 'src/app/shared/models/form-fields/form-fields';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { matchFields } from 'src/app/shared/validators/validators';
 import {
-  ContinuousCertificationSelectors,
   IUserProfile,
   RequestRefrence,
   UserProfileSelectors,
@@ -41,6 +43,10 @@ import { PicklistsSelectors } from 'src/app/state/picklists';
 import { ADD_REFERENCE_LETTER_FIELDS } from './add-reference-letter-fields';
 import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
 import { InputMask, InputMaskModule } from 'primeng/inputmask';
+
+export interface IReferenceFormModalConfig {
+  lapsedPath?: boolean;
+}
 
 @UntilDestroy()
 @Component({
@@ -65,7 +71,7 @@ import { InputMask, InputMaskModule } from 'primeng/inputmask';
   styleUrls: ['./reference-form-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ReferenceFormModalComponent implements OnInit {
+export class ReferenceFormModalComponent implements OnInit, OnChanges {
   @ViewChild('referenceRequestPanel')
   referenceRequestPanel!: CollapsePanelComponent;
 
@@ -73,18 +79,17 @@ export class ReferenceFormModalComponent implements OnInit {
     | Observable<IStateReadOnlyModel[]>
     | undefined;
 
-  @Select(ContinuousCertificationSelectors.slices.refrenceFormGridData)
-  refrenceFormGridData$:
-    | Observable<IRefrenceFormReadOnlyModel[] | undefined>
-    | undefined;
-
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
 
+  @Input() referenceFormGridData$:
+    | Observable<IRefrenceFormReadOnlyModel[] | undefined>
+    | undefined;
+  @Input() modalConfig: IReferenceFormModalConfig | undefined;
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
-  lapsedPath = true; // TODO - will be set from user data
+  lapsedPath = false;
   formExpanded = false;
 
   referenceLetterForm = new FormGroup(
@@ -122,11 +127,16 @@ export class ReferenceFormModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.setConfigValues(this.modalConfig);
+
     this.setPicklists();
     // note to all future developers, never do this, it is stupid and hacky
     // but also it was the only thing that worked, blame shoelace
     document.addEventListener('sl-after-hide', ($event: any) => {
-      if ($event?.srcElement?.innerHTML.includes('Reference Form')) {
+      if (
+        $event?.srcElement?.innerHTML.includes('Reference Form') &&
+        this.referenceRequestPanel
+      ) {
         this.referenceRequestPanel.collaspsePanel();
       }
     });
@@ -136,6 +146,18 @@ export class ReferenceFormModalComponent implements OnInit {
         name: user?.fullName,
       });
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['modalConfig']) {
+      this.setConfigValues(this.modalConfig);
+    }
+  }
+
+  setConfigValues(config: IReferenceFormModalConfig | undefined) {
+    if (config?.lapsedPath !== undefined) {
+      this.lapsedPath = config.lapsedPath;
+    }
   }
 
   setPicklists() {

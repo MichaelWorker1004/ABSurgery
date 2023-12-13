@@ -6,7 +6,11 @@ import { PAYMENT_HISTORY_COLS } from './payment-histroy-grid';
 import { ButtonModule } from 'primeng/button';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { ExamProcessSelectors, GetExamFees } from '../state';
+import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
+import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
 
 @Component({
   selector: 'abs-payment-history',
@@ -24,72 +28,36 @@ import { BehaviorSubject } from 'rxjs';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PaymentHistoryComponent implements OnInit {
+  @Select(ExamProcessSelectors.slices.examFees) examFees$:
+    | Observable<IExamFeeReadOnlyModel[]>
+    | undefined;
+
   paymentHistoryData!: any;
-  paymentHistoryCols = PAYMENT_HISTORY_COLS;
+  paymentHistoryCols = PAY_FEE_COLS;
   paymentFooterData!: any;
   payFeeModal = false;
   amount$: BehaviorSubject<number> = new BehaviorSubject(0);
   invoiceNumber$: BehaviorSubject<string> = new BehaviorSubject('');
+
+  constructor(private _store: Store) {
+    this._store.dispatch(new GetExamFees());
+  }
 
   ngOnInit(): void {
     this.getPaymentHistoryData();
   }
 
   getPaymentHistoryData() {
-    this.paymentHistoryData = [
-      {
-        invoiceNumber: '12345678910112',
-        feeCode: 'VOET',
-        description: 'Vasular Surgery Certifying Examination',
-        totalBilled: 1700,
-        paid: 0,
-        balanceDue: 1700,
-      },
-      {
-        invoiceNumber: '12344444444444',
-        feeCode: 'VOET',
-        description: 'Pediatric Surgery Qualifying Examination (PQ - 2022)',
-        totalBilled: 1700,
-        paid: 0,
-        balanceDue: 1700,
-      },
-      {
-        invoiceNumber: '555555555555',
-        feeCode: 'VOET',
-        description: 'Pediatric Surgery Certifying Examination',
-        totalBilled: 1700,
-        paid: 0,
-        balanceDue: 0,
-      },
-      {
-        invoiceNumber: '6666666666666',
-        feeCode: 'VOET',
-        description: 'Complex General Surgical Oncology Certifying Examination',
-        totalBilled: 1700,
-        paid: 0,
-        balanceDue: 1700,
-      },
-      {
-        invoiceNumber: '7777777777777',
-        feeCode: 'VOET',
-        description: 'Hand Surgery Certification Examination (HC - 2022)',
-        totalBilled: 1700,
-        paid: 0,
-        balanceDue: 1700,
-      },
-    ];
-
-    const totalBalance = this.paymentHistoryData.reduce(
-      (acc: number, curr: any) => {
+    this.examFees$?.subscribe((data) => {
+      const totalBalance = data.reduce((acc: number, curr: any) => {
         return acc + curr.balanceDue;
-      },
-      0
-    );
+      }, 0);
 
-    this.paymentFooterData = {
-      date: new Date(),
-      amount: totalBalance,
-    };
+      this.paymentFooterData = {
+        date: new Date(),
+        amount: totalBalance,
+      };
+    });
   }
 
   handleClosePayFee() {

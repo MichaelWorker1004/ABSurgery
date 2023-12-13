@@ -58,6 +58,8 @@
   modalName="referenceFormsModal"
 >
   <abs-reference-form-modal
+    [referenceFormGridData$]="referenceFormGridData$"
+    [modalConfig]="referenceFormModalConfig"
     (closeDialog)="handleCardAction('referenceFormsModal')"
   ></abs-reference-form-modal>
 </abs-modal>
