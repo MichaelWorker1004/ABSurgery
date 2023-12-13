@@ -1,0 +1,66 @@
+{
+  "name": "ReferenceLetterAltRoleReadOnly",
+  "implementationName": "Picklists\\ReferenceLetterAltRoleReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_reglet_altrole_picklist",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\ReferenceLetterAltRoleReadOnly",
+    "ModelGroup": "ReferenceLetterAltRoleReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "reference-letter-alt-role",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_reglet_altrole_picklist",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_regLet_altrole_picklist]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\ReferenceLetterAltRoleReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Role",
+                "dataType": "string",
+                "maxLength": 200,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Role"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\ReferenceLetterAltRoleReadOnly.GetAll ReferenceLetterAltRoleReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ReferenceLetterAltRoleReadOnly -p:Adapter=sp:abssp-[dbo].[get_regLet_altrole_picklist] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ReferenceLetterAltRoleReadOnly -p:Route=reference-letter-alt-role -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Picklists\\ReferenceLetterAltRoleReadOnly.GetAll ReferenceLetterAltRoleReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ReferenceLetterAltRoleReadOnly -p:Adapter=sp:abssp-[dbo].[get_regLet_altrole_picklist] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ReferenceLetterAltRoleReadOnly -p:Route=reference-letter-alt-role -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-13T16:11:53.4687599Z"
+  },
+  "version": 1
+}

@@ -1,4 +1,5 @@
 using Csla;
+using Csla.Rules.CommonRules;
 using SurgeonPortal.DataAccess.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.Email;
@@ -40,7 +41,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<int?> UserIdProperty = RegisterProperty<int?>(c => c.UserId);
 
-		[Required]
         [DisplayName(nameof(Official))]
 		public string Official
 		{
@@ -65,8 +65,7 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> AltRoleNameProperty = RegisterProperty<string>(c => c.AltRoleName);
 
-        [Key]
-        [Required]
+        [Key] 
         [DisplayName(nameof(RoleId))]
 		public int? RoleId
 		{
@@ -92,7 +91,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> ExplainProperty = RegisterProperty<string>(c => c.Explain);
 
-        [Required]
         [DisplayName(nameof(Title))]
 		public string Title
 		{
@@ -101,7 +99,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> TitleProperty = RegisterProperty<string>(c => c.Title);
 
-        [Required]
         [DisplayName(nameof(Email))]
 		public string Email
 		{
@@ -110,7 +107,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> EmailProperty = RegisterProperty<string>(c => c.Email);
 
-        [Required]
         [DisplayName(nameof(Phone))]
 		public string Phone
 		{
@@ -119,7 +115,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> PhoneProperty = RegisterProperty<string>(c => c.Phone);
 
-        [Required]
         [DisplayName(nameof(Hosp))]
 		public string Hosp
 		{
@@ -128,7 +123,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> HospProperty = RegisterProperty<string>(c => c.Hosp);
 
-        [Required]
         [DisplayName(nameof(City))]
 		public string City
 		{
@@ -137,7 +131,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> CityProperty = RegisterProperty<string>(c => c.City);
 
-        [Required]
         [DisplayName(nameof(State))]
 		public string State
 		{
@@ -168,6 +161,20 @@ namespace SurgeonPortal.Library.ContinuousCertification
             Csla.Rules.BusinessRules.AddRule(typeof(ReferenceLetter),
                 new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+        }
+
+        protected override void AddBusinessRules()
+        {
+            base.AddBusinessRules();
+
+            BusinessRules.AddRule(new Required(OfficialProperty, "Official is required"));
+            BusinessRules.AddRule(new Required(RoleIdProperty, "RoleId is required"));
+            BusinessRules.AddRule(new Required(TitleProperty, "Title is required"));
+            BusinessRules.AddRule(new Required(EmailProperty, "Email is required"));
+            BusinessRules.AddRule(new Required(PhoneProperty, "Phone is required"));
+            BusinessRules.AddRule(new Required(HospProperty, "Hosp is required"));
+            BusinessRules.AddRule(new Required(CityProperty, "City is required"));
+            BusinessRules.AddRule(new Required(StateProperty, "State is required"));
         }
 
 
@@ -207,11 +214,11 @@ namespace SurgeonPortal.Library.ContinuousCertification
         
             using (BypassPropertyChecks)
             {
-				var dto = await _referenceLetterDal.InsertAsync(ToDto());
-
-				FetchData(dto);
-
-				MarkIdle();
+                var dto = await _referenceLetterDal.InsertAsync(ToDto());
+        
+                FetchData(dto);
+        
+                MarkIdle();
             }
 
 			await SendReferenceLetter();

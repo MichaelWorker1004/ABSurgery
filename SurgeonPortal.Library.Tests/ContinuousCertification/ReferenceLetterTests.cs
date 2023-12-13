@@ -4,6 +4,8 @@ using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.ContinuousCertification;
+using SurgeonPortal.Library.Contracts.Email;
+using SurgeonPortal.Library.Contracts.EmailProvider;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 
@@ -20,7 +22,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             dto.Official = Create<string>();
             dto.RoleName = Create<string>();
             dto.AltRoleName = Create<string>();
-            dto.RoleId = Create<int?>();
+            dto.RoleId = Create<int>();
             dto.AltRoleId = Create<int?>();
             dto.Explain = Create<string>();
             dto.Title = Create<string>();
@@ -46,12 +48,14 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             var mockDal = new Mock<IReferenceLetterDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(Create<ReferenceLetterDto>());
-            
-        
+
+            var mockEmailFactory = GetEmailFactory();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockEmailFactory)
                 .WithBusinessObject<IReferenceLetter, ReferenceLetter>()
                 .Build();
         
@@ -70,12 +74,14 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             var mockDal = new Mock<IReferenceLetterDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedId))
                 .ReturnsAsync(dto);
-            
-        
+
+            var mockEmailFactory = GetEmailFactory();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockEmailFactory)
                 .WithBusinessObject<IReferenceLetter, ReferenceLetter>()
                 .Build();
         
@@ -99,11 +105,14 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             mockDal.Setup(m => m.InsertAsync(It.IsAny<ReferenceLetterDto>()))
                 .Callback<ReferenceLetterDto>((p) => passedDto = p)
                 .ReturnsAsync(dto);
-        
+
+            var mockEmailFactory = GetEmailFactory();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockEmailFactory)
                 .WithBusinessObject<IReferenceLetter, ReferenceLetter>()
                 .Build();
         
@@ -151,11 +160,14 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             var mockDal = new Mock<IReferenceLetterDal>();
             mockDal.Setup(m => m.InsertAsync(It.IsAny<ReferenceLetterDto>()))
                 .ReturnsAsync(dto);
-        
+
+            var mockEmailFactory = GetEmailFactory();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockEmailFactory)
                 .WithBusinessObject<IReferenceLetter, ReferenceLetter>()
                 .Build();
         
@@ -186,7 +198,14 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                     .Excluding(m => m.LastUpdatedByUserId)
                     .ExcludingMissingMembers());
         }
-        
+
         #endregion
-	}
+
+        private static Mock<IEmailFactory> GetEmailFactory()
+        {
+            var mockEmailFactory = new Mock<IEmailFactory>();
+            mockEmailFactory.Setup(e => e.Create()).Returns(new Mock<IEmail>().Object);
+            return mockEmailFactory;
+        }
+    }
 }
