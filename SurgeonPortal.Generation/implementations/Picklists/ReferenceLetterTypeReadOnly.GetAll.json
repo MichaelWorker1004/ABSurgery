@@ -1,0 +1,66 @@
+{
+  "name": "ReferenceLetterTypeReadOnly",
+  "implementationName": "Picklists\\ReferenceLetterTypeReadOnly.GetAll",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_reflet_let_type",
+    "ControllerName": "Picklists\\PicklistsController",
+    "ControllerRoute": "api/picklists",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAll",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Picklists\\ReferenceLetterTypeReadOnly",
+    "ModelGroup": "ReferenceLetterTypeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "reference-letter-type",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_reflet_let_type",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_refLet_let_type]",
+        "parameters": [],
+        "recordsets": [
+          {
+            "model": "Picklists\\ReferenceLetterTypeReadOnly",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "Role",
+                "dataType": "string",
+                "maxLength": 200,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Role"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [],
+  "metadata": {
+    "command": "ytgim g i s Picklists\\ReferenceLetterTypeReadOnly.GetAll ReferenceLetterTypeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ReferenceLetterTypeReadOnly -p:Adapter=sp:abssp-[dbo].[get_refLet_let_type] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ReferenceLetterTypeReadOnly -p:Route=reference-letter-type -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Picklists\\ReferenceLetterTypeReadOnly.GetAll ReferenceLetterTypeReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\ReferenceLetterTypeReadOnly -p:Adapter=sp:abssp-[dbo].[get_refLet_let_type] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ReferenceLetterTypeReadOnly -p:Route=reference-letter-type -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-13T16:04:45.2631778Z"
+  },
+  "version": 1
+}

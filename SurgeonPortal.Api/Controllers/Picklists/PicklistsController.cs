@@ -418,6 +418,38 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ReferenceLetterAltRoleReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("reference-letter-alt-role")]
+        public async Task<ActionResult<IEnumerable<ReferenceLetterAltRoleReadOnlyModel>>> GetReferenceLetterAltRoleReadOnly_GetAllAsync(
+            [FromServices] IReferenceLetterAltRoleReadOnlyListFactory referenceLetterAltRoleReadOnlyListFactory)
+        {
+            var items = await referenceLetterAltRoleReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<ReferenceLetterAltRoleReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ReferenceLetterTypeReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("reference-letter-type")]
+        public async Task<ActionResult<IEnumerable<ReferenceLetterTypeReadOnlyModel>>> GetReferenceLetterTypeReadOnly_GetAllAsync(
+            [FromServices] IReferenceLetterTypeReadOnlyListFactory referenceLetterTypeReadOnlyListFactory)
+        {
+            var items = await referenceLetterTypeReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<ReferenceLetterTypeReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ResidencyProgramReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

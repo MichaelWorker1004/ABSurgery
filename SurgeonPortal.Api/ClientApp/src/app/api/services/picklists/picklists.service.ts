@@ -24,6 +24,8 @@ import { IOrganizationTypeReadOnlyModel } from '../../models/picklists/organizat
 import { IPracticeTypeReadOnlyModel } from '../../models/picklists/practice-type-read-only.model';
 import { IPrimaryPracticeReadOnlyModel } from '../../models/picklists/primary-practice-read-only.model';
 import { IRaceReadOnlyModel } from '../../models/picklists/race-read-only.model';
+import { IReferenceLetterAltRoleReadOnlyModel } from '../../models/picklists/reference-letter-alt-role-read-only.model';
+import { IReferenceLetterTypeReadOnlyModel } from '../../models/picklists/reference-letter-type-read-only.model';
 import { IResidencyProgramReadOnlyModel } from '../../models/picklists/residency-program-read-only.model';
 import { IScoringSessionReadOnlyModel } from '../../models/picklists/scoring-session-read-only.model';
 import { IStateReadOnlyModel } from '../../models/picklists/state-read-only.model';
@@ -614,6 +616,54 @@ export class PicklistsService {
             
             
             return this.apiService.get<IRaceReadOnlyModel[]>(`api/picklists/races?api-version=${apiVersion}`);
+        }
+ 
+        public retrieveReferenceLetterAltRoleReadOnly_GetAll(apiVersion = '1.0'): Observable<IReferenceLetterAltRoleReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_regLet_altrole_picklist]
+            */
+            
+            
+            return this.apiService.get<IReferenceLetterAltRoleReadOnlyModel[]>(`api/picklists/reference-letter-alt-role?api-version=${apiVersion}`);
+        }
+ 
+        public retrieveReferenceLetterTypeReadOnly_GetAll(apiVersion = '1.0'): Observable<IReferenceLetterTypeReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_refLet_let_type]
+            */
+            
+            
+            return this.apiService.get<IReferenceLetterTypeReadOnlyModel[]>(`api/picklists/reference-letter-type?api-version=${apiVersion}`);
         }
  
         public retrieveResidencyProgramReadOnly_GetAll(apiVersion = '1.0'): Observable<IResidencyProgramReadOnlyModel[]> {

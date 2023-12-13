@@ -1,6 +1,8 @@
 using Csla;
+using Csla.Rules.CommonRules;
 using SurgeonPortal.DataAccess.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.ContinuousCertification;
+using SurgeonPortal.Library.Contracts.Email;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -19,13 +21,16 @@ namespace SurgeonPortal.Library.ContinuousCertification
 	public class ReferenceLetter : YtgBusinessBase<ReferenceLetter>, IReferenceLetter
     {
         private readonly IReferenceLetterDal _referenceLetterDal;
+		private readonly IEmailFactory _emailFactory;
 
         public ReferenceLetter(
             IIdentityProvider identityProvider,
-            IReferenceLetterDal referenceLetterDal)
+            IReferenceLetterDal referenceLetterDal,
+			IEmailFactory emailFactory)
             : base(identityProvider)
         {
             _referenceLetterDal = referenceLetterDal;
+			_emailFactory = emailFactory;
         }
 
         [DisplayName(nameof(UserId))]
@@ -158,6 +163,20 @@ namespace SurgeonPortal.Library.ContinuousCertification
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
         }
 
+        protected override void AddBusinessRules()
+        {
+            base.AddBusinessRules();
+
+            BusinessRules.AddRule(new Required(OfficialProperty, "Official is required"));
+            BusinessRules.AddRule(new Required(RoleIdProperty, "RoleId is required"));
+            BusinessRules.AddRule(new Required(TitleProperty, "Title is required"));
+            BusinessRules.AddRule(new Required(EmailProperty, "Email is required"));
+            BusinessRules.AddRule(new Required(PhoneProperty, "Phone is required"));
+            BusinessRules.AddRule(new Required(HospProperty, "Hosp is required"));
+            BusinessRules.AddRule(new Required(CityProperty, "City is required"));
+            BusinessRules.AddRule(new Required(StateProperty, "State is required"));
+        }
+
 
         [Fetch]
         [RunLocal]
@@ -201,6 +220,8 @@ namespace SurgeonPortal.Library.ContinuousCertification
         
                 MarkIdle();
             }
+
+			await SendReferenceLetter();
         }
 
 
@@ -252,6 +273,16 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			return dto;
 		}
 
+		private async Task SendReferenceLetter()
+		{
+			var email = _emailFactory.Create();
 
+			// TODO replace with template logic
+			email.To = Email;
+			email.Subject = "Mock Reference Letter";
+			email.PlainTextContent = "This is a mock reference letter.";
+
+			await email.SendAsync();
+		}
     }
 }

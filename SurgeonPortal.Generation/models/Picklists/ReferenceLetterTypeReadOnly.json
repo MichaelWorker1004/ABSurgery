@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\ReferenceLetterTypeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Role",
+      "dataType": "string",
+      "maxLength": 200,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ReferenceLetterTypeReadOnly -sp [dbo].[get_refLet_let_type] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-13T15:55:29.5962916Z"
+  },
+  "version": 1
+}
