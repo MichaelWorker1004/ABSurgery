@@ -89,6 +89,8 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
         {
             entity.Official = model.Official;
             entity.Title = model.Title;
+            entity.RoleId = model.RoleId;
+            entity.AltRoleId = model.AltRoleId;
             entity.Explain = model.Explain;
             entity.Email = model.Email;
             entity.Phone = model.Phone;
