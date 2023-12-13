@@ -434,6 +434,22 @@ namespace SurgeonPortal.Api.Controllers.Picklists
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ReferenceLetterExplainReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("reference-letter-explain")]
+        public async Task<ActionResult<IEnumerable<ReferenceLetterExplainReadOnlyModel>>> GetReferenceLetterExplainReadOnly_GetAllAsync(
+            [FromServices] IReferenceLetterExplainReadOnlyListFactory referenceLetterExplainReadOnlyListFactory)
+        {
+            var items = await referenceLetterExplainReadOnlyListFactory.GetAllAsync();
+        
+            return Ok(_mapper.Map<IEnumerable<ReferenceLetterExplainReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ReferenceLetterTypeReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
