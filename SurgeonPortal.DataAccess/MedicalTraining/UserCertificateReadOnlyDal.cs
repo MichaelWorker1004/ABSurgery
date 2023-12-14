@@ -15,6 +15,23 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
 
 
 
+        public async Task<IEnumerable<UserCertificateReadOnlyDto>> GetByUserAndTypeAsync(
+            int userId,
+            int certificateTypeId)
+        {
+            using (var connection = CreateConnection())
+            {
+                return await connection.ExecAsync<UserCertificateReadOnlyDto>(
+                    "[dbo].[get_user_certs_by_certId]",
+                        new
+                        {
+                            UserId = userId,
+                            CertificateTypeId = certificateTypeId,
+                        });
+                        
+            }
+        }
+
         public async Task<IEnumerable<UserCertificateReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())

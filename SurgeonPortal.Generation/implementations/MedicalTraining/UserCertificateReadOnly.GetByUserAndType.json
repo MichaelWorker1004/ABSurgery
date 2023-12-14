@@ -1,0 +1,167 @@
+{
+  "name": "UserCertificateReadOnly",
+  "implementationName": "MedicalTraining\\UserCertificateReadOnly.GetByUserAndType",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_user_certs_by_certid",
+    "ControllerName": "MedicalTraining\\UserCertificateController",
+    "ControllerRoute": "api/user-certificates",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserAndType",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "MedicalTraining\\UserCertificateReadOnly",
+    "ModelGroup": "UserCertificateReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid-and-typeid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_certs_by_certid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_certs_by_certId]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "CertificateTypeId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "CertificateTypeId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "MedicalTraining\\UserCertificateReadOnly",
+            "fields": [
+              {
+                "name": "CertificateId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.CertificateId"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "DocumentId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentId"
+              },
+              {
+                "name": "CertificateTypeId",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificateTypeId"
+              },
+              {
+                "name": "CertificateType",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificateType"
+              },
+              {
+                "name": "IssueDate",
+                "dataType": "datetime",
+                "maxLength": 3,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.IssueDate"
+              },
+              {
+                "name": "CertificateNumber",
+                "dataType": "string",
+                "maxLength": 25,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.CertificateNumber"
+              },
+              {
+                "name": "DocumentName",
+                "dataType": "string",
+                "maxLength": 255,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DocumentName"
+              },
+              {
+                "name": "UploadDateUtc",
+                "dataType": "datetime",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UploadDateUtc"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "CertificateTypeId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s MedicalTraining\\UserCertificateReadOnly.GetByUserAndType UserCertificateReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\UserCertificateReadOnly -p:Adapter=sp:abssp-[dbo].[get_user_certs_by_certId] -p:FetchMethodName=GetByUserAndType -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=UserCertificateReadOnly -p:Route=by-userid-and-typeid -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 ",
+    "inferredCommand": "ytgim generate i  MedicalTraining\\UserCertificateReadOnly.GetByUserAndType UserCertificateReadOnly -t=ytg-framework/readonly-getlist -p:Model=MedicalTraining\\UserCertificateReadOnly -p:Adapter=sp:abssp-[dbo].[get_user_certs_by_certId] -p:FetchMethodName=GetByUserAndType -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=UserCertificateReadOnly -p:Route=by-userid-and-typeid -p:ControllerName=MedicalTraining\\UserCertificateController -p:ControllerRoute=api/user-certificates -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-14T20:55:29.4612415Z"
+  },
+  "version": 1
+}

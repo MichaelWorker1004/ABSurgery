@@ -94,6 +94,32 @@ export class UserCertificateService {
                 model);
         }
  
+        public retrieveUserCertificateReadOnly_GetByUserAndType(certificateTypeId: number,
+        apiVersion = '1.0'): Observable<IUserCertificateReadOnlyModel[]> {
+            /**
+            * Claims
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * certificateTypeId:Number
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_user_certs_by_certId]
+            */
+            
+            
+            return this.apiService.get<IUserCertificateReadOnlyModel[]>(`api/user-certificates/by-userid-and-typeid?api-version=${apiVersion}&certificateTypeId=${certificateTypeId}`);
+        }
+ 
         public retrieveUserCertificateReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IUserCertificateReadOnlyModel[]> {
             /**
             * Claims

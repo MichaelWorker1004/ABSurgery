@@ -13,6 +13,65 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
 	public class UserCertificateReadOnlyListTests : TestBase<int>
     {
         [Test]
+        public async Task GetByUserAndTypeAsync_CallsDalCorrectly()
+        {
+            var expectedCertificateTypeId = Create<int>();
+            var expectedUserId = 1234;
+            
+            var mockDal = new Mock<IUserCertificateReadOnlyDal>();
+            mockDal.Setup(m => m.GetByUserAndTypeAsync(
+                expectedUserId,
+                expectedCertificateTypeId))
+                .ReturnsAsync(CreateMany<UserCertificateReadOnlyDto>());
+            
+        
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<IUserCertificateReadOnlyList, UserCertificateReadOnlyList>()
+                .WithBusinessObject<IUserCertificateReadOnly, UserCertificateReadOnly>()
+                .Build();
+        
+            var factory = new UserCertificateReadOnlyListFactory();
+            var sut = await factory.GetByUserAndTypeAsync(expectedCertificateTypeId);
+        
+            mockDal.VerifyAll();
+        }
+        
+        [Test]
+        public async Task GetByUserAndTypeAsync_LoadsChildrenCorrectly()
+        {
+            var expectedDtos = CreateMany<UserCertificateReadOnlyDto>();
+            var expectedCertificateTypeId = Create<int>();
+            var expectedUserId = 1234;
+            
+        
+            var mockDal = new Mock<IUserCertificateReadOnlyDal>();
+            mockDal.Setup(m => m.GetByUserAndTypeAsync(
+                expectedUserId,
+                expectedCertificateTypeId))
+                .ReturnsAsync(expectedDtos);
+            
+        
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<IUserCertificateReadOnlyList, UserCertificateReadOnlyList>()
+                .WithBusinessObject<IUserCertificateReadOnly, UserCertificateReadOnly>()
+                .Build();
+        
+            var factory = new UserCertificateReadOnlyListFactory();
+            var sut = await factory.GetByUserAndTypeAsync(expectedCertificateTypeId);
+        
+            Assert.That(sut, Has.Count.EqualTo(3));
+            expectedDtos.Should().BeEquivalentTo(sut, options => 
+            {
+                options.ExcludingMissingMembers();
+                return options;
+            });
+        }
+
+        [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
             var expectedUserId = 1234;
@@ -20,8 +79,8 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var mockDal = new Mock<IUserCertificateReadOnlyDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(CreateMany<UserCertificateReadOnlyDto>());
+            
         
-                
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
@@ -45,8 +104,8 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             var mockDal = new Mock<IUserCertificateReadOnlyDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
                 .ReturnsAsync(expectedDtos);
+            
         
-                
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithRegisteredInstance(mockDal)
