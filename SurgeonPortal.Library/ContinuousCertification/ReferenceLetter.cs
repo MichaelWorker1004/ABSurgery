@@ -294,6 +294,8 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			dto.City = this.City;
 			dto.State = this.State;
 			dto.FullName = this.FullName;
+			dto.SecOrder = this.SecOrder;
+			dto.IdCode = this.IdCode;
 
 			return dto;
 		}
