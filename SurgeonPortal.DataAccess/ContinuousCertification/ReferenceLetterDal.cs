@@ -49,6 +49,8 @@ namespace SurgeonPortal.DataAccess.ContinuousCertification
                                 Hosp = dto.Hosp,
                                 City = dto.City,
                                 State = dto.State,
+                                SecOrder = dto.SecOrder,
+                                IdCode = dto.IdCode,
                             });
                             
                 }

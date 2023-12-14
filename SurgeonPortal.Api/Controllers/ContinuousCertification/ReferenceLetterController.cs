@@ -97,6 +97,7 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
             entity.Hosp = model.Hosp;
             entity.City = model.City;
             entity.State = model.State;
+            entity.SecOrder = model.SecOrder;
         }
     }
 }

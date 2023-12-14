@@ -131,6 +131,24 @@
             "scale": 0,
             "required": true,
             "mapsTo": "State"
+          },
+          {
+            "name": "SecOrder",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "SecOrder"
+          },
+          {
+            "name": "IdCode",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "IdCode"
           }
         ],
         "recordsets": [
@@ -339,12 +357,22 @@
       "name": "State",
       "dataType": "string",
       "required": true
+    },
+    {
+      "name": "SecOrder",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "IdCode",
+      "dataType": "string",
+      "required": true
     }
   ],
   "metadata": {
-    "command": "ytgim g i pa ContinuousCertification\\\\ReferenceLetter.insert ReferenceLetter -t=ytg-framework/editable-create -p:Model=ContinuousCertification\\\\ReferenceLetter -p:Adapter=sp:ABSSP-[dbo].[ins_cc_refLetter] -p:FetchImplementation=ContinuousCertification\\\\ReferenceLetter.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ReferenceLetter -p:Route= -p:ControllerName=ContinuousCertification\\\\ReferenceLetterController -p:ControllerRoute=api/continuous-certification/reference-letter -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim -f ",
+    "command": "ytgim g i pa ContinuousCertification\\ReferenceLetter.insert ReferenceLetter -t=ytg-framework/editable-create -p:Model=ContinuousCertification\\ReferenceLetter -p:Adapter=sp:ABSSP-[dbo].[ins_cc_refLetter] -p:FetchImplementation=ContinuousCertification\\ReferenceLetter.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ReferenceLetter -p:Route= -p:ControllerName=ContinuousCertification\\ReferenceLetterController -p:ControllerRoute=api/continuous-certification/reference-letter -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim -f ",
     "inferredCommand": "ytgim generate i  ContinuousCertification\\ReferenceLetter.insert ReferenceLetter -t=ytg-framework/editable-create -p:Model=ContinuousCertification\\ReferenceLetter -p:Adapter=sp:ABSSP-[dbo].[ins_cc_refLetter] -p:FetchImplementation=ContinuousCertification\\ReferenceLetter.GetById -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ReferenceLetter -p:Route= -p:ControllerName=ContinuousCertification\\ReferenceLetterController -p:ControllerRoute=api/continuous-certification/reference-letter -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-12-12T20:12:39.0648203Z"
+    "generatedDateUtc": "2023-12-14T15:03:17.5745447Z"
   },
   "version": 1
 }

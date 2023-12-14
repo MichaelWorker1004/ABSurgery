@@ -78,6 +78,8 @@ namespace SurgeonPortal.DataAccess.Tests.ContinuousCertification
                     Hosp = expectedDto.Hosp,
                     City = expectedDto.City,
                     State = expectedDto.State,
+                    SecOrder = expectedDto.SecOrder,
+                    IdCode = expectedDto.IdCode,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
