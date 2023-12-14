@@ -1,12 +1,16 @@
 using Csla;
 using Csla.Rules.CommonRules;
+using Microsoft.Extensions.Options;
 using SurgeonPortal.DataAccess.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.Email;
+using SurgeonPortal.Shared.ReferenceLetters;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
@@ -22,15 +26,18 @@ namespace SurgeonPortal.Library.ContinuousCertification
     {
         private readonly IReferenceLetterDal _referenceLetterDal;
 		private readonly IEmailFactory _emailFactory;
+		private readonly ReferenceLettersConfiguration _referenceLettersConfiguration;
 
         public ReferenceLetter(
             IIdentityProvider identityProvider,
             IReferenceLetterDal referenceLetterDal,
-			IEmailFactory emailFactory)
+			IEmailFactory emailFactory,
+			IOptions<ReferenceLettersConfiguration> referenceLettersConfiguration)
             : base(identityProvider)
         {
             _referenceLetterDal = referenceLetterDal;
 			_emailFactory = emailFactory;
+			_referenceLettersConfiguration = referenceLettersConfiguration.Value;
         }
 
         [DisplayName(nameof(UserId))]
@@ -147,6 +154,22 @@ namespace SurgeonPortal.Library.ContinuousCertification
 		}
 		public static readonly PropertyInfo<string> FullNameProperty = RegisterProperty<string>(c => c.FullName);
 
+        [DisplayName(nameof(SecOrder))]
+        public int SecOrder
+        {
+            get { return GetProperty(SecOrderProperty); }
+            set { SetProperty(SecOrderProperty, value); }
+        }
+        public static readonly PropertyInfo<int> SecOrderProperty = RegisterProperty<int>(c => c.SecOrder);
+
+        [DisplayName(nameof(IdCode))]
+        public string IdCode
+        {
+            get { return GetProperty(IdCodeProperty); }
+            set { SetProperty(IdCodeProperty, value); }
+        }
+        public static readonly PropertyInfo<string> IdCodeProperty = RegisterProperty<string>(c => c.IdCode);
+
 
 
         /// <summary>
@@ -211,7 +234,11 @@ namespace SurgeonPortal.Library.ContinuousCertification
         private async Task Insert()
         {
             base.DataPortal_Insert();
-        
+
+			LoadProperty(IdCodeProperty, GenerateIdCode());
+
+            await SendReferenceLetter();
+
             using (BypassPropertyChecks)
             {
                 var dto = await _referenceLetterDal.InsertAsync(ToDto());
@@ -220,8 +247,6 @@ namespace SurgeonPortal.Library.ContinuousCertification
         
                 MarkIdle();
             }
-
-			await SendReferenceLetter();
         }
 
 
@@ -273,14 +298,22 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			return dto;
 		}
 
+		private string GenerateIdCode()
+		{
+			var sha = SHA1.Create();
+			return Convert.ToHexString(sha.ComputeHash(Encoding.UTF8.GetBytes($"{Email}{UserId}{SecOrder}")));
+		}
+
 		private async Task SendReferenceLetter()
 		{
 			var email = _emailFactory.Create();
 
+			var url = $"{_referenceLettersConfiguration.Url}?reflet={IdCode}";
+
 			// TODO replace with template logic
 			email.To = Email;
 			email.Subject = "Mock Reference Letter";
-			email.PlainTextContent = "This is a mock reference letter.";
+			email.PlainTextContent = $"This is a mock reference letter. Url: {url}";
 
 			await email.SendAsync();
 		}

@@ -1,11 +1,12 @@
 using FluentAssertions;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.ContinuousCertification;
 using SurgeonPortal.Library.Contracts.Email;
-using SurgeonPortal.Library.Contracts.EmailProvider;
+using SurgeonPortal.Shared.ReferenceLetters;
 using System.Threading.Tasks;
 using Ytg.UnitTest;
 
@@ -56,6 +57,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithRegisteredInstance(mockEmailFactory)
+                .WithRegisteredInstance(new Mock<IOptions<ReferenceLettersConfiguration>>())
                 .WithBusinessObject<IReferenceLetter, ReferenceLetter>()
                 .Build();
         
@@ -82,13 +84,17 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithRegisteredInstance(mockEmailFactory)
+                .WithRegisteredInstance(GetConfiguration())
                 .WithBusinessObject<IReferenceLetter, ReferenceLetter>()
                 .Build();
         
             var factory = new ReferenceLetterFactory();
             var sut = await factory.GetByIdAsync(expectedId);
         
-            dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
+            dto.Should().BeEquivalentTo(sut, options => options
+                .Excluding(m => m.SecOrder)
+                .Excluding(m => m.IdCode)
+                .ExcludingMissingMembers());
         }
         
         #endregion
@@ -113,6 +119,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithRegisteredInstance(mockEmailFactory)
+                .WithRegisteredInstance(GetConfiguration())
                 .WithBusinessObject<IReferenceLetter, ReferenceLetter>()
                 .Build();
         
@@ -143,6 +150,8 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Excluding(m => m.RoleName)
                 .Excluding(m => m.AltRoleName)
                 .Excluding(m => m.FullName)
+                .Excluding(m => m.SecOrder)
+                .Excluding(m => m.IdCode)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
@@ -168,6 +177,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
                 .WithRegisteredInstance(mockDal)
                 .WithRegisteredInstance(mockEmailFactory)
+                .WithRegisteredInstance(GetConfiguration())
                 .WithBusinessObject<IReferenceLetter, ReferenceLetter>()
                 .Build();
         
@@ -192,7 +202,9 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             
             dto.Should().BeEquivalentTo(sut,
                 options => options
-                .Excluding(m => m.CreatedAtUtc)
+                    .Excluding(m => m.SecOrder)
+                    .Excluding(m => m.IdCode)
+                    .Excluding(m => m.CreatedAtUtc)
                     .Excluding(m => m.CreatedByUserId)
                     .Excluding(m => m.LastUpdatedAtUtc)
                     .Excluding(m => m.LastUpdatedByUserId)
@@ -206,6 +218,13 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
             var mockEmailFactory = new Mock<IEmailFactory>();
             mockEmailFactory.Setup(e => e.Create()).Returns(new Mock<IEmail>().Object);
             return mockEmailFactory;
+        }
+
+        private static Mock<IOptions<ReferenceLettersConfiguration>> GetConfiguration()
+        {
+            var mockOptions = new Mock<IOptions<ReferenceLettersConfiguration>>();
+            mockOptions.Setup(m => m.Value).Returns(new ReferenceLettersConfiguration());
+            return mockOptions;
         }
     }
 }

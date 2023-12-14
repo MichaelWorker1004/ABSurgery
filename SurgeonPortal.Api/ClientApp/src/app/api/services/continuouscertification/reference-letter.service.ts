@@ -63,6 +63,8 @@ export class ReferenceLetterService {
             * hosp:String
             * city:String
             * state:String
+            * secOrder:Number
+            * idCode:String
             * apiVersion
             */
             

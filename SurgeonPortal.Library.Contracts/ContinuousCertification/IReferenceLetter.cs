@@ -18,5 +18,7 @@ namespace SurgeonPortal.Library.Contracts.ContinuousCertification
         string City { get; set; }
         string State { get; set; }
         string FullName { get; set; }
+        public int SecOrder { get; set; }
+        public string IdCode { get; set; }
     }
 }
