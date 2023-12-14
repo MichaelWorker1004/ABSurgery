@@ -1,6 +1,7 @@
 import { IOutcomeRegistryModel } from 'src/app/api/models/continuouscertification/outcome-registry.model';
 import { IRefrenceFormModel } from './refrence-form.model';
 import { IAttestationSubmitModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
+import { IReferenceLetterModel } from 'src/app/api/models/continuouscertification/reference-letter.model';
 
 export class CreateOutcomeRegistries {
   static readonly type = '[Continuous Certification] Create Outcome Registries';
@@ -42,7 +43,7 @@ export class RequestRefrence {
   static readonly type =
     '[Continuous Certification] Request Reference Form Grid Data';
 
-  constructor(public model: IRefrenceFormModel) {}
+  constructor(public model: IReferenceLetterModel) {}
 }
 
 export class ClearOutcomeRegistriesErrors {

@@ -16,13 +16,37 @@
     [expandTemplate]="expandedRow"
   >
     <ng-template #expandedRow let-r>
-      <div>
-        <p>Authenticating Official Name: {{ r.authenticatingOfficial }}</p>
-        <p>Authenticating Official Email: {{ r.authOfficialEmail }}</p>
-        <p>Authenticating Official Phone: {{ r.authOfficialPhone }}</p>
-        <p>Authenticating Official Role: {{ r.authOfficialRole }}</p>
-        <p>Authenticating Official Title: {{ r.authOfficialTitle }}</p>
-        <p>Affiliated Institution: {{ r.affiliatedInstitution }}</p>
+      <div class="grid" *ngIf="source === 'continuousCertification'">
+        <div class="col-4">
+          <label>Authenticating Official</label>
+          <p class="mt-1 mb-1" *ngIf="r.official">
+            <b>Name: </b> {{ r.official }}
+          </p>
+          <p class="mt-1 mb-1" *ngIf="r.title"><b>Title: </b> {{ r.title }}</p>
+          <p class="mt-1" *ngIf="r.roleName && !r.altRoleName">
+            <b>Role: </b> {{ r.roleName }}
+          </p>
+          <p class="mt-1 mb-1" *ngIf="r.altRoleName">
+            <b>Altnerate Role: </b> {{ r.roleName }}
+          </p>
+          <p class="mt-1" *ngIf="r.altRoleName && r.explain">
+            <b>Reason for Alt Role: </b> {{ r.explain }}
+          </p>
+        </div>
+        <div class="col-4">
+          <label>Contact Information</label>
+          <p class="mt-1 mb-1" *ngIf="r.email"><b>Email: </b> {{ r.email }}</p>
+          <p class="mt-1" *ngIf="r.email"><b>Phone: </b> {{ r.phone }}</p>
+        </div>
+        <div class="col-4">
+          <label
+            >Letter Status -
+            <span [ngClass]="r.statusClass">{{ r.statusDisplay }}</span></label
+          >
+          <p class="mt-1">
+            <b>Sent On: </b> {{ r.letterSent | date : 'shortDate' }}
+          </p>
+        </div>
       </div>
     </ng-template>
   </abs-grid>
@@ -47,51 +71,50 @@
       </p-button>
       <h5 class="m-0" *ngIf="formExpanded">Add Reference</h5>
     </div>
-    <!-- <h5 class="mt-3 mb-2" panel-header>Add Reference</h5> -->
     <form [formGroup]="referenceLetterForm">
       <div class="grid">
-        <div
-          *ngFor="let formField of referenceLetterFields"
-          class="col-12 md:{{
-            formField.size
-          }} flex flex-column justify-content-start"
-        >
-          <label [htmlFor]="formField.name">{{ formField.label }}</label>
-          <input
-            *ngIf="formField.type === 'text' || formField.type === 'email'"
-            [placeholder]="formField.placeholder ?? ''"
-            [name]="formField.name"
-            [id]="formField.name"
-            [formControlName]="formField.name"
-            [required]="formField.required"
-            [type]="formField.type"
-            pInputText
-          />
-          <input
-            *ngIf="formField.type === 'tel'"
-            [type]="'text'"
-            [id]="formField.name"
-            [name]="formField.name"
-            [formControlName]="formField.name"
-            placeholder="999 999 9999"
-            mask="000 000 0000"
-            pInputText
-          />
-          <p-dropdown
-            *ngIf="formField.type === 'select'"
-            [placeholder]="formField.placeholder ?? ''"
-            [options]="formField.options ?? []"
-            [name]="formField.name"
-            [id]="formField.name"
-            [formControlName]="formField.name"
-            [editable]="true"
-            appendTo="body"
-            optionLabel="itemDescription"
-            optionValue="itemValue"
-          ></p-dropdown>
-          <span>{{ formField.subLabel }}</span>
-        </div>
-
+        <ng-container *ngFor="let formField of referenceLetterFields">
+          <div
+            *ngIf="!formField.hidden"
+            class="col-12 md:{{
+              formField.size
+            }} flex flex-column justify-content-start"
+          >
+            <label [htmlFor]="formField.name">{{ formField.label }}</label>
+            <input
+              *ngIf="formField.type === 'text' || formField.type === 'email'"
+              [placeholder]="formField.placeholder ?? ''"
+              [name]="formField.name"
+              [id]="formField.name"
+              [formControlName]="formField.name"
+              [required]="formField.required"
+              [type]="formField.type"
+              pInputText
+            />
+            <input
+              *ngIf="formField.type === 'tel'"
+              [type]="'text'"
+              [id]="formField.name"
+              [name]="formField.name"
+              [formControlName]="formField.name"
+              placeholder="999 999 9999"
+              mask="000 000 0000"
+              pInputText
+            />
+            <p-dropdown
+              *ngIf="formField.type === 'select'"
+              [placeholder]="formField.placeholder ?? ''"
+              [options]="formField.options ?? []"
+              [name]="formField.name"
+              [id]="formField.name"
+              [formControlName]="formField.name"
+              appendTo="body"
+              optionLabel="itemDescription"
+              optionValue="itemValue"
+            ></p-dropdown>
+            <span>{{ formField.subLabel }}</span>
+          </div>
+        </ng-container>
         <div class="col-12 mb-3">
           I hereby authorize any hospital or medical staff where I now have,
           have had, or have applied for medical staff privileges, and any
@@ -111,8 +134,12 @@
           ensure these forms are completed.
         </div>
         <div class="col-12 flex align-items-start gap-3">
-          <p-checkbox value="Yes" inputId="sendEmail"></p-checkbox>
-          <label for="ny"
+          <p-checkbox
+            [binary]="true"
+            inputId="sendEmail"
+            formControlName="confirmSend"
+          ></p-checkbox>
+          <label for="sendEmail"
             >I would like my reference form sent to me via email</label
           >
         </div>
@@ -123,7 +150,10 @@
           >
             Cancel
           </p-button>
-          <p-button [style]="{ width: '337px' }" (click)="onSubmitPanel()"
+          <p-button
+            [style]="{ width: '337px' }"
+            [disabled]="referenceLetterForm.invalid"
+            (click)="onSubmitPanel()"
             >Save</p-button
           >
         </div>

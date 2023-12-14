@@ -27,6 +27,9 @@ import { Status } from 'src/app/shared/components/action-card/status.enum';
 import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
 import { AttestationService } from 'src/app/api/services/continuouscertification/attestation.service';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { IReferenceLetterReadOnlyModel } from 'src/app/api/models/continuouscertification/reference-letter-read-only.model';
+import { ReferenceLetterService } from 'src/app/api/services/continuouscertification/reference-letter.service';
+import { IReferenceLetterModel } from 'src/app/api/models/continuouscertification/reference-letter.model';
 
 const statusTypes = [
   Status.InProgress, //0
@@ -40,7 +43,8 @@ export interface IContinuousCertication {
   attestations: IAttestationReadOnlyModel[] | undefined;
   continuousCertificationStatuses?: IStatuses[];
   outcomeRegistriesErrors?: IFormErrors | null;
-  refrenceFormGridData?: IRefrenceFormReadOnlyModel[] | null;
+  refrenceFormGridData?: IReferenceLetterReadOnlyModel[] | null;
+  referenceLetterErrors?: IFormErrors | null;
   errors?: IFormErrors | null;
 }
 
@@ -56,6 +60,7 @@ export const CONTCERT_STATE_TOKEN = new StateToken<IContinuousCertication>(
     continuousCertificationStatuses: undefined,
     outcomeRegistriesErrors: null,
     refrenceFormGridData: null,
+    referenceLetterErrors: null,
     errors: null,
   },
 })
@@ -65,6 +70,7 @@ export class ContinuousCertificationState {
     private outcomeRegistriesService: OutcomeRegistriesService,
     private dashboardStatusService: DashboardStatusService,
     private attestationService: AttestationService,
+    private referenceLetterService: ReferenceLetterService,
     private globalDialogService: GlobalDialogService
   ) {}
 
@@ -73,7 +79,6 @@ export class ContinuousCertificationState {
     ctx: StateContext<IContinuousCertication>,
     { payload }: CreateOutcomeRegistries
   ) {
-    console.log(payload);
     return this.outcomeRegistriesService.createOutcomeRegistry(payload).pipe(
       tap((outcomeRegistries: IOutcomeRegistryModel) => {
         ctx.patchState({
@@ -236,66 +241,65 @@ export class ContinuousCertificationState {
 
   @Action(GetRefrenceFormGridData)
   getRefrenceFormGridData(ctx: StateContext<IContinuousCertication>) {
-    const response = [
-      {
-        referenceFormId: 'MD19143',
-        affiliatedInstitution: 'ABS',
-        authenticatingOfficial: 'John Doe, M.D.',
-        authOfficialRole: 'Role 1',
-        authOfficialTitle: 'Title 1',
-        authOfficialEmail: 'email1@email.io',
-        authOfficialPhone: '111-123-1234',
-        date: new Date('09/21/2019'),
-        status: 'Requested',
-        id: 1,
-        expandedDataLoading: false,
-        expandedData: null,
-      },
-      {
-        referenceFormId: 'MD08221',
-        affiliatedInstitution: 'ABS',
-        authenticatingOfficial: 'Mary Joseph',
-        authOfficialRole: 'Role 2',
-        authOfficialTitle: 'Title 2',
-        authOfficialEmail: 'email2@email.io',
-        authOfficialPhone: '222-123-1234',
-        date: new Date('08/12/2019'),
-        status: 'Approved',
-        id: 2,
-        expandedDataLoading: false,
-        expandedData: null,
-      },
-      {
-        referenceFormId: 'MD12345',
-        affiliatedInstitution: 'ABS',
-        authenticatingOfficial: 'John Dorian',
-        authOfficialRole: 'Role 3',
-        authOfficialTitle: 'Title 3',
-        authOfficialEmail: 'email3@email.io',
-        authOfficialPhone: '333-123-1234',
-        date: new Date('8/1/2019'),
-        status: 'Approved',
-        id: 3,
-        expandedDataLoading: false,
-        expandedData: null,
-      },
-    ];
+    return this.referenceLetterService
+      .retrieveReferenceLetterReadOnly_GetAllByUserId()
+      .pipe(
+        tap((referenceLetters: IReferenceLetterReadOnlyModel[]) => {
+          const statusOptions = [
+            'Required',
+            'Pending',
+            'Awaiting ABS Approval',
+            'Approved',
+          ];
+          const statusClasses = ['danger', 'warning', 'warning', 'success'];
 
-    ctx.patchState({
-      refrenceFormGridData: response,
-    });
+          const mappedData = referenceLetters.map((letter) => {
+            return {
+              ...letter,
+              letterSent: letter.letterSent
+                ? new Date(letter.letterSent)
+                : undefined,
+              statusDisplay: letter.status
+                ? statusOptions[letter.status]
+                : 'Processing',
+              statusClass: letter.status
+                ? statusClasses[letter.status]
+                : 'warning',
+            } as unknown as IReferenceLetterReadOnlyModel;
+          });
+          ctx.patchState({
+            refrenceFormGridData: mappedData,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
   }
 
   @Action(RequestRefrence)
   requestRefrence(
     ctx: StateContext<IContinuousCertication>,
-    { model }: RequestRefrence
+    payload: RequestRefrence
   ) {
-    // API CALL TO SEND REFRENCE
-    console.log('Request Refrence', model);
-
-    // REFRESH GRID DATA
-    ctx.dispatch(new GetRefrenceFormGridData());
+    return this.referenceLetterService
+      .createReferenceLetter(payload.model)
+      .pipe(
+        tap((response) => {
+          ctx.patchState({ referenceLetterErrors: null });
+          ctx.dispatch(new GetRefrenceFormGridData());
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ referenceLetterErrors: errors });
+          return of(errors);
+        })
+      );
   }
 
   @Action(ClearOutcomeRegistriesErrors)

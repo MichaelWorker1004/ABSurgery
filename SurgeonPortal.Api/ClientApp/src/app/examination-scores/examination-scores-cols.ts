@@ -7,6 +7,6 @@ export const EXAMINATION_SCORES_COLS = [
   AbsGrid.setTextDisplayCol('Candidate Name', 'displayName', true),
   // AbsGrid.setTextDisplayCol('Score', 'score', true),
   // AbsGrid.setTextDisplayCol('Critical Fail Y/N', 'criticalFail', true),
-  AbsGrid.setCellCustomClass('Status', 'status', true),
+  AbsGrid.setCellCustomClass('Status', 'status', undefined, true),
   AbsGrid.setCustomButtonCol('View', 'view', 'fa fa-eye'),
 ];

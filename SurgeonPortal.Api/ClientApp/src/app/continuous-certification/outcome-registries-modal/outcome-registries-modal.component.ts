@@ -125,7 +125,6 @@ export class OutcomeRegistriesModalComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.outcomeRegistriesForm.getRawValue());
     const formValues = {
       ...this.outcomeRegistriesForm.getRawValue(),
       userConfirmedDateUtc: new Date(),

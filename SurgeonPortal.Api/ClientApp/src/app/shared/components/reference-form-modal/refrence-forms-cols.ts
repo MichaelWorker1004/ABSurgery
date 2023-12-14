@@ -1,14 +1,10 @@
 import { AbsGrid } from '../grid/abs-grid';
 
 export const REFERENCE_FORMS_COLS = [
-  AbsGrid.setTextDisplayCol('Reference Form', 'referenceFormId'),
-  AbsGrid.setTextDisplayCol('Affiliated Institution', 'affiliatedInstitution'),
-  AbsGrid.setTextDisplayCol(
-    'Authenticating Official',
-    'authenticatingOfficial'
-  ),
-  AbsGrid.setFormattedDateCol('Date', 'date'),
-  AbsGrid.setCellCustomClass('Status', 'status'),
-  AbsGrid.setCustomButtonCol('Delete', 'delete', 'fa-solid fa-trash'),
+  AbsGrid.setTextDisplayCol('Reference Form', 'id'),
+  AbsGrid.setTextDisplayCol('Hospital', 'hosp'),
+  AbsGrid.setTextDisplayCol('Authenticating Official', 'official'),
+  AbsGrid.setFormattedDateCol('Date Sent', 'letterSent'),
+  AbsGrid.setCellCustomClass('Status', 'statusDisplay', 'statusClass'),
   AbsGrid.setExpandToggle('View', 'view'),
 ];

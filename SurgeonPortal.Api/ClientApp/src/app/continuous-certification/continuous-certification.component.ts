@@ -11,12 +11,13 @@ import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outc
 import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
 import {
   IReferenceFormModalConfig,
+  IReferenceLetterPicklists,
   ReferenceFormModalComponent,
 } from '../shared/components/reference-form-modal/reference-form-modal.component';
 import { Action } from '../shared/components/action-card/action.enum';
 import { Observable, skipWhile, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
-import { GetStateList } from '../state/picklists';
+import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
 import { LegendComponent } from '../shared/components/legend/legend.component';
@@ -32,12 +33,14 @@ import {
   SubmitAttestation,
   GetDashboardCertificationStatus,
   DashboardSelectors,
+  RequestRefrence,
 } from '../state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IStatuses } from '../api/models/users/statuses.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IAttestationSubmitModel } from '../api/models/continuouscertification/attestation-read-only.model';
 import { IRefrenceFormReadOnlyModel } from '../state/continuous-certification/refrence-form-read-only.model';
+import { IReferenceLetterModel } from '../api/models/continuouscertification/reference-letter.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -95,7 +98,15 @@ export class ContinuousCertificationComponent implements OnInit {
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
 
+  referenceLetterPicklists: IReferenceLetterPicklists = {
+    stateOptions: [],
+    roleOptions: [],
+    altRoleOptions: [],
+    explainOptions: [],
+  };
+
   referenceFormModalConfig: IReferenceFormModalConfig = {
+    source: 'continuousCertification',
     lapsedPath: false,
   };
 
@@ -136,7 +147,33 @@ export class ContinuousCertificationComponent implements OnInit {
     private _store: Store,
     private globalDialogService: GlobalDialogService
   ) {
-    this._store.dispatch(new GetStateList('500'));
+    this._store
+      .dispatch(new GetPicklists('500'))
+      .pipe(take(1))
+      .subscribe(() => {
+        const newReferenceLetterPicklists: IReferenceLetterPicklists = {
+          stateOptions: [],
+          roleOptions: [],
+          altRoleOptions: [],
+          explainOptions: [],
+        };
+        newReferenceLetterPicklists.stateOptions =
+          this._store.selectSnapshot(PicklistsSelectors.slices.states) || [];
+        newReferenceLetterPicklists.roleOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterRoleTypes
+          ) || [];
+        newReferenceLetterPicklists.altRoleOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterAltRoleTypes
+          ) || [];
+        newReferenceLetterPicklists.explainOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterExplainOptions
+          ) || [];
+
+        this.referenceLetterPicklists = newReferenceLetterPicklists;
+      });
     this._store.dispatch(new GetContinuousCertificationStatuses());
     this._store.dispatch(new GetRefrenceFormGridData());
     this.featureFlags$?.pipe(take(1)).subscribe((featureFlags) => {
@@ -284,7 +321,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
-        id: 'referenceForms',
+        id: 'Ref_Let',
         title: 'Reference Forms',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -298,7 +335,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
-        id: 'attestation',
+        id: 'CC_Attestation',
         title: 'Attestation',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -386,4 +423,20 @@ export class ContinuousCertificationComponent implements OnInit {
         this.handleCardAction('attestationModal');
       });
   }
+
+  // handleReferenceLetterSave(data: IReferenceLetterModel) {
+  //   this.globalDialogService.showLoading();
+  //   console.log('save reference letter', data);
+  //   const model: IReferenceLetterModel = {
+  //     ...data,
+  //   };
+
+  //   // this._store
+  //   //   .dispatch(new RequestRefrence(model))
+  //   //   .pipe(untilDestroyed(this))
+  //   //   .subscribe(() => {
+  //   //     this.globalDialogService.closeOpenDialog();
+  //   //     this.handleCardAction('referenceModal');
+  //   //   });
+  // }
 }
