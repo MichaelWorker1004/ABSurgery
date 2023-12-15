@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\ReferenceLetterExplainReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Explain",
+      "dataType": "string",
+      "maxLength": 200,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ReferenceLetterExplainReadOnly -sp [dbo].[get_refLet_explain_picklist] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-13T18:12:59.8426405Z"
+  },
+  "version": 1
+}

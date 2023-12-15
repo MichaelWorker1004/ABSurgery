@@ -147,12 +147,15 @@ export class GridComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (isObservable(this.data)) {
       this.data.subscribe((data: any) => {
-        const mappedData = data?.map((item: any) => {
-          return {
-            ...item,
-            expanded: item.expanded ?? false,
-          };
-        });
+        let mappedData;
+        if (data?.length > 0) {
+          mappedData = data?.map((item: any) => {
+            return {
+              ...item,
+              expanded: item.expanded ?? false,
+            };
+          });
+        }
 
         this.localData = mappedData ?? [];
         this.filteredData = mappedData ?? [];
@@ -306,5 +309,14 @@ export class GridComponent implements OnInit, OnChanges {
       this.initPagintion(this.filteredData);
       this.changePage(1);
     }
+  }
+
+  /**
+   *
+   * removes special characters and spaces from string, replaces with '-'
+   *
+   */
+  cleanString(str: string) {
+    return str.replace(/[^a-zA-Z0-9]+/gi, '-');
   }
 }

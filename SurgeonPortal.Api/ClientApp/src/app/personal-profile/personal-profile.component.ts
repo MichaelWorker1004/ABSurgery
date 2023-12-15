@@ -328,7 +328,6 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const model = this.userProfileForm.value;
-    console.log(model);
     model.birthDate = new Date(model.birthDate).toISOString();
 
     this._store

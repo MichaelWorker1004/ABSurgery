@@ -43,6 +43,7 @@ using SurgeonPortal.Shared.Email;
 using SendGrid.Extensions.DependencyInjection;
 using SurgeonPortal.Library.Contracts.EmailProvider;
 using SurgeonPortal.Library.EmailProvider.SendGrid;
+using SurgeonPortal.Shared.ReferenceLetters;
 
 namespace SurgeonPortal.Api
 {
@@ -72,6 +73,7 @@ namespace SurgeonPortal.Api
             services.Configure<PaymentProviderConfiguration>(Configuration.GetSection(ConfigurationSections.PaymentProvider));
             services.Configure<ReportConfiguration>(Configuration.GetSection(ConfigurationSections.Reports));
             services.Configure<EmailConfiguration>(Configuration.GetSection(ConfigurationSections.Email));
+            services.Configure<ReferenceLettersConfiguration>(Configuration.GetSection(ConfigurationSections.ReferenceLetters));
 
             services.AddCsla();
 

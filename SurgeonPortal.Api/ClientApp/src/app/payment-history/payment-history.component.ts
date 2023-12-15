@@ -65,8 +65,15 @@ export class PaymentHistoryComponent implements OnInit {
   }
 
   handlePaymentClick($event: any) {
-    this.amount$.next($event.data.balanceDue);
-    this.invoiceNumber$.next($event.data.invoiceNumber);
-    this.payFeeModal = true;
+    if ($event.fieldKey === 'pay balance') {
+      this.amount$.next($event.data.balanceDue);
+      this.invoiceNumber$.next($event.data.invoiceNumber);
+      this.payFeeModal = true;
+    } else if ($event.fieldKey === 'receipt') {
+      window.open(
+        `api/reports/invoice?invoiceNumber=${$event.data.invoiceNumber}`,
+        '_blank'
+      );
+    }
   }
 }

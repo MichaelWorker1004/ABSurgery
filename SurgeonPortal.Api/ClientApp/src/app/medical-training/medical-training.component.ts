@@ -396,8 +396,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
   handleDocumentUpload(event: any) {
     const data = event.data;
 
-    console.log(data);
-
     const model = {
       documentId: 1,
       certificateTypeId: data.typeId,

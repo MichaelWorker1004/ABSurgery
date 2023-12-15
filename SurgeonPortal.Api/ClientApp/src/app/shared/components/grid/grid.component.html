@@ -152,7 +152,11 @@
               </div>
               <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
-                [class]="c.cellClass(r[c.fieldName]).toLowerCase()"
+                [class]="
+                  cleanString(
+                    c.cellClass(r[c.classField || c.fieldName]).toLowerCase()
+                  )
+                "
               >
                 <span class="pr-1" *ngIf="c.prependIcon.length !== 1">
                   <i [class]="c.prependIcon ?? ''"></i>

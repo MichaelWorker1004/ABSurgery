@@ -58,6 +58,7 @@
   modalName="referenceFormsModal"
 >
   <abs-reference-form-modal
+    [picklistValues]="referenceLetterPicklists"
     [referenceFormGridData$]="referenceFormGridData$"
     [modalConfig]="referenceFormModalConfig"
     (closeDialog)="handleCardAction('referenceFormsModal')"

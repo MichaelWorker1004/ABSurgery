@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Picklists\\ReferenceLetterAltRoleReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "Id",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
+      "rules": {}
+    },
+    {
+      "name": "Role",
+      "dataType": "string",
+      "maxLength": 200,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Picklists\\ReferenceLetterAltRoleReadOnly -sp [dbo].[get_regLet_altrole_picklist] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-13T16:11:30.8799944Z"
+  },
+  "version": 1
+}
