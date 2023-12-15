@@ -12,6 +12,8 @@ namespace SurgeonPortal.Library.MedicalTraining
         FLS,
         ACLS,
         ATLS,
-        PALS
+        PALS,
+        RPVI,
+        ACGME
     }
 }
