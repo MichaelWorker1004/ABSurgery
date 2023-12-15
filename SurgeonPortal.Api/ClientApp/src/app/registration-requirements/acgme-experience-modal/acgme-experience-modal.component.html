@@ -12,9 +12,10 @@
 <abs-documents-upload
   [showFilter]="false"
   [gridCols]="AcgmeGridCols"
-  [documentsData]="AcgmeGridData"
+  [documentsData]="userCertificates$ | async"
   [userId]="userId$ | async"
   (uploadAction)="onDocumentUpload($event)"
+  [allowUpload]="allowUpload"
 ></abs-documents-upload>
 
 <div class="flex justify-content-end mt-5" slot="footer">

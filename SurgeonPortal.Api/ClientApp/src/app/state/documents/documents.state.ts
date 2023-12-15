@@ -10,14 +10,17 @@ import {
   DeleteDocument,
   DownloadDocument,
   GetAllDocuments,
+  GetCertificateByType,
   UploadDocument,
 } from './documents.actions';
 import { UserCertificateService } from 'src/app/api/services/medicaltraining/user-certificate.service';
 import { GetUserCertificates } from '../medical-training/medical-training.actions';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { IUserCertificateReadOnlyModel } from 'src/app/api/models/medicaltraining/user-certificate-read-only.model';
 
 export interface IDocuments {
   documents: IDocumentReadOnlyModel[] | undefined;
+  userCertificates: IUserCertificateReadOnlyModel[] | undefined;
   errors?: IFormErrors;
 }
 
@@ -27,6 +30,7 @@ export const DOCUMENTS_STATE_TOKEN = new StateToken<IDocuments>('documents');
   name: DOCUMENTS_STATE_TOKEN,
   defaults: {
     documents: undefined,
+    userCertificates: undefined,
   },
 })
 @Injectable()
@@ -54,6 +58,27 @@ export class DocumentsState {
         return of(error);
       })
     );
+  }
+
+  @Action(GetCertificateByType)
+  GetCertificateByType(
+    ctx: StateContext<IDocuments>,
+    payload: GetCertificateByType
+  ): Observable<IUserCertificateReadOnlyModel[]> {
+    return this.userCertificateService
+      .retrieveUserCertificateReadOnly_GetByUserAndType(payload.certificateType)
+      .pipe(
+        tap((userCertificates) => {
+          ctx.patchState({
+            userCertificates,
+          });
+        }),
+        catchError((error) => {
+          console.error('------- In Documents Store', error);
+          console.error(error);
+          return of(error);
+        })
+      );
   }
 
   @Action(DownloadDocument)

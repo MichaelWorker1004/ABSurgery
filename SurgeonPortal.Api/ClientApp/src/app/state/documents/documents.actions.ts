@@ -2,6 +2,11 @@ export class GetAllDocuments {
   static readonly type = '[Documents] Get all documents';
 }
 
+export class GetCertificateByType {
+  static readonly type = '[Documents] Get certificate by type';
+  constructor(public certificateType: number) {}
+}
+
 export class DownloadDocument {
   static readonly type = '[Documents] Download document';
   constructor(public payload: { documentId: number; documentName: string }) {}

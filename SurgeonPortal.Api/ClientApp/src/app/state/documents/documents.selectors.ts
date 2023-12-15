@@ -9,6 +9,7 @@ export class DocumentSelectors {
     if (state) {
       return {
         documents: state.documents,
+        userCertificates: state.userCertificates,
       } as IDocuments;
     }
     return;
