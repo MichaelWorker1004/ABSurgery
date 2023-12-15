@@ -13,42 +13,60 @@ import {
   Validators,
 } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
+import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
 import { TrainingAddEditModalComponent } from '../shared/components/training-add-edit-modal/training-add-edit-modal.component';
 import { MEDICAL_TRAINING_COLS } from '../shared/gridDefinitions/medical-training-cols';
 
-import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { Select, Store } from '@ngxs/store';
+import { IAdvancedTrainingReadOnlyModel } from '../api/models/medicaltraining/advanced-training-read-only.model';
 import { ModalComponent } from '../shared/components/modal/modal.component';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   MedicalTrainingSelectors,
   UploadDocument,
   UserProfileSelectors,
 } from '../state';
-import { Select, Store } from '@ngxs/store';
-import { AdvancedTrainingService } from '../api/services/medicaltraining/advanced-training.service';
-import { IAdvancedTrainingReadOnlyModel } from '../api/models/medicaltraining/advanced-training-read-only.model';
 
-import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { IStateReadOnlyModel } from '../api';
+import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-training.model';
+import { IFellowshipReadOnlyModel } from '../api/models/medicaltraining/fellowship-read-only.model';
+import { IFellowshipModel } from '../api/models/medicaltraining/fellowship.model';
+import { IMedicalTrainingModel } from '../api/models/medicaltraining/medical-training.model';
+import { IOtherCertificationsModel } from '../api/models/medicaltraining/other-certifications.model';
+import { IUserCertificateReadOnlyModel } from '../api/models/medicaltraining/user-certificate-read-only.model';
+import { IUserCertificateModel } from '../api/models/medicaltraining/user-certificate.model';
+import { ICertificateTypeReadOnlyModel } from '../api/models/picklists/certificate-type-read-only.model';
+import { IDegreeReadOnlyModel } from '../api/models/picklists/degree-read-only.model';
+import { IDocumentTypeReadOnlyModel } from '../api/models/picklists/document-type-read-only.model';
+import { IGraduateProfileReadOnlyModel } from '../api/models/picklists/graduate-profile-read-only.model';
+import { IResidencyProgramReadOnlyModel } from '../api/models/picklists/residency-program-read-only.model';
+import { IFormErrors } from '../shared/common';
+import { DocumentsUploadComponent } from '../shared/components/documents-upload/documents-upload.component';
+import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
+import { IGridColumns } from '../shared/components/grid/abs-grid-col.interface';
+import { SetUnsavedChanges } from '../state/application/application.actions';
 import {
-  CreateMedicalTraining,
-  GetMedicalTraining,
-  GetUserCertificates,
-  GetOtherCertifications,
-  UpdateMedicalTraining,
-  CreateOtherCertification,
-  UpdateOtherCertifications,
-  GetFellowships,
-  DeleteFellowship,
-  UpdateFellowship,
-  CreateFellowship,
   ClearMedicalTrainingErrors,
   CreateAdvancedTraining,
-  UpdateAdvancedTraining,
+  CreateFellowship,
+  CreateMedicalTraining,
+  CreateOtherCertification,
+  DeleteFellowship,
   GetAdvancedTrainingData,
+  GetFellowships,
+  GetMedicalTraining,
+  GetOtherCertifications,
+  GetUserCertificates,
+  UpdateAdvancedTraining,
+  UpdateFellowship,
+  UpdateMedicalTraining,
+  UpdateOtherCertifications,
 } from '../state/medical-training/medical-training.actions';
 import {
   GetCertificateTypes,
@@ -59,31 +77,12 @@ import {
   IPickListItem,
   PicklistsSelectors,
 } from '../state/picklists';
-import { IStateReadOnlyModel } from '../api';
-import { IGraduateProfileReadOnlyModel } from '../api/models/picklists/graduate-profile-read-only.model';
-import { IDegreeReadOnlyModel } from '../api/models/picklists/degree-read-only.model';
-import { FELLOWSHIP_COLS } from './fellowship-cols';
-import { FellowshipAddEditModalComponent } from './fellowship-add-edit-modal/fellowship-add-edit-modal.component';
-import { IFellowshipReadOnlyModel } from '../api/models/medicaltraining/fellowship-read-only.model';
-import { MedicalTrainingActions } from './medical-training-models';
-import { IMedicalTrainingModel } from '../api/models/medicaltraining/medical-training.model';
-import { IResidencyProgramReadOnlyModel } from '../api/models/picklists/residency-program-read-only.model';
-import { DocumentsUploadComponent } from '../shared/components/documents-upload/documents-upload.component';
 import { DOCUMENTS_COLS } from './documents-col';
-import { OTHER_CERTIFICATIONS_COLS } from './other-certificates-add-edit-modal/other-certifications-cols';
+import { FellowshipAddEditModalComponent } from './fellowship-add-edit-modal/fellowship-add-edit-modal.component';
+import { FELLOWSHIP_COLS } from './fellowship-cols';
+import { MedicalTrainingActions } from './medical-training-models';
 import { OtherCertificatesAddEditModalComponent } from './other-certificates-add-edit-modal/other-certificates-add-edit-modal.component';
-import { ICertificateTypeReadOnlyModel } from '../api/models/picklists/certificate-type-read-only.model';
-import { IDocumentTypeReadOnlyModel } from '../api/models/picklists/document-type-read-only.model';
-import { IUserCertificateReadOnlyModel } from '../api/models/medicaltraining/user-certificate-read-only.model';
-import { IOtherCertificationsModel } from '../api/models/medicaltraining/other-certifications.model';
-import { IFellowshipModel } from '../api/models/medicaltraining/fellowship.model';
-import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IFormErrors } from '../shared/common';
-import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-training.model';
-import { SetUnsavedChanges } from '../state/application/application.actions';
-import { IUserCertificateModel } from '../api/models/medicaltraining/user-certificate.model';
-import { IGridColumns } from '../shared/components/grid/abs-grid-col.interface';
+import { OTHER_CERTIFICATIONS_COLS } from './other-certificates-add-edit-modal/other-certifications-cols';
 
 @UntilDestroy()
 @Component({
@@ -234,7 +233,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
 
   constructor(
     private _store: Store,
-    private advancedTrainingService: AdvancedTrainingService,
     public globalDialogService: GlobalDialogService
   ) {
     this._store.dispatch(new GetResidencyPrograms());
@@ -259,7 +257,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
       this.userId = id;
     });
     this.setPicklists();
-    this.getDocumentsData();
     this.getMedicalTraining();
     this.getRPVICertificates();
 
@@ -396,14 +393,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
       });
   }
 
-  getDocumentsData() {
-    this.userCertificates$
-      ?.pipe(untilDestroyed(this))
-      .subscribe((userCertificates: IUserCertificateReadOnlyModel[]) => {
-        this.documentsData$.next(userCertificates);
-      });
-  }
-
   handleDocumentUpload(event: any) {
     const data = event.data;
 
@@ -454,12 +443,12 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
           this._store.dispatch(new DeleteFellowship(data.id));
         },
         certificates: () => {
-          this.getDocumentsData();
+          this._store.dispatch(new GetUserCertificates());
         },
       },
       upload: {
         certificates: () => {
-          this.getDocumentsData();
+          this._store.dispatch(new GetUserCertificates());
         },
       },
     };
