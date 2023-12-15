@@ -9,5 +9,6 @@
         public static string PaymentProvider => "PaymentProviderConfiguration";
         public static string Reports => "Reports";
         public static string Email => "EmailConfiguration";
+        public static string ReferenceLetters => "ReferenceLetters";
     }
 }

@@ -146,7 +146,11 @@
               </div>
               <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
-                [class]="c.cellClass(r[c.fieldName]).toLowerCase()"
+                [class]="
+                  cleanString(
+                    c.cellClass(r[c.classField || c.fieldName]).toLowerCase()
+                  )
+                "
               >
                 {{ r[c.fieldName] }}
               </div>

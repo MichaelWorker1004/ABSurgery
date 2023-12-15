@@ -1,0 +1,211 @@
+{
+  "name": "ReferenceLetterReadOnly",
+  "implementationName": "ContinuousCertification\\ReferenceLetterReadOnly.GetAllByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_cc_refletters",
+    "ControllerName": "ContinuousCertification\\ReferenceLetterController",
+    "ControllerRoute": "api/continuous-certification/reference-letter",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetAllByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ContinuousCertification\\ReferenceLetterReadOnly",
+    "ModelGroup": "ReferenceLetterReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "all-by-user-id",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_cc_refletters",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_cc_refLetters]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ContinuousCertification\\ReferenceLetterReadOnly",
+            "fields": [
+              {
+                "name": "id",
+                "dataType": "decimal",
+                "maxLength": 9,
+                "precision": 18,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "Hosp",
+                "dataType": "string",
+                "maxLength": 356,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Hosp"
+              },
+              {
+                "name": "Official",
+                "dataType": "string",
+                "maxLength": 85,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Official"
+              },
+              {
+                "name": "Title",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Title"
+              },
+              {
+                "name": "RoleName",
+                "dataType": "string",
+                "maxLength": 200,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RoleName"
+              },
+              {
+                "name": "AltRoleName",
+                "dataType": "string",
+                "maxLength": 200,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AltRoleName"
+              },
+              {
+                "name": "RoleId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": "model.RoleId"
+              },
+              {
+                "name": "AltRoleId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": "model.AltRoleId"
+              },
+              {
+                "name": "Explain",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Explain"
+              },
+              {
+                "name": "Email",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Email"
+              },
+              {
+                "name": "Phone",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Phone"
+              },
+              {
+                "name": "LetterSent",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LetterSent"
+              },
+              {
+                "name": "Status",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Status"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ContinuousCertification\\\\ReferenceLetterReadOnly.GetAllByUserId ReferenceLetterReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuousCertification\\\\ReferenceLetterReadOnly -p:Adapter=sp:abssp-[dbo].[get_cc_refLetters] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ReferenceLetterReadOnly -p:Route=all-by-user-id -p:ControllerName=ContinuousCertification\\\\ReferenceLetterController -p:ControllerRoute=api/continuous-certification/reference-letter -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim -f ",
+    "inferredCommand": "ytgim generate i  ContinuousCertification\\ReferenceLetterReadOnly.GetAllByUserId ReferenceLetterReadOnly -t=ytg-framework/readonly-getlist -p:Model=ContinuousCertification\\ReferenceLetterReadOnly -p:Adapter=sp:abssp-[dbo].[get_cc_refLetters] -p:FetchMethodName=GetAllByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ReferenceLetterReadOnly -p:Route=all-by-user-id -p:ControllerName=ContinuousCertification\\ReferenceLetterController -p:ControllerRoute=api/continuous-certification/reference-letter -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-12T20:12:09.0112197Z"
+  },
+  "version": 1
+}

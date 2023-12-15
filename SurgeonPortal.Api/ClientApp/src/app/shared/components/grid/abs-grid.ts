@@ -188,6 +188,7 @@ const AbsGrid = {
   setCellCustomClass(
     headerName: string,
     fieldName: string,
+    classField?: string,
     sortable?: boolean,
     className?: string,
     width?: number
@@ -195,6 +196,7 @@ const AbsGrid = {
     const colDef = {
       headerName,
       fieldName,
+      classField,
       cellRenderer: 'customClass',
       cellClass: (fieldName: string) => {
         return className ?? fieldName;

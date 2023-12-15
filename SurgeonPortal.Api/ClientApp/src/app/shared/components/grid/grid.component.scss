@@ -119,22 +119,22 @@ sl-input {
   }
 }
 
-.requested {
+.requested,
+.warning {
   color: var(--global-warning);
   font-weight: bold;
 }
 .approved,
-.completed {
+.completed,
+.passed,
+.success {
   color: var(--global-success);
   font-weight: bold;
 }
 
 .failed,
-.incomplete {
+.incomplete,
+.danger {
   color: var(--global-danger);
-  font-weight: bold;
-}
-.passed {
-  color: var(--global-success);
   font-weight: bold;
 }

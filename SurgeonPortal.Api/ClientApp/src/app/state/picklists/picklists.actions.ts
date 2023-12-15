@@ -107,3 +107,17 @@ export class GetFellowshipTypes {
 export class GetAccommodationTypes {
   static readonly type = '[Picklists] Get the Accommodation Types list';
 }
+
+export class GetReferenceLetterRoleTypes {
+  static readonly type = '[Picklists] Get the Role List for Reference Letters';
+}
+
+export class GetReferenceLetterAltRoleTypes {
+  static readonly type =
+    '[Picklists] Get the Alt Role List for Reference Letters';
+}
+
+export class GetReferenceLetterExplainOptions {
+  static readonly type =
+    '[Picklists] Get the Explain Options for Reference Letters';
+}

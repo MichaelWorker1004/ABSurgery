@@ -55,11 +55,17 @@ import {
   GetPracticeTypeList,
   GetPrimaryPracticeList,
   GetRaceList,
+  GetReferenceLetterAltRoleTypes,
+  GetReferenceLetterExplainOptions,
+  GetReferenceLetterRoleTypes,
   GetResidencyPrograms,
   GetScoringSessionList,
   GetStateList,
   GetTrainingTypeList,
 } from './picklists.actions';
+import { IReferenceLetterTypeReadOnlyModel } from 'src/app/api/models/picklists/reference-letter-type-read-only.model';
+import { IReferenceLetterAltRoleReadOnlyModel } from 'src/app/api/models/picklists/reference-letter-alt-role-read-only.model';
+import { IReferenceLetterExplainReadOnlyModel } from 'src/app/api/models/picklists/reference-letter-explain-read-only.model';
 export interface IPicklist {
   countries: ICountryReadOnlyModel[] | undefined;
   ethnicities: IEthnicityReadOnlyModel[] | undefined;
@@ -90,6 +96,9 @@ export interface IPicklist {
   scoringSessions: IScoringSessionReadOnlyModel[] | undefined;
   fellowshipTypes: IFellowshipTypeReadOnlyModel[] | undefined;
   accommodationTypes: IAccommodationReadOnlyModel[] | undefined;
+  referenceLetterRoleTypes: IPickListItemNumber[] | undefined;
+  referenceLetterAltRoleTypes: IPickListItemNumber[] | undefined;
+  referenceLetterExplainOptions: IPickListItem[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -162,6 +171,9 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     scoringSessions: undefined,
     fellowshipTypes: undefined,
     accommodationTypes: undefined,
+    referenceLetterRoleTypes: undefined,
+    referenceLetterAltRoleTypes: undefined,
+    referenceLetterExplainOptions: undefined,
   },
 })
 @Injectable()
@@ -753,6 +765,105 @@ export class PicklistsState {
     );
   }
 
+  @Action(GetReferenceLetterRoleTypes)
+  getReferenceLetterRoleTypes(
+    ctx: StateContext<IPicklist>
+  ): Observable<IPickListItemNumber[] | undefined> {
+    if (ctx.getState()?.referenceLetterRoleTypes) {
+      return of(ctx.getState()?.referenceLetterRoleTypes);
+    }
+    return this.picklistsService
+      .retrieveReferenceLetterTypeReadOnly_GetAll()
+      .pipe(
+        tap((roleTypes: IReferenceLetterTypeReadOnlyModel[]) => {
+          const referenceLetterRoleTypes = [] as IPickListItemNumber[];
+          roleTypes.forEach((type) => {
+            referenceLetterRoleTypes.push({
+              itemValue: type.id,
+              itemDescription: type.role,
+            });
+          });
+
+          ctx.patchState({
+            referenceLetterRoleTypes,
+          });
+        }),
+        catchError((error) => {
+          console.error(
+            '------- In Picklists Store: Reference Letter Role Types',
+            error
+          );
+          return of(error);
+        })
+      );
+  }
+
+  @Action(GetReferenceLetterAltRoleTypes)
+  getReferenceLetterAltRoleTypes(
+    ctx: StateContext<IPicklist>
+  ): Observable<IPickListItemNumber[] | undefined> {
+    if (ctx.getState()?.referenceLetterAltRoleTypes) {
+      return of(ctx.getState()?.referenceLetterAltRoleTypes);
+    }
+    return this.picklistsService
+      .retrieveReferenceLetterAltRoleReadOnly_GetAll()
+      .pipe(
+        tap((altRoleTypes: IReferenceLetterAltRoleReadOnlyModel[]) => {
+          const referenceLetterAltRoleTypes = [] as IPickListItemNumber[];
+          altRoleTypes.forEach((type) => {
+            referenceLetterAltRoleTypes.push({
+              itemValue: type.id,
+              itemDescription: type.role,
+            });
+          });
+
+          ctx.patchState({
+            referenceLetterAltRoleTypes,
+          });
+        }),
+        catchError((error) => {
+          console.error(
+            '------- In Picklists Store: Reference Letter Alt Role Types',
+            error
+          );
+          return of(error);
+        })
+      );
+  }
+
+  @Action(GetReferenceLetterExplainOptions)
+  getReferenceLetterExplainOptions(
+    ctx: StateContext<IPicklist>
+  ): Observable<IPickListItem[] | undefined> {
+    if (ctx.getState()?.referenceLetterExplainOptions) {
+      return of(ctx.getState()?.referenceLetterExplainOptions);
+    }
+    return this.picklistsService
+      .retrieveReferenceLetterExplainReadOnly_GetAll()
+      .pipe(
+        tap((explainOptions: IReferenceLetterExplainReadOnlyModel[]) => {
+          const referenceLetterExplainOptions = [] as IPickListItem[];
+          explainOptions.forEach((type) => {
+            referenceLetterExplainOptions.push({
+              itemValue: type.id.toString(),
+              itemDescription: type.explain,
+            });
+          });
+
+          ctx.patchState({
+            referenceLetterExplainOptions,
+          });
+        }),
+        catchError((error) => {
+          console.error(
+            '------- In Picklists Store: Reference Letter Explain Options',
+            error
+          );
+          return of(error);
+        })
+      );
+  }
+
   @Action(GetPicklists)
   getPicklists(
     ctx: StateContext<IPicklist>,
@@ -781,6 +892,15 @@ export class PicklistsState {
       this.getClinicalLevelList(ctx).pipe(catchError((error) => of(error))),
       this.getClinicalActivityList(ctx).pipe(catchError((error) => of(error))),
       this.getAccomodationTypes(ctx).pipe(catchError((error) => of(error))),
+      this.getReferenceLetterRoleTypes(ctx).pipe(
+        catchError((error) => of(error))
+      ),
+      this.getReferenceLetterAltRoleTypes(ctx).pipe(
+        catchError((error) => of(error))
+      ),
+      this.getReferenceLetterExplainOptions(ctx).pipe(
+        catchError((error) => of(error))
+      ),
     ];
 
     if (payload?.countryCode) {

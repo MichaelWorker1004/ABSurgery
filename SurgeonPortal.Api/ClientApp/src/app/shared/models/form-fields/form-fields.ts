@@ -16,4 +16,7 @@ export interface IFormFields {
   helpTextArray?: string[];
   overlapId?: number;
   disabled?: boolean;
+  hidden?: boolean;
+  labelField?: string;
+  valueField?: string;
 }
