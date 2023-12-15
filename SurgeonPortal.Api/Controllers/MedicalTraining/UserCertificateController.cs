@@ -91,6 +91,23 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserCertificateReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("by-userid-and-typeid")]
+        public async Task<ActionResult<IEnumerable<UserCertificateReadOnlyModel>>> GetUserCertificateReadOnly_GetByUserAndTypeAsync(
+            [FromServices] IUserCertificateReadOnlyListFactory userCertificateReadOnlyListFactory,
+            int certificateTypeId)
+        {
+            var items = await userCertificateReadOnlyListFactory.GetByUserAndTypeAsync(certificateTypeId);
+        
+            return Ok(_mapper.Map<IEnumerable<UserCertificateReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserCertificateReadOnlyModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("by-userid")]
         public async Task<ActionResult<IEnumerable<UserCertificateReadOnlyModel>>> GetUserCertificateReadOnly_GetByUserIdAsync(
             [FromServices] IUserCertificateReadOnlyListFactory userCertificateReadOnlyListFactory)

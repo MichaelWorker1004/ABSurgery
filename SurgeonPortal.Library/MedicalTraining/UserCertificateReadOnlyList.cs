@@ -39,6 +39,19 @@ namespace SurgeonPortal.Library.MedicalTraining
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+        private async Task GetByUserAndType(GetByUserAndTypeCriteria criteria)
+        
+        {
+            var dtos = await _userCertificateReadOnlyDal.GetByUserAndTypeAsync(
+                _identity.GetUserId<int>(),
+                criteria.CertificateTypeId);
+        			
+            FetchChildren(dtos);
+        }
+        [Fetch]
+        [RunLocal]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
+           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
         private async Task GetByUserId()
         
         {
