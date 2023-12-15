@@ -312,10 +312,18 @@ namespace SurgeonPortal.Library.ContinuousCertification
 
 			var url = $"{_referenceLettersConfiguration.Url}?reflet={IdCode}";
 
-			// TODO replace with template logic
 			email.To = Email;
-			email.Subject = "Mock Reference Letter";
-			email.PlainTextContent = $"This is a mock reference letter. Url: {url}";
+			email.TemplateId = _referenceLettersConfiguration.EmailTemplateId;
+			var recipientNameSplit = Official.Split(' ', count: 2);
+			var candidateNameSplit = FullName.Split(' ', count: 2);
+			email.TemplateData = new
+			{
+				recipient_first_name = recipientNameSplit[0],
+				recipient_last_name = recipientNameSplit[1],
+				candidate_first_name = candidateNameSplit[0],
+				candidate_last_name = candidateNameSplit[1],
+				url
+			};
 
 			await email.SendAsync();
 		}
