@@ -48,7 +48,6 @@ namespace SurgeonPortal.Library.Email
 		}
 		public static readonly PropertyInfo<string> FromProperty = RegisterProperty<string>(c => c.From);
 
-		[Required]
 		public string Subject
 		{
 			get { return GetProperty(SubjectProperty); }
@@ -77,11 +76,19 @@ namespace SurgeonPortal.Library.Email
 		}
 		public static readonly PropertyInfo<IAttachment> AttachmentProperty = RegisterProperty<IAttachment>(c => c.Attachment);
 
+		public object TemplateData
+		{
+			get { return GetProperty(TemplateDataProperty); }
+			set { SetProperty(TemplateDataProperty, value); }
+		}
+		public static readonly PropertyInfo<object> TemplateDataProperty = RegisterProperty<object>(c => c.TemplateData);
+
 		protected override void AddBusinessRules()
 		{
 			base.AddBusinessRules();
 
 			BusinessRules.AddRule(new EitherOrRequiredRule(TemplateIdProperty, PlainTextContentProperty, 1));
+			BusinessRules.AddRule(new EitherOrRequiredRule(TemplateIdProperty, SubjectProperty, 1));
 		}
 
 		[Create]

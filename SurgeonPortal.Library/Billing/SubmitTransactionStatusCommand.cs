@@ -272,27 +272,26 @@ namespace SurgeonPortal.Library.Billing
 		protected async Task ExecuteCommand()
 		{
 			var email = _emailFactory.Create();
+            var allFields = JsonSerializer.Serialize(this);
 
-			if (ResultMessage.Equals("approval", StringComparison.InvariantCultureIgnoreCase))
+            if (ResultMessage.Equals("approval", StringComparison.InvariantCultureIgnoreCase))
 			{
-				var allFields = JsonSerializer.Serialize(this);
 				await _submitTransactionStatusCommandDal.SubmitTransactionTokenAsync(TransactionId, InvoiceNumber, LastName, FirstName, Amount, TransactionTime, allFields);
 
-				string subject;
-				string text;
+				email.TemplateId = TransactionType.Equals("sale", StringComparison.InvariantCultureIgnoreCase)
+					? _paymentProviderConfiguration.EmailTemplateIds[PaymentEmailTemplateKeys.Sale]
+					: _paymentProviderConfiguration.EmailTemplateIds[PaymentEmailTemplateKeys.Refund];
 
-				if(TransactionType.Equals("return", StringComparison.InvariantCultureIgnoreCase))
-				{
-					subject = $"Receipt for Credit-Card Refund of ABS Invoice #{InvoiceNumber}";
-					text = $"The American Board of Surgery has issued a refund of your payment toward Invoice #{InvoiceNumber}.\r\n\r\nRefunds take 7 to 10 business days to be credited to your credit card account. If you have a question or concern about your refund, please contact your credit card company directly.";
-				}
-				else
-				{
-					subject = $"Receipt for Credit-Card Payment of ABS Invoice #{InvoiceNumber}";
-					text = $"Thank you for completing your payment to the American Board of Surgery. Attached, please find a receipt for your payment toward ABS Invoice #{InvoiceNumber}";
-				}
+                email.TemplateData = new
+                {
+                    first_name = FirstName,
+                    last_name = LastName,
+                    email = Email,
+                    phone_number = PhoneNumber,
+                    payment_amount = Amount
+                };
 
-				var invoice = await _reportReadOnlyFactory.GetByInvoiceNumber(InvoiceNumber);
+                var invoice = await _reportReadOnlyFactory.GetByInvoiceNumber(InvoiceNumber);
 
 				var attachment = _attachmentFactory.Create();
 				attachment.Filename = $"Invoice_{InvoiceNumber}.pdf";
@@ -300,20 +299,24 @@ namespace SurgeonPortal.Library.Billing
 				attachment.ContentType = invoice.ContentType;
 
 				email.To = Email;
-				email.Subject = subject;
-				email.PlainTextContent = text;
 				email.Attachment = attachment;
-
-				await email.SendAsync();
 			}
 			else
 			{
 				email.To = _paymentProviderConfiguration.ErrorEmailRecipient;
-				email.Subject = "Transaction Failed";
-				email.PlainTextContent = $"A transaction has failed.\r\n\r\n{JsonSerializer.Serialize(this)}";
-
-				await email.SendAsync();
+				email.TemplateId = _paymentProviderConfiguration.EmailTemplateIds[PaymentEmailTemplateKeys.Decline];
+				email.TemplateData = new 
+				{
+                    first_name = FirstName,
+                    last_name = LastName,
+                    email = Email,
+                    phone_number = PhoneNumber,
+                    payment_amount = Amount,
+                    api_error_contents = allFields
+                };
 			}
-		}
+
+            await email.SendAsync();
+        }
 	}
 }
