@@ -83,6 +83,7 @@ import { IFormErrors } from '../shared/common';
 import { IAdvancedTrainingModel } from '../api/models/medicaltraining/advanced-training.model';
 import { SetUnsavedChanges } from '../state/application/application.actions';
 import { IUserCertificateModel } from '../api/models/medicaltraining/user-certificate.model';
+import { IGridColumns } from '../shared/components/grid/abs-grid-col.interface';
 
 @UntilDestroy()
 @Component({
@@ -192,10 +193,10 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
   degrees: IDegreeReadOnlyModel[] = [];
   userId!: number;
   createMode!: boolean;
-  trainingCols = MEDICAL_TRAINING_COLS;
+  trainingCols = MEDICAL_TRAINING_COLS as IGridColumns[];
   fellowshipCols = FELLOWSHIP_COLS;
-  documentsCols = DOCUMENTS_COLS;
-  otherCertificationCols = OTHER_CERTIFICATIONS_COLS;
+  documentsCols = DOCUMENTS_COLS as IGridColumns[];
+  otherCertificationCols = OTHER_CERTIFICATIONS_COLS as IGridColumns[];
   medicalTrainingReadOnly!: IMedicalTrainingModel;
   medicalTrainingId!: number;
   trainingAddEditTitle: string | undefined;

@@ -147,7 +147,7 @@ export class GridComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (isObservable(this.data)) {
       this.data.subscribe((data: any) => {
-        const mappedData = data.map((item: any) => {
+        const mappedData = data?.map((item: any) => {
           return {
             ...item,
             expanded: item.expanded ?? false,

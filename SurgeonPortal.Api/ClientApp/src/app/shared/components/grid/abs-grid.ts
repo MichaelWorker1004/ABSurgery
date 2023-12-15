@@ -1,3 +1,5 @@
+import { IGridColumns } from './abs-grid-col.interface';
+
 const AbsGrid = {
   setTextDisplayCol(
     headerName: string,
@@ -5,12 +7,30 @@ const AbsGrid = {
     sortable?: boolean,
     width?: number
   ) {
-    const colDef = {
+    const colDef: IGridColumns = {
       headerName: headerName,
       fieldName,
       sortable,
       width,
-    };
+    } as IGridColumns;
+
+    if (!('appendIcon' in colDef)) {
+      colDef.appendIcon = (icon?: string) => {
+        if (icon) {
+          colDef.appendIcon = icon;
+        }
+        return colDef;
+      };
+    }
+
+    if (!('prependIcon' in colDef)) {
+      colDef.prependIcon = (icon?: string) => {
+        if (icon) {
+          colDef.prependIcon = icon;
+        }
+        return colDef;
+      };
+    }
 
     return colDef;
   },
@@ -56,8 +76,8 @@ const AbsGrid = {
     onClick?: (data: any) => void,
     sortable?: boolean,
     width?: number
-  ) {
-    const colDef = {
+  ): IGridColumns {
+    const colDef: IGridColumns = {
       headerName: headerName,
       fieldName,
       icon: icon,
@@ -68,7 +88,7 @@ const AbsGrid = {
       },
       sortable,
       width,
-    };
+    } as IGridColumns;
 
     return colDef;
   },
@@ -191,7 +211,7 @@ const AbsGrid = {
     sortable?: boolean,
     className?: string,
     width?: number
-  ) {
+  ): IGridColumns {
     const colDef = {
       headerName,
       fieldName,
@@ -201,7 +221,26 @@ const AbsGrid = {
       },
       sortable,
       width,
-    };
+    } as IGridColumns;
+
+    if (!('appendIcon' in colDef)) {
+      colDef.appendIcon = (icon?: string) => {
+        if (icon) {
+          colDef.appendIcon = icon;
+        }
+        return colDef;
+      };
+    }
+
+    if (!('prependIcon' in colDef)) {
+      colDef.prependIcon = (icon?: string) => {
+        if (icon) {
+          colDef.prependIcon = icon;
+        }
+        return colDef;
+      };
+    }
+
     return colDef;
   },
 
@@ -221,7 +260,26 @@ const AbsGrid = {
       },
       sortable,
       width,
-    };
+    } as IGridColumns;
+
+    if (!('appendIcon' in colDef)) {
+      colDef.appendIcon = (icon?: string) => {
+        if (icon) {
+          colDef.appendIcon = icon;
+        }
+        return colDef;
+      };
+    }
+
+    if (!('prependIcon' in colDef)) {
+      colDef.prependIcon = (icon?: string) => {
+        if (icon) {
+          colDef.prependIcon = icon;
+        }
+        return colDef;
+      };
+    }
+
     return colDef;
   },
 };

@@ -30,6 +30,7 @@ import {
   PicklistsSelectors,
 } from 'src/app/state/picklists';
 import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
+import { IGridColumns } from 'src/app/shared/components/grid/abs-grid-col.interface';
 
 @UntilDestroy()
 @Component({
@@ -65,7 +66,7 @@ export class SpecialAccommodationsModalComponent implements OnInit {
 
   examHeaderId!: number;
 
-  specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS;
+  specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS as IGridColumns[];
   specialAccommodationsData: BehaviorSubject<any> = new BehaviorSubject([]);
 
   fileUploadedName!: string | undefined;

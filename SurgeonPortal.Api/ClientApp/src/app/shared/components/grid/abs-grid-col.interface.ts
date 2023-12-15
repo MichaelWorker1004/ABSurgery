@@ -5,6 +5,8 @@ export interface IGridColumns {
   width?: number;
   icon?: string;
   onClick?: (data: any) => void;
+  appendIcon?: any;
+  prependIcon?: any;
   cellRenderer?:
     | 'button'
     | 'conditionalButton'

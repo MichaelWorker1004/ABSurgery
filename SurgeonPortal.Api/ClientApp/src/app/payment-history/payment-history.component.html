@@ -14,6 +14,7 @@
     [columns]="paymentHistoryCols"
     [data]="examFees$"
     (action)="handlePaymentClick($event)"
+    [pagination]="true"
   >
     <div class="pt-5">
       <abs-alert alertType="info" [hideIcon]="true">

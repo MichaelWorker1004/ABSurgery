@@ -10,6 +10,7 @@ import { DocumentSelectors, GetAllDocuments } from '../state/documents';
 import { IDocumentReadOnlyModel } from '../api/models/documents/document-read-only.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IGridColumns } from '../shared/components/grid/abs-grid-col.interface';
 
 @UntilDestroy()
 @Component({
@@ -28,7 +29,7 @@ export class DocumentsComponent implements OnInit {
   documentsData$: BehaviorSubject<IDocumentReadOnlyModel[]> =
     new BehaviorSubject<IDocumentReadOnlyModel[]>([]);
 
-  documentsCols = DOCUMENTS_COLS;
+  documentsCols = DOCUMENTS_COLS as IGridColumns[];
   gridOptions: IGridOptions = {
     showFilter: true,
     filterOn: 'documentName',
