@@ -8,6 +8,7 @@ using SurgeonPortal.Shared.ReferenceLetters;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
@@ -319,9 +320,9 @@ namespace SurgeonPortal.Library.ContinuousCertification
 			email.TemplateData = new
 			{
 				recipient_first_name = recipientNameSplit[0],
-				recipient_last_name = recipientNameSplit[1],
+				recipient_last_name = recipientNameSplit.ElementAtOrDefault(1),
 				candidate_first_name = candidateNameSplit[0],
-				candidate_last_name = candidateNameSplit[1],
+				candidate_last_name = candidateNameSplit.ElementAtOrDefault(1),
 				url
 			};
 
