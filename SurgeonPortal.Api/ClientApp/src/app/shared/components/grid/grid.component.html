@@ -72,7 +72,13 @@
               [style.min-width]="c.width ? 'unset' : ''"
             >
               <div *ngIf="!c.cellRenderer">
+                <span class="pr-1" *ngIf="c.prependIcon.length !== 1">
+                  <i [class]="c.prependIcon ?? ''"></i>
+                </span>
                 {{ r[c.fieldName] }}
+                <span class="pl-1" *ngIf="c.appendIcon.length !== 1">
+                  <i [class]="c.appendIcon ?? ''"></i>
+                </span>
               </div>
               <div *ngIf="c.cellRenderer === AbsGridCellRendererType.Currency">
                 {{ r[c.field] | currency : 'USD' : true : '1.2-2' }}
@@ -152,14 +158,26 @@
                   )
                 "
               >
+                <span class="pr-1" *ngIf="c.prependIcon.length !== 1">
+                  <i [class]="c.prependIcon ?? ''"></i>
+                </span>
                 {{ r[c.fieldName] }}
+                <span class="pl-1" *ngIf="c.appendIcon.length !== 1">
+                  <i [class]="c.appendIcon"></i>
+                </span>
               </div>
               <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomStyle"
                 [style]="c.style(r[c.fieldName])"
               >
+                <span class="pr-1" *ngIf="c.prependIcon.length !== 1">
+                  <i [class]="c.prependIcon ?? ''"></i>
+                </span>
                 {{ c.cellStyle }}
                 {{ r[c.fieldName] }}
+                <span class="pl-3" *ngIf="c.appendIcon.length !== 1">
+                  <i [class]="c.appendIcon"></i>
+                </span>
               </div>
               <div
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.ExpandToggle"

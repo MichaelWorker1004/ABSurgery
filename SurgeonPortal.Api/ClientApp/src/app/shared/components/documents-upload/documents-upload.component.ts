@@ -9,7 +9,12 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -119,7 +124,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
     filterType: AbsFilterType.Text,
   };
   fileUploadedName: string | undefined;
-  uploadedFile: File | undefined;
+  uploadedFile!: File | null;
 
   uploadForm = new FormGroup({
     typeId: new FormControl(''),
@@ -138,6 +143,15 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.localDocumentsData = this.documentsData || [];
     this.setFilterOptions();
+    this.setRequired();
+  }
+
+  setRequired() {
+    if (this.dropdownOptions?.length) {
+      this.uploadForm.get('typeId')?.setValidators([Validators.required]);
+    } else {
+      this.uploadForm.get('typeId')?.clearValidators();
+    }
   }
 
   setFilterOptions() {
@@ -196,6 +210,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   resetData() {
     this.fileUploadedName = undefined;
     this.uploadForm.get('typeId')?.setValue('');
-    this.uploadedFile = undefined;
+    this.uploadForm.get('file')?.setValue('');
+    this.uploadedFile = null;
   }
 }

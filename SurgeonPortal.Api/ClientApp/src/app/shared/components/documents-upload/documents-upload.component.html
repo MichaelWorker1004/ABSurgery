@@ -7,13 +7,14 @@
   >
     <form class="flex gap-3 mb-3" [formGroup]="uploadForm">
       <p-dropdown
-        *ngIf="dropdownOptions"
-        [options]="dropdownOptions"
+        *ngIf="dropdownOptions?.length"
+        [options]="dropdownOptions ?? []"
         [placeholder]="dropdownPlaceholder"
         [optionLabel]="dropdownLabel"
         [optionValue]="dropdownValue"
         [showClear]="true"
         formControlName="typeId"
+        class="dropdown"
       ></p-dropdown>
       <div class="input-file">
         <label>
@@ -30,11 +31,7 @@
       </div>
       <p-button
         (click)="onDocumentUpload()"
-        [disabled]="
-          !uploadForm.valid ||
-          !fileUploadedName ||
-          (!uploadForm.value.typeId && dropdownOptions !== undefined)
-        "
+        [disabled]="!uploadForm.valid || !fileUploadedName"
         class="btn-add"
       >
         <i slot="prefix" class="fa-solid fa-plus"></i>

@@ -149,7 +149,7 @@ export class GridComponent implements OnInit, OnChanges {
       this.data.subscribe((data: any) => {
         let mappedData;
         if (data?.length > 0) {
-          mappedData = data.map((item: any) => {
+          mappedData = data?.map((item: any) => {
             return {
               ...item,
               expanded: item.expanded ?? false,

@@ -340,7 +340,7 @@
           <hr />
           <abs-documents-upload
             [allowUpload]="true"
-            [documentsData$]="documentsData$"
+            [documentsData]="userCertificates$ | async"
             [gridCols]="documentsCols"
             [dropdownOptions]="certificateTypes"
             [dropdownPlaceholder]="'Select a certificate type'"
