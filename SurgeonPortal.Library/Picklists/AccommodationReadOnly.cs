@@ -33,9 +33,9 @@ namespace SurgeonPortal.Library.Picklists
 		public static readonly PropertyInfo<string> CodeProperty = RegisterProperty<string>(c => c.Code);
 
         [DataMember]
-		[DisplayName(nameof(Description))]
-        public string Description => ReadProperty(DescriptionProperty);
-		public static readonly PropertyInfo<string> DescriptionProperty = RegisterProperty<string>(c => c.Description);
+		[DisplayName(nameof(DocumentLink))]
+        public string DocumentLink => ReadProperty(DocumentLinkProperty);
+		public static readonly PropertyInfo<string> DocumentLinkProperty = RegisterProperty<string>(c => c.DocumentLink);
 
 
         [FetchChild]
@@ -51,7 +51,7 @@ namespace SurgeonPortal.Library.Picklists
 		{
             LoadProperty(IdProperty, dto.Id);
             LoadProperty(CodeProperty, dto.Code);
-            LoadProperty(DescriptionProperty, dto.Description);
+            LoadProperty(DocumentLinkProperty, dto.DocumentLink);
 		} 
         
     }

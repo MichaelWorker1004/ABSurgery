@@ -6,6 +6,6 @@ namespace SurgeonPortal.Library.Contracts.Picklists
     {
         int Id { get; }
         string Code { get; }
-        string Description { get; }
+        string DocumentLink { get; }
     }
 }

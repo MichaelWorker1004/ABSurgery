@@ -4010,8 +4010,7 @@
     "lastGeneratedHash": "C6C21658A40D656629BD8383D68E977A"
   },
   "\\SurgeonPortal.Api\\Controllers\\ContinuousCertification\\DashboardStatusController.cs": {
-    "lastGeneratedHash": "78ADF7AD27D547E6680BB1D3A174996D",
-    "lastMergedHash": "78ADF7AD27D547E6680BB1D3A174996D"
+    "lastGeneratedHash": "78ADF7AD27D547E6680BB1D3A174996D"
   },
   "\\SurgeonPortal.Library\\ContinuousCertification\\SubmitAttestationsCommand.cs": {
     "lastGeneratedHash": "1D44BCF47B3EC7E04979D13504E798DD",
@@ -4030,7 +4029,7 @@
     "lastGeneratedHash": "A3D2917664771F20C34ACD6BB0C57BEA"
   },
   "\\SurgeonPortal.Library\\Picklists\\AccommodationReadOnly.cs": {
-    "lastGeneratedHash": "4FBE87FF2B8930618ED6A22EC699181F"
+    "lastGeneratedHash": "73FE7882879BE35A90BE169A0E947C05"
   },
   "\\SurgeonPortal.Library\\Picklists\\AccommodationReadOnlyList.cs": {
     "lastGeneratedHash": "C4D6C5DB7FF357CC04115822CFDDCB41"
@@ -4102,7 +4101,8 @@
     "lastGeneratedHash": "F5936888308A57AA1D1E86D93F68DD81"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\ContinuousCertification\\ReferenceLetterDto.cs": {
-    "lastGeneratedHash": "A4CFE07C2BC4BE9CA2E69258D928513D"
+    "lastGeneratedHash": "A4CFE07C2BC4BE9CA2E69258D928513D",
+    "lastMergedHash": "AC0E6876BB7B2762073D360646E6EE3B"
   },
   "\\SurgeonPortal.Models\\ContinuousCertification\\ReferenceLetterModel.cs": {
     "lastGeneratedHash": "4AB76FC69FC9C874B2827095E3CCE457",
@@ -4124,36 +4124,30 @@
     "lastGeneratedHash": "258E4C9AC24C7181AA53ECD6B65B1E23"
   },
   "\\SurgeonPortal.Library.Contracts\\Picklists\\IAccommodationReadOnly.cs": {
-    "lastGeneratedHash": "EF34D7830792A1089EE7685AB637D847"
+    "lastGeneratedHash": "3EC32F9ED55D33C14C5609019A18F830"
   },
   "\\SurgeonPortal.Library.Contracts\\Picklists\\IAccommodationReadOnlyList.cs": {
     "lastGeneratedHash": "CE0AAA7B05F18E714FA3F7DE97F6BD88"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\picklists\\accommodation-read-only.model.ts": {
-    "lastGeneratedHash": "F09ECD826229567397CBA09A67BFC5F8"
+    "lastGeneratedHash": "E1BF74381B34ADB64DA88F4AFB008985"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Picklists\\AccommodationReadOnlyDto.cs": {
-    "lastGeneratedHash": "CA14FCA1856FBFF17A637185B317C9A4"
+    "lastGeneratedHash": "496268C098E2557714DD73F5A13F9498"
   },
   "\\SurgeonPortal.Models\\Picklists\\AccommodationReadOnlyModel.cs": {
-    "lastGeneratedHash": "02E00A0FE0A343226E78F7071FBB719B"
-  },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\continuouscertification\\dashboard-status.service.ts": {
-    "lastGeneratedHash": "C6C21658A40D656629BD8383D68E977A"
-  },
-  "\\SurgeonPortal.Api\\Controllers\\ContinuousCertification\\DashboardStatusController.cs": {
-    "lastGeneratedHash": "78ADF7AD27D547E6680BB1D3A174996D"
+    "lastGeneratedHash": "CCE085490B45B78F19DBFFE9FFAE9D1B"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\continuouscertification\\reference-letter.service.ts": {
     "lastGeneratedHash": "859ACC549BCFEBAC781371747B298D7A"
   },
   "\\SurgeonPortal.Api\\Controllers\\ContinuousCertification\\ReferenceLetterController.cs": {
     "lastGeneratedHash": "D77E6A3D859B55976D31C06B42E6B200",
-    "lastMergedHash": "EB78B4382164445769C31D9CC0909586"
+    "lastMergedHash": "820C7AB690EDEA13BD2D81DF3B88E93D"
   },
   "\\SurgeonPortal.Library\\ContinuousCertification\\ReferenceLetter.cs": {
     "lastGeneratedHash": "275C80629DBA7342F8E2852A79993F0F",
-    "lastMergedHash": "755F2D38E38FE04CAE102ADE11AE85AA"
+    "lastMergedHash": "2824B02B7B0220283763248134F46140"
   },
   "\\SurgeonPortal.DataAccess\\ContinuousCertification\\ReferenceLetterDal.cs": {
     "lastGeneratedHash": "2C90F4F07C51469B53C69D49AB054D6C"
@@ -4173,7 +4167,7 @@
   },
   "\\SurgeonPortal.Library.Tests\\ContinuousCertification\\ReferenceLetterTests.cs": {
     "lastGeneratedHash": "3120AB5E37566332530FAD5B46B1B6F9",
-    "lastMergedHash": "90EAFAF2261D6497F401FEA896223023"
+    "lastMergedHash": "08190FDAE0F8E932996BB73D816F3858"
   },
   "\\SurgeonPortal.DataAccess.Tests\\ContinuousCertification\\ReferenceLetterDalTests.cs": {
     "lastGeneratedHash": "38A8E567C9F8679552B2CD9A0520AFC6"

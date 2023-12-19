@@ -43,7 +43,7 @@
               {
                 "name": "Code",
                 "dataType": "string",
-                "maxLength": 50,
+                "maxLength": 100,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": false,
@@ -51,14 +51,14 @@
                 "mapsTo": "model.Code"
               },
               {
-                "name": "Description",
+                "name": "DocumentLink",
                 "dataType": "string",
-                "maxLength": 200,
+                "maxLength": 1000,
                 "precision": 0,
                 "scale": 0,
                 "isNullable": true,
                 "isIdentityColumn": false,
-                "mapsTo": "model.Description"
+                "mapsTo": "model.DocumentLink"
               }
             ]
           }
@@ -68,9 +68,9 @@
   ],
   "inputParameters": [],
   "metadata": {
-    "command": "ytgim g i s Picklists\\AccommodationReadOnly.GetAll AccommodationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\AccommodationReadOnly -p:Adapter=sp:abssp-[dbo].[get_accommodation_picklist] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AccommodationReadOnly -p:Route=accommodations -p:ControllerName=Picklists/PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 ",
-    "inferredCommand": "ytgim generate i  Picklists\\AccommodationReadOnly.GetAll AccommodationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\AccommodationReadOnly -p:Adapter=sp:abssp-[dbo].[get_accommodation_picklist] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AccommodationReadOnly -p:Route=accommodations -p:ControllerName=Picklists/PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-12-05T18:15:57.6542906Z"
+    "command": "ytgim g i s Picklists\\AccommodationReadOnly.GetAll AccommodationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\AccommodationReadOnly -p:Adapter=sp:abssp-[dbo].[get_accommodation_picklist] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AccommodationReadOnly -p:Route=accommodations -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Picklists\\AccommodationReadOnly.GetAll AccommodationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\AccommodationReadOnly -p:Adapter=sp:abssp-[dbo].[get_accommodation_picklist] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AccommodationReadOnly -p:Route=accommodations -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-19T21:31:30.0342237Z"
   },
   "version": 1
 }
