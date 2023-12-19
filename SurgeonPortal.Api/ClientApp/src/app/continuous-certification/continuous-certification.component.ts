@@ -199,6 +199,17 @@ export class ContinuousCertificationComponent implements OnInit {
             ...this.referenceFormModalConfig,
             lapsedPath: certStatus.lapsedPath,
           };
+
+          if (this.continousCertificationData) {
+            this.continousCertificationData.find((cc: any) => {
+              if (cc.id === 'Ref_Let') {
+                cc['disabled'] = !this.referenceFormModalConfig.lapsedPath;
+                if (cc['disabled']) {
+                  cc['status'] = Status.Completed;
+                }
+              }
+            });
+          }
         }
       });
   }
@@ -307,7 +318,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
-        id: 'payFee',
+        id: 'CC_Fee',
         title: 'Pay Fee',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -329,7 +340,7 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.dialog,
           action: 'referenceFormsModal',
         },
-        actionDisplay: 'View / Update my activities',
+        actionDisplay: 'View / Update my references',
         icon: 'fa-solid fa-rectangle-list',
         status: Status.InProgress,
         displayStatusText: false,
@@ -352,10 +363,14 @@ export class ContinuousCertificationComponent implements OnInit {
       {
         id: 'applyForExam',
         title: 'Apply for an Exam',
+        action: {
+          type: Action.component,
+          action: '/apply-and-resgister',
+        },
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         actionStyle: 'button',
-        disabled: true,
+        disabled: false,
         actionDisplay: 'Apply Now',
         icon: 'fa-solid fa-language',
         displayStatusText: false,
@@ -376,6 +391,15 @@ export class ContinuousCertificationComponent implements OnInit {
 
         continousCertificationData.forEach((cc: any) => {
           cc['status'] = statuses[cc.id]?.status || Status.InProgress;
+        });
+
+        continousCertificationData.find((cc) => {
+          if (cc.id === 'Ref_Let') {
+            cc['disabled'] = !this.referenceFormModalConfig.lapsedPath;
+            if (cc['disabled']) {
+              cc['status'] = Status.Completed;
+            }
+          }
         });
 
         continousCertificationData.find((cc) => {
