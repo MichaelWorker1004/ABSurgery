@@ -125,6 +125,10 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
     }
   );
 
+  attestationForm = new FormGroup({
+    attestation: new FormControl(false, [Validators.requiredTrue]),
+  });
+
   referenceAttestationsForm = new FormGroup({});
 
   referenceFormsCols = REFERENCE_FORMS_COLS;
@@ -290,26 +294,16 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   onSubmit() {
     // this function will be the attestation version of the submit
     console.log('unhandled submit');
-    // const form = this.referenceLetterForm.getRawValue();
 
-    // const model = form as unknown as IRefrenceFormModel;
+    if (this.source === 'continuousCertification') {
+      console.log('submit for CC page');
 
-    // this._store
-    //   .dispatch(new RequestRefrence(model))
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe(() => {
-    //     this.referenceRequestPanel.collaspsePanel();
-    //     this.globalDialogService.showSuccessError(
-    //       'Reference Requested',
-    //       'Your reference request has been sent successfully.',
-    //       true
-    //     );
-
-    //     this.close();
-    //   });
+      this.close();
+    }
   }
 
   close() {
+    this.attestationForm.reset();
     this.closeDialog.emit();
   }
 
