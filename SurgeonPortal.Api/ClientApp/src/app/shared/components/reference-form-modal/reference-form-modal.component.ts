@@ -24,12 +24,13 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 
+import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IStateReadOnlyModel } from 'src/app/api';
+import { IReferenceLetterModel } from 'src/app/api/models/continuouscertification/reference-letter.model';
 import { CollapsePanelComponent } from 'src/app/shared/components/collapse-panel/collapse-panel.component';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
-import { IFormFields } from 'src/app/shared/models/form-fields/form-fields';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { matchFields } from 'src/app/shared/validators/validators';
 import {
@@ -38,12 +39,8 @@ import {
   UserProfileSelectors,
 } from 'src/app/state';
 import { IRefrenceFormReadOnlyModel } from 'src/app/state/continuous-certification/refrence-form-read-only.model';
-import { IRefrenceFormModel } from 'src/app/state/continuous-certification/refrence-form.model';
 import { IPickListItem, IPickListItemNumber } from 'src/app/state/picklists';
-import { ADD_REFERENCE_LETTER_FIELDS } from './add-reference-letter-fields';
 import { REFERENCE_FORMS_COLS } from './refrence-forms-cols';
-import { InputMask, InputMaskModule } from 'primeng/inputmask';
-import { IReferenceLetterModel } from 'src/app/api/models/continuouscertification/reference-letter.model';
 
 export interface IReferenceFormModalConfig {
   lapsedPath?: boolean;
@@ -97,6 +94,7 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
     | Observable<IRefrenceFormReadOnlyModel[] | undefined>
     | undefined;
   @Input() modalConfig: IReferenceFormModalConfig | undefined;
+  @Input() formFields!: any;
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
 
   lapsedPath = false;
@@ -104,31 +102,11 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   formExpanded = false;
   sec_order = 0;
 
-  referenceLetterForm = new FormGroup(
-    {
-      official: new FormControl('', [Validators.required]),
-      roleId: new FormControl<number | null>(null, [Validators.required]),
-      altRoleId: new FormControl<number | null>(null),
-      explain: new FormControl(''),
-      title: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      confirmEmail: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required]),
-      hosp: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      state: new FormControl('', [Validators.required]),
-      fullName: new FormControl({ value: '', disabled: true }),
-      confirmSend: new FormControl(false, [Validators.requiredTrue]),
-    },
-    {
-      validators: matchFields('email', 'confirmEmail'),
-    }
-  );
-
-  referenceAttestationsForm = new FormGroup({});
-
   referenceFormsCols = REFERENCE_FORMS_COLS;
-  referenceLetterFields: IFormFields[] = ADD_REFERENCE_LETTER_FIELDS;
+  referenceLetterForm: FormGroup = new FormGroup(
+    {},
+    { validators: matchFields('email', 'confirmEmail') }
+  );
   fullName = '';
 
   constructor(
@@ -139,7 +117,7 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.setConfigValues(this.modalConfig);
     this.setPicklists(this.picklistValues);
-
+    this.setUpFormFields();
     this.onFormChanges();
     // note to all future developers, never do this, it is stupid and hacky
     // but also it was the only thing that worked, blame shoelace
@@ -176,6 +154,24 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
       this.setPicklists(changes['picklistValues'].currentValue);
     }
   }
+
+  async setUpFormFields() {
+    const promises = this.formFields.map((field: any) => {
+      return new Promise<void>((resolve, reject) => {
+        this.referenceLetterForm.addControl(
+          field.name,
+          new FormControl(
+            { value: field.value, disabled: field.disabled ?? false },
+            field.validators
+          )
+        );
+        resolve();
+      });
+    });
+
+    await Promise.all(promises);
+  }
+
   onFormChanges() {
     this.referenceLetterForm
       .get('roleId')
@@ -192,7 +188,7 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
             .get('explain')
             ?.setValidators([Validators.required]);
 
-          this.referenceLetterFields.filter((field) => {
+          this.formFields.filter((field: any) => {
             if (field.name === 'altRoleId' || field.name === 'explain') {
               field.hidden = false;
             }
@@ -206,7 +202,7 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
           this.referenceLetterForm.get('explain')?.setValue('');
           this.referenceLetterForm.get('explain')?.clearValidators();
 
-          this.referenceLetterFields.filter((field) => {
+          this.formFields.filter((field: any) => {
             if (field.name === 'altRoleId' || field.name === 'explain') {
               field.hidden = true;
             }
@@ -223,7 +219,7 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   }
 
   setPicklists(picklistValues: IReferenceLetterPicklists) {
-    this.referenceLetterFields.filter((field) => {
+    this.formFields.filter((field: any) => {
       if (field.name === 'state') {
         field.options = picklistValues.stateOptions;
       }
@@ -275,6 +271,9 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
             this.closePanel();
           }
         });
+    } else {
+      this.globalDialogService.closeOpenDialog();
+      this.onSubmit();
     }
   }
 
@@ -289,8 +288,10 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
 
   onSubmit() {
     // this function will be the attestation version of the submit
-    console.log('unhandled submit');
-    // const form = this.referenceLetterForm.getRawValue();
+
+    const form = this.referenceLetterForm.getRawValue();
+
+    console.log('unhandled submit', form);
 
     // const model = form as unknown as IRefrenceFormModel;
 

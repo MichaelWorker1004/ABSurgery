@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
 import { IStatuses } from '../api/models/users/statuses.model';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
@@ -19,7 +19,12 @@ import { ModalComponent } from '../shared/components/modal/modal.component';
 import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
-import { ExamProcessSelectors, GetExamFees } from '../state';
+import {
+  ContinuousCertificationSelectors,
+  ExamProcessSelectors,
+  GetExamFees,
+  GetRefrenceFormGridData,
+} from '../state';
 import {
   GetResgistrationRequirmentsStatuses,
   ReqistrationRequirmentsSelectors,
@@ -33,6 +38,14 @@ import { SpecialAccommodationsModalComponent } from './special-accommodations-mo
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
 import { ProgramDirectorAttestationsComponent } from './program-director-attestations/program-director-attestations.component';
+import { IRefrenceFormReadOnlyModel } from '../state/continuous-certification/refrence-form-read-only.model';
+import {
+  IReferenceFormModalConfig,
+  IReferenceLetterPicklists,
+  ReferenceFormModalComponent,
+} from '../shared/components/reference-form-modal/reference-form-modal.component';
+import { GetPicklists, PicklistsSelectors } from '../state/picklists';
+import { ADD_PROGRAM_DIRECTOR_FIELDS } from './program-director-fields';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -57,6 +70,7 @@ interface ActionMap {
     AttestationModalComponent,
     PayFeeComponent,
     ProgramDirectorAttestationsComponent,
+    ReferenceFormModalComponent,
   ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
@@ -71,6 +85,27 @@ export class RegistrationRequirementsComponent implements OnInit {
     ReqistrationRequirmentsSelectors.slices.registrationRequirementsStatuses
   )
   registrationRequirementsStatuses$: Observable<any> | undefined;
+
+  // this will be replaced with correct data
+
+  @Select(ContinuousCertificationSelectors.slices.refrenceFormGridData)
+  referenceFormGridData$:
+    | Observable<IRefrenceFormReadOnlyModel[] | undefined>
+    | undefined;
+
+  referenceLetterPicklists: IReferenceLetterPicklists = {
+    stateOptions: [],
+    roleOptions: [],
+    altRoleOptions: [],
+    explainOptions: [],
+  };
+
+  referenceFormModalConfig: IReferenceFormModalConfig = {
+    source: 'registrationRequirments',
+    lapsedPath: true,
+  };
+
+  refrenceLetterFormFields = ADD_PROGRAM_DIRECTOR_FIELDS;
 
   userData!: any;
   registrationRequirementsData!: Array<any>;
@@ -113,7 +148,36 @@ export class RegistrationRequirementsComponent implements OnInit {
     public viewContainerRef: ViewContainerRef,
     private _store: Store
   ) {
+    this._store
+      .dispatch(new GetPicklists('500'))
+      .pipe(take(1))
+      .subscribe(() => {
+        const newReferenceLetterPicklists: IReferenceLetterPicklists = {
+          stateOptions: [],
+          roleOptions: [],
+          altRoleOptions: [],
+          explainOptions: [],
+        };
+        newReferenceLetterPicklists.stateOptions =
+          this._store.selectSnapshot(PicklistsSelectors.slices.states) || [];
+        newReferenceLetterPicklists.roleOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterRoleTypes
+          ) || [];
+        newReferenceLetterPicklists.altRoleOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterAltRoleTypes
+          ) || [];
+        newReferenceLetterPicklists.explainOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterExplainOptions
+          ) || [];
+
+        this.referenceLetterPicklists = newReferenceLetterPicklists;
+      });
+
     this._store.dispatch(new GetResgistrationRequirmentsStatuses());
+    this._store.dispatch(new GetRefrenceFormGridData());
     this._store.dispatch(new GetExamFees());
     this._globalDialogService.setViewContainerRef = this.viewContainerRef;
   }

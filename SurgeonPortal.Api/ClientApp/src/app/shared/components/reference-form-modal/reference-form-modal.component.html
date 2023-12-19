@@ -73,14 +73,16 @@
     </div>
     <form [formGroup]="referenceLetterForm">
       <div class="grid">
-        <ng-container *ngFor="let formField of referenceLetterFields">
+        <ng-container *ngFor="let formField of formFields">
           <div
             *ngIf="!formField.hidden"
             class="col-12 md:{{
               formField.size
             }} flex flex-column justify-content-start"
           >
-            <label [htmlFor]="formField.name">{{ formField.label }}</label>
+            <label [htmlFor]="formField.name"
+              >{{ formField.label }} {{ formField.required ? '*' : '' }}
+            </label>
             <input
               *ngIf="formField.type === 'text' || formField.type === 'email'"
               [placeholder]="formField.placeholder ?? ''"

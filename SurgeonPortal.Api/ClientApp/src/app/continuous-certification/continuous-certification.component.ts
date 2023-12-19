@@ -41,6 +41,7 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IAttestationSubmitModel } from '../api/models/continuouscertification/attestation-read-only.model';
 import { IRefrenceFormReadOnlyModel } from '../state/continuous-certification/refrence-form-read-only.model';
 import { IReferenceLetterModel } from '../api/models/continuouscertification/reference-letter.model';
+import { ADD_REFERENCE_LETTER_FIELDS } from './add-reference-letter-fields';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -109,6 +110,8 @@ export class ContinuousCertificationComponent implements OnInit {
     source: 'continuousCertification',
     lapsedPath: false,
   };
+
+  refrenceLetterFormFields = ADD_REFERENCE_LETTER_FIELDS;
 
   legendItems = [
     {
