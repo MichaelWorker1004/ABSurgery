@@ -1,0 +1,156 @@
+{
+  "name": "PdReferenceLetter",
+  "implementationName": "Examinations\\PdReferenceLetter.GetByExamId",
+  "template": "ytg-framework/editable-get",
+  "parameters": {
+    "Adapter": "dbo.get_pd_refletters",
+    "ControllerName": "Examinations\\PdReferenceLetterController",
+    "ControllerRoute": "api/examinations/pd-reference-letter",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\PdReferenceLetter",
+    "ModelGroup": "PdReferenceLetter",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-examid"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_pd_refletters",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_pd_refLetters]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ExamId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\PdReferenceLetter",
+            "fields": [
+              {
+                "name": "Id",
+                "dataType": "decimal",
+                "maxLength": 9,
+                "precision": 18,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": true,
+                "mapsTo": "model.Id"
+              },
+              {
+                "name": "UserId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserId"
+              },
+              {
+                "name": "Hosp",
+                "dataType": "string",
+                "maxLength": 356,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Hosp"
+              },
+              {
+                "name": "Official",
+                "dataType": "string",
+                "maxLength": 85,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Official"
+              },
+              {
+                "name": "Title",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Title"
+              },
+              {
+                "name": "Email",
+                "dataType": "string",
+                "maxLength": 100,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Email"
+              },
+              {
+                "name": "LetterSent",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LetterSent"
+              },
+              {
+                "name": "Status",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Status"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "ExamId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\PdReferenceLetter.GetByExamId PdReferenceLetter -t=ytg-framework/editable-get -p:Model=Examinations\\PdReferenceLetter -p:Adapter=sp:abssp-[dbo].[get_pd_refLetters] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=PdReferenceLetter -p:Route=by-examid -p:ControllerName=Examinations\\PdReferenceLetterController -p:ControllerRoute=api/examinations/pd-reference-letter -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\PdReferenceLetter.GetByExamId PdReferenceLetter -t=ytg-framework/editable-get -p:Model=Examinations\\PdReferenceLetter -p:Adapter=sp:abssp-[dbo].[get_pd_refLetters] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=PdReferenceLetter -p:Route=by-examid -p:ControllerName=Examinations\\PdReferenceLetterController -p:ControllerRoute=api/examinations/pd-reference-letter -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-19T15:18:06.0091868Z"
+  },
+  "version": 1
+}
