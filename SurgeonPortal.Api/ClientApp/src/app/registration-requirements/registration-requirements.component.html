@@ -73,9 +73,13 @@
     status="in-progress"
     [hideClose]="true"
   >
-    <abs-program-director-attestations
-      (closeDialog)="handleCardAction('programDirectorAttestationModal')"
-    ></abs-program-director-attestations>
+    <abs-reference-form-modal
+      [picklistValues]="referenceLetterPicklists"
+      [referenceFormGridData$]="referenceFormGridData$"
+      [formFields]="refrenceLetterFormFields"
+      [modalConfig]="referenceFormModalConfig"
+      (closeDialog)="handleCardAction('referenceFormsModal')"
+    ></abs-reference-form-modal>
   </abs-modal>
 
   <!-- <abs-modal
