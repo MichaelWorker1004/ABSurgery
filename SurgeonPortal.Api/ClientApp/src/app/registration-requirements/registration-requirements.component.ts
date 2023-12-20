@@ -5,11 +5,13 @@ import {
   OnInit,
   ViewContainerRef,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { Observable, take } from 'rxjs';
 import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
 import { IAccommodationModel } from '../api/models/examinations/accommodation.model';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { IPdReferenceLetterModel } from '../api/models/examinations/pd-reference-letter.model';
 import { IStatuses } from '../api/models/users/statuses.model';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
@@ -30,12 +32,12 @@ import {
   ExamProcessSelectors,
   ExamScoringSelectors,
   GetExamFees,
-  GetExamTitle,
 } from '../state';
 import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import {
   GetAccommodations,
   GetPdReferenceLetter,
+  GetRegistrationRequirementsTitle,
   GetResgistrationRequirmentsStatuses,
   ReqistrationRequirmentsSelectors,
 } from '../state/registration-requirements';
@@ -44,14 +46,12 @@ import { GraduateMedicalEducationModalComponent } from './graduate-medical-educa
 import { MedicalLicenseModalComponent } from './medical-license-modal/medical-license-modal.component';
 import { ProfessionalActivitiesAndPrivilegesModalComponent } from './professional-activities-and-privileges-modal/professional-activities-and-privileges-modal.component';
 import { ProgramDirectorAttestationsComponent } from './program-director-attestations/program-director-attestations.component';
+import { PROGRAM_DIRECTOR_COLS } from './program-director-cols';
 import { ADD_PROGRAM_DIRECTOR_FIELDS } from './program-director-fields';
 import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-cards';
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
-import { PROGRAM_DIRECTOR_COLS } from './program-director-cols';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -104,7 +104,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   @Select(ReqistrationRequirmentsSelectors.slices.accommodation)
   accommodation$: Observable<IAccommodationModel> | undefined;
 
-  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
+  @Select(ReqistrationRequirmentsSelectors.slices.examTitle) examTitle$:
     | Observable<IExamTitleReadOnlyModel>
     | undefined;
 
@@ -168,7 +168,9 @@ export class RegistrationRequirementsComponent implements OnInit {
   ) {
     this.activatedRoute.params.subscribe((params) => {
       if (params['examId']) {
-        this._store.dispatch(new GetExamTitle(params['examId']));
+        this._store.dispatch(
+          new GetRegistrationRequirementsTitle(params['examId'])
+        );
       }
     });
     this._store

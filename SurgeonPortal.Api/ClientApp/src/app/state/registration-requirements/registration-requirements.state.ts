@@ -13,16 +13,20 @@ import {
   CreatePdReferenceLetter,
   GetAccommodations,
   GetPdReferenceLetter,
+  GetRegistrationRequirementsTitle,
   GetResgistrationRequirmentsStatuses,
   UpdateAccommodation,
 } from './registration-requirements.actions';
 import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-reference-letter.model';
 import { PdReferenceLetterService } from 'src/app/api/services/examinations/pd-reference-letter.service';
+import { IExamTitleReadOnlyModel } from 'src/app/api/models/examinations/exam-title-read-only.model';
+import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
 
 export interface IRegistrationRequirements {
   registrationRequirementsStatuses?: IStatuses[];
   accommodation?: IAccommodationModel;
   pdReferenceLetter?: IPdReferenceLetterModel[];
+  examTitle?: IExamTitleReadOnlyModel | undefined;
   errors?: IFormErrors | null;
 }
 
@@ -36,6 +40,7 @@ export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
     registrationRequirementsStatuses: undefined,
     accommodation: undefined,
     pdReferenceLetter: undefined,
+    examTitle: undefined,
     errors: null,
   },
 })
@@ -44,7 +49,8 @@ export class RegistrationRequirementsState {
   constructor(
     private accommodationService: AccommodationService,
     private globalDialogService: GlobalDialogService,
-    private pdReferenceLetterService: PdReferenceLetterService
+    private pdReferenceLetterService: PdReferenceLetterService,
+    private examinationsService: ExaminationsService
   ) {}
 
   @Action(GetResgistrationRequirmentsStatuses)
@@ -107,6 +113,34 @@ export class RegistrationRequirementsState {
     ctx.patchState({
       registrationRequirementsStatuses: response,
     });
+  }
+
+  @Action(GetRegistrationRequirementsTitle)
+  getRegistrationRequirementsTitle(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: { id: number }
+  ) {
+    // const state = ctx.getState();
+    const sessionId = payload.id;
+
+    if (ctx.getState()?.examTitle) {
+      return of(ctx.getState()?.examTitle);
+    }
+    return this.examinationsService
+      .retrieveExamTitleReadOnly_GetByExamId(sessionId)
+      .pipe(
+        tap((result: IExamTitleReadOnlyModel) => {
+          ctx.patchState({
+            examTitle: result,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({ errors });
+          return of(errors);
+        })
+      );
   }
 
   @Action(CreateAccommodation)
