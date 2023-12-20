@@ -166,13 +166,18 @@ export class RegistrationRequirementsComponent implements OnInit {
     private _store: Store,
     private activatedRoute: ActivatedRoute
   ) {
-    this.activatedRoute.params.subscribe((params) => {
-      if (params['examId']) {
-        this._store.dispatch(
-          new GetRegistrationRequirementsTitle(params['examId'])
-        );
-      }
-    });
+    this.activatedRoute.params
+      .pipe(untilDestroyed(this))
+      .subscribe((params) => {
+        this.examHeaderId = params['examId'];
+        if (this.examHeaderId) {
+          this._store.dispatch(
+            new GetRegistrationRequirementsTitle(this.examHeaderId)
+          );
+          this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
+          this._store.dispatch(new GetAccommodations(this.examHeaderId));
+        }
+      });
     this._store
       .dispatch(new GetPicklists('500'))
       .pipe(take(1))
@@ -201,14 +206,6 @@ export class RegistrationRequirementsComponent implements OnInit {
         this.referenceLetterPicklists = newReferenceLetterPicklists;
       });
 
-    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
-      this.examHeaderId = id;
-      if (this.examHeaderId) {
-        this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
-        this._store.dispatch(new GetAccommodations(this.examHeaderId));
-      }
-    });
-
     this._store.dispatch(new GetResgistrationRequirmentsStatuses());
 
     this._store.dispatch(new GetExamFees());
@@ -232,6 +229,9 @@ export class RegistrationRequirementsComponent implements OnInit {
       this.showGraduateMedicalEducation = !this.showGraduateMedicalEducation;
     },
     specialAccommodationsModal: () => {
+      if (this.examHeaderId) {
+        this._store.dispatch(new GetAccommodations(this.examHeaderId));
+      }
       this.showSpecialAccommodations = !this.showSpecialAccommodations;
     },
     professionalActivitiesAndPrivilegesModal: () => {

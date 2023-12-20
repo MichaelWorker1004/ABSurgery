@@ -17,7 +17,7 @@
     {
       "name": "Code",
       "dataType": "string",
-      "maxLength": 50,
+      "maxLength": 100,
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
@@ -26,9 +26,9 @@
       "rules": {}
     },
     {
-      "name": "Description",
+      "name": "DocumentLink",
       "dataType": "string",
-      "maxLength": 200,
+      "maxLength": 1000,
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
@@ -38,9 +38,9 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g m s Picklists\\AccommodationReadOnly -sp [dbo].[get_accommodation_picklist] -cn abssp ",
+    "command": "ytgim g m s Picklists\\AccommodationReadOnly -sp [dbo].[get_accommodation_picklist] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-12-05T18:15:49.7462717Z"
+    "generatedDateUtc": "2023-12-19T21:30:37.3102146Z"
   },
   "version": 1
 }

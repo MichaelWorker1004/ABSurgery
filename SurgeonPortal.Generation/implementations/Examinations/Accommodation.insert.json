@@ -68,24 +68,6 @@
             "scale": 0,
             "required": true,
             "mapsTo": "ExamID"
-          },
-          {
-            "name": "CreatedByUserId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "CreatedByUserId"
-          },
-          {
-            "name": "LastUpdatedByUserId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "LastUpdatedByUserId"
           }
         ],
         "recordsets": [
@@ -229,18 +211,6 @@
       "name": "ExamID",
       "dataType": "int",
       "required": true
-    },
-    {
-      "name": "CreatedByUserId",
-      "dataType": "int",
-      "required": true,
-      "substitution": "$UserId"
-    },
-    {
-      "name": "LastUpdatedByUserId",
-      "dataType": "int",
-      "required": true,
-      "substitution": "$UserId"
     }
   ],
   "metadata": {

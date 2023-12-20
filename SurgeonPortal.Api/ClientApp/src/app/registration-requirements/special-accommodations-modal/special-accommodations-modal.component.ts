@@ -68,13 +68,17 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   @Input() examHeaderId!: number | null;
 
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS as IGridColumns[];
-  specialAccommodationsData: BehaviorSubject<any> = new BehaviorSubject([]);
+  specialAccommodationsData$: BehaviorSubject<any> = new BehaviorSubject([]);
 
   fileUploadedName!: string | undefined;
   uploadedFile!: File | undefined;
   documentType!: string;
 
-  selectedDocumentType: string | null | undefined;
+  accommodationTypes: IAccommodationReadOnlyModel[] = [];
+  gridData: any[] = [];
+
+  selectedAccommodationType: IAccommodationReadOnlyModel | undefined;
+
   $event: any;
 
   constructor(private _store: Store, private activatedRoute: ActivatedRoute) {
@@ -91,18 +95,21 @@ export class SpecialAccommodationsModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSpecialAccommodationsData();
+    this.accommodationTypes$?.pipe(untilDestroyed(this)).subscribe((data) => {
+      this.accommodationTypes = data;
+    });
   }
 
   getSpecialAccommodationsData() {
     this.accommodation$?.pipe(untilDestroyed(this)).subscribe((data) => {
       if (data) {
-        this.specialAccommodationsData.next([data]);
+        this.selectedAccommodationType = this.accommodationTypes.find(
+          (x) => x.id === data.accommodationID
+        );
+        this.specialAccommodationsData$.next([data]);
+        this.gridData = [data];
       }
     });
-  }
-
-  handleSelectChange(event: any) {
-    this.selectedDocumentType = event.target.__displayLabel;
   }
 
   handleFileOnChange($event: any) {
@@ -114,52 +121,65 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     const data = $event.data;
     const existingAccommodation = $event.gridData[0];
     const model = {
-      file: data.file,
-      accommodationID: data.typeId,
-      examID: this.examHeaderId,
+      file: data?.file,
+      accommodationID: this.selectedAccommodationType?.id || 0,
+      examID: +(this.examHeaderId || 0),
       id: existingAccommodation?.id,
     };
 
     const formData = new FormData();
 
     Object.keys(model).forEach((key) => {
-      formData.set(key, model[key as keyof typeof model]);
+      if (model[key as keyof typeof model]) {
+        formData.set(key, model[key as keyof typeof model]);
+      }
     });
 
-    if (data.file) {
-      if (!existingAccommodation) {
-        this._store
-          .dispatch(
-            new CreateAccommodation(formData as unknown as IAccommodationModel)
-          )
-          .pipe(untilDestroyed(this))
-          .subscribe(() => {
+    if (!existingAccommodation) {
+      this._store
+        .dispatch(
+          new CreateAccommodation(formData as unknown as IAccommodationModel)
+        )
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          if (data) {
+            this.close();
+          } else {
             this._store.dispatch(new GetAccommodations(model.examID ?? 0));
-          });
-      } else {
-        this._store
-          .dispatch(
-            new UpdateAccommodation(
-              model.examID ?? 0,
-              formData as unknown as IAccommodationModel
-            )
+          }
+        });
+    } else {
+      this._store
+        .dispatch(
+          new UpdateAccommodation(
+            model.examID,
+            formData as unknown as IAccommodationModel
           )
-          .pipe(untilDestroyed(this))
-          .subscribe(() => {
+        )
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          if (data) {
+            this.close();
+          } else {
             this._store.dispatch(new GetAccommodations(model.examID ?? 0));
-          });
-      }
+          }
+        });
     }
   }
 
   resetData() {
     this.fileUploadedName = undefined;
     this.uploadedFile = undefined;
-    this.selectedDocumentType = null;
+    this.selectedAccommodationType = undefined;
   }
 
   close() {
+    this.resetData();
     this.closeDialog.emit({ action: 'specialAccommodationsModal' });
+  }
+
+  save() {
+    this.onDocumentUpload({ gridData: this.gridData });
   }
 
   gridAction($event: any) {
