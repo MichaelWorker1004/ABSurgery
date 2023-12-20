@@ -1,0 +1,173 @@
+{
+  "name": "QeExamEligibilityReadOnly",
+  "implementationName": "Examinations\\QeExamEligibilityReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_qe_eligibility_by_userid",
+    "ControllerName": "Examinations\\QeExamEligibilityController",
+    "ControllerRoute": "api/examinations/qe-exam-eligibility",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\QeExamEligibilityReadOnly",
+    "ModelGroup": "QeExamEligibilityReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_qe_eligibility_by_userid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_qe_eligibility_by_userId]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\QeExamEligibilityReadOnly",
+            "fields": [
+              {
+                "name": "ExamId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ExamId"
+              },
+              {
+                "name": "ExamCode",
+                "dataType": "string",
+                "maxLength": 7,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamCode"
+              },
+              {
+                "name": "ExamName",
+                "dataType": "string",
+                "maxLength": 8000,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamName"
+              },
+              {
+                "name": "AppOpenDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AppOpenDate"
+              },
+              {
+                "name": "AppCloseDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AppCloseDate"
+              },
+              {
+                "name": "AppLateDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AppLateDate"
+              },
+              {
+                "name": "AppDelayDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AppDelayDate"
+              },
+              {
+                "name": "ExamStartDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamStartDate"
+              },
+              {
+                "name": "ExamEndDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamEndDate"
+              },
+              {
+                "name": "ApplicationApproved",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ApplicationApproved"
+              },
+              {
+                "name": "RegistrationOpen",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.RegistrationOpen"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\QeExamEligibilityReadOnly.GetByUserId QeExamEligibilityReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\QeExamEligibilityReadOnly -p:Adapter=sp:abssp-[dbo].[get_qe_eligibility_by_userId] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=QeExamEligibilityReadOnly -p:Route=by-userid -p:ControllerName=Examinations\\QeExamEligibilityController -p:ControllerRoute=api/examinations/qe-exam-eligibility -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\QeExamEligibilityReadOnly.GetByUserId QeExamEligibilityReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\QeExamEligibilityReadOnly -p:Adapter=sp:abssp-[dbo].[get_qe_eligibility_by_userId] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=QeExamEligibilityReadOnly -p:Route=by-userid -p:ControllerName=Examinations\\QeExamEligibilityController -p:ControllerRoute=api/examinations/qe-exam-eligibility -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-20T20:23:48.8281842Z"
+  },
+  "version": 1
+}
