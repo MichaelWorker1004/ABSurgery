@@ -188,9 +188,9 @@ namespace SurgeonPortal.Library.Tests.Examinations
                 .Excluding(m => m.Id)
                 .Excluding(m => m.AccommodationName)
                 .Excluding(m => m.DocumentName)
+                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
-                .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedByUserId)
                 .ExcludingMissingMembers());
         

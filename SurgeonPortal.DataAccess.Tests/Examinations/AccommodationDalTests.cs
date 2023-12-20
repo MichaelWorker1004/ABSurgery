@@ -102,8 +102,6 @@ namespace SurgeonPortal.DataAccess.Tests.Examinations
                     AccommodationID = expectedDto.AccommodationID,
                     DocumentId = expectedDto.DocumentId,
                     ExamID = expectedDto.ExamID,
-                    CreatedByUserId = expectedDto.CreatedByUserId,
-                    LastUpdatedByUserId = expectedDto.LastUpdatedByUserId,
                 };
         
             Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
