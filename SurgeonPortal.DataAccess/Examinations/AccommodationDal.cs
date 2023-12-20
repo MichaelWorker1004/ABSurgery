@@ -59,8 +59,6 @@ namespace SurgeonPortal.DataAccess.Examinations
                                 AccommodationID = dto.AccommodationID,
                                 DocumentId = dto.DocumentId,
                                 ExamID = dto.ExamID,
-                                CreatedByUserId = dto.CreatedByUserId,
-                                LastUpdatedByUserId = dto.LastUpdatedByUserId,
                             });
                             
                 }
