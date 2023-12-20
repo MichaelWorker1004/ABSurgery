@@ -35,3 +35,7 @@ export class GetRegistrationRequirementsTitle {
   static readonly type = '[RegistrationRequirements] Get Title';
   constructor(public id: number) {}
 }
+
+export class GetQeExamEligibility {
+  static readonly type = '[RegistrationRequirements] Get QW Eligibility';
+}
