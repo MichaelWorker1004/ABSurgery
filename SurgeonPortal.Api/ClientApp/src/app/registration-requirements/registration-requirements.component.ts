@@ -7,8 +7,10 @@ import {
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
+import { IAccommodationModel } from '../api/models/examinations/accommodation.model';
+import { IPdReferenceLetterModel } from '../api/models/examinations/pd-reference-letter.model';
 import { IStatuses } from '../api/models/users/statuses.model';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
 import { Action } from '../shared/components/action-card/action.enum';
@@ -18,9 +20,21 @@ import { LegendComponent } from '../shared/components/legend/legend.component';
 import { ModalComponent } from '../shared/components/modal/modal.component';
 import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
-import { GlobalDialogService } from '../shared/services/global-dialog.service';
-import { ExamProcessSelectors, GetExamFees } from '../state';
 import {
+  IReferenceFormModalConfig,
+  IReferenceLetterPicklists,
+  ReferenceFormModalComponent,
+} from '../shared/components/reference-form-modal/reference-form-modal.component';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import {
+  ExamProcessSelectors,
+  ExamScoringSelectors,
+  GetExamFees,
+} from '../state';
+import { GetPicklists, PicklistsSelectors } from '../state/picklists';
+import {
+  GetAccommodations,
+  GetPdReferenceLetter,
   GetResgistrationRequirmentsStatuses,
   ReqistrationRequirmentsSelectors,
 } from '../state/registration-requirements';
@@ -28,11 +42,14 @@ import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-ex
 import { GraduateMedicalEducationModalComponent } from './graduate-medical-education-modal/graduate-medical-education-modal.component';
 import { MedicalLicenseModalComponent } from './medical-license-modal/medical-license-modal.component';
 import { ProfessionalActivitiesAndPrivilegesModalComponent } from './professional-activities-and-privileges-modal/professional-activities-and-privileges-modal.component';
+import { ProgramDirectorAttestationsComponent } from './program-director-attestations/program-director-attestations.component';
+import { ADD_PROGRAM_DIRECTOR_FIELDS } from './program-director-fields';
 import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-cards';
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
-import { ProgramDirectorAttestationsComponent } from './program-director-attestations/program-director-attestations.component';
+import { PROGRAM_DIRECTOR_COLS } from './program-director-cols';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -57,6 +74,7 @@ interface ActionMap {
     AttestationModalComponent,
     PayFeeComponent,
     ProgramDirectorAttestationsComponent,
+    ReferenceFormModalComponent,
   ],
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss'],
@@ -72,6 +90,34 @@ export class RegistrationRequirementsComponent implements OnInit {
   )
   registrationRequirementsStatuses$: Observable<any> | undefined;
 
+  @Select(ReqistrationRequirmentsSelectors.slices.pdReferenceLetter)
+  pdReferenceLetter$:
+    | Observable<IPdReferenceLetterModel[] | undefined>
+    | undefined;
+
+  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+    | Observable<number>
+    | undefined;
+
+  @Select(ReqistrationRequirmentsSelectors.slices.accommodation)
+  accommodation$: Observable<IAccommodationModel> | undefined;
+
+  referenceLetterPicklists: IReferenceLetterPicklists = {
+    stateOptions: [],
+    roleOptions: [],
+    altRoleOptions: [],
+    explainOptions: [],
+  };
+
+  referenceFormModalConfig: IReferenceFormModalConfig = {
+    source: 'registrationRequirments',
+    lapsedPath: true,
+  };
+
+  refrenceLetterFormFields = ADD_PROGRAM_DIRECTOR_FIELDS;
+  refrenceLetterCols = PROGRAM_DIRECTOR_COLS;
+
+  examHeaderId!: number;
   userData!: any;
   registrationRequirementsData!: Array<any>;
   applyForAnExamActionCardData!: any;
@@ -113,7 +159,44 @@ export class RegistrationRequirementsComponent implements OnInit {
     public viewContainerRef: ViewContainerRef,
     private _store: Store
   ) {
+    this._store
+      .dispatch(new GetPicklists('500'))
+      .pipe(take(1))
+      .subscribe(() => {
+        const newReferenceLetterPicklists: IReferenceLetterPicklists = {
+          stateOptions: [],
+          roleOptions: [],
+          altRoleOptions: [],
+          explainOptions: [],
+        };
+        newReferenceLetterPicklists.stateOptions =
+          this._store.selectSnapshot(PicklistsSelectors.slices.states) || [];
+        newReferenceLetterPicklists.roleOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterRoleTypes
+          ) || [];
+        newReferenceLetterPicklists.altRoleOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterAltRoleTypes
+          ) || [];
+        newReferenceLetterPicklists.explainOptions =
+          this._store.selectSnapshot(
+            PicklistsSelectors.slices.referenceLetterExplainOptions
+          ) || [];
+
+        this.referenceLetterPicklists = newReferenceLetterPicklists;
+      });
+
+    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
+      this.examHeaderId = id;
+      if (this.examHeaderId) {
+        this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
+        this._store.dispatch(new GetAccommodations(this.examHeaderId));
+      }
+    });
+
     this._store.dispatch(new GetResgistrationRequirmentsStatuses());
+
     this._store.dispatch(new GetExamFees());
     this._globalDialogService.setViewContainerRef = this.viewContainerRef;
   }

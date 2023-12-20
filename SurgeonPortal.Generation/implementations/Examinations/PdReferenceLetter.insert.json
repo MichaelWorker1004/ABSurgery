@@ -1,0 +1,140 @@
+{
+  "name": "PdReferenceLetter",
+  "implementationName": "Examinations\\PdReferenceLetter.insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.ins_pd_refletter",
+    "ControllerName": "Examinations\\PdReferenceLetterController",
+    "ControllerRoute": "api/examinations/pd-reference-letter",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Examinations\\PdReferenceLetter.GetByExamId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\PdReferenceLetter",
+    "ModelGroup": "PdReferenceLetter",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.ins_pd_refletter",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[ins_pd_refLetter]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "Official",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Official"
+          },
+          {
+            "name": "Title",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Title"
+          },
+          {
+            "name": "Email",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Email"
+          },
+          {
+            "name": "Hosp",
+            "dataType": "string",
+            "maxLength": 1000,
+            "precision": 1000,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Hosp"
+          },
+          {
+            "name": "ExamId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamId"
+          },
+          {
+            "name": "IdCode",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "IdCode"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "Official",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "Title",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "Email",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "Hosp",
+      "dataType": "string",
+      "required": true
+    },
+    {
+      "name": "ExamId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "IdCode",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i pa Examinations\\PdReferenceLetter.insert PdReferenceLetter -t=ytg-framework/editable-create -p:Model=Examinations\\PdReferenceLetter -p:Adapter=sp:ABSSP-[dbo].[ins_pd_refLetter] -p:FetchImplementation=Examinations\\PdReferenceLetter.GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=PdReferenceLetter -p:Route= -p:ControllerName=Examinations\\PdReferenceLetterController -p:ControllerRoute=api/examinations/pd-reference-letter -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\PdReferenceLetter.insert PdReferenceLetter -t=ytg-framework/editable-create -p:Model=Examinations\\PdReferenceLetter -p:Adapter=sp:ABSSP-[dbo].[ins_pd_refLetter] -p:FetchImplementation=Examinations\\PdReferenceLetter.GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=PdReferenceLetter -p:Route= -p:ControllerName=Examinations\\PdReferenceLetterController -p:ControllerRoute=api/examinations/pd-reference-letter -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-19T15:15:01.0725397Z"
+  },
+  "version": 1
+}
