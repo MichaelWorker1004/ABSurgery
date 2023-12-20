@@ -1,6 +1,11 @@
 <div class="flex align-items-end flex-wrap col-12 margin-bottom-2">
   <div>
-    <h1>General Surgery Qualifying Examination</h1>
+    <h1>
+      {{
+        (examTitle$ | async)?.examName ||
+          'General Surgery Qualifying Examination'
+      }}
+    </h1>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eros arcu,
     mattis ut urna id, convallis eleifend purus. Phasellus sodales condimentum
     orci, id malesuada ante faucibus eu.

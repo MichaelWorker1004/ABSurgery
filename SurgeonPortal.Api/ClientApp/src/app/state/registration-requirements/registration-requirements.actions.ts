@@ -30,3 +30,8 @@ export class GetPdReferenceLetter {
   static readonly type = '[RegistrationRequirements] Get Pd Reference Letter';
   constructor(public examId: number) {}
 }
+
+export class GetRegistrationRequirementsTitle {
+  static readonly type = '[RegistrationRequirements] Get Title';
+  constructor(public id: number) {}
+}
