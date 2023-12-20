@@ -24,16 +24,20 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 
+import { ActivatedRoute } from '@angular/router';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { Observable } from 'rxjs';
 import { IStateReadOnlyModel } from 'src/app/api';
 import { IReferenceLetterModel } from 'src/app/api/models/continuouscertification/reference-letter.model';
+import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-reference-letter.model';
 import { CollapsePanelComponent } from 'src/app/shared/components/collapse-panel/collapse-panel.component';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { matchFields } from 'src/app/shared/validators/validators';
 import {
+  CreatePdReferenceLetter,
+  GetPdReferenceLetter,
   IUserProfile,
   RequestRefrence,
   UserProfileSelectors,
@@ -81,28 +85,28 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   @ViewChild('referenceRequestPanel')
   referenceRequestPanel!: CollapsePanelComponent;
 
-  // @Select(PicklistsSelectors.slices.states) states$:
-  //   | Observable<IStateReadOnlyModel[]>
-  //   | undefined;
-
   @Select(UserProfileSelectors.user) user$:
     | Observable<IUserProfile>
     | undefined;
 
   @Input() picklistValues!: IReferenceLetterPicklists;
   @Input() referenceFormGridData$:
-    | Observable<IRefrenceFormReadOnlyModel[] | undefined>
+    | Observable<
+        IRefrenceFormReadOnlyModel[] | IPdReferenceLetterModel[] | undefined
+      >
     | undefined;
+  @Input() referenceFormsCols = REFERENCE_FORMS_COLS;
   @Input() modalConfig: IReferenceFormModalConfig | undefined;
   @Input() formFields!: any;
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
+
+  examHeaderId!: number;
 
   lapsedPath = false;
   source: string | undefined;
   formExpanded = false;
   sec_order = 0;
 
-  referenceFormsCols = REFERENCE_FORMS_COLS;
   referenceLetterForm: FormGroup = new FormGroup(
     {},
     { validators: matchFields('email', 'confirmEmail') }
@@ -111,8 +115,16 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
 
   constructor(
     private _store: Store,
-    private globalDialogService: GlobalDialogService
-  ) {}
+    private globalDialogService: GlobalDialogService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.params.subscribe((params) => {
+      this.examHeaderId = params['examId'];
+      if (this.examHeaderId) {
+        this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.setConfigValues(this.modalConfig);
@@ -278,7 +290,6 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   }
 
   closePanel() {
-    // this.globalDialogService.closeOpenDialog();
     this.referenceLetterForm.reset();
     this.referenceLetterForm.patchValue({
       fullName: this.fullName,
@@ -287,27 +298,23 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    // this function will be the attestation version of the submit
-
     const form = this.referenceLetterForm.getRawValue();
+    const model = {
+      hosp: form.hosp,
+      official: form.official,
+      title: form.title,
+      email: form.email,
+      examId: this.examHeaderId,
+    } as unknown as IPdReferenceLetterModel;
 
-    console.log('unhandled submit', form);
+    this._store
+      .dispatch(new CreatePdReferenceLetter(model))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this._store.dispatch(new GetPdReferenceLetter(496));
+      });
 
-    // const model = form as unknown as IRefrenceFormModel;
-
-    // this._store
-    //   .dispatch(new RequestRefrence(model))
-    //   .pipe(untilDestroyed(this))
-    //   .subscribe(() => {
-    //     this.referenceRequestPanel.collaspsePanel();
-    //     this.globalDialogService.showSuccessError(
-    //       'Reference Requested',
-    //       'Your reference request has been sent successfully.',
-    //       true
-    //     );
-
-    //     this.close();
-    //   });
+    this.close();
   }
 
   close() {

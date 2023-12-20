@@ -8,4 +8,5 @@ export interface IPdReferenceLetterModel {
     email: string;
     letterSent: string;
     status: number;
+    examId: number;
 }

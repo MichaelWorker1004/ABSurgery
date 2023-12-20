@@ -1,47 +1,45 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Select, Store } from '@ngxs/store';
+import { Observable, skipWhile, take } from 'rxjs';
+import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
+import { IAttestationSubmitModel } from '../api/models/continuouscertification/attestation-read-only.model';
+import { IStatuses } from '../api/models/users/statuses.model';
 import { ActionCardComponent } from '../shared/components/action-card/action-card.component';
+import { Action } from '../shared/components/action-card/action.enum';
 import { Status } from '../shared/components/action-card/status.enum';
+import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
 import { GridComponent } from '../shared/components/grid/grid.component';
+import { LegendComponent } from '../shared/components/legend/legend.component';
+import { ModalComponent } from '../shared/components/modal/modal.component';
 import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
-import { ModalComponent } from '../shared/components/modal/modal.component';
-import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outcome-registries-modal.component';
-import { AttestationModalComponent } from '../shared/components/attestation-modal/attestation-modal.component';
 import {
   IReferenceFormModalConfig,
   IReferenceLetterPicklists,
   ReferenceFormModalComponent,
 } from '../shared/components/reference-form-modal/reference-form-modal.component';
-import { Action } from '../shared/components/action-card/action.enum';
-import { Observable, skipWhile, take } from 'rxjs';
-import { Select, Store } from '@ngxs/store';
-import { GetPicklists, PicklistsSelectors } from '../state/picklists';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import {
+  ContinuousCertificationSelectors,
+  DashboardSelectors,
+  ExamProcessSelectors,
+  GetContinuousCertificationStatuses,
+  GetDashboardCertificationStatus,
+  GetExamFees,
+  GetRefrenceFormGridData,
+  IUserProfile,
+  SubmitAttestation,
+  UserProfileSelectors,
+} from '../state';
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
-import { LegendComponent } from '../shared/components/legend/legend.component';
-import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
-import {
-  UserProfileSelectors,
-  IUserProfile,
-  ExamProcessSelectors,
-  GetExamFees,
-  ContinuousCertificationSelectors,
-  GetContinuousCertificationStatuses,
-  GetRefrenceFormGridData,
-  SubmitAttestation,
-  GetDashboardCertificationStatus,
-  DashboardSelectors,
-  RequestRefrence,
-} from '../state';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IStatuses } from '../api/models/users/statuses.model';
-import { GlobalDialogService } from '../shared/services/global-dialog.service';
-import { IAttestationSubmitModel } from '../api/models/continuouscertification/attestation-read-only.model';
 import { IRefrenceFormReadOnlyModel } from '../state/continuous-certification/refrence-form-read-only.model';
-import { IReferenceLetterModel } from '../api/models/continuouscertification/reference-letter.model';
+import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import { ADD_REFERENCE_LETTER_FIELDS } from './add-reference-letter-fields';
+import { OutcomeRegistriesModalComponent } from './outcome-registries-modal/outcome-registries-modal.component';
 
 interface ActionMap {
   [key: string]: () => void;

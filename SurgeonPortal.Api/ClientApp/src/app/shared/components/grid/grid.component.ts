@@ -317,6 +317,6 @@ export class GridComponent implements OnInit, OnChanges {
    *
    */
   cleanString(str: string) {
-    return str.replace(/[^a-zA-Z0-9]+/gi, '-');
+    return str?.replace(/[^a-zA-Z0-9]+/gi, '-');
   }
 }

@@ -89,7 +89,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'apply-and-resgister/registration-requirements',
+    path: 'apply-and-resgister/registration-requirements/:examId',
     loadComponent: () =>
       import(
         './registration-requirements/registration-requirements.component'

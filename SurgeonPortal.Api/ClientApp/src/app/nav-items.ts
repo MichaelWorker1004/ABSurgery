@@ -61,22 +61,6 @@ export const ALL_NAV_ITEMS = [
     feature: 'applyRegisterPage',
     allowedClaims: ['surgeon'],
     order: 7,
-    children: [
-      {
-        display: 'Registration Requirements',
-        displayKey: 'SIDENAV.APPLY_REGISTER.REQUIREMENTS',
-        action: 'registration-requirements',
-        allowedClaims: ['surgeon'],
-        order: 7.1,
-      },
-      {
-        display: 'Exam Registration',
-        displayKey: 'SIDENAV.APPLY_REGISTER.REGISTRATION',
-        action: 'exam-registration',
-        allowedClaims: ['surgeon'],
-        order: 7.2,
-      },
-    ],
   },
   {
     display: 'Examination History',
