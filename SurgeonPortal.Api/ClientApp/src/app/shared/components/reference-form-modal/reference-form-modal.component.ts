@@ -318,6 +318,7 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   }
 
   close() {
+    this.referenceLetterForm.reset();
     this.closeDialog.emit();
   }
 

@@ -200,6 +200,17 @@ export class ContinuousCertificationComponent implements OnInit {
             ...this.referenceFormModalConfig,
             lapsedPath: certStatus.lapsedPath,
           };
+
+          if (this.continousCertificationData) {
+            this.continousCertificationData.find((cc: any) => {
+              if (cc.id === 'Ref_Let') {
+                cc['disabled'] = !this.referenceFormModalConfig.lapsedPath;
+                if (cc['disabled']) {
+                  cc['status'] = Status.Completed;
+                }
+              }
+            });
+          }
         }
       });
   }
@@ -308,7 +319,7 @@ export class ContinuousCertificationComponent implements OnInit {
         displayStatusText: false,
       },
       {
-        id: 'payFee',
+        id: 'CC_Fee',
         title: 'Pay Fee',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -330,7 +341,7 @@ export class ContinuousCertificationComponent implements OnInit {
           type: Action.dialog,
           action: 'referenceFormsModal',
         },
-        actionDisplay: 'View / Update my activities',
+        actionDisplay: 'View / Update my references',
         icon: 'fa-solid fa-rectangle-list',
         status: Status.InProgress,
         displayStatusText: false,
@@ -353,10 +364,14 @@ export class ContinuousCertificationComponent implements OnInit {
       {
         id: 'applyForExam',
         title: 'Apply for an Exam',
+        action: {
+          type: Action.component,
+          action: '/apply-and-resgister',
+        },
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
         actionStyle: 'button',
-        disabled: true,
+        disabled: false,
         actionDisplay: 'Apply Now',
         icon: 'fa-solid fa-language',
         displayStatusText: false,
@@ -377,13 +392,52 @@ export class ContinuousCertificationComponent implements OnInit {
 
         continousCertificationData.forEach((cc: any) => {
           cc['status'] = statuses[cc.id]?.status || Status.InProgress;
+          cc['disabled'] = statuses[cc.id]?.disabled || false;
+        });
+
+        continousCertificationData.find((cc) => {
+          if (cc.id === 'Ref_Let') {
+            cc['disabled'] = !this.referenceFormModalConfig.lapsedPath;
+            if (cc['disabled']) {
+              cc['status'] = Status.Completed;
+            }
+          }
+        });
+
+        continousCertificationData.find((cc) => {
+          if (cc.id === 'CC_Attestation') {
+            if (!cc['disabled']) {
+              cc['disabled'] = !continousCertificationData.every((item) => {
+                if (
+                  item.id === 'applyForExam' ||
+                  item.id === 'CC_Attestation'
+                ) {
+                  return true;
+                } else {
+                  return (
+                    item.status === Status.Completed ||
+                    item.status === undefined
+                  );
+                }
+              });
+            }
+            cc['disabled'] = true; // TODO: remove this line when ready to enable
+            if (cc['disabled']) {
+              cc['status'] = Status.Contingent;
+            }
+          }
         });
 
         continousCertificationData.find((cc) => {
           if (cc.id === 'applyForExam') {
-            cc['disabled'] = !this.areAllItemsCompleted(
-              continousCertificationData
-            );
+            if (!cc['disabled']) {
+              cc['disabled'] = !continousCertificationData.every((item) => {
+                return (
+                  item.status === Status.Completed || item.status === undefined
+                );
+              });
+            }
+            cc['disabled'] = true; // TODO: remove this line when ready to enable
             if (cc['disabled']) {
               cc['status'] = Status.Contingent;
             }
@@ -392,15 +446,6 @@ export class ContinuousCertificationComponent implements OnInit {
 
         this.continousCertificationData = continousCertificationData;
       });
-  }
-
-  areAllItemsCompleted(certificationData: any[]): boolean {
-    for (const item of certificationData) {
-      if (item.status !== undefined && item.status !== Status.Completed) {
-        return false;
-      }
-    }
-    return true; // All items have a status of Completed or no status at all
   }
 
   handleCardAction(action: string) {
@@ -424,20 +469,4 @@ export class ContinuousCertificationComponent implements OnInit {
         this.handleCardAction('attestationModal');
       });
   }
-
-  // handleReferenceLetterSave(data: IReferenceLetterModel) {
-  //   this.globalDialogService.showLoading();
-  //   console.log('save reference letter', data);
-  //   const model: IReferenceLetterModel = {
-  //     ...data,
-  //   };
-
-  //   // this._store
-  //   //   .dispatch(new RequestRefrence(model))
-  //   //   .pipe(untilDestroyed(this))
-  //   //   .subscribe(() => {
-  //   //     this.globalDialogService.closeOpenDialog();
-  //   //     this.handleCardAction('referenceModal');
-  //   //   });
-  // }
 }
