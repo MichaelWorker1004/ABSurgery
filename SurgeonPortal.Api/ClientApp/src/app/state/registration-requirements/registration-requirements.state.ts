@@ -121,10 +121,6 @@ export class RegistrationRequirementsState {
     payload: { id: number }
   ) {
     const sessionId = payload.id;
-
-    if (ctx.getState()?.examTitle) {
-      return of(ctx.getState()?.examTitle);
-    }
     return this.examinationsService
       .retrieveExamTitleReadOnly_GetByExamId(sessionId)
       .pipe(
