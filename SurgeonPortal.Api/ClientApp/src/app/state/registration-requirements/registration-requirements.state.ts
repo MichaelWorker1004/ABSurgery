@@ -120,7 +120,6 @@ export class RegistrationRequirementsState {
     ctx: StateContext<IRegistrationRequirements>,
     payload: { id: number }
   ) {
-    // const state = ctx.getState();
     const sessionId = payload.id;
 
     if (ctx.getState()?.examTitle) {
