@@ -114,7 +114,6 @@ export class RegistrationRequirementsState {
     ctx: StateContext<IRegistrationRequirements>,
     payload: CreateAccommodation
   ) {
-    console.log('payload', payload);
     return this.accommodationService.createAccommodation(payload.model).pipe(
       tap(() => {
         this.globalDialogService.showSuccessError(

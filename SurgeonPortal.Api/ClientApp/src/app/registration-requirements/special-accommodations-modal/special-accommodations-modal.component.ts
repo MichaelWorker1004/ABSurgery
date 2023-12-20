@@ -68,11 +68,14 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   @Input() examHeaderId!: number | null;
 
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS as IGridColumns[];
-  specialAccommodationsData: BehaviorSubject<any> = new BehaviorSubject([]);
+  specialAccommodationsData$: BehaviorSubject<any> = new BehaviorSubject([]);
 
   fileUploadedName!: string | undefined;
   uploadedFile!: File | undefined;
   documentType!: string;
+
+  accommodationTypes: IAccommodationReadOnlyModel[] = [];
+  gridData: any[] = [];
 
   selectedAccommodationType: IAccommodationReadOnlyModel | undefined;
 
@@ -92,12 +95,19 @@ export class SpecialAccommodationsModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSpecialAccommodationsData();
+    this.accommodationTypes$?.pipe(untilDestroyed(this)).subscribe((data) => {
+      this.accommodationTypes = data;
+    });
   }
 
   getSpecialAccommodationsData() {
     this.accommodation$?.pipe(untilDestroyed(this)).subscribe((data) => {
       if (data) {
-        this.specialAccommodationsData.next([data]);
+        this.selectedAccommodationType = this.accommodationTypes.find(
+          (x) => x.id === data.accommodationID
+        );
+        this.specialAccommodationsData$.next([data]);
+        this.gridData = [data];
       }
     });
   }
@@ -113,21 +123,22 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     const model = {
       file: data?.file,
       accommodationID: this.selectedAccommodationType?.id || 0,
-      examID: this.examHeaderId,
+      examID: +(this.examHeaderId || 0),
       id: existingAccommodation?.id,
     };
 
-    // const formData = new FormData();
+    const formData = new FormData();
 
-    // Object.keys(model).forEach((key) => {
-    //   formData.set(key, model[key as keyof typeof model]);
-    // });
+    Object.keys(model).forEach((key) => {
+      if (model[key as keyof typeof model]) {
+        formData.set(key, model[key as keyof typeof model]);
+      }
+    });
 
     if (!existingAccommodation) {
-      console.log(model);
       this._store
         .dispatch(
-          new CreateAccommodation(model as unknown as IAccommodationModel)
+          new CreateAccommodation(formData as unknown as IAccommodationModel)
         )
         .pipe(untilDestroyed(this))
         .subscribe(() => {
@@ -141,8 +152,8 @@ export class SpecialAccommodationsModalComponent implements OnInit {
       this._store
         .dispatch(
           new UpdateAccommodation(
-            model.examID ?? 0,
-            model as unknown as IAccommodationModel
+            model.examID,
+            formData as unknown as IAccommodationModel
           )
         )
         .pipe(untilDestroyed(this))
@@ -168,7 +179,7 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   }
 
   save() {
-    this.onDocumentUpload({ gridData: [] });
+    this.onDocumentUpload({ gridData: this.gridData });
   }
 
   gridAction($event: any) {

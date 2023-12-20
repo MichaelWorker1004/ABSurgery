@@ -1,10 +1,22 @@
 <div class="mb-5">
-  <label for="accommodationType"
+  <label
+    for="accommodationType"
+    *ngIf="gridData && gridData.length > 0 && gridData[0].accommodationID === 1"
+  >
+    You have already indicated that you do not need any special accommodations,
+    if you would like to update this selection please select one of the options
+    below and complete the associated form.
+  </label>
+  <label
+    for="accommodationType"
+    *ngIf="
+      !gridData || gridData.length === 0 || gridData[0].accommodationID !== 1
+    "
     >Please select an accomodation type below:
   </label>
   <p-dropdown
     placeholder="Select an Accommodation Type"
-    [options]="(accommodationTypes$ | async) ?? []"
+    [options]="accommodationTypes"
     name="accommodationType"
     id="accommodationType"
     [(ngModel)]="selectedAccommodationType"
@@ -28,7 +40,7 @@
     <abs-documents-upload
       [showFilter]="false"
       [gridCols]="specialAccommodationsCols"
-      [documentsData]="specialAccommodationsData | async"
+      [documentsData]="specialAccommodationsData$ | async"
       [dropdownLabel]="'description'"
       [dropdownValue]="'id'"
       [userId]="userId$ | async"
