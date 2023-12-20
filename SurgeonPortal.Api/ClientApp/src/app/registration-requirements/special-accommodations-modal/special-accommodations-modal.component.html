@@ -1,22 +1,61 @@
 <div class="mb-5">
-  <p>
-    Please complete and upload below
-    <a href="#">Accommodation Request Other Medical Conditions</a>
-  </p>
+  <label for="accommodationType"
+    >Please select an accomodation type below:
+  </label>
+  <p-dropdown
+    placeholder="Select an Accommodation Type"
+    [options]="(accommodationTypes$ | async) ?? []"
+    name="accommodationType"
+    id="accommodationType"
+    [(ngModel)]="selectedAccommodationType"
+    appendTo="body"
+    optionLabel="code"
+  ></p-dropdown>
+
+  <div
+    *ngIf="selectedAccommodationType && selectedAccommodationType?.documentLink"
+  >
+    <p>
+      Please complete and upload this form to request an accommodation:
+      <a [href]="selectedAccommodationType.documentLink" target="_blank"
+        ><span style="text-transform: capitalize">{{
+          selectedAccommodationType.code
+        }}</span>
+        Form</a
+      >
+    </p>
+
+    <abs-documents-upload
+      [showFilter]="false"
+      [gridCols]="specialAccommodationsCols"
+      [documentsData]="specialAccommodationsData | async"
+      [dropdownLabel]="'description'"
+      [dropdownValue]="'id'"
+      [userId]="userId$ | async"
+      (uploadAction)="onDocumentUpload($event)"
+    ></abs-documents-upload>
+  </div>
 </div>
 
-<abs-documents-upload
-  [dropdownOptions]="accommodationTypes$ | async"
-  [dropdownPlaceholder]="'Select an Accomodation Type'"
-  [showFilter]="false"
-  [gridCols]="specialAccommodationsCols"
-  [documentsData]="specialAccommodationsData | async"
-  [dropdownLabel]="'description'"
-  [dropdownValue]="'id'"
-  [userId]="userId$ | async"
-  (uploadAction)="onDocumentUpload($event)"
-></abs-documents-upload>
-
 <div class="flex justify-content-end mt-5" slot="footer">
-  <p-button styleClass="p-button-primary" (click)="close()">Cancel</p-button>
+  <p-button
+    *ngIf="selectedAccommodationType && !selectedAccommodationType.documentLink"
+    styleClass="p-button-link p-button-primary"
+    (click)="close()"
+    >Cancel</p-button
+  >
+  <p-button
+    *ngIf="selectedAccommodationType && !selectedAccommodationType.documentLink"
+    [style]="{ width: '337px' }"
+    styleClass="p-button-primary"
+    (click)="save()"
+    >Save</p-button
+  >
+  <p-button
+    *ngIf="!selectedAccommodationType || selectedAccommodationType.documentLink"
+    [style]="{ width: '337px' }"
+    styleClass="p-button-primary"
+    (click)="close()"
+    >Close</p-button
+  >
 </div>

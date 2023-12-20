@@ -3,6 +3,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -15,12 +16,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
 import { IAccommodationReadOnlyModel } from 'src/app/api/models/picklists/accommodation-read-only.model';
 import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
+import { IGridColumns } from 'src/app/shared/components/grid/abs-grid-col.interface';
 import { GridComponent } from 'src/app/shared/components/grid/grid.component';
 import {
   CreateAccommodation,
   ExamScoringSelectors,
   GetAccommodations,
-  GetActiveExamId,
   ReqistrationRequirmentsSelectors,
   UpdateAccommodation,
   UserProfileSelectors,
@@ -30,7 +31,7 @@ import {
   PicklistsSelectors,
 } from 'src/app/state/picklists';
 import { SPECIAL_ACCOMMODATIONS_COLS } from './special-accommodations-cols';
-import { IGridColumns } from 'src/app/shared/components/grid/abs-grid-col.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -64,7 +65,7 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   @Select(ReqistrationRequirmentsSelectors.slices.accommodation)
   accommodation$: Observable<IAccommodationModel> | undefined;
 
-  examHeaderId!: number;
+  @Input() examHeaderId!: number | null;
 
   specialAccommodationsCols = SPECIAL_ACCOMMODATIONS_COLS as IGridColumns[];
   specialAccommodationsData: BehaviorSubject<any> = new BehaviorSubject([]);
@@ -73,15 +74,19 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   uploadedFile!: File | undefined;
   documentType!: string;
 
-  selectedDocumentType: string | null | undefined;
+  selectedAccommodationType: IAccommodationReadOnlyModel | undefined;
+
   $event: any;
 
-  constructor(private _store: Store) {
-    this._store.dispatch(new GetActiveExamId());
-    this.examHeaderId$?.pipe(untilDestroyed(this)).subscribe((id) => {
-      this.examHeaderId = id;
-      if (id) this._store.dispatch(new GetAccommodations(this.examHeaderId));
-    });
+  constructor(private _store: Store, private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params
+      .pipe(untilDestroyed(this))
+      .subscribe((params) => {
+        this.examHeaderId = params['examId'];
+        if (this.examHeaderId) {
+          this._store.dispatch(new GetAccommodations(this.examHeaderId));
+        }
+      });
     this._store.dispatch(new GetAccommodationTypes());
   }
 
@@ -97,10 +102,6 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     });
   }
 
-  handleSelectChange(event: any) {
-    this.selectedDocumentType = event.target.__displayLabel;
-  }
-
   handleFileOnChange($event: any) {
     this.fileUploadedName = $event.target.files[0].name;
     this.uploadedFile = $event.target.files;
@@ -110,52 +111,64 @@ export class SpecialAccommodationsModalComponent implements OnInit {
     const data = $event.data;
     const existingAccommodation = $event.gridData[0];
     const model = {
-      file: data.file,
-      accommodationID: data.typeId,
+      file: data?.file,
+      accommodationID: this.selectedAccommodationType?.id || 0,
       examID: this.examHeaderId,
       id: existingAccommodation?.id,
     };
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
-    Object.keys(model).forEach((key) => {
-      formData.set(key, model[key as keyof typeof model]);
-    });
+    // Object.keys(model).forEach((key) => {
+    //   formData.set(key, model[key as keyof typeof model]);
+    // });
 
-    if (data.file) {
-      if (!existingAccommodation) {
-        this._store
-          .dispatch(
-            new CreateAccommodation(formData as unknown as IAccommodationModel)
-          )
-          .pipe(untilDestroyed(this))
-          .subscribe(() => {
+    if (!existingAccommodation) {
+      console.log(model);
+      this._store
+        .dispatch(
+          new CreateAccommodation(model as unknown as IAccommodationModel)
+        )
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          if (data) {
+            this.close();
+          } else {
             this._store.dispatch(new GetAccommodations(model.examID ?? 0));
-          });
-      } else {
-        this._store
-          .dispatch(
-            new UpdateAccommodation(
-              model.examID ?? 0,
-              formData as unknown as IAccommodationModel
-            )
+          }
+        });
+    } else {
+      this._store
+        .dispatch(
+          new UpdateAccommodation(
+            model.examID ?? 0,
+            model as unknown as IAccommodationModel
           )
-          .pipe(untilDestroyed(this))
-          .subscribe(() => {
+        )
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          if (data) {
+            this.close();
+          } else {
             this._store.dispatch(new GetAccommodations(model.examID ?? 0));
-          });
-      }
+          }
+        });
     }
   }
 
   resetData() {
     this.fileUploadedName = undefined;
     this.uploadedFile = undefined;
-    this.selectedDocumentType = null;
+    this.selectedAccommodationType = undefined;
   }
 
   close() {
+    this.resetData();
     this.closeDialog.emit({ action: 'specialAccommodationsModal' });
+  }
+
+  save() {
+    this.onDocumentUpload({ gridData: [] });
   }
 
   gridAction($event: any) {

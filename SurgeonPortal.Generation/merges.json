@@ -4339,5 +4339,44 @@
   },
   "\\SurgeonPortal.DataAccess.Tests\\Picklists\\ReferenceLetterExplainReadOnlyDalTests.cs": {
     "lastGeneratedHash": "D098BEBC88C114CA1AF0643A8280F7DE"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\pd-reference-letter.model.ts": {
+    "lastGeneratedHash": "B7C487E952714E6A6C88DB2162BD5665"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\PdReferenceLetterDto.cs": {
+    "lastGeneratedHash": "C0AF31184850B26BA90A55463B51F961"
+  },
+  "\\SurgeonPortal.Models\\Examinations\\PdReferenceLetterModel.cs": {
+    "lastGeneratedHash": "33305A90C9852ECF95819EBE11901BC5"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\pd-reference-letter.service.ts": {
+    "lastGeneratedHash": "11BD61E98E08A7E34BC73D16CD17CF9F"
+  },
+  "\\SurgeonPortal.Api\\Controllers\\Examinations\\PdReferenceLetterController.cs": {
+    "lastGeneratedHash": "302EE59A14CAA19CB77C505938002FF9"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\PdReferenceLetter.cs": {
+    "lastGeneratedHash": "F417B0BB403190F58D4F2116FBDA37C8"
+  },
+  "\\SurgeonPortal.DataAccess\\Examinations\\PdReferenceLetterDal.cs": {
+    "lastGeneratedHash": "C55C423708EBA9EC8399EE461CF2B04F"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\PdReferenceLetterFactory.cs": {
+    "lastGeneratedHash": "B711B2B5442358371E99C100FE3AABE9"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IPdReferenceLetter.cs": {
+    "lastGeneratedHash": "2C67D5B05F01381C57F792459F41D862"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IPdReferenceLetterDal.cs": {
+    "lastGeneratedHash": "7CD836CE9624A5310A25B7A669EB2F89"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IPdReferenceLetterFactory.cs": {
+    "lastGeneratedHash": "FD073E3ACB159E65D27D9A336BB8EEB6"
+  },
+  "\\SurgeonPortal.Library.Tests\\Examinations\\PdReferenceLetterTests.cs": {
+    "lastGeneratedHash": "08DDFE2C7A13E62C2E566DA558185298"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\Examinations\\PdReferenceLetterDalTests.cs": {
+    "lastGeneratedHash": "F54D070908C95BCD7EEFBF07BCBC86B1"
   }
 }

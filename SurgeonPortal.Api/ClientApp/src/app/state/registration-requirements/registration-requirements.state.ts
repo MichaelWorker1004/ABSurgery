@@ -10,14 +10,19 @@ import { IFormErrors } from 'src/app/shared/common';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import {
   CreateAccommodation,
+  CreatePdReferenceLetter,
   GetAccommodations,
+  GetPdReferenceLetter,
   GetResgistrationRequirmentsStatuses,
   UpdateAccommodation,
 } from './registration-requirements.actions';
+import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-reference-letter.model';
+import { PdReferenceLetterService } from 'src/app/api/services/examinations/pd-reference-letter.service';
 
 export interface IRegistrationRequirements {
   registrationRequirementsStatuses?: IStatuses[];
   accommodation?: IAccommodationModel;
+  pdReferenceLetter?: IPdReferenceLetterModel[];
   errors?: IFormErrors | null;
 }
 
@@ -30,6 +35,7 @@ export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
   defaults: {
     registrationRequirementsStatuses: undefined,
     accommodation: undefined,
+    pdReferenceLetter: undefined,
     errors: null,
   },
 })
@@ -37,7 +43,8 @@ export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
 export class RegistrationRequirementsState {
   constructor(
     private accommodationService: AccommodationService,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    private pdReferenceLetterService: PdReferenceLetterService
   ) {}
 
   @Action(GetResgistrationRequirmentsStatuses)
@@ -107,6 +114,7 @@ export class RegistrationRequirementsState {
     ctx: StateContext<IRegistrationRequirements>,
     payload: CreateAccommodation
   ) {
+    console.log('payload', payload);
     return this.accommodationService.createAccommodation(payload.model).pipe(
       tap(() => {
         this.globalDialogService.showSuccessError(
@@ -174,6 +182,58 @@ export class RegistrationRequirementsState {
             'An error has occured while uploading the file. Please try again.',
             false
           );
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(CreatePdReferenceLetter)
+  createPdReferenceLetter(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: CreatePdReferenceLetter
+  ) {
+    return this.pdReferenceLetterService
+      .createPdReferenceLetter(payload.model)
+      .pipe(
+        tap(() => {
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Your reference request has been sent successfully.',
+            true
+          );
+        }),
+
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'An error has occured. Please try again.',
+            false
+          );
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetPdReferenceLetter)
+  getPdReferenceLetter(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: GetPdReferenceLetter
+  ) {
+    return this.pdReferenceLetterService
+      .retrievePdReferenceLetter_GetByExamId(payload.examId)
+      .pipe(
+        tap((pdReferenceLetter: IPdReferenceLetterModel) => {
+          const letters = [pdReferenceLetter];
+          ctx.patchState({
+            pdReferenceLetter: letters,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
           return of(errors);
         })
       );

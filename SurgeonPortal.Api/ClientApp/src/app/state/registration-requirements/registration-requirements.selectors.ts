@@ -18,6 +18,7 @@ export class ReqistrationRequirmentsSelectors {
         registrationRequirementsStatuses:
           state.registrationRequirementsStatuses,
         accommodation: state.accommodation,
+        pdReferenceLetter: state.pdReferenceLetter,
         errors: state.errors,
       };
     }

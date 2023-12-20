@@ -154,7 +154,7 @@
                 *ngIf="c.cellRenderer === AbsGridCellRendererType.CustomClass"
                 [class]="
                   cleanString(
-                    c.cellClass(r[c.classField || c.fieldName]).toLowerCase()
+                    c.cellClass(r[c.classField || c.fieldName])?.toLowerCase()
                   )
                 "
               >
