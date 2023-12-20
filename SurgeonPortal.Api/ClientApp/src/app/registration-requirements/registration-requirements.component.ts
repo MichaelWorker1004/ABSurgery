@@ -30,6 +30,7 @@ import {
   ExamProcessSelectors,
   ExamScoringSelectors,
   GetExamFees,
+  GetExamTitle,
 } from '../state';
 import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import {
@@ -50,6 +51,7 @@ import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-pr
 import { TrainingModalComponent } from './training-modal/training-modal.component';
 import { PROGRAM_DIRECTOR_COLS } from './program-director-cols';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -101,6 +103,10 @@ export class RegistrationRequirementsComponent implements OnInit {
 
   @Select(ReqistrationRequirmentsSelectors.slices.accommodation)
   accommodation$: Observable<IAccommodationModel> | undefined;
+
+  @Select(ExamScoringSelectors.slices.examTitle) examTitle$:
+    | Observable<IExamTitleReadOnlyModel>
+    | undefined;
 
   referenceLetterPicklists: IReferenceLetterPicklists = {
     stateOptions: [],
@@ -157,8 +163,14 @@ export class RegistrationRequirementsComponent implements OnInit {
   constructor(
     private _globalDialogService: GlobalDialogService,
     public viewContainerRef: ViewContainerRef,
-    private _store: Store
+    private _store: Store,
+    private activatedRoute: ActivatedRoute
   ) {
+    this.activatedRoute.params.subscribe((params) => {
+      if (params['examId']) {
+        this._store.dispatch(new GetExamTitle(params['examId']));
+      }
+    });
     this._store
       .dispatch(new GetPicklists('500'))
       .pipe(take(1))
