@@ -391,6 +391,7 @@ export class ContinuousCertificationComponent implements OnInit {
 
         continousCertificationData.forEach((cc: any) => {
           cc['status'] = statuses[cc.id]?.status || Status.InProgress;
+          cc['disabled'] = statuses[cc.id]?.disabled || false;
         });
 
         continousCertificationData.find((cc) => {
@@ -403,10 +404,39 @@ export class ContinuousCertificationComponent implements OnInit {
         });
 
         continousCertificationData.find((cc) => {
+          if (cc.id === 'CC_Attestation') {
+            if (!cc['disabled']) {
+              cc['disabled'] = !continousCertificationData.every((item) => {
+                if (
+                  item.id === 'applyForExam' ||
+                  item.id === 'CC_Attestation'
+                ) {
+                  return true;
+                } else {
+                  return (
+                    item.status === Status.Completed ||
+                    item.status === undefined
+                  );
+                }
+              });
+            }
+            cc['disabled'] = true; // TODO: remove this line when ready to enable
+            if (cc['disabled']) {
+              cc['status'] = Status.Contingent;
+            }
+          }
+        });
+
+        continousCertificationData.find((cc) => {
           if (cc.id === 'applyForExam') {
-            cc['disabled'] = !this.areAllItemsCompleted(
-              continousCertificationData
-            );
+            if (!cc['disabled']) {
+              cc['disabled'] = !continousCertificationData.every((item) => {
+                return (
+                  item.status === Status.Completed || item.status === undefined
+                );
+              });
+            }
+            cc['disabled'] = true; // TODO: remove this line when ready to enable
             if (cc['disabled']) {
               cc['status'] = Status.Contingent;
             }
@@ -415,15 +445,6 @@ export class ContinuousCertificationComponent implements OnInit {
 
         this.continousCertificationData = continousCertificationData;
       });
-  }
-
-  areAllItemsCompleted(certificationData: any[]): boolean {
-    for (const item of certificationData) {
-      if (item.status !== undefined && item.status !== Status.Completed) {
-        return false;
-      }
-    }
-    return true; // All items have a status of Completed or no status at all
   }
 
   handleCardAction(action: string) {
@@ -447,20 +468,4 @@ export class ContinuousCertificationComponent implements OnInit {
         this.handleCardAction('attestationModal');
       });
   }
-
-  // handleReferenceLetterSave(data: IReferenceLetterModel) {
-  //   this.globalDialogService.showLoading();
-  //   console.log('save reference letter', data);
-  //   const model: IReferenceLetterModel = {
-  //     ...data,
-  //   };
-
-  //   // this._store
-  //   //   .dispatch(new RequestRefrence(model))
-  //   //   .pipe(untilDestroyed(this))
-  //   //   .subscribe(() => {
-  //   //     this.globalDialogService.closeOpenDialog();
-  //   //     this.handleCardAction('referenceModal');
-  //   //   });
-  // }
 }

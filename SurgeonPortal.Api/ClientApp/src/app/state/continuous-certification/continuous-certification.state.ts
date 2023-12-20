@@ -221,7 +221,7 @@ export class ContinuousCertificationState {
             stati.push({
               id: status.statusType,
               status: statusTypes[status.status],
-              disabled: status.status === 3 ? true : false,
+              disabled: status.status === 2 ? true : false,
             });
           });
           ctx.patchState({
