@@ -43,39 +43,39 @@ namespace SurgeonPortal.Library.Users
         }
 
         public string UserName
-        {
-            get { return ReadProperty(UserNameProperty); }
-            internal set { LoadProperty(UserNameProperty, value); }
-        }
-        public static readonly PropertyInfo<string> UserNameProperty = RegisterProperty<string>(c => c.UserName);
+		{
+			get { return ReadProperty(UserNameProperty); }
+			internal set { LoadProperty(UserNameProperty, value); }
+		}
+		public static readonly PropertyInfo<string> UserNameProperty = RegisterProperty<string>(c => c.UserName);
 
         public Guid? ResetGUID
-        {
-            get { return ReadProperty(ResetGUIDProperty); }
-            internal set { LoadProperty(ResetGUIDProperty, value); }
-        }
-        public static readonly PropertyInfo<Guid?> ResetGUIDProperty = RegisterProperty<Guid?>(c => c.ResetGUID);
+		{
+			get { return ReadProperty(ResetGUIDProperty); }
+			internal set { LoadProperty(ResetGUIDProperty, value); }
+		}
+		public static readonly PropertyInfo<Guid?> ResetGUIDProperty = RegisterProperty<Guid?>(c => c.ResetGUID);
 
         public string EmailAddress
-        {
-            get { return ReadProperty(EmailAddressProperty); }
-            internal set { LoadProperty(EmailAddressProperty, value); }
-        }
-        public static readonly PropertyInfo<string> EmailAddressProperty = RegisterProperty<string>(c => c.EmailAddress);
+		{
+			get { return ReadProperty(EmailAddressProperty); }
+			internal set { LoadProperty(EmailAddressProperty, value); }
+		}
+		public static readonly PropertyInfo<string> EmailAddressProperty = RegisterProperty<string>(c => c.EmailAddress);
 
         public string FirstName
-        {
-            get { return ReadProperty(FirstNameProperty); }
-            internal set { LoadProperty(FirstNameProperty, value); }
-        }
-        public static readonly PropertyInfo<string> FirstNameProperty = RegisterProperty<string>(c => c.FirstName);
+		{
+			get { return ReadProperty(FirstNameProperty); }
+			internal set { LoadProperty(FirstNameProperty, value); }
+		}
+		public static readonly PropertyInfo<string> FirstNameProperty = RegisterProperty<string>(c => c.FirstName);
 
         public string LastName
-        {
-            get { return ReadProperty(LastNameProperty); }
-            internal set { LoadProperty(LastNameProperty, value); }
-        }
-        public static readonly PropertyInfo<string> LastNameProperty = RegisterProperty<string>(c => c.LastName);
+		{
+			get { return ReadProperty(LastNameProperty); }
+			internal set { LoadProperty(LastNameProperty, value); }
+		}
+		public static readonly PropertyInfo<string> LastNameProperty = RegisterProperty<string>(c => c.LastName);
 
 
         [Execute]
@@ -112,5 +112,6 @@ namespace SurgeonPortal.Library.Users
             await email.SendAsync();
         }
 
+        
     }
 }

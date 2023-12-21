@@ -220,6 +220,30 @@ namespace SurgeonPortal.Api.Controllers.Users
                 return BadRequest("Unable to create password reset request.");
             }
         }
+        
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VerifyForgotGuidCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("verify-forgot-guid")]
+        public async Task<IActionResult> VerifyforgotguidCommandAsync(
+            [FromServices] IVerifyForgotGuidCommandFactory verifyForgotGuidCommandFactory,
+            [FromBody] VerifyForgotGuidCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await verifyForgotGuidCommandFactory.VerifyForgotPasswordGuidAsync(model.ResetGUID);
+
+            model.Result = command.Result;
+        
+            return Ok(model);
+        } 
 
 		private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
         {

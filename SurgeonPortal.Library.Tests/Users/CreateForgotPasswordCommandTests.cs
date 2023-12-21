@@ -20,7 +20,7 @@ namespace SurgeonPortal.Library.Tests.Users
             var dto = Create<CreateForgotPasswordCommandDto>();
         
             dto.UserName = Create<string>();
-            dto.ResetGUID = Create<System.Guid>();
+            dto.ResetGUID = Create<System.Guid?>();
             dto.EmailAddress = Create<string>();
             dto.FirstName = Create<string>();
             dto.LastName = Create<string>();
@@ -58,7 +58,7 @@ namespace SurgeonPortal.Library.Tests.Users
             Assert.That(dto, Is.Not.Null);
         	Assert.That(dto, Is.TypeOf<CreateForgotPasswordCommandDto>());
         }
-
+        
         #endregion
 
         private static Mock<IEmailFactory> GetEmailFactory()
