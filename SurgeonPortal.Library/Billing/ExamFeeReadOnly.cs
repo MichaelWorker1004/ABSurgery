@@ -4,8 +4,11 @@ using SurgeonPortal.Library.Contracts.Billing;
 using System;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using Ytg.Framework.Csla;
+using Ytg.Framework.Exceptions;
 using Ytg.Framework.Identity;
+using static SurgeonPortal.Library.Billing.ExamFeeReadOnlyFactory;
 
 namespace SurgeonPortal.Library.Billing
 {
@@ -15,11 +18,15 @@ namespace SurgeonPortal.Library.Billing
 	[DataContract]
     public class ExamFeeReadOnly : YtgReadOnlyBase<ExamFeeReadOnly, int>, IExamFeeReadOnly
     {
+        private readonly IExamFeeReadOnlyDal _examFeeReadOnlyDal;
 
 
-        public ExamFeeReadOnly(IIdentityProvider identityProvider)
+        public ExamFeeReadOnly(
+            IIdentityProvider identityProvider,
+            IExamFeeReadOnlyDal examFeeReadOnlyDal)
             : base(identityProvider)
         {
+            _examFeeReadOnlyDal = examFeeReadOnlyDal;
         }
         
         [DataMember]
@@ -53,6 +60,17 @@ namespace SurgeonPortal.Library.Billing
 		public static readonly PropertyInfo<DateTime?> PaymentDateProperty = RegisterProperty<DateTime?>(c => c.PaymentDate);
 
 
+        /// <summary>
+        /// This method is used to apply authorization rules on the object
+        /// </summary>
+        [ObjectAuthorizationRules]
+        public static void AddObjectAuthorizationRules()
+        {
+            Csla.Rules.BusinessRules.AddRule(typeof(ExamFeeReadOnly),
+                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+        }
+
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
@@ -61,6 +79,24 @@ namespace SurgeonPortal.Library.Billing
             FetchData(dto);
         }
 
+        [Fetch]
+        [RunLocal]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
+           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+        private async Task GetByExamId(GetByExamIdCriteria criteria)
+        
+        {
+            var dto = await _examFeeReadOnlyDal.GetByExamIdAsync(
+                _identity.GetUserId<int>(),
+                criteria.ExamId);
+            
+            if (dto == null)
+            {
+                throw new DataNotFoundException("ExamFeeReadOnly not found based on criteria.");
+            }
+            
+            FetchData(dto);
+        }
         
 		private void FetchData(ExamFeeReadOnlyDto dto)
 		{
