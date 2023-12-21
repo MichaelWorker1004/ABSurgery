@@ -244,6 +244,37 @@ namespace SurgeonPortal.Api.Controllers.Users
         
             return Ok(model);
         } 
+        
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResetForgotPasswordCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("reset-forgot-password")]
+        public async Task<IActionResult> ResetforgotpasswordCommandAsync(
+            [FromServices] IResetForgotPasswordCommandFactory resetForgotPasswordCommandFactory,
+            [FromBody] ResetForgotPasswordCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await resetForgotPasswordCommandFactory.ResetForgotPasswordAsync(
+                model.ResetGUID,
+                model.NewPassword);
+
+            if (command.Result.HasValue && command.Result.Value)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
 		private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
         {
