@@ -4439,5 +4439,44 @@
   },
   "\\SurgeonPortal.Library.Tests\\Billing\\ExamFeeReadOnlyTests.cs": {
     "lastGeneratedHash": "C06B6FC8B516740C51877C9497393D2D"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Billing\\IApplicationFeeReadOnly.cs": {
+    "lastGeneratedHash": "9B8994CB3040A0591F98466BFD4B2508"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\billing\\application-fee-read-only.model.ts": {
+    "lastGeneratedHash": "D01310F5781FB26F06B9D86C94D57345"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Billing\\ApplicationFeeReadOnlyDto.cs": {
+    "lastGeneratedHash": "046BCDF5B59443747704906C3CD48D93"
+  },
+  "\\SurgeonPortal.Models\\Billing\\ApplicationFeeReadOnlyModel.cs": {
+    "lastGeneratedHash": "43040D9328A7F598889EA2417DFEB7A1"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\billing\\application-fee.service.ts": {
+    "lastGeneratedHash": "57D6ECB031C290FF83AEE6832BCAA58B"
+  },
+  "\\SurgeonPortal.Api\\Controllers\\Billing\\ApplicationFeeController.cs": {
+    "lastGeneratedHash": "9261A002A17A4F804B4836FC0AA31D3E"
+  },
+  "\\SurgeonPortal.Library\\Billing\\ApplicationFeeReadOnly.cs": {
+    "lastGeneratedHash": "36CF066DD58A7FD481A2B4A9A349DCBF"
+  },
+  "\\SurgeonPortal.DataAccess\\Billing\\ApplicationFeeReadOnlyDal.cs": {
+    "lastGeneratedHash": "EAC7079159A867ACB466A01501FB73CA"
+  },
+  "\\SurgeonPortal.Library\\Billing\\ApplicationFeeReadOnlyFactory.cs": {
+    "lastGeneratedHash": "6D6D88444987F6626EB5F43027599426"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Billing\\IApplicationFeeReadOnlyDal.cs": {
+    "lastGeneratedHash": "037D27540EC42FB795096F221287E3FD"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Billing\\IApplicationFeeReadOnlyFactory.cs": {
+    "lastGeneratedHash": "F4A0811AD913AA796B5C8A65416B84B7"
+  },
+  "\\SurgeonPortal.Library.Tests\\Billing\\ApplicationFeeReadOnlyTests.cs": {
+    "lastGeneratedHash": "37183B65C215EA0F17B5975E8CDA36A5"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\Billing\\ApplicationFeeReadOnlyDalTests.cs": {
+    "lastGeneratedHash": "78079CA1DD3F6A0FA6866CFFD4E4D22D"
   }
 }
