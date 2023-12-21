@@ -126,4 +126,31 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     actionDisplay: 'View / Update my information',
     icon: 'fa-solid fa-star',
   },
+  {
+    id: 'attestation',
+    title: 'Attestation',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    action: {
+      type: Action.dialog,
+      action: 'attestationModal',
+    },
+    actionDisplay: 'View / Update my Attesation',
+    icon: 'fa-solid fa-star',
+  },
+  {
+    id: 'applyForExam',
+    title: 'Apply for an Exam',
+    action: {
+      style: 2,
+      type: Action.component,
+      action: '/apply-and-resgister',
+    },
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    actionStyle: 'button',
+    disabled: true,
+    actionDisplay: 'Apply Now',
+    icon: 'fa-solid fa-language',
+  },
 ];

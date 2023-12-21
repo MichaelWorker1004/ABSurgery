@@ -33,8 +33,8 @@
     [status]="actionCard?.status"
     [disabled]="actionCard.disabled"
   ></abs-action-card>
-  <abs-action-card
-    class="col-12"
+  <!-- <abs-action-card
+    class="col-12 md:col-6 lg:col-6"
     [title]="applyForAnExamActionCardData.title"
     [description]="applyForAnExamActionCardData.description"
     [icon]="applyForAnExamActionCardData.icon"
@@ -42,7 +42,7 @@
     [actionAction]="applyForAnExamActionCardData?.action?.action"
     [actionDisplay]="applyForAnExamActionCardData?.actionDisplay"
     [disabled]="applyForAnExamActionCardData.disabled"
-  ></abs-action-card>
+  ></abs-action-card> -->
 
   <abs-modal
     [open]="showACGMEexprience"
@@ -84,6 +84,7 @@
     [hideClose]="true"
   >
     <abs-special-accommodations-modal
+      [examHeaderId]="examHeaderId"
       (closeDialog)="handleCardAction('specialAccommodationsModal')"
     ></abs-special-accommodations-modal>
   </abs-modal>

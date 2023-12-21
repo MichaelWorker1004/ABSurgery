@@ -76,7 +76,7 @@ namespace SurgeonPortal.Api.Controllers.Examinations
             [FromForm] AccommodationModel model)
         {
             var item = accommodationFactory.Create();
-            AssignCreateProperties(item, model);
+            await AssignCreateProperties(item, model);
         
             return await CreateAsync<AccommodationModel>(
                 _mapper,
@@ -98,28 +98,28 @@ namespace SurgeonPortal.Api.Controllers.Examinations
             int examId)
         {
             var item = await accommodationFactory.GetByExamIdAsync(examId);
-            AssignEditProperties(item, model);
+            await AssignEditProperties(item, model);
             
             return await UpdateAsync<AccommodationModel>(_mapper, item);
         } 
 
-        private void AssignCreateProperties(IAccommodation entity, AccommodationModel model)
+        private async Task AssignCreateProperties(IAccommodation entity, AccommodationModel model)
         {
             entity.AccommodationID = model.AccommodationID;
             entity.DocumentId = model.DocumentId;
             entity.ExamID = model.ExamID;
-			LoadDocument(entity, model);
+			await LoadDocument(entity, model);
 		}
 
-        private void AssignEditProperties(IAccommodation entity, AccommodationModel model)
+        private async Task AssignEditProperties(IAccommodation entity, AccommodationModel model)
         {
             entity.AccommodationID = model.AccommodationID;
             entity.DocumentId = model.DocumentId;
             entity.ExamID = model.ExamID;
-            LoadDocument(entity, model);
+            await LoadDocument(entity, model);
         }
 
-        private async void LoadDocument(IAccommodation entity, AccommodationModel model)
+        private async Task LoadDocument(IAccommodation entity, AccommodationModel model)
         {
             if(model.File != null)
             {

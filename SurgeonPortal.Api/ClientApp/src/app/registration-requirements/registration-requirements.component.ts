@@ -172,19 +172,11 @@ export class RegistrationRequirementsComponent implements OnInit {
       .subscribe((params) => {
         this.examHeaderId = params['examId'];
         if (this.examHeaderId) {
-          this._store
-            .dispatch(new GetRegistrationRequirementsTitle(this.examHeaderId))
-            .pipe(untilDestroyed(this))
-            .subscribe((state) => {
-              if (!state.registration_requirements.examTitle) {
-                this.router.navigate(['/404']);
-              } else {
-                this._store.dispatch(
-                  new GetPdReferenceLetter(this.examHeaderId)
-                );
-                this._store.dispatch(new GetAccommodations(this.examHeaderId));
-              }
-            });
+          this._store.dispatch(
+            new GetRegistrationRequirementsTitle(this.examHeaderId)
+          );
+          this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
+          //this._store.dispatch(new GetAccommodations(this.examHeaderId));
         }
       });
     this._store
@@ -306,6 +298,27 @@ export class RegistrationRequirementsComponent implements OnInit {
           data.status = statuses[data.id].status;
           data.disabled = statuses[data.id].disabled;
         });
+
+        this.registrationRequirementsData =
+          this.registrationRequirementsData.map((x: any) => {
+            if (x.id === 'applyForExam') {
+              x.disabled = !this.areAllItemsCompleted(
+                this.registrationRequirementsData
+              );
+              return {
+                ...x,
+                disabled: this.areAllItemsCompleted(
+                  this.registrationRequirementsData
+                ),
+                status: !this.areAllItemsCompleted(
+                  this.registrationRequirementsData
+                )
+                  ? x.status
+                  : Status.Contingent,
+              };
+            }
+            return x;
+          });
       });
 
     this.applyForAnExamActionCardData = {

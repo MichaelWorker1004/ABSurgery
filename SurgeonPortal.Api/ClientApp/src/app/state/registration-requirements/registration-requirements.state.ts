@@ -179,6 +179,7 @@ export class RegistrationRequirementsState {
       .retrieveAccommodation_GetByExamId(payload.examId)
       .pipe(
         tap((accommodations: IAccommodationModel) => {
+          console.log('accommodations', accommodations);
           ctx.patchState({
             accommodation: accommodations,
           });
