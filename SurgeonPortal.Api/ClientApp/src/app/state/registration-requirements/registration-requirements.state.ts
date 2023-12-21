@@ -13,6 +13,7 @@ import {
   CreatePdReferenceLetter,
   GetAccommodations,
   GetPdReferenceLetter,
+  GetQeExamEligibility,
   GetRegistrationRequirementsTitle,
   GetResgistrationRequirmentsStatuses,
   UpdateAccommodation,
@@ -21,12 +22,15 @@ import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-refe
 import { PdReferenceLetterService } from 'src/app/api/services/examinations/pd-reference-letter.service';
 import { IExamTitleReadOnlyModel } from 'src/app/api/models/examinations/exam-title-read-only.model';
 import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
+import { IQeExamEligibilityReadOnlyModel } from 'src/app/api/models/examinations/qe-exam-eligibility-read-only.model';
+import { QeExamEligibilityService } from 'src/app/api/services/examinations/qe-exam-eligibility.service';
 
 export interface IRegistrationRequirements {
   registrationRequirementsStatuses?: IStatuses[];
   accommodation?: IAccommodationModel;
   pdReferenceLetter?: IPdReferenceLetterModel[];
   examTitle?: IExamTitleReadOnlyModel | undefined;
+  qeExamEligibility: IQeExamEligibilityReadOnlyModel[];
   errors?: IFormErrors | null;
 }
 
@@ -41,6 +45,7 @@ export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
     accommodation: undefined,
     pdReferenceLetter: undefined,
     examTitle: undefined,
+    qeExamEligibility: [],
     errors: null,
   },
 })
@@ -50,7 +55,8 @@ export class RegistrationRequirementsState {
     private accommodationService: AccommodationService,
     private globalDialogService: GlobalDialogService,
     private pdReferenceLetterService: PdReferenceLetterService,
-    private examinationsService: ExaminationsService
+    private examinationsService: ExaminationsService,
+    private qeExamEligibilityService: QeExamEligibilityService
   ) {}
 
   @Action(GetResgistrationRequirmentsStatuses)
@@ -255,6 +261,26 @@ export class RegistrationRequirementsState {
           const letters = [pdReferenceLetter];
           ctx.patchState({
             pdReferenceLetter: letters,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetQeExamEligibility)
+  getQeExamEligibility(ctx: StateContext<IRegistrationRequirements>) {
+    return this.qeExamEligibilityService
+      .retrieveQeExamEligibilityReadOnly_GetByUserId()
+      .pipe(
+        tap((qeExamEligibility: IQeExamEligibilityReadOnlyModel[]) => {
+          ctx.patchState({
+            qeExamEligibility: qeExamEligibility,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {

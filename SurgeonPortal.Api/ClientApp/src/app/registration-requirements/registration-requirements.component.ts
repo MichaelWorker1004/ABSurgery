@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewContainerRef,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { Observable, take } from 'rxjs';
@@ -164,18 +164,27 @@ export class RegistrationRequirementsComponent implements OnInit {
     private _globalDialogService: GlobalDialogService,
     public viewContainerRef: ViewContainerRef,
     private _store: Store,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.activatedRoute.params
       .pipe(untilDestroyed(this))
       .subscribe((params) => {
         this.examHeaderId = params['examId'];
         if (this.examHeaderId) {
-          this._store.dispatch(
-            new GetRegistrationRequirementsTitle(this.examHeaderId)
-          );
-          this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
-          this._store.dispatch(new GetAccommodations(this.examHeaderId));
+          this._store
+            .dispatch(new GetRegistrationRequirementsTitle(this.examHeaderId))
+            .pipe(untilDestroyed(this))
+            .subscribe((state) => {
+              if (!state.registration_requirements.examTitle) {
+                this.router.navigate(['/404']);
+              } else {
+                this._store.dispatch(
+                  new GetPdReferenceLetter(this.examHeaderId)
+                );
+                this._store.dispatch(new GetAccommodations(this.examHeaderId));
+              }
+            });
         }
       });
     this._store
