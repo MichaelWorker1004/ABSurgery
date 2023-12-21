@@ -4,5 +4,6 @@
     {
         public string ForgotUsernameTemplateId { get; set; }
         public string ForgotPasswordTempalteId { get; set; }
+        public string ForgotPasswordUrl { get; set; }
     }
 }

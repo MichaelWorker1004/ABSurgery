@@ -191,6 +191,35 @@ namespace SurgeonPortal.Api.Controllers.Users
         
             return Ok();
         } 
+        
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateForgotPasswordCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("create-forgot-password")]
+        public async Task<IActionResult> CreateforgotpasswordCommandAsync(
+            [FromServices] ICreateForgotPasswordCommandFactory createForgotPasswordCommandFactory,
+            [FromBody] CreateForgotPasswordCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await createForgotPasswordCommandFactory.SendForgotPasswordEmailAsync(model.UserName);
+        
+            if(command.ResetGUID.HasValue)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Unable to create password reset request.");
+            }
+        }
 
 		private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
         {

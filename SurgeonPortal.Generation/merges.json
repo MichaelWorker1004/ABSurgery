@@ -108,8 +108,8 @@
     "lastGeneratedHash": "E5F62FC902C76A35265ECB4EAEFD0D1B"
   },
   "\\SurgeonPortal.Api\\Controllers\\Users\\UsersController.cs": {
-    "lastGeneratedHash": "28804BFDCA51C1484B261FC616629DA7",
-    "lastMergedHash": "4583760D42E4BC727137BE7E08B9B48A"
+    "lastGeneratedHash": "99376D1548DF58996B458F59BD283B7C",
+    "lastMergedHash": "2FA54ADEBC3507D6170F2E2A89D51AFF"
   },
   "\\SurgeonPortal.Library.Contracts\\Users\\IUserClaimReadOnly.cs": {
     "lastGeneratedHash": "3C36F0C28D33564C42D50504552E7C05",
@@ -4414,5 +4414,32 @@
   },
   "\\SurgeonPortal.DataAccess.Tests\\Users\\ForgotUsernameCommandDalTests.cs": {
     "lastGeneratedHash": "5521966D555910F92A28CA5F988F07F1"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Users\\ICreateForgotPasswordCommand.cs": {
+    "lastGeneratedHash": "5ECD11CF277779C1DD064EEB0F2596EB"
+  },
+  "\\SurgeonPortal.Models\\Users\\CreateForgotPasswordCommandModel.cs": {
+    "lastGeneratedHash": "CF8FBFA08A0BC59C5A3BB7ACFD148DBD"
+  },
+  "\\SurgeonPortal.Library\\Users\\CreateForgotPasswordCommand.cs": {
+    "lastGeneratedHash": "2F8623AEAC0FD7F7460A534182183336"
+  },
+  "\\SurgeonPortal.DataAccess\\Users\\CreateForgotPasswordCommandDal.cs": {
+    "lastGeneratedHash": "C9E7B12F57366CE2833C8A475118EF0F"
+  },
+  "\\SurgeonPortal.Library\\Users\\CreateForgotPasswordCommandFactory.cs": {
+    "lastGeneratedHash": "523C7B1BE2D95E60300A7FF778A83110"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Users\\ICreateForgotPasswordCommandDal.cs": {
+    "lastGeneratedHash": "1D865E39CC6EBEA1D4B40A25C4FEF10F"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Users\\ICreateForgotPasswordCommandFactory.cs": {
+    "lastGeneratedHash": "18852D1197EAF7788FCB35F3C408FA7A"
+  },
+  "\\SurgeonPortal.Library.Tests\\Users\\CreateForgotPasswordCommandTests.cs": {
+    "lastGeneratedHash": "5BD06DB9BAF05DE01415AB8B1B086EBB"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\Users\\CreateForgotPasswordCommandDalTests.cs": {
+    "lastGeneratedHash": "D033B2185D9CFEABE2E419C81A2E5796"
   }
 }
