@@ -109,7 +109,7 @@
   },
   "\\SurgeonPortal.Api\\Controllers\\Users\\UsersController.cs": {
     "lastGeneratedHash": "28804BFDCA51C1484B261FC616629DA7",
-    "lastMergedHash": "65F2FD890C1994647ED3EA9B374C632F"
+    "lastMergedHash": "4583760D42E4BC727137BE7E08B9B48A"
   },
   "\\SurgeonPortal.Library.Contracts\\Users\\IUserClaimReadOnly.cs": {
     "lastGeneratedHash": "3C36F0C28D33564C42D50504552E7C05",
@@ -4341,22 +4341,27 @@
     "lastGeneratedHash": "D098BEBC88C114CA1AF0643A8280F7DE"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\pd-reference-letter.model.ts": {
-    "lastGeneratedHash": "B7C487E952714E6A6C88DB2162BD5665"
+    "lastGeneratedHash": "B7C487E952714E6A6C88DB2162BD5665",
+    "lastMergedHash": "869C3C16AD6CC60D8EC016325CC684D4"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\PdReferenceLetterDto.cs": {
-    "lastGeneratedHash": "C0AF31184850B26BA90A55463B51F961"
+    "lastGeneratedHash": "C0AF31184850B26BA90A55463B51F961",
+    "lastMergedHash": "C2D40234F87684087329A8BD06FA576F"
   },
   "\\SurgeonPortal.Models\\Examinations\\PdReferenceLetterModel.cs": {
-    "lastGeneratedHash": "33305A90C9852ECF95819EBE11901BC5"
+    "lastGeneratedHash": "33305A90C9852ECF95819EBE11901BC5",
+    "lastMergedHash": "A275A9E600D138D6709434C2284866B4"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\pd-reference-letter.service.ts": {
     "lastGeneratedHash": "11BD61E98E08A7E34BC73D16CD17CF9F"
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\PdReferenceLetterController.cs": {
-    "lastGeneratedHash": "302EE59A14CAA19CB77C505938002FF9"
+    "lastGeneratedHash": "302EE59A14CAA19CB77C505938002FF9",
+    "lastMergedHash": "53117BD37AA5377E1E261ED5B99B1A91"
   },
   "\\SurgeonPortal.Library\\Examinations\\PdReferenceLetter.cs": {
-    "lastGeneratedHash": "F417B0BB403190F58D4F2116FBDA37C8"
+    "lastGeneratedHash": "F417B0BB403190F58D4F2116FBDA37C8",
+    "lastMergedHash": "D61F73FEBA8302FFC3FF18F2AAD248B4"
   },
   "\\SurgeonPortal.DataAccess\\Examinations\\PdReferenceLetterDal.cs": {
     "lastGeneratedHash": "C55C423708EBA9EC8399EE461CF2B04F"
@@ -4365,7 +4370,8 @@
     "lastGeneratedHash": "B711B2B5442358371E99C100FE3AABE9"
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IPdReferenceLetter.cs": {
-    "lastGeneratedHash": "2C67D5B05F01381C57F792459F41D862"
+    "lastGeneratedHash": "2C67D5B05F01381C57F792459F41D862",
+    "lastMergedHash": "2315045A69BB6F44696CFD98590B8DE9"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IPdReferenceLetterDal.cs": {
     "lastGeneratedHash": "7CD836CE9624A5310A25B7A669EB2F89"
@@ -4374,9 +4380,39 @@
     "lastGeneratedHash": "FD073E3ACB159E65D27D9A336BB8EEB6"
   },
   "\\SurgeonPortal.Library.Tests\\Examinations\\PdReferenceLetterTests.cs": {
-    "lastGeneratedHash": "08DDFE2C7A13E62C2E566DA558185298"
+    "lastGeneratedHash": "08DDFE2C7A13E62C2E566DA558185298",
+    "lastMergedHash": "B42969460BC12A06E13CDFDBEC2A345C"
   },
   "\\SurgeonPortal.DataAccess.Tests\\Examinations\\PdReferenceLetterDalTests.cs": {
     "lastGeneratedHash": "F54D070908C95BCD7EEFBF07BCBC86B1"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Users\\IForgotUsernameCommand.cs": {
+    "lastGeneratedHash": "247542EDC5954DA892032C882B44CECD"
+  },
+  "\\SurgeonPortal.Models\\Users\\ForgotUsernameCommandModel.cs": {
+    "lastGeneratedHash": "3F62AF7C7C5F5E101175FE6AE65DD0FC"
+  },
+  "\\SurgeonPortal.Library\\Users\\ForgotUsernameCommand.cs": {
+    "lastGeneratedHash": "23297373EE699957CC492A987DBDD6A9",
+    "lastMergedHash": "8A75D8F26AC137C23F495B04A67A6673"
+  },
+  "\\SurgeonPortal.DataAccess\\Users\\ForgotUsernameCommandDal.cs": {
+    "lastGeneratedHash": "7C0807E67050EFA242B06E386E6E5783"
+  },
+  "\\SurgeonPortal.Library\\Users\\ForgotUsernameCommandFactory.cs": {
+    "lastGeneratedHash": "45E9B60DC6F10C78616A5404252B018B"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Users\\IForgotUsernameCommandDal.cs": {
+    "lastGeneratedHash": "120A74F07844C952D03D91EB7DFEFCFD"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Users\\IForgotUsernameCommandFactory.cs": {
+    "lastGeneratedHash": "718B93CF82D60F12769FED37B8AFEA9A"
+  },
+  "\\SurgeonPortal.Library.Tests\\Users\\ForgotUsernameCommandTests.cs": {
+    "lastGeneratedHash": "F5DA207CD36E2CE53A67A8BA34CD1149",
+    "lastMergedHash": "57AFD01FEE92A9226771BD1976C58DEA"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\Users\\ForgotUsernameCommandDalTests.cs": {
+    "lastGeneratedHash": "5521966D555910F92A28CA5F988F07F1"
   }
 }

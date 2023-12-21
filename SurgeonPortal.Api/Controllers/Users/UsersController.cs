@@ -56,7 +56,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             _userLoginAuditCommandFactory = userLoginAuditCommandFactory;
         }
 
-        [AllowAnonymous]
+        [AllowAnonymous] 
         [MapToApiVersion("1")]
         [ApiExplorerSettings(IgnoreApi = true)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AppUserReadOnlyModel))]
@@ -169,6 +169,28 @@ namespace SurgeonPortal.Api.Controllers.Users
                 return BadRequest();
             }
 		}
+		
+		///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ForgotUsernameCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("forgot-username")]
+        public async Task<IActionResult> ForgotusernameCommandAsync(
+            [FromServices] IForgotUsernameCommandFactory forgotUsernameCommandFactory,
+            [FromBody] ForgotUsernameCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await forgotUsernameCommandFactory.SendForgotUsernameEmailAsync(model.Email);
+        
+            return Ok();
+        } 
 
 		private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
         {

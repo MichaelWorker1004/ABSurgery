@@ -1,0 +1,57 @@
+{
+  "refs": {},
+  "name": "Users\\ForgotUsernameCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "Email",
+      "dataType": "string",
+      "maxLength": 100,
+      "precision": 100,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "UserName",
+      "dataType": "string",
+      "maxLength": 50,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "FirstName",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "LastName",
+      "dataType": "string",
+      "maxLength": 35,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Users\\ForgotUsernameCommand -sp [dbo].[get_forgotten_username] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-21T18:14:29.0117912Z"
+  },
+  "version": 1
+}
