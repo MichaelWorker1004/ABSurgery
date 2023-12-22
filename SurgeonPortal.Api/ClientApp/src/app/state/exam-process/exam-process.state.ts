@@ -113,7 +113,7 @@ export class ExamProcessState {
   ): Observable<IApplicationFeeReadOnlyModel[]> {
     this.globalDialogService.showLoading();
     return this.applicationFeeService
-      .retrieveApplicationFeeReadOnly_GetByExamId(14, payload.examId)
+      .retrieveApplicationFeeReadOnly_GetByExamId(payload.examId)
       .pipe(
         tap((applicationFee: IApplicationFeeReadOnlyModel) => {
           const fee = [applicationFee];

@@ -272,7 +272,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         remainingBalance: 0,
       };
 
-      examFees.forEach((examFee: any) => {
+      examFees.forEach((examFee: IApplicationFeeReadOnlyModel) => {
         payFeeData.totalAmountOfFee += examFee.subTotal;
         payFeeData.totalAmountPaid += examFee.paidTotal;
         payFeeData.remainingBalance += examFee.balanceDue;

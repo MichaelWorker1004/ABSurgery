@@ -11,7 +11,7 @@ export class ApplicationFeeService {
     constructor(private apiService: ApiService) {}
 
  
-        public retrieveApplicationFeeReadOnly_GetByExamId(userId: number,
+        public retrieveApplicationFeeReadOnly_GetByExamId(
         examId: number,
         apiVersion = '1.0'): Observable<IApplicationFeeReadOnlyModel> {
             /**
@@ -37,7 +37,7 @@ export class ApplicationFeeService {
             */
             
             
-            return this.apiService.get<IApplicationFeeReadOnlyModel>(`api/billing/application-fee/by-examid?api-version=${apiVersion}&userId=${userId}&examId=${examId}`);
+            return this.apiService.get<IApplicationFeeReadOnlyModel>(`api/billing/application-fee/by-examid?api-version=${apiVersion}&examId=${examId}`);
         }
 
 
