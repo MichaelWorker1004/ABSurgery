@@ -31,7 +31,7 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   ExamProcessSelectors,
   ExamScoringSelectors,
-  GetExamFees,
+  GetApplicationFee,
 } from '../state';
 import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import {
@@ -52,6 +52,7 @@ import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-card
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
+import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-fee-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -83,8 +84,8 @@ interface ActionMap {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RegistrationRequirementsComponent implements OnInit {
-  @Select(ExamProcessSelectors.slices.examFees) examFees$:
-    | Observable<IExamFeeReadOnlyModel[]>
+  @Select(ExamProcessSelectors.slices.applicationFee) applicationFee$:
+    | Observable<IApplicationFeeReadOnlyModel[]>
     | undefined;
 
   @Select(
@@ -175,8 +176,9 @@ export class RegistrationRequirementsComponent implements OnInit {
           this._store.dispatch(
             new GetRegistrationRequirementsTitle(this.examHeaderId)
           );
+          this._store.dispatch(new GetApplicationFee(this.examHeaderId));
           this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
-          //this._store.dispatch(new GetAccommodations(this.examHeaderId));
+          // this._store.dispatch(new GetAccommodations(this.examHeaderId));
         }
       });
     this._store
@@ -208,8 +210,6 @@ export class RegistrationRequirementsComponent implements OnInit {
       });
 
     this._store.dispatch(new GetResgistrationRequirmentsStatuses());
-
-    this._store.dispatch(new GetExamFees());
     this._globalDialogService.setViewContainerRef = this.viewContainerRef;
   }
 
@@ -264,7 +264,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   }
 
   getPayFeeData() {
-    this.examFees$?.subscribe((examFees) => {
+    this.applicationFee$?.subscribe((examFees) => {
       const payFeeData = {
         totalAmountOfFee: 0,
         totalAmountPaidDate: new Date(),

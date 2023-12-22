@@ -14,3 +14,15 @@ export class ExamFeeTransaction {
 
   constructor(public model: IExamFeeTransactionModel) {}
 }
+
+export class GetExamFeeByExamId {
+  static readonly type = '[ExamProcess] Get exam fee by exam id';
+
+  constructor(public examId: number) {}
+}
+
+export class GetApplicationFee {
+  static readonly type = '[ExamProcess] Get application fee';
+
+  constructor(public examId: number) {}
+}
