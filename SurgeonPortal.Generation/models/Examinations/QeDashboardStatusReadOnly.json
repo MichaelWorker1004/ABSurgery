@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "Examinations\\QeDashboardStatusReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "StatusType",
+      "dataType": "string",
+      "maxLength": 22,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Status",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Disabled",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examinations\\QeDashboardStatusReadOnly -sp [dbo].[get_user_qe_all_status_byuserid] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-22T20:52:12.2054955Z"
+  },
+  "version": 1
+}

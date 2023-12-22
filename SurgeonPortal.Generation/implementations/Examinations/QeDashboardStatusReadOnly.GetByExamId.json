@@ -1,0 +1,107 @@
+{
+  "name": "QeDashboardStatusReadOnly",
+  "implementationName": "Examinations\\QeDashboardStatusReadOnly.GetByExamId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_user_qe_all_status_byuserid",
+    "ControllerName": "Examinations\\QeDashboardStatusController",
+    "ControllerRoute": "api/examinations/qe-dashboard-status",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\QeDashboardStatusReadOnly",
+    "ModelGroup": "QeDashboardStatusReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-examid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_qe_all_status_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_qe_all_status_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ExamheaderId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamheaderId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\QeDashboardStatusReadOnly",
+            "fields": [
+              {
+                "name": "StatusType",
+                "dataType": "string",
+                "maxLength": 22,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StatusType"
+              },
+              {
+                "name": "Status",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Status"
+              },
+              {
+                "name": "Disabled",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Disabled"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "ExamheaderId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\QeDashboardStatusReadOnly.GetByExamId QeDashboardStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\QeDashboardStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_user_qe_all_status_byuserid] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=QeDashboardStatusReadOnly -p:Route=by-userid -p:ControllerName=Examinations\\QeDashboardStatusController -p:ControllerRoute=api/examinations/qe-dashboard-status -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\QeDashboardStatusReadOnly.GetByExamId QeDashboardStatusReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\QeDashboardStatusReadOnly -p:Adapter=sp:abssp-[dbo].[get_user_qe_all_status_byuserid] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=QeDashboardStatusReadOnly -p:Route=by-userid -p:ControllerName=Examinations\\QeDashboardStatusController -p:ControllerRoute=api/examinations/qe-dashboard-status -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-22T20:52:51.0693399Z"
+  },
+  "version": 1
+}
