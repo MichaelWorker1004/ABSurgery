@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Ytg.AspNetCore.Controllers;
+using Ytg.AspNetCore.Helpers;
 
 namespace SurgeonPortal.Api.Controllers.Examinations
 {
@@ -44,6 +45,28 @@ namespace SurgeonPortal.Api.Controllers.Examinations
             var items = await qeAttestationReadOnlyListFactory.GetByExamIdAsync(examId);
         
             return Ok(_mapper.Map<IEnumerable<QeAttestationReadOnlyModel>>(items));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateQeAttestationsCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateCommandAsync(
+            [FromServices] IUpdateQeAttestationsCommandFactory updateQeAttestationsCommandFactory,
+            [FromBody] UpdateQeAttestationsCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await updateQeAttestationsCommandFactory.UpdateQeAttestationsAsync(model.ExamId);
+        
+            return Ok();
         } 
     }
 }

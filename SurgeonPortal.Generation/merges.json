@@ -4450,7 +4450,7 @@
     "lastGeneratedHash": "4106B1F7A3B91BE491E207ACF8A1A6CD"
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\QeAttestationController.cs": {
-    "lastGeneratedHash": "FCB18A3A29E73EE17147500A3EEDA432"
+    "lastGeneratedHash": "583EE7A68B3C562ED9E9D9CC999546BA"
   },
   "\\SurgeonPortal.Library\\Examinations\\QeAttestationReadOnly.cs": {
     "lastGeneratedHash": "15F6094C74E24F10762609A3C82322BC"
@@ -4475,5 +4475,26 @@
   },
   "\\SurgeonPortal.DataAccess.Tests\\Examinations\\QeAttestationReadOnlyDalTests.cs": {
     "lastGeneratedHash": "35104E97826E58CEF526EA8D36E1BA4E"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IUpdateQeAttestationsCommand.cs": {
+    "lastGeneratedHash": "D0F184DFD69C244700395933A0C6DE51"
+  },
+  "\\SurgeonPortal.Models\\Examinations\\UpdateQeAttestationsCommandModel.cs": {
+    "lastGeneratedHash": "7AE1D11C369F9140CDDB0A338D9FD61E"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\UpdateQeAttestationsCommand.cs": {
+    "lastGeneratedHash": "763C83278C06FAA8EFAA420DE1BA1114"
+  },
+  "\\SurgeonPortal.DataAccess\\Examinations\\UpdateQeAttestationsCommandDal.cs": {
+    "lastGeneratedHash": "EB9466732C167F4956A70CF40A29D636"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\UpdateQeAttestationsCommandFactory.cs": {
+    "lastGeneratedHash": "F1AD92F911CE7B7CB6CA11B50BD25315"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IUpdateQeAttestationsCommandDal.cs": {
+    "lastGeneratedHash": "E747CCFCD65E2939BD413BD400720EB9"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IUpdateQeAttestationsCommandFactory.cs": {
+    "lastGeneratedHash": "6F2564EBEC9063F94D62A93B4DDDD983"
   }
 }
