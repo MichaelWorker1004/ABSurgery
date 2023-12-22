@@ -78,7 +78,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-solid fa-stethoscope',
   },
   {
-    id: 'attestation',
+    id: 'PD_Attestation',
     title: 'Program Director Attestation',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',

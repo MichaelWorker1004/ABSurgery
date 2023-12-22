@@ -45,6 +45,8 @@
   modalName="attestationModal"
 >
   <abs-attestation-modal
+    source="continuousCertification"
+    [attestations]="(attestations$ | async) || []"
     (closeDialog)="handleCardAction('attestationModal')"
     (saveAttestation)="handleAttestationSave()"
   ></abs-attestation-modal>

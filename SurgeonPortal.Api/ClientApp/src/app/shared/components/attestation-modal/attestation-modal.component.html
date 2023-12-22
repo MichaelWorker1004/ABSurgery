@@ -1,26 +1,42 @@
 <form action="">
-  <div class="form-description">
+  <!-- <div class="form-description">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec
     dolor lacinia interdum quis nec nisi. Pellentesque dolor erat, egestas sit
     amet tortor at, condimentum tempor erat. All fields are required.
-  </div>
+  </div> -->
   <h6 *ngIf="user$ | async as user">{{ user.displayName }}</h6>
-  <div class="grid" *ngIf="attestations$ | async as attestations">
+  <div class="grid" *ngIf="attestations">
     <form [formGroup]="attestationForm">
-      <div
-        *ngFor="let formField of attestations"
-        class="flex align-items-center gap-2 col-12"
-      >
-        <p-checkbox
-          [value]="true"
-          [name]="formField.name"
-          [binary]="true"
-          [checked]="formField.checked"
-          [inputId]="formField.name"
-          [formControlName]="formField.name"
-        ></p-checkbox>
-        <label [for]="formField.name">{{ formField.label }}</label>
-      </div>
+      <ng-container *ngFor="let formField of attestations">
+        <div class="col-12" *ngIf="source === 'qualifyingExamination'">
+          <div [innerHTML]="formField.label"></div>
+        </div>
+        <div class="flex align-items-center gap-2 col-12">
+          <p-checkbox
+            [value]="true"
+            [name]="formField.name"
+            [binary]="true"
+            [checked]="formField.checked"
+            [inputId]="formField.name"
+            [formControlName]="formField.name"
+          ></p-checkbox>
+          <label
+            [for]="formField.name"
+            *ngIf="source === 'continuousCertification'"
+            >{{ formField.label }}</label
+          >
+          <label
+            [for]="formField.name"
+            *ngIf="source === 'qualifyingExamination'"
+            >I hereby explicitly to all ten items listed above</label
+          >
+        </div>
+        <div class="col-12" *ngIf="source === 'qualifyingExamination'">
+          <p class="font-bold">
+            We Recommend that you print a copy of this form for your records.
+          </p>
+        </div>
+      </ng-container>
     </form>
     <div class="col-12 flex justify-content-end btn-container mt-3">
       <p-button styleClass="p-button-link p-button-primary" (click)="close()"

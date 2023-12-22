@@ -3,8 +3,11 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
+  Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormControl,
@@ -13,17 +16,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Observable } from 'rxjs';
 import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
-import {
-  ContinuousCertificationSelectors,
-  GetAttestations,
-  IUserProfile,
-  UserProfileSelectors,
-} from 'src/app/state';
+import { IUserProfile, UserProfileSelectors } from 'src/app/state';
 
 @UntilDestroy()
 @Component({
@@ -40,7 +38,9 @@ import {
   styleUrls: ['./attestation-modal.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AttestationModalComponent implements OnInit {
+export class AttestationModalComponent implements OnInit, OnChanges {
+  @Input() source: string | undefined;
+  @Input() attestations: IAttestationReadOnlyModel[] | undefined;
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
   @Output() saveAttestation: EventEmitter<any> = new EventEmitter();
 
@@ -48,26 +48,24 @@ export class AttestationModalComponent implements OnInit {
     | Observable<IUserProfile>
     | undefined;
 
-  @Select(ContinuousCertificationSelectors.slices.attestations)
-  attestations$!: Observable<IAttestationReadOnlyModel[]> | undefined;
   attestationForm: FormGroup = new FormGroup({});
 
   disabledSubmit = true;
 
-  constructor(private _store: Store) {
-    this._store.dispatch(new GetAttestations());
-  }
-
   ngOnInit(): void {
-    this.attestations$?.pipe(untilDestroyed(this)).subscribe((attestations) => {
-      this.setUpFormFields(attestations);
-    });
+    this.setUpFormFields(this.attestations || []);
 
     this.attestationForm.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe((values) => {
         this.disabledSubmit = !Object.values(values).every((x) => x === true);
       });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['attestations']) {
+      this.setUpFormFields(changes['attestations'].currentValue);
+    }
   }
 
   async setUpFormFields(attestations: IAttestationReadOnlyModel[]) {
