@@ -10,6 +10,52 @@ namespace SurgeonPortal.DataAccess.Tests.Billing
 {
 	public class ExamFeeReadOnlyDalTests : TestBase<int>
     {
+        #region GetByExamIdAsync
+        
+        [Test]
+        public async Task GetByExamIdAsync_ExecutesSprocCorrectly()
+        {
+            var expectedSprocName = "[dbo].[get_exam_fee_by_examId]";
+            var expectedUserId = Create<int>();
+            var expectedExamId = Create<int>();
+            var expectedParams = 
+                new
+                {
+                    UserId = expectedUserId,
+                    ExamId = expectedExamId,
+                };
+            
+            var sqlManager = new MockSqlConnectionManager();
+            sqlManager.AddRecord(Create<ExamFeeReadOnlyDto>());
+        
+            var sut = new ExamFeeReadOnlyDal(sqlManager);
+            await sut.GetByExamIdAsync(
+                expectedUserId,
+                expectedExamId);
+        
+            Assert.That(sqlManager.SqlConnection.ShouldCallStoredProcedure(expectedSprocName));
+            Assert.That(sqlManager.SqlConnection.ShouldPassParameters(expectedParams));
+        }
+        
+        [Test]
+        public async Task GetByExamIdAsync_YieldsCorrectResult()
+        {
+            var expectedDto = Create<ExamFeeReadOnlyDto>();
+        
+            var sqlManager = new MockSqlConnectionManager();
+            sqlManager.AddRecord(expectedDto);
+        
+            var sut = new ExamFeeReadOnlyDal(sqlManager);
+            var result = await sut.GetByExamIdAsync(
+                Create<int>(),
+                Create<int>());
+        
+            expectedDto.Should().BeEquivalentTo(result,
+                options => options.ExcludingMissingMembers());
+        }
+        
+        #endregion
+
         #region GetByUserIdAsync
         
         [Test]
@@ -17,7 +63,7 @@ namespace SurgeonPortal.DataAccess.Tests.Billing
         {
             var expectedSprocName = "[dbo].[Get_Exam_Fees_byUserId]";
             var expectedUserId = Create<int>();
-            var expectedParams =
+            var expectedParams = 
                 new
                 {
                     UserId = expectedUserId,

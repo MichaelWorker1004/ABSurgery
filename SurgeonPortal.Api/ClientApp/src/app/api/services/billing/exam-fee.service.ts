@@ -11,6 +11,33 @@ export class ExamFeeService {
     constructor(private apiService: ApiService) {}
 
  
+        public retrieveExamFeeReadOnly_GetByExamId(examId: number,
+        apiVersion = '1.0'): Observable<IExamFeeReadOnlyModel> {
+            /**
+            * Claims
+            * SurgeonPortalClaims.SurgeonClaim
+            */
+            
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * examId:Number
+            * apiVersion
+            */
+            
+            /**
+            * Calls Sp(s)
+            * [get_exam_fee_by_examId]
+            */
+            
+            
+            return this.apiService.get<IExamFeeReadOnlyModel>(`api/billing/exam-fee/by-examid?api-version=${apiVersion}&examId=${examId}`);
+        }
+ 
         public retrieveExamFeeReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IExamFeeReadOnlyModel[]> {
             /**
             * Claims

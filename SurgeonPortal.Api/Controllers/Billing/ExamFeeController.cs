@@ -33,6 +33,23 @@ namespace SurgeonPortal.Api.Controllers.Billing
         /// YtgIm
         ///<summary>
         [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExamFeeReadOnlyModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("by-examid")]
+        public async Task<ActionResult<ExamFeeReadOnlyModel>> GetExamFeeReadOnly_GetByExamIdAsync(
+            [FromServices] IExamFeeReadOnlyFactory examFeeReadOnlyFactory,
+            int examId)
+        {
+            var item = await examFeeReadOnlyFactory.GetByExamIdAsync(examId);
+        
+            return Ok(_mapper.Map<ExamFeeReadOnlyModel>(item));
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ExamFeeReadOnlyModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

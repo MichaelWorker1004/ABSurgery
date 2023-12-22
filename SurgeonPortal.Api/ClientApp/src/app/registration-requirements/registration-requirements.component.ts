@@ -31,7 +31,7 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   ExamProcessSelectors,
   ExamScoringSelectors,
-  GetExamFees,
+  GetApplicationFee,
 } from '../state';
 import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import {
@@ -54,7 +54,7 @@ import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-card
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
-import { IQeAttestationReadOnlyModel } from '../api/models/examinations/qe-attestation-read-only.model';
+import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-fee-read-only.model';
 import { IAttestationReadOnlyModel } from '../api/models/continuouscertification/attestation-read-only.model';
 
 interface ActionMap {
@@ -87,8 +87,8 @@ interface ActionMap {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RegistrationRequirementsComponent implements OnInit {
-  @Select(ExamProcessSelectors.slices.examFees) examFees$:
-    | Observable<IExamFeeReadOnlyModel[]>
+  @Select(ExamProcessSelectors.slices.applicationFee) applicationFee$:
+    | Observable<IApplicationFeeReadOnlyModel[]>
     | undefined;
 
   @Select(
@@ -182,8 +182,9 @@ export class RegistrationRequirementsComponent implements OnInit {
           this._store.dispatch(
             new GetRegistrationRequirementsTitle(this.examHeaderId)
           );
+          this._store.dispatch(new GetApplicationFee(this.examHeaderId));
           this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
-          //this._store.dispatch(new GetAccommodations(this.examHeaderId));
+          // this._store.dispatch(new GetAccommodations(this.examHeaderId));
           this._store.dispatch(new GetQeAttestations(this.examHeaderId));
         }
       });
@@ -216,8 +217,6 @@ export class RegistrationRequirementsComponent implements OnInit {
       });
 
     this._store.dispatch(new GetResgistrationRequirmentsStatuses());
-
-    this._store.dispatch(new GetExamFees());
     this._globalDialogService.setViewContainerRef = this.viewContainerRef;
   }
 
@@ -272,7 +271,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   }
 
   getPayFeeData() {
-    this.examFees$?.subscribe((examFees) => {
+    this.applicationFee$?.subscribe((examFees) => {
       const payFeeData = {
         totalAmountOfFee: 0,
         totalAmountPaidDate: new Date(),
@@ -280,7 +279,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         remainingBalance: 0,
       };
 
-      examFees.forEach((examFee: any) => {
+      examFees.forEach((examFee: IApplicationFeeReadOnlyModel) => {
         payFeeData.totalAmountOfFee += examFee.subTotal;
         payFeeData.totalAmountPaid += examFee.paidTotal;
         payFeeData.remainingBalance += examFee.balanceDue;
@@ -329,19 +328,19 @@ export class RegistrationRequirementsComponent implements OnInit {
           });
       });
 
-    this.applyForAnExamActionCardData = {
-      title: 'Apply for an Exam',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-      action: {
-        style: 2,
-        type: Action.component,
-        action: '/apply-and-resgister/exam-registration',
-      },
-      disabled: !this.areAllItemsCompleted(this.registrationRequirementsData),
-      actionDisplay: 'Apply Now',
-      icon: 'fa-solid fa-language',
-    };
+    // this.applyForAnExamActionCardData = {
+    //   title: 'Apply for an Exam',
+    //   description:
+    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    //   action: {
+    //     style: 2,
+    //     type: Action.component,
+    //     action: '/apply-and-resgister/exam-registration',
+    //   },
+    //   disabled: !this.areAllItemsCompleted(this.registrationRequirementsData),
+    //   actionDisplay: 'Apply Now',
+    //   icon: 'fa-solid fa-language',
+    // };
   }
 
   areAllItemsCompleted(data: any[]): boolean {
