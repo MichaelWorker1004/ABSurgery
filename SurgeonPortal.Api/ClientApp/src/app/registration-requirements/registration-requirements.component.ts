@@ -37,9 +37,11 @@ import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import {
   GetAccommodations,
   GetPdReferenceLetter,
+  GetQeAttestations,
   GetRegistrationRequirementsTitle,
   GetResgistrationRequirmentsStatuses,
   ReqistrationRequirmentsSelectors,
+  UpdateQeAttestations,
 } from '../state/registration-requirements';
 import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-experience-modal.component';
 import { GraduateMedicalEducationModalComponent } from './graduate-medical-education-modal/graduate-medical-education-modal.component';
@@ -52,6 +54,8 @@ import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-card
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
+import { IQeAttestationReadOnlyModel } from '../api/models/examinations/qe-attestation-read-only.model';
+import { IAttestationReadOnlyModel } from '../api/models/continuouscertification/attestation-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -103,6 +107,9 @@ export class RegistrationRequirementsComponent implements OnInit {
 
   @Select(ReqistrationRequirmentsSelectors.slices.accommodation)
   accommodation$: Observable<IAccommodationModel> | undefined;
+
+  @Select(ReqistrationRequirmentsSelectors.slices.qeAttestations)
+  attestations$: Observable<IAttestationReadOnlyModel[]> | undefined;
 
   @Select(ReqistrationRequirmentsSelectors.slices.examTitle) examTitle$:
     | Observable<IExamTitleReadOnlyModel>
@@ -177,6 +184,7 @@ export class RegistrationRequirementsComponent implements OnInit {
           );
           this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
           //this._store.dispatch(new GetAccommodations(this.examHeaderId));
+          this._store.dispatch(new GetQeAttestations(this.examHeaderId));
         }
       });
     this._store
@@ -350,5 +358,21 @@ export class RegistrationRequirementsComponent implements OnInit {
     if (actionFunction) {
       actionFunction();
     }
+  }
+
+  handleAttestationSave() {
+    console.log('handleAttestationSave');
+    // this.globalDialogService.showLoading();
+    // const model: IAttestationSubmitModel = {
+    //   SigReceive: new Date(),
+    //   CertnoticeReceive: new Date(),
+    // };
+
+    this._store
+      .dispatch(new UpdateQeAttestations(this.examHeaderId))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.handleCardAction('attestationModal');
+      });
   }
 }

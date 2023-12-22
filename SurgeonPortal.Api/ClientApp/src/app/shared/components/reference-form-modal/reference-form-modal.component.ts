@@ -108,7 +108,11 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
   sec_order = 0;
 
   referenceLetterForm: FormGroup = new FormGroup(
-    {},
+    {
+      confirmSend: new FormControl<boolean>({ value: false, disabled: false }, [
+        Validators.required,
+      ]),
+    },
     { validators: matchFields('email', 'confirmEmail') }
   );
   fullName = '';

@@ -39,3 +39,13 @@ export class GetRegistrationRequirementsTitle {
 export class GetQeExamEligibility {
   static readonly type = '[RegistrationRequirements] Get QW Eligibility';
 }
+
+export class GetQeAttestations {
+  static readonly type = '[RegistrationRequirements] Get QE Attestations';
+  constructor(public examId: number) {}
+}
+
+export class UpdateQeAttestations {
+  static readonly type = '[RegistrationRequirements] Update QE Attestations';
+  constructor(public examId: number) {}
+}

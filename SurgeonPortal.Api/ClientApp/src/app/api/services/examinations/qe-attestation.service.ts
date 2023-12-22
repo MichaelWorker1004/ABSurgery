@@ -37,5 +37,11 @@ export class QeAttestationService {
             return this.apiService.get<IQeAttestationReadOnlyModel[]>(`api/examinations/qe-attestation/by-examid?api-version=${apiVersion}&examId=${examId}`);
         }
 
+        public updateQeAttestationReadOnly_UpdateByExamId(examId: number, apiVersion = '1.0'): Observable<IQeAttestationReadOnlyModel[]> {
+          const model = {
+            examId: +(examId || 0),
+          };
 
+          return this.apiService.post<IQeAttestationReadOnlyModel[]>(`api/examinations/qe-attestation/update?api-version=${apiVersion}`, model);
+        }
 }

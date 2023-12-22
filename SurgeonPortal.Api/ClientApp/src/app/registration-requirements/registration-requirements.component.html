@@ -96,7 +96,10 @@
     modalName="attestationModal"
   >
     <abs-attestation-modal
+      source="qualifyingExamination"
+      [attestations]="(attestations$ | async) || []"
       (closeDialog)="handleCardAction('attestationModal')"
+      (saveAttestation)="handleAttestationSave()"
     ></abs-attestation-modal>
   </abs-modal>
 
