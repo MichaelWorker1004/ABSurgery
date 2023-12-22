@@ -8,23 +8,15 @@ namespace SurgeonPortal.Library.Billing
 {
     public class ApplicationFeeReadOnlyFactory : IApplicationFeeReadOnlyFactory
     {
-        public async Task<IApplicationFeeReadOnly> GetByExamIdAsync(
-            int userId,
-            int examId)
+        public async Task<IApplicationFeeReadOnly> GetByExamIdAsync(int examId)
         {
-            if (userId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("userId is a required field.");
-            }
             if (examId <= 0)
             {
                 throw new FactoryInvalidCriteriaException("examId is a required field.");
             }
             
             return await DataPortal.FetchAsync<ApplicationFeeReadOnly>(
-                new GetByExamIdCriteria(
-                userId,
-                examId));
+                new GetByExamIdCriteria(examId));
             
         }
 
@@ -33,14 +25,10 @@ namespace SurgeonPortal.Library.Billing
             [Serializable]
             internal class GetByExamIdCriteria
             {
-                public int UserId { get; set; }
                 public int ExamId { get; set; }
             
-                public GetByExamIdCriteria(
-                int userId,
-                int examId)
+                public GetByExamIdCriteria(int examId)
              {
-                    UserId = userId;
                     ExamId = examId;
               }
             }

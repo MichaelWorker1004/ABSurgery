@@ -17,8 +17,8 @@ namespace SurgeonPortal.Library.Tests.Billing
         [Test]
         public async Task GetByExamIdAsync_CallsDalCorrectly()
         {
-            var expectedUserId = Create<int>();
             var expectedExamId = Create<int>();
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IApplicationFeeReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamIdAsync(
@@ -35,9 +35,7 @@ namespace SurgeonPortal.Library.Tests.Billing
                 .Build();
         
             var factory = new ApplicationFeeReadOnlyFactory();
-            var sut = await factory.GetByExamIdAsync(
-                expectedUserId,
-                expectedExamId);
+            var sut = await factory.GetByExamIdAsync(expectedExamId);
         
             mockDal.VerifyAll();
         }
@@ -46,8 +44,8 @@ namespace SurgeonPortal.Library.Tests.Billing
         public async Task GetByExamIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<ApplicationFeeReadOnlyDto>();
-            var expectedUserId = Create<int>();
             var expectedExamId = Create<int>();
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IApplicationFeeReadOnlyDal>();
             mockDal.Setup(m => m.GetByExamIdAsync(
@@ -64,9 +62,7 @@ namespace SurgeonPortal.Library.Tests.Billing
                 .Build();
         
             var factory = new ApplicationFeeReadOnlyFactory();
-            var sut = await factory.GetByExamIdAsync(
-                expectedUserId,
-                expectedExamId);
+            var sut = await factory.GetByExamIdAsync(expectedExamId);
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

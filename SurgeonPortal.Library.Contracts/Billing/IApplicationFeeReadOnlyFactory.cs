@@ -4,8 +4,6 @@ namespace SurgeonPortal.Library.Contracts.Billing
 {
     public interface IApplicationFeeReadOnlyFactory
     {
-        Task<IApplicationFeeReadOnly> GetByExamIdAsync(
-            int userId,
-            int examId);
+        Task<IApplicationFeeReadOnly> GetByExamIdAsync(int examId);
     }
 }

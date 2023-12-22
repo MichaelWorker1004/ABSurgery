@@ -39,12 +39,9 @@ namespace SurgeonPortal.Api.Controllers.Billing
         [HttpGet("by-examid")]
         public async Task<ActionResult<ApplicationFeeReadOnlyModel>> GetApplicationFeeReadOnly_GetByExamIdAsync(
             [FromServices] IApplicationFeeReadOnlyFactory applicationFeeReadOnlyFactory,
-            int userId,
             int examId)
         {
-            var item = await applicationFeeReadOnlyFactory.GetByExamIdAsync(
-                userId,
-                examId);
+            var item = await applicationFeeReadOnlyFactory.GetByExamIdAsync(examId);
         
             return Ok(_mapper.Map<ApplicationFeeReadOnlyModel>(item));
         } 

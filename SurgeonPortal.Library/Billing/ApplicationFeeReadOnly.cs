@@ -79,7 +79,7 @@ namespace SurgeonPortal.Library.Billing
         
         {
             var dto = await _applicationFeeReadOnlyDal.GetByExamIdAsync(
-                criteria.UserId,
+                _identity.GetUserId<int>(),
                 criteria.ExamId);
             
             if (dto == null)
