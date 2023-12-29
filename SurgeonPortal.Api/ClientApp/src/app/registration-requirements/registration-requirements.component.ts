@@ -216,7 +216,9 @@ export class RegistrationRequirementsComponent implements OnInit {
         this.referenceLetterPicklists = newReferenceLetterPicklists;
       });
 
-    this._store.dispatch(new GetResgistrationRequirmentsStatuses());
+    this._store.dispatch(
+      new GetResgistrationRequirmentsStatuses(this.examHeaderId)
+    );
     this._globalDialogService.setViewContainerRef = this.viewContainerRef;
   }
 
@@ -295,6 +297,9 @@ export class RegistrationRequirementsComponent implements OnInit {
     this.registrationRequirementsStatuses$
       ?.pipe(untilDestroyed(this))
       .subscribe((registrationRequirementsStatuses: IStatuses[]) => {
+        if (!registrationRequirementsStatuses) {
+          return;
+        }
         const statuses = {} as any;
 
         registrationRequirementsStatuses.forEach((status: any) => {
@@ -302,8 +307,10 @@ export class RegistrationRequirementsComponent implements OnInit {
         });
 
         this.registrationRequirementsData.forEach((data: any) => {
-          data.status = statuses[data.id].status;
-          data.disabled = statuses[data.id].disabled;
+          if (statuses[data.id]) {
+            data.status = statuses[data.id].status;
+            data.disabled = statuses[data.id].disabled;
+          }
         });
 
         this.registrationRequirementsData =
@@ -314,10 +321,10 @@ export class RegistrationRequirementsComponent implements OnInit {
               );
               return {
                 ...x,
-                disabled: this.areAllItemsCompleted(
+                disabled: !this.areAllItemsCompleted(
                   this.registrationRequirementsData
                 ),
-                status: !this.areAllItemsCompleted(
+                status: this.areAllItemsCompleted(
                   this.registrationRequirementsData
                 )
                   ? x.status
@@ -327,29 +334,12 @@ export class RegistrationRequirementsComponent implements OnInit {
             return x;
           });
       });
-
-    // this.applyForAnExamActionCardData = {
-    //   title: 'Apply for an Exam',
-    //   description:
-    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-    //   action: {
-    //     style: 2,
-    //     type: Action.component,
-    //     action: '/apply-and-resgister/exam-registration',
-    //   },
-    //   disabled: !this.areAllItemsCompleted(this.registrationRequirementsData),
-    //   actionDisplay: 'Apply Now',
-    //   icon: 'fa-solid fa-language',
-    // };
   }
 
   areAllItemsCompleted(data: any[]): boolean {
-    for (const item of data) {
-      if (item.status !== undefined && item.status !== Status.Completed) {
-        return false;
-      }
-    }
-    return true; // All items have a status of Completed or no status at all
+    return data.every((item) => {
+      return item.status === Status.Completed || item.status === undefined;
+    });
   }
 
   handleCardAction(action: string) {
@@ -360,13 +350,6 @@ export class RegistrationRequirementsComponent implements OnInit {
   }
 
   handleAttestationSave() {
-    console.log('handleAttestationSave');
-    // this.globalDialogService.showLoading();
-    // const model: IAttestationSubmitModel = {
-    //   SigReceive: new Date(),
-    //   CertnoticeReceive: new Date(),
-    // };
-
     this._store
       .dispatch(new UpdateQeAttestations(this.examHeaderId))
       .pipe(untilDestroyed(this))
