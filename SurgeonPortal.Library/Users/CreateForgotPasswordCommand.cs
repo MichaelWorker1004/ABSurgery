@@ -100,7 +100,7 @@ namespace SurgeonPortal.Library.Users
 
             var url = $"{_usersConfiguration.ForgotPasswordUrl}{ResetGUID}";
 
-            email.To = "evan.frisch@ytg.io";//EmailAddress;
+            email.To = EmailAddress;
             email.TemplateId = _usersConfiguration.ForgotPasswordTempalteId;
             email.TemplateData = new
             {
