@@ -16,6 +16,24 @@
       </svg>
       <h1 class="my-3">{{ 'LOGIN.TITLE' | translate }}</h1>
       <div class="text-left mt-5 form-container">
+        <ng-container *ngIf="!isPasswordReset">
+          <sl-alert
+            variant="danger"
+            open
+            closable
+            class="alert-closable login-alert"
+            *ngIf="errors$ | async as error"
+            (sl-hide)="clearErrors()"
+          >
+            <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+            <strong>{{ error.title }}</strong
+            ><br />
+            <div *ngIf="error.errors">
+              <p *ngFor="let errmsg of getErrors(error)">{{ errmsg }}</p>
+            </div>
+          </sl-alert>
+        </ng-container>
+
         <form name="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <input
             class="mt-2"
