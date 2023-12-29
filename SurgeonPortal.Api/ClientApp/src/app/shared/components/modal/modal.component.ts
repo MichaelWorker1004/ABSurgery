@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 export class ModalComponent {
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
   @Input() open = false;
-  @Input() title: string | undefined;
+  @Input() title: string | undefined | null;
   @Input() status: 'completed' | 'in-progress' | 'alert' | undefined;
   @Input() modalName!: any;
   @Input() preventOverlayClose = false;

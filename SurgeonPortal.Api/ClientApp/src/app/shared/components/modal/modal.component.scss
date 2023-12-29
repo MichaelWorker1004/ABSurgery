@@ -46,3 +46,6 @@ sl-tab::part(base):hover {
 .alert {
   color: var(--global-danger);
 }
+.title {
+  text-transform: capitalize;
+}

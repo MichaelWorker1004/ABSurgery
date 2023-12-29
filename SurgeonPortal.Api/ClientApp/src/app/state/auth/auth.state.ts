@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { catchError, tap } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
 import {
   Login,
@@ -7,6 +7,9 @@ import {
   ClearAuthErrors,
   RefreshToken,
   ResetPassword,
+  ForgotUsername,
+  ForgotPassword,
+  ResetForgotPassword,
 } from './auth.actions';
 import { AuthService, IAppUserReadOnlyModel } from '../../api';
 import {
@@ -180,6 +183,68 @@ export class AuthState {
             errors: null,
           });
         }
+      })
+    );
+  }
+
+  @Action(ForgotUsername)
+  forgotUsername(ctx: StateContext<IAuthState>, payload: ForgotUsername) {
+    return this.authService.forgotUsername(payload.model).pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Request Sent',
+          'You will receive an email if there is a username associated with the provided email',
+          true
+        );
+      }),
+      catchError((err: any) => {
+        this.globalDialogService.showSuccessError('error', 'Error', false);
+        return err;
+      })
+    );
+  }
+
+  @Action(ForgotPassword)
+  forgotPassword(ctx: StateContext<IAuthState>, payload: ForgotPassword) {
+    return this.authService.forgotPassword(payload.model).pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Request Sent',
+          'An email has been sent with a link to reset your password',
+          true
+        );
+      }),
+      catchError((err: any) => {
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'There is no account associated with the provided username',
+          false
+        );
+        return err;
+      })
+    );
+  }
+
+  @Action(ResetForgotPassword)
+  resetForgotPassword(
+    ctx: StateContext<IAuthState>,
+    payload: ResetForgotPassword
+  ) {
+    return this.authService.resetForgotPassword(payload.model).pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Password Reset',
+          'Your password has been reset',
+          true
+        );
+      }),
+      catchError((err: any) => {
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'An error has occured resetting your password',
+          false
+        );
+        return err;
       })
     );
   }
