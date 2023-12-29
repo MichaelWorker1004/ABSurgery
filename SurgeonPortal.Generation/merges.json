@@ -4431,51 +4431,63 @@
   "\\SurgeonPortal.DataAccess.Tests\\Examinations\\QeExamEligibilityReadOnlyDalTests.cs": {
     "lastGeneratedHash": "803D7FDF13633BE6A8EF83F0BF0EBF47"
   },
-  "\\SurgeonPortal.Library\\Billing\\ExamFeeReadOnlyFactory.cs": {
-    "lastGeneratedHash": "347955B6C8C6F07FD28F8F0426202F7F"
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeAttestationReadOnly.cs": {
+    "lastGeneratedHash": "F45782F69725F4C2025B6FBD793C8119"
   },
-  "\\SurgeonPortal.Library.Contracts\\Billing\\IExamFeeReadOnlyFactory.cs": {
-    "lastGeneratedHash": "B4D3E1C6F919D1FB6AC933AED48CB067"
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeAttestationReadOnlyList.cs": {
+    "lastGeneratedHash": "BCC0523D6668129AFA0A7A7BDD95B79A"
   },
-  "\\SurgeonPortal.Library.Tests\\Billing\\ExamFeeReadOnlyTests.cs": {
-    "lastGeneratedHash": "C06B6FC8B516740C51877C9497393D2D"
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\qe-attestation-read-only.model.ts": {
+    "lastGeneratedHash": "3533C75207AE3C6C96F9A71672272A70"
   },
-  "\\SurgeonPortal.Library.Contracts\\Billing\\IApplicationFeeReadOnly.cs": {
-    "lastGeneratedHash": "9B8994CB3040A0591F98466BFD4B2508"
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\QeAttestationReadOnlyDto.cs": {
+    "lastGeneratedHash": "E008BEB7D6D016C11666FEDAF0759AB7"
   },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\billing\\application-fee-read-only.model.ts": {
-    "lastGeneratedHash": "D01310F5781FB26F06B9D86C94D57345"
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\qe-attestation.service.ts": {
+    "lastGeneratedHash": "4106B1F7A3B91BE491E207ACF8A1A6CD"
   },
-  "\\SurgeonPortal.DataAccess.Contracts\\Billing\\ApplicationFeeReadOnlyDto.cs": {
-    "lastGeneratedHash": "046BCDF5B59443747704906C3CD48D93"
+  "\\SurgeonPortal.Api\\Controllers\\Examinations\\QeAttestationController.cs": {
+    "lastGeneratedHash": "583EE7A68B3C562ED9E9D9CC999546BA"
   },
-  "\\SurgeonPortal.Models\\Billing\\ApplicationFeeReadOnlyModel.cs": {
-    "lastGeneratedHash": "43040D9328A7F598889EA2417DFEB7A1"
+  "\\SurgeonPortal.Library\\Examinations\\QeAttestationReadOnly.cs": {
+    "lastGeneratedHash": "15F6094C74E24F10762609A3C82322BC"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\billing\\application-fee.service.ts": {
     "lastGeneratedHash": "10662A8905701CFF9BF2A53CE54E5B53",
     "lastMergedHash": "2209762627CF6FB7D549826D1AA9FE2A"
   },
-  "\\SurgeonPortal.Api\\Controllers\\Billing\\ApplicationFeeController.cs": {
-    "lastGeneratedHash": "672F13593FBC4C8EBBF9F9FAB5C01AE8"
+  "\\SurgeonPortal.DataAccess\\Examinations\\QeAttestationReadOnlyDal.cs": {
+    "lastGeneratedHash": "55EBECE4858EE4F99F3E5AD2F955AEFA"
   },
-  "\\SurgeonPortal.Library\\Billing\\ApplicationFeeReadOnly.cs": {
-    "lastGeneratedHash": "33E515F500E981E64ACCAFBD542CAE43"
+  "\\SurgeonPortal.Library\\Examinations\\QeAttestationReadOnlyListFactory.cs": {
+    "lastGeneratedHash": "CEFE39239020BB1BCF0D5947FBC37A7B"
   },
-  "\\SurgeonPortal.DataAccess\\Billing\\ApplicationFeeReadOnlyDal.cs": {
-    "lastGeneratedHash": "EAC7079159A867ACB466A01501FB73CA"
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IQeAttestationReadOnlyDal.cs": {
+    "lastGeneratedHash": "960046599363CD7FAAEDB1FD0A225974"
   },
-  "\\SurgeonPortal.Library\\Billing\\ApplicationFeeReadOnlyFactory.cs": {
-    "lastGeneratedHash": "FAAD33CC01D2BB96DC0E0F187F400B8E"
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeAttestationReadOnlyListFactory.cs": {
+    "lastGeneratedHash": "2158254344B2C0D01DD797D5D903F954"
   },
-  "\\SurgeonPortal.DataAccess.Contracts\\Billing\\IApplicationFeeReadOnlyDal.cs": {
-    "lastGeneratedHash": "037D27540EC42FB795096F221287E3FD"
+  "\\SurgeonPortal.Library.Tests\\Examinations\\QeAttestationReadOnlyListTests.cs": {
+    "lastGeneratedHash": "86EDE4D648456DEA03B06131A98E815E"
   },
-  "\\SurgeonPortal.Library.Contracts\\Billing\\IApplicationFeeReadOnlyFactory.cs": {
-    "lastGeneratedHash": "BAED031A8FBB71366F2BEB898EC5D065"
+  "\\SurgeonPortal.DataAccess.Tests\\Examinations\\QeAttestationReadOnlyDalTests.cs": {
+    "lastGeneratedHash": "35104E97826E58CEF526EA8D36E1BA4E"
   },
-  "\\SurgeonPortal.Library.Tests\\Billing\\ApplicationFeeReadOnlyTests.cs": {
-    "lastGeneratedHash": "74E9013F0D3FADCEF4B993329E9B07D4"
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IUpdateQeAttestationsCommand.cs": {
+    "lastGeneratedHash": "D0F184DFD69C244700395933A0C6DE51"
+  },
+  "\\SurgeonPortal.Models\\Examinations\\UpdateQeAttestationsCommandModel.cs": {
+    "lastGeneratedHash": "7AE1D11C369F9140CDDB0A338D9FD61E"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\UpdateQeAttestationsCommand.cs": {
+    "lastGeneratedHash": "763C83278C06FAA8EFAA420DE1BA1114"
+  },
+  "\\SurgeonPortal.DataAccess\\Examinations\\UpdateQeAttestationsCommandDal.cs": {
+    "lastGeneratedHash": "EB9466732C167F4956A70CF40A29D636"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\UpdateQeAttestationsCommandFactory.cs": {
+    "lastGeneratedHash": "F1AD92F911CE7B7CB6CA11B50BD25315"
   },
   "\\SurgeonPortal.DataAccess.Tests\\Billing\\ApplicationFeeReadOnlyDalTests.cs": {
     "lastGeneratedHash": "78079CA1DD3F6A0FA6866CFFD4E4D22D"

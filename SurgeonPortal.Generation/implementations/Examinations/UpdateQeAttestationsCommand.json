@@ -1,0 +1,70 @@
+{
+  "name": "UpdateQeAttestationsCommand",
+  "implementationName": "Examinations\\UpdateQeAttestationsCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.update_qe_attestation_by_userid",
+    "CommandMethodName": "UpdateQeAttestations",
+    "ControllerName": "Examinations\\QeAttestationController",
+    "ControllerRoute": "api/examinations/qe-attestation",
+    "ControllerVersion": "1",
+    "ExecuteAsynchronously": "true",
+    "IncludeControllerInGeneration": "true",
+    "Model": "Examinations\\UpdateQeAttestationsCommand",
+    "ModelGroup": "UpdateQeAttestationsCommand",
+    "ReturnsPayload": "false",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "update"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.update_qe_attestation_by_userid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[update_qe_attestation_by_userid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ExamId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "ExamId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i pa Examinations\\UpdateQeAttestationsCommand UpdateQeAttestationsCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[update_qe_attestation_by_userid] -p:Model=Examinations\\UpdateQeAttestationsCommand -p:ModelGroup=UpdateQeAttestationsCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=UpdateQeAttestations -p:ReturnsPayload=false -p:IncludeControllerInGeneration=true -p:Route=update -p:ControllerName=Examinations\\QeAttestationController -p:ControllerRoute=api/examinations/qe-attestation -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\UpdateQeAttestationsCommand UpdateQeAttestationsCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[update_qe_attestation_by_userid] -p:Model=Examinations\\UpdateQeAttestationsCommand -p:ModelGroup=UpdateQeAttestationsCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=UpdateQeAttestations -p:ReturnsPayload=false -p:IncludeControllerInGeneration=true -p:Route=update -p:ControllerName=Examinations\\QeAttestationController -p:ControllerRoute=api/examinations/qe-attestation -p:ControllerVersion=1 -p:ExecuteAsynchronously=true",
+    "generatedDateUtc": "2023-12-22T18:47:14.2861976Z"
+  },
+  "version": 1
+}

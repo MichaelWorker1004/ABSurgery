@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "Examinations\\QeAttestationReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "AttestationText",
+      "dataType": "string",
+      "maxLength": -1,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Name",
+      "dataType": "string",
+      "maxLength": 108,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Checked",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examinations\\QeAttestationReadOnly -sp [dbo].[get_qe_attestation_items_by_userId] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-22T18:26:07.7457752Z"
+  },
+  "version": 1
+}

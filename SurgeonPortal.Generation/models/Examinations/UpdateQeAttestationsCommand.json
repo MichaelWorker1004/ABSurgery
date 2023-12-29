@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Examinations\\UpdateQeAttestationsCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m p Examinations\\UpdateQeAttestationsCommand -sp [dbo].[update_qe_attestation_by_userid] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-22T18:47:05.183769Z"
+  },
+  "version": 1
+}
