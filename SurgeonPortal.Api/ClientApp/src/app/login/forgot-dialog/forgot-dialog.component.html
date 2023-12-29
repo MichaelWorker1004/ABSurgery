@@ -1,7 +1,14 @@
 <div>
+  <div *ngIf="errors$ | async as error">
+    <p-messages
+      [(value)]="errMessage"
+      [enableService]="false"
+      [closable]="false"
+    ></p-messages>
+  </div>
+
   Please enter the {{ forgotType === 'password' ? 'username' : 'email' }} for
-  the account and we will send you an email with further instructions. TYPE:
-  {{ forgotType }}
+  the account and we will send you an email with further instructions.
 
   <div class="text-left mt-3 form-container">
     <div *ngIf="forgotType === 'username'; else password">
@@ -51,7 +58,7 @@
           <p-button
             variant="text"
             styleClass="p-button-link p-button-primary"
-            (onClick)="returnToLogin()"
+            (onClick)="resetAndCloseDialog()"
             >Back to Login</p-button
           >
           <p-button type="submit" [style]="{ width: '337px' }"> Send </p-button>

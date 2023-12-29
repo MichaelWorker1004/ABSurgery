@@ -38,6 +38,7 @@ export const AUTH_STATE_TOKEN = new StateToken<IAuthState>('auth');
     user: null,
     claims: null,
     errors: null,
+    forgotPasswordErrors: null,
     isBusy: false,
     isPasswordReset: false,
     passwordResetComplete: false,
@@ -109,6 +110,7 @@ export class AuthState {
             ...res,
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
+            forgotPasswordErrors: null,
             isBusy: false,
             isPasswordReset: res.user?.resetRequired ?? false,
             isAuthenticated: true,
@@ -155,6 +157,7 @@ export class AuthState {
             ...result,
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
+            forgotPasswordErrors: null,
           });
           // if (res.expires_in_minutes) {
           //   this.setRefreshTimer(res.expires_in_minutes);
@@ -181,6 +184,7 @@ export class AuthState {
             isBusy: false,
             passwordResetComplete: true,
             errors: null,
+            forgotPasswordErrors: null,
           });
         }
       })
@@ -213,13 +217,15 @@ export class AuthState {
           'An email has been sent with a link to reset your password',
           true
         );
+        ctx.patchState({
+          forgotPasswordErrors: null,
+        });
       }),
       catchError((err: any) => {
-        this.globalDialogService.showSuccessError(
-          'Error',
-          'There is no account associated with the provided username',
-          false
-        );
+        this.globalDialogService.closeOpenDialog();
+        ctx.patchState({
+          forgotPasswordErrors: err,
+        });
         return err;
       })
     );
@@ -269,6 +275,7 @@ export class AuthState {
       user: {} as IAppUserReadOnlyModel,
       claims: [],
       errors: null,
+      forgotPasswordErrors: null,
       isBusy: false,
       isPasswordReset: false,
       passwordResetComplete: false,
@@ -282,7 +289,10 @@ export class AuthState {
    */
   @Action(ClearAuthErrors)
   clearErrors(ctx: StateContext<IAuthState>) {
-    ctx.patchState({ errors: null });
+    ctx.patchState({
+      errors: null,
+      forgotPasswordErrors: null,
+    });
   }
 
   /**
@@ -348,6 +358,7 @@ export class AuthState {
         user: {} as IAppUserReadOnlyModel,
         claims: [],
         errors: <IError>error,
+        forgotPasswordErrors: null,
         isBusy: false,
         isPasswordReset: false,
         passwordResetComplete: false,
@@ -371,6 +382,7 @@ export class AuthState {
             traceId: '',
             errors: null,
           },
+          forgotPasswordErrors: null,
           isBusy: false,
           isPasswordReset: false,
           passwordResetComplete: false,

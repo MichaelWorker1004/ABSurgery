@@ -1,3 +1,4 @@
+import { IFormErrors } from 'src/app/shared/common';
 import { IAppUserReadOnlyModel } from '../../api';
 
 export interface IAuthCredentials {
@@ -31,6 +32,7 @@ export interface AuthStateModel {
 export interface IAuthState extends AuthStateModel {
   claims: string[] | null;
   errors: IError | null;
+  forgotPasswordErrors: IError | null;
   isBusy: boolean;
   isPasswordReset: boolean;
   passwordResetComplete: boolean;

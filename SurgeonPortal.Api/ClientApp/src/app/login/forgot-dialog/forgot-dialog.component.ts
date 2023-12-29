@@ -10,12 +10,20 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
-import { Store } from '@ngxs/store';
-import { ForgotPassword, ForgotUsername } from 'src/app/state';
+import { MessagesModule } from 'primeng/messages';
+import { Select, Store } from '@ngxs/store';
+import {
+  AuthSelectors,
+  ClearAuthErrors,
+  ForgotPassword,
+  ForgotUsername,
+  IError,
+} from 'src/app/state';
 import { IForgotUsernameReadOnlyModel } from 'src/app/api/models/auth/forgot-username-read-only.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IForgotPasswordReadOnlyModel } from 'src/app/api/models/auth/forgot-password-read-only.model';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -28,6 +36,7 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
     InputTextModule,
     PasswordModule,
     ButtonModule,
+    MessagesModule,
   ],
   templateUrl: './forgot-dialog.component.html',
   styleUrls: ['./forgot-dialog.component.scss'],
@@ -35,6 +44,10 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
 export class ForgotDialogComponent {
   @Input() forgotType!: string | null;
   @Output() closeDialog: EventEmitter<any> = new EventEmitter();
+
+  @Select(AuthSelectors.slices.forgotPasswordErrors) errors$?:
+    | Observable<IError>
+    | undefined;
 
   usernameForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -46,6 +59,14 @@ export class ForgotDialogComponent {
       Validators.minLength(3),
     ]),
   });
+
+  errMessage: any = [
+    {
+      severity: 'error',
+      summary:
+        'Please check to make sure you have entered your username correctly. If you continue to have issues, please contact the ABS Team for further assistance.',
+    },
+  ];
 
   constructor(
     private _store: Store,
@@ -86,7 +107,7 @@ export class ForgotDialogComponent {
   }
 
   returnToLogin() {
-    console.log('return to login');
+    this._store.dispatch(new ClearAuthErrors());
     this.closeDialog.emit();
   }
 }

@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -70,16 +70,11 @@ export class ForgotPasswordComponent {
     private _store: Store,
     private _router: Router,
     private _route: ActivatedRoute,
-    private globalDialogService: GlobalDialogService,
-    @Inject(DOCUMENT) private document: Document
+    private globalDialogService: GlobalDialogService
   ) {
     this._route.queryParams.subscribe((params) => {
       this.guid = params['guid'];
     });
-  }
-
-  navigateToAbs(): void {
-    this.document.location.href = 'https://www.absurgery.org/login.jsp';
   }
 
   onSubmit() {

@@ -43,7 +43,7 @@
             formControlName="userName"
           />
           <p-button
-            styleClass="mt-1 p-button-link"
+            styleClass="mt-1 pt-0 p-button-link"
             label="Forgot Username"
             tabindex="-1"
             (onClick)="openForgotDialog('username')"
@@ -66,7 +66,7 @@
             [toggleMask]="true"
           ></p-password>
           <p-button
-            styleClass="mt-1 p-button-link"
+            styleClass="mt-1 pt-0 p-button-link"
             label="Forgot password"
             tabindex="-1"
             (onClick)="openForgotDialog('password')"
@@ -123,7 +123,10 @@
 </div>
 
 <abs-modal
+  [width]="40"
   [open]="(forgotType$ | async) ? true : false"
+  [hideClose]="true"
+  [preventOverlayClose]="true"
   (closeDialog)="closeForgot()"
   [title]="'Forgot ' + (forgotType$ | async)"
 >
