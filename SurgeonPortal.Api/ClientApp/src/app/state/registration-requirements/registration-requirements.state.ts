@@ -29,6 +29,9 @@ import { QeExamEligibilityService } from 'src/app/api/services/examinations/qe-e
 import { IQeAttestationReadOnlyModel } from 'src/app/api/models/examinations/qe-attestation-read-only.model';
 import { QeAttestationService } from 'src/app/api/services/examinations/qe-attestation.service';
 import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
+import { QeDashboardStatusService } from 'src/app/api/services/examinations/qe-dashboard-status.service';
+import { IQeDashboardStatusReadOnlyModel } from 'src/app/api/models/examinations/qe-dashboard-status-read-only.model';
+import { statusTypes } from '../continuous-certification/statusTypes';
 
 export interface IRegistrationRequirements {
   qeAttestations: IAttestationReadOnlyModel[] | undefined;
@@ -64,79 +67,40 @@ export class RegistrationRequirementsState {
     private pdReferenceLetterService: PdReferenceLetterService,
     private examinationsService: ExaminationsService,
     private qeExamEligibilityService: QeExamEligibilityService,
-    private qeAttestationService: QeAttestationService
+    private qeAttestationService: QeAttestationService,
+    private qeDashboardStatusService: QeDashboardStatusService
   ) {}
 
   @Action(GetResgistrationRequirmentsStatuses)
   getRegistrationRequirementsStatuses(
-    ctx: StateContext<IRegistrationRequirements>
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: GetResgistrationRequirmentsStatuses
   ) {
-    const response: IStatuses[] = [
-      {
-        id: 'personalProfile',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'training',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'personalActivities',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'medicalLicense',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'acgmeExperience',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'gme',
-        status: 'alert',
-        disabled: false,
-      },
-      {
-        id: 'PD_Attestation',
-        status: 'in-progress',
-        disabled: false,
-      },
-      {
-        id: 'certifications',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'applicationFee',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'accommodations',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'attestation',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'applyForExam',
-        status: 'contingent',
-        disabled: true,
-      },
-    ];
-
-    ctx.patchState({
-      registrationRequirementsStatuses: response,
-    });
+    return this.qeDashboardStatusService
+      .retrieveQeDashboardStatusReadOnly_GetByExamId(payload.examId)
+      .pipe(
+        tap((dashboardStati: IQeDashboardStatusReadOnlyModel[]) => {
+          const stati: IStatuses[] = [];
+          dashboardStati.forEach((status) => {
+            stati.push({
+              id: status.statusType,
+              status: statusTypes[status.status],
+              disabled: status.disabled === 1 ? true : false,
+            });
+          });
+          ctx.patchState({
+            registrationRequirementsStatuses: stati,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
   }
 
   @Action(GetRegistrationRequirementsTitle)

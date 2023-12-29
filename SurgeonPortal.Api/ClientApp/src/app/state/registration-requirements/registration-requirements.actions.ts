@@ -3,6 +3,7 @@ import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-refe
 
 export class GetResgistrationRequirmentsStatuses {
   static readonly type = '[RegistrationRequirements] Get Statuses';
+  constructor(public examId: number) {}
 }
 
 export class CreateAccommodation {
