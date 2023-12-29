@@ -12,7 +12,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, take } from 'rxjs';
 import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
 import { IAccommodationReadOnlyModel } from 'src/app/api/models/picklists/accommodation-read-only.model';
 import { DocumentsUploadComponent } from 'src/app/shared/components/documents-upload/documents-upload.component';
@@ -54,9 +54,9 @@ export class SpecialAccommodationsModalComponent implements OnInit {
 
   @Select(UserProfileSelectors.userId) userId$: Observable<number> | undefined;
 
-  @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
-    | Observable<number>
-    | undefined;
+  // @Select(ExamScoringSelectors.slices.examHeaderId) examHeaderId$:
+  //   | Observable<number>
+  //   | undefined;
 
   @Select(PicklistsSelectors.slices.accommodationTypes) accommodationTypes$:
     | Observable<IAccommodationReadOnlyModel[]>
@@ -82,14 +82,14 @@ export class SpecialAccommodationsModalComponent implements OnInit {
   $event: any;
 
   constructor(private _store: Store, private activatedRoute: ActivatedRoute) {
-    this.activatedRoute.params
-      .pipe(untilDestroyed(this))
-      .subscribe((params) => {
-        this.examHeaderId = params['examId'];
-        if (this.examHeaderId) {
-          this._store.dispatch(new GetAccommodations(this.examHeaderId));
-        }
-      });
+    // this.activatedRoute.params
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe((params) => {
+    //     this.examHeaderId = params['examId'];
+    //     if (this.examHeaderId) {
+    //       this._store.dispatch(new GetAccommodations(this.examHeaderId));
+    //     }
+    //   });
     this._store.dispatch(new GetAccommodationTypes());
   }
 
@@ -140,7 +140,7 @@ export class SpecialAccommodationsModalComponent implements OnInit {
         .dispatch(
           new CreateAccommodation(formData as unknown as IAccommodationModel)
         )
-        .pipe(untilDestroyed(this))
+        .pipe(take(1), untilDestroyed(this))
         .subscribe(() => {
           if (data) {
             this.close();
@@ -156,7 +156,7 @@ export class SpecialAccommodationsModalComponent implements OnInit {
             formData as unknown as IAccommodationModel
           )
         )
-        .pipe(untilDestroyed(this))
+        .pipe(take(1), untilDestroyed(this))
         .subscribe(() => {
           if (data) {
             this.close();

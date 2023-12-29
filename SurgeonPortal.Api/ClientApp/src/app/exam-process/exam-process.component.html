@@ -18,54 +18,75 @@
             [ngClass]="{
               'col-12': true,
               'application-container': true,
-              'available-applications': availableApplications.length > 0
+              'available-applications': qeExamEligibility$ | async
             }"
           >
             <p class="text-lg font-bold m-0">
               {{
-                availableApplications.length > 0
+                (qeExamEligibility$ | async)
                   ? 'Active Examinations & Applications'
                   : 'No applications are currently available, check back later.'
               }}
             </p>
-            <div class="mt-2 grid" *ngIf="availableApplications.length > 0">
+            <div class="mt-2 grid" *ngIf="qeExamEligibility$ | async">
               <sl-card
                 class="col-12 md:col-6 application-card"
-                *ngFor="let application of availableApplications"
+                *ngFor="let application of qeExamEligibility$ | async"
               >
                 <p
                   class="font-bold mt-0 flex justify-content-between align-items-center"
                 >
-                  {{ application.name }}
-                  <span
+                  {{ application.examName }}
+                  <!-- <span
                     [class]="'application-progress ' + application.status"
                     >{{ application.progress }}</span
-                  >
+                  > -->
                 </p>
                 <div class="mt-2 mb-3">
-                  <p class="font-bold m-0">
+                  <!-- <p class="font-bold m-0">
                     Application Status:
-                    <span [class]="'application-status ' + application.status">
+                    <span [class]="'application-status'">
                       {{
                         application.continuousCertNeeded
                           ? 'Continuous Certification needed'
                           : application.status.replace('-', ' ')
                       }}
                     </span>
+                  </p> -->
+                  <p class="font-bold m-0">
+                    Application Open:
+                    <span class="font-normal">{{
+                      application.appOpenDate | date : 'longDate'
+                    }}</span>
+                  </p>
+                  <p class="font-bold m-0" *ngIf="application.appDelayDate">
+                    Application Delayed Open:
+                    <span class="font-normal">{{
+                      application.appDelayDate | date : 'longDate'
+                    }}</span>
                   </p>
                   <p class="font-bold m-0">
-                    2022 Deadline:
+                    Application Late:
                     <span class="font-normal">{{
-                      application.deadline | date : 'longDate'
+                      application.appLateDate | date : 'longDate'
+                    }}</span>
+                  </p>
+                  <p class="font-bold m-0">
+                    Deadline:
+                    <span class="font-normal">{{
+                      application.appCloseDate | date : 'longDate'
                     }}</span>
                   </p>
                 </div>
                 <a
                   class="btn-link"
-                  [routerLink]="'/continuous-certification'"
-                  *ngIf="application.continuousCertNeeded"
+                  [routerLink]="
+                    '/apply-and-resgister/registration-requirements/' +
+                    application.examId
+                  "
+                  *ngIf="application.registrationOpen === 1"
                 >
-                  Go to your Continuous Certification
+                  Go to your Registration Requirements
                   <i class="fa-solid fa-arrow-right ml-2"></i>
                 </a>
               </sl-card>

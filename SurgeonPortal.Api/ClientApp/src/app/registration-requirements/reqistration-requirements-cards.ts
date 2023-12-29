@@ -2,7 +2,7 @@ import { Action } from '../shared/components/action-card/action.enum';
 
 export const REGISTRATION_REQUIRMENTS_CARDS = [
   {
-    id: 'personalProfile',
+    id: 'Personal_Profile',
     title: 'Personal Profile',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -14,7 +14,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-solid fa-address-card',
   },
   {
-    id: 'training',
+    id: 'Training',
     title: 'Training',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -28,7 +28,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     recievedOn: new Date('2021-01-01'),
   },
   {
-    id: 'personalActivities',
+    id: 'Professional_Standing',
     title: 'Professional Activities and Privileges',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -41,7 +41,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-solid fa-user-doctor',
   },
   {
-    id: 'medicalLicense',
+    id: 'Medical_Licenses',
     title: 'Medical License',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -54,7 +54,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-certificate fa-solid',
   },
   {
-    id: 'acgmeExperience',
+    id: 'ACGME',
     title: 'ACGME Experience Report by Role',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -66,7 +66,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-solid fa-stethoscope',
   },
   {
-    id: 'gme',
+    id: 'GME',
     title: 'Graduate Medical Education (GME)',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -78,7 +78,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-solid fa-stethoscope',
   },
   {
-    id: 'attestation',
+    id: 'PD_Attestation',
     title: 'Program Director Attestation',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -90,7 +90,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-solid fa-user-check',
   },
   {
-    id: 'certifications',
+    id: 'QE_Certificates',
     title: 'Certification(s) Upload',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -103,7 +103,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-solid fa-rectangle-list',
   },
   {
-    id: 'applicationFee',
+    id: 'Application_Fee',
     title: 'Application Fee',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -115,7 +115,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     icon: 'fa-solid fa-cash-register',
   },
   {
-    id: 'accommodations',
+    id: 'Special_Accommodations',
     title: 'Special Accommodations',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
@@ -125,5 +125,32 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     },
     actionDisplay: 'View / Update my information',
     icon: 'fa-solid fa-star',
+  },
+  {
+    id: 'Attestation',
+    title: 'Attestation',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    action: {
+      type: Action.dialog,
+      action: 'attestationModal',
+    },
+    actionDisplay: 'View / Update my Attesation',
+    icon: 'fa-solid fa-star',
+  },
+  {
+    id: 'applyForExam',
+    title: 'Apply for an Exam',
+    action: {
+      style: 2,
+      type: Action.component,
+      action: '/apply-and-resgister',
+    },
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    actionStyle: 'button',
+    disabled: true,
+    actionDisplay: 'Apply Now',
+    icon: 'fa-solid fa-language',
   },
 ];

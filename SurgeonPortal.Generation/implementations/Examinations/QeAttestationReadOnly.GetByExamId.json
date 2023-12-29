@@ -1,0 +1,107 @@
+{
+  "name": "QeAttestationReadOnly",
+  "implementationName": "Examinations\\QeAttestationReadOnly.GetByExamId",
+  "template": "ytg-framework/readonly-getlist",
+  "parameters": {
+    "Adapter": "dbo.get_qe_attestation_items_by_userid",
+    "ControllerName": "Examinations\\QeAttestationController",
+    "ControllerRoute": "api/examinations/qe-attestation",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\QeAttestationReadOnly",
+    "ModelGroup": "QeAttestationReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-examid",
+    "UsePaginatedList": "false"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_qe_attestation_items_by_userid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_qe_attestation_items_by_userId]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ExamId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\QeAttestationReadOnly",
+            "fields": [
+              {
+                "name": "AttestationText",
+                "dataType": "string",
+                "maxLength": -1,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AttestationText"
+              },
+              {
+                "name": "Name",
+                "dataType": "string",
+                "maxLength": 108,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Name"
+              },
+              {
+                "name": "Checked",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Checked"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "ExamId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\QeAttestationReadOnly.GetByExamId QeAttestationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\QeAttestationReadOnly -p:Adapter=sp:abssp-[dbo].[get_qe_attestation_items_by_userId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=QeAttestationReadOnly -p:Route=by-examid -p:ControllerName=Examinations\\QeAttestationController -p:ControllerRoute=api/examinations/qe-attestation -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\QeAttestationReadOnly.GetByExamId QeAttestationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Examinations\\QeAttestationReadOnly -p:Adapter=sp:abssp-[dbo].[get_qe_attestation_items_by_userId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=QeAttestationReadOnly -p:Route=by-examid -p:ControllerName=Examinations\\QeAttestationController -p:ControllerRoute=api/examinations/qe-attestation -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-22T18:26:21.2923696Z"
+  },
+  "version": 1
+}

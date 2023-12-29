@@ -1,0 +1,79 @@
+{
+  "refs": {},
+  "name": "Billing\\ApplicationFeeReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "SubTotal",
+      "dataType": "decimal?",
+      "maxLength": 8,
+      "precision": 19,
+      "scale": 4,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "InvoiceNumber",
+      "dataType": "string",
+      "maxLength": 16,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "PaidTotal",
+      "dataType": "decimal?",
+      "maxLength": 8,
+      "precision": 19,
+      "scale": 4,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "BalanceDue",
+      "dataType": "decimal?",
+      "maxLength": 8,
+      "precision": 19,
+      "scale": 4,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "TrackCode",
+      "dataType": "string",
+      "maxLength": 32,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "PaymentDate",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Billing\\ApplicationFeeReadOnly -sp [dbo].[get_application_fee_by_examId] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-21T21:28:30.3367173Z"
+  },
+  "version": 1
+}

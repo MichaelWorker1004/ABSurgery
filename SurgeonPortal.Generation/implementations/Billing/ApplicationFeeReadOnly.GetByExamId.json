@@ -1,0 +1,144 @@
+{
+  "name": "ApplicationFeeReadOnly",
+  "implementationName": "Billing\\ApplicationFeeReadOnly.GetByExamId",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_application_fee_by_examid",
+    "ControllerName": "Billing\\ApplicationFeeController",
+    "ControllerRoute": "api/billing/application-fee",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Billing\\ApplicationFeeReadOnly",
+    "ModelGroup": "ApplicationFeeReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-examid"
+  },
+  "projectClaims": {
+    "SurgeonPortalClaims.SurgeonClaim": {
+      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
+      "namespace": "SurgeonPortal.Library.Contracts.Identity",
+      "name": "SurgeonPortalClaims.SurgeonClaim",
+      "key": "SurgeonPortalClaims.SurgeonClaim",
+      "claimSetName": "SugeonPortal"
+    }
+  },
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_application_fee_by_examid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_application_fee_by_examId]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ExamId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Billing\\ApplicationFeeReadOnly",
+            "fields": [
+              {
+                "name": "SubTotal",
+                "dataType": "decimal?",
+                "maxLength": 8,
+                "precision": 19,
+                "scale": 4,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.SubTotal"
+              },
+              {
+                "name": "InvoiceNumber",
+                "dataType": "string",
+                "maxLength": 16,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.InvoiceNumber"
+              },
+              {
+                "name": "PaidTotal",
+                "dataType": "decimal?",
+                "maxLength": 8,
+                "precision": 19,
+                "scale": 4,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PaidTotal"
+              },
+              {
+                "name": "BalanceDue",
+                "dataType": "decimal?",
+                "maxLength": 8,
+                "precision": 19,
+                "scale": 4,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.BalanceDue"
+              },
+              {
+                "name": "TrackCode",
+                "dataType": "string",
+                "maxLength": 32,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.TrackCode"
+              },
+              {
+                "name": "PaymentDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PaymentDate"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "ExamId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Billing\\ApplicationFeeReadOnly.GetByExamId ApplicationFeeReadOnly -t=ytg-framework/readonly-get -p:Model=Billing\\ApplicationFeeReadOnly -p:Adapter=sp:abssp-[dbo].[get_application_fee_by_examId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ApplicationFeeReadOnly -p:Route=by-examid -p:ControllerName=Billing\\ApplicationFeeController -p:ControllerRoute=api/billing/application-fee -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim -f ",
+    "inferredCommand": "ytgim generate i  Billing\\ApplicationFeeReadOnly.GetByExamId ApplicationFeeReadOnly -t=ytg-framework/readonly-get -p:Model=Billing\\ApplicationFeeReadOnly -p:Adapter=sp:abssp-[dbo].[get_application_fee_by_examId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ApplicationFeeReadOnly -p:Route=by-examid -p:ControllerName=Billing\\ApplicationFeeController -p:ControllerRoute=api/billing/application-fee -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2023-12-21T21:28:35.5089547Z"
+  },
+  "version": 1
+}

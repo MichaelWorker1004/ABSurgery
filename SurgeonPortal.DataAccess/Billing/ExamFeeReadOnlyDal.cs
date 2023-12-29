@@ -15,6 +15,23 @@ namespace SurgeonPortal.DataAccess.Billing
 
 
 
+        public async Task<ExamFeeReadOnlyDto> GetByExamIdAsync(
+            int userId,
+            int examId)
+        {
+            using (var connection = CreateConnection())
+            {
+                return await connection.ExecFirstOrDefaultAsync<ExamFeeReadOnlyDto>(
+                    "[dbo].[get_exam_fee_by_examId]",
+                        new
+                        {
+                            UserId = userId,
+                            ExamId = examId,
+                        });
+                        
+            }
+        }
+
         public async Task<IEnumerable<ExamFeeReadOnlyDto>> GetByUserIdAsync(int userId)
         {
             using (var connection = CreateConnection())

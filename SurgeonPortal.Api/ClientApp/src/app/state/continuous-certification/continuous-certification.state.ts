@@ -19,24 +19,15 @@ import {
   RequestRefrence,
   UpdateOutcomeRegistries,
 } from './continuous-certification.actions';
-import { IRefrenceFormReadOnlyModel } from './refrence-form-read-only.model';
 import { IStatuses } from '../../api/models/users/statuses.model';
 import { DashboardStatusService } from 'src/app/api/services/continuouscertification/dashboard-status.service';
 import { IDashboardStatusReadOnlyModel } from 'src/app/api/models/continuouscertification/dashboard-status-read-only.model';
-import { Status } from 'src/app/shared/components/action-card/status.enum';
+import { statusTypes } from './statusTypes';
 import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
 import { AttestationService } from 'src/app/api/services/continuouscertification/attestation.service';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import { IReferenceLetterReadOnlyModel } from 'src/app/api/models/continuouscertification/reference-letter-read-only.model';
 import { ReferenceLetterService } from 'src/app/api/services/continuouscertification/reference-letter.service';
-import { IReferenceLetterModel } from 'src/app/api/models/continuouscertification/reference-letter.model';
-
-const statusTypes = [
-  Status.InProgress, //0
-  Status.Completed, //1
-  Status.Contingent, //2
-  Status.Alert, //3
-];
 
 export interface IContinuousCertication {
   outcomeRegistries: IOutcomeRegistryModel | undefined;

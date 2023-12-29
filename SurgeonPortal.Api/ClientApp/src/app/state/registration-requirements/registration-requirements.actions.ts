@@ -3,6 +3,7 @@ import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-refe
 
 export class GetResgistrationRequirmentsStatuses {
   static readonly type = '[RegistrationRequirements] Get Statuses';
+  constructor(public examId: number) {}
 }
 
 export class CreateAccommodation {
@@ -34,4 +35,18 @@ export class GetPdReferenceLetter {
 export class GetRegistrationRequirementsTitle {
   static readonly type = '[RegistrationRequirements] Get Title';
   constructor(public id: number) {}
+}
+
+export class GetQeExamEligibility {
+  static readonly type = '[RegistrationRequirements] Get QW Eligibility';
+}
+
+export class GetQeAttestations {
+  static readonly type = '[RegistrationRequirements] Get QE Attestations';
+  constructor(public examId: number) {}
+}
+
+export class UpdateQeAttestations {
+  static readonly type = '[RegistrationRequirements] Update QE Attestations';
+  constructor(public examId: number) {}
 }

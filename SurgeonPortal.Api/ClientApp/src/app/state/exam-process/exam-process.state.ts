@@ -5,7 +5,9 @@ import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { IFormErrors } from '../../shared/common';
 import {
   ExamFeeTransaction,
+  GetApplicationFee,
   GetExamDirectory,
+  GetExamFeeByExamId,
   GetExamFees,
 } from './exam-process.actions';
 import { IExamOverviewReadOnlyModel } from 'src/app/api/models/examinations/exam-overview-read-only.model';
@@ -16,11 +18,15 @@ import { ExamFeeService } from 'src/app/api/services/billing/exam-fee.service';
 import { IExamFeeTransactionModel } from 'src/app/api/models/billing/exam-fee-transaction.mode';
 import { ExamFeeTransactionService } from 'src/app/api/services/billing/exam-fee-transaction.service';
 import { environment } from 'src/environments/environment';
+import { IApplicationFeeReadOnlyModel } from 'src/app/api/models/billing/application-fee-read-only.model';
+import { ApplicationFeeService } from 'src/app/api/services/billing/application-fee.service';
 
 export interface IExamProcess {
   examDirectory: IExamOverviewReadOnlyModel[];
   examFees: IExamFeeReadOnlyModel[];
+  examFeeByExamId?: IExamFeeReadOnlyModel[];
   examFeeTransaction: IExamFeeTransactionModel | undefined;
+  applicationFee?: IApplicationFeeReadOnlyModel[];
   errors?: IFormErrors | null;
 }
 
@@ -33,7 +39,9 @@ export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
   defaults: {
     examDirectory: [],
     examFees: [],
+    examFeeByExamId: [],
     examFeeTransaction: undefined,
+    applicationFee: [],
     errors: null,
   },
 })
@@ -43,7 +51,8 @@ export class ExamProcessState {
     private examinationsService: ExaminationsService,
     private examFeeService: ExamFeeService,
     private examFeeTransactionService: ExamFeeTransactionService,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    private applicationFeeService: ApplicationFeeService
   ) {}
 
   @Action(GetExamDirectory)
@@ -70,6 +79,56 @@ export class ExamProcessState {
         return of(error);
       })
     );
+  }
+
+  @Action(GetExamFeeByExamId)
+  getExamFeeByExamId(
+    ctx: StateContext<IExamProcess>,
+    payload: GetExamFeeByExamId
+  ): Observable<IExamFeeReadOnlyModel[]> {
+    this.globalDialogService.showLoading();
+    return this.examFeeService
+      .retrieveExamFeeReadOnly_GetByExamId(payload.examId)
+      .pipe(
+        tap((examFee: IExamFeeReadOnlyModel) => {
+          const fee = [examFee];
+          ctx.patchState({
+            examFeeByExamId: fee,
+          });
+          this.globalDialogService.closeOpenDialog();
+        }),
+        catchError((error) => {
+          console.error('------- In Exam Process', error);
+          console.error(error);
+          this.globalDialogService.closeOpenDialog();
+          return of(error);
+        })
+      );
+  }
+
+  @Action(GetApplicationFee)
+  getApplicationFee(
+    ctx: StateContext<IExamProcess>,
+    payload: GetApplicationFee
+  ): Observable<IApplicationFeeReadOnlyModel[]> {
+    this.globalDialogService.showLoading();
+    return this.applicationFeeService
+      .retrieveApplicationFeeReadOnly_GetByExamId(payload.examId)
+      .pipe(
+        tap((applicationFee: IApplicationFeeReadOnlyModel) => {
+          const fee = [applicationFee];
+          ctx.patchState({
+            applicationFee: fee,
+          });
+          this.globalDialogService.closeOpenDialog();
+        }),
+        catchError((error) => {
+          console.error('------- In Exam Process', error);
+          console.error(error);
+          this.globalDialogService.closeOpenDialog();
+          return of(error);
+        })
+      );
   }
 
   @Action(GetExamFees)

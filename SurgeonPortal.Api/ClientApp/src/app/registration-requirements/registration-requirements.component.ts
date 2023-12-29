@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewContainerRef,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { Observable, take } from 'rxjs';
@@ -31,15 +31,17 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   ExamProcessSelectors,
   ExamScoringSelectors,
-  GetExamFees,
+  GetApplicationFee,
 } from '../state';
 import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import {
   GetAccommodations,
   GetPdReferenceLetter,
+  GetQeAttestations,
   GetRegistrationRequirementsTitle,
   GetResgistrationRequirmentsStatuses,
   ReqistrationRequirmentsSelectors,
+  UpdateQeAttestations,
 } from '../state/registration-requirements';
 import { AcgmeExperienceModalComponent } from './acgme-experience-modal/acgme-experience-modal.component';
 import { GraduateMedicalEducationModalComponent } from './graduate-medical-education-modal/graduate-medical-education-modal.component';
@@ -52,6 +54,8 @@ import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-card
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
+import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-fee-read-only.model';
+import { IAttestationReadOnlyModel } from '../api/models/continuouscertification/attestation-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -83,8 +87,8 @@ interface ActionMap {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RegistrationRequirementsComponent implements OnInit {
-  @Select(ExamProcessSelectors.slices.examFees) examFees$:
-    | Observable<IExamFeeReadOnlyModel[]>
+  @Select(ExamProcessSelectors.slices.applicationFee) applicationFee$:
+    | Observable<IApplicationFeeReadOnlyModel[]>
     | undefined;
 
   @Select(
@@ -103,6 +107,9 @@ export class RegistrationRequirementsComponent implements OnInit {
 
   @Select(ReqistrationRequirmentsSelectors.slices.accommodation)
   accommodation$: Observable<IAccommodationModel> | undefined;
+
+  @Select(ReqistrationRequirmentsSelectors.slices.qeAttestations)
+  attestations$: Observable<IAttestationReadOnlyModel[]> | undefined;
 
   @Select(ReqistrationRequirmentsSelectors.slices.examTitle) examTitle$:
     | Observable<IExamTitleReadOnlyModel>
@@ -164,7 +171,8 @@ export class RegistrationRequirementsComponent implements OnInit {
     private _globalDialogService: GlobalDialogService,
     public viewContainerRef: ViewContainerRef,
     private _store: Store,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.activatedRoute.params
       .pipe(untilDestroyed(this))
@@ -174,8 +182,10 @@ export class RegistrationRequirementsComponent implements OnInit {
           this._store.dispatch(
             new GetRegistrationRequirementsTitle(this.examHeaderId)
           );
+          this._store.dispatch(new GetApplicationFee(this.examHeaderId));
           this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
-          this._store.dispatch(new GetAccommodations(this.examHeaderId));
+          // this._store.dispatch(new GetAccommodations(this.examHeaderId));
+          this._store.dispatch(new GetQeAttestations(this.examHeaderId));
         }
       });
     this._store
@@ -206,9 +216,9 @@ export class RegistrationRequirementsComponent implements OnInit {
         this.referenceLetterPicklists = newReferenceLetterPicklists;
       });
 
-    this._store.dispatch(new GetResgistrationRequirmentsStatuses());
-
-    this._store.dispatch(new GetExamFees());
+    this._store.dispatch(
+      new GetResgistrationRequirmentsStatuses(this.examHeaderId)
+    );
     this._globalDialogService.setViewContainerRef = this.viewContainerRef;
   }
 
@@ -263,7 +273,7 @@ export class RegistrationRequirementsComponent implements OnInit {
   }
 
   getPayFeeData() {
-    this.examFees$?.subscribe((examFees) => {
+    this.applicationFee$?.subscribe((examFees) => {
       const payFeeData = {
         totalAmountOfFee: 0,
         totalAmountPaidDate: new Date(),
@@ -271,7 +281,7 @@ export class RegistrationRequirementsComponent implements OnInit {
         remainingBalance: 0,
       };
 
-      examFees.forEach((examFee: any) => {
+      examFees.forEach((examFee: IApplicationFeeReadOnlyModel) => {
         payFeeData.totalAmountOfFee += examFee.subTotal;
         payFeeData.totalAmountPaid += examFee.paidTotal;
         payFeeData.remainingBalance += examFee.balanceDue;
@@ -287,6 +297,9 @@ export class RegistrationRequirementsComponent implements OnInit {
     this.registrationRequirementsStatuses$
       ?.pipe(untilDestroyed(this))
       .subscribe((registrationRequirementsStatuses: IStatuses[]) => {
+        if (!registrationRequirementsStatuses) {
+          return;
+        }
         const statuses = {} as any;
 
         registrationRequirementsStatuses.forEach((status: any) => {
@@ -294,33 +307,39 @@ export class RegistrationRequirementsComponent implements OnInit {
         });
 
         this.registrationRequirementsData.forEach((data: any) => {
-          data.status = statuses[data.id].status;
-          data.disabled = statuses[data.id].disabled;
+          if (statuses[data.id]) {
+            data.status = statuses[data.id].status;
+            data.disabled = statuses[data.id].disabled;
+          }
         });
-      });
 
-    this.applyForAnExamActionCardData = {
-      title: 'Apply for an Exam',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
-      action: {
-        style: 2,
-        type: Action.component,
-        action: '/apply-and-resgister/exam-registration',
-      },
-      disabled: !this.areAllItemsCompleted(this.registrationRequirementsData),
-      actionDisplay: 'Apply Now',
-      icon: 'fa-solid fa-language',
-    };
+        this.registrationRequirementsData =
+          this.registrationRequirementsData.map((x: any) => {
+            if (x.id === 'applyForExam') {
+              x.disabled = !this.areAllItemsCompleted(
+                this.registrationRequirementsData
+              );
+              return {
+                ...x,
+                disabled: !this.areAllItemsCompleted(
+                  this.registrationRequirementsData
+                ),
+                status: this.areAllItemsCompleted(
+                  this.registrationRequirementsData
+                )
+                  ? x.status
+                  : Status.Contingent,
+              };
+            }
+            return x;
+          });
+      });
   }
 
   areAllItemsCompleted(data: any[]): boolean {
-    for (const item of data) {
-      if (item.status !== undefined && item.status !== Status.Completed) {
-        return false;
-      }
-    }
-    return true; // All items have a status of Completed or no status at all
+    return data.every((item) => {
+      return item.status === Status.Completed || item.status === undefined;
+    });
   }
 
   handleCardAction(action: string) {
@@ -328,5 +347,14 @@ export class RegistrationRequirementsComponent implements OnInit {
     if (actionFunction) {
       actionFunction();
     }
+  }
+
+  handleAttestationSave() {
+    this._store
+      .dispatch(new UpdateQeAttestations(this.examHeaderId))
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.handleCardAction('attestationModal');
+      });
   }
 }

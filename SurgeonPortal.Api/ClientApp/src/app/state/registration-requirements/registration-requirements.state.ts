@@ -13,20 +13,33 @@ import {
   CreatePdReferenceLetter,
   GetAccommodations,
   GetPdReferenceLetter,
+  GetQeAttestations,
+  GetQeExamEligibility,
   GetRegistrationRequirementsTitle,
   GetResgistrationRequirmentsStatuses,
   UpdateAccommodation,
+  UpdateQeAttestations,
 } from './registration-requirements.actions';
 import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-reference-letter.model';
 import { PdReferenceLetterService } from 'src/app/api/services/examinations/pd-reference-letter.service';
 import { IExamTitleReadOnlyModel } from 'src/app/api/models/examinations/exam-title-read-only.model';
 import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
+import { IQeExamEligibilityReadOnlyModel } from 'src/app/api/models/examinations/qe-exam-eligibility-read-only.model';
+import { QeExamEligibilityService } from 'src/app/api/services/examinations/qe-exam-eligibility.service';
+import { IQeAttestationReadOnlyModel } from 'src/app/api/models/examinations/qe-attestation-read-only.model';
+import { QeAttestationService } from 'src/app/api/services/examinations/qe-attestation.service';
+import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
+import { QeDashboardStatusService } from 'src/app/api/services/examinations/qe-dashboard-status.service';
+import { IQeDashboardStatusReadOnlyModel } from 'src/app/api/models/examinations/qe-dashboard-status-read-only.model';
+import { statusTypes } from '../continuous-certification/statusTypes';
 
 export interface IRegistrationRequirements {
+  qeAttestations: IAttestationReadOnlyModel[] | undefined;
   registrationRequirementsStatuses?: IStatuses[];
   accommodation?: IAccommodationModel;
   pdReferenceLetter?: IPdReferenceLetterModel[];
   examTitle?: IExamTitleReadOnlyModel | undefined;
+  qeExamEligibility: IQeExamEligibilityReadOnlyModel[];
   errors?: IFormErrors | null;
 }
 
@@ -37,10 +50,12 @@ export const REGREQ_STATE_TOKEN = new StateToken<IRegistrationRequirements>(
 @State<IRegistrationRequirements>({
   name: REGREQ_STATE_TOKEN,
   defaults: {
+    qeAttestations: undefined,
     registrationRequirementsStatuses: undefined,
     accommodation: undefined,
     pdReferenceLetter: undefined,
     examTitle: undefined,
+    qeExamEligibility: [],
     errors: null,
   },
 })
@@ -50,69 +65,42 @@ export class RegistrationRequirementsState {
     private accommodationService: AccommodationService,
     private globalDialogService: GlobalDialogService,
     private pdReferenceLetterService: PdReferenceLetterService,
-    private examinationsService: ExaminationsService
+    private examinationsService: ExaminationsService,
+    private qeExamEligibilityService: QeExamEligibilityService,
+    private qeAttestationService: QeAttestationService,
+    private qeDashboardStatusService: QeDashboardStatusService
   ) {}
 
   @Action(GetResgistrationRequirmentsStatuses)
   getRegistrationRequirementsStatuses(
-    ctx: StateContext<IRegistrationRequirements>
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: GetResgistrationRequirmentsStatuses
   ) {
-    const response: IStatuses[] = [
-      {
-        id: 'personalProfile',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'training',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'personalActivities',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'medicalLicense',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'acgmeExperience',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'gme',
-        status: 'alert',
-        disabled: false,
-      },
-      {
-        id: 'attestation',
-        status: 'in-progress',
-        disabled: false,
-      },
-      {
-        id: 'certifications',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'applicationFee',
-        status: 'completed',
-        disabled: false,
-      },
-      {
-        id: 'accommodations',
-        status: 'completed',
-        disabled: false,
-      },
-    ];
-
-    ctx.patchState({
-      registrationRequirementsStatuses: response,
-    });
+    return this.qeDashboardStatusService
+      .retrieveQeDashboardStatusReadOnly_GetByExamId(payload.examId)
+      .pipe(
+        tap((dashboardStati: IQeDashboardStatusReadOnlyModel[]) => {
+          const stati: IStatuses[] = [];
+          dashboardStati.forEach((status) => {
+            stati.push({
+              id: status.statusType,
+              status: statusTypes[status.status],
+              disabled: status.disabled === 1 ? true : false,
+            });
+          });
+          ctx.patchState({
+            registrationRequirementsStatuses: stati,
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
   }
 
   @Action(GetRegistrationRequirementsTitle)
@@ -173,6 +161,7 @@ export class RegistrationRequirementsState {
       .retrieveAccommodation_GetByExamId(payload.examId)
       .pipe(
         tap((accommodations: IAccommodationModel) => {
+          console.log('accommodations', accommodations);
           ctx.patchState({
             accommodation: accommodations,
           });
@@ -259,6 +248,99 @@ export class RegistrationRequirementsState {
         }),
         catchError((httpError: HttpErrorResponse) => {
           const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetQeExamEligibility)
+  getQeExamEligibility(ctx: StateContext<IRegistrationRequirements>) {
+    return this.qeExamEligibilityService
+      .retrieveQeExamEligibilityReadOnly_GetByUserId()
+      .pipe(
+        tap((qeExamEligibility: IQeExamEligibilityReadOnlyModel[]) => {
+          ctx.patchState({
+            qeExamEligibility: qeExamEligibility,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(GetQeAttestations)
+  getQeAttestations(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: GetQeAttestations
+  ) {
+    return this.qeAttestationService
+      .retrieveQeAttestationReadOnly_GetByExamId(payload.examId)
+      .pipe(
+        tap((qeAttestations: IQeAttestationReadOnlyModel[]) => {
+          const attestations = [] as IAttestationReadOnlyModel[];
+          qeAttestations.forEach((attestation) => {
+            attestations.push({
+              label: attestation.attestationText,
+              name: attestation.name,
+              checked: attestation.checked,
+            });
+          });
+          ctx.patchState({
+            qeAttestations: attestations,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(UpdateQeAttestations)
+  updateQeAttestations(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: UpdateQeAttestations
+  ) {
+    return this.qeAttestationService
+      .updateQeAttestationReadOnly_UpdateByExamId(payload.examId)
+      .pipe(
+        tap((qeAttestations: IQeAttestationReadOnlyModel[]) => {
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Attestation submitted successfully',
+            true
+          );
+
+          const attestations = [] as IAttestationReadOnlyModel[];
+          qeAttestations.forEach((attestation) => {
+            attestations.push({
+              label: attestation.attestationText,
+              name: attestation.name,
+              checked: attestation.checked,
+            });
+          });
+          ctx.patchState({
+            qeAttestations: attestations,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'There was an error submitting your attestation',
+            false
+          );
           ctx.patchState({
             errors: errors,
           });
