@@ -10,5 +10,6 @@
         public static string Reports => "Reports";
         public static string Email => "EmailConfiguration";
         public static string ReferenceLetters => "ReferenceLetters";
+        public static string Users => "Users";
     }
 }

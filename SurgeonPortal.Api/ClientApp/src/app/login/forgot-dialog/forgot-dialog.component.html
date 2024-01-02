@@ -1,0 +1,69 @@
+<div>
+  <div *ngIf="errors$ | async as error">
+    <p-messages
+      [(value)]="errMessage"
+      [enableService]="false"
+      [closable]="false"
+    ></p-messages>
+  </div>
+
+  Please enter the {{ forgotType === 'password' ? 'username' : 'email' }} for
+  the account and we will send you an email with further instructions.
+
+  <div class="text-left mt-3 form-container">
+    <div *ngIf="forgotType === 'username'; else password">
+      <form
+        name="login-form"
+        [formGroup]="usernameForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <label class="block" for="email">Email</label>
+        <input
+          class="mt-2"
+          id="email"
+          type="email"
+          [placeholder]="'Enter your email'"
+          pInputText
+          formControlName="email"
+        />
+
+        <div class="flex justify-content-end mt-3">
+          <p-button
+            variant="text"
+            styleClass="p-button-link p-button-primary"
+            (onClick)="returnToLogin()"
+          >
+            Back to Login
+          </p-button>
+          <p-button type="submit" [style]="{ width: '337px' }"> Send </p-button>
+        </div>
+      </form>
+    </div>
+
+    <ng-template #password>
+      <form
+        name="login-form"
+        [formGroup]="passwordForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <label class="block" for="username">Username</label>
+        <input
+          class="mt-2"
+          id="username"
+          [placeholder]="'Enter your username'"
+          pInputText
+          formControlName="username"
+        />
+        <div class="flex justify-content-end mt-3">
+          <p-button
+            variant="text"
+            styleClass="p-button-link p-button-primary"
+            (onClick)="resetAndCloseDialog()"
+            >Back to Login</p-button
+          >
+          <p-button type="submit" [style]="{ width: '337px' }"> Send </p-button>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+</div>

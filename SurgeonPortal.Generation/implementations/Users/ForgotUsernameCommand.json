@@ -1,0 +1,91 @@
+{
+  "name": "ForgotUsernameCommand",
+  "implementationName": "Users\\ForgotUsernameCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.get_forgotten_username",
+    "CommandMethodName": "SendForgotUsernameEmail",
+    "ControllerName": "Users\\UsersController",
+    "ControllerRoute": "api/users",
+    "ControllerVersion": "1",
+    "ExecuteAsynchronously": "true",
+    "IncludeControllerInGeneration": "false",
+    "Model": "Users\\ForgotUsernameCommand",
+    "ModelGroup": "ForgotUsernameCommand",
+    "ReturnsPayload": "true",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "forgot-username"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_forgotten_username",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_forgotten_username]",
+        "parameters": [
+          {
+            "name": "Email",
+            "dataType": "string",
+            "maxLength": 100,
+            "precision": 100,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Email"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Users\\ForgotUsernameCommand",
+            "fields": [
+              {
+                "name": "UserName",
+                "dataType": "string",
+                "maxLength": 50,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserName"
+              },
+              {
+                "name": "FirstName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.FirstName"
+              },
+              {
+                "name": "LastName",
+                "dataType": "string",
+                "maxLength": 35,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.LastName"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "Email",
+      "dataType": "string",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Users\\ForgotUsernameCommand ForgotUsernameCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_forgotten_username] -p:Model=Users\\ForgotUsernameCommand -p:ModelGroup=ForgotUsernameCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=SendForgotUsernameEmail -p:ReturnsPayload=true -p:InlcudeControllerInGeneration=true -p:Route=forgot-username -p:ControllerName=Users/UsersController -p:ControllerRoute=api/users -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Users\\ForgotUsernameCommand ForgotUsernameCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_forgotten_username] -p:Model=Users\\ForgotUsernameCommand -p:ModelGroup=ForgotUsernameCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=SendForgotUsernameEmail -p:ReturnsPayload=true -p:Route=forgot-username -p:ControllerName=Users/UsersController -p:ControllerRoute=api/users -p:ControllerVersion=1 -p:ExecuteAsynchronously=true -p:IncludeControllerInGeneration=false",
+    "generatedDateUtc": "2023-12-21T18:15:16.9516359Z"
+  },
+  "version": 1
+}

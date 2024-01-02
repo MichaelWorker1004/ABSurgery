@@ -56,7 +56,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             _userLoginAuditCommandFactory = userLoginAuditCommandFactory;
         }
 
-        [AllowAnonymous]
+        [AllowAnonymous] 
         [MapToApiVersion("1")]
         [ApiExplorerSettings(IgnoreApi = true)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AppUserReadOnlyModel))]
@@ -169,6 +169,112 @@ namespace SurgeonPortal.Api.Controllers.Users
                 return BadRequest();
             }
 		}
+		
+		///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ForgotUsernameCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("forgot-username")]
+        public async Task<IActionResult> ForgotusernameCommandAsync(
+            [FromServices] IForgotUsernameCommandFactory forgotUsernameCommandFactory,
+            [FromBody] ForgotUsernameCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await forgotUsernameCommandFactory.SendForgotUsernameEmailAsync(model.Email);
+        
+            return Ok();
+        } 
+        
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateForgotPasswordCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("create-forgot-password")]
+        public async Task<IActionResult> CreateforgotpasswordCommandAsync(
+            [FromServices] ICreateForgotPasswordCommandFactory createForgotPasswordCommandFactory,
+            [FromBody] CreateForgotPasswordCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await createForgotPasswordCommandFactory.SendForgotPasswordEmailAsync(model.UserName);
+        
+            if(command.ResetGUID.HasValue)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Unable to create password reset request.");
+            }
+        }
+        
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(VerifyForgotGuidCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("verify-forgot-guid")]
+        public async Task<IActionResult> VerifyforgotguidCommandAsync(
+            [FromServices] IVerifyForgotGuidCommandFactory verifyForgotGuidCommandFactory,
+            [FromBody] VerifyForgotGuidCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await verifyForgotGuidCommandFactory.VerifyForgotPasswordGuidAsync(model.ResetGUID);
+
+            model.Result = command.Result;
+        
+            return Ok(model);
+        } 
+        
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResetForgotPasswordCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("reset-forgot-password")]
+        public async Task<IActionResult> ResetforgotpasswordCommandAsync(
+            [FromServices] IResetForgotPasswordCommandFactory resetForgotPasswordCommandFactory,
+            [FromBody] ResetForgotPasswordCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await resetForgotPasswordCommandFactory.ResetForgotPasswordAsync(
+                model.ResetGUID,
+                model.NewPassword);
+
+            if (command.Result.HasValue && command.Result.Value)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
 		private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
         {

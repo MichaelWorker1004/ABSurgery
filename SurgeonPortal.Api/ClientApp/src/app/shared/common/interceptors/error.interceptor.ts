@@ -30,7 +30,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (
             (!err.error ||
               (typeof err.error === 'string' &&
-                err.error !== 'Login failed')) &&
+                err.error !== 'Login failed' &&
+                err.error !== 'Unable to create password reset request.')) &&
             err.status !== 401 &&
             err.status !== 403 &&
             err.status !== 404

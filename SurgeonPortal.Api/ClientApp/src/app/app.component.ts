@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterOutlet,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxsModule, Select, Store } from '@ngxs/store';
 import { MessagesModule } from 'primeng/messages';
@@ -96,7 +101,11 @@ export class AppComponent implements OnInit {
   preventScreenshot = false;
   messages!: Message[];
 
-  constructor(private _store: Store, private router: Router) {
+  constructor(
+    private _store: Store,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.isAuthenticated$?.pipe(untilDestroyed(this)).subscribe((isAuthed) => {
       this.isAuthenticated = isAuthed;
       this.isPasswordReset = this._store.selectSnapshot(
@@ -153,9 +162,12 @@ export class AppComponent implements OnInit {
             ? '/dashboard'
             : routerStateSnapshot.url
           : '/dashboard';
-        this.router.navigate(['/login'], {
-          queryParams: { returnUrl: returnUrl },
-        });
+
+        if (!window.location.href.includes('forgot-password')) {
+          this.router.navigate(['/login'], {
+            queryParams: { returnUrl: returnUrl },
+          });
+        }
       }
     });
   }

@@ -108,8 +108,8 @@
     "lastGeneratedHash": "E5F62FC902C76A35265ECB4EAEFD0D1B"
   },
   "\\SurgeonPortal.Api\\Controllers\\Users\\UsersController.cs": {
-    "lastGeneratedHash": "28804BFDCA51C1484B261FC616629DA7",
-    "lastMergedHash": "65F2FD890C1994647ED3EA9B374C632F"
+    "lastGeneratedHash": "70AB03C468A9449557D2BAF41723AB70",
+    "lastMergedHash": "784F5EEABE1BD152980E611C57BE7D04"
   },
   "\\SurgeonPortal.Library.Contracts\\Users\\IUserClaimReadOnly.cs": {
     "lastGeneratedHash": "3C36F0C28D33564C42D50504552E7C05",
@@ -4386,155 +4386,117 @@
   "\\SurgeonPortal.DataAccess.Tests\\Examinations\\PdReferenceLetterDalTests.cs": {
     "lastGeneratedHash": "F54D070908C95BCD7EEFBF07BCBC86B1"
   },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeExamEligibilityReadOnly.cs": {
-    "lastGeneratedHash": "7C4ACFF35E8C931C76DEAA500363DC42"
+  "\\SurgeonPortal.Library.Contracts\\Users\\IForgotUsernameCommand.cs": {
+    "lastGeneratedHash": "247542EDC5954DA892032C882B44CECD"
   },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeExamEligibilityReadOnlyList.cs": {
-    "lastGeneratedHash": "DC7D026B7AD96FEFE1F4FA63E6F504D4"
+  "\\SurgeonPortal.Models\\Users\\ForgotUsernameCommandModel.cs": {
+    "lastGeneratedHash": "3F62AF7C7C5F5E101175FE6AE65DD0FC"
   },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\qe-exam-eligibility-read-only.model.ts": {
-    "lastGeneratedHash": "344A657314E2F6797A2644E7C524F69C"
+  "\\SurgeonPortal.Library\\Users\\ForgotUsernameCommand.cs": {
+    "lastGeneratedHash": "23297373EE699957CC492A987DBDD6A9",
+    "lastMergedHash": "8A75D8F26AC137C23F495B04A67A6673"
   },
-  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\QeExamEligibilityReadOnlyDto.cs": {
-    "lastGeneratedHash": "B3404A6528B2E5B88103ACA89CDAC8D0"
+  "\\SurgeonPortal.DataAccess\\Users\\ForgotUsernameCommandDal.cs": {
+    "lastGeneratedHash": "7C0807E67050EFA242B06E386E6E5783"
   },
-  "\\SurgeonPortal.Models\\Examinations\\QeExamEligibilityReadOnlyModel.cs": {
-    "lastGeneratedHash": "ECE1BD4B08EA544406F6B92F809F1624"
+  "\\SurgeonPortal.Library\\Users\\ForgotUsernameCommandFactory.cs": {
+    "lastGeneratedHash": "45E9B60DC6F10C78616A5404252B018B"
   },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\qe-exam-eligibility.service.ts": {
-    "lastGeneratedHash": "61797D038B31BDD152A5B2C5A4346533"
+  "\\SurgeonPortal.DataAccess.Contracts\\Users\\IForgotUsernameCommandDal.cs": {
+    "lastGeneratedHash": "120A74F07844C952D03D91EB7DFEFCFD"
   },
-  "\\SurgeonPortal.Api\\Controllers\\Examinations\\QeExamEligibilityController.cs": {
-    "lastGeneratedHash": "BA34475193D3147A390F219C55F2DF40"
+  "\\SurgeonPortal.Library.Contracts\\Users\\IForgotUsernameCommandFactory.cs": {
+    "lastGeneratedHash": "718B93CF82D60F12769FED37B8AFEA9A"
   },
-  "\\SurgeonPortal.Library\\Examinations\\QeExamEligibilityReadOnly.cs": {
-    "lastGeneratedHash": "08BB67DE92E6F6CD84EF87832984EE21"
+  "\\SurgeonPortal.Library.Tests\\Users\\ForgotUsernameCommandTests.cs": {
+    "lastGeneratedHash": "F5DA207CD36E2CE53A67A8BA34CD1149",
+    "lastMergedHash": "57AFD01FEE92A9226771BD1976C58DEA"
   },
-  "\\SurgeonPortal.Library\\Examinations\\QeExamEligibilityReadOnlyList.cs": {
-    "lastGeneratedHash": "EB3726C07E75E82F6A098C7C182DA362"
+  "\\SurgeonPortal.DataAccess.Tests\\Users\\ForgotUsernameCommandDalTests.cs": {
+    "lastGeneratedHash": "5521966D555910F92A28CA5F988F07F1"
   },
-  "\\SurgeonPortal.DataAccess\\Examinations\\QeExamEligibilityReadOnlyDal.cs": {
-    "lastGeneratedHash": "3719CC460EA4FFD8675CE635F3822FE1"
+  "\\SurgeonPortal.Library.Contracts\\Users\\ICreateForgotPasswordCommand.cs": {
+    "lastGeneratedHash": "E59B3D51E6B0DEA708972E12B27C0075",
+    "lastMergedHash": "E59B3D51E6B0DEA708972E12B27C0075"
   },
-  "\\SurgeonPortal.Library\\Examinations\\QeExamEligibilityReadOnlyListFactory.cs": {
-    "lastGeneratedHash": "94420C8CCE207D08C2F8036A4178B92D"
+  "\\SurgeonPortal.Models\\Users\\CreateForgotPasswordCommandModel.cs": {
+    "lastGeneratedHash": "70A7672A9BD3D28585E88B53B5C28485"
   },
-  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IQeExamEligibilityReadOnlyDal.cs": {
-    "lastGeneratedHash": "C976FFDD00612679D5C95B8DF72BD236"
+  "\\SurgeonPortal.Library\\Users\\CreateForgotPasswordCommand.cs": {
+    "lastGeneratedHash": "5EA2824123BCBD194CE5DB9592F2FDC3",
+    "lastMergedHash": "6FDEC74D6F4A268A0A05EB74C8BB0DCB"
   },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeExamEligibilityReadOnlyListFactory.cs": {
-    "lastGeneratedHash": "48B893B76B3A395196B726D9B019BAAE"
+  "\\SurgeonPortal.DataAccess\\Users\\CreateForgotPasswordCommandDal.cs": {
+    "lastGeneratedHash": "C9E7B12F57366CE2833C8A475118EF0F"
   },
-  "\\SurgeonPortal.Library.Tests\\Examinations\\QeExamEligibilityReadOnlyListTests.cs": {
-    "lastGeneratedHash": "5EEA280710052C4325BC9B508C70E2BE"
+  "\\SurgeonPortal.Library\\Users\\CreateForgotPasswordCommandFactory.cs": {
+    "lastGeneratedHash": "523C7B1BE2D95E60300A7FF778A83110"
   },
-  "\\SurgeonPortal.DataAccess.Tests\\Examinations\\QeExamEligibilityReadOnlyDalTests.cs": {
-    "lastGeneratedHash": "803D7FDF13633BE6A8EF83F0BF0EBF47"
+  "\\SurgeonPortal.DataAccess.Contracts\\Users\\ICreateForgotPasswordCommandDal.cs": {
+    "lastGeneratedHash": "1D865E39CC6EBEA1D4B40A25C4FEF10F"
   },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeAttestationReadOnly.cs": {
-    "lastGeneratedHash": "F45782F69725F4C2025B6FBD793C8119"
+  "\\SurgeonPortal.Library.Contracts\\Users\\ICreateForgotPasswordCommandFactory.cs": {
+    "lastGeneratedHash": "18852D1197EAF7788FCB35F3C408FA7A"
   },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeAttestationReadOnlyList.cs": {
-    "lastGeneratedHash": "BCC0523D6668129AFA0A7A7BDD95B79A"
+  "\\SurgeonPortal.Library.Tests\\Users\\CreateForgotPasswordCommandTests.cs": {
+    "lastGeneratedHash": "2B7FF80B1BB0C9683EE8802EB17B83FA",
+    "lastMergedHash": "0BBA9C0A54A8E0E6DE3EC885ECB2F9E2"
   },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\qe-attestation-read-only.model.ts": {
-    "lastGeneratedHash": "3533C75207AE3C6C96F9A71672272A70"
+  "\\SurgeonPortal.DataAccess.Tests\\Users\\CreateForgotPasswordCommandDalTests.cs": {
+    "lastGeneratedHash": "D033B2185D9CFEABE2E419C81A2E5796"
   },
-  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\QeAttestationReadOnlyDto.cs": {
-    "lastGeneratedHash": "E008BEB7D6D016C11666FEDAF0759AB7"
+  "\\SurgeonPortal.Library.Contracts\\Users\\IVerifyForgotGuidCommand.cs": {
+    "lastGeneratedHash": "3CD162D35F5FDD821BBF5EC8033E526C"
   },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\qe-attestation.service.ts": {
-    "lastGeneratedHash": "4106B1F7A3B91BE491E207ACF8A1A6CD"
+  "\\SurgeonPortal.Models\\Users\\VerifyForgotGuidCommandModel.cs": {
+    "lastGeneratedHash": "D178CED02792E2FE52EC489E3F662E1C"
   },
-  "\\SurgeonPortal.Api\\Controllers\\Examinations\\QeAttestationController.cs": {
-    "lastGeneratedHash": "583EE7A68B3C562ED9E9D9CC999546BA"
+  "\\SurgeonPortal.Library\\Users\\VerifyForgotGuidCommand.cs": {
+    "lastGeneratedHash": "FC23A48518965BFED204A0EB05D10B1D"
   },
-  "\\SurgeonPortal.Library\\Examinations\\QeAttestationReadOnly.cs": {
-    "lastGeneratedHash": "15F6094C74E24F10762609A3C82322BC"
+  "\\SurgeonPortal.DataAccess\\Users\\VerifyForgotGuidCommandDal.cs": {
+    "lastGeneratedHash": "7E8B80330A8833B43E4107596A0F1C08"
   },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\billing\\application-fee.service.ts": {
-    "lastGeneratedHash": "10662A8905701CFF9BF2A53CE54E5B53",
-    "lastMergedHash": "2209762627CF6FB7D549826D1AA9FE2A"
+  "\\SurgeonPortal.Library\\Users\\VerifyForgotGuidCommandFactory.cs": {
+    "lastGeneratedHash": "65F9A5CA6220575A76C5FE01139BC4FF"
   },
-  "\\SurgeonPortal.DataAccess\\Examinations\\QeAttestationReadOnlyDal.cs": {
-    "lastGeneratedHash": "55EBECE4858EE4F99F3E5AD2F955AEFA"
+  "\\SurgeonPortal.DataAccess.Contracts\\Users\\IVerifyForgotGuidCommandDal.cs": {
+    "lastGeneratedHash": "E8111B36C900E7F69C57AD3235E58ECD"
   },
-  "\\SurgeonPortal.Library\\Examinations\\QeAttestationReadOnlyListFactory.cs": {
-    "lastGeneratedHash": "CEFE39239020BB1BCF0D5947FBC37A7B"
+  "\\SurgeonPortal.Library.Contracts\\Users\\IVerifyForgotGuidCommandFactory.cs": {
+    "lastGeneratedHash": "DBBD5DD3392928796A461F4EFC83D992"
   },
-  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IQeAttestationReadOnlyDal.cs": {
-    "lastGeneratedHash": "960046599363CD7FAAEDB1FD0A225974"
+  "\\SurgeonPortal.Library.Tests\\Users\\VerifyForgotGuidCommandTests.cs": {
+    "lastGeneratedHash": "2EB2DAEF0DF62B86E1AA7D8231D3722C"
   },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeAttestationReadOnlyListFactory.cs": {
-    "lastGeneratedHash": "2158254344B2C0D01DD797D5D903F954"
+  "\\SurgeonPortal.DataAccess.Tests\\Users\\VerifyForgotGuidCommandDalTests.cs": {
+    "lastGeneratedHash": "D24571337A5FEF2AC3F9F1B16257F020"
   },
-  "\\SurgeonPortal.Library.Tests\\Examinations\\QeAttestationReadOnlyListTests.cs": {
-    "lastGeneratedHash": "86EDE4D648456DEA03B06131A98E815E"
+  "\\SurgeonPortal.Library.Contracts\\Users\\IResetForgotPasswordCommand.cs": {
+    "lastGeneratedHash": "3F8CA5A641B53E9213DC83D47188BAFE"
   },
-  "\\SurgeonPortal.DataAccess.Tests\\Examinations\\QeAttestationReadOnlyDalTests.cs": {
-    "lastGeneratedHash": "35104E97826E58CEF526EA8D36E1BA4E"
+  "\\SurgeonPortal.Models\\Users\\ResetForgotPasswordCommandModel.cs": {
+    "lastGeneratedHash": "141EBDAE40386C057A94066D98EF12C8"
   },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IUpdateQeAttestationsCommand.cs": {
-    "lastGeneratedHash": "D0F184DFD69C244700395933A0C6DE51"
+  "\\SurgeonPortal.Library\\Users\\ResetForgotPasswordCommand.cs": {
+    "lastGeneratedHash": "0EA4D00D26940EB0D1A8CC4759FC7917"
   },
-  "\\SurgeonPortal.Models\\Examinations\\UpdateQeAttestationsCommandModel.cs": {
-    "lastGeneratedHash": "7AE1D11C369F9140CDDB0A338D9FD61E"
+  "\\SurgeonPortal.DataAccess\\Users\\ResetForgotPasswordCommandDal.cs": {
+    "lastGeneratedHash": "8698FDE7005FB6B56379BDAE3F21CA86"
   },
-  "\\SurgeonPortal.Library\\Examinations\\UpdateQeAttestationsCommand.cs": {
-    "lastGeneratedHash": "763C83278C06FAA8EFAA420DE1BA1114"
+  "\\SurgeonPortal.Library\\Users\\ResetForgotPasswordCommandFactory.cs": {
+    "lastGeneratedHash": "D67CF69186CEE6DC1FA4B71F221AB4AE"
   },
-  "\\SurgeonPortal.DataAccess\\Examinations\\UpdateQeAttestationsCommandDal.cs": {
-    "lastGeneratedHash": "EB9466732C167F4956A70CF40A29D636"
+  "\\SurgeonPortal.DataAccess.Contracts\\Users\\IResetForgotPasswordCommandDal.cs": {
+    "lastGeneratedHash": "9C0AC1D62A9EE96B4B3F02832D318B6D"
   },
-  "\\SurgeonPortal.Library\\Examinations\\UpdateQeAttestationsCommandFactory.cs": {
-    "lastGeneratedHash": "F1AD92F911CE7B7CB6CA11B50BD25315"
+  "\\SurgeonPortal.Library.Contracts\\Users\\IResetForgotPasswordCommandFactory.cs": {
+    "lastGeneratedHash": "CF0E227E554164A6EE380A47EA450184"
   },
-  "\\SurgeonPortal.DataAccess.Tests\\Billing\\ApplicationFeeReadOnlyDalTests.cs": {
-    "lastGeneratedHash": "78079CA1DD3F6A0FA6866CFFD4E4D22D"
+  "\\SurgeonPortal.Library.Tests\\Users\\ResetForgotPasswordCommandTests.cs": {
+    "lastGeneratedHash": "01C2B844B85FE58ACEADF24894417C1F"
   },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeDashboardStatusReadOnly.cs": {
-    "lastGeneratedHash": "53696616B6FF6486E304D497A7AC9761"
-  },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeDashboardStatusReadOnlyList.cs": {
-    "lastGeneratedHash": "C46CF2F6FA7FB468E556034876305234"
-  },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\qe-dashboard-status-read-only.model.ts": {
-    "lastGeneratedHash": "D5572CA91797CAE724824E67D169155F"
-  },
-  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\QeDashboardStatusReadOnlyDto.cs": {
-    "lastGeneratedHash": "11059F32470C65142BC602ABEA09B82C"
-  },
-  "\\SurgeonPortal.Models\\Examinations\\QeDashboardStatusReadOnlyModel.cs": {
-    "lastGeneratedHash": "09F0F0141165434D582D7B6DCDAB3E11"
-  },
-  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\qe-dashboard-status.service.ts": {
-    "lastGeneratedHash": "191445EC94C1404FEB2C2426338966E9"
-  },
-  "\\SurgeonPortal.Api\\Controllers\\Examinations\\QeDashboardStatusController.cs": {
-    "lastGeneratedHash": "9A38E339A1037D3B73856B8589DA6F78"
-  },
-  "\\SurgeonPortal.Library\\Examinations\\QeDashboardStatusReadOnly.cs": {
-    "lastGeneratedHash": "9AC08A0DB2D033CF8CAD60CC6ABA7AE4"
-  },
-  "\\SurgeonPortal.Library\\Examinations\\QeDashboardStatusReadOnlyList.cs": {
-    "lastGeneratedHash": "94D50FAA064278EE52F9574FFE885BF0"
-  },
-  "\\SurgeonPortal.DataAccess\\Examinations\\QeDashboardStatusReadOnlyDal.cs": {
-    "lastGeneratedHash": "0128703B091E4B90A81186DCCFB8885B"
-  },
-  "\\SurgeonPortal.Library\\Examinations\\QeDashboardStatusReadOnlyListFactory.cs": {
-    "lastGeneratedHash": "5B3AE96BB4359465603962DB1BE51281"
-  },
-  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IQeDashboardStatusReadOnlyDal.cs": {
-    "lastGeneratedHash": "9D77F61DDE4542B1BD62B330144E6D69"
-  },
-  "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeDashboardStatusReadOnlyListFactory.cs": {
-    "lastGeneratedHash": "31A13E6B4AF9E704FB91F05EE7F12436"
-  },
-  "\\SurgeonPortal.Library.Tests\\Examinations\\QeDashboardStatusReadOnlyListTests.cs": {
-    "lastGeneratedHash": "A4446C232F82FAED5081DD47C9029031"
-  },
-  "\\SurgeonPortal.DataAccess.Tests\\Examinations\\QeDashboardStatusReadOnlyDalTests.cs": {
-    "lastGeneratedHash": "C17597CA165FE0B2761E6BDB387CFC19"
+  "\\SurgeonPortal.DataAccess.Tests\\Users\\ResetForgotPasswordCommandDalTests.cs": {
+    "lastGeneratedHash": "E5FA9AFB7CF31F2F001D9DA4428DD7A3"
   }
 }

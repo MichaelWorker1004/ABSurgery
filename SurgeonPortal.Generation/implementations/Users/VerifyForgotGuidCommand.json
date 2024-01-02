@@ -1,0 +1,71 @@
+{
+  "name": "VerifyForgotGuidCommand",
+  "implementationName": "Users\\VerifyForgotGuidCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.get_guid_status",
+    "CommandMethodName": "VerifyForgotPasswordGuid",
+    "ControllerName": "Users\\UsersController",
+    "ControllerRoute": "api/users",
+    "ControllerVersion": "1",
+    "ExecuteAsynchronously": "true",
+    "IncludeControllerInGeneration": "true",
+    "Model": "Users\\VerifyForgotGuidCommand",
+    "ModelGroup": "VerifyForgotGuidCommand",
+    "ReturnsPayload": "true",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "verify-forgot-guid"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_guid_status",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_guid_status]",
+        "parameters": [
+          {
+            "name": "ResetGUID",
+            "dataType": "guid",
+            "maxLength": 16,
+            "precision": 0,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ResetGUID"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Users\\VerifyForgotGuidCommand",
+            "fields": [
+              {
+                "name": "Result",
+                "dataType": "bool",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Result"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "ResetGUID",
+      "dataType": "guid",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Users\\VerifyForgotGuidCommand VerifyForgotGuidCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_guid_status] -p:Model=Users\\VerifyForgotGuidCommand -p:ModelGroup=VerifyForgotGuidCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=VerifyForgotPasswordGuid -p:ReturnsPayload=true -p:IncludeControllerInGeneration=true -p:Route=verify-forgot-guid -p:ControllerName=Users\\UsersController -p:ControllerRoute=api/users -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Users\\VerifyForgotGuidCommand VerifyForgotGuidCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[get_guid_status] -p:Model=Users\\VerifyForgotGuidCommand -p:ModelGroup=VerifyForgotGuidCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=VerifyForgotPasswordGuid -p:ReturnsPayload=true -p:IncludeControllerInGeneration=true -p:Route=verify-forgot-guid -p:ControllerName=Users\\UsersController -p:ControllerRoute=api/users -p:ControllerVersion=1 -p:ExecuteAsynchronously=true",
+    "generatedDateUtc": "2023-12-21T20:41:47.7983407Z"
+  },
+  "version": 1
+}

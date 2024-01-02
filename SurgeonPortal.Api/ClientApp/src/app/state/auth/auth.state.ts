@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { catchError, tap } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
 import {
   Login,
@@ -7,6 +7,9 @@ import {
   ClearAuthErrors,
   RefreshToken,
   ResetPassword,
+  ForgotUsername,
+  ForgotPassword,
+  ResetForgotPassword,
 } from './auth.actions';
 import { AuthService, IAppUserReadOnlyModel } from '../../api';
 import {
@@ -35,6 +38,7 @@ export const AUTH_STATE_TOKEN = new StateToken<IAuthState>('auth');
     user: null,
     claims: null,
     errors: null,
+    forgotPasswordErrors: null,
     isBusy: false,
     isPasswordReset: false,
     passwordResetComplete: false,
@@ -106,6 +110,7 @@ export class AuthState {
             ...res,
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
+            forgotPasswordErrors: null,
             isBusy: false,
             isPasswordReset: res.user?.resetRequired ?? false,
             isAuthenticated: true,
@@ -152,6 +157,7 @@ export class AuthState {
             ...result,
             claims: AuthState.parseJwt(<string>res.access_token).claims,
             errors: null,
+            forgotPasswordErrors: null,
           });
           // if (res.expires_in_minutes) {
           //   this.setRefreshTimer(res.expires_in_minutes);
@@ -178,8 +184,73 @@ export class AuthState {
             isBusy: false,
             passwordResetComplete: true,
             errors: null,
+            forgotPasswordErrors: null,
           });
         }
+      })
+    );
+  }
+
+  @Action(ForgotUsername)
+  forgotUsername(ctx: StateContext<IAuthState>, payload: ForgotUsername) {
+    return this.authService.forgotUsername(payload.model).pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Request Sent',
+          'You will receive an email if there is a username associated with the provided email',
+          true
+        );
+      }),
+      catchError((err: any) => {
+        this.globalDialogService.showSuccessError('error', 'Error', false);
+        return err;
+      })
+    );
+  }
+
+  @Action(ForgotPassword)
+  forgotPassword(ctx: StateContext<IAuthState>, payload: ForgotPassword) {
+    return this.authService.forgotPassword(payload.model).pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Request Sent',
+          'An email has been sent with a link to reset your password',
+          true
+        );
+        ctx.patchState({
+          forgotPasswordErrors: null,
+        });
+      }),
+      catchError((err: any) => {
+        this.globalDialogService.closeOpenDialog();
+        ctx.patchState({
+          forgotPasswordErrors: err,
+        });
+        return err;
+      })
+    );
+  }
+
+  @Action(ResetForgotPassword)
+  resetForgotPassword(
+    ctx: StateContext<IAuthState>,
+    payload: ResetForgotPassword
+  ) {
+    return this.authService.resetForgotPassword(payload.model).pipe(
+      tap(() => {
+        this.globalDialogService.showSuccessError(
+          'Password Reset',
+          'Your password has been reset',
+          true
+        );
+      }),
+      catchError((err: any) => {
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'An error has occured resetting your password',
+          false
+        );
+        return err;
       })
     );
   }
@@ -204,6 +275,7 @@ export class AuthState {
       user: {} as IAppUserReadOnlyModel,
       claims: [],
       errors: null,
+      forgotPasswordErrors: null,
       isBusy: false,
       isPasswordReset: false,
       passwordResetComplete: false,
@@ -217,7 +289,10 @@ export class AuthState {
    */
   @Action(ClearAuthErrors)
   clearErrors(ctx: StateContext<IAuthState>) {
-    ctx.patchState({ errors: null });
+    ctx.patchState({
+      errors: null,
+      forgotPasswordErrors: null,
+    });
   }
 
   /**
@@ -283,6 +358,7 @@ export class AuthState {
         user: {} as IAppUserReadOnlyModel,
         claims: [],
         errors: <IError>error,
+        forgotPasswordErrors: null,
         isBusy: false,
         isPasswordReset: false,
         passwordResetComplete: false,
@@ -306,6 +382,7 @@ export class AuthState {
             traceId: '',
             errors: null,
           },
+          forgotPasswordErrors: null,
           isBusy: false,
           isPasswordReset: false,
           passwordResetComplete: false,

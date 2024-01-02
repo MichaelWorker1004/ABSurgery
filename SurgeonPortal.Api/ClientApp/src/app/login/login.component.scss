@@ -1,6 +1,8 @@
 :host {
   background-color: #1f3758;
-  color: var(--global-text-white);
+  .app-container {
+    color: var(--global-text-white);
+  }
 }
 :host:before {
   content: '';

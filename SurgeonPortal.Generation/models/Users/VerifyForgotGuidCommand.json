@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Users\\VerifyForgotGuidCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "ResetGUID",
+      "dataType": "guid",
+      "maxLength": 16,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Result",
+      "dataType": "bool",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Users\\VerifyForgotGuidCommand -sp [dbo].[get_guid_status] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2023-12-21T20:41:43.8007809Z"
+  },
+  "version": 1
+}

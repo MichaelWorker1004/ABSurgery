@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import {
   AuthSelectors,
@@ -32,6 +32,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DialogModule } from 'primeng/dialog';
 import { matchFields, validatePassword } from '../shared/validators/validators';
+import { ForgotDialogComponent } from './forgot-dialog/forgot-dialog.component';
+import { ModalComponent } from '../shared/components/modal/modal.component';
 
 @UntilDestroy()
 @Component({
@@ -49,6 +51,8 @@ import { matchFields, validatePassword } from '../shared/validators/validators';
     PasswordModule,
     ButtonModule,
     DialogModule,
+    ForgotDialogComponent,
+    ModalComponent,
   ],
 })
 export class LoginComponent {
@@ -120,6 +124,9 @@ export class LoginComponent {
    * The password reset is complete
    */
   passwordResetComplete = false;
+
+  forgotType$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   constructor(
     private store: Store,
     private router: Router,
@@ -134,7 +141,7 @@ export class LoginComponent {
       this.isPasswordReset = this.store.selectSnapshot(
         AuthSelectors.slices.isPasswordReset
       );
-      if (isAuthed && !this.isPasswordReset) {
+      if (isAuthed) {
         this.router.navigate([
           this.route.snapshot.queryParams['returnUrl'] ?? '/',
         ]);
@@ -181,6 +188,15 @@ export class LoginComponent {
         : '',
     };
     this.store.dispatch(new ResetPassword(payload));
+  }
+
+  openForgotDialog(type: string) {
+    console.log('openForgotDialog', type);
+    this.forgotType$.next(type);
+  }
+
+  closeForgot() {
+    this.forgotType$.next('');
   }
 
   completePasswordReset() {
