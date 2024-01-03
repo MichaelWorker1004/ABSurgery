@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Examinations\\InsertUserExamCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamHeaderId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m p Examinations\\InsertUserExamCommand -sp [dbo].[ins_user_exam] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2024-01-03T20:31:52.8453496Z"
+  },
+  "version": 1
+}

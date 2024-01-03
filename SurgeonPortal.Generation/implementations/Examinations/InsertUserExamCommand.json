@@ -1,0 +1,70 @@
+{
+  "name": "InsertUserExamCommand",
+  "implementationName": "Examinations\\InsertUserExamCommand",
+  "template": "ytg-framework/command",
+  "parameters": {
+    "Adapter": "dbo.ins_user_exam",
+    "CommandMethodName": "InsertUserExam",
+    "ControllerName": "Examinations\\ExaminationsController",
+    "ControllerRoute": "api/examinations",
+    "ControllerVersion": "1",
+    "ExecuteAsynchronously": "true",
+    "IncludeControllerInGeneration": "true",
+    "Model": "Examinations\\InsertUserExamCommand",
+    "ModelGroup": "InsertUserExamCommand",
+    "ReturnsPayload": "false",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "insert"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.ins_user_exam",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[ins_user_exam]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ExamHeaderId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamHeaderId"
+          }
+        ],
+        "recordsets": []
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "ExamHeaderId",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i pa Examinations\\InsertUserExamCommand InsertUserExamCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[ins_user_exam] -p:Model=Examinations\\InsertUserExamCommand -p:ModelGroup=InsertUserExamCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=InsertUserExam -p:ReturnsPayload=false -p:IncludeControllerInGeneration=true -p:Route=insert -p:ControllerName=Examinations\\ExaminationsController -p:ControllerRoute=api/examinations -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\InsertUserExamCommand InsertUserExamCommand -t=ytg-framework/command -p:Adapter=sp:ABSSP-[dbo].[ins_user_exam] -p:Model=Examinations\\InsertUserExamCommand -p:ModelGroup=InsertUserExamCommand -p:RootNamespace=$project.RootNamespace -p:CommandMethodName=InsertUserExam -p:ReturnsPayload=false -p:IncludeControllerInGeneration=true -p:Route=insert -p:ControllerName=Examinations\\ExaminationsController -p:ControllerRoute=api/examinations -p:ControllerVersion=1 -p:ExecuteAsynchronously=true",
+    "generatedDateUtc": "2024-01-03T20:32:04.9799842Z"
+  },
+  "version": 1
+}

@@ -11,8 +11,7 @@ export class ApplicationFeeService {
     constructor(private apiService: ApiService) {}
 
  
-        public retrieveApplicationFeeReadOnly_GetByExamId(
-        examId: number,
+        public retrieveApplicationFeeReadOnly_GetByExamId(examId: number,
         apiVersion = '1.0'): Observable<IApplicationFeeReadOnlyModel> {
             /**
             * Claims
@@ -26,7 +25,6 @@ export class ApplicationFeeService {
             
             /**
             * Required Parameters
-            * userId:Number
             * examId:Number
             * apiVersion
             */
