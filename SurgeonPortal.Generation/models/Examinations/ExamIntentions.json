@@ -1,0 +1,57 @@
+{
+  "refs": {},
+  "name": "Examinations\\ExamIntentions",
+  "description": "",
+  "properties": [
+    {
+      "name": "ExamName",
+      "dataType": "string",
+      "maxLength": 101,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamDate",
+      "dataType": "datetime?",
+      "maxLength": 8,
+      "precision": 23,
+      "scale": 3,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "DateReceived",
+      "dataType": "datetime?",
+      "maxLength": 4,
+      "precision": 16,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "Intention",
+      "dataType": "bool",
+      "maxLength": 1,
+      "precision": 3,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examinations\\ExamIntentions -sp [dbo].[get_exam_intentions] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2024-01-04T15:30:47.8817459Z"
+  },
+  "version": 1
+}
