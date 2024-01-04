@@ -26,9 +26,13 @@ import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-
 import {
   ExamProcessSelectors,
   GetApplicationFee,
+  GetExamIntentions,
   GetSiteSelection,
   SetSiteSelection,
+  UpdateExamIntentions,
 } from '../state';
+import { IExamIntentionsModel } from '../api/models/examinations/exam-intentions.model';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
 
 @UntilDestroy()
 @Component({
@@ -60,11 +64,17 @@ export class ExamRegistrationComponent implements OnInit {
     | Observable<string>
     | undefined;
 
+  @Select(ExamProcessSelectors.slices.examIntentions) examIntentions$:
+    | Observable<IExamIntentionsModel>
+    | undefined;
+
   examRegistrationFormData = new FormGroup({
     siteSelection: new FormControl('', Validators.required),
+    examIntention: new FormControl(false, Validators.required),
   });
 
   siteSelectionPicklist!: any[];
+  examId!: number;
 
   payFeeData: any;
   paymentGridData = [
@@ -75,19 +85,29 @@ export class ExamRegistrationComponent implements OnInit {
     },
   ];
 
-  constructor(private _store: Store, private route: ActivatedRoute) {
+  constructor(
+    private _store: Store,
+    private route: ActivatedRoute,
+    private globalDialogService: GlobalDialogService
+  ) {
     this.route.params.pipe(untilDestroyed(this)).subscribe((params) => {
       const examHeaderId = params['examId'];
       if (examHeaderId) {
+        this.examId = examHeaderId;
         this._store.dispatch(new GetSiteSelctionList(examHeaderId));
         this._store.dispatch(new GetApplicationFee(examHeaderId));
         this._store.dispatch(new GetSiteSelection(examHeaderId));
+        this._store.dispatch(new GetExamIntentions(examHeaderId));
         this.getPayFeeData();
       }
     });
   }
 
   ngOnInit(): void {
+    this.populateFormData();
+  }
+
+  populateFormData() {
     this.siteSelection$
       ?.pipe(untilDestroyed(this))
       .subscribe((siteSelection: string) => {
@@ -97,6 +117,15 @@ export class ExamRegistrationComponent implements OnInit {
           });
         }
       });
+
+    this.examIntentions$?.pipe(untilDestroyed(this)).subscribe((intentions) => {
+      if (intentions?.intention === true) {
+        this.examRegistrationFormData.patchValue({
+          examIntention: intentions.intention,
+        });
+        this.examRegistrationFormData.controls['examIntention'].disable();
+      }
+    });
   }
 
   getPayFeeData() {
@@ -119,17 +148,30 @@ export class ExamRegistrationComponent implements OnInit {
   }
 
   handleSiteSelectionSubmit() {
-    console.log(
-      'unhandled submit',
-      this.examRegistrationFormData.getRawValue()
-    );
-
     const siteSelection =
       this.examRegistrationFormData.getRawValue().siteSelection;
 
     if (siteSelection) {
       this._store.dispatch(new SetSiteSelection(siteSelection));
     }
+  }
+
+  handleSubmitExamIntention() {
+    const intention = this.examRegistrationFormData.getRawValue().examIntention;
+    const model = {
+      examId: this.examId,
+      dateReceived: new Date().toISOString(),
+      intention,
+    } as IExamIntentionsModel;
+
+    this.globalDialogService.showLoading();
+
+    this._store
+      .dispatch(new UpdateExamIntentions(model))
+      ?.pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.globalDialogService.closeOpenDialog();
+      });
   }
 
   handleDigitalSignatureChange($event: any) {

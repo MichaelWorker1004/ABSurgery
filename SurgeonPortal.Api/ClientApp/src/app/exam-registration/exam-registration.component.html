@@ -77,24 +77,48 @@
       </abs-collapse-panel>
     </sl-card>
 
-    <!-- Exam Registration Form -->
-    <sl-card class="col-12">
+    <!-- Exam Intentions Form -->
+    <sl-card class="col-12" *ngIf="examIntentions$ | async as examIntention">
       <abs-collapse-panel [panelId]="2" [startExpanded]="true">
         <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">Exam Intentions</h5>
-          <div class="status completed">Received 07/28/2022</div>
+          <div
+            class="status {{
+              examIntention.dateReceived ? 'completed' : 'alert'
+            }}"
+          >
+            {{ examIntention.dateReceived ? 'Confirmed' : '' }}
+            {{
+              (examIntention.dateReceived | date : 'longDate') ??
+                'Not Confirmed'
+            }}
+          </div>
         </div>
 
         <div class="form-description mb-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-          erat, egestas sit amet tortor at, condimentum tempor erat. All fields
-          are required.
+          Please confirm that you intend to take the upcoming examination.
         </div>
-        <p-button (click)="handleDownloadForm()" class="btn-add">
-          <i slot="prefix" class="fa-solid fa-download"></i>
-          <span>Download Form</span>
-        </p-button>
+        <form [formGroup]="examRegistrationFormData">
+          <div class="col-12 flex align-items-center gap-2 mb-3">
+            <p-checkbox
+              inputId="acknowlegement"
+              [formControlName]="'examIntention'"
+              [binary]="true"
+            ></p-checkbox>
+            <label for="userConfirmed">
+              I will take the examination {{ examIntention.examName }} as
+              offered, on {{ examIntention.examDate | date : 'longDate' }}
+            </label>
+          </div>
+          <div class="col-12 align-right mt-3">
+            <p-button
+              [style]="{ width: '200px' }"
+              (click)="handleSubmitExamIntention()"
+              [disabled]="examIntention.intention === true"
+              >Submit</p-button
+            >
+          </div>
+        </form>
       </abs-collapse-panel>
     </sl-card>
 

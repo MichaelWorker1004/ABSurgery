@@ -9,8 +9,10 @@ import {
   GetExamDirectory,
   GetExamFeeByExamId,
   GetExamFees,
+  GetExamIntentions,
   GetSiteSelection,
   SetSiteSelection,
+  UpdateExamIntentions,
 } from './exam-process.actions';
 import { IExamOverviewReadOnlyModel } from 'src/app/api/models/examinations/exam-overview-read-only.model';
 import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
@@ -22,6 +24,8 @@ import { ExamFeeTransactionService } from 'src/app/api/services/billing/exam-fee
 import { environment } from 'src/environments/environment';
 import { IApplicationFeeReadOnlyModel } from 'src/app/api/models/billing/application-fee-read-only.model';
 import { ApplicationFeeService } from 'src/app/api/services/billing/application-fee.service';
+import { IExamIntentionsModel } from 'src/app/api/models/examinations/exam-intentions.model';
+import { ExamIntentionsService } from 'src/app/api/services/examinations/exam-intentions.service';
 
 export interface IExamProcess {
   examDirectory: IExamOverviewReadOnlyModel[];
@@ -29,6 +33,7 @@ export interface IExamProcess {
   examFeeByExamId?: IExamFeeReadOnlyModel[];
   examFeeTransaction: IExamFeeTransactionModel | undefined;
   applicationFee?: IApplicationFeeReadOnlyModel[];
+  examIntentions?: IExamIntentionsModel;
   siteSelection?: string;
   errors?: IFormErrors | null;
 }
@@ -46,6 +51,7 @@ export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
     examFeeTransaction: undefined,
     applicationFee: [],
     siteSelection: '',
+    examIntentions: undefined,
     errors: null,
   },
 })
@@ -56,7 +62,8 @@ export class ExamProcessState {
     private examFeeService: ExamFeeService,
     private examFeeTransactionService: ExamFeeTransactionService,
     private globalDialogService: GlobalDialogService,
-    private applicationFeeService: ApplicationFeeService
+    private applicationFeeService: ApplicationFeeService,
+    private examIntentionsService: ExamIntentionsService
   ) {}
 
   @Action(GetExamDirectory)
@@ -218,5 +225,46 @@ export class ExamProcessState {
     ctx.patchState({
       siteSelection: payload.siteSelection,
     });
+  }
+
+  @Action(GetExamIntentions)
+  getExamIntentions(
+    ctx: StateContext<IExamProcess>,
+    payload: GetExamIntentions
+  ): Observable<IExamIntentionsModel> {
+    return this.examIntentionsService
+      .retrieveExamIntentions_GetByExamId(payload.examId)
+      .pipe(
+        tap((examIntentions: IExamIntentionsModel) => {
+          ctx.patchState({
+            examIntentions,
+          });
+        }),
+        catchError((error) => {
+          console.error('------- In Exam Process', error);
+          console.error(error);
+          return of(error);
+        })
+      );
+  }
+
+  @Action(UpdateExamIntentions)
+  updateExamIntentions(
+    ctx: StateContext<IExamProcess>,
+    payload: UpdateExamIntentions
+  ): Observable<IExamIntentionsModel> {
+    return this.examIntentionsService.createExamIntentions(payload.model).pipe(
+      tap((examIntentions: IExamIntentionsModel) => {
+        ctx.patchState({
+          examIntentions,
+        });
+        ctx.dispatch(new GetExamIntentions(payload.model.examId));
+      }),
+      catchError((error) => {
+        console.error('------- In Exam Process', error);
+        console.error(error);
+        return of(error);
+      })
+    );
   }
 }

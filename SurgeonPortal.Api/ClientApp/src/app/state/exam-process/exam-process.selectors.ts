@@ -14,6 +14,7 @@ export class ExamProcessSelectors {
         examFeeTransaction: state.examFeeTransaction,
         examFeeByExamId: state.examFeeByExamId,
         siteSelection: state.siteSelection,
+        examIntentions: state.examIntentions,
       };
     }
 

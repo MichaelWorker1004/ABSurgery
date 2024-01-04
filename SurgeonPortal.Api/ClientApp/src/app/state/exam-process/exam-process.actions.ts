@@ -1,4 +1,5 @@
 import { IExamFeeTransactionModel } from 'src/app/api/models/billing/exam-fee-transaction.mode';
+import { IExamIntentionsModel } from 'src/app/api/models/examinations/exam-intentions.model';
 
 export class GetExamDirectory {
   static readonly type =
@@ -37,4 +38,16 @@ export class SetSiteSelection {
   static readonly type = '[ExamProcess] Set site selection';
 
   constructor(public siteSelection: string) {}
+}
+
+export class GetExamIntentions {
+  static readonly type = '[ExamProcess] Get exam intentions';
+
+  constructor(public examId: number) {}
+}
+
+export class UpdateExamIntentions {
+  static readonly type = '[ExamProcess] Update exam intentions';
+
+  constructor(public model: IExamIntentionsModel) {}
 }
