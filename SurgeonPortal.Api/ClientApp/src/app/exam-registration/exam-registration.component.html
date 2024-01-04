@@ -87,10 +87,11 @@
               examIntention.dateReceived ? 'completed' : 'alert'
             }}"
           >
-            {{ examIntention.dateReceived ? 'Confirmed' : '' }}
             {{
-              (examIntention.dateReceived | date : 'longDate') ??
-                'Not Confirmed'
+              examIntention.dateReceived
+                ? 'Confirmed ' +
+                  (examIntention.dateReceived | date : 'longDate')
+                : 'Not Confirmed'
             }}
           </div>
         </div>
