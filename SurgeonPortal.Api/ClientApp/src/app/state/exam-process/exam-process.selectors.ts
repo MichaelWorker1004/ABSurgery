@@ -13,6 +13,7 @@ export class ExamProcessSelectors {
         examFees: state.examFees,
         examFeeTransaction: state.examFeeTransaction,
         examFeeByExamId: state.examFeeByExamId,
+        siteSelection: state.siteSelection,
       };
     }
 

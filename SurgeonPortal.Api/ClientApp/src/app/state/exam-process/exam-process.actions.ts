@@ -26,3 +26,15 @@ export class GetApplicationFee {
 
   constructor(public examId: number) {}
 }
+
+export class GetSiteSelection {
+  static readonly type = '[ExamProcess] Get site selection';
+
+  constructor(public examId: number) {}
+}
+
+export class SetSiteSelection {
+  static readonly type = '[ExamProcess] Set site selection';
+
+  constructor(public siteSelection: string) {}
+}

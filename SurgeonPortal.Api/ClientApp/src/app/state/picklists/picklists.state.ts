@@ -60,6 +60,7 @@ import {
   GetReferenceLetterRoleTypes,
   GetResidencyPrograms,
   GetScoringSessionList,
+  GetSiteSelctionList,
   GetStateList,
   GetTrainingTypeList,
 } from './picklists.actions';
@@ -99,6 +100,7 @@ export interface IPicklist {
   referenceLetterRoleTypes: IPickListItemNumber[] | undefined;
   referenceLetterAltRoleTypes: IPickListItemNumber[] | undefined;
   referenceLetterExplainOptions: IPickListItem[] | undefined;
+  siteSelectionPicklist: IPickListItem[] | undefined;
   errors?: IFormErrors | undefined;
 }
 
@@ -137,6 +139,7 @@ export interface IPicklistUserValues {
   clinicalLevels: IClinicalLevelReadOnlyModel[] | undefined;
   documentTypes: IDocumentTypeReadOnlyModel[] | undefined;
   accommodationTypes: IAccommodationReadOnlyModel[] | undefined;
+  siteSelectionPicklist: IPickListItem[] | undefined;
 }
 
 export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
@@ -174,6 +177,7 @@ export const PICKLISTS_STATE_TOKEN = new StateToken<IPicklist>('picklists');
     referenceLetterRoleTypes: undefined,
     referenceLetterAltRoleTypes: undefined,
     referenceLetterExplainOptions: undefined,
+    siteSelectionPicklist: undefined,
   },
 })
 @Injectable()
@@ -862,6 +866,24 @@ export class PicklistsState {
           return of(error);
         })
       );
+  }
+
+  @Action(GetSiteSelctionList)
+  getSiteSelectionList(
+    ctx: StateContext<IPicklist>,
+    payload: GetSiteSelctionList
+  ): Observable<IPickListItem[] | undefined> {
+    if (!payload.examHeaderId) {
+      return of([]);
+    }
+
+    const response = [] as any;
+
+    ctx.patchState({
+      siteSelectionPicklist: response,
+    });
+
+    return of(response);
   }
 
   @Action(GetPicklists)

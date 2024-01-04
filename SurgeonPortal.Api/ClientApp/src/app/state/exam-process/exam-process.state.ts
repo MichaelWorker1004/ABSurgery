@@ -9,6 +9,8 @@ import {
   GetExamDirectory,
   GetExamFeeByExamId,
   GetExamFees,
+  GetSiteSelection,
+  SetSiteSelection,
 } from './exam-process.actions';
 import { IExamOverviewReadOnlyModel } from 'src/app/api/models/examinations/exam-overview-read-only.model';
 import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
@@ -27,6 +29,7 @@ export interface IExamProcess {
   examFeeByExamId?: IExamFeeReadOnlyModel[];
   examFeeTransaction: IExamFeeTransactionModel | undefined;
   applicationFee?: IApplicationFeeReadOnlyModel[];
+  siteSelection?: string;
   errors?: IFormErrors | null;
 }
 
@@ -42,6 +45,7 @@ export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
     examFeeByExamId: [],
     examFeeTransaction: undefined,
     applicationFee: [],
+    siteSelection: '',
     errors: null,
   },
 })
@@ -190,5 +194,29 @@ export class ExamProcessState {
           return of(error);
         })
       );
+  }
+
+  @Action(GetSiteSelection)
+  getSiteSelection(
+    ctx: StateContext<IExamProcess>,
+    payload: GetSiteSelection
+  ): Observable<any> {
+    const siteSelection = '11/29/2022-11/30/2022';
+
+    ctx.patchState({
+      siteSelection,
+    });
+
+    return of(siteSelection);
+  }
+
+  @Action(SetSiteSelection)
+  setSiteSelection(
+    ctx: StateContext<IExamProcess>,
+    payload: SetSiteSelection
+  ): void {
+    ctx.patchState({
+      siteSelection: payload.siteSelection,
+    });
   }
 }
