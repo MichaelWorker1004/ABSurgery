@@ -1,0 +1,130 @@
+{
+  "name": "ExamIntentions",
+  "implementationName": "Examinations\\ExamIntentions.insert",
+  "template": "ytg-framework/editable-create",
+  "parameters": {
+    "Adapter": "dbo.ins_exam_intentions",
+    "ControllerName": "Examinations\\ExamIntentionsController",
+    "ControllerRoute": "api/examinations/intentions",
+    "ControllerVersion": "1",
+    "FetchImplementation": "Examinations\\ExamIntentions.GetByExamId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\ExamIntentions",
+    "ModelGroup": "ExamIntentions",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": ""
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.ins_exam_intentions",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[ins_exam_intentions]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          },
+          {
+            "name": "ExamId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamId"
+          },
+          {
+            "name": "Intention",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "Intention"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\ExamIntentions",
+            "fields": [
+              {
+                "name": "ExamName",
+                "dataType": "string",
+                "maxLength": 101,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamName"
+              },
+              {
+                "name": "ExamDate",
+                "dataType": "datetime?",
+                "maxLength": 8,
+                "precision": 23,
+                "scale": 3,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamDate"
+              },
+              {
+                "name": "DateReceived",
+                "dataType": "datetime?",
+                "maxLength": 4,
+                "precision": 16,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DateReceived"
+              },
+              {
+                "name": "Intention",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 3,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.Intention"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "ExamId",
+      "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "Intention",
+      "dataType": "bool",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\ExamIntentions.insert ExamIntentions -t=ytg-framework/editable-create -p:Model=Examinations\\ExamIntentions -p:Adapter=sp:abssp-[dbo].[ins_exam_intentions] -p:FetchImplementation=Examinations\\ExamIntentions.GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamIntentions -p:Route= -p:ControllerName=Examinations\\ExamIntentionsController -p:ControllerRoute=api/examinations/intentions -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\ExamIntentions.insert ExamIntentions -t=ytg-framework/editable-create -p:Model=Examinations\\ExamIntentions -p:Adapter=sp:abssp-[dbo].[ins_exam_intentions] -p:FetchImplementation=Examinations\\ExamIntentions.GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ExamIntentions -p:Route= -p:ControllerName=Examinations\\ExamIntentionsController -p:ControllerRoute=api/examinations/intentions -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2024-01-04T15:32:19.8545745Z"
+  },
+  "version": 1
+}

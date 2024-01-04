@@ -121,3 +121,8 @@ export class GetReferenceLetterExplainOptions {
   static readonly type =
     '[Picklists] Get the Explain Options for Reference Letters';
 }
+
+export class GetSiteSelctionList {
+  static readonly type = '[Picklists] Get the Site Selection list';
+  constructor(public examHeaderId: number) {}
+}

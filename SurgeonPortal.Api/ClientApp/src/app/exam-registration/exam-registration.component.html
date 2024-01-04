@@ -27,18 +27,22 @@
 <section>
   <div class="grid">
     <!-- Site Selection -->
-    <sl-card class="col-12">
+    <sl-card class="col-12" *ngIf="(siteSelectionPicklist$ | async)?.length">
       <abs-collapse-panel [panelId]="1" [startExpanded]="true">
         <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">Site Selection</h5>
-          <div class="status completed">
-            Nov 16 - Nov 18, 2022, General Surgery Certifying Exam (Virtual)
-            Assigned
+          <div
+            class="status {{
+              (siteSelection$ | async) ? 'completed' : 'alert'
+            }}"
+          >
+            {{ siteSelection$ | async }} General Surgery Certifying Exam
+            (Virtual) Assigned
           </div>
         </div>
         <div class="flex align-items-end flex-wrap col-12 margin-bottom-2">
-          <form action="">
-            <div class="form-description">
+          <form [formGroup]="examRegistrationFormData">
+            <div class="form-description mb-3">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
               neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
               erat, egestas sit amet tortor at, condimentum tempor erat. All
@@ -46,22 +50,14 @@
             </div>
             <div class="grid">
               <div
-                *ngFor="let formField of siteSelectionFormData"
-                class="col-12 md:{{ formField.size }}"
+                *ngFor="let option of siteSelectionPicklist$ | async"
+                class="col-12 md:col-12"
               >
-                <label
-                  class="block"
-                  [for]="formField.name"
-                  *ngIf="formField.label && formField.label.length > 0"
-                  >{{ formField.label }}</label
-                >
                 <div class="flex flex-column gap-3">
                   <p-radioButton
-                    *ngFor="let option of formField.options"
-                    [name]="formField.name"
-                    [value]="option.value"
-                    [label]="option.label"
-                    [(ngModel)]="formField.value"
+                    [value]="option.itemValue"
+                    [label]="option.itemDescription ?? ''"
+                    [formControlName]="'siteSelection'"
                   ></p-radioButton>
                 </div>
               </div>
@@ -81,24 +77,49 @@
       </abs-collapse-panel>
     </sl-card>
 
-    <!-- Exam Registration Form -->
-    <sl-card class="col-12">
+    <!-- Exam Intentions Form -->
+    <sl-card class="col-12" *ngIf="examIntentions$ | async as examIntention">
       <abs-collapse-panel [panelId]="2" [startExpanded]="true">
         <div class="flex justify-content-between panel-header" panel-header>
-          <h5 class="mt-0 mb-2">Site Selection</h5>
-          <div class="status completed">Received 07/28/2022</div>
+          <h5 class="mt-0 mb-2">Exam Intentions</h5>
+          <div
+            class="status {{
+              examIntention.dateReceived ? 'completed' : 'alert'
+            }}"
+          >
+            {{
+              examIntention.dateReceived
+                ? 'Confirmed ' +
+                  (examIntention.dateReceived | date : 'longDate')
+                : 'Not Confirmed'
+            }}
+          </div>
         </div>
 
         <div class="form-description mb-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-          erat, egestas sit amet tortor at, condimentum tempor erat. All fields
-          are required.
+          Please confirm that you intend to take the upcoming examination.
         </div>
-        <p-button (click)="handleDownloadForm()" class="btn-add">
-          <i slot="prefix" class="fa-solid fa-download"></i>
-          <span>Download Form</span>
-        </p-button>
+        <form [formGroup]="examRegistrationFormData">
+          <div class="col-12 flex align-items-center gap-2 mb-3">
+            <p-checkbox
+              inputId="acknowlegement"
+              [formControlName]="'examIntention'"
+              [binary]="true"
+            ></p-checkbox>
+            <label for="userConfirmed">
+              I will take the examination {{ examIntention.examName }} as
+              offered, on {{ examIntention.examDate | date : 'longDate' }}
+            </label>
+          </div>
+          <div class="col-12 align-right mt-3">
+            <p-button
+              [style]="{ width: '200px' }"
+              (click)="handleSubmitExamIntention()"
+              [disabled]="examIntention.intention === true"
+              >Submit</p-button
+            >
+          </div>
+        </form>
       </abs-collapse-panel>
     </sl-card>
 
@@ -107,12 +128,18 @@
       <abs-collapse-panel [panelId]="3" [startExpanded]="true">
         <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">Exam Registration Fee</h5>
-          <div class="status alert">Amount Owed: $1500.00</div>
+          <div
+            class="status {{
+              payFeeData.remainingBalance <= 0 ? 'completed' : 'alert'
+            }}"
+          >
+            Amount Owed: {{ payFeeData.remainingBalance | currency }}
+          </div>
         </div>
 
         <abs-pay-fee
           [payFeeData]="payFeeData"
-          [paymentGridData]="paymentGridData"
+          [paymentGridData]="applicationFee$ | async"
         >
           <strong
             >To avoid additional fees, all items must be received by deadline.

@@ -108,7 +108,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'apply-and-resgister/exam-registration',
+    path: 'apply-and-resgister/exam-registration/:examId',
     loadComponent: () =>
       import('./exam-registration/exam-registration.component').then(
         (m) => m.ExamRegistrationComponent

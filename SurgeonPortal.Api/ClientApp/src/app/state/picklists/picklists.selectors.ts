@@ -27,6 +27,7 @@ export class PicklistsSelectors {
         fellowshipPrograms: state.fellowshipPrograms,
         residencyPrograms: state.residencyPrograms,
         accommodationTypes: state.accommodationTypes,
+        siteSelectionPicklist: state.siteSelectionPicklist,
       } as IPicklistUserValues;
     }
     return;
