@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { Observable, take } from 'rxjs';
+import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-fee-read-only.model';
+import { IAttestationReadOnlyModel } from '../api/models/continuouscertification/attestation-read-only.model';
 import { IAccommodationModel } from '../api/models/examinations/accommodation.model';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { IPdReferenceLetterModel } from '../api/models/examinations/pd-reference-letter.model';
@@ -55,8 +57,6 @@ import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-card
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
-import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-fee-read-only.model';
-import { IAttestationReadOnlyModel } from '../api/models/continuouscertification/attestation-read-only.model';
 
 interface ActionMap {
   [key: string]: () => void;
