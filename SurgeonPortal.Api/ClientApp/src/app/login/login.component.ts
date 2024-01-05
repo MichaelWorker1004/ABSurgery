@@ -191,7 +191,6 @@ export class LoginComponent {
   }
 
   openForgotDialog(type: string) {
-    console.log('openForgotDialog', type);
     this.forgotType$.next(type);
   }
 

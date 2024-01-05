@@ -40,7 +40,7 @@ export const Default: Story = {
       },
       {
         display: 'Has Children',
-        action: 'apply-and-resgister',
+        action: 'apply-and-register',
         icon: 'fa-solid fa-list-check',
         children: [
           {

@@ -36,45 +36,52 @@ export class GlobalDialogService {
   }
 
   // handle the Success/Error dialog
-  showSuccessError(title: string, message: string, isSuccess: boolean) {
+  showSuccessError(
+    title: string,
+    message: string,
+    isSuccess: boolean
+  ): Promise<boolean> {
     // If another global dialog is open, close it
     if (document.body.contains(this._dialog)) {
       this.hide();
     }
 
-    // create button text and icon based on success or error
-    const buttonText = isSuccess ? 'Continue' : 'Okay';
-    const icon = isSuccess ? 'fa-circle-check' : 'fa-circle-xmark';
-    const iconClass = isSuccess ? 'success-icon' : 'error-icon';
+    return new Promise((resolve) => {
+      // create button text and icon based on success or error
+      const buttonText = isSuccess ? 'Continue' : 'Okay';
+      const icon = isSuccess ? 'fa-circle-check' : 'fa-circle-xmark';
+      const iconClass = isSuccess ? 'success-icon' : 'error-icon';
 
-    // create the dialog content
-    this._dialog.innerHTML = `<div class="global-dialog flex flex-column justify-content-center align-items-center">
-      <i class="fa-regular ${icon} ${iconClass}"></i>
-      <h2 class="font-normal mt-3 mb-1">${title}</h2>
-      <p class="font-bold mt-0 mb-1 text-center" *ngIf="message">${message}</p>
-      <sl-button
-        slot="footer"
-        class="mt-5"
-        style="width: 337px"
-        variant="primary"
-        >${buttonText}</sl-button
-      >
-    </div>`;
+      // create the dialog content
+      this._dialog.innerHTML = `<div class="global-dialog flex flex-column justify-content-center align-items-center">
+        <i class="fa-regular ${icon} ${iconClass}"></i>
+        <h2 class="font-normal mt-3 mb-1">${title}</h2>
+        <p class="font-bold mt-0 mb-1 text-center" *ngIf="message">${message}</p>
+        <sl-button
+          slot="footer"
+          class="mt-5"
+          style="width: 337px"
+          variant="primary"
+          >${buttonText}</sl-button
+        >
+      </div>`;
 
-    // add the click event listener to the button and set initial focus
-    const button = this._dialog.querySelector('sl-button');
-    button.setAttribute('autofocus', '');
-    button.addEventListener('click', () => {
-      this.hide();
+      // add the click event listener to the button and set initial focus
+      const button = this._dialog.querySelector('sl-button');
+      button.setAttribute('autofocus', '');
+      button.addEventListener('click', () => {
+        this.hide();
+        resolve(true);
+      });
+
+      // set modal specific attributes (this can be done with param options)
+      this._dialog.setAttribute('style', '--width: unset');
+      this._dialog.setAttribute('no-header', 'true');
+
+      // add the dialog to the DOM and show
+      document.body.appendChild(this._dialog);
+      this._dialog.show();
     });
-
-    // set modal specific attributes (this can be done with param options)
-    this._dialog.setAttribute('style', '--width: unset');
-    this._dialog.setAttribute('no-header', 'true');
-
-    // add the dialog to the DOM and show
-    document.body.appendChild(this._dialog);
-    this._dialog.show();
   }
 
   // handle the Confirmation dialog

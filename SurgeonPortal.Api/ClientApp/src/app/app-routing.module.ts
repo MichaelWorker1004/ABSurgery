@@ -84,7 +84,7 @@ const routes: Routes = [
     canDeactivate: [WorkInProgressGuard],
   },
   {
-    path: 'apply-and-resgister',
+    path: 'apply-and-register',
     loadComponent: () =>
       import('./exam-process/exam-process.component').then(
         (m) => m.ExamProcessComponent
@@ -96,7 +96,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'apply-and-resgister/registration-requirements/:examId',
+    path: 'apply-and-register/registration-requirements/:examId',
     loadComponent: () =>
       import(
         './registration-requirements/registration-requirements.component'
@@ -108,7 +108,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'apply-and-resgister/exam-registration',
+    path: 'apply-and-register/exam-registration/:examId',
     loadComponent: () =>
       import('./exam-registration/exam-registration.component').then(
         (m) => m.ExamRegistrationComponent

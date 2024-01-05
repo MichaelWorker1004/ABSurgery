@@ -54,7 +54,8 @@
       color: var(--global-success);
     }
   }
-  &.in-progress {
+  &.in-progress,
+  &.pending-approval {
     border-right: 10px solid var(--global-warning);
     .icon {
       color: var(--global-warning);
@@ -117,7 +118,8 @@
     &.completed {
       color: var(--global-success);
     }
-    &.in-progress {
+    &.in-progress,
+    &.pending-approval {
       color: var(--global-warning);
     }
     &.alert {

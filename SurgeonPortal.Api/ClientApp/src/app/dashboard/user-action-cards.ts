@@ -51,7 +51,7 @@ export const CERTIFIED_ACTION_CARDS = [
     descriptionKey: 'DASHBOARD.ACTION_CARDS.REGISTER_SUBTITLE',
     action: {
       type: 'component',
-      action: '/apply-and-resgister',
+      action: '/apply-and-register',
     },
     actionDisplay: '',
     actionDisplayKey: 'DASHBOARD.ACTION_CARDS.REGISTER_BTN',

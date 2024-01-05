@@ -9,6 +9,7 @@ import { AccommodationService } from 'src/app/api/services/examinations/accommod
 import { IFormErrors } from 'src/app/shared/common';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import {
+  ApplyForQeExam,
   CreateAccommodation,
   CreatePdReferenceLetter,
   GetAccommodations,
@@ -33,13 +34,17 @@ import { QeDashboardStatusService } from 'src/app/api/services/examinations/qe-d
 import { IQeDashboardStatusReadOnlyModel } from 'src/app/api/models/examinations/qe-dashboard-status-read-only.model';
 import { statusTypes } from '../continuous-certification/statusTypes';
 
+export interface IExamEligibility extends IQeExamEligibilityReadOnlyModel {
+  applicationIsOpen: boolean;
+}
+
 export interface IRegistrationRequirements {
   qeAttestations: IAttestationReadOnlyModel[] | undefined;
   registrationRequirementsStatuses?: IStatuses[];
   accommodation?: IAccommodationModel;
   pdReferenceLetter?: IPdReferenceLetterModel[];
   examTitle?: IExamTitleReadOnlyModel | undefined;
-  qeExamEligibility: IQeExamEligibilityReadOnlyModel[];
+  qeExamEligibility: IExamEligibility[];
   errors?: IFormErrors | null;
 }
 
@@ -84,7 +89,7 @@ export class RegistrationRequirementsState {
           dashboardStati.forEach((status) => {
             stati.push({
               id: status.statusType,
-              status: statusTypes[status.status],
+              status: statusTypes[status.status + 1],
               disabled: status.disabled === 1 ? true : false,
             });
           });
@@ -161,7 +166,6 @@ export class RegistrationRequirementsState {
       .retrieveAccommodation_GetByExamId(payload.examId)
       .pipe(
         tap((accommodations: IAccommodationModel) => {
-          console.log('accommodations', accommodations);
           ctx.patchState({
             accommodation: accommodations,
           });
@@ -262,8 +266,24 @@ export class RegistrationRequirementsState {
       .retrieveQeExamEligibilityReadOnly_GetByUserId()
       .pipe(
         tap((qeExamEligibility: IQeExamEligibilityReadOnlyModel[]) => {
+          const examEligibility = qeExamEligibility.map((exam) => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            let examApplicationOpen = false;
+            if (exam.appOpenDate) {
+              examApplicationOpen = today >= new Date(exam.appOpenDate);
+              if (exam.appCloseDate) {
+                examApplicationOpen =
+                  examApplicationOpen && today <= new Date(exam.appCloseDate);
+              }
+            }
+            return {
+              ...exam,
+              applicationIsOpen: examApplicationOpen,
+            };
+          });
           ctx.patchState({
-            qeExamEligibility: qeExamEligibility,
+            qeExamEligibility: examEligibility,
           });
         }),
         catchError((httpError: HttpErrorResponse) => {
@@ -341,6 +361,29 @@ export class RegistrationRequirementsState {
             'There was an error submitting your attestation',
             false
           );
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(ApplyForQeExam)
+  applyForQeExam(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: ApplyForQeExam
+  ) {
+    return this.examinationsService
+      .applyForExam_PostByExamId(payload.examId)
+      .pipe(
+        tap(() => {
+          ctx.patchState({
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
           ctx.patchState({
             errors: errors,
           });

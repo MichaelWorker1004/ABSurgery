@@ -143,8 +143,8 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     title: 'Apply for an Exam',
     action: {
       style: 2,
-      type: Action.component,
-      action: '/apply-and-resgister',
+      type: Action.action,
+      action: 'applyForExam',
     },
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',

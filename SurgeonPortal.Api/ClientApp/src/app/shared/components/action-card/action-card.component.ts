@@ -58,7 +58,7 @@ export class ActionCardComponent implements OnInit {
    * Type of action to perform
    * @type {string}
    */
-  @Input() actionType!: string | 'dialog' | 'component';
+  @Input() actionType!: string | 'dialog' | 'component' | 'action';
 
   /**
    * Action being passed to the parent component

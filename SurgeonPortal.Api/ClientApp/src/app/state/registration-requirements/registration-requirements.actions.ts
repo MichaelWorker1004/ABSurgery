@@ -50,3 +50,8 @@ export class UpdateQeAttestations {
   static readonly type = '[RegistrationRequirements] Update QE Attestations';
   constructor(public examId: number) {}
 }
+
+export class ApplyForQeExam {
+  static readonly type = '[RegistrationRequirements] Apply For QE Exam';
+  constructor(public examId: number) {}
+}
