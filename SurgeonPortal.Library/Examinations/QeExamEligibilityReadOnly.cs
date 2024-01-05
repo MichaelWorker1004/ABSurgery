@@ -73,6 +73,11 @@ namespace SurgeonPortal.Library.Examinations
 		public static readonly PropertyInfo<int> ApplicationApprovedProperty = RegisterProperty<int>(c => c.ApplicationApproved);
 
         [DataMember]
+		[DisplayName(nameof(ExamRegistrationAvailable))]
+        public int ExamRegistrationAvailable => ReadProperty(ExamRegistrationAvailableProperty);
+		public static readonly PropertyInfo<int> ExamRegistrationAvailableProperty = RegisterProperty<int>(c => c.ExamRegistrationAvailable);
+
+        [DataMember]
 		[DisplayName(nameof(RegistrationOpen))]
         public int RegistrationOpen => ReadProperty(RegistrationOpenProperty);
 		public static readonly PropertyInfo<int> RegistrationOpenProperty = RegisterProperty<int>(c => c.RegistrationOpen);
@@ -99,6 +104,7 @@ namespace SurgeonPortal.Library.Examinations
             LoadProperty(ExamStartDateProperty, dto.ExamStartDate);
             LoadProperty(ExamEndDateProperty, dto.ExamEndDate);
             LoadProperty(ApplicationApprovedProperty, dto.ApplicationApproved);
+            LoadProperty(ExamRegistrationAvailableProperty, dto.ExamRegistrationAvailable);
             LoadProperty(RegistrationOpenProperty, dto.RegistrationOpen);
 		} 
         

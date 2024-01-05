@@ -10,7 +10,7 @@
     class="hotspot"
   ></a>
   <button
-    *ngIf="!disabled && actionType === 'dialog'"
+    *ngIf="!disabled && (actionType === 'dialog' || actionType === 'action')"
     class="hotspot"
     (click)="handleCardAction(actionAction)"
   ></button>

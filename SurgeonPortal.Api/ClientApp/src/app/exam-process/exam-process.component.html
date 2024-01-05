@@ -79,14 +79,35 @@
                   </p>
                 </div>
                 <a
-                  class="btn-link"
+                  class="btn-link block"
                   [routerLink]="
-                    '/apply-and-resgister/registration-requirements/' +
+                    '/apply-and-register/registration-requirements/' +
                     application.examId
                   "
-                  *ngIf="application.registrationOpen === 1"
+                  *ngIf="
+                    application.applicationIsOpen &&
+                    application.applicationApproved !== 1
+                  "
                 >
-                  Go to your Registration Requirements
+                  {{
+                    application.examRegistrationAvailable !== 1
+                      ? 'Complete your Exam Application'
+                      : 'Review your Exam Application'
+                  }}
+                  <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+                <a
+                  class="btn-link block"
+                  [routerLink]="
+                    '/apply-and-register/exam-registration/' +
+                    application.examId
+                  "
+                  *ngIf="
+                    application.registrationOpen === 1 &&
+                    application.examRegistrationAvailable === 1
+                  "
+                >
+                  Go to your Exam Registration
                   <i class="fa-solid fa-arrow-right ml-2"></i>
                 </a>
               </sl-card>

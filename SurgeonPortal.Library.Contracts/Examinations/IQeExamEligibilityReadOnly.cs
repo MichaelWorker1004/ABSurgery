@@ -15,6 +15,7 @@ namespace SurgeonPortal.Library.Contracts.Examinations
         DateTime? ExamStartDate { get; }
         DateTime? ExamEndDate { get; }
         int ApplicationApproved { get; }
+        int ExamRegistrationAvailable { get; }
         int RegistrationOpen { get; }
     }
 }

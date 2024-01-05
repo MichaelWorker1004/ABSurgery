@@ -10,15 +10,16 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Ytg.AspNetCore.Controllers;
+using Ytg.AspNetCore.Helpers;
 
 namespace SurgeonPortal.Api.Controllers.Examinations
 {
     [ApiVersion("1")]
     [ApiController]
     [Produces("application/json")]
-    [Route("api/examinations")]
-    public class ExaminationsController : YtgControllerBase
-    {
+	[Route("api/examinations")]
+	public class ExaminationsController : YtgControllerBase
+	{
         private readonly IMapper _mapper;
 
         public ExaminationsController(
@@ -57,9 +58,9 @@ namespace SurgeonPortal.Api.Controllers.Examinations
             [FromServices] IExamOverviewReadOnlyListFactory examOverviewReadOnlyListFactory)
         {
             var items = await examOverviewReadOnlyListFactory.GetAllAsync();
-
+        
             return Ok(_mapper.Map<IEnumerable<ExamOverviewReadOnlyModel>>(items));
-        }
+        } 
 
         ///<summary>
         /// YtgIm
@@ -74,9 +75,31 @@ namespace SurgeonPortal.Api.Controllers.Examinations
             int examId)
         {
             var item = await examTitleReadOnlyFactory.GetByExamIdAsync(examId);
-
+        
             return Ok(_mapper.Map<ExamTitleReadOnlyModel>(item));
-        }
+        } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InsertUserExamCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("insert")]
+        public async Task<IActionResult> InsertCommandAsync(
+            [FromServices] IInsertUserExamCommandFactory insertUserExamCommandFactory,
+            [FromBody] InsertUserExamCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await insertUserExamCommandFactory.InsertUserExamAsync(model.ExamHeaderId);
+        
+            return Ok();
+        } 
     }
 }
 

@@ -2370,8 +2370,8 @@
     "lastMergedHash": "BD9B66619ED2D247C3DD886866CF6CBA"
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\ExaminationsController.cs": {
-    "lastGeneratedHash": "5FECC0CBEA734A18AB5349024AAE0526",
-    "lastMergedHash": "505067A0947049A9DC764F95FD4D818E"
+    "lastGeneratedHash": "0D023DA21491700CF21B3A9C28EEB3B7",
+    "lastMergedHash": "0D023DA21491700CF21B3A9C28EEB3B7"
   },
   "\\SurgeonPortal.Library\\Examinations\\ExamOverviewReadOnly.cs": {
     "lastGeneratedHash": "F2EB64D578C85645F4D2F066F1CE7B24"

@@ -3,4 +3,5 @@ export enum Status {
   InProgress = 'in-progress',
   Contingent = 'contingent',
   Alert = 'alert',
+  PendingApproval = 'pending-approval',
 }

@@ -114,6 +114,17 @@
       "rules": {}
     },
     {
+      "name": "ExamRegistrationAvailable",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
       "name": "RegistrationOpen",
       "dataType": "int",
       "maxLength": 4,

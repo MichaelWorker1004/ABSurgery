@@ -8,6 +8,7 @@ import { IQeExamEligibilityReadOnlyModel } from '../api/models/examinations/qe-e
 import { GridComponent } from '../shared/components/grid/grid.component';
 import {
   GetQeExamEligibility,
+  IExamEligibility,
   ReqistrationRequirmentsSelectors,
 } from '../state';
 import { ExamProcessSelectors, GetExamDirectory } from '../state/exam-process';
@@ -27,7 +28,7 @@ export class ExamProcessComponent {
     | undefined;
 
   @Select(ReqistrationRequirmentsSelectors.slices.qeExamEligibility)
-  qeExamEligibility$: Observable<IQeExamEligibilityReadOnlyModel[]> | undefined;
+  qeExamEligibility$: Observable<IExamEligibility[]> | undefined;
   directoryColumns = DIRECTORY_COLS;
 
   constructor(private _store: Store) {

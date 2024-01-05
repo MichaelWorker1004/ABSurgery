@@ -87,7 +87,6 @@ export class AcgmeExperienceModalComponent {
           });
       } else {
         //update ACGME
-        console.log('update ACGME!!!');
         this.allowUpload = false;
       }
     }

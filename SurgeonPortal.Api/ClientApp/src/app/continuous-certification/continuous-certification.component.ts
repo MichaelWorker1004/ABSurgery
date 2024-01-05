@@ -374,7 +374,7 @@ export class ContinuousCertificationComponent implements OnInit {
         title: 'Apply for an Exam',
         action: {
           type: Action.component,
-          action: '/apply-and-resgister',
+          action: '/apply-and-register',
         },
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',

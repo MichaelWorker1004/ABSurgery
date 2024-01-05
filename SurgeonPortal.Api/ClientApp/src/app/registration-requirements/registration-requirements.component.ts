@@ -35,11 +35,14 @@ import {
 } from '../state';
 import { GetPicklists, PicklistsSelectors } from '../state/picklists';
 import {
+  ApplyForQeExam,
   GetAccommodations,
   GetPdReferenceLetter,
   GetQeAttestations,
+  GetQeExamEligibility,
   GetRegistrationRequirementsTitle,
   GetResgistrationRequirmentsStatuses,
+  IExamEligibility,
   ReqistrationRequirmentsSelectors,
   UpdateQeAttestations,
 } from '../state/registration-requirements';
@@ -143,6 +146,8 @@ export class RegistrationRequirementsComponent implements OnInit {
   payFeeModal = false;
   programDirectorAttestationModal = false;
 
+  applicationSubmitted = false;
+
   payFeeCols = PAY_FEE_COLS;
   payFeeData!: any;
 
@@ -170,22 +175,40 @@ export class RegistrationRequirementsComponent implements OnInit {
     public viewContainerRef: ViewContainerRef,
     private _store: Store,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private _router: Router
   ) {
-    this.activatedRoute.params
-      .pipe(untilDestroyed(this))
-      .subscribe((params) => {
-        this.examHeaderId = params['examId'];
-        if (this.examHeaderId) {
-          this._store.dispatch(
-            new GetRegistrationRequirementsTitle(this.examHeaderId)
-          );
-          this._store.dispatch(new GetApplicationFee(this.examHeaderId));
-          this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
-          // this._store.dispatch(new GetAccommodations(this.examHeaderId));
-          this._store.dispatch(new GetQeAttestations(this.examHeaderId));
-        }
-      });
+    this.activatedRoute.params.pipe(take(1)).subscribe((params) => {
+      this.examHeaderId = params['examId'];
+      if (this.examHeaderId) {
+        this._store.dispatch(
+          new GetRegistrationRequirementsTitle(this.examHeaderId)
+        );
+        this._store.dispatch(new GetApplicationFee(this.examHeaderId));
+        this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
+        // this._store.dispatch(new GetAccommodations(this.examHeaderId));
+        this._store.dispatch(new GetQeAttestations(this.examHeaderId));
+        this._store
+          .dispatch(new GetQeExamEligibility())
+          .pipe(take(1))
+          .subscribe(() => {
+            const examsEligibility = this._store.selectSnapshot(
+              ReqistrationRequirmentsSelectors.slices.qeExamEligibility
+            );
+            const examEligibility = examsEligibility?.find(
+              (x) => x.examId === +this.examHeaderId
+            );
+            if (examEligibility && examEligibility.examRegistrationAvailable) {
+              this.applicationSubmitted = true;
+            } else {
+              this.applicationSubmitted = false;
+            }
+
+            this._store.dispatch(
+              new GetResgistrationRequirmentsStatuses(this.examHeaderId)
+            );
+          });
+      }
+    });
     this._store
       .dispatch(new GetPicklists('500'))
       .pipe(take(1))
@@ -214,9 +237,6 @@ export class RegistrationRequirementsComponent implements OnInit {
         this.referenceLetterPicklists = newReferenceLetterPicklists;
       });
 
-    this._store.dispatch(
-      new GetResgistrationRequirmentsStatuses(this.examHeaderId)
-    );
     this._globalDialogService.setViewContainerRef = this.viewContainerRef;
   }
 
@@ -255,6 +275,37 @@ export class RegistrationRequirementsComponent implements OnInit {
     programDirectorAttestationModal: () => {
       this.programDirectorAttestationModal =
         !this.programDirectorAttestationModal;
+    },
+    applyForExam: () => {
+      this._store
+        .dispatch(new ApplyForQeExam(this.examHeaderId))
+        .pipe(take(1))
+        .subscribe((state) => {
+          const errors = this._store.selectSnapshot(
+            ReqistrationRequirmentsSelectors.slices.errors
+          );
+          // this._router.navigate([
+          //   '/apply-and-register/exam-registration',
+          //   this.examHeaderId,
+          // ]);
+          if (errors) {
+            this._globalDialogService.showSuccessError(
+              'Error',
+              'There was an error submitting your application',
+              false
+            );
+          } else {
+            this._globalDialogService
+              .showSuccessError(
+                'Success',
+                'Aplication submitted successfully',
+                true
+              )
+              .then(() => {
+                this._router.navigate(['/apply-and-register']);
+              });
+          }
+        });
     },
   };
 
@@ -313,20 +364,51 @@ export class RegistrationRequirementsComponent implements OnInit {
 
         this.registrationRequirementsData =
           this.registrationRequirementsData.map((x: any) => {
-            if (x.id === 'applyForExam') {
+            if (x.id === 'Attestation') {
               x.disabled = !this.areAllItemsCompleted(
-                this.registrationRequirementsData
+                this.registrationRequirementsData,
+                ['applyForExam', 'Attestation']
               );
               return {
                 ...x,
-                disabled: !this.areAllItemsCompleted(
-                  this.registrationRequirementsData
-                ),
                 status: this.areAllItemsCompleted(
-                  this.registrationRequirementsData
+                  this.registrationRequirementsData,
+                  ['applyForExam', 'Attestation']
                 )
                   ? x.status
                   : Status.Contingent,
+                description: this.areAllItemsCompleted(
+                  this.registrationRequirementsData,
+                  ['applyForExam', 'Attestation']
+                )
+                  ? x.description
+                  : 'You must complete all previous steps before completing this step.',
+              };
+            }
+            if (x.id === 'applyForExam') {
+              x.disabled = !this.areAllItemsCompleted(
+                this.registrationRequirementsData,
+                ['applyForExam']
+              );
+              if (this.applicationSubmitted) {
+                x.disabled = true;
+                x.description =
+                  'You have already submitted your application for this exam. You can make changes to previous sections while your application is pending approval.';
+              }
+              return {
+                ...x,
+                status: this.areAllItemsCompleted(
+                  this.registrationRequirementsData,
+                  ['applyForExam']
+                )
+                  ? x.status
+                  : Status.Contingent,
+                description: this.areAllItemsCompleted(
+                  this.registrationRequirementsData,
+                  ['applyForExam']
+                )
+                  ? x.description
+                  : 'You must complete all other application requirements before you can apply for this exam.',
               };
             }
             return x;
@@ -334,8 +416,11 @@ export class RegistrationRequirementsComponent implements OnInit {
       });
   }
 
-  areAllItemsCompleted(data: any[]): boolean {
+  areAllItemsCompleted(data: any[], exclude?: string[]): boolean {
     return data.every((item) => {
+      if (exclude && exclude.includes(item.id)) {
+        return true;
+      }
       return item.status === Status.Completed || item.status === undefined;
     });
   }
