@@ -10,5 +10,6 @@ export interface IQeExamEligibilityReadOnlyModel {
     examStartDate: string;
     examEndDate: string;
     applicationApproved: number;
+    examRegistrationAvailable: number;
     registrationOpen: number;
 }

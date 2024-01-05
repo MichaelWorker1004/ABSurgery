@@ -141,6 +141,16 @@
                 "mapsTo": "model.ApplicationApproved"
               },
               {
+                "name": "ExamRegistrationAvailable",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamRegistrationAvailable"
+              },
+              {
                 "name": "RegistrationOpen",
                 "dataType": "int",
                 "maxLength": 4,

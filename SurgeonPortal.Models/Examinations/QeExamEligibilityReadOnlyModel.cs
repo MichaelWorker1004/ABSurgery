@@ -14,6 +14,7 @@ namespace SurgeonPortal.Models.Examinations
         public DateTime? ExamStartDate { get; set; }
         public DateTime? ExamEndDate { get; set; }
         public int ApplicationApproved { get; set; }
+        public int ExamRegistrationAvailable { get; set; }
         public int RegistrationOpen { get; set; }
     }
 }
