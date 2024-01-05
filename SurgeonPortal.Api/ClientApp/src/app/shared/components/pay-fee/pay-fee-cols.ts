@@ -7,5 +7,5 @@ export const PAY_FEE_COLS = [
   AbsGrid.setCurrencyDisplayCol('Payment Amount', 'paidTotal'),
   AbsGrid.setCurrencyDisplayCol('Remaining Balance', 'balanceDue'),
   AbsGrid.setCustomButtonCol('Pay Balance', 'balanceDue'),
-  AbsGrid.setCustomButtonCol('Receipt', 'receipt', 'fa-solid fa-download'),
+  AbsGrid.setCustomButtonCol('Receipt', 'paidTotal', 'fa-solid fa-download'),
 ];

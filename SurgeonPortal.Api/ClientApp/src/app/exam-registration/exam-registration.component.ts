@@ -1,5 +1,5 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,29 +10,31 @@ import {
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
 
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ButtonModule } from 'primeng/button';
+import { ActivatedRoute } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { Observable } from 'rxjs';
+import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-fee-read-only.model';
+import { IExamIntentionsModel } from '../api/models/examinations/exam-intentions.model';
+import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import {
+  ExamProcessSelectors,
+  GetExamFeeByExamId,
+  GetExamIntentions,
+  GetSiteSelection,
+  ReqistrationRequirmentsSelectors,
+  SetSiteSelection,
+  UpdateExamIntentions,
+} from '../state';
 import {
   GetSiteSelctionList,
   IPickListItem,
   PicklistsSelectors,
 } from '../state/picklists';
-import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-fee-read-only.model';
-import {
-  ExamProcessSelectors,
-  GetApplicationFee,
-  GetExamIntentions,
-  GetSiteSelection,
-  SetSiteSelection,
-  UpdateExamIntentions,
-} from '../state';
-import { IExamIntentionsModel } from '../api/models/examinations/exam-intentions.model';
-import { GlobalDialogService } from '../shared/services/global-dialog.service';
+import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 
 @UntilDestroy()
 @Component({
@@ -53,10 +55,14 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExamRegistrationComponent implements OnInit {
+  @Select(ReqistrationRequirmentsSelectors.slices.examTitle) examTitle$:
+    | Observable<IExamTitleReadOnlyModel>
+    | undefined;
+
   @Select(PicklistsSelectors.slices.siteSelectionPicklist)
   siteSelectionPicklist$: Observable<IPickListItem[]> | undefined;
 
-  @Select(ExamProcessSelectors.slices.applicationFee) applicationFee$:
+  @Select(ExamProcessSelectors.slices.examFeeByExamId) examFeeByExamId$:
     | Observable<IApplicationFeeReadOnlyModel[]>
     | undefined;
 
@@ -95,7 +101,7 @@ export class ExamRegistrationComponent implements OnInit {
       if (examHeaderId) {
         this.examId = examHeaderId;
         this._store.dispatch(new GetSiteSelctionList(examHeaderId));
-        this._store.dispatch(new GetApplicationFee(examHeaderId));
+        this._store.dispatch(new GetExamFeeByExamId(examHeaderId));
         this._store.dispatch(new GetSiteSelection(examHeaderId));
         this._store.dispatch(new GetExamIntentions(examHeaderId));
         this.getPayFeeData();
@@ -129,7 +135,7 @@ export class ExamRegistrationComponent implements OnInit {
   }
 
   getPayFeeData() {
-    this.applicationFee$?.subscribe((examFees) => {
+    this.examFeeByExamId$?.subscribe((examFees) => {
       const payFeeData = {
         totalAmountOfFee: 0,
         totalAmountPaidDate: new Date(),
