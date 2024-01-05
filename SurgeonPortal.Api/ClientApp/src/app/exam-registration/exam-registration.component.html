@@ -1,6 +1,11 @@
 <div class="flex align-items-end flex-wrap col-12 margin-bottom-2">
   <div>
-    <h1>General Surgery Exam Registration</h1>
+    <h1>
+      {{
+        (examTitle$ | async)?.examName ||
+          'General Surgery Qualifying Examination'
+      }}
+    </h1>
     <p>
       This year, the exam will be completely virtual via Zoom. The registration
       deadline is September 1st. Dates are filed on a first-come, first-served
@@ -139,7 +144,7 @@
 
         <abs-pay-fee
           [payFeeData]="payFeeData"
-          [paymentGridData]="applicationFee$ | async"
+          [paymentGridData]="examFeeByExamId$ | async"
         >
           <strong
             >To avoid additional fees, all items must be received by deadline.
