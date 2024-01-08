@@ -278,7 +278,6 @@ export class UserProfilesService {
             * userProfileId:Number
             * firstName:String
             * middleName:String
-            * lastName:String
             * suffix:String
             * displayName:String
             * officePhoneNumber:String

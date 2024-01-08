@@ -144,7 +144,6 @@ namespace SurgeonPortal.DataAccess.Tests.Users
                     UserId = expectedDto.UserId,
                     FirstName = expectedDto.FirstName,
                     MiddleName = expectedDto.MiddleName,
-                    LastName = expectedDto.LastName,
                     Suffix = expectedDto.Suffix,
                     DisplayName = expectedDto.DisplayName,
                     OfficePhoneNumber = expectedDto.OfficePhoneNumber,

@@ -62,15 +62,6 @@
             "mapsTo": "MiddleName"
           },
           {
-            "name": "LastName",
-            "dataType": "string",
-            "maxLength": 35,
-            "precision": 35,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "LastName"
-          },
-          {
             "name": "Suffix",
             "dataType": "string",
             "maxLength": 5,
@@ -711,11 +702,6 @@
     },
     {
       "name": "MiddleName",
-      "dataType": "string",
-      "required": true
-    },
-    {
-      "name": "LastName",
       "dataType": "string",
       "required": true
     },
