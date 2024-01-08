@@ -15,6 +15,17 @@
       "rules": {}
     },
     {
+      "name": "DatePosted",
+      "dataType": "datetime?",
+      "maxLength": 4,
+      "precision": 16,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
       "name": "ExamId",
       "dataType": "int?",
       "maxLength": 4,

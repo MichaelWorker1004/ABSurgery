@@ -35,6 +35,11 @@ namespace SurgeonPortal.Library.Examinations
 		public static readonly PropertyInfo<bool> AdmCardAvailableProperty = RegisterProperty<bool>(c => c.AdmCardAvailable);
 
         [DataMember]
+		[DisplayName(nameof(DatePosted))]
+        public DateTime? DatePosted => ReadProperty(DatePostedProperty);
+		public static readonly PropertyInfo<DateTime?> DatePostedProperty = RegisterProperty<DateTime?>(c => c.DatePosted);
+
+        [DataMember]
 		[DisplayName(nameof(ExamId))]
         public int? ExamId => ReadProperty(ExamIdProperty);
 		public static readonly PropertyInfo<int?> ExamIdProperty = RegisterProperty<int?>(c => c.ExamId);
@@ -71,6 +76,7 @@ namespace SurgeonPortal.Library.Examinations
 		private void FetchData(AdmissionCardAvailabilityReadOnlyDto dto)
 		{
             LoadProperty(AdmCardAvailableProperty, dto.AdmCardAvailable);
+            LoadProperty(DatePostedProperty, dto.DatePosted);
             LoadProperty(ExamIdProperty, dto.ExamId);
 		} 
         
