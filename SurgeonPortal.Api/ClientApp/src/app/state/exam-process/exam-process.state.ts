@@ -5,6 +5,7 @@ import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { IFormErrors } from '../../shared/common';
 import {
   ExamFeeTransaction,
+  GetAdmissionCardAvailability,
   GetApplicationFee,
   GetExamDirectory,
   GetExamFeeByExamId,
@@ -26,6 +27,8 @@ import { IApplicationFeeReadOnlyModel } from 'src/app/api/models/billing/applica
 import { ApplicationFeeService } from 'src/app/api/services/billing/application-fee.service';
 import { IExamIntentionsModel } from 'src/app/api/models/examinations/exam-intentions.model';
 import { ExamIntentionsService } from 'src/app/api/services/examinations/exam-intentions.service';
+import { IAdmissionCardAvailabilityReadOnlyModel } from 'src/app/api/models/examinations/admission-card-availability-read-only.model';
+import { AdmissionCardService } from 'src/app/api/services/examinations/admission-card.service';
 
 export interface IExamProcess {
   examDirectory: IExamOverviewReadOnlyModel[];
@@ -35,6 +38,7 @@ export interface IExamProcess {
   applicationFee?: IApplicationFeeReadOnlyModel[];
   examIntentions?: IExamIntentionsModel;
   siteSelection?: string;
+  admissionCardAvailability?: IAdmissionCardAvailabilityReadOnlyModel;
   errors?: IFormErrors | null;
 }
 
@@ -52,6 +56,7 @@ export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
     applicationFee: [],
     siteSelection: '',
     examIntentions: undefined,
+    admissionCardAvailability: undefined,
     errors: null,
   },
 })
@@ -63,7 +68,8 @@ export class ExamProcessState {
     private examFeeTransactionService: ExamFeeTransactionService,
     private globalDialogService: GlobalDialogService,
     private applicationFeeService: ApplicationFeeService,
-    private examIntentionsService: ExamIntentionsService
+    private examIntentionsService: ExamIntentionsService,
+    private admissionCardService: AdmissionCardService
   ) {}
 
   @Action(GetExamDirectory)
@@ -266,5 +272,26 @@ export class ExamProcessState {
         return of(error);
       })
     );
+  }
+
+  @Action(GetAdmissionCardAvailability)
+  getAdmissionCardAvailability(
+    ctx: StateContext<IExamProcess>,
+    payload: GetAdmissionCardAvailability
+  ): Observable<IAdmissionCardAvailabilityReadOnlyModel> {
+    return this.admissionCardService
+      .retrieveAdmissionCardAvailabilityReadOnly_GetByExamId(payload.examId)
+      .pipe(
+        tap((admissionCardAvailability) => {
+          ctx.patchState({
+            admissionCardAvailability,
+          });
+        }),
+        catchError((error) => {
+          console.error('------- In Exam Process', error);
+          console.error(error);
+          return of(error);
+        })
+      );
   }
 }

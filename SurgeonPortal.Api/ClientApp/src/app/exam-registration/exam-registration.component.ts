@@ -22,6 +22,7 @@ import { IExamIntentionsModel } from '../api/models/examinations/exam-intentions
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
   ExamProcessSelectors,
+  GetAdmissionCardAvailability,
   GetExamFeeByExamId,
   GetExamIntentions,
   GetSiteSelection,
@@ -35,6 +36,7 @@ import {
   PicklistsSelectors,
 } from '../state/picklists';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
+import { IAdmissionCardAvailabilityReadOnlyModel } from '../api/models/examinations/admission-card-availability-read-only.model';
 
 @UntilDestroy()
 @Component({
@@ -74,6 +76,11 @@ export class ExamRegistrationComponent implements OnInit {
     | Observable<IExamIntentionsModel>
     | undefined;
 
+  @Select(ExamProcessSelectors.slices.admissionCardAvailability)
+  admissionCardAvailability$:
+    | Observable<IAdmissionCardAvailabilityReadOnlyModel>
+    | undefined;
+
   examRegistrationFormData = new FormGroup({
     siteSelection: new FormControl('', Validators.required),
     examIntention: new FormControl(false, Validators.required),
@@ -104,6 +111,7 @@ export class ExamRegistrationComponent implements OnInit {
         this._store.dispatch(new GetExamFeeByExamId(examHeaderId));
         this._store.dispatch(new GetSiteSelection(examHeaderId));
         this._store.dispatch(new GetExamIntentions(examHeaderId));
+        this._store.dispatch(new GetAdmissionCardAvailability(examHeaderId));
         this.getPayFeeData();
       }
     });
@@ -180,11 +188,10 @@ export class ExamRegistrationComponent implements OnInit {
       });
   }
 
-  handleDigitalSignatureChange($event: any) {
-    console.log('unhandled signature change', $event);
-  }
-
   handleDownloadForm() {
-    console.log('unhandled Download Form');
+    window.open(
+      `api/examinations/admission-card/document?examId=${this.examId}`,
+      '_blank'
+    );
   }
 }

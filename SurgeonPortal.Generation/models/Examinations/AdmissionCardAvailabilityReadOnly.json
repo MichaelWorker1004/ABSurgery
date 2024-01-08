@@ -1,0 +1,46 @@
+{
+  "refs": {},
+  "name": "Examinations\\AdmissionCardAvailabilityReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "AdmCardAvailable",
+      "dataType": "bool",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "DatePosted",
+      "dataType": "datetime?",
+      "maxLength": 4,
+      "precision": 16,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamId",
+      "dataType": "int?",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": true,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s Examinations\\AdmissionCardAvailabilityReadOnly -sp [dbo].[get_adm_card_availability] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2024-01-05T21:30:49.6943246Z"
+  },
+  "version": 1
+}

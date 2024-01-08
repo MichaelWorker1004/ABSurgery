@@ -1,0 +1,106 @@
+{
+  "name": "AdmissionCardAvailabilityReadOnly",
+  "implementationName": "Examinations\\AdmissionCardAvailabilityReadOnly.GetByExamId",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_adm_card_availability",
+    "ControllerName": "Examinations\\AdmissionCardController",
+    "ControllerRoute": "api/examinations/admission-card",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByExamId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "Examinations\\AdmissionCardAvailabilityReadOnly",
+    "ModelGroup": "AdmissionCardAvailabilityReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "availability"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_adm_card_availability",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_adm_card_availability]",
+        "parameters": [
+          {
+            "name": "UserID",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserID"
+          },
+          {
+            "name": "ExamID",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "ExamID"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "Examinations\\AdmissionCardAvailabilityReadOnly",
+            "fields": [
+              {
+                "name": "AdmCardAvailable",
+                "dataType": "bool",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AdmCardAvailable"
+              },
+              {
+                "name": "DatePosted",
+                "dataType": "datetime?",
+                "maxLength": 4,
+                "precision": 16,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DatePosted"
+              },
+              {
+                "name": "ExamId",
+                "dataType": "int?",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": true,
+                "mapsTo": "model.ExamId"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserID",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    },
+    {
+      "name": "ExamID",
+      "dataType": "int",
+      "required": true
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s Examinations\\AdmissionCardAvailabilityReadOnly.GetByExamId AdmissionCardAvailabilityReadOnly -t=ytg-framework/readonly-get -p:Model=Examinations\\AdmissionCardAvailabilityReadOnly -p:Adapter=sp:abssp-[dbo].[get_adm_card_availability] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=AdmissionCardAvailabilityReadOnly -p:Route=availability -p:ControllerName=Examinations\\AdmissionCardController -p:ControllerRoute=api/examinations/admission-card -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Examinations\\AdmissionCardAvailabilityReadOnly.GetByExamId AdmissionCardAvailabilityReadOnly -t=ytg-framework/readonly-get -p:Model=Examinations\\AdmissionCardAvailabilityReadOnly -p:Adapter=sp:abssp-[dbo].[get_adm_card_availability] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=AdmissionCardAvailabilityReadOnly -p:Route=availability -p:ControllerName=Examinations\\AdmissionCardController -p:ControllerRoute=api/examinations/admission-card -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2024-01-05T21:30:56.5809757Z"
+  },
+  "version": 1
+}
