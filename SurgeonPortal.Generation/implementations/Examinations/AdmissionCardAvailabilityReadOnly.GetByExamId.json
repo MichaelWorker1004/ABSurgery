@@ -59,6 +59,16 @@
                 "mapsTo": "model.AdmCardAvailable"
               },
               {
+                "name": "DatePosted",
+                "dataType": "datetime?",
+                "maxLength": 4,
+                "precision": 16,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.DatePosted"
+              },
+              {
                 "name": "ExamId",
                 "dataType": "int?",
                 "maxLength": 4,
