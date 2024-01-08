@@ -2367,7 +2367,7 @@
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\examinations.service.ts": {
     "lastGeneratedHash": "9D1A8795699136D2126476214F167850",
-    "lastMergedHash": "BD9B66619ED2D247C3DD886866CF6CBA"
+    "lastMergedHash": "18F4238B8233FACB4AB27EC631DFDE3A"
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\ExaminationsController.cs": {
     "lastGeneratedHash": "0D023DA21491700CF21B3A9C28EEB3B7",
@@ -4512,7 +4512,8 @@
     "lastGeneratedHash": "43040D9328A7F598889EA2417DFEB7A1"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\exam-intentions.model.ts": {
-    "lastGeneratedHash": "D8CE1ACAD004EAD48C12009BE8DB3FA0"
+    "lastGeneratedHash": "D8CE1ACAD004EAD48C12009BE8DB3FA0",
+    "lastMergedHash": "D6D1AA29209D7B6A9F4046089855A084"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\ExamIntentionsDto.cs": {
     "lastGeneratedHash": "ED44745EBA94B99277815CFAD5B925FD",
@@ -4553,19 +4554,19 @@
     "lastGeneratedHash": "09F0F0141165434D582D7B6DCDAB3E11"
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeExamEligibilityReadOnly.cs": {
-    "lastGeneratedHash": "7C4ACFF35E8C931C76DEAA500363DC42"
+    "lastGeneratedHash": "D71B7081A019FE84395005E545086415"
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IQeExamEligibilityReadOnlyList.cs": {
     "lastGeneratedHash": "DC7D026B7AD96FEFE1F4FA63E6F504D4"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\qe-exam-eligibility-read-only.model.ts": {
-    "lastGeneratedHash": "344A657314E2F6797A2644E7C524F69C"
+    "lastGeneratedHash": "6EFFD8B53D1C3EF7ABCBA170A900F097"
   },
   "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\QeExamEligibilityReadOnlyDto.cs": {
-    "lastGeneratedHash": "B3404A6528B2E5B88103ACA89CDAC8D0"
+    "lastGeneratedHash": "3034227CA0409D6BA1516C42A8C00FEF"
   },
   "\\SurgeonPortal.Models\\Examinations\\QeExamEligibilityReadOnlyModel.cs": {
-    "lastGeneratedHash": "ECE1BD4B08EA544406F6B92F809F1624"
+    "lastGeneratedHash": "4768E78AFD07D93867A067BC369C6EBB"
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IUpdateQeAttestationsCommand.cs": {
     "lastGeneratedHash": "D0F184DFD69C244700395933A0C6DE51"
@@ -4711,7 +4712,7 @@
     "lastGeneratedHash": "BA34475193D3147A390F219C55F2DF40"
   },
   "\\SurgeonPortal.Library\\Examinations\\QeExamEligibilityReadOnly.cs": {
-    "lastGeneratedHash": "08BB67DE92E6F6CD84EF87832984EE21"
+    "lastGeneratedHash": "FB4697619EC8FF2E8C9DB02A7D6509DE"
   },
   "\\SurgeonPortal.Library\\Examinations\\QeExamEligibilityReadOnlyList.cs": {
     "lastGeneratedHash": "EB3726C07E75E82F6A098C7C182DA362"
@@ -4748,5 +4749,65 @@
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IUpdateQeAttestationsCommandFactory.cs": {
     "lastGeneratedHash": "6F2564EBEC9063F94D62A93B4DDDD983"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IAdmissionCardAvailabilityReadOnly.cs": {
+    "lastGeneratedHash": "AD9626F72A40F284A0D75C6078AFDDA9"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\examinations\\admission-card-availability-read-only.model.ts": {
+    "lastGeneratedHash": "11B1E634CA1E5C2DA2915501F8EB3E8D"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\AdmissionCardAvailabilityReadOnlyDto.cs": {
+    "lastGeneratedHash": "5154FE407BF3159BE7E275874BFE8D90"
+  },
+  "\\SurgeonPortal.Models\\Examinations\\AdmissionCardAvailabilityReadOnlyModel.cs": {
+    "lastGeneratedHash": "5F13FFD1875AA52AF023C2545F8C039E"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IInsertUserExamCommand.cs": {
+    "lastGeneratedHash": "A750661B2BEFB6B6B480BAA722CF3E0A"
+  },
+  "\\SurgeonPortal.Models\\Examinations\\InsertUserExamCommandModel.cs": {
+    "lastGeneratedHash": "3D9D1AC39353A68EBB6F08965A81DDDD"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\admission-card.service.ts": {
+    "lastGeneratedHash": "F670629AFCF3D17A97C9E9BBB06C53F6"
+  },
+  "\\SurgeonPortal.Api\\Controllers\\Examinations\\AdmissionCardController.cs": {
+    "lastGeneratedHash": "4CF0F7380E2593AAA431963411998825"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\AdmissionCardAvailabilityReadOnly.cs": {
+    "lastGeneratedHash": "BC6BA1ECE3A22FD16BC9366A0DB7CF9C"
+  },
+  "\\SurgeonPortal.DataAccess\\Examinations\\AdmissionCardAvailabilityReadOnlyDal.cs": {
+    "lastGeneratedHash": "3D64151BDBBFE08E227903E5B17BF813"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\AdmissionCardAvailabilityReadOnlyFactory.cs": {
+    "lastGeneratedHash": "EC30609A4C67E8B2D73DC37BACF87713"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IAdmissionCardAvailabilityReadOnlyDal.cs": {
+    "lastGeneratedHash": "CCD7964159D501DD43A5555C43D4BAAA"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IAdmissionCardAvailabilityReadOnlyFactory.cs": {
+    "lastGeneratedHash": "98A5DACF29BFC7679B9FAB6BC1833DDD"
+  },
+  "\\SurgeonPortal.Library.Tests\\Examinations\\AdmissionCardAvailabilityReadOnlyTests.cs": {
+    "lastGeneratedHash": "20332218FA78FC657E75090B26921F29"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\Examinations\\AdmissionCardAvailabilityReadOnlyDalTests.cs": {
+    "lastGeneratedHash": "3AE61FE5674377EA055E375A6C85D1DA"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\InsertUserExamCommand.cs": {
+    "lastGeneratedHash": "AE70097BCBFAEA65EFED82FD0BF85888"
+  },
+  "\\SurgeonPortal.DataAccess\\Examinations\\InsertUserExamCommandDal.cs": {
+    "lastGeneratedHash": "5C8E7B4801C9408C0A5B6A11A812AD04"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\InsertUserExamCommandFactory.cs": {
+    "lastGeneratedHash": "38527FFFDBA3885562BD6462F66A3051"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IInsertUserExamCommandDal.cs": {
+    "lastGeneratedHash": "F7C3288EB2B4293062532E538916C8CA"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IInsertUserExamCommandFactory.cs": {
+    "lastGeneratedHash": "EBC5787F482DE5698096D23D98BDBF2C"
   }
 }
