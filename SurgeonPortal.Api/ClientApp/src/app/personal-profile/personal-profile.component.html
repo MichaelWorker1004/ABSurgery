@@ -39,12 +39,15 @@
                 <label>M. I.</label>
                 <div>{{ user.middleName === '' ? '-' : user.middleName }}</div>
               </div>
-              <div class="col-12 md:col-6">
+              <div class="col-12 sm:col-8 md:col-4">
                 <label>Last Name</label>
                 <div>{{ user.lastName === '' ? '-' : user.lastName }}</div>
+                <small class="form-helper-text text-muted"
+                  >Please contact ABS if your Last Name is incorrect.</small
+                >
               </div>
-              <div class="col-12 md:col-6">
-                <label>Last Name</label>
+              <div class="col-12 sm:col-4 md:col-2">
+                <label>Suffix</label>
                 <div>{{ user.suffix === '' ? '-' : user.suffix }}</div>
               </div>
               <div class="col-12">
@@ -57,7 +60,7 @@
               </div>
             </div>
             <div class="grid" *ngIf="isEdit">
-              <div class="col-12 sm:col-8 md:col-3">
+              <div class="col-12 sm:col-8 md:col-4">
                 <label class="block" for="firstName">First Name *</label>
                 <input
                   id="firstName"
@@ -66,7 +69,7 @@
                   formControlName="firstName"
                 />
               </div>
-              <div class="col-12 sm:col-4 md:col-3">
+              <div class="col-12 sm:col-4 md:col-2">
                 <label class="block" for="middleName">M. I.</label>
                 <input
                   id="middleName"
@@ -75,16 +78,20 @@
                   formControlName="middleName"
                 />
               </div>
-              <div class="col-12 md:col-3">
-                <label class="block" for="lastName">Last Name *</label>
+              <div class="col-12 sm:col-8 md:col-4">
+                <label class="block" for="lastName">Last Name</label>
                 <input
                   id="lastName"
                   pInputText
                   type="text"
                   formControlName="lastName"
+                  readonly
                 />
+                <small class="form-helper-text text-muted"
+                  >Please contact ABS if your Last Name is incorrect.</small
+                >
               </div>
-              <div class="col-12 md:col-3">
+              <div class="col-12 sm:col-4 md:col-2">
                 <label class="block" for="suffix">Suffix</label>
                 <input
                   id="suffix"
