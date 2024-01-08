@@ -171,7 +171,8 @@
           >
             {{
               admissionCardAvailability.admCardAvailable
-                ? 'Posted'
+                ? 'Posted ' +
+                  (admissionCardAvailability.datePosted | date : 'longDate')
                 : 'Not yet posted'
             }}
           </div>
