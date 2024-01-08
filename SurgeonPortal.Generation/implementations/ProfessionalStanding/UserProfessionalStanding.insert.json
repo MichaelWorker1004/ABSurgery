@@ -3,7 +3,7 @@
   "implementationName": "ProfessionalStanding\\UserProfessionalStanding.insert",
   "template": "ytg-framework/editable-create",
   "parameters": {
-    "Adapter": "dbo.ins_user_sanctions",
+    "Adapter": "dbo.ins_user_professional_standing",
     "ControllerName": "ProfessionalStanding\\UserProfessionalStandingController",
     "ControllerRoute": "api/professional-standing",
     "ControllerVersion": "1",
@@ -28,10 +28,10 @@
   "adapters": [
     {
       "type": "storedProcedure",
-      "name": "dbo.ins_user_sanctions",
+      "name": "dbo.ins_user_professional_standing",
       "storedProcedure": {
         "schema": "[dbo]",
-        "procedureName": "[ins_user_sanctions]",
+        "procedureName": "[ins_user_professional_standing]",
         "parameters": [
           {
             "name": "UserId",
