@@ -18,6 +18,17 @@ namespace SurgeonPortal.Library.Reports
 			return await DataPortal.FetchAsync<ReportReadOnly>(
 				new GetByInvoiceNumberCriteria(invoiceNumber));
 		}
+
+		public async Task<IReportReadOnly> GetAdmissionCardByExamId(int examId)
+		{
+			if(examId <= 0)
+			{
+				throw new FactoryInvalidCriteriaException("examId is a required field");
+			}
+
+			return await DataPortal.FetchAsync<ReportReadOnly>(
+				new GetAdmissionCardByExamIdCriteria(examId));
+		}
 	}
 
 	[Serializable]
@@ -29,6 +40,18 @@ namespace SurgeonPortal.Library.Reports
 		{
 			Type = "invoice";
 			InvoiceNumber = invoiceNumber;
+		}
+	}
+
+	[Serializable]
+	internal class GetAdmissionCardByExamIdCriteria : ReportCriteriaBase
+	{
+		public int ExamId { get; set; }
+
+		public GetAdmissionCardByExamIdCriteria(int examId)
+		{
+			Type = "adm_auth";
+			ExamId = examId;
 		}
 	}
 

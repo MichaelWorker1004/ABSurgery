@@ -47,7 +47,18 @@ namespace SurgeonPortal.Library.Reports
 			await GetFromQuery(query);
 		}
 
-		private static string GetBaseQuery(ReportCriteriaBase criteria)
+		[Fetch]
+		[RunLocal]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
+           Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
+		private async Task GetAdmissionCardByExamId(GetAdmissionCardByExamIdCriteria criteria)
+		{
+			var userId = _identity.GetUserId<int>();
+			var query = $"{GetBaseQuery(criteria)}&examcode={criteria.ExamId}&candidate={userId}";
+			await GetFromQuery(query);
+		}
+
+        private static string GetBaseQuery(ReportCriteriaBase criteria)
 		{
 			return $"?jr={criteria.Type}";
 		}

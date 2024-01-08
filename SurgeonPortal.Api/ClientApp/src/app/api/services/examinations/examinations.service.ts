@@ -62,7 +62,7 @@ export class ExaminationsService {
             
             return this.apiService.get<IExamOverviewReadOnlyModel[]>(`api/examinations/overview?api-version=${apiVersion}`);
         }
-
+ 
         public retrieveExamTitleReadOnly_GetByExamId(examId: number,
         apiVersion = '1.0'): Observable<IExamTitleReadOnlyModel> {
             /**

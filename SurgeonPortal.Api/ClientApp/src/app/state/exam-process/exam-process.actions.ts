@@ -51,3 +51,9 @@ export class UpdateExamIntentions {
 
   constructor(public model: IExamIntentionsModel) {}
 }
+
+export class GetAdmissionCardAvailability {
+  static readonly type = '[ExamProcess] Get admission card availability';
+
+  constructor(public examId: number) {}
+}

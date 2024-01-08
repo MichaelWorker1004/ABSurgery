@@ -154,84 +154,34 @@
       </abs-collapse-panel>
     </sl-card>
 
-    <!-- Digital Signature-->
-    <sl-card class="col-12">
-      <abs-collapse-panel [panelId]="4" [startExpanded]="true">
-        <div class="flex justify-content-between panel-header" panel-header>
-          <h5 class="mt-0 mb-2">Digital Signature</h5>
-          <div class="status completed">Completed</div>
-        </div>
-
-        <ul>
-          <li>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            sodales condimentum orci, id malesuada ante faucibus eu. Sed ut
-            perspiciatis unde omnis iste natus error sit voluptatem accusantium
-            doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-            inventore veritatis et quasi architecto beatae vitae dicta sunt
-            explicabo.
-          </li>
-          <li>
-            Maecenas eros arcu, mattis ut urna id, convallis eleifend purus.
-            Phasellus sodales condimentum orci, id malesuada ante faucibus eu.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-            eros arcu, mattis ut urna id, convallis eleifend purus.
-          </li>
-          <li>
-            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
-            fugit, sed quia consequuntur magni dolores eos qui ratione
-            voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem
-            ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non
-            numquam eius modi tempora incidunt ut labore et dolore magnam
-            aliquam quaerat voluptatem.
-          </li>
-          <li>
-            Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-            suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-          </li>
-          <li>
-            Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse
-            quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat
-            quo voluptas nulla pariatur?
-          </li>
-        </ul>
-        <div class="col-12 flex align-items-center gap-2 mb-3">
-          <p-checkbox
-            inputId="acknowlegement"
-            name="acknowlegement"
-            (change)="handleDigitalSignatureChange($event)"
-            [binary]="true"
-          ></p-checkbox>
-          <label for="userConfirmed"
-            >I agree to the following statements above to the fullest of my
-            knowledge</label
-          >
-        </div>
-
-        <p-button (click)="handleDownloadForm()" class="btn-add">
-          <i slot="prefix" class="fa-solid fa-download"></i>
-          <span>Download Form</span>
-        </p-button>
-      </abs-collapse-panel>
-    </sl-card>
-
     <!-- Exam Admission Card / Authorization Letter Status -->
-    <sl-card class="col-12">
+    <sl-card
+      class="col-12"
+      *ngIf="admissionCardAvailability$ | async as admissionCardAvailability"
+    >
       <abs-collapse-panel [panelId]="6" [startExpanded]="true">
         <div class="flex justify-content-between panel-header" panel-header>
           <h5 class="mt-0 mb-2">
             Exam Admission Card / Authorization Letter Status
           </h5>
-          <div class="status completed">Posted 10/20/2022</div>
+          <div
+            class="status {{
+              admissionCardAvailability.admCardAvailable ? 'completed' : 'alert'
+            }}"
+          >
+            {{
+              admissionCardAvailability.admCardAvailable
+                ? 'Posted ' +
+                  (admissionCardAvailability.datePosted | date : 'longDate')
+                : 'Not yet posted'
+            }}
+          </div>
         </div>
-
-        <div class="form-description mb-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-          erat, egestas sit amet tortor at, condimentum tempor erat. All fields
-          are required.
-        </div>
-        <p-button (click)="handleDownloadForm()" class="btn-add">
+        <p-button
+          (onClick)="handleDownloadForm()"
+          class="btn-add"
+          [disabled]="!admissionCardAvailability.admCardAvailable"
+        >
           <i slot="prefix" class="fa-solid fa-download"></i>
           <span>Download Exam Admission Card</span>
         </p-button>
