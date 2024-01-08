@@ -7,6 +7,6 @@ namespace SurgeonPortal.Library.Contracts.Examinations
     {
         bool AdmCardAvailable { get; }
         DateTime? DatePosted { get; }
-        int? ExamId { get; }
+        string ExamCode { get; }
     }
 }

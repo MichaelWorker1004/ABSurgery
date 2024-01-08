@@ -26,14 +26,14 @@
       "rules": {}
     },
     {
-      "name": "ExamId",
-      "dataType": "int?",
-      "maxLength": 4,
-      "precision": 10,
+      "name": "ExamCode",
+      "dataType": "string",
+      "maxLength": 7,
+      "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
       "isNullable": true,
-      "isIdentityColumn": true,
+      "isIdentityColumn": false,
       "rules": {}
     }
   ],
