@@ -40,9 +40,9 @@ namespace SurgeonPortal.Library.Examinations
 		public static readonly PropertyInfo<DateTime?> DatePostedProperty = RegisterProperty<DateTime?>(c => c.DatePosted);
 
         [DataMember]
-		[DisplayName(nameof(ExamId))]
-        public int? ExamId => ReadProperty(ExamIdProperty);
-		public static readonly PropertyInfo<int?> ExamIdProperty = RegisterProperty<int?>(c => c.ExamId);
+		[DisplayName(nameof(ExamCode))]
+        public string ExamCode => ReadProperty(ExamCodeProperty);
+		public static readonly PropertyInfo<string> ExamCodeProperty = RegisterProperty<string>(c => c.ExamCode);
 
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace SurgeonPortal.Library.Examinations
 		{
             LoadProperty(AdmCardAvailableProperty, dto.AdmCardAvailable);
             LoadProperty(DatePostedProperty, dto.DatePosted);
-            LoadProperty(ExamIdProperty, dto.ExamId);
+            LoadProperty(ExamCodeProperty, dto.ExamCode);
 		} 
         
     }

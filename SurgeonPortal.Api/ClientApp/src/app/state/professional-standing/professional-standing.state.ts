@@ -454,6 +454,7 @@ export class ProfessionalStandingState {
           );
         }),
         catchError((httpError: HttpErrorResponse) => {
+          this.globalDialogService.closeOpenDialog();
           const errors = httpError.error;
           ctx.patchState({ professionalStandingErrors: errors });
           return of(errors);

@@ -35,7 +35,7 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                 using (var connection = CreateConnection())
                 {
                     return await connection.ExecFirstOrDefaultAsync<UserProfessionalStandingDto>(
-                        "[dbo].[ins_user_sanctions]",
+                        "[dbo].[ins_user_professional_standing]",
                             new
                             {
                                 UserId = dto.UserId,

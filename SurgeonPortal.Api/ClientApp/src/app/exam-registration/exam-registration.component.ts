@@ -90,13 +90,8 @@ export class ExamRegistrationComponent implements OnInit {
   examId!: number;
 
   payFeeData: any;
-  paymentGridData = [
-    {
-      paymentDate: new Date('09/18/2015'),
-      paymentAmount: 100,
-      balanceRemaining: 285.0,
-    },
-  ];
+
+  completeExamRegistrationEnabled = false;
 
   constructor(
     private _store: Store,
@@ -121,6 +116,28 @@ export class ExamRegistrationComponent implements OnInit {
     this.populateFormData();
   }
 
+  checkIfCompleteExamRegistration() {
+    const examIntentions =
+      this.examRegistrationFormData?.get('examIntention')?.value;
+
+    this.admissionCardAvailability$
+      ?.pipe(untilDestroyed(this))
+      .subscribe(
+        (
+          admissionCardAvailability: IAdmissionCardAvailabilityReadOnlyModel
+        ) => {
+          if (
+            examIntentions === true &&
+            this.payFeeData.remainingBalance === 0 &&
+            admissionCardAvailability?.admCardAvailable === true
+          ) {
+            console.log('exam not ready');
+            this.completeExamRegistrationEnabled = true;
+          }
+        }
+      );
+  }
+
   populateFormData() {
     this.siteSelection$
       ?.pipe(untilDestroyed(this))
@@ -138,6 +155,7 @@ export class ExamRegistrationComponent implements OnInit {
           examIntention: intentions.intention,
         });
         this.examRegistrationFormData.controls['examIntention'].disable();
+        this.checkIfCompleteExamRegistration();
       }
     });
   }
@@ -158,6 +176,7 @@ export class ExamRegistrationComponent implements OnInit {
       });
 
       this.payFeeData = payFeeData;
+      this.checkIfCompleteExamRegistration();
     });
   }
 
@@ -188,10 +207,14 @@ export class ExamRegistrationComponent implements OnInit {
       });
   }
 
-  handleDownloadForm() {
+  handleDownloadForm(examCode: string) {
     window.open(
-      `api/examinations/admission-card/document?examId=${this.examId}`,
+      `api/examinations/admission-card/document?examCode=${examCode}`,
       '_blank'
     );
+  }
+
+  completeExamRegistration() {
+    console.log('complete exam registration');
   }
 }
