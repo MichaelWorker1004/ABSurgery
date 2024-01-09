@@ -55,7 +55,7 @@ namespace SurgeonPortal.DataAccess.Tests.ProfessionalStanding
         [Test]
         public async Task InsertAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[ins_user_sanctions]";
+            var expectedSprocName = "[dbo].[ins_user_professional_standing]";
             var expectedDto = Create<UserProfessionalStandingDto>();
         
             var sqlManager = new MockSqlConnectionManager();

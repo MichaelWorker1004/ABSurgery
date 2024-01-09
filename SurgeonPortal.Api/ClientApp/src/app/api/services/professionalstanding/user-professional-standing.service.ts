@@ -59,7 +59,7 @@ export class UserProfessionalStandingService {
             
             /**
             * Calls Sp(s)
-            * [ins_user_sanctions]
+            * [ins_user_professional_standing]
             */
             
             
