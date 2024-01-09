@@ -10,7 +10,7 @@ import {
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
@@ -97,6 +97,7 @@ export class ExamRegistrationComponent implements OnInit {
   constructor(
     private _store: Store,
     private route: ActivatedRoute,
+    private router: Router,
     private globalDialogService: GlobalDialogService
   ) {
     this.route.params.pipe(untilDestroyed(this)).subscribe((params) => {
@@ -217,6 +218,24 @@ export class ExamRegistrationComponent implements OnInit {
 
   completeExamRegistration() {
     this.globalDialogService.showLoading();
-    this._store.dispatch(new CompleteExamRegistration(this.examId));
+    this._store
+      .dispatch(new CompleteExamRegistration(this.examId))
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        const errors = res?.registration_requirements?.errors;
+        if (!errors) {
+          this.globalDialogService
+            .showSuccessError('Success', 'Exam registration complete', true)
+            .then(() => {
+              this.router.navigate(['/apply-and-register']);
+            });
+        } else {
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'There was an error completing your exam registration',
+            false
+          );
+        }
+      });
   }
 }
