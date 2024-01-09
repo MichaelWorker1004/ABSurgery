@@ -10,6 +10,7 @@ import { IFormErrors } from 'src/app/shared/common';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 import {
   ApplyForQeExam,
+  CompleteExamRegistration,
   CreateAccommodation,
   CreatePdReferenceLetter,
   GetAccommodations,
@@ -387,6 +388,39 @@ export class RegistrationRequirementsState {
           ctx.patchState({
             errors: errors,
           });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(CompleteExamRegistration)
+  completeExamRegistration(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: CompleteExamRegistration
+  ) {
+    return this.examinationsService
+      .completeExamRegistration_PostByExamId(payload.examId)
+      .pipe(
+        tap(() => {
+          ctx.patchState({
+            errors: null,
+          });
+          this.globalDialogService.showSuccessError(
+            'Success',
+            'Exam registration complete',
+            true
+          );
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'There was an error completing your exam registration',
+            false
+          );
           return of(errors);
         })
       );

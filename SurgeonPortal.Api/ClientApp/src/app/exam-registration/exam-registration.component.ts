@@ -21,6 +21,7 @@ import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-
 import { IExamIntentionsModel } from '../api/models/examinations/exam-intentions.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
+  CompleteExamRegistration,
   ExamProcessSelectors,
   GetAdmissionCardAvailability,
   GetExamFeeByExamId,
@@ -215,6 +216,7 @@ export class ExamRegistrationComponent implements OnInit {
   }
 
   completeExamRegistration() {
-    console.log('complete exam registration');
+    this.globalDialogService.showLoading();
+    this._store.dispatch(new CompleteExamRegistration(this.examId));
   }
 }

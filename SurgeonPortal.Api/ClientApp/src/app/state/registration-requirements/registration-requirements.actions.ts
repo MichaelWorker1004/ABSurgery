@@ -55,3 +55,9 @@ export class ApplyForQeExam {
   static readonly type = '[RegistrationRequirements] Apply For QE Exam';
   constructor(public examId: number) {}
 }
+
+export class CompleteExamRegistration {
+  static readonly type =
+    '[RegistrationRequirements] Complete Exam Registration';
+  constructor(public examId: number) {}
+}
