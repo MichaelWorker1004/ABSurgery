@@ -158,7 +158,7 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
     firstLanguageId: new FormControl('', [Validators.required]),
     firstName: new FormControl('', [Validators.required]),
     genderId: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', []), // readonly
     officePhoneNumber: new FormControl('', [Validators.required]),
     race: new FormControl('', [Validators.required]),
     receiveComms: new FormControl(false, [Validators.required]),

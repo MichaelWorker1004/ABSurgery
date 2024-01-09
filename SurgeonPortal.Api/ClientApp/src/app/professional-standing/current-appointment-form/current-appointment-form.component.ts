@@ -16,7 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 
 import { ButtonModule } from 'primeng/button';
@@ -118,15 +118,37 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
 
     if (checked) {
       this.currentAppointmentForm.get('primaryPracticeId')?.enable();
+      this.currentAppointmentForm
+        .get('primaryPracticeId')
+        ?.setValidators([Validators.required]);
       this.currentAppointmentForm.get('organizationTypeId')?.enable();
+      this.currentAppointmentForm
+        .get('organizationTypeId')
+        ?.setValidators([Validators.required]);
       this.currentAppointmentForm.get('explanationOfNonPrivileges')?.disable();
+      this.currentAppointmentForm
+        .get('explanationOfNonPrivileges')
+        ?.clearValidators();
+      this.currentAppointmentForm
+        .get('explanationOfNonPrivileges')
+        ?.setValue(null);
       this.currentAppointmentForm
         .get('explanationOfNonClinicalActivities')
         ?.disable();
+      this.currentAppointmentForm
+        .get('explanationOfNonClinicalActivities')
+        ?.setValue('');
     } else {
       this.currentAppointmentForm.get('primaryPracticeId')?.disable();
+      this.currentAppointmentForm.get('primaryPracticeId')?.clearValidators();
+      this.currentAppointmentForm.get('primaryPracticeId')?.setValue(null);
       this.currentAppointmentForm.get('organizationTypeId')?.disable();
+      this.currentAppointmentForm.get('organizationTypeId')?.clearValidators();
+      this.currentAppointmentForm.get('organizationTypeId')?.setValue(null);
       this.currentAppointmentForm.get('explanationOfNonPrivileges')?.enable();
+      this.currentAppointmentForm
+        .get('explanationOfNonPrivileges')
+        ?.setValidators([Validators.required]);
       this.currentAppointmentForm
         .get('explanationOfNonClinicalActivities')
         ?.enable();
@@ -142,8 +164,8 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
         }
 
         if (key === 'clinicallyActive') {
-          this.onClinicalActiveChange({ checked: [value] });
           newValue = value === 1 ? true : false;
+          this.onClinicalActiveChange({ checked: newValue });
         }
 
         this.currentAppointmentForm.get(key)?.setValue(newValue);
@@ -156,6 +178,12 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
   onFormChanges() {
     // include subscriptions to .valueChanges here for the reactive form
     // be sure to include .pipe(untilDestroyed(this)) to the subscriptions
+    this.currentAppointmentForm
+      .get('clinicallyActive')
+      ?.valueChanges.pipe(untilDestroyed(this))
+      .subscribe((val) => {
+        this.onClinicalActiveChange({ checked: val });
+      });
   }
 
   onSubmit() {

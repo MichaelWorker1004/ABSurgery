@@ -122,7 +122,6 @@ namespace SurgeonPortal.Api.Controllers.Users
         {
             entity.FirstName = model.FirstName;
             entity.MiddleName = model.MiddleName;
-            entity.LastName = model.LastName;
             entity.Suffix = model.Suffix;
             entity.DisplayName = model.DisplayName;
             entity.OfficePhoneNumber = model.OfficePhoneNumber;

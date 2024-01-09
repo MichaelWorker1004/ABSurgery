@@ -1392,6 +1392,7 @@ namespace SurgeonPortal.Library.Tests.Users
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
+                .Excluding(m => m.LastName)
                 .Excluding(m => m.CertificationStatus)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.CreatedByUserId)

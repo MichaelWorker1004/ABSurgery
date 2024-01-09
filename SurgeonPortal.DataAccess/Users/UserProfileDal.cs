@@ -100,7 +100,6 @@ namespace SurgeonPortal.DataAccess.Users
                             UserId = dto.UserId,
                             FirstName = dto.FirstName,
                             MiddleName = dto.MiddleName,
-                            LastName = dto.LastName,
                             Suffix = dto.Suffix,
                             DisplayName = dto.DisplayName,
                             OfficePhoneNumber = dto.OfficePhoneNumber,
