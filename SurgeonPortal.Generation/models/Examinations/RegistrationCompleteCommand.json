@@ -1,0 +1,35 @@
+{
+  "refs": {},
+  "name": "Examinations\\RegistrationCompleteCommand",
+  "description": "",
+  "properties": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "ExamHeaderId",
+      "dataType": "int",
+      "maxLength": 4,
+      "precision": 10,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m p Examinations\\RegistrationCompleteCommand -sp [dbo].[update_user_exam_registration_complete] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2024-01-09T16:14:23.6168015Z"
+  },
+  "version": 1
+}

@@ -10,7 +10,7 @@ import {
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
 import { PayFeeComponent } from '../shared/components/pay-fee/pay-fee.component';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Select, Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
@@ -21,6 +21,7 @@ import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-
 import { IExamIntentionsModel } from '../api/models/examinations/exam-intentions.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
+  CompleteExamRegistration,
   ExamProcessSelectors,
   GetAdmissionCardAvailability,
   GetExamFeeByExamId,
@@ -90,17 +91,13 @@ export class ExamRegistrationComponent implements OnInit {
   examId!: number;
 
   payFeeData: any;
-  paymentGridData = [
-    {
-      paymentDate: new Date('09/18/2015'),
-      paymentAmount: 100,
-      balanceRemaining: 285.0,
-    },
-  ];
+
+  completeExamRegistrationEnabled = false;
 
   constructor(
     private _store: Store,
     private route: ActivatedRoute,
+    private router: Router,
     private globalDialogService: GlobalDialogService
   ) {
     this.route.params.pipe(untilDestroyed(this)).subscribe((params) => {
@@ -121,6 +118,28 @@ export class ExamRegistrationComponent implements OnInit {
     this.populateFormData();
   }
 
+  checkIfCompleteExamRegistration() {
+    const examIntentions =
+      this.examRegistrationFormData?.get('examIntention')?.value;
+
+    this.admissionCardAvailability$
+      ?.pipe(untilDestroyed(this))
+      .subscribe(
+        (
+          admissionCardAvailability: IAdmissionCardAvailabilityReadOnlyModel
+        ) => {
+          if (
+            examIntentions === true &&
+            this.payFeeData.remainingBalance === 0 &&
+            admissionCardAvailability?.admCardAvailable === true
+          ) {
+            console.log('exam not ready');
+            this.completeExamRegistrationEnabled = true;
+          }
+        }
+      );
+  }
+
   populateFormData() {
     this.siteSelection$
       ?.pipe(untilDestroyed(this))
@@ -138,6 +157,7 @@ export class ExamRegistrationComponent implements OnInit {
           examIntention: intentions.intention,
         });
         this.examRegistrationFormData.controls['examIntention'].disable();
+        this.checkIfCompleteExamRegistration();
       }
     });
   }
@@ -158,6 +178,7 @@ export class ExamRegistrationComponent implements OnInit {
       });
 
       this.payFeeData = payFeeData;
+      this.checkIfCompleteExamRegistration();
     });
   }
 
@@ -193,5 +214,28 @@ export class ExamRegistrationComponent implements OnInit {
       `api/examinations/admission-card/document?examCode=${examCode}`,
       '_blank'
     );
+  }
+
+  completeExamRegistration() {
+    this.globalDialogService.showLoading();
+    this._store
+      .dispatch(new CompleteExamRegistration(this.examId))
+      .pipe(untilDestroyed(this))
+      .subscribe((res) => {
+        const errors = res?.registration_requirements?.errors;
+        if (!errors) {
+          this.globalDialogService
+            .showSuccessError('Success', 'Exam registration complete', true)
+            .then(() => {
+              this.router.navigate(['/apply-and-register']);
+            });
+        } else {
+          this.globalDialogService.showSuccessError(
+            'Error',
+            'There was an error completing your exam registration',
+            false
+          );
+        }
+      });
   }
 }

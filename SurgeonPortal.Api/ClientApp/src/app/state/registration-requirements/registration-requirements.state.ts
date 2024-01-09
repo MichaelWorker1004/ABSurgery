@@ -3,13 +3,26 @@ import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
 import { IAccommodationModel } from 'src/app/api/models/examinations/accommodation.model';
+import { IExamTitleReadOnlyModel } from 'src/app/api/models/examinations/exam-title-read-only.model';
+import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-reference-letter.model';
+import { IQeAttestationReadOnlyModel } from 'src/app/api/models/examinations/qe-attestation-read-only.model';
+import { IQeDashboardStatusReadOnlyModel } from 'src/app/api/models/examinations/qe-dashboard-status-read-only.model';
+import { IQeExamEligibilityReadOnlyModel } from 'src/app/api/models/examinations/qe-exam-eligibility-read-only.model';
 import { IStatuses } from 'src/app/api/models/users/statuses.model';
 import { AccommodationService } from 'src/app/api/services/examinations/accommodation.service';
+import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
+import { PdReferenceLetterService } from 'src/app/api/services/examinations/pd-reference-letter.service';
+import { QeAttestationService } from 'src/app/api/services/examinations/qe-attestation.service';
+import { QeDashboardStatusService } from 'src/app/api/services/examinations/qe-dashboard-status.service';
+import { QeExamEligibilityService } from 'src/app/api/services/examinations/qe-exam-eligibility.service';
 import { IFormErrors } from 'src/app/shared/common';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { statusTypes } from '../continuous-certification/statusTypes';
 import {
   ApplyForQeExam,
+  CompleteExamRegistration,
   CreateAccommodation,
   CreatePdReferenceLetter,
   GetAccommodations,
@@ -21,18 +34,6 @@ import {
   UpdateAccommodation,
   UpdateQeAttestations,
 } from './registration-requirements.actions';
-import { IPdReferenceLetterModel } from 'src/app/api/models/examinations/pd-reference-letter.model';
-import { PdReferenceLetterService } from 'src/app/api/services/examinations/pd-reference-letter.service';
-import { IExamTitleReadOnlyModel } from 'src/app/api/models/examinations/exam-title-read-only.model';
-import { ExaminationsService } from 'src/app/api/services/examinations/examinations.service';
-import { IQeExamEligibilityReadOnlyModel } from 'src/app/api/models/examinations/qe-exam-eligibility-read-only.model';
-import { QeExamEligibilityService } from 'src/app/api/services/examinations/qe-exam-eligibility.service';
-import { IQeAttestationReadOnlyModel } from 'src/app/api/models/examinations/qe-attestation-read-only.model';
-import { QeAttestationService } from 'src/app/api/services/examinations/qe-attestation.service';
-import { IAttestationReadOnlyModel } from 'src/app/api/models/continuouscertification/attestation-read-only.model';
-import { QeDashboardStatusService } from 'src/app/api/services/examinations/qe-dashboard-status.service';
-import { IQeDashboardStatusReadOnlyModel } from 'src/app/api/models/examinations/qe-dashboard-status-read-only.model';
-import { statusTypes } from '../continuous-certification/statusTypes';
 
 export interface IExamEligibility extends IQeExamEligibilityReadOnlyModel {
   applicationIsOpen: boolean;
@@ -376,6 +377,29 @@ export class RegistrationRequirementsState {
   ) {
     return this.examinationsService
       .applyForExam_PostByExamId(payload.examId)
+      .pipe(
+        tap(() => {
+          ctx.patchState({
+            errors: null,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          ctx.patchState({
+            errors: errors,
+          });
+          return of(errors);
+        })
+      );
+  }
+
+  @Action(CompleteExamRegistration)
+  completeExamRegistration(
+    ctx: StateContext<IRegistrationRequirements>,
+    payload: CompleteExamRegistration
+  ) {
+    return this.examinationsService
+      .completeExamRegistration_PostByExamId(payload.examId)
       .pipe(
         tap(() => {
           ctx.patchState({

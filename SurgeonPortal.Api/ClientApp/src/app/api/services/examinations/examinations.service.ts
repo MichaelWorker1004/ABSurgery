@@ -106,5 +106,21 @@ export class ExaminationsService {
             return this.apiService.post<void>(`api/examinations/insert?api-version=${apiVersion}`, {examHeaderId: examId});
         }
 
+        public completeExamRegistration_PostByExamId(examId: number, apiVersion = '1.0'): Observable<void> {  
+            /**
+            * Business Rules
+            * No business rules exist for this model
+            */
+            
+            /**
+            * Required Parameters
+            * examId:Number
+            * apiVersion
+            */
+            
+            
+            return this.apiService.post<void>(`api/examinations/registration-complete?api-version=${apiVersion}`, {examHeaderId: examId});
+        }
+
 
 }

@@ -100,6 +100,28 @@ namespace SurgeonPortal.Api.Controllers.Examinations
         
             return Ok();
         } 
+
+        ///<summary>
+        /// YtgIm
+        ///<summary>
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RegistrationCompleteCommandModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("registration-complete")]
+        public async Task<IActionResult> RegistrationcompleteCommandAsync(
+            [FromServices] IRegistrationCompleteCommandFactory registrationCompleteCommandFactory,
+            [FromBody] RegistrationCompleteCommandModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
+            }
+        
+            var command = await registrationCompleteCommandFactory.CompleteRegistrationAsync(model.ExamHeaderId);
+        
+            return Ok();
+        } 
     }
 }
 
