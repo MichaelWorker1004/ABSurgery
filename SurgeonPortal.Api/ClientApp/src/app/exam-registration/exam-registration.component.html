@@ -180,6 +180,7 @@
         <p-button
           (onClick)="handleDownloadForm(admissionCardAvailability.examCode)"
           class="btn-add"
+          [disabled]="!admissionCardAvailability.admCardAvailable"
         >
           <i slot="prefix" class="fa-solid fa-download"></i>
           <span>Download Exam Admission Card</span>
