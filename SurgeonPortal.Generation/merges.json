@@ -2370,7 +2370,7 @@
     "lastMergedHash": "18F4238B8233FACB4AB27EC631DFDE3A"
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\ExaminationsController.cs": {
-    "lastGeneratedHash": "0D023DA21491700CF21B3A9C28EEB3B7",
+    "lastGeneratedHash": "38BD5D06D62A86456CC9A2D443D3EF87",
     "lastMergedHash": "0D023DA21491700CF21B3A9C28EEB3B7"
   },
   "\\SurgeonPortal.Library\\Examinations\\ExamOverviewReadOnly.cs": {
@@ -4810,5 +4810,26 @@
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IInsertUserExamCommandFactory.cs": {
     "lastGeneratedHash": "EBC5787F482DE5698096D23D98BDBF2C"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IRegistrationCompleteCommand.cs": {
+    "lastGeneratedHash": "169D04B2A28415ACDDC3AC6D8C18BF6E"
+  },
+  "\\SurgeonPortal.Models\\Examinations\\RegistrationCompleteCommandModel.cs": {
+    "lastGeneratedHash": "1391A32758341FAF0656F04ABADE7C05"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\RegistrationCompleteCommand.cs": {
+    "lastGeneratedHash": "65D33BA93CCE710020B7EDFA6A3EE366"
+  },
+  "\\SurgeonPortal.DataAccess\\Examinations\\RegistrationCompleteCommandDal.cs": {
+    "lastGeneratedHash": "877C201D14BA11C2D6CA75153F966207"
+  },
+  "\\SurgeonPortal.Library\\Examinations\\RegistrationCompleteCommandFactory.cs": {
+    "lastGeneratedHash": "09ABF030DA87545E26F305E658F05206"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\Examinations\\IRegistrationCompleteCommandDal.cs": {
+    "lastGeneratedHash": "AD3A44BFF18FB6ADDA57E0172FCB3761"
+  },
+  "\\SurgeonPortal.Library.Contracts\\Examinations\\IRegistrationCompleteCommandFactory.cs": {
+    "lastGeneratedHash": "CAD78D7764186B927159DD737A0401C6"
   }
 }
