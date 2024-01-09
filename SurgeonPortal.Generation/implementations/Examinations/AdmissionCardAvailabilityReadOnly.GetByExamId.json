@@ -69,14 +69,14 @@
                 "mapsTo": "model.DatePosted"
               },
               {
-                "name": "ExamId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
+                "name": "ExamCode",
+                "dataType": "string",
+                "maxLength": 7,
+                "precision": 0,
                 "scale": 0,
                 "isNullable": true,
-                "isIdentityColumn": true,
-                "mapsTo": "model.ExamId"
+                "isIdentityColumn": false,
+                "mapsTo": "model.ExamCode"
               }
             ]
           }
