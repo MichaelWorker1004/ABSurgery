@@ -54,9 +54,9 @@ namespace SurgeonPortal.Api.Controllers.Examinations
         [HttpGet("document")]
         public async Task<ActionResult<AdmissionCardAvailabilityReadOnlyModel>> GetAdmissionCardDocument(
             [FromServices] IReportReadOnlyFactory reportReadOnlyFactory,
-            int examID)
+            string examCode)
         {
-            var report = await reportReadOnlyFactory.GetAdmissionCardByExamId(examID);
+            var report = await reportReadOnlyFactory.GetAdmissionCardByExamId(examCode);
 
             return File(report.Data, report.ContentType);
         }
