@@ -2,6 +2,7 @@ using Csla;
 using Csla.Rules.CommonRules;
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
+using SurgeonPortal.Library.Users;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
+using Ytg.Framework.Rules;
 using static SurgeonPortal.Library.MedicalTraining.MedicalTrainingFactory;
 
 namespace SurgeonPortal.Library.MedicalTraining
@@ -190,10 +192,9 @@ namespace SurgeonPortal.Library.MedicalTraining
             BusinessRules.AddRule(new Required(DegreeIdProperty, "DegreeId is required"));
             BusinessRules.AddRule(new Required(MedicalSchoolCompletionYearProperty, "MedicalSchoolCompletionYear is required"));
             BusinessRules.AddRule(new RegExMatch(MedicalSchoolCompletionYearProperty, @"^\d{4}$", @"The medical school completion year doesn't match the required pattern (YYYY)"));
-            BusinessRules.AddRule(new Required(ResidencyProgramNameProperty, "ResidencyProgramName is required"));
             BusinessRules.AddRule(new Required(ResidencyCompletionYearProperty, "ResidencyCompletionYear is required"));
             BusinessRules.AddRule(new RegExMatch(ResidencyCompletionYearProperty, @"^\d{4}$", @"The residency completion year doesn't match the required pattern (YYYY)"));
-            BusinessRules.AddRule(new Required(ResidencyProgramOtherProperty, "ResidencyProgramOther is required"));
+			BusinessRules.AddRule(new EitherOrRequiredRule(ResidencyProgramOtherProperty, ResidencyProgramNameProperty, 2));
         }
 
 
