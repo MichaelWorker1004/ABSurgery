@@ -197,12 +197,7 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "ResidencyProgramName is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "ResidencyCompletionYear",
@@ -233,12 +228,7 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "ResidencyProgramOther is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "CreatedAtUtc",

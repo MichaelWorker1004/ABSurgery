@@ -27,12 +27,10 @@ namespace SurgeonPortal.Models.MedicalTraining
         [Required(ErrorMessage = "MedicalSchoolCompletionYear is required")]
         [RegularExpression(@"^\d{4}$", ErrorMessage = "The medical school completion year doesn't match the required pattern (YYYY)")]
         public string MedicalSchoolCompletionYear { get; set; }
-        [Required(ErrorMessage = "ResidencyProgramName is required")]
         public string ResidencyProgramName { get; set; }
         [Required(ErrorMessage = "ResidencyCompletionYear is required")]
         [RegularExpression(@"^\d{4}$", ErrorMessage = "The residency completion year doesn't match the required pattern (YYYY)")]
         public string ResidencyCompletionYear { get; set; }
-        [Required(ErrorMessage = "ResidencyProgramOther is required")]
         public string ResidencyProgramOther { get; set; }
         public DateTime CreatedAtUtc { get; set; }
         public int CreatedByUserId { get; set; }

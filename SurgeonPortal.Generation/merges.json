@@ -1027,7 +1027,7 @@
     "lastGeneratedHash": "B8BBB13ABC60D34BD5CA2124F99E44BA"
   },
   "\\SurgeonPortal.Models\\MedicalTraining\\MedicalTrainingModel.cs": {
-    "lastGeneratedHash": "FC19AA0022A41A32D42DA9E4327B99C1"
+    "lastGeneratedHash": "DD2CB3538857760154DEB27B4BE7A4AB"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\medicaltraining\\medical-training.service.ts": {
     "lastGeneratedHash": "DD64831A07686E4A6EBB87AFF2F51D75"
@@ -1037,8 +1037,8 @@
     "lastMergedHash": "8236A11FBF6315220807586C32B4FE73"
   },
   "\\SurgeonPortal.Library\\MedicalTraining\\MedicalTraining.cs": {
-    "lastGeneratedHash": "0588D5640E17FD31952AEABEE3C0AAA1",
-    "lastMergedHash": "2E4247578CBE893421835D687ACD105E"
+    "lastGeneratedHash": "0C8ADFB3C624A493131FC93481AE1DD3",
+    "lastMergedHash": "AC37A0FDDFEAAA9841F7750B7163C3CD"
   },
   "\\SurgeonPortal.DataAccess\\MedicalTraining\\MedicalTrainingDal.cs": {
     "lastGeneratedHash": "EB58F632E11E77DC7BA1A526E52A788B",
@@ -1057,7 +1057,7 @@
     "lastGeneratedHash": "AE023ABE8E441327B2233729763BDC04"
   },
   "\\SurgeonPortal.Library.Tests\\MedicalTraining\\MedicalTrainingTests.cs": {
-    "lastGeneratedHash": "3B2B6CF692BDF0CA741E907724523DEB",
+    "lastGeneratedHash": "A476D7CB9B1DDA3F4969C357EDDEDF13",
     "lastMergedHash": "51E2587AC2A2338C4CDBD6AC4CB5974F"
   },
   "\\SurgeonPortal.DataAccess.Tests\\MedicalTraining\\MedicalTrainingDalTests.cs": {
