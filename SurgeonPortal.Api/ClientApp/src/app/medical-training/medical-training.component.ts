@@ -272,6 +272,15 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     this.setStates();
   }
 
+  onResidencyProgramChange(event: any) {
+    if (event.value) {
+      this.medicalTrainingForm.get('residencyProgramOther')?.disable();
+      this.medicalTrainingForm.get('residencyProgramOther')?.patchValue(null);
+    } else {
+      this.medicalTrainingForm.get('residencyProgramOther')?.enable();
+    }
+  }
+
   setPicklists() {
     this.countries$
       ?.pipe(untilDestroyed(this))
@@ -329,6 +338,22 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
           this.medicalTrainingForm
             .get('residencyProgramName')
             ?.patchValue(residencyProgramId);
+
+          if (medicalTraining.residencyProgramName?.length > 0) {
+            this.medicalTrainingForm.get('residencyProgramOther')?.disable();
+            this.medicalTrainingForm
+              .get('residencyProgramOther')
+              ?.patchValue(null);
+          } else {
+            this.medicalTrainingForm.get('residencyProgramOther')?.enable();
+          }
+
+          // if (medicalTraining.residencyProgramOther?.length > 0) {
+          //   this.medicalTrainingForm.get('residencyProgramName')?.disable();
+          // } else {
+          //   this.medicalTrainingForm.get('residencyProgramName')?.enable();
+          // }
+
           this.isEdit = false;
         } else {
           this.createMode = true;
