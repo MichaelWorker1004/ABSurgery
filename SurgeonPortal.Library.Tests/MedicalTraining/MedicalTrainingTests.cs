@@ -372,36 +372,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
         }
-        [Test]
-        public async Task IsRequired_GetByUserId_ResidencyProgramName_Fails()
-        {
-            var dto = CreateValidDto();
-            var expectedUserId = 1234;
-            
-            var mockDal = new Mock<IMedicalTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                .ReturnsAsync(dto);
-            
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
-                .Build();
-        
-            var factory = new MedicalTrainingFactory();
-            var sut = await factory.GetByUserIdAsync();
-            
-            sut.ResidencyProgramName = default;
-        
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-            //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-            Assert.That(sut.GetBrokenRules()[0].Description == "ResidencyProgramName is required", $"Expected the rule description to be 'ResidencyProgramName is required', have {sut.GetBrokenRules()[0].Description}");
-            Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
-            Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
-        }
         
         [Test]
         public async Task IsRequired_GetByUserId_ResidencyProgramName_Passes()
@@ -482,36 +452,6 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
         }
-        [Test]
-        public async Task IsRequired_GetByUserId_ResidencyProgramOther_Fails()
-        {
-            var dto = CreateValidDto();
-            var expectedUserId = 1234;
-            
-            var mockDal = new Mock<IMedicalTrainingDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                .ReturnsAsync(dto);
-            
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
-                .Build();
-        
-            var factory = new MedicalTrainingFactory();
-            var sut = await factory.GetByUserIdAsync();
-            
-            sut.ResidencyProgramOther = default;
-        
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-            //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-            Assert.That(sut.GetBrokenRules()[0].Description == "ResidencyProgramOther is required", $"Expected the rule description to be 'ResidencyProgramOther is required', have {sut.GetBrokenRules()[0].Description}");
-            Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
-            Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
-        }
         
         [Test]
         public async Task IsRequired_GetByUserId_ResidencyProgramOther_Passes()
@@ -537,10 +477,85 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
         
         }
+
+        [Test]
+        public async Task EitherOrRequired_GetByUser_ResidencyProgramOther_Passes()
+        {
+            var dto = CreateValidDto();
+            var expectedUserId = 1234;
+
+            var mockDal = new Mock<IMedicalTrainingDal>(MockBehavior.Strict);
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+                .ReturnsAsync(dto);
+
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
+                .Build();
+
+            var factory = new MedicalTrainingFactory();
+            var sut = await factory.GetByUserIdAsync();
+
+            sut.ResidencyProgramOther = dto.ResidencyProgramOther;
+
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
+        }
+
+        [Test]
+        public async Task EitherOrRequired_GetByUser_ResidencyProgramName_Passes()
+        {
+            var dto = CreateValidDto();
+            var expectedUserId = 1234;
+
+            var mockDal = new Mock<IMedicalTrainingDal>(MockBehavior.Strict);
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+                .ReturnsAsync(dto);
+
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
+                .Build();
+
+            var factory = new MedicalTrainingFactory();
+            var sut = await factory.GetByUserIdAsync();
+
+            sut.ResidencyProgramName = dto.ResidencyProgramName;
+
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
+        }
+
+        [Test]
+        public async Task EitherOrRequired_GetByUser_ResidencyProgramOther_ResidencyProgramName_Fails()
+        {
+            var dto = CreateValidDto();
+            var expectedUserId = 1234;
+
+            var mockDal = new Mock<IMedicalTrainingDal>(MockBehavior.Strict);
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+                .ReturnsAsync(dto);
+
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<IMedicalTraining, MedicalTrainingNamespace.MedicalTraining>()
+                .Build();
+
+            var factory = new MedicalTrainingFactory();
+            var sut = await factory.GetByUserIdAsync();
+
+            sut.ResidencyProgramOther = null;
+            sut.ResidencyProgramName = null;
+
+            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+        }
+
+
         #endregion
 
         #region GetByUserIdAsync MedicalTraining
-        
+
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
