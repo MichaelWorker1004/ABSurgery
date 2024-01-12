@@ -203,8 +203,4 @@ export class LoginComponent {
     this.loginForm.reset();
     this.store.dispatch(new Logout());
   }
-
-  navigateToAbs(): void {
-    this.document.location.href = 'https://www.absurgery.org/login.jsp';
-  }
 }

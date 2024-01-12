@@ -417,7 +417,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
 
   handleGridAction($event: any, form: string) {
     const data = $event.data;
-
     const actions: MedicalTrainingActions = {
       edit: {
         additionalTraining: () => {
@@ -452,6 +451,7 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     };
 
     const action = actions[$event.fieldKey]?.[form];
+
     if (action) {
       action();
     }
@@ -622,7 +622,9 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
       degreeName: formValues.degreeName,
       residencyProgramName: residencyProgramName[0].programName,
       residencyCompletionYear: formValues.residencyCompletionYear,
-      residencyProgramOther: formValues.residencyProgramOther,
+      residencyProgramOther: formValues.residencyProgramOther?.length
+        ? formValues.residencyProgramOther
+        : null,
     } as unknown as IMedicalTrainingModel;
 
     this.globalDialogService
