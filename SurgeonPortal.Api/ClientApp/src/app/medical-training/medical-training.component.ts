@@ -252,7 +252,7 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._store.dispatch(new SetUnsavedChanges(false));
 
-    this.maxYear.setFullYear(this.year);
+    this.maxYear.setFullYear(this.year + 2);
     this.userId$?.pipe(untilDestroyed(this)).subscribe((id) => {
       this.userId = id;
     });

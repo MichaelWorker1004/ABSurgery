@@ -21,7 +21,7 @@
       "CCR_SUBTITLE": "Click here to view your current Continuous Certification progress and complete any remaining requirements.",
       "CCR_TITLE": "Continuous Certification Requirements",
       "CME_BTN": "View Your CME",
-      "CME_SUBTITLE": "Click here to view your current CME Credits and keep track of your requirements for the Continuous Certification Program.",
+      "CME_SUBTITLE": "Are you keeping up with your CME requirements?",
       "CME_TITLE": "Continuing Medical Education (CME)",
       "GME_BTN": "View Your GME",
       "GME_SUBTITLE": "Click here to view your current GME progress and to add rotations to your GME history.",
@@ -32,7 +32,7 @@
     },
     "HIGHLIGHT_CARDS": {
       "DOCUMENTS_BTN": "View Your Documents",
-      "DOCUMENTS_SUBTITLE": "Click here to view all of your current document and certificate uploads.",
+      "DOCUMENTS_SUBTITLE": "Your ABS document repository.",
       "DOCUMENTS_TITLE": "Documents",
       "EXAMREGISTRATION_SUBTITLE": "<strong>Coming soon.</strong><br>You will be able to find more information about upcoming exams and registration windows here.",
       "EXAMREGISTRATION_TITLE": "Upcoming Exam Registration",

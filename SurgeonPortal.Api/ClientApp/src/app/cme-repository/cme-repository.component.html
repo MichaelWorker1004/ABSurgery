@@ -3,21 +3,9 @@
   <sl-card class="mb-3">
     <p class="my-0">
       CME requirements for the <i>Continuous Certification (CC) Program</i> are
-      <b>150 category 1 CME credits</b> earned over the last five calendar
-      years, <b>50 of which must be self-assesment credits</b>.
+      <b>150 category 1 CME credits</b> earned over the last five years,
+      <b>50 of which must be self-assessment credits</b>.
     </p>
-    <!-- <p class="my-0">
-      CME requirements for the <i>Continuous Certification (CC) Program</i> are
-      <b>150 category 1 CME credits</b> earned over the last five calendar
-      years, <b>50 of which must be self-assesment credits</b>. Note that ABS
-      will waive 25 category 1 credits and 50 self-assessment credits for each
-      successfully completed Continuous Certification Assessment (CCA). If you
-      are current with your CCA's, you will meet the self-assessment requirement
-      for the entire five-year period, and, depending upon your CCA cycle, you
-      will reduce the category 1 requirement by 50 to 75 credits. If you are not
-      yet enrolled in the CC program, averaging 30 CME credits per year will
-      help you stay on track with this requirement.
-    </p> -->
   </sl-card>
 </header>
 
@@ -28,10 +16,7 @@
         <div class="col-12">
           <h5 class="mt-0 mb-2" panel-header>
             Current Five-Year Cycle:
-            <span class="font-normal"
-              >{{ cycleStartDate | date : 'longDate' }} -
-              {{ cycleEndDate | date : 'longDate' }}</span
-            >
+            <span class="font-normal">Summary of CME Received to Date</span>
 
             <abs-tooltip
               style="float: right"
@@ -67,11 +52,9 @@
           </p>
           <p class="text-muted">
             * Credits and ABS Waivers dropping off are those that were earned
-            more than five years ago from today. You may see an increase in the
-            number of credits needed the next time you login if you have CME
-            that is expiring between now and the end of the year. Refer to the
-            itemized CME section for specific CME activities that may drop off
-            soon.
+            more than five years ago from today. You may see a change in the
+            number of credits needed the next time you login depending upon the
+            expiration dates of individual credits earned.
           </p>
         </div>
       </div>
@@ -96,9 +79,8 @@
           Itemized ABS Waivers that Reduce Your CME Requirements
         </h5>
         <p class="text-xl mt-0">
-          Listed below are activities you completed (e.g., a CCA module) during
-          the current five-year period that have reduced your overall CME
-          requirements.
+          Listed below are activities you completed (e.g., a CCA module) within
+          the last five years that have reduced your overall CME requirements.
         </p>
         <abs-grid
           [columns]="requirementsAndAdjustmentsCols"

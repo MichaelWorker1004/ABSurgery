@@ -4,8 +4,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   {
     id: 'Personal_Profile',
     title: 'Personal Profile',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    description: 'Review the personal information ABS has on file for you.',
     action: {
       type: Action.component,
       action: '/personal-profile',
@@ -17,7 +16,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     id: 'Training',
     title: 'Training',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'Update your medical training records, including your residency and fellowship information.',
     action: {
       type: Action.component,
       action: '/medical-training',
@@ -30,8 +29,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   {
     id: 'Professional_Standing',
     title: 'Professional Activities and Privileges',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    description: 'Update your hospital appointments and sanctions/ethics.',
     action: {
       type: Action.component,
       action: '/professional-standing',
@@ -43,8 +41,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   {
     id: 'Medical_Licenses',
     title: 'Medical License',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    description: 'Review and Update your state medical license information.',
     action: {
       type: Action.component,
       action: '/professional-standing',
@@ -92,8 +89,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   {
     id: 'QE_Certificates',
     title: 'Certification(s) Upload',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    description: 'Please review and update your certification(s) information.',
     action: {
       type: Action.component,
       action: '/medical-training',
@@ -147,7 +143,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
       action: 'applyForExam',
     },
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'All requirements up to date? Go to the Apply & Register page.',
     actionStyle: 'button',
     disabled: true,
     actionDisplay: 'Apply Now',

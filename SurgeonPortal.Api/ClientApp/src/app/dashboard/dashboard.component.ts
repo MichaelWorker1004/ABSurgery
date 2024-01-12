@@ -378,7 +378,7 @@ export class DashboardComponent {
                 <br>${regOpenDate.toLocaleDateString()} - ${regCloseDate.toLocaleDateString()}`;
             });
 
-          if (this.featureFlags.applyRegisterPage) {
+          if (this.featureFlags.applyRegisterPage && this.upcomingExams) {
             alertsAndNoticesCertfiied[0].content =
               this.upcomingExams?.join('<br><br>') || '';
           }
