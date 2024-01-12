@@ -272,6 +272,24 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     this.setStates();
   }
 
+  onResidencyProgramChange(event: any) {
+    if (event.value) {
+      this.medicalTrainingForm.get('residencyProgramOther')?.disable();
+      this.medicalTrainingForm.get('residencyProgramOther')?.patchValue(null);
+    } else {
+      this.medicalTrainingForm.get('residencyProgramOther')?.enable();
+    }
+  }
+
+  onResidencyProgramOtherChange(event: any) {
+    if (event) {
+      this.medicalTrainingForm.get('residencyProgramName')?.disable();
+      this.medicalTrainingForm.get('residencyProgramName')?.patchValue(null);
+    } else {
+      this.medicalTrainingForm.get('residencyProgramName')?.enable();
+    }
+  }
+
   setPicklists() {
     this.countries$
       ?.pipe(untilDestroyed(this))
@@ -329,6 +347,22 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
           this.medicalTrainingForm
             .get('residencyProgramName')
             ?.patchValue(residencyProgramId);
+
+          if (medicalTraining.residencyProgramName?.length > 0) {
+            this.medicalTrainingForm.get('residencyProgramOther')?.disable();
+            this.medicalTrainingForm
+              .get('residencyProgramOther')
+              ?.patchValue(null);
+          } else {
+            this.medicalTrainingForm.get('residencyProgramOther')?.enable();
+          }
+
+          if (medicalTraining.residencyProgramOther) {
+            this.medicalTrainingForm.get('residencyProgramName')?.disable();
+          } else {
+            this.medicalTrainingForm.get('residencyProgramName')?.enable();
+          }
+
           this.isEdit = false;
         } else {
           this.createMode = true;
@@ -620,7 +654,9 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
       graduateProfileDescription: formValues.graduateProfileDescription,
       degreeId: formValues.degreeId,
       degreeName: formValues.degreeName,
-      residencyProgramName: residencyProgramName[0].programName,
+      residencyProgramName: formValues.residencyProgramName
+        ? residencyProgramName[0].programName
+        : null,
       residencyCompletionYear: formValues.residencyCompletionYear,
       residencyProgramOther: formValues.residencyProgramOther?.length
         ? formValues.residencyProgramOther

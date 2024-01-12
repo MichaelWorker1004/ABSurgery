@@ -220,9 +220,16 @@
               <div class="col-6">
                 <div class="grid">
                   <div class="col-12">
-                    <label class="block" for="residencyProgramName"
-                      >Enter program name *</label
-                    >
+                    <label class="block" for="residencyProgramName">
+                      Enter program name
+                      {{
+                        medicalTrainingForm
+                          .get('residencyProgramOther')
+                          ?.getRawValue()
+                          ? ''
+                          : '*'
+                      }}
+                    </label>
                     <p-dropdown
                       [options]="residencyPrograms"
                       [showClear]="true"
@@ -232,6 +239,7 @@
                       optionLabel="programName"
                       optionValue="programId"
                       appendTo="body"
+                      (onChange)="onResidencyProgramChange($event)"
                     ></p-dropdown>
                   </div>
                   <div class="flex flex-column col-12">
@@ -265,9 +273,16 @@
               <div class="col-6">
                 <div class="grid">
                   <div class="col-12">
-                    <label class="block" for="residencyProgramOther"
-                      >My program is not listed *</label
-                    >
+                    <label class="block" for="residencyProgramOther">
+                      My program is not listed
+                      {{
+                        medicalTrainingForm
+                          .get('residencyProgramName')
+                          ?.getRawValue()
+                          ? ''
+                          : '*'
+                      }}
+                    </label>
                     <textarea
                       pInputTextarea
                       rows="5"
@@ -275,6 +290,7 @@
                       id="residencyProgramOther"
                       formControlName="residencyProgramOther"
                       placeholder="Explain..."
+                      (ngModelChange)="onResidencyProgramOtherChange($event)"
                     ></textarea>
                   </div>
                 </div>
