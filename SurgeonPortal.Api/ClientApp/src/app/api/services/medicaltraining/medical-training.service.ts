@@ -45,17 +45,11 @@ export class MedicalTrainingService {
             * Business rules for property: MedicalSchoolCompletionYear
             *   Rule Name: RegEx
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: ResidencyProgramName
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: RegEx
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: ResidencyProgramOther
-            *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
@@ -108,17 +102,11 @@ export class MedicalTrainingService {
             * Business rules for property: MedicalSchoolCompletionYear
             *   Rule Name: RegEx
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: ResidencyProgramName
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: RegEx
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: ResidencyProgramOther
-            *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
@@ -181,17 +169,11 @@ export class MedicalTrainingService {
             * Business rules for property: MedicalSchoolCompletionYear
             *   Rule Name: RegEx
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: ResidencyProgramName
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: ResidencyCompletionYear
             *   Rule Name: RegEx
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: ResidencyProgramOther
-            *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             

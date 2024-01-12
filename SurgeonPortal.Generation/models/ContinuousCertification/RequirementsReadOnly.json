@@ -1,0 +1,24 @@
+{
+  "refs": {},
+  "name": "ContinuousCertification\\RequirementsReadOnly",
+  "description": "",
+  "properties": [
+    {
+      "name": "MeetingRequirements",
+      "dataType": "string",
+      "maxLength": 12,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g m s ContinuousCertification\\RequirementsReadOnly -sp [dbo].[get_user_meeting_cc_requirements_byuserid] -cn abssp -f ",
+    "inferredCommand": "",
+    "generatedDateUtc": "2024-01-12T18:02:18.9788085Z"
+  },
+  "version": 1
+}

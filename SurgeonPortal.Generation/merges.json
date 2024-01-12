@@ -1030,7 +1030,7 @@
     "lastGeneratedHash": "DD2CB3538857760154DEB27B4BE7A4AB"
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\medicaltraining\\medical-training.service.ts": {
-    "lastGeneratedHash": "DD64831A07686E4A6EBB87AFF2F51D75"
+    "lastGeneratedHash": "E123B449A0DF7685EB08D8B451DDABA3"
   },
   "\\SurgeonPortal.Api\\Controllers\\MedicalTraining\\MedicalTrainingController.cs": {
     "lastGeneratedHash": "DE53C214A9CC131341E2A356F406CF38",
@@ -1038,7 +1038,7 @@
   },
   "\\SurgeonPortal.Library\\MedicalTraining\\MedicalTraining.cs": {
     "lastGeneratedHash": "0C8ADFB3C624A493131FC93481AE1DD3",
-    "lastMergedHash": "AC37A0FDDFEAAA9841F7750B7163C3CD"
+    "lastMergedHash": "43EC3794239D002D3831A2FDEA69A76D"
   },
   "\\SurgeonPortal.DataAccess\\MedicalTraining\\MedicalTrainingDal.cs": {
     "lastGeneratedHash": "EB58F632E11E77DC7BA1A526E52A788B",
@@ -1058,7 +1058,7 @@
   },
   "\\SurgeonPortal.Library.Tests\\MedicalTraining\\MedicalTrainingTests.cs": {
     "lastGeneratedHash": "A476D7CB9B1DDA3F4969C357EDDEDF13",
-    "lastMergedHash": "51E2587AC2A2338C4CDBD6AC4CB5974F"
+    "lastMergedHash": "77FA19C12D9E136ACCFA90F5A3A601F3"
   },
   "\\SurgeonPortal.DataAccess.Tests\\MedicalTraining\\MedicalTrainingDalTests.cs": {
     "lastGeneratedHash": "8499313EBFB1E125D4AA603F4E3DDD84",
@@ -2367,7 +2367,7 @@
   },
   "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\examinations\\examinations.service.ts": {
     "lastGeneratedHash": "9D1A8795699136D2126476214F167850",
-    "lastMergedHash": "18F4238B8233FACB4AB27EC631DFDE3A"
+    "lastMergedHash": "C6DB2C097B5D995AB5F7FDC0527A269F"
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\ExaminationsController.cs": {
     "lastGeneratedHash": "38BD5D06D62A86456CC9A2D443D3EF87",
@@ -4773,7 +4773,7 @@
   },
   "\\SurgeonPortal.Api\\Controllers\\Examinations\\AdmissionCardController.cs": {
     "lastGeneratedHash": "4CF0F7380E2593AAA431963411998825",
-    "lastMergedHash": "EB475925CBBBA0610C663BDFA7DA294E"
+    "lastMergedHash": "5776A14132736C744B3D02FE3145AB15"
   },
   "\\SurgeonPortal.Library\\Examinations\\AdmissionCardAvailabilityReadOnly.cs": {
     "lastGeneratedHash": "FD94EACD541541956A44D15D0409907C"
@@ -4831,5 +4831,44 @@
   },
   "\\SurgeonPortal.Library.Contracts\\Examinations\\IRegistrationCompleteCommandFactory.cs": {
     "lastGeneratedHash": "CAD78D7764186B927159DD737A0401C6"
+  },
+  "\\SurgeonPortal.Library.Contracts\\ContinuousCertification\\IRequirementsReadOnly.cs": {
+    "lastGeneratedHash": "B977F2AABE17595FAE588F4C9048B9D7"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\models\\continuouscertification\\requirements-read-only.model.ts": {
+    "lastGeneratedHash": "54634925626D098D6A4985787193EEF2"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\ContinuousCertification\\RequirementsReadOnlyDto.cs": {
+    "lastGeneratedHash": "B2EEE6A95C99D2E3C0465B64C8435467"
+  },
+  "\\SurgeonPortal.Models\\ContinuousCertification\\RequirementsReadOnlyModel.cs": {
+    "lastGeneratedHash": "34644F3A801338524C35711D54E98613"
+  },
+  "\\SurgeonPortal.Api\\ClientApp\\src\\app\\api\\services\\continuouscertification\\requirements.service.ts": {
+    "lastGeneratedHash": "B734AF46B97A2A044DD41B45C9611524"
+  },
+  "\\SurgeonPortal.Api\\Controllers\\ContinuousCertification\\RequirementsController.cs": {
+    "lastGeneratedHash": "C66536258DC47756E655DEA33E61600B"
+  },
+  "\\SurgeonPortal.Library\\ContinuousCertification\\RequirementsReadOnly.cs": {
+    "lastGeneratedHash": "C5050F8DFD8253369F15655B5F5ADE7D"
+  },
+  "\\SurgeonPortal.DataAccess\\ContinuousCertification\\RequirementsReadOnlyDal.cs": {
+    "lastGeneratedHash": "E929E1C8FC2962A90228127259F753A0"
+  },
+  "\\SurgeonPortal.Library\\ContinuousCertification\\RequirementsReadOnlyFactory.cs": {
+    "lastGeneratedHash": "6A4BEB2DD5696D006C51901AA004E3F1"
+  },
+  "\\SurgeonPortal.DataAccess.Contracts\\ContinuousCertification\\IRequirementsReadOnlyDal.cs": {
+    "lastGeneratedHash": "0016FA4D0679E34F14037BFF9AED2877"
+  },
+  "\\SurgeonPortal.Library.Contracts\\ContinuousCertification\\IRequirementsReadOnlyFactory.cs": {
+    "lastGeneratedHash": "3D2135BF16ACD8AF9E8B00435EC61093"
+  },
+  "\\SurgeonPortal.Library.Tests\\ContinuousCertification\\RequirementsReadOnlyTests.cs": {
+    "lastGeneratedHash": "5A981D9F35ECB4B0C11EC78FCD017A9B"
+  },
+  "\\SurgeonPortal.DataAccess.Tests\\ContinuousCertification\\RequirementsReadOnlyDalTests.cs": {
+    "lastGeneratedHash": "A6B0968AE3480F87CBE72225F2E3B996"
   }
 }
