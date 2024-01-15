@@ -11,8 +11,7 @@ export class RequirementsService {
     constructor(private apiService: ApiService) {}
 
  
-        public retrieveRequirementsReadOnly_GetByUserId(userId: number,
-        apiVersion = '1.0'): Observable<IRequirementsReadOnlyModel> {
+        public retrieveRequirementsReadOnly_GetByUserId(apiVersion = '1.0'): Observable<IRequirementsReadOnlyModel> {
             /**
             * Claims
             */
@@ -24,7 +23,6 @@ export class RequirementsService {
             
             /**
             * Required Parameters
-            * userId:Number
             * apiVersion
             */
             
@@ -34,7 +32,7 @@ export class RequirementsService {
             */
             
             
-            return this.apiService.get<IRequirementsReadOnlyModel>(`api/continuous-certification/requirements/by-userid?api-version=${apiVersion}&userId=${userId}`);
+            return this.apiService.get<IRequirementsReadOnlyModel>(`api/continuous-certification/requirements/by-userid?api-version=${apiVersion}`);
         }
 
 
