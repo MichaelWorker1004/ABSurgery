@@ -59,7 +59,8 @@
     {
       "name": "UserId",
       "dataType": "int",
-      "required": true
+      "required": true,
+      "substitution": "$UserId"
     }
   ],
   "metadata": {

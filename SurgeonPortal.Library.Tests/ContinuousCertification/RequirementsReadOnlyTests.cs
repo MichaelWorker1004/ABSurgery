@@ -17,7 +17,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         [Test]
         public async Task GetByUserIdAsync_CallsDalCorrectly()
         {
-            var expectedUserId = Create<int>();
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IRequirementsReadOnlyDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
@@ -31,7 +31,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Build();
         
             var factory = new RequirementsReadOnlyFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = await factory.GetByUserIdAsync();
         
             mockDal.VerifyAll();
         }
@@ -40,7 +40,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
         public async Task GetByUserIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<RequirementsReadOnlyDto>();
-            var expectedUserId = Create<int>();
+            var expectedUserId = 1234;
             
             var mockDal = new Mock<IRequirementsReadOnlyDal>();
             mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
@@ -54,7 +54,7 @@ namespace SurgeonPortal.Library.Tests.ContinuousCertification
                 .Build();
         
             var factory = new RequirementsReadOnlyFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
+            var sut = await factory.GetByUserIdAsync();
         
             dto.Should().BeEquivalentTo(sut, options => options.ExcludingMissingMembers());
         }

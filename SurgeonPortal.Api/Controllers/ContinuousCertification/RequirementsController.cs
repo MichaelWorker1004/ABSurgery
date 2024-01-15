@@ -38,10 +38,9 @@ namespace SurgeonPortal.Api.Controllers.ContinuousCertification
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("by-userid")]
         public async Task<ActionResult<RequirementsReadOnlyModel>> GetRequirementsReadOnly_GetByUserIdAsync(
-            [FromServices] IRequirementsReadOnlyFactory requirementsReadOnlyFactory,
-            int userId)
+            [FromServices] IRequirementsReadOnlyFactory requirementsReadOnlyFactory)
         {
-            var item = await requirementsReadOnlyFactory.GetByUserIdAsync(userId);
+            var item = await requirementsReadOnlyFactory.GetByUserIdAsync();
         
             return Ok(_mapper.Map<RequirementsReadOnlyModel>(item));
         } 

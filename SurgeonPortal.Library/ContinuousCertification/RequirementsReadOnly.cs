@@ -48,10 +48,10 @@ namespace SurgeonPortal.Library.ContinuousCertification
         [RunLocal]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
            Justification = "This method is called indirectly by the CSLA.NET DataPortal.")]
-        private async Task GetByUserId(GetByUserIdCriteria criteria)
+        private async Task GetByUserId()
         
         {
-            var dto = await _requirementsReadOnlyDal.GetByUserIdAsync(criteria.UserId);
+            var dto = await _requirementsReadOnlyDal.GetByUserIdAsync(_identity.GetUserId<int>());
             
             if (dto == null)
             {

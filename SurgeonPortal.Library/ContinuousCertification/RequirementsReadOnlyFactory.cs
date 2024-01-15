@@ -8,15 +8,10 @@ namespace SurgeonPortal.Library.ContinuousCertification
 {
     public class RequirementsReadOnlyFactory : IRequirementsReadOnlyFactory
     {
-        public async Task<IRequirementsReadOnly> GetByUserIdAsync(int userId)
+        public async Task<IRequirementsReadOnly> GetByUserIdAsync()
         {
-            if (userId <= 0)
-            {
-                throw new FactoryInvalidCriteriaException("userId is a required field.");
-            }
             
-            return await DataPortal.FetchAsync<RequirementsReadOnly>(
-                new GetByUserIdCriteria(userId));
+            return await DataPortal.FetchAsync<RequirementsReadOnly>();
             
         }
 
@@ -25,11 +20,9 @@ namespace SurgeonPortal.Library.ContinuousCertification
             [Serializable]
             internal class GetByUserIdCriteria
             {
-                public int UserId { get; set; }
             
-                public GetByUserIdCriteria(int userId)
+                public GetByUserIdCriteria()
              {
-                    UserId = userId;
               }
             }
             
