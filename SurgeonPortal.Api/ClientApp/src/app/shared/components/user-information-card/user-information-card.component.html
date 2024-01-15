@@ -1,15 +1,21 @@
 <div class="user-information-card">
-  <div class="status-container">
-    <div class="status-indicators">
-      <div class="status one active"></div>
-      <div class="status two active"></div>
-      <div class="status three active"></div>
+  <div class="status-container flex justify-content-between">
+    <div class="flex align-items-center">
+      <div class="status-indicators">
+        <div class="status one active"></div>
+        <div class="status two active"></div>
+        <div class="status three active"></div>
+      </div>
+      <span
+        [innerHTML]="
+          'DASHBOARD.STATUS' | translate : { status: localCurrentStatus }
+        "
+      ></span>
     </div>
-    <span
-      [innerHTML]="
-        'DASHBOARD.STATUS' | translate : { status: localCurrentStatus }
-      "
-    ></span>
+
+    <span *ngIf="meetingRequirements">
+      Meeting Requirements: {{ meetingRequirements }}
+    </span>
   </div>
 
   <div class="info-container" *ngIf="!localIsSurgeon; else certified">

@@ -201,12 +201,9 @@ export class DashboardState {
   }
 
   @Action(GetMeetingRequitments)
-  getMeetingRequitments(
-    ctx: StateContext<IDashboardState>,
-    payload: GetMeetingRequitments
-  ) {
+  getMeetingRequitments(ctx: StateContext<IDashboardState>) {
     return this.requirementsService
-      .retrieveRequirementsReadOnly_GetByUserId(payload.userId)
+      .retrieveRequirementsReadOnly_GetByUserId()
       .pipe(
         tap((result: IRequirementsReadOnlyModel) => {
           ctx.patchState({

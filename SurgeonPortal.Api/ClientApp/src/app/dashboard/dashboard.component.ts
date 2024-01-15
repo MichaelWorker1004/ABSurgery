@@ -146,6 +146,7 @@ export class DashboardComponent {
           : 'Coming Soon';
       }
     });
+    this._store.dispatch(new GetMeetingRequitments());
     this.initDashboardData();
   }
 

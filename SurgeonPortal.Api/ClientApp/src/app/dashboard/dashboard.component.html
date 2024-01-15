@@ -21,6 +21,9 @@
       [userInformation]="userInformation"
       [currentStatus]="userCertificationStatus || user.certificationStatus"
       [isSurgeon]="isSurgeon"
+      [meetingRequirements]="
+        (meetingRequirements$ | async)?.meetingRequirements
+      "
     ></abs-user-information-card>
 
     <abs-highlight-card

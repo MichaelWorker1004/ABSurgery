@@ -24,6 +24,4 @@ export class GetAlertsAndNotices {
 
 export class GetMeetingRequitments {
   static readonly type = '[Dashboard] Get the meeting requirements information';
-
-  constructor(public userId: number) {}
 }
