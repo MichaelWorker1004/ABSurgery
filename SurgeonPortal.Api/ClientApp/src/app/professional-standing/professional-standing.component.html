@@ -12,11 +12,6 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-          neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-          erat, egestas sit amet tortor at, condimentum tempor erat.
-        </p>
         <abs-collapse-panel
           [panelId]="1"
           [startExpanded]="true"
@@ -43,157 +38,8 @@
         <div>
           <abs-collapse-panel [panelId]="2" [startExpanded]="true">
             <h5 class="mt-0 mb-2" panel-header id="hospital-appointments">
-              Current Hospital Appointments / Privileges
+              Hospital Appointments / Privileges
             </h5>
-            <p class="mt-1">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-              neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-              erat, egestas sit amet tortor at, condimentum tempor erat.
-            </p>
-            <h6 class="section__sub-header">Primary Appointments/Privileges</h6>
-            <div
-              class="grid"
-              *ngIf="(editHospitalAppointmentsAndPrivileges$ | async) === false"
-            >
-              <div class="col-12">
-                <label>Clincally Active</label>
-                <div>
-                  <span
-                    *ngIf="
-                      currentAppointments &&
-                      currentAppointments.clinicallyActive
-                    "
-                    >{{
-                      currentAppointments.clinicallyActive ? 'True' : 'False'
-                    }}</span
-                  >
-                  <span
-                    class="text-muted font-italic"
-                    *ngIf="
-                      !currentAppointments ||
-                      !currentAppointments.clinicallyActive
-                    "
-                    >False</span
-                  >
-                </div>
-              </div>
-              <div class="col-12 md:col-6">
-                <label>Primary Current Practice or Training</label>
-                <div>
-                  <span
-                    *ngIf="
-                      currentAppointments && currentAppointments.primaryPractice
-                    "
-                    >{{ currentAppointments.primaryPractice }}</span
-                  >
-                  <span
-                    class="text-muted font-italic"
-                    *ngIf="
-                      !currentAppointments ||
-                      !currentAppointments.primaryPractice
-                    "
-                    >not specified</span
-                  >
-                </div>
-              </div>
-              <div class="col-12 md:col-6">
-                <label
-                  >Type of Organization of Primary Practice or Training</label
-                >
-                <div>
-                  <span
-                    *ngIf="
-                      currentAppointments &&
-                      currentAppointments.organizationType
-                    "
-                    >{{ currentAppointments.organizationType }}</span
-                  >
-                  <span
-                    class="text-muted font-italic"
-                    *ngIf="
-                      !currentAppointments ||
-                      !currentAppointments.organizationType
-                    "
-                    >not specified</span
-                  >
-                </div>
-              </div>
-              <div class="col-12 md:col-6">
-                <label>Lack of Hospital Privileges</label>
-                <div class="white-space-break-spaces">
-                  <span
-                    *ngIf="
-                      currentAppointments &&
-                      currentAppointments.explanationOfNonPrivileges
-                    "
-                    >{{ currentAppointments.explanationOfNonPrivileges }}</span
-                  >
-                  <span
-                    class="text-muted font-italic"
-                    *ngIf="
-                      !currentAppointments ||
-                      !currentAppointments.explanationOfNonPrivileges
-                    "
-                    >none</span
-                  >
-                </div>
-              </div>
-              <div class="col-12 md:col-6">
-                <label>Non-Clinical Activities</label>
-                <div class="white-space-break-spaces">
-                  <span
-                    *ngIf="
-                      currentAppointments &&
-                      currentAppointments.explanationOfNonClinicalActivities
-                    "
-                    >{{
-                      currentAppointments.explanationOfNonClinicalActivities
-                    }}</span
-                  >
-                  <span
-                    class="text-muted font-italic"
-                    *ngIf="
-                      !currentAppointments ||
-                      !currentAppointments.explanationOfNonClinicalActivities
-                    "
-                    >none</span
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="grid col-12"
-              *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
-            >
-              <abs-current-appointment-form
-                [formData]="currentAppointments"
-                [isEdit]="false"
-                [picklists]="currentAppointmentPickLists"
-                [errors$]="currentAppointmentErrors$"
-                [clearErrors]="clearErrors"
-                (cancelForm)="
-                  toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
-                "
-                (saveForm)="saveCurrentAppointments($event)"
-                class="w-full"
-              ></abs-current-appointment-form>
-            </div>
-
-            <div
-              class="grid mt-3"
-              *ngIf="(editHospitalAppointmentsAndPrivileges$ | async) === false"
-            >
-              <div class="col-12 flex justify-content-end">
-                <p-button
-                  [style]="{ width: '200px' }"
-                  (click)="
-                    toggleEdit(editHospitalAppointmentsAndPrivileges$, true)
-                  "
-                  >Edit</p-button
-                >
-              </div>
-            </div>
 
             <h6 class="section__sub-header">
               All Hospital Appointments/Privileges
@@ -210,12 +56,103 @@
                 </p-button>
                 <abs-grid
                   [columns]="appointmentsPrivilegesCols"
-                  [data]="allAppointments$"
+                  [data]="allAppointments"
                   (action)="handleAppointementsGridAction($event)"
                   class="margin-bottom-2"
                 ></abs-grid>
               </div>
             </div>
+            <ng-container *ngIf="!hasPrimaryAppointment">
+              <h6 class="section__sub-header">
+                Explanation for lack of Primary Appointments/Privileges
+              </h6>
+              <div
+                class="grid"
+                *ngIf="
+                  (editHospitalAppointmentsAndPrivileges$ | async) === false
+                "
+              >
+                <div class="col-12 md:col-6">
+                  <label>Lack of Hospital Privileges *</label>
+                  <div class="white-space-break-spaces">
+                    <span
+                      *ngIf="
+                        currentAppointments &&
+                        currentAppointments.explanationOfNonPrivileges
+                      "
+                      >{{
+                        currentAppointments.explanationOfNonPrivileges
+                      }}</span
+                    >
+                    <span
+                      class="text-muted font-italic"
+                      *ngIf="
+                        !currentAppointments ||
+                        !currentAppointments.explanationOfNonPrivileges
+                      "
+                      >none</span
+                    >
+                  </div>
+                </div>
+                <div class="col-12 md:col-6">
+                  <label>Non-Clinical Activities</label>
+                  <div class="white-space-break-spaces">
+                    <span
+                      *ngIf="
+                        currentAppointments &&
+                        currentAppointments.explanationOfNonClinicalActivities
+                      "
+                      >{{
+                        currentAppointments.explanationOfNonClinicalActivities
+                      }}</span
+                    >
+                    <span
+                      class="text-muted font-italic"
+                      *ngIf="
+                        !currentAppointments ||
+                        !currentAppointments.explanationOfNonClinicalActivities
+                      "
+                      >none</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="grid col-12"
+                *ngIf="editHospitalAppointmentsAndPrivileges$ | async"
+              >
+                <abs-current-appointment-form
+                  [formData]="currentAppointments"
+                  [isEdit]="false"
+                  [picklists]="currentAppointmentPickLists"
+                  [errors$]="currentAppointmentErrors$"
+                  [clearErrors]="clearErrors"
+                  (cancelForm)="
+                    toggleEdit(editHospitalAppointmentsAndPrivileges$, false)
+                  "
+                  (saveForm)="saveCurrentAppointments($event)"
+                  class="w-full"
+                ></abs-current-appointment-form>
+              </div>
+
+              <div
+                class="grid mt-3"
+                *ngIf="
+                  (editHospitalAppointmentsAndPrivileges$ | async) === false
+                "
+              >
+                <div class="col-12 flex justify-content-end">
+                  <p-button
+                    [style]="{ width: '200px' }"
+                    (click)="
+                      toggleEdit(editHospitalAppointmentsAndPrivileges$, true)
+                    "
+                    >Edit</p-button
+                  >
+                </div>
+              </div>
+            </ng-container>
           </abs-collapse-panel>
         </div>
       </sl-card>

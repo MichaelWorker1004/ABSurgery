@@ -48,6 +48,11 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 		public static readonly PropertyInfo<int?> AppointmentTypeIdProperty = RegisterProperty<int?>(c => c.AppointmentTypeId);
 
         [DataMember]
+		[DisplayName(nameof(PrimaryAppointment))]
+        public bool? PrimaryAppointment => ReadProperty(PrimaryAppointmentProperty);
+		public static readonly PropertyInfo<bool?> PrimaryAppointmentProperty = RegisterProperty<bool?>(c => c.PrimaryAppointment);
+
+        [DataMember]
 		[DisplayName(nameof(AppointmentType))]
         public string AppointmentType => ReadProperty(AppointmentTypeProperty);
 		public static readonly PropertyInfo<string> AppointmentTypeProperty = RegisterProperty<string>(c => c.AppointmentType);
@@ -104,6 +109,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             LoadProperty(PracticeTypeIdProperty, dto.PracticeTypeId);
             LoadProperty(PracticeTypeProperty, dto.PracticeType);
             LoadProperty(AppointmentTypeIdProperty, dto.AppointmentTypeId);
+            LoadProperty(PrimaryAppointmentProperty, dto.PrimaryAppointment);
             LoadProperty(AppointmentTypeProperty, dto.AppointmentType);
             LoadProperty(OrganizationTypeIdProperty, dto.OrganizationTypeId);
             LoadProperty(AuthorizingOfficialProperty, dto.AuthorizingOfficial);

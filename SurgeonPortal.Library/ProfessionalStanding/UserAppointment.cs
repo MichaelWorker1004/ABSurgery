@@ -69,6 +69,14 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 		}
 		public static readonly PropertyInfo<int?> AppointmentTypeIdProperty = RegisterProperty<int?>(c => c.AppointmentTypeId);
 
+        [DisplayName(nameof(PrimaryAppointment))]
+		public bool? PrimaryAppointment
+		{
+			get { return GetProperty(PrimaryAppointmentProperty); }
+			set { SetProperty(PrimaryAppointmentProperty, value); }
+		}
+		public static readonly PropertyInfo<bool?> PrimaryAppointmentProperty = RegisterProperty<bool?>(c => c.PrimaryAppointment);
+
         [DisplayName(nameof(AppointmentType))]
 		public string AppointmentType
 		{
@@ -246,6 +254,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			this.PracticeTypeId = dto.PracticeTypeId;
 			this.PracticeType = dto.PracticeType;
 			this.AppointmentTypeId = dto.AppointmentTypeId;
+			this.PrimaryAppointment = dto.PrimaryAppointment;
 			this.AppointmentType = dto.AppointmentType;
 			this.OrganizationTypeId = dto.OrganizationTypeId;
 			this.AuthorizingOfficial = dto.AuthorizingOfficial;
@@ -270,6 +279,7 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			dto.PracticeTypeId = this.PracticeTypeId;
 			dto.PracticeType = this.PracticeType;
 			dto.AppointmentTypeId = this.AppointmentTypeId;
+			dto.PrimaryAppointment = this.PrimaryAppointment;
 			dto.AppointmentType = this.AppointmentType;
 			dto.OrganizationTypeId = this.OrganizationTypeId;
 			dto.AuthorizingOfficial = this.AuthorizingOfficial;

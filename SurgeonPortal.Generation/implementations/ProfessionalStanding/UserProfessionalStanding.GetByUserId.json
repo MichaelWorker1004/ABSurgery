@@ -68,46 +68,6 @@
                 "mapsTo": "model.UserId"
               },
               {
-                "name": "PrimaryPracticeId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.PrimaryPracticeId"
-              },
-              {
-                "name": "PrimaryPractice",
-                "dataType": "string",
-                "maxLength": 100,
-                "precision": 0,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.PrimaryPractice"
-              },
-              {
-                "name": "OrganizationTypeId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.OrganizationTypeId"
-              },
-              {
-                "name": "OrganizationType",
-                "dataType": "string",
-                "maxLength": 200,
-                "precision": 0,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.OrganizationType"
-              },
-              {
                 "name": "ExplanationOfNonPrivileges",
                 "dataType": "string",
                 "maxLength": -1,

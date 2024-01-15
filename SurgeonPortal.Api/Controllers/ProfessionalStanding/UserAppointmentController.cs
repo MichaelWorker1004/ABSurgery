@@ -126,6 +126,7 @@ namespace SurgeonPortal.Api.Controllers.ProfessionalStanding
             entity.OrganizationTypeId = model.OrganizationTypeId;
             entity.StateCode = model.StateCode;
             entity.OrganizationId = model.OrganizationId;
+            entity.PrimaryAppointment = model.PrimaryAppointment;
             entity.AuthorizingOfficial = model.AuthorizingOfficial;
             entity.Other = model.Other;
         }
@@ -135,6 +136,7 @@ namespace SurgeonPortal.Api.Controllers.ProfessionalStanding
             entity.PracticeTypeId = model.PracticeTypeId;
             entity.AppointmentTypeId = model.AppointmentTypeId;
             entity.OrganizationTypeId = model.OrganizationTypeId;
+            entity.PrimaryAppointment = model.PrimaryAppointment;
             entity.StateCode = model.StateCode;
             entity.OrganizationId = model.OrganizationId;
             entity.AuthorizingOfficial = model.AuthorizingOfficial;

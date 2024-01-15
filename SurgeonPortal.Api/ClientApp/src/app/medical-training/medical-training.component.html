@@ -23,11 +23,6 @@
           <div class="form-section mt-0">
             <h5 class="form-section__title">Medical School</h5>
             <hr />
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-              neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-              erat, egestas sit amet tortor at, condimentum tempor erat.
-            </p>
             <div class="grid" *ngIf="!isEdit">
               <div class="col-12">
                 <label
@@ -183,11 +178,6 @@
           <div class="form-section">
             <h5 class="form-section__title">Residency</h5>
             <hr />
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-              neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-              erat, egestas sit amet tortor at, condimentum tempor erat.
-            </p>
             <div class="grid" *ngIf="!isEdit">
               <div class="col-6">
                 <div class="grid">
@@ -289,7 +279,7 @@
                       maxlength="8000"
                       id="residencyProgramOther"
                       formControlName="residencyProgramOther"
-                      placeholder="Explain..."
+                      placeholder="Enter the name and state of your school if it does not appear in the program list..."
                       (ngModelChange)="onResidencyProgramOtherChange($event)"
                     ></textarea>
                   </div>
@@ -327,11 +317,6 @@
         <div class="form-section">
           <h5 class="form-section__title">Fellowship</h5>
           <hr />
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-            neque nec dolor lacinia interdum quis nec nisi. Pellentesque dolor
-            erat, egestas sit amet tortor at, condimentum tempor erat.
-          </p>
           <div class="grid">
             <div class="col-12">
               <p-button

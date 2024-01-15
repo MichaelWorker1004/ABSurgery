@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
@@ -10,7 +10,9 @@ import { DownloadDocument, IUserProfile, UserProfileSelectors } from '../state';
 import { GetExamHistory } from '../state/exam-history/exam-history.actions';
 import { IExamHistoryReadOnlyModel } from '../api/models/examinations/exam-history-read-only.model';
 import { ExamHistorySelectors } from '../state/exam-history';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'abs-examination-history',
   templateUrl: './examination-history.component.html',
@@ -19,7 +21,7 @@ import { ExamHistorySelectors } from '../state/exam-history';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule, CollapsePanelComponent, GridComponent],
 })
-export class ExaminationHistoryComponent {
+export class ExaminationHistoryComponent implements OnInit {
   @Select(ExamHistorySelectors.slices.examHistory) examHistory$:
     | Observable<IExamHistoryReadOnlyModel[]>
     | undefined;
@@ -67,10 +69,31 @@ export class ExaminationHistoryComponent {
     },
   ];
 
-  examHistory!: IExamHistoryReadOnlyModel[];
+  examHistory: IExamHistoryReadOnlyModel[] = [];
 
   constructor(private _router: Router, private _store: Store) {
     this._store.dispatch(new GetExamHistory());
+  }
+  ngOnInit(): void {
+    this.examHistory$?.pipe(untilDestroyed(this)).subscribe((data) => {
+      let examHistory = data.filter((exam) => {
+        return exam.status !== 'Expired' && exam.status !== 'Postponed';
+      });
+      console.log(examHistory);
+      examHistory = examHistory.sort((a, b) => {
+        if (a.examinationDate && !b.examinationDate) {
+          return -1;
+        } else if (!a.examinationDate && b.examinationDate) {
+          return 1;
+        } else {
+          return (
+            new Date(b.examinationDate).getTime() -
+            new Date(a.examinationDate).getTime()
+          );
+        }
+      });
+      this.examHistory = examHistory;
+    });
   }
 
   handleGridAction($event: any) {

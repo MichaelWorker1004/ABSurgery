@@ -26,50 +26,6 @@
       "rules": {}
     },
     {
-      "name": "PrimaryPracticeId",
-      "dataType": "int?",
-      "maxLength": 4,
-      "precision": 10,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": true,
-      "isIdentityColumn": false,
-      "rules": {}
-    },
-    {
-      "name": "PrimaryPractice",
-      "dataType": "string",
-      "maxLength": 100,
-      "precision": 0,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": true,
-      "isIdentityColumn": false,
-      "rules": {}
-    },
-    {
-      "name": "OrganizationTypeId",
-      "dataType": "int?",
-      "maxLength": 4,
-      "precision": 10,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": true,
-      "isIdentityColumn": false,
-      "rules": {}
-    },
-    {
-      "name": "OrganizationType",
-      "dataType": "string",
-      "maxLength": 200,
-      "precision": 0,
-      "scale": 0,
-      "isAlwaysReadOnly": false,
-      "isNullable": true,
-      "isIdentityColumn": false,
-      "rules": {}
-    },
-    {
       "name": "ExplanationOfNonPrivileges",
       "dataType": "string",
       "maxLength": -1,
@@ -78,7 +34,12 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {}
+      "rules": {
+        "required": {
+          "value": true,
+          "message": "ExplanationOfNonPrivileges is required"
+        }
+      }
     },
     {
       "name": "ExplanationOfNonClinicalActivities",

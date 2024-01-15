@@ -70,18 +70,21 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
   localEdit = false;
 
   currentAppointmentForm = new FormGroup({
-    clinicallyActive: new FormControl({ value: false, disabled: true }),
-    primaryPracticeId: new FormControl<number | null>(
-      { value: null, disabled: true },
+    // clinicallyActive: new FormControl({ value: false, disabled: true }),
+    // primaryPracticeId: new FormControl<number | null>(
+    //   { value: null, disabled: true },
+    //   [Validators.required]
+    // ),
+
+    // organizationTypeId: new FormControl<number | null>(
+    //   { value: null, disabled: true },
+    //   [Validators.required]
+    // ),
+
+    explanationOfNonPrivileges: new FormControl(
+      { value: '', disabled: false },
       [Validators.required]
     ),
-
-    organizationTypeId: new FormControl<number | null>(
-      { value: null, disabled: true },
-      [Validators.required]
-    ),
-
-    explanationOfNonPrivileges: new FormControl({ value: '', disabled: false }),
 
     explanationOfNonClinicalActivities: new FormControl({
       value: '',
@@ -113,47 +116,47 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
     }
   }
 
-  onClinicalActiveChange(event: any) {
-    const checked = event.checked;
+  // onClinicalActiveChange(event: any) {
+  //   const checked = event.checked;
 
-    if (checked) {
-      this.currentAppointmentForm.get('primaryPracticeId')?.enable();
-      this.currentAppointmentForm
-        .get('primaryPracticeId')
-        ?.setValidators([Validators.required]);
-      this.currentAppointmentForm.get('organizationTypeId')?.enable();
-      this.currentAppointmentForm
-        .get('organizationTypeId')
-        ?.setValidators([Validators.required]);
-      this.currentAppointmentForm.get('explanationOfNonPrivileges')?.disable();
-      this.currentAppointmentForm
-        .get('explanationOfNonPrivileges')
-        ?.clearValidators();
-      this.currentAppointmentForm
-        .get('explanationOfNonPrivileges')
-        ?.setValue(null);
-      this.currentAppointmentForm
-        .get('explanationOfNonClinicalActivities')
-        ?.disable();
-      this.currentAppointmentForm
-        .get('explanationOfNonClinicalActivities')
-        ?.setValue('');
-    } else {
-      this.currentAppointmentForm.get('primaryPracticeId')?.disable();
-      this.currentAppointmentForm.get('primaryPracticeId')?.clearValidators();
-      this.currentAppointmentForm.get('primaryPracticeId')?.setValue(null);
-      this.currentAppointmentForm.get('organizationTypeId')?.disable();
-      this.currentAppointmentForm.get('organizationTypeId')?.clearValidators();
-      this.currentAppointmentForm.get('organizationTypeId')?.setValue(null);
-      this.currentAppointmentForm.get('explanationOfNonPrivileges')?.enable();
-      this.currentAppointmentForm
-        .get('explanationOfNonPrivileges')
-        ?.setValidators([Validators.required]);
-      this.currentAppointmentForm
-        .get('explanationOfNonClinicalActivities')
-        ?.enable();
-    }
-  }
+  //   if (checked) {
+  //     this.currentAppointmentForm.get('primaryPracticeId')?.enable();
+  //     this.currentAppointmentForm
+  //       .get('primaryPracticeId')
+  //       ?.setValidators([Validators.required]);
+  //     this.currentAppointmentForm.get('organizationTypeId')?.enable();
+  //     this.currentAppointmentForm
+  //       .get('organizationTypeId')
+  //       ?.setValidators([Validators.required]);
+  //     this.currentAppointmentForm.get('explanationOfNonPrivileges')?.disable();
+  //     this.currentAppointmentForm
+  //       .get('explanationOfNonPrivileges')
+  //       ?.clearValidators();
+  //     this.currentAppointmentForm
+  //       .get('explanationOfNonPrivileges')
+  //       ?.setValue(null);
+  //     this.currentAppointmentForm
+  //       .get('explanationOfNonClinicalActivities')
+  //       ?.disable();
+  //     this.currentAppointmentForm
+  //       .get('explanationOfNonClinicalActivities')
+  //       ?.setValue('');
+  //   } else {
+  //     this.currentAppointmentForm.get('primaryPracticeId')?.disable();
+  //     this.currentAppointmentForm.get('primaryPracticeId')?.clearValidators();
+  //     this.currentAppointmentForm.get('primaryPracticeId')?.setValue(null);
+  //     this.currentAppointmentForm.get('organizationTypeId')?.disable();
+  //     this.currentAppointmentForm.get('organizationTypeId')?.clearValidators();
+  //     this.currentAppointmentForm.get('organizationTypeId')?.setValue(null);
+  //     this.currentAppointmentForm.get('explanationOfNonPrivileges')?.enable();
+  //     this.currentAppointmentForm
+  //       .get('explanationOfNonPrivileges')
+  //       ?.setValidators([Validators.required]);
+  //     this.currentAppointmentForm
+  //       .get('explanationOfNonClinicalActivities')
+  //       ?.enable();
+  //   }
+  // }
 
   setFormValues(data: any) {
     if (data) {
@@ -165,7 +168,7 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
 
         if (key === 'clinicallyActive') {
           newValue = value === 1 ? true : false;
-          this.onClinicalActiveChange({ checked: newValue });
+          //this.onClinicalActiveChange({ checked: newValue });
         }
 
         this.currentAppointmentForm.get(key)?.setValue(newValue);
@@ -178,12 +181,12 @@ export class CurrentAppointmentFormComponent implements OnInit, OnChanges {
   onFormChanges() {
     // include subscriptions to .valueChanges here for the reactive form
     // be sure to include .pipe(untilDestroyed(this)) to the subscriptions
-    this.currentAppointmentForm
-      .get('clinicallyActive')
-      ?.valueChanges.pipe(untilDestroyed(this))
-      .subscribe((val) => {
-        this.onClinicalActiveChange({ checked: val });
-      });
+    // this.currentAppointmentForm
+    //   .get('clinicallyActive')
+    //   ?.valueChanges.pipe(untilDestroyed(this))
+    //   .subscribe((val) => {
+    //     this.onClinicalActiveChange({ checked: val });
+    //   });
   }
 
   onSubmit() {

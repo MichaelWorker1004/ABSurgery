@@ -39,8 +39,6 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                             new
                             {
                                 UserId = dto.UserId,
-                                PrimaryPracticeID = dto.PrimaryPracticeId,
-                                OrganizationTypeId = dto.OrganizationTypeId,
                                 ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges,
                                 ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities,
                                 CreatedByUserId = dto.UserId,
@@ -71,8 +69,6 @@ namespace SurgeonPortal.DataAccess.ProfessionalStanding
                         new
                         {
                             UserId = dto.UserId,
-                            PrimaryPracticeID = dto.PrimaryPracticeId,
-                            OrganizationTypeId = dto.OrganizationTypeId,
                             ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges,
                             ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities,
                             LastUpdatedByUserId = dto.UserId,

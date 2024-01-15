@@ -79,6 +79,15 @@
             "mapsTo": "OrganizationTypeId"
           },
           {
+            "name": "PrimaryAppointment",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "PrimaryAppointment"
+          },
+          {
             "name": "StateCode",
             "dataType": "string",
             "maxLength": 2,
@@ -177,6 +186,16 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.AppointmentTypeId"
+              },
+              {
+                "name": "PrimaryAppointment",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PrimaryAppointment"
               },
               {
                 "name": "AppointmentType",
@@ -289,6 +308,11 @@
     {
       "name": "OrganizationTypeId",
       "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "PrimaryAppointment",
+      "dataType": "bool",
       "required": true
     },
     {

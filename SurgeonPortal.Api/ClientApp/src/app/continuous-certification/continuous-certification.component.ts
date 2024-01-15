@@ -247,8 +247,7 @@ export class ContinuousCertificationComponent implements OnInit {
       {
         id: 'Pers_Info',
         title: 'Personal Profile',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+        description: 'Review the personal information ABS has on file for you.',
         action: {
           type: Action.component,
           action: '/personal-profile',
@@ -263,9 +262,9 @@ export class ContinuousCertificationComponent implements OnInit {
       },
       {
         id: 'Outcomes',
-        title: 'Outcomes Registries / Quality Assessment Programs',
+        title: 'Outcomes Registries / Quality Assessments',
         description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+          'Confirm your participation in registries and/or QA programs.',
         action: {
           type: Action.dialog,
           action: 'outcomeRegistriesModal',
@@ -279,7 +278,7 @@ export class ContinuousCertificationComponent implements OnInit {
         id: 'Med_Training',
         title: 'Medical Training',
         description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+          'Update your medical training records and related certifications.',
         action: {
           type: Action.component,
           action: '/medical-training',
@@ -296,7 +295,7 @@ export class ContinuousCertificationComponent implements OnInit {
         id: 'Prof_Standing',
         title: 'Professional Standing',
         description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+          'Update your state medical license, hospital appointments and sanctions/ethics.',
         action: {
           type: Action.component,
           action: '/professional-standing',
@@ -313,7 +312,7 @@ export class ContinuousCertificationComponent implements OnInit {
         id: 'CME',
         title: 'CME Repository',
         description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+          'View detailed records of CME credits earned and reported to ABS.',
         action: {
           type: Action.component,
           action: '/cme-repository',
@@ -329,8 +328,7 @@ export class ContinuousCertificationComponent implements OnInit {
       {
         id: 'CC_Fee',
         title: 'Pay Fee',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+        description: 'Continuous Certification fees are due annually.',
         action: {
           type: Action.dialog,
           action: 'payFeeModal',
@@ -343,8 +341,7 @@ export class ContinuousCertificationComponent implements OnInit {
       {
         id: 'Ref_Let',
         title: 'Reference Forms',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+        description: 'Provide professional references for ABS to contact.',
         action: {
           type: Action.dialog,
           action: 'referenceFormsModal',
@@ -358,7 +355,7 @@ export class ContinuousCertificationComponent implements OnInit {
         id: 'CC_Attestation',
         title: 'Attestation',
         description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+          'Attest to your compliance with Continuous Certification requirements.',
         action: {
           type: Action.dialog,
           action: 'attestationModal',
@@ -377,7 +374,7 @@ export class ContinuousCertificationComponent implements OnInit {
           action: '/apply-and-register',
         },
         description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+          'All requirements up to date? Go to the Apply & Register page.',
         actionStyle: 'button',
         disabled: false,
         actionDisplay: 'Apply Now',

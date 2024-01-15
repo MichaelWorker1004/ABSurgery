@@ -5,6 +5,7 @@ export interface IUserAppointmentReadOnlyModel {
     practiceTypeId: number;
     practiceType: string;
     appointmentTypeId: number;
+    primaryAppointment: boolean;
     appointmentType: string;
     organizationTypeId: number;
     authorizingOfficial: string;

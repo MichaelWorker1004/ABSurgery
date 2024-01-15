@@ -5,14 +5,8 @@
   <section>
     <div class="grid">
       <sl-card class="col-12">
-        <h5 class="mt-0 mb-2" panel-header>Applications for 2021-2022</h5>
-        <hr />
-        <p>
-          Applications for ABS examinations are restricted to eligible
-          candidates only. Below is a list of exams for which the ABS currently
-          recognizes you as eligible to apply. Click the link to apply where
-          appropriate.
-        </p>
+        <!-- <h5 class="mt-0 mb-2" panel-header>Current Eligible Exams</h5>
+        <hr /> -->
         <div class="mt-2 grid">
           <div
             [ngClass]="{
@@ -23,7 +17,7 @@
           >
             <p class="text-lg font-bold m-0">
               {{
-                (qeExamEligibility$ | async)
+                ((qeExamEligibility$ | async) ?? []).length > 0
                   ? 'Active Examinations & Applications'
                   : 'No applications are currently available, check back later.'
               }}
@@ -114,6 +108,10 @@
             </div>
           </div>
         </div>
+        <p>
+          ABS exam applications and registrations for which you are eligible and
+          are currently open appear on this page.
+        </p>
         <hr class="mt-5" />
         <div class="col-12">
           <h5>Upcoming Exams</h5>

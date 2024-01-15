@@ -9,14 +9,15 @@
 </ng-container>
 <form [formGroup]="hospitalAppointmentForm" (ngSubmit)="onSubmit()">
   <div class="grid">
-    <div class="col-12">
-      <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque
-        nec dolor lacinia interdum quis nec nisi. Pellentesque dolor erat,
-        egestas sit amet tortor at, condimentum tempor erat.
-      </p>
+    <div class="col-12 flex gap-2 justify-content-start align-items-center">
+      <p-checkbox
+        formControlName="primaryAppointment"
+        [value]="true"
+        [binary]="true"
+        inputId="primaryAppointment"
+      ></p-checkbox>
+      <label for="primaryAppointment">This is my Primary Appointment</label>
     </div>
-
     <div class="col-12 md:col-6 flex flex-column justify-content-start">
       <label htmlFor="practiceTypeId">Practice Type*</label>
 

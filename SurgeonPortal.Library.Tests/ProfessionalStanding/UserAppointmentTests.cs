@@ -13,14 +13,15 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
 	public class UserAppointmentTests : TestBase<int>
     {
         private UserAppointmentDto CreateValidDto()
-        {     
+        {
             var dto = Create<UserAppointmentDto>();
-
+        
             dto.ApptId = Create<decimal>();
             dto.UserId = 1234;
             dto.PracticeTypeId = Create<int?>();
             dto.PracticeType = Create<string>();
             dto.AppointmentTypeId = Create<int?>();
+            dto.PrimaryAppointment = Create<bool?>();
             dto.AppointmentType = Create<string>();
             dto.OrganizationTypeId = Create<int?>();
             dto.AuthorizingOfficial = Create<string>();
@@ -29,11 +30,11 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.StateCode = Create<string>();
             dto.Other = Create<string>();
             dto.OrganizationName = Create<string>();
-    
+        
             return dto;
         }
-
-            
+        
+        
 
         #region DeleteAsync
         
@@ -91,7 +92,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var mockDal = new Mock<IUserAppointmentDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
                 .ReturnsAsync(Create<UserAppointmentDto>());
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -111,11 +112,11 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         {
             var dto = CreateValidDto();
             var expectedApptId = Create<int>();
-        
+            
             var mockDal = new Mock<IUserAppointmentDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
                 .ReturnsAsync(dto);
-        
+            
         
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
@@ -160,6 +161,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             sut.PracticeTypeId = dto.PracticeTypeId;
             sut.PracticeType = dto.PracticeType;
             sut.AppointmentTypeId = dto.AppointmentTypeId;
+            sut.PrimaryAppointment = dto.PrimaryAppointment;
             sut.AppointmentType = dto.AppointmentType;
             sut.OrganizationTypeId = dto.OrganizationTypeId;
             sut.AuthorizingOfficial = dto.AuthorizingOfficial;
@@ -212,6 +214,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             sut.PracticeTypeId = dto.PracticeTypeId;
             sut.PracticeType = dto.PracticeType;
             sut.AppointmentTypeId = dto.AppointmentTypeId;
+            sut.PrimaryAppointment = dto.PrimaryAppointment;
             sut.AppointmentType = dto.AppointmentType;
             sut.OrganizationTypeId = dto.OrganizationTypeId;
             sut.AuthorizingOfficial = dto.AuthorizingOfficial;
@@ -246,7 +249,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var mockDal = new Mock<IUserAppointmentDal>();
             mockDal.Setup(m => m.GetByIdAsync(expectedApptId))
-                        .ReturnsAsync(dto);
+                .ReturnsAsync(dto);
             
             mockDal.Setup(m => m.UpdateAsync(It.IsAny<UserAppointmentDto>()))
                 .Callback<UserAppointmentDto>((p) => passedDto = p)
@@ -267,6 +270,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             sut.PracticeTypeId = dto.PracticeTypeId;
             sut.PracticeType = dto.PracticeType;
             sut.AppointmentTypeId = dto.AppointmentTypeId;
+            sut.PrimaryAppointment = dto.PrimaryAppointment;
             sut.AppointmentType = dto.AppointmentType;
             sut.OrganizationTypeId = dto.OrganizationTypeId;
             sut.AuthorizingOfficial = dto.AuthorizingOfficial;
@@ -285,6 +289,7 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             sut.PracticeTypeId = dto.PracticeTypeId;
             sut.PracticeType = dto.PracticeType;
             sut.AppointmentTypeId = dto.AppointmentTypeId;
+            sut.PrimaryAppointment = dto.PrimaryAppointment;
             sut.AppointmentType = dto.AppointmentType;
             sut.OrganizationTypeId = dto.OrganizationTypeId;
             sut.AuthorizingOfficial = dto.AuthorizingOfficial;
@@ -300,10 +305,10 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
-                    .Excluding(m => m.PracticeType)
-                    .Excluding(m => m.AppointmentType)
-                    .Excluding(m => m.OrganizationType)
-                    .Excluding(m => m.OrganizationName)
+                .Excluding(m => m.PracticeType)
+                .Excluding(m => m.AppointmentType)
+                .Excluding(m => m.OrganizationType)
+                .Excluding(m => m.OrganizationName)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.LastUpdatedAtUtc)
