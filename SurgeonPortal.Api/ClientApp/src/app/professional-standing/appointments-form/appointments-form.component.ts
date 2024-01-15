@@ -20,6 +20,7 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { FormErrorsComponent } from 'src/app/shared/components/form-errors/form-errors.component';
 
@@ -47,6 +48,7 @@ interface OptionList {
     ButtonModule,
     InputTextModule,
     DropdownModule,
+    CheckboxModule,
 
     AutoCompleteModule,
     FormErrorsComponent,
@@ -82,6 +84,7 @@ export class AppointmentsFormComponent implements OnInit, OnChanges {
   localEdit = false;
 
   hospitalAppointmentForm = new FormGroup({
+    primaryAppointment: new FormControl({ value: false, disabled: false }),
     practiceTypeId: new FormControl<number | null>(
       { value: null, disabled: false },
       [Validators.required]

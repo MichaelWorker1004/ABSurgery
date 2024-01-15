@@ -18,10 +18,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             dto.Id = Create<int>();
             dto.UserId = 1234;
-            dto.PrimaryPracticeId = Create<int?>();
-            dto.PrimaryPractice = Create<string>();
-            dto.OrganizationTypeId = Create<int?>();
-            dto.OrganizationType = Create<string>();
             dto.ExplanationOfNonPrivileges = Create<string>();
             dto.ExplanationOfNonClinicalActivities = Create<string>();
             dto.ClinicallyActive = Create<int>();
@@ -33,7 +29,65 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             return dto;
         }
         
+        #region UserProfessionalStanding Business Rules
+        [Test]
+        public async Task IsRequired_GetByUserId_ExplanationOfNonPrivileges_Fails()
+        {
+            var dto = CreateValidDto();
+            var expectedUserId = 1234;
+            
+            var mockDal = new Mock<IUserProfessionalStandingDal>(MockBehavior.Strict);
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+                .ReturnsAsync(dto);
+            
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
+                .Build();
         
+            var factory = new UserProfessionalStandingFactory();
+            var sut = await factory.GetByUserIdAsync();
+            
+            sut.ExplanationOfNonPrivileges = default;
+        
+            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+        
+            //Ensure that the save fails...
+            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
+            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
+            Assert.That(sut.GetBrokenRules()[0].Description == "ExplanationOfNonPrivileges is required", $"Expected the rule description to be 'ExplanationOfNonPrivileges is required', have {sut.GetBrokenRules()[0].Description}");
+            Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
+            Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
+        }
+        
+        [Test]
+        public async Task IsRequired_GetByUserId_ExplanationOfNonPrivileges_Passes()
+        {
+            var dto = CreateValidDto();
+            var expectedUserId = 1234;
+            
+            var mockDal = new Mock<IUserProfessionalStandingDal>(MockBehavior.Strict);
+            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
+                .ReturnsAsync(dto);
+            
+            UseMockServiceProvider()
+                .WithMockedIdentity(1234, "SomeUser")
+                .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim)
+                .WithRegisteredInstance(mockDal)
+                .WithBusinessObject<IUserProfessionalStanding, UserProfessionalStanding>()
+                .Build();
+        
+            var factory = new UserProfessionalStandingFactory();
+            var sut = await factory.GetByUserIdAsync();
+            
+            sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
+        
+            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
+        
+        }
+        #endregion
 
         #region GetByUserIdAsync UserProfessionalStanding
         
@@ -121,10 +175,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
-            sut.PrimaryPracticeId = dto.PrimaryPracticeId;
-            sut.PrimaryPractice = dto.PrimaryPractice;
-            sut.OrganizationTypeId = dto.OrganizationTypeId;
-            sut.OrganizationType = dto.OrganizationType;
             sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
             sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
             sut.ClinicallyActive = dto.ClinicallyActive;
@@ -140,8 +190,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
                 .Excluding(m => m.Id)
-                .Excluding(m => m.PrimaryPractice)
-                .Excluding(m => m.OrganizationType)
                 .Excluding(m => m.ClinicallyActive)
                 .Excluding(m => m.CreatedAtUtc)
                 .Excluding(m => m.LastUpdatedAtUtc)
@@ -176,10 +224,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             var sut = factory.Create();
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
-            sut.PrimaryPracticeId = dto.PrimaryPracticeId;
-            sut.PrimaryPractice = dto.PrimaryPractice;
-            sut.OrganizationTypeId = dto.OrganizationTypeId;
-            sut.OrganizationType = dto.OrganizationType;
             sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
             sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
             sut.ClinicallyActive = dto.ClinicallyActive;
@@ -235,10 +279,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
-            sut.PrimaryPracticeId = dto.PrimaryPracticeId;
-            sut.PrimaryPractice = dto.PrimaryPractice;
-            sut.OrganizationTypeId = dto.OrganizationTypeId;
-            sut.OrganizationType = dto.OrganizationType;
             sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
             sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
             sut.ClinicallyActive = dto.ClinicallyActive;
@@ -253,10 +293,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             sut.Id = dto.Id;
             sut.UserId = dto.UserId;
-            sut.PrimaryPracticeId = dto.PrimaryPracticeId;
-            sut.PrimaryPractice = dto.PrimaryPractice;
-            sut.OrganizationTypeId = dto.OrganizationTypeId;
-            sut.OrganizationType = dto.OrganizationType;
             sut.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
             sut.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
             sut.ClinicallyActive = dto.ClinicallyActive;
@@ -272,8 +308,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
             dto.Should().BeEquivalentTo(passedDto,
                 options => options
                 .Excluding(m => m.Id)
-                .Excluding(m => m.PrimaryPractice)
-                .Excluding(m => m.OrganizationType)
                 .Excluding(m => m.ClinicallyActive)
                 .Excluding(m => m.CreatedByUserId)
                 .Excluding(m => m.CreatedAtUtc)
@@ -311,7 +345,6 @@ namespace SurgeonPortal.Library.Tests.ProfessionalStanding
         
             var factory = new UserProfessionalStandingFactory();
             var sut = await factory.GetByUserIdAsync();
-            sut.PrimaryPracticeId = Create<int>();
         
             await sut.SaveAsync();
             

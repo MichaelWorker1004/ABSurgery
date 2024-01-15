@@ -1,5 +1,5 @@
 using Csla;
-using Csla.Rules;
+using Csla.Rules.CommonRules;
 using SurgeonPortal.DataAccess.Contracts.ProfessionalStanding;
 using SurgeonPortal.Library.Contracts.ProfessionalStanding;
 using System;
@@ -20,18 +20,14 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 	public class UserProfessionalStanding : YtgBusinessBase<UserProfessionalStanding>, IUserProfessionalStanding
     {
         private readonly IUserProfessionalStandingDal _userProfessionalStandingDal;
-        private readonly IGetClinicallyActiveCommandFactory _getClinicallyActiveCommandFactory;
 
         public UserProfessionalStanding(
             IIdentityProvider identityProvider,
-            IUserProfessionalStandingDal userProfessionalStandingDal,
-			IGetClinicallyActiveCommandFactory getClinicallyActiveCommandFactory)
+            IUserProfessionalStandingDal userProfessionalStandingDal)
             : base(identityProvider)
         {
             _userProfessionalStandingDal = userProfessionalStandingDal;
-            _getClinicallyActiveCommandFactory = getClinicallyActiveCommandFactory;
-
-		}
+        }
 
         [Key] 
         [DisplayName(nameof(Id))]
@@ -49,38 +45,6 @@ namespace SurgeonPortal.Library.ProfessionalStanding
 			set { SetProperty(UserIdProperty, value); }
 		}
 		public static readonly PropertyInfo<int> UserIdProperty = RegisterProperty<int>(c => c.UserId);
-
-        [DisplayName(nameof(PrimaryPracticeId))]
-		public int? PrimaryPracticeId
-		{
-			get { return GetProperty(PrimaryPracticeIdProperty); }
-			set { SetProperty(PrimaryPracticeIdProperty, value); }
-		}
-		public static readonly PropertyInfo<int?> PrimaryPracticeIdProperty = RegisterProperty<int?>(c => c.PrimaryPracticeId);
-
-        [DisplayName(nameof(PrimaryPractice))]
-		public string PrimaryPractice
-		{
-			get { return GetProperty(PrimaryPracticeProperty); }
-			set { SetProperty(PrimaryPracticeProperty, value); }
-		}
-		public static readonly PropertyInfo<string> PrimaryPracticeProperty = RegisterProperty<string>(c => c.PrimaryPractice);
-
-        [DisplayName(nameof(OrganizationTypeId))]
-		public int? OrganizationTypeId
-		{
-			get { return GetProperty(OrganizationTypeIdProperty); }
-			set { SetProperty(OrganizationTypeIdProperty, value); }
-		}
-		public static readonly PropertyInfo<int?> OrganizationTypeIdProperty = RegisterProperty<int?>(c => c.OrganizationTypeId);
-
-        [DisplayName(nameof(OrganizationType))]
-		public string OrganizationType
-		{
-			get { return GetProperty(OrganizationTypeProperty); }
-			set { SetProperty(OrganizationTypeProperty, value); }
-		}
-		public static readonly PropertyInfo<string> OrganizationTypeProperty = RegisterProperty<string>(c => c.OrganizationType);
 
         [DisplayName(nameof(ExplanationOfNonPrivileges))]
 		public string ExplanationOfNonPrivileges
@@ -125,10 +89,18 @@ namespace SurgeonPortal.Library.ProfessionalStanding
                     SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
         }
 
-		protected override void AddInjectedBusinessRules()
-		{
-            BusinessRules.AddRule(new ClinicallyActiveRequiresRule(_getClinicallyActiveCommandFactory, ClinicallyActiveProperty, 1));
-		}
+        /// <summary>
+        /// This method is used to add business rules to the Csla 
+        /// business rule engine
+        /// </summary>
+        protected override void AddBusinessRules()
+        {
+            // Only process priority 5 and higher if all 4 and lower completed first
+            BusinessRules.ProcessThroughPriority = 4;
+
+            BusinessRules.AddRule(new Required(ExplanationOfNonPrivilegesProperty, "ExplanationOfNonPrivileges is required"));
+        }
+
 
         [Fetch]
         [RunLocal]
@@ -202,10 +174,6 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             
 			this.Id = dto.Id;
 			this.UserId = dto.UserId;
-			this.PrimaryPracticeId = dto.PrimaryPracticeId;
-			this.PrimaryPractice = dto.PrimaryPractice;
-			this.OrganizationTypeId = dto.OrganizationTypeId;
-			this.OrganizationType = dto.OrganizationType;
 			this.ExplanationOfNonPrivileges = dto.ExplanationOfNonPrivileges;
 			this.ExplanationOfNonClinicalActivities = dto.ExplanationOfNonClinicalActivities;
 			this.ClinicallyActive = dto.ClinicallyActive;
@@ -222,10 +190,6 @@ namespace SurgeonPortal.Library.ProfessionalStanding
             
 			dto.Id = this.Id;
 			dto.UserId = this.UserId;
-			dto.PrimaryPracticeId = this.PrimaryPracticeId;
-			dto.PrimaryPractice = this.PrimaryPractice;
-			dto.OrganizationTypeId = this.OrganizationTypeId;
-			dto.OrganizationType = this.OrganizationType;
 			dto.ExplanationOfNonPrivileges = this.ExplanationOfNonPrivileges;
 			dto.ExplanationOfNonClinicalActivities = this.ExplanationOfNonClinicalActivities;
 			dto.ClinicallyActive = this.ClinicallyActive;

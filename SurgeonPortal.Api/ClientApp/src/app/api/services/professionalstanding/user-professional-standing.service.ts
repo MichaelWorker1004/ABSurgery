@@ -19,7 +19,9 @@ export class UserProfessionalStandingService {
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: ExplanationOfNonPrivileges
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**
@@ -45,13 +47,13 @@ export class UserProfessionalStandingService {
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: ExplanationOfNonPrivileges
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**
             * Required Parameters
-            * primaryPracticeId:Number
-            * organizationTypeId:Number
             * explanationOfNonPrivileges:String
             * explanationOfNonClinicalActivities:String
             * apiVersion
@@ -76,13 +78,13 @@ export class UserProfessionalStandingService {
             
             /**
             * Business Rules
-            * No business rules exist for this model
+            * Business rules for property: ExplanationOfNonPrivileges
+            *   Rule Name: Required
+            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             */
             
             /**
             * Required Parameters
-            * primaryPracticeId:Number
-            * organizationTypeId:Number
             * explanationOfNonPrivileges:String
             * explanationOfNonClinicalActivities:String
             * apiVersion

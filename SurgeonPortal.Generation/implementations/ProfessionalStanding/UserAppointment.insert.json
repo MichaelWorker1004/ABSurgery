@@ -88,6 +88,15 @@
             "mapsTo": "OrganizationId"
           },
           {
+            "name": "PrimaryAppointment",
+            "dataType": "bool",
+            "maxLength": 1,
+            "precision": 1,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "PrimaryAppointment"
+          },
+          {
             "name": "AuthorizingOfficial",
             "dataType": "string",
             "maxLength": 100,
@@ -168,6 +177,16 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.AppointmentTypeId"
+              },
+              {
+                "name": "PrimaryAppointment",
+                "dataType": "bool?",
+                "maxLength": 1,
+                "precision": 1,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.PrimaryAppointment"
               },
               {
                 "name": "AppointmentType",
@@ -285,6 +304,11 @@
     {
       "name": "OrganizationId",
       "dataType": "int",
+      "required": true
+    },
+    {
+      "name": "PrimaryAppointment",
+      "dataType": "bool",
       "required": true
     },
     {

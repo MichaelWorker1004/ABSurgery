@@ -302,9 +302,16 @@ export class ProfessionalStandingState {
           stateCode: response.stateCode,
           other: response.other,
           organizationName: response.organizationName,
+          primaryAppointment: response.primaryAppointment,
         };
+        const updatedAppointmentsList = state.allAppointments.map((item) => {
+          if (readOnlyResult.primaryAppointment) {
+            return { ...item, primaryAppointment: false };
+          }
+          return item;
+        });
         ctx.patchState({
-          allAppointments: [readOnlyResult, ...state.allAppointments],
+          allAppointments: [readOnlyResult, ...updatedAppointmentsList],
           selectedAppointment: undefined,
           appointmentErrors: null,
         });
@@ -342,10 +349,18 @@ export class ProfessionalStandingState {
             stateCode: response.stateCode,
             other: response.other,
             organizationName: response.organizationName,
+            primaryAppointment: response.primaryAppointment,
           };
-          const updatedAppointmentsList = state.allAppointments.map((item) =>
-            item.apptId === readOnlyResult.apptId ? readOnlyResult : item
-          );
+          const updatedAppointmentsList = state.allAppointments.map((item) => {
+            if (readOnlyResult.primaryAppointment) {
+              return item.apptId === readOnlyResult.apptId
+                ? readOnlyResult
+                : { ...item, primaryAppointment: false };
+            }
+            return item.apptId === readOnlyResult.apptId
+              ? readOnlyResult
+              : item;
+          });
           ctx.patchState({
             allAppointments: updatedAppointmentsList,
             selectedAppointment: undefined,

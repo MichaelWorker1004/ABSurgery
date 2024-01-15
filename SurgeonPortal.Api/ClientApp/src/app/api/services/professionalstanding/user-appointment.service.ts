@@ -85,6 +85,7 @@ export class UserAppointmentService {
             * organizationTypeId:Number
             * stateCode:String
             * organizationId:Number
+            * primaryAppointment:Boolean
             * authorizingOfficial:String
             * other:String
             * apiVersion
@@ -119,6 +120,7 @@ export class UserAppointmentService {
             * practiceTypeId:Number
             * appointmentTypeId:Number
             * organizationTypeId:Number
+            * primaryAppointment:Boolean
             * stateCode:String
             * organizationId:Number
             * authorizingOfficial:String

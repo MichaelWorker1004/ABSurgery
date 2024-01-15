@@ -59,6 +59,17 @@
       "rules": {}
     },
     {
+      "name": "PrimaryAppointment",
+      "dataType": "bool?",
+      "maxLength": 1,
+      "precision": 1,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
       "name": "AppointmentType",
       "dataType": "string",
       "maxLength": 100,

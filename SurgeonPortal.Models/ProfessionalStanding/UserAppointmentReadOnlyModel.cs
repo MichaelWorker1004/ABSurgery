@@ -7,6 +7,7 @@ namespace SurgeonPortal.Models.ProfessionalStanding
         public int? PracticeTypeId { get; set; }
         public string PracticeType { get; set; }
         public int? AppointmentTypeId { get; set; }
+        public bool? PrimaryAppointment { get; set; }
         public string AppointmentType { get; set; }
         public int? OrganizationTypeId { get; set; }
         public string AuthorizingOfficial { get; set; }

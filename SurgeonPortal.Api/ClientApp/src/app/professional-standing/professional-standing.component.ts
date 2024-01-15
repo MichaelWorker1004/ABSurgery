@@ -167,6 +167,9 @@ export class ProfessionalStandingComponent implements OnInit {
     appointmentTypeOptions: [],
   };
 
+  hasPrimaryAppointment = false;
+  allAppointments: IUserAppointmentReadOnlyModel[] = [];
+
   constructor(
     private _store: Store,
     private globalDialogService: GlobalDialogService
@@ -177,6 +180,25 @@ export class ProfessionalStandingComponent implements OnInit {
   ngOnInit() {
     this.initPicklistValues();
     this.setStateMedicalLicenseEdit();
+
+    this.allAppointments$?.pipe(untilDestroyed(this)).subscribe((res) => {
+      if (res) {
+        this.hasPrimaryAppointment = res.some(
+          (appt) => appt.primaryAppointment
+        );
+        let allAppointments = JSON.parse(JSON.stringify(res));
+        allAppointments = allAppointments.sort((a: any, b: any) => {
+          if (a.primaryAppointment === b.primaryAppointment) {
+            return 0;
+          } else if (a.primaryAppointment) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+        this.allAppointments = allAppointments;
+      }
+    });
   }
 
   setStateMedicalLicenseEdit() {
@@ -505,6 +527,7 @@ export class ProfessionalStandingComponent implements OnInit {
       organizationId: orgId,
       stateCode: $event.data.stateCode ?? '',
       other: $event.data.other ?? '',
+      primaryAppointment: $event.data.primaryAppointment ?? false,
     } as unknown as IUserAppointmentModel;
     if ($event.isEdit) {
       this._store

@@ -9,6 +9,7 @@ namespace SurgeonPortal.Library.Contracts.ProfessionalStanding
         int? PracticeTypeId { get; set; }
         string PracticeType { get; set; }
         int? AppointmentTypeId { get; set; }
+        bool? PrimaryAppointment { get; set; }
         string AppointmentType { get; set; }
         int? OrganizationTypeId { get; set; }
         string AuthorizingOfficial { get; set; }

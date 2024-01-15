@@ -88,16 +88,12 @@ namespace SurgeonPortal.Api.Controllers.ProfessionalStanding
 
         private void AssignCreateProperties(IUserProfessionalStanding entity, UserProfessionalStandingModel model)
         {
-            entity.PrimaryPracticeId = model.PrimaryPracticeId;
-            entity.OrganizationTypeId = model.OrganizationTypeId;
             entity.ExplanationOfNonPrivileges = model.ExplanationOfNonPrivileges;
             entity.ExplanationOfNonClinicalActivities = model.ExplanationOfNonClinicalActivities;
         }
 
         private void AssignEditProperties(IUserProfessionalStanding entity, UserProfessionalStandingModel model)
         {
-            entity.PrimaryPracticeId = model.PrimaryPracticeId;
-            entity.OrganizationTypeId = model.OrganizationTypeId;
             entity.ExplanationOfNonPrivileges = model.ExplanationOfNonPrivileges;
             entity.ExplanationOfNonClinicalActivities = model.ExplanationOfNonClinicalActivities;
         }

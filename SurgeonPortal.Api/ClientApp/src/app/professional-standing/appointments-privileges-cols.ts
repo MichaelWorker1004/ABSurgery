@@ -1,6 +1,7 @@
 import { AbsGrid } from '../shared/components/grid/abs-grid';
 
 export const APPOINTMENTS_PRIVILEGES_COLS = [
+  AbsGrid.setYesNoDisplayCol('Primary', 'primaryAppointment'),
   AbsGrid.setTextDisplayCol('Practice Type', 'practiceType'),
   AbsGrid.setTextDisplayCol('Appointment Type', 'appointmentType'),
   AbsGrid.setTextDisplayCol('Organization Type', 'organizationType'),

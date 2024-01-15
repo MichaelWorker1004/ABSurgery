@@ -43,25 +43,6 @@
             "mapsTo": "UserId"
           },
           {
-            "name": "PrimaryPracticeID",
-            "nameOverride": "PrimaryPracticeId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "PrimaryPracticeId"
-          },
-          {
-            "name": "OrganizationTypeId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "OrganizationTypeId"
-          },
-          {
             "name": "ExplanationOfNonPrivileges",
             "dataType": "string",
             "maxLength": -1,
@@ -99,16 +80,6 @@
       "dataType": "int",
       "required": true,
       "substitution": "$UserId"
-    },
-    {
-      "name": "PrimaryPracticeId",
-      "dataType": "int",
-      "required": true
-    },
-    {
-      "name": "OrganizationTypeId",
-      "dataType": "int",
-      "required": true
     },
     {
       "name": "ExplanationOfNonPrivileges",

@@ -43,25 +43,6 @@
             "mapsTo": "UserId"
           },
           {
-            "name": "PrimaryPracticeID",
-            "nameOverride": "PrimaryPracticeId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "PrimaryPracticeId"
-          },
-          {
-            "name": "OrganizationTypeId",
-            "dataType": "int",
-            "maxLength": 4,
-            "precision": 10,
-            "scale": 0,
-            "required": true,
-            "mapsTo": "OrganizationTypeId"
-          },
-          {
             "name": "ExplanationOfNonPrivileges",
             "dataType": "string",
             "maxLength": -1,
@@ -121,46 +102,6 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.UserId"
-              },
-              {
-                "name": "PrimaryPracticeId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.PrimaryPracticeId"
-              },
-              {
-                "name": "PrimaryPractice",
-                "dataType": "string",
-                "maxLength": 100,
-                "precision": 0,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.PrimaryPractice"
-              },
-              {
-                "name": "OrganizationTypeId",
-                "dataType": "int?",
-                "maxLength": 4,
-                "precision": 10,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.OrganizationTypeId"
-              },
-              {
-                "name": "OrganizationType",
-                "dataType": "string",
-                "maxLength": 200,
-                "precision": 0,
-                "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
-                "mapsTo": "model.OrganizationType"
               },
               {
                 "name": "ExplanationOfNonPrivileges",
@@ -244,16 +185,6 @@
       "dataType": "int",
       "required": true,
       "substitution": "$UserId"
-    },
-    {
-      "name": "PrimaryPracticeId",
-      "dataType": "int",
-      "required": true
-    },
-    {
-      "name": "OrganizationTypeId",
-      "dataType": "int",
-      "required": true
     },
     {
       "name": "ExplanationOfNonPrivileges",
