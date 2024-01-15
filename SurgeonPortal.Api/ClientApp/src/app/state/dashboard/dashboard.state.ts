@@ -10,6 +10,7 @@ import {
   GetDashboardCertificationInformation,
   GetDashboardCertificationStatus,
   GetDashboardProgramInformation,
+  GetMeetingRequitments,
   GetTraineeRegistrationStatus,
 } from './dashboard.actions';
 import { catchError, of, tap } from 'rxjs';
@@ -20,6 +21,8 @@ import { IQualifyingExamReadOnlyModel } from 'src/app/api/models/examinations/qu
 import { QualifyingExamService } from 'src/app/api/services/examinations/qualifying-exam.service';
 import { ICertificationStatusReadOnlyModel } from 'src/app/api/models/user/certification-status-read-only.model';
 import { CertificationStatusService } from 'src/app/api/services/user/certification-status.service';
+import { IRequirementsReadOnlyModel } from 'src/app/api/models/continuouscertification/requirements-read-only.model';
+import { RequirementsService } from 'src/app/api/services/continuouscertification/requirements.service';
 
 export interface ICertification extends ICertificationReadOnlyModel {
   status?: string;
@@ -36,6 +39,7 @@ export interface IDashboardState {
   registrationStatus: IRegistrationStatusReadOnlyModel | null;
   alertsAndNotices: IQualifyingExamReadOnlyModel | undefined;
   programs: IProgramReadOnlyModel;
+  meetingRequirements: IRequirementsReadOnlyModel | undefined;
 }
 
 const USER_ACCOUNT_STATE_TOKEN = new StateToken<IDashboardState>('dashboard');
@@ -47,6 +51,7 @@ const USER_ACCOUNT_STATE_TOKEN = new StateToken<IDashboardState>('dashboard');
     certificationStatus: null,
     registrationStatus: null,
     alertsAndNotices: undefined,
+    meetingRequirements: undefined,
     programs: {
       programName: '',
       programDirector: '',
@@ -66,7 +71,8 @@ export class DashboardState {
     private examService: ExamService,
     private globalDialogService: GlobalDialogService,
     private qualifyingExamService: QualifyingExamService,
-    private certificationStatusService: CertificationStatusService
+    private certificationStatusService: CertificationStatusService,
+    private requirementsService: RequirementsService
   ) {}
   //user
   @Action(GetDashboardCertificationStatus) getDashboardCertificationStatus(
@@ -192,5 +198,25 @@ export class DashboardState {
         return of(errors);
       })
     );
+  }
+
+  @Action(GetMeetingRequitments)
+  getMeetingRequitments(
+    ctx: StateContext<IDashboardState>,
+    payload: GetMeetingRequitments
+  ) {
+    return this.requirementsService
+      .retrieveRequirementsReadOnly_GetByUserId(payload.userId)
+      .pipe(
+        tap((result: IRequirementsReadOnlyModel) => {
+          ctx.patchState({
+            meetingRequirements: result,
+          });
+        }),
+        catchError((httpError: HttpErrorResponse) => {
+          const errors = httpError.error;
+          return of(errors);
+        })
+      );
   }
 }
