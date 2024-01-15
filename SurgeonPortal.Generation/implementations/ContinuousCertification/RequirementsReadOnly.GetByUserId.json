@@ -1,0 +1,72 @@
+{
+  "name": "RequirementsReadOnly",
+  "implementationName": "ContinuousCertification\\RequirementsReadOnly.GetByUserId",
+  "template": "ytg-framework/readonly-get",
+  "parameters": {
+    "Adapter": "dbo.get_user_meeting_cc_requirements_byuserid",
+    "ControllerName": "ContinuousCertification\\RequirementsController",
+    "ControllerRoute": "api/continuous-certification/requirements",
+    "ControllerVersion": "1",
+    "FetchMethodName": "GetByUserId",
+    "IncludeControllerInGeneration": "true",
+    "IsChild": "false",
+    "IsRoot": "true",
+    "Model": "ContinuousCertification\\RequirementsReadOnly",
+    "ModelGroup": "RequirementsReadOnly",
+    "RootNamespace": "$project.RootNamespace",
+    "Route": "by-userid"
+  },
+  "projectClaims": {},
+  "adapters": [
+    {
+      "type": "storedProcedure",
+      "name": "dbo.get_user_meeting_cc_requirements_byuserid",
+      "storedProcedure": {
+        "schema": "[dbo]",
+        "procedureName": "[get_user_meeting_cc_requirements_byuserid]",
+        "parameters": [
+          {
+            "name": "UserId",
+            "dataType": "int",
+            "maxLength": 4,
+            "precision": 10,
+            "scale": 0,
+            "required": true,
+            "mapsTo": "UserId"
+          }
+        ],
+        "recordsets": [
+          {
+            "model": "ContinuousCertification\\RequirementsReadOnly",
+            "fields": [
+              {
+                "name": "MeetingRequirements",
+                "dataType": "string",
+                "maxLength": 12,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.MeetingRequirements"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "inputParameters": [
+    {
+      "name": "UserId",
+      "dataType": "int",
+      "required": true,
+      "substitution": "$UserId"
+    }
+  ],
+  "metadata": {
+    "command": "ytgim g i s ContinuousCertification\\RequirementsReadOnly.GetByUserId RequirementsReadOnly -t=ytg-framework/readonly-get -p:Model=ContinuousCertification\\RequirementsReadOnly -p:Adapter=sp:abssp-[dbo].[get_user_meeting_cc_requirements_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=RequirementsReadOnly -p:Route=by-userid -p:ControllerName=ContinuousCertification\\RequirementsController -p:ControllerRoute=api/continuous-certification/requirements -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  ContinuousCertification\\RequirementsReadOnly.GetByUserId RequirementsReadOnly -t=ytg-framework/readonly-get -p:Model=ContinuousCertification\\RequirementsReadOnly -p:Adapter=sp:abssp-[dbo].[get_user_meeting_cc_requirements_byuserid] -p:FetchMethodName=GetByUserId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=RequirementsReadOnly -p:Route=by-userid -p:ControllerName=ContinuousCertification\\RequirementsController -p:ControllerRoute=api/continuous-certification/requirements -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2024-01-12T18:02:25.7176419Z"
+  },
+  "version": 1
+}

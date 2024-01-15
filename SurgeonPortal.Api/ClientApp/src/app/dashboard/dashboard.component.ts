@@ -20,6 +20,7 @@ import {
   GetExamDirectory,
   ExamProcessSelectors,
   GetDashboardCertificationStatus,
+  GetMeetingRequitments,
 } from '../state';
 import { UserClaims } from '../side-navigation/user-status.enum';
 import { IActionCardReadOnlyModel } from '../shared/components/action-card/action-card-read-only.model';
@@ -31,6 +32,7 @@ import { IProgramReadOnlyModel } from '../api/models/trainees/program-read-only.
 import { ICertificationReadOnlyModel } from '../api/models/surgeons/certification-read-only.model';
 import { ApplicationSelectors } from '../state/application/application.selectors';
 import { IFeatureFlags } from '../state/application/application.state';
+import { IRequirementsReadOnlyModel } from '../api/models/continuouscertification/requirements-read-only.model';
 
 @UntilDestroy()
 @Component({
@@ -65,6 +67,10 @@ export class DashboardComponent {
 
   @Select(DashboardSelectors.dashboardRegistrationStatus) registrationStatus$:
     | Observable<IDashboardState>
+    | undefined;
+
+  @Select(DashboardSelectors.slices.meetingRequirements) meetingRequirements$:
+    | Observable<IRequirementsReadOnlyModel>
     | undefined;
 
   @Select(DashboardSelectors.dashboardCertificateInformation)
@@ -140,6 +146,7 @@ export class DashboardComponent {
           : 'Coming Soon';
       }
     });
+    this._store.dispatch(new GetMeetingRequitments());
     this.initDashboardData();
   }
 

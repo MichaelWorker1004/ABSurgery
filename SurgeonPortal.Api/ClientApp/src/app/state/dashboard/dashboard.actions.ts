@@ -21,3 +21,7 @@ export class GetTraineeRegistrationStatus {
 export class GetAlertsAndNotices {
   static readonly type = '[Dashboard] Get the alerts and notices information';
 }
+
+export class GetMeetingRequitments {
+  static readonly type = '[Dashboard] Get the meeting requirements information';
+}

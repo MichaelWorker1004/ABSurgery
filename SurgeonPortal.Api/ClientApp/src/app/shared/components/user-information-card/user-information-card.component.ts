@@ -35,6 +35,12 @@ export class UserInformationCardComponent implements OnInit, OnChanges {
    */
   @Input() isSurgeon: boolean | undefined;
 
+  /**
+   * Meeting requiremnts status for the user
+   * @type {string}
+   */
+  @Input() meetingRequirements: string | null | undefined;
+
   localIsSurgeon!: boolean;
   localCurrentStatus!: string;
 
