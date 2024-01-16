@@ -288,7 +288,8 @@ namespace SurgeonPortal.Library.Billing
                     last_name = LastName,
                     email = Email,
                     phone_number = PhoneNumber,
-                    payment_amount = Amount
+                    payment_amount = Amount,
+					invoice_number = InvoiceNumber
                 };
 
                 var invoice = await _reportReadOnlyFactory.GetByInvoiceNumber(InvoiceNumber);
@@ -312,6 +313,7 @@ namespace SurgeonPortal.Library.Billing
                     email = Email,
                     phone_number = PhoneNumber,
                     payment_amount = Amount,
+                    invoice_number = InvoiceNumber,
                     api_error_contents = allFields
                 };
 			}
