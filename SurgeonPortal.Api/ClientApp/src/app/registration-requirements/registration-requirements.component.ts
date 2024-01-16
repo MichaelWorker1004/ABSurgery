@@ -347,7 +347,6 @@ export class RegistrationRequirementsComponent implements OnInit {
 
         registrationRequirementsStatuses.forEach((status: any) => {
           statuses[status.id] = status;
-          console.log(status);
         });
 
         this.registrationRequirementsData.forEach((data: any) => {
