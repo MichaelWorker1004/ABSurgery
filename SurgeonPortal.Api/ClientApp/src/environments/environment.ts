@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  convergePayBaseUrl: 'https://convergepay.com',
+  convergePayBaseUrl: 'https://www.convergepay.com',
+  credentialSearch: 'https://absurgery.org/check-a-certification',
 };

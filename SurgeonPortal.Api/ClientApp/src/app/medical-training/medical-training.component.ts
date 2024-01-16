@@ -281,15 +281,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     }
   }
 
-  onResidencyProgramOtherChange(event: any) {
-    if (event) {
-      this.medicalTrainingForm.get('residencyProgramName')?.disable();
-      this.medicalTrainingForm.get('residencyProgramName')?.patchValue(null);
-    } else {
-      this.medicalTrainingForm.get('residencyProgramName')?.enable();
-    }
-  }
-
   setPicklists() {
     this.countries$
       ?.pipe(untilDestroyed(this))

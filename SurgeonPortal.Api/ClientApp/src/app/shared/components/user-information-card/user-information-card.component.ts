@@ -1,13 +1,14 @@
+import { CommonModule } from '@angular/common';
 import {
+  CUSTOM_ELEMENTS_SCHEMA,
   Component,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges,
-  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'abs-user-information-card',
@@ -41,6 +42,8 @@ export class UserInformationCardComponent implements OnInit, OnChanges {
    */
   @Input() meetingRequirements: string | null | undefined;
 
+  @Input() userId: number | undefined;
+
   localIsSurgeon!: boolean;
   localCurrentStatus!: string;
 
@@ -56,5 +59,9 @@ export class UserInformationCardComponent implements OnInit, OnChanges {
     if (changes['currentStatus']) {
       this.localCurrentStatus = changes['currentStatus'].currentValue;
     }
+  }
+
+  navigateToCredentialSearch() {
+    window.open(`${environment.credentialSearch}?userId=${this.userId}`);
   }
 }

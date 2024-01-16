@@ -35,8 +35,8 @@
       </div>
     </div>
     <div class="status col-12 md:col-4" *ngIf="status && displayStatusText">
-      Status:
-      <span [class]="status"> {{ status.replace('-', ' ') }}</span>
+      <div>Status:</div>
+      <div [class]="status">{{ replaceHyphens(status) }}</div>
       <div class="date" *ngIf="recievedOn">
         Received on {{ recievedOn | date : 'MM/dd/yyyy' }}
       </div>
