@@ -149,6 +149,7 @@ export class AppointmentsFormComponent implements OnInit, OnChanges {
       .get('organizationId')
       ?.valueChanges.pipe(untilDestroyed(this))
       .subscribe((val) => {
+        console.log('update', val);
         if (val) {
           this.hospitalAppointmentForm
             .get('other')
