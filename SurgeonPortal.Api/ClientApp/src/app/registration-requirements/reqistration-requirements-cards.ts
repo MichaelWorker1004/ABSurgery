@@ -14,7 +14,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   },
   {
     id: 'Training',
-    title: 'Training',
+    title: 'Medical Training',
     description:
       'Update your medical training records, including your residency and fellowship information.',
     action: {
@@ -28,7 +28,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   },
   {
     id: 'Professional_Standing',
-    title: 'Professional Activities and Privileges',
+    title: 'Professional Standing',
     description: 'Update your hospital appointments and sanctions/ethics.',
     action: {
       type: Action.component,
@@ -53,8 +53,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   {
     id: 'ACGME',
     title: 'ACGME Experience Report by Role',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+    description: 'Upload your operative report from ACGME.',
     action: {
       type: Action.dialog,
       action: 'ACGMEExperienceModal',
@@ -66,7 +65,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     id: 'GME',
     title: 'Graduate Medical Education (GME)',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'Complete the history of your general surgery rotations for all training years. Your PD will be required to review and approve the rotations you enter in this section.',
     action: {
       type: Action.component,
       action: '/gme-history',
@@ -78,7 +77,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     id: 'PD_Attestation',
     title: 'Program Director Attestation',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'Once you have completed your GME history, send a request to your PD to attest to your clinical skills.',
     action: {
       type: Action.dialog,
       action: 'programDirectorAttestationModal',
@@ -88,8 +87,8 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   },
   {
     id: 'QE_Certificates',
-    title: 'Certification(s) Upload',
-    description: 'Please review and update your certification(s) information.',
+    title: 'Certificate/Document Uploads',
+    description: 'Upload documents relevant to your GQE application.',
     action: {
       type: Action.component,
       action: '/medical-training',
@@ -102,7 +101,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     id: 'Application_Fee',
     title: 'Application Fee',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'The application fee is required before you can register for the exam (there is a separate fee for sitting the examination).',
     action: {
       type: Action.dialog,
       action: 'payFeeModal',
@@ -114,7 +113,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
     id: 'Special_Accommodations',
     title: 'Special Accommodations',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'Confirm whether you will need special accommodations for the upcoming examination.',
     action: {
       type: Action.dialog,
       action: 'specialAccommodationsModal',
@@ -124,9 +123,9 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
   },
   {
     id: 'Attestation',
-    title: 'Attestation',
+    title: 'Your Attestation',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed neque nec dolor lacinia interdum.',
+      'Electronically attest that you have read and agree to the Surgeon Agreement Regarding ABS Certification/Continuous Certification Process.',
     action: {
       type: Action.dialog,
       action: 'attestationModal',
@@ -143,7 +142,7 @@ export const REGISTRATION_REQUIRMENTS_CARDS = [
       action: 'applyForExam',
     },
     description:
-      'All requirements up to date? Go to the Apply & Register page.',
+      'Have you met the minimum application requirements for exam registration? Go to the Apply & Register page.',
     actionStyle: 'button',
     disabled: true,
     actionDisplay: 'Apply Now',

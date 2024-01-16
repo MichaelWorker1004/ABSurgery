@@ -18,7 +18,7 @@
       "APPLY_SUBTITLE": "QE applications are not yet available. Check back on {{date}}",
       "APPLY_TITLE": "Apply for a Qualified Exam",
       "CCR_BTN": "See Requirements",
-      "CCR_SUBTITLE": "Click here to view your current Continuous Certification progress and complete any remaining requirements.",
+      "CCR_SUBTITLE": "The next Continuous Certification window begins August 2024.",
       "CCR_TITLE": "Continuous Certification Requirements",
       "CME_BTN": "View Your CME",
       "CME_SUBTITLE": "Are you keeping up with your CME requirements?",
@@ -27,15 +27,15 @@
       "GME_SUBTITLE": "Click here to view your current GME progress and to add rotations to your GME history.",
       "GME_TITLE": "Graduate Medical Education (GME)",
       "REGISTER_BTN": "Apply Now",
-      "REGISTER_SUBTITLE": "Click here to view and apply or register for any eligible exams.",
+      "REGISTER_SUBTITLE": "View exams currently available for you.",
       "REGISTER_TITLE": "Apply and Register"
     },
     "HIGHLIGHT_CARDS": {
       "DOCUMENTS_BTN": "View Your Documents",
       "DOCUMENTS_SUBTITLE": "Your ABS document repository.",
       "DOCUMENTS_TITLE": "Documents",
-      "EXAMREGISTRATION_SUBTITLE": "<strong>Coming soon.</strong><br>You will be able to find more information about upcoming exams and registration windows here.",
-      "EXAMREGISTRATION_TITLE": "Upcoming Exam Registration",
+      "EXAMREGISTRATION_SUBTITLE": "<strong>General Surgery Qualifying Examination</strong> - July 18,2024",
+      "EXAMREGISTRATION_TITLE": "Upcoming Exams",
       "UPCOMINGEXAMS_SUBTITLE": "You will be able to find more information about upcoming exams here as that information becomes available.",
       "UPCOMINGEXAMS_TITLE": "Next General Surgery QE -  {{date}}"
     },

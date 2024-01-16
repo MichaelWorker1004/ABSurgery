@@ -44,7 +44,7 @@ export const ADD_EDIT_RECORD_FIELDS = [
     subLabel: '',
     required: true,
     name: 'programName',
-    placeholder: 'Select a program...',
+    placeholder: 'Begin typing to search for a program...',
     type: 'autocomplete',
     size: 'col-6',
     options: [],

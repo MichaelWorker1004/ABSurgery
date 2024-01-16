@@ -11,10 +11,10 @@
     <p class="font-bold mt-0 mb-1" *ngIf="user.emailAddress">
       {{ user.emailAddress }}
     </p>
-    <p class="font-bold mt-0 mb-1 account-status" *ngIf="user.claims">
+    <!-- <p class="font-bold mt-0 mb-1 account-status" *ngIf="user.claims">
       Status:
       {{ user.claims.includes(userClaims.surgeon) ? 'Surgeon' : 'Trainee' }}
-    </p>
+    </p> -->
   </div>
   <ng-template #noUser>
     <div class="ml-3">

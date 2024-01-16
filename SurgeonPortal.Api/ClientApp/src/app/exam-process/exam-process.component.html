@@ -7,6 +7,10 @@
       <sl-card class="col-12">
         <!-- <h5 class="mt-0 mb-2" panel-header>Current Eligible Exams</h5>
         <hr /> -->
+        <p class="mt-0">
+          ABS exam applications and registrations for which you are eligible and
+          are currently open appear on this page.
+        </p>
         <div class="mt-2 grid">
           <div
             [ngClass]="{
@@ -47,28 +51,34 @@
                       }}
                     </span>
                   </p> -->
-                  <p class="font-bold m-0">
+                  <!-- <p class="font-bold m-0">
                     Application Open:
                     <span class="font-normal">{{
                       application.appOpenDate | date : 'longDate'
                     }}</span>
-                  </p>
-                  <p class="font-bold m-0" *ngIf="application.appDelayDate">
+                  </p> -->
+                  <!-- <p class="font-bold m-0" *ngIf="application.appDelayDate">
                     Application Delayed Open:
                     <span class="font-normal">{{
                       application.appDelayDate | date : 'longDate'
                     }}</span>
+                  </p> -->
+                  <p class="font-bold m-0">
+                    Application Deadline:
+                    <span class="font-normal">{{
+                      application.appCloseDate | date : 'longDate'
+                    }}</span>
                   </p>
                   <p class="font-bold m-0">
-                    Application Late:
+                    Late Applications:
                     <span class="font-normal">{{
                       application.appLateDate | date : 'longDate'
                     }}</span>
                   </p>
-                  <p class="font-bold m-0">
-                    Deadline:
+                  <p class="font-bold m-0" *ngIf="application.examStartDate">
+                    Exam Date:
                     <span class="font-normal">{{
-                      application.appCloseDate | date : 'longDate'
+                      application.examStartDate | date : 'longDate'
                     }}</span>
                   </p>
                 </div>
@@ -108,10 +118,6 @@
             </div>
           </div>
         </div>
-        <p>
-          ABS exam applications and registrations for which you are eligible and
-          are currently open appear on this page.
-        </p>
         <hr class="mt-5" />
         <div class="col-12">
           <h5>Upcoming Exams</h5>
