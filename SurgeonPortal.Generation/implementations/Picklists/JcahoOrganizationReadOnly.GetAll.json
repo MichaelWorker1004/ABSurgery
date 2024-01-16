@@ -3,7 +3,7 @@
   "implementationName": "Picklists\\JcahoOrganizationReadOnly.GetAll",
   "template": "ytg-framework/readonly-getlist",
   "parameters": {
-    "Adapter": "dbo.get_jcaho",
+    "Adapter": "dbo.get_joint_commission",
     "ControllerName": "Picklists\\PicklistsController",
     "ControllerRoute": "api/picklists",
     "ControllerVersion": "1",
@@ -21,10 +21,10 @@
   "adapters": [
     {
       "type": "storedProcedure",
-      "name": "dbo.get_jcaho",
+      "name": "dbo.get_joint_commission",
       "storedProcedure": {
         "schema": "[dbo]",
-        "procedureName": "[get_jcaho]",
+        "procedureName": "[get_joint_commission]",
         "parameters": [],
         "recordsets": [
           {
@@ -32,23 +32,33 @@
             "fields": [
               {
                 "name": "OrganizationId",
-                "dataType": "int?",
+                "dataType": "int",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isNullable": true,
-                "isIdentityColumn": false,
+                "isNullable": false,
+                "isIdentityColumn": true,
                 "mapsTo": "model.OrganizationId"
               },
               {
                 "name": "OrganizationName",
                 "dataType": "string",
-                "maxLength": 510,
+                "maxLength": 2000,
                 "precision": 0,
                 "scale": 0,
-                "isNullable": true,
+                "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.OrganizationName"
+              },
+              {
+                "name": "StateCode",
+                "dataType": "string",
+                "maxLength": 4,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.StateCode"
               }
             ]
           }
@@ -58,9 +68,9 @@
   ],
   "inputParameters": [],
   "metadata": {
-    "command": "ytgim g i s Picklists\\JcahoOrganizationReadOnly.GetAll JcahoOrganizationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\JcahoOrganizationReadOnly -p:Adapter=sp:abssp-[dbo].[get_jcaho] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=JcahoOrganizationReadOnly -p:Route=jcaho-organizations -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
-    "inferredCommand": "ytgim generate i  Picklists\\JcahoOrganizationReadOnly.GetAll JcahoOrganizationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\JcahoOrganizationReadOnly -p:Adapter=sp:abssp-[dbo].[get_jcaho] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=JcahoOrganizationReadOnly -p:Route=jcaho-organizations -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
-    "generatedDateUtc": "2023-06-14T20:08:10.1256431Z"
+    "command": "ytgim g i s Picklists\\JcahoOrganizationReadOnly.GetAll JcahoOrganizationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\JcahoOrganizationReadOnly -p:Adapter=sp:abssp-[dbo].[get_joint_commission] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=JcahoOrganizationReadOnly -p:Route=jcaho-organizations -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -f ",
+    "inferredCommand": "ytgim generate i  Picklists\\JcahoOrganizationReadOnly.GetAll JcahoOrganizationReadOnly -t=ytg-framework/readonly-getlist -p:Model=Picklists\\JcahoOrganizationReadOnly -p:Adapter=sp:abssp-[dbo].[get_joint_commission] -p:FetchMethodName=GetAll -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=JcahoOrganizationReadOnly -p:Route=jcaho-organizations -p:ControllerName=Picklists\\PicklistsController -p:ControllerRoute=api/picklists -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
+    "generatedDateUtc": "2024-01-16T21:11:15.3313519Z"
   },
   "version": 1
 }
