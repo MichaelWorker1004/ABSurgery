@@ -19,7 +19,10 @@ import { QeDashboardStatusService } from 'src/app/api/services/examinations/qe-d
 import { QeExamEligibilityService } from 'src/app/api/services/examinations/qe-exam-eligibility.service';
 import { IFormErrors } from 'src/app/shared/common';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
-import { statusTypes } from '../continuous-certification/statusTypes';
+import {
+  statusTypes,
+  statusTypesPDAttestation,
+} from '../continuous-certification/statusTypes';
 import {
   ApplyForQeExam,
   CompleteExamRegistration,
@@ -88,11 +91,21 @@ export class RegistrationRequirementsState {
         tap((dashboardStati: IQeDashboardStatusReadOnlyModel[]) => {
           const stati: IStatuses[] = [];
           dashboardStati.forEach((status) => {
-            stati.push({
-              id: status.statusType,
-              status: statusTypes[status.status + 1],
-              disabled: status.disabled === 1 ? true : false,
-            });
+            if (status.statusType === 'PD_Attestation') {
+              stati.push({
+                id: status.statusType,
+                status: status.status
+                  ? statusTypesPDAttestation[status.status + 1]
+                  : statusTypesPDAttestation[0],
+                disabled: status.disabled === 1 ? true : false,
+              });
+            } else {
+              stati.push({
+                id: status.statusType,
+                status: statusTypes[status.status + 1],
+                disabled: status.disabled === 1 ? true : false,
+              });
+            }
           });
           ctx.patchState({
             registrationRequirementsStatuses: stati,

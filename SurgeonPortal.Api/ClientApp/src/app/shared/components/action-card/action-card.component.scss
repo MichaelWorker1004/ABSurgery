@@ -48,20 +48,24 @@
     left: 0;
     padding: 0 2rem;
   }
-  &.completed {
+  &.completed,
+  &.approved {
     border-right: 10px solid var(--global-success);
     .icon {
       color: var(--global-success);
     }
   }
   &.in-progress,
-  &.pending-approval {
+  &.pending-approval,
+  &.signed-waiting-approval,
+  &.available {
     border-right: 10px solid var(--global-warning);
     .icon {
       color: var(--global-warning);
     }
   }
-  &.alert {
+  &.alert,
+  &.GME-not-completed {
     border-right: 10px solid var(--global-danger);
     .description {
       color: var(--global-danger);
@@ -112,17 +116,20 @@
   position: relative;
   margin: 1rem 0 2rem 0;
   text-align: right;
-  span {
+  > div {
     text-transform: capitalize;
-    white-space: nowrap;
-    &.completed {
+    &.completed,
+    &.approved {
       color: var(--global-success);
     }
     &.in-progress,
-    &.pending-approval {
+    &.pending-approval,
+    &.signed-waiting-approval,
+    &.available {
       color: var(--global-warning);
     }
-    &.alert {
+    &.alert,
+    &.GME-not-completed {
       color: var(--global-danger);
     }
     &.contingent {

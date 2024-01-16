@@ -42,7 +42,6 @@ import {
   GetQeExamEligibility,
   GetRegistrationRequirementsTitle,
   GetResgistrationRequirmentsStatuses,
-  IExamEligibility,
   ReqistrationRequirmentsSelectors,
   UpdateQeAttestations,
 } from '../state/registration-requirements';
@@ -185,7 +184,6 @@ export class RegistrationRequirementsComponent implements OnInit {
         );
         this._store.dispatch(new GetApplicationFee(this.examHeaderId));
         this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
-        // this._store.dispatch(new GetAccommodations(this.examHeaderId));
         this._store.dispatch(new GetQeAttestations(this.examHeaderId));
         this._store
           .dispatch(new GetQeExamEligibility())
@@ -284,10 +282,6 @@ export class RegistrationRequirementsComponent implements OnInit {
           const errors = this._store.selectSnapshot(
             ReqistrationRequirmentsSelectors.slices.errors
           );
-          // this._router.navigate([
-          //   '/apply-and-register/exam-registration',
-          //   this.examHeaderId,
-          // ]);
           if (errors) {
             this._globalDialogService.showSuccessError(
               'Error',

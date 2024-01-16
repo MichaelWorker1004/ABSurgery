@@ -105,7 +105,16 @@ export class ActionCardComponent implements OnInit {
    * Status of the card
    * @type {string}
    */
-  @Input() status!: 'completed' | 'in-progress' | 'contingent' | 'alert';
+  @Input() status!:
+    | 'completed'
+    | 'in-progress'
+    | 'contingent'
+    | 'alert'
+    | 'approved'
+    | 'pending-approval'
+    | 'signed-waiting-approval'
+    | 'available'
+    | 'GME-not-completed';
 
   /**
    * Whether or not to display the status text
@@ -138,6 +147,10 @@ export class ActionCardComponent implements OnInit {
 
   handleCardAction(action?: string) {
     this.cardAction.emit(action);
+  }
+
+  replaceHyphens(status: string): string {
+    return status.replace(/-/g, ' ');
   }
 
   get router(): Router {
