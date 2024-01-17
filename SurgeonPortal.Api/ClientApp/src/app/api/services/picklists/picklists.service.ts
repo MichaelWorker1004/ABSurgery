@@ -468,7 +468,7 @@ export class PicklistsService {
             
             /**
             * Calls Sp(s)
-            * [get_jcaho]
+            * [get_joint_commission]
             */
             
             

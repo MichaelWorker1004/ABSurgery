@@ -15,7 +15,7 @@ namespace SurgeonPortal.DataAccess.Tests.Picklists
         [Test]
         public async Task GetAllAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[get_jcaho]";
+            var expectedSprocName = "[dbo].[get_joint_commission]";
             
         
             var sqlManager = new MockSqlConnectionManager();

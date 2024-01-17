@@ -21,6 +21,7 @@ import { IApplicationFeeReadOnlyModel } from '../api/models/billing/application-
 import { IExamIntentionsModel } from '../api/models/examinations/exam-intentions.model';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import {
+  AuthSelectors,
   CompleteExamRegistration,
   ExamProcessSelectors,
   GetAdmissionCardAvailability,
@@ -38,6 +39,7 @@ import {
 } from '../state/picklists';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { IAdmissionCardAvailabilityReadOnlyModel } from '../api/models/examinations/admission-card-availability-read-only.model';
+import { ReportService } from '../api/services/reports/reports.service';
 
 @UntilDestroy()
 @Component({
@@ -89,6 +91,7 @@ export class ExamRegistrationComponent implements OnInit {
 
   siteSelectionPicklist!: any[];
   examId!: number;
+  access_token = '';
 
   payFeeData: any;
 
@@ -98,7 +101,8 @@ export class ExamRegistrationComponent implements OnInit {
     private _store: Store,
     private route: ActivatedRoute,
     private router: Router,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    private reportService: ReportService
   ) {
     this.route.params.pipe(untilDestroyed(this)).subscribe((params) => {
       const examHeaderId = params['examId'];
@@ -112,6 +116,9 @@ export class ExamRegistrationComponent implements OnInit {
         this.getPayFeeData();
       }
     });
+
+    this.access_token =
+      this._store.selectSnapshot(AuthSelectors.slices.access_token) || '';
   }
 
   ngOnInit(): void {
@@ -209,11 +216,8 @@ export class ExamRegistrationComponent implements OnInit {
       });
   }
 
-  handleDownloadForm(examCode: string) {
-    window.open(
-      `api/examinations/admission-card/document?examCode=${examCode}`,
-      '_blank'
-    );
+  handleDownloadForm(examCode: string, type: string) {
+    this.reportService.downloadAdmissionCard(examCode, type, this.access_token);
   }
 
   completeExamRegistration() {

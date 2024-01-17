@@ -35,6 +35,17 @@
       "isNullable": true,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "AdmCardReport",
+      "dataType": "string",
+      "maxLength": 11,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {

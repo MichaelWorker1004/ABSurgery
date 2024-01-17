@@ -12,4 +12,5 @@ export interface IQeExamEligibilityReadOnlyModel {
     applicationApproved: number;
     examRegistrationAvailable: number;
     registrationOpen: number;
+    admissionCardReport: string;
 }

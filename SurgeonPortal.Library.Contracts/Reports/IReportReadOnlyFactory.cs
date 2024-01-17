@@ -6,6 +6,6 @@ namespace SurgeonPortal.Library.Contracts.Reports
 	{
 		Task<IReportReadOnly> GetByInvoiceNumber(string invoiceNumber);
 
-		Task<IReportReadOnly> GetAdmissionCardByExamId(string examCode);
+		Task<IReportReadOnly> GetAdmissionCardByExamId(string examCode, string type);
 	}
 }

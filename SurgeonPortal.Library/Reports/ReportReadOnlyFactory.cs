@@ -19,15 +19,20 @@ namespace SurgeonPortal.Library.Reports
 				new GetByInvoiceNumberCriteria(invoiceNumber));
 		}
 
-		public async Task<IReportReadOnly> GetAdmissionCardByExamId(string examCode)
+		public async Task<IReportReadOnly> GetAdmissionCardByExamId(string examCode, string type)
 		{
 			if(string.IsNullOrWhiteSpace(examCode))
 			{
 				throw new FactoryInvalidCriteriaException("examId is a required field");
 			}
 
+			if(string.IsNullOrWhiteSpace(type))
+			{
+				throw new FactoryInvalidCriteriaException("type is a required field");
+			}
+
 			return await DataPortal.FetchAsync<ReportReadOnly>(
-				new GetAdmissionCardByExamIdCriteria(examCode));
+				new GetAdmissionCardByExamIdCriteria(examCode, type));
 		}
 	}
 
@@ -48,9 +53,9 @@ namespace SurgeonPortal.Library.Reports
 	{
 		public string ExamCode { get; set; }
 
-		public GetAdmissionCardByExamIdCriteria(string examCode)
+		public GetAdmissionCardByExamIdCriteria(string examCode, string type)
 		{
-			Type = "adm_auth";
+			Type = type;
 			ExamCode = examCode;
 		}
 	}

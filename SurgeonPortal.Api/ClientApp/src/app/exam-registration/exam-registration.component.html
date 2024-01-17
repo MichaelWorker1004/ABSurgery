@@ -178,7 +178,12 @@
           </div>
         </div>
         <p-button
-          (onClick)="handleDownloadForm(admissionCardAvailability.examCode)"
+          (onClick)="
+            handleDownloadForm(
+              admissionCardAvailability.examCode,
+              admissionCardAvailability.admCardReport
+            )
+          "
           class="btn-add"
           [disabled]="!admissionCardAvailability.admCardAvailable"
         >
