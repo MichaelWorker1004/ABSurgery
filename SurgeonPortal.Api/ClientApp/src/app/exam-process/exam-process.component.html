@@ -116,20 +116,19 @@
                   Go to your Exam Registration
                   <i class="fa-solid fa-arrow-right ml-2"></i>
                 </a>
-                <a
+                <p-button
                   styleClass="btn-link block"
-                  [href]="
-                    'api/examinations/admission-card/document?examCode=' +
-                    application.examCode +
-                    '&type=' +
-                    application.admissionCardReport
+                  (click)="
+                    downloadAdmissionCard(
+                      application.examCode,
+                      application.admissionCardReport
+                    )
                   "
-                  target="_blank"
                   *ngIf="application.admissionCardReport"
                 >
                   Download your Admission Card
                   <i class="fa-solid fa-cloud-arrow-down ml-2"></i>
-                </a>
+                </p-button>
               </sl-card>
             </div>
           </div>
