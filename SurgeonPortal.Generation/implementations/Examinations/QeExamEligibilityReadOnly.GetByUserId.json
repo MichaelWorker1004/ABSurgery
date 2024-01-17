@@ -159,6 +159,16 @@
                 "isNullable": false,
                 "isIdentityColumn": false,
                 "mapsTo": "model.RegistrationOpen"
+              },
+              {
+                "name": "AdmissionCardReport",
+                "dataType": "string",
+                "maxLength": 11,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AdmissionCardReport"
               }
             ]
           }

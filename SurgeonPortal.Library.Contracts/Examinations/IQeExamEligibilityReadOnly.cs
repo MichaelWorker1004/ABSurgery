@@ -17,5 +17,6 @@ namespace SurgeonPortal.Library.Contracts.Examinations
         int ApplicationApproved { get; }
         int ExamRegistrationAvailable { get; }
         int RegistrationOpen { get; }
+        string AdmissionCardReport { get; }
     }
 }
