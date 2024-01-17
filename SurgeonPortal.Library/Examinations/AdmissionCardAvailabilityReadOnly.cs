@@ -44,6 +44,11 @@ namespace SurgeonPortal.Library.Examinations
         public string ExamCode => ReadProperty(ExamCodeProperty);
 		public static readonly PropertyInfo<string> ExamCodeProperty = RegisterProperty<string>(c => c.ExamCode);
 
+        [DataMember]
+		[DisplayName(nameof(AdmCardReport))]
+        public string AdmCardReport => ReadProperty(AdmCardReportProperty);
+		public static readonly PropertyInfo<string> AdmCardReportProperty = RegisterProperty<string>(c => c.AdmCardReport);
+
 
         /// <summary>
         /// This method is used to apply authorization rules on the object
@@ -78,6 +83,7 @@ namespace SurgeonPortal.Library.Examinations
             LoadProperty(AdmCardAvailableProperty, dto.AdmCardAvailable);
             LoadProperty(DatePostedProperty, dto.DatePosted);
             LoadProperty(ExamCodeProperty, dto.ExamCode);
+            LoadProperty(AdmCardReportProperty, dto.AdmCardReport);
 		} 
         
     }
