@@ -7,6 +7,7 @@
       </h4>
     </div>
     <div
+      *ngIf="user.lastLoginDateUtc"
       class="last-login"
       [innerHTML]="
         'DASHBOARD.LASTLOGIN'
