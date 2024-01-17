@@ -24,13 +24,18 @@ namespace SurgeonPortal.Library.Picklists
         
         [DataMember]
 		[DisplayName(nameof(OrganizationId))]
-        public int? OrganizationId => ReadProperty(OrganizationIdProperty);
-		public static readonly PropertyInfo<int?> OrganizationIdProperty = RegisterProperty<int?>(c => c.OrganizationId);
+        public int OrganizationId => ReadProperty(OrganizationIdProperty);
+		public static readonly PropertyInfo<int> OrganizationIdProperty = RegisterProperty<int>(c => c.OrganizationId);
 
         [DataMember]
 		[DisplayName(nameof(OrganizationName))]
         public string OrganizationName => ReadProperty(OrganizationNameProperty);
 		public static readonly PropertyInfo<string> OrganizationNameProperty = RegisterProperty<string>(c => c.OrganizationName);
+
+        [DataMember]
+		[DisplayName(nameof(StateCode))]
+        public string StateCode => ReadProperty(StateCodeProperty);
+		public static readonly PropertyInfo<string> StateCodeProperty = RegisterProperty<string>(c => c.StateCode);
 
 
         [FetchChild]
@@ -46,6 +51,7 @@ namespace SurgeonPortal.Library.Picklists
 		{
             LoadProperty(OrganizationIdProperty, dto.OrganizationId);
             LoadProperty(OrganizationNameProperty, dto.OrganizationName);
+            LoadProperty(StateCodeProperty, dto.StateCode);
 		} 
         
     }

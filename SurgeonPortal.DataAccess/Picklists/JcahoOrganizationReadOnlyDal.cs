@@ -20,7 +20,7 @@ namespace SurgeonPortal.DataAccess.Picklists
             using (var connection = CreateConnection())
             {
                 return await connection.ExecAsync<JcahoOrganizationReadOnlyDto>(
-                    "[dbo].[get_jcaho]",
+                    "[dbo].[get_joint_commission]",
                         param: null);
                         
             }

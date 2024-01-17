@@ -686,6 +686,7 @@ export class PicklistsState {
             jcahoOrganizationList.push({
               itemValue: type.organizationId,
               itemDescription: type.organizationName,
+              modifier: type.stateCode,
             });
           });
 

@@ -5,31 +5,42 @@
   "properties": [
     {
       "name": "OrganizationId",
-      "dataType": "int?",
+      "dataType": "int",
       "maxLength": 4,
       "precision": 10,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": true,
-      "isIdentityColumn": false,
+      "isNullable": false,
+      "isIdentityColumn": true,
       "rules": {}
     },
     {
       "name": "OrganizationName",
       "dataType": "string",
-      "maxLength": 510,
+      "maxLength": 2000,
       "precision": 0,
       "scale": 0,
       "isAlwaysReadOnly": false,
-      "isNullable": true,
+      "isNullable": false,
+      "isIdentityColumn": false,
+      "rules": {}
+    },
+    {
+      "name": "StateCode",
+      "dataType": "string",
+      "maxLength": 4,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": false,
       "isIdentityColumn": false,
       "rules": {}
     }
   ],
   "metadata": {
-    "command": "ytgim g m s Picklists\\JcahoOrganizationReadOnly -sp [dbo].[get_jcaho] -cn abssp -f ",
+    "command": "ytgim g m s Picklists\\JcahoOrganizationReadOnly -sp [dbo].[get_joint_commission] -cn abssp -f ",
     "inferredCommand": "",
-    "generatedDateUtc": "2023-06-14T20:08:06.5137551Z"
+    "generatedDateUtc": "2024-01-16T21:09:48.8183573Z"
   },
   "version": 1
 }

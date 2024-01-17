@@ -101,14 +101,13 @@ export class AppointmentsFormComponent implements OnInit, OnChanges {
     ),
 
     stateCode: new FormControl<number | string | null>(
-      { value: null, disabled: false },
+      { value: null, disabled: true },
       [Validators.required]
     ),
 
-    organizationId: new FormControl<number | string | null>(
-      { value: '', disabled: false },
-      [Validators.required]
-    ),
+    organizationId: new FormControl<any>({ value: '', disabled: false }, [
+      Validators.required,
+    ]),
 
     other: new FormControl({
       value: '',
@@ -149,8 +148,16 @@ export class AppointmentsFormComponent implements OnInit, OnChanges {
       .get('organizationId')
       ?.valueChanges.pipe(untilDestroyed(this))
       .subscribe((val) => {
-        console.log('update', val);
         if (val) {
+          const stateCode = this.optionLists.stateCodeOptions.find(
+            (code) => code.itemValue === val?.modifier
+          );
+          if (stateCode) {
+            this.hospitalAppointmentForm
+              .get('stateCode')
+              ?.setValue(stateCode.itemValue);
+          }
+
           this.hospitalAppointmentForm
             .get('other')
             ?.setValue('', { emitEvent: false });
