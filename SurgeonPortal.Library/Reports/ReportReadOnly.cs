@@ -54,7 +54,7 @@ namespace SurgeonPortal.Library.Reports
 		private async Task GetAdmissionCardByExamId(GetAdmissionCardByExamIdCriteria criteria)
 		{
 			var userId = _identity.GetUserId<int>();
-			var query = $"{GetBaseQuery(criteria)}&examcode={criteria.ExamCode}&candidate={userId}";
+			var query = $"{GetBaseQuery(criteria)}&examcode={criteria.ExamCode}&userId={userId}";
 			await GetFromQuery(query);
 		}
 
