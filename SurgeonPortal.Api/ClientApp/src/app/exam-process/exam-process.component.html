@@ -90,7 +90,8 @@
                   "
                   *ngIf="
                     application.applicationIsOpen &&
-                    application.applicationApproved !== 1
+                    application.applicationApproved !== 1 &&
+                    application.admissionCardReport !== 'ce_adm_card'
                   "
                 >
                   {{
@@ -108,11 +109,26 @@
                   "
                   *ngIf="
                     application.registrationOpen === 1 &&
-                    application.examRegistrationAvailable === 1
+                    application.examRegistrationAvailable === 1 &&
+                    application.admissionCardReport !== 'ce_adm_card'
                   "
                 >
                   Go to your Exam Registration
                   <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+                <a
+                  styleClass="btn-link block"
+                  [href]="
+                    'api/examinations/admission-card/document?examCode=' +
+                    application.examCode +
+                    '&type=' +
+                    application.admissionCardReport
+                  "
+                  target="_blank"
+                  *ngIf="application.admissionCardReport"
+                >
+                  Download your Admission Card
+                  <i class="fa-solid fa-cloud-arrow-down ml-2"></i>
                 </a>
               </sl-card>
             </div>

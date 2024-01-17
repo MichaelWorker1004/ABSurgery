@@ -14,13 +14,15 @@ import {
 import { ExamProcessSelectors, GetExamDirectory } from '../state/exam-process';
 import { DIRECTORY_COLS } from './directory-cols';
 
+import { ButtonModule } from 'primeng/button';
+
 @Component({
   selector: 'abs-exam-process',
   templateUrl: './exam-process.component.html',
   styleUrls: ['./exam-process.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterLink, GridComponent],
+  imports: [CommonModule, RouterLink, GridComponent, ButtonModule],
 })
 export class ExamProcessComponent {
   @Select(ExamProcessSelectors.slices.examDirectory) examDirectory$:

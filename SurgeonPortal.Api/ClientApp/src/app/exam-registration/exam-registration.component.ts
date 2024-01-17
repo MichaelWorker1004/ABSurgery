@@ -209,9 +209,9 @@ export class ExamRegistrationComponent implements OnInit {
       });
   }
 
-  handleDownloadForm(examCode: string) {
+  handleDownloadForm(examCode: string, type: string) {
     window.open(
-      `api/examinations/admission-card/document?examCode=${examCode}`,
+      `api/examinations/admission-card/document?examCode=${examCode}type=${type}`,
       '_blank'
     );
   }
