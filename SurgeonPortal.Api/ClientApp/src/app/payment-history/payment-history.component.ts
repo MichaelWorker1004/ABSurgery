@@ -11,6 +11,7 @@ import { Select, Store } from '@ngxs/store';
 import { ExamProcessSelectors, GetExamFees } from '../state';
 import { IExamFeeReadOnlyModel } from '../api/models/billing/exam-fee-read-only.model';
 import { PAY_FEE_COLS } from '../shared/components/pay-fee/pay-fee-cols';
+import { ReportService } from '../api/services/reports/reports.service';
 
 @Component({
   selector: 'abs-payment-history',
@@ -39,7 +40,7 @@ export class PaymentHistoryComponent implements OnInit {
   amount$: BehaviorSubject<number> = new BehaviorSubject(0);
   invoiceNumber$: BehaviorSubject<string> = new BehaviorSubject('');
 
-  constructor(private _store: Store) {
+  constructor(private _store: Store, private reportService: ReportService) {
     this._store.dispatch(new GetExamFees());
   }
 
@@ -70,10 +71,7 @@ export class PaymentHistoryComponent implements OnInit {
       this.invoiceNumber$.next($event.data.invoiceNumber);
       this.payFeeModal = true;
     } else if ($event.fieldKey === 'receipt') {
-      window.open(
-        `api/reports/invoice?invoiceNumber=${$event.data.invoiceNumber}`,
-        '_blank'
-      );
+      this.reportService.downloadInvoice($event.data.invoiceNumber);
     }
   }
 }

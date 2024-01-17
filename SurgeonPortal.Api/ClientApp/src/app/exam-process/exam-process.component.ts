@@ -7,6 +7,7 @@ import { IExamOverviewReadOnlyModel } from '../api/models/examinations/exam-over
 import { IQeExamEligibilityReadOnlyModel } from '../api/models/examinations/qe-exam-eligibility-read-only.model';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import {
+  AuthSelectors,
   GetQeExamEligibility,
   IExamEligibility,
   ReqistrationRequirmentsSelectors,
@@ -14,13 +15,16 @@ import {
 import { ExamProcessSelectors, GetExamDirectory } from '../state/exam-process';
 import { DIRECTORY_COLS } from './directory-cols';
 
+import { ButtonModule } from 'primeng/button';
+import { ReportService } from '../api/services/reports/reports.service';
+
 @Component({
   selector: 'abs-exam-process',
   templateUrl: './exam-process.component.html',
   styleUrls: ['./exam-process.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterLink, GridComponent],
+  imports: [CommonModule, RouterLink, GridComponent, ButtonModule],
 })
 export class ExamProcessComponent {
   @Select(ExamProcessSelectors.slices.examDirectory) examDirectory$:
@@ -31,8 +35,17 @@ export class ExamProcessComponent {
   qeExamEligibility$: Observable<IExamEligibility[]> | undefined;
   directoryColumns = DIRECTORY_COLS;
 
-  constructor(private _store: Store) {
+  access_token = '';
+
+  constructor(private _store: Store, private reportService: ReportService) {
     this._store.dispatch(new GetExamDirectory());
     this._store.dispatch(new GetQeExamEligibility());
+
+    this.access_token =
+      this._store.selectSnapshot(AuthSelectors.slices.access_token) || '';
+  }
+
+  downloadAdmissionCard(examCode: string, type: string) {
+    this.reportService.downloadAdmissionCard(examCode, type, this.access_token);
   }
 }

@@ -32,6 +32,7 @@ import { PAY_FEE_FORM_FIELDS } from './pay-fee-form-fields';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IExamFeeTransactionModel } from 'src/app/api/models/billing/exam-fee-transaction.mode';
 import { GlobalDialogService } from '../../services/global-dialog.service';
+import { ReportService } from 'src/app/api/services/reports/reports.service';
 
 @UntilDestroy()
 @Component({
@@ -79,7 +80,8 @@ export class PayFeeComponent implements OnInit {
 
   constructor(
     private _store: Store,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    private reportService: ReportService
   ) {
     this._store.dispatch(new GetStateList('500'));
   }
@@ -160,10 +162,7 @@ export class PayFeeComponent implements OnInit {
         ?.setValue(invoiceData.balanceDue);
       this.payFeeDisabled = false;
     } else if (event.fieldKey === 'receipt') {
-      window.open(
-        `api/reports/invoice?invoiceNumber=${event.data.invoiceNumber}`,
-        '_blank'
-      );
+      this.reportService.downloadInvoice(event.data.invoiceNumber);
     }
   }
 

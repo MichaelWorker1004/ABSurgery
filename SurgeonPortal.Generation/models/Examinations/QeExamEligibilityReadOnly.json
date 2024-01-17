@@ -134,6 +134,17 @@
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "AdmissionCardReport",
+      "dataType": "string",
+      "maxLength": 11,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules": {}
     }
   ],
   "metadata": {

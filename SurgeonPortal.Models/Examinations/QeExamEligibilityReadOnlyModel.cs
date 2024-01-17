@@ -16,5 +16,6 @@ namespace SurgeonPortal.Models.Examinations
         public int ApplicationApproved { get; set; }
         public int ExamRegistrationAvailable { get; set; }
         public int RegistrationOpen { get; set; }
+        public string AdmissionCardReport { get; set; }
     }
 }

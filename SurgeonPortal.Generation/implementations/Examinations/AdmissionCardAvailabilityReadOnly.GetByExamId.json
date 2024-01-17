@@ -77,6 +77,16 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.ExamCode"
+              },
+              {
+                "name": "AdmCardReport",
+                "dataType": "string",
+                "maxLength": 11,
+                "precision": 0,
+                "scale": 0,
+                "isNullable": true,
+                "isIdentityColumn": false,
+                "mapsTo": "model.AdmCardReport"
               }
             ]
           }
