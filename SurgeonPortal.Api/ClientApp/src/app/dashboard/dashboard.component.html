@@ -8,6 +8,7 @@
     </div>
     <div
       class="last-login"
+      *ngIf="user.lastLoginDateUtc"
       [innerHTML]="
         'DASHBOARD.LASTLOGIN'
           | translate : { lastLogin: user.lastLoginDateUtc | date }
