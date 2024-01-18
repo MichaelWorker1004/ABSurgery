@@ -442,61 +442,6 @@ namespace SurgeonPortal.Library.Tests.Users
         
         }
         [Test]
-        public async Task IsRequired_GetByUserId_GenderId_Fails()
-        {
-            var dto = CreateValidDto();
-            var expectedUserId = Create<int>();
-            
-            var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                .ReturnsAsync(dto);
-            
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IUserProfile, UserProfile>()
-                .Build();
-        
-            var factory = new UserProfileFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
-            
-            sut.GenderId = default;
-        
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-            //Ensure that the save fails...
-            var ex = Assert.ThrowsAsync<Csla.Rules.ValidationException>(async () => await sut.SaveAsync());
-            Assert.That(sut.GetBrokenRules().Count == 1, $"Expected 1 broken rule, have {sut.GetBrokenRules().Count} ");
-            Assert.That(sut.GetBrokenRules()[0].Description == "GenderId is required", $"Expected the rule description to be 'GenderId is required', have {sut.GetBrokenRules()[0].Description}");
-            Assert.That(sut.GetBrokenRules()[0].Severity == Csla.Rules.RuleSeverity.Error, $"Expected the rule severity to be Error, have {sut.GetBrokenRules()[0].Severity}");
-            Assert.That(ex.Message, Is.EqualTo("Object is not valid and can not be saved"));
-        }
-        
-        [Test]
-        public async Task IsRequired_GetByUserId_GenderId_Passes()
-        {
-            var dto = CreateValidDto();
-            var expectedUserId = Create<int>();
-            
-            var mockDal = new Mock<IUserProfileDal>(MockBehavior.Strict);
-            mockDal.Setup(m => m.GetByUserIdAsync(expectedUserId))
-                .ReturnsAsync(dto);
-            
-            UseMockServiceProvider()
-                .WithMockedIdentity(1234, "SomeUser")
-                .WithRegisteredInstance(mockDal)
-                .WithBusinessObject<IUserProfile, UserProfile>()
-                .Build();
-        
-            var factory = new UserProfileFactory();
-            var sut = await factory.GetByUserIdAsync(expectedUserId);
-            
-            sut.GenderId = dto.GenderId;
-        
-            Assert.That(sut.GetBrokenRules().Count == 0, $"Expected 0 broken rule, have {sut.GetBrokenRules().Count} ");
-        
-        }
-        [Test]
         public async Task IsRequired_GetByUserId_BirthDate_Fails()
         {
             var dto = CreateValidDto();

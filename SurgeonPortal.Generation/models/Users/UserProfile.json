@@ -223,12 +223,7 @@
       "isAlwaysReadOnly": false,
       "isNullable": true,
       "isIdentityColumn": false,
-      "rules": {
-        "required": {
-          "value": true,
-          "message": "GenderId is required"
-        }
-      }
+      "rules": {}
     },
     {
       "name": "BirthDate",

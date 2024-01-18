@@ -154,7 +154,7 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
     ethnicity: new FormControl('', [Validators.required]),
     firstLanguageId: new FormControl('', [Validators.required]),
     firstName: new FormControl('', [Validators.required]),
-    genderId: new FormControl('', [Validators.required]),
+    genderId: new FormControl('', []),
     lastName: new FormControl('', []), // readonly
     officePhoneNumber: new FormControl('', [Validators.required]),
     race: new FormControl('', [Validators.required]),

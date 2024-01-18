@@ -34,7 +34,7 @@
                 <div>{{ user.firstName === '' ? 'n/a' : user.firstName }}</div>
               </div>
               <div class="col-12 sm:col-4 md:col-2">
-                <label>M. I.</label>
+                <label>Middle Name</label>
                 <div>{{ user.middleName === '' ? '-' : user.middleName }}</div>
               </div>
               <div class="col-12 sm:col-8 md:col-4">
@@ -68,7 +68,7 @@
                 />
               </div>
               <div class="col-12 sm:col-4 md:col-2">
-                <label class="block" for="middleName">M. I.</label>
+                <label class="block" for="middleName">Middle Name</label>
                 <input
                   id="middleName"
                   pInputText
@@ -460,11 +460,12 @@
                 >
               </div>
               <div class="col-12 md:col-3">
-                <label class="block" for="gender">Gender *</label>
+                <label class="block" for="gender">Gender</label>
                 <p-dropdown
                   inputId="gender"
                   *ngIf="genders$ | async as genders"
                   [options]="genders"
+                  [showClear]="true"
                   formControlName="genderId"
                   placeholder="Select a Gender"
                   optionLabel="itemDescription"
