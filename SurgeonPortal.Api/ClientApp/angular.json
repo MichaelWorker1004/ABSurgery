@@ -43,6 +43,27 @@
               ],
               "outputHashing": "all"
             },
+            "uat": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.uat.ts"
+                }
+              ]
+            },
             "dev": {
               "budgets": [
                 {
@@ -86,6 +107,9 @@
           "configurations": {
             "production": {
               "browserTarget": "SurgeonPortal:build:production"
+            },
+            "uat": {
+              "browserTarget": "SurgeonPortal:build:uat"
             },
             "dev": {
               "browserTarget": "SurgeonPortal:build:dev"
