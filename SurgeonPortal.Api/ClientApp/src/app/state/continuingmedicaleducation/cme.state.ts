@@ -118,7 +118,7 @@ export class ContinuingMedicalEducationState {
 
           creditsList.push({
             ...credit,
-            credits: credit.creditsTotal - credit.creditsSA,
+            credits: credit.creditsTotal,
             cmeDirect: credit.cMEDirect === 0 ? 'No' : 'Yes',
             rowStyle: rowStyle,
           });
@@ -152,7 +152,7 @@ export class ContinuingMedicalEducationState {
         ctx.patchState({
           selectedCmeCredit: {
             ...response,
-            credits: response.creditsTotal - response.creditsSA,
+            credits: response.creditsTotal,
             cmeDirect: response.cMEDirect === 0 ? 'No' : 'Yes',
           },
           errors: null,
@@ -183,7 +183,7 @@ export class ContinuingMedicalEducationState {
 
           adjustmentsList.push({
             ...adjustment,
-            credits: adjustment.creditsTotal - adjustment.creditsSA,
+            credits: adjustment.creditsTotal,
             rowStyle: rowStyle,
           });
         });
@@ -229,7 +229,7 @@ export class ContinuingMedicalEducationState {
           if (new Date(adjustment.creditExpDate) < new Date()) return;
         }
         saCreditsAdjustment += adjustment.creditsSA;
-        creditsAdjustment += adjustment.creditsTotal - adjustment.creditsSA;
+        creditsAdjustment += adjustment.creditsTotal;
       });
     }
     if (credits.length > 0) {
@@ -238,7 +238,7 @@ export class ContinuingMedicalEducationState {
           if (new Date(credit.creditExpDate) < new Date()) return;
         }
         saCreditsEarned += credit.creditsSA;
-        creditsEarned += credit.creditsTotal - credit.creditsSA;
+        creditsEarned += credit.creditsTotal;
       });
     }
 
@@ -302,7 +302,7 @@ export class ContinuingMedicalEducationState {
         if (credit.creditExpDate) {
           const expirationDate = new Date(credit.creditExpDate);
           if (expirationDate >= today && expirationDate <= dropDateEnd) {
-            droppingCredits.credits += credit.creditsTotal - credit.creditsSA;
+            droppingCredits.credits += credit.creditsTotal;
             droppingCredits.saCredits += credit.creditsSA;
           }
         }
@@ -313,8 +313,7 @@ export class ContinuingMedicalEducationState {
         if (adjustment.creditExpDate) {
           const expirationDate = new Date(adjustment.creditExpDate);
           if (expirationDate >= today && expirationDate <= dropDateEnd) {
-            droppingCredits.credits +=
-              adjustment.creditsTotal - adjustment.creditsSA;
+            droppingCredits.credits += adjustment.creditsTotal;
             droppingCredits.saCredits += adjustment.creditsSA;
           }
         }
