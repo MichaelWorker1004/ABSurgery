@@ -28,7 +28,6 @@ namespace SurgeonPortal.Models.Users
         public string AbsId { get; set; }
         public string CertificationStatus { get; set; }
         public string NPI { get; set; }
-        [Required(ErrorMessage = "GenderId is required")]
         public int? GenderId { get; set; }
         [Required(ErrorMessage = "BirthDate is required")]
         public DateTime? BirthDate { get; set; }

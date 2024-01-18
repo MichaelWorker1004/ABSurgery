@@ -40,9 +40,6 @@ export class UserProfilesService {
             * Business rules for property: CountryCitizenship
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: GenderId
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: BirthDate
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
@@ -120,9 +117,6 @@ export class UserProfilesService {
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: CountryCitizenship
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: GenderId
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: BirthDate
@@ -233,9 +227,6 @@ export class UserProfilesService {
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: CountryCitizenship
-            *   Rule Name: Required
-            *   Rule Value: YtgIm.Library.Rules.RuleOptions
-            * Business rules for property: GenderId
             *   Rule Name: Required
             *   Rule Value: YtgIm.Library.Rules.RuleOptions
             * Business rules for property: BirthDate

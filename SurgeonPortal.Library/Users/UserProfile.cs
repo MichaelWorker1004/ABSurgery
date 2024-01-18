@@ -307,7 +307,6 @@ namespace SurgeonPortal.Library.Users
             BusinessRules.AddRule(new Required(BirthCityProperty, "BirthCity is required"));
             BusinessRules.AddRule(new Required(BirthCountryProperty, "BirthCountry is required"));
             BusinessRules.AddRule(new Required(CountryCitizenshipProperty, "CountryCitizenship is required"));
-            BusinessRules.AddRule(new Required(GenderIdProperty, "GenderId is required"));
             BusinessRules.AddRule(new Required(BirthDateProperty, "BirthDate is required"));
             BusinessRules.AddRule(new Required(RaceProperty, "Race is required"));
             BusinessRules.AddRule(new Required(EthnicityProperty, "Ethnicity is required"));
