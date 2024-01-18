@@ -32,11 +32,11 @@
             "fields": [
               {
                 "name": "ItemValue",
-                "dataType": "int",
+                "dataType": "int?",
                 "maxLength": 4,
                 "precision": 10,
                 "scale": 0,
-                "isNullable": false,
+                "isNullable": true,
                 "isIdentityColumn": true,
                 "mapsTo": "model.ItemValue"
               },

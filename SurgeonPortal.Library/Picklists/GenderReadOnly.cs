@@ -24,8 +24,8 @@ namespace SurgeonPortal.Library.Picklists
         
         [DataMember]
 		[DisplayName(nameof(ItemValue))]
-        public int ItemValue => ReadProperty(ItemValueProperty);
-		public static readonly PropertyInfo<int> ItemValueProperty = RegisterProperty<int>(c => c.ItemValue);
+        public int? ItemValue => ReadProperty(ItemValueProperty);
+		public static readonly PropertyInfo<int?> ItemValueProperty = RegisterProperty<int?>(c => c.ItemValue);
 
         [DataMember]
 		[DisplayName(nameof(ItemDescription))]
