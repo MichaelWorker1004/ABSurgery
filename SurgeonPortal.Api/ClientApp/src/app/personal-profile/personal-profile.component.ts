@@ -141,10 +141,7 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
     street2: new FormControl('', []), //sometimes no valid value
     suffix: new FormControl('', []), //sometimes no valid value
     mobilePhoneNumber: new FormControl('', []), // typically not required in forms
-    middleName: new FormControl('', [
-      Validators.minLength(1),
-      Validators.maxLength(1),
-    ]), // typically not required in forms
+    middleName: new FormControl('', []), // typically not required in forms
     profilePicture: new FormControl('', []), //currently no input
     bestLanguageId: new FormControl('', [Validators.required]),
     birthCity: new FormControl('', [Validators.required]),
