@@ -50,7 +50,7 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                 using (var connection = CreateConnection())
                 {
                     return await connection.ExecFirstOrDefaultAsync<UserCertificateDto>(
-                        "[dbo].[insert_usercertificates]",
+                        "[dbo].[upsert_usercertificates]",
                             new
                             {
                                 UserId = dto.UserId,
