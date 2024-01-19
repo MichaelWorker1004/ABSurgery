@@ -20,10 +20,10 @@
   "adapters": [
     {
       "type": "storedProcedure",
-      "name": "dbo.insert_usercertificates",
+      "name": "dbo.upsert_usercertificates",
       "storedProcedure": {
         "schema": "[dbo]",
-        "procedureName": "[insert_usercertificates]",
+        "procedureName": "[upsert_usercertificates]",
         "parameters": [
           {
             "name": "UserId",

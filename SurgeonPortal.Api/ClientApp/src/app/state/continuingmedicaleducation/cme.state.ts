@@ -242,12 +242,10 @@ export class ContinuingMedicalEducationState {
       });
     }
 
-    const requiredCredits = totalCreditsRequired - creditsAdjustment;
-    const requiredSACredits = totalSACreditsRequired - saCreditsAdjustment;
-    const remainingCredits =
-      totalCreditsRequired - creditsAdjustment - creditsEarned;
-    const remainingSACredits =
-      totalSACreditsRequired - saCreditsAdjustment - saCreditsEarned;
+    const requiredCredits = totalCreditsRequired + creditsAdjustment;
+    const requiredSACredits = totalSACreditsRequired + saCreditsAdjustment;
+    const remainingCredits = requiredCredits - creditsEarned;
+    const remainingSACredits = requiredSACredits - saCreditsEarned;
 
     const summary: ICmeSummaryRow[] = [
       {
