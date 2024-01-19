@@ -81,7 +81,7 @@ namespace SurgeonPortal.DataAccess.Tests.MedicalTraining
         [Test]
         public async Task InsertAsync_ExecutesSprocCorrectly()
         {
-            var expectedSprocName = "[dbo].[insert_usercertificates]";
+            var expectedSprocName = "[dbo].[upsert_usercertificates]";
             var expectedDto = Create<UserCertificateDto>();
         
             var sqlManager = new MockSqlConnectionManager();
