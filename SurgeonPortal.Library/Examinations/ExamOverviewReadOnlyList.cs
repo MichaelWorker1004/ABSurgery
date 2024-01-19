@@ -44,7 +44,7 @@ namespace SurgeonPortal.Library.Examinations
         private async Task GetAll()
         
         {
-            var dtos = await _examOverviewReadOnlyDal.GetAllAsync();
+            var dtos = await _examOverviewReadOnlyDal.GetAllAsync(_identity.GetUserId<int>());
         			
             FetchChildren(dtos);
         }
