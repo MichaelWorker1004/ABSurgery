@@ -4,7 +4,6 @@ import { RouterLink } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IExamOverviewReadOnlyModel } from '../api/models/examinations/exam-overview-read-only.model';
-import { IQeExamEligibilityReadOnlyModel } from '../api/models/examinations/qe-exam-eligibility-read-only.model';
 import { GridComponent } from '../shared/components/grid/grid.component';
 import {
   AuthSelectors,
@@ -17,6 +16,7 @@ import { DIRECTORY_COLS } from './directory-cols';
 
 import { ButtonModule } from 'primeng/button';
 import { ReportService } from '../api/services/reports/reports.service';
+import { AlertComponent } from '../shared/components/alert/alert.component';
 
 @Component({
   selector: 'abs-exam-process',
@@ -24,7 +24,13 @@ import { ReportService } from '../api/services/reports/reports.service';
   styleUrls: ['./exam-process.component.scss'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, RouterLink, GridComponent, ButtonModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    GridComponent,
+    ButtonModule,
+    AlertComponent,
+  ],
 })
 export class ExamProcessComponent {
   @Select(ExamProcessSelectors.slices.examDirectory) examDirectory$:
