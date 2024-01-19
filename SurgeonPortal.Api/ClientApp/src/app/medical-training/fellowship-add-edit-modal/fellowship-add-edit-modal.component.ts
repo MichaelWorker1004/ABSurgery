@@ -141,6 +141,7 @@ export class FellowshipAddEditModalComponent implements OnInit, OnDestroy {
     this.fellowship$.subscribe((formData) => {
       if (Object.keys(formData).length > 0) {
         let fellowshipType = '';
+        this.fellowshipId = formData.id;
         if (formData.programName) {
           fellowshipType = formData.programName.charAt(
             formData.programName.length - 2
@@ -153,16 +154,17 @@ export class FellowshipAddEditModalComponent implements OnInit, OnDestroy {
               const programName = this.fellowshipPrograms.find(
                 (i) => i === formData.programName.toString()
               );
-              this.fellowshipId = formData.id;
 
               this.fellowshipForm.patchValue({
                 fellowshipType,
                 programName: programName,
-                programOther: formData.programOther,
                 completionYear: formData.completionYear.toString(),
               });
             });
         }
+        this.fellowshipForm.patchValue({
+          programOther: formData.programOther,
+        });
       } else {
         this.fellowshipForm.reset();
       }
