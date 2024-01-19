@@ -78,19 +78,19 @@ export class AppComponent implements OnInit {
   headerLinks = [
     {
       display: 'News',
-      action: 'https://www.absurgery.org/default.jsp?news_home_mb',
+      action: 'https://www.absurgery.org/news/',
     },
     {
       display: 'EPAs',
-      action: 'https://www.absurgery.org/default.jsp?epahome',
+      action: 'https://www.absurgery.org/get-certified/epas/',
     },
     {
       display: 'About',
-      action: 'https://www.absurgery.org/default.jsp?abouthome',
+      action: 'https://www.absurgery.org/about-abs/',
     },
     {
       display: 'Contact',
-      action: 'https://www.absurgery.org/default.jsp?aboutcontact',
+      action: 'https://www.absurgery.org/contact/',
     },
   ];
 
