@@ -160,8 +160,13 @@ export class ExamProcessState {
     // }
     return this.examFeeService.retrieveExamFeeReadOnly_GetByUserId().pipe(
       tap((examFees) => {
+        // TODO - remove this and replace with a more future proof solution
+        const filteredFees = examFees.filter((fee) => {
+          return fee.invoiceNumber.includes('2023MCA');
+        });
+
         ctx.patchState({
-          examFees,
+          examFees: filteredFees,
         });
         this.globalDialogService.closeOpenDialog();
       }),
