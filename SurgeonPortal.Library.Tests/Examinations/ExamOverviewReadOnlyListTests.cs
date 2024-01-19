@@ -15,9 +15,10 @@ namespace SurgeonPortal.Library.Tests.Examinations
         [Test]
         public async Task GetAllAsync_CallsDalCorrectly()
         {
-            
+            var expectedUserId = 1234;
+
             var mockDal = new Mock<IExamOverviewReadOnlyDal>();
-            mockDal.Setup(m => m.GetAllAsync())
+            mockDal.Setup(m => m.GetAllAsync(expectedUserId))
                 .ReturnsAsync(CreateMany<ExamOverviewReadOnlyDto>());
             
         
@@ -39,10 +40,10 @@ namespace SurgeonPortal.Library.Tests.Examinations
         public async Task GetAllAsync_LoadsChildrenCorrectly()
         {
             var expectedDtos = CreateMany<ExamOverviewReadOnlyDto>();
-            
-        
+            var expectedUserId = 1234;
+
             var mockDal = new Mock<IExamOverviewReadOnlyDal>();
-            mockDal.Setup(m => m.GetAllAsync())
+            mockDal.Setup(m => m.GetAllAsync(expectedUserId))
                 .ReturnsAsync(expectedDtos);
             
         

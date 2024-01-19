@@ -15,13 +15,16 @@ namespace SurgeonPortal.DataAccess.Examinations
 
 
 
-        public async Task<IEnumerable<ExamOverviewReadOnlyDto>> GetAllAsync()
+        public async Task<IEnumerable<ExamOverviewReadOnlyDto>> GetAllAsync(int userId)
         {
             using (var connection = CreateConnection())
             {
                 return await connection.ExecAsync<ExamOverviewReadOnlyDto>(
                     "[dbo].[get_exam_overview]",
-                        param: null);
+                        new
+                        {
+                            UserId = userId,
+                        });
                         
             }
         }
