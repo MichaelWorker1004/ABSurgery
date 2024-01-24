@@ -242,8 +242,8 @@ export class ContinuingMedicalEducationState {
       });
     }
 
-    const requiredCredits = totalCreditsRequired + creditsAdjustment;
-    const requiredSACredits = totalSACreditsRequired + saCreditsAdjustment;
+    const requiredCredits = totalCreditsRequired - creditsAdjustment;
+    const requiredSACredits = totalSACreditsRequired - saCreditsAdjustment;
     const remainingCredits = requiredCredits - creditsEarned;
     const remainingSACredits = requiredSACredits - saCreditsEarned;
 
