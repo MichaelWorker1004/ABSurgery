@@ -58,10 +58,7 @@
           <span>Certificate Number:</span>
           {{ info?.certificateId ? info?.certificateId : 'N/A' }}
         </div>
-        <div
-          class="info-data"
-          *ngIf="info.status && !info.isClinicallyInactive"
-        >
+        <div class="info-data">
           <span>Current Status:</span>
           {{ info?.status }}
         </div>
