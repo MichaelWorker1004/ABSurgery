@@ -5,4 +5,5 @@ export interface ICertificationReadOnlyModel {
     initialCertificationDate: string;
     endDateDisplay: string;
     isClinicallyInactive: number;
+    status: string;
 }

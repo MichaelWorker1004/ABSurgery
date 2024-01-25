@@ -24,9 +24,7 @@ import { CertificationStatusService } from 'src/app/api/services/user/certificat
 import { IRequirementsReadOnlyModel } from 'src/app/api/models/continuouscertification/requirements-read-only.model';
 import { RequirementsService } from 'src/app/api/services/continuouscertification/requirements.service';
 
-export interface ICertification extends ICertificationReadOnlyModel {
-  status?: string;
-}
+export type ICertification = ICertificationReadOnlyModel;
 
 export interface ICertificationStatus
   extends ICertificationStatusReadOnlyModel {
@@ -139,7 +137,9 @@ export class DashboardState {
             ) {
               cert.status = cert.isClinicallyInactive
                 ? 'Clinically Inactive'
-                : 'Active';
+                : cert.status == 'Certified'
+                ? cert.status
+                : 'Not Certified';
             }
           });
           ctx.patchState({
