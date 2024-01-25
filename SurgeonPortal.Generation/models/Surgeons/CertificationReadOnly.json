@@ -57,6 +57,17 @@
       "isNullable": false,
       "isIdentityColumn": false,
       "rules": {}
+    },
+    {
+      "name": "Status",
+      "dataType": "string",
+      "maxLength": 8000,
+      "precision": 0,
+      "scale": 0,
+      "isAlwaysReadOnly": false,
+      "isNullable": true,
+      "isIdentityColumn": false,
+      "rules":{}
     }
   ],
   "metadata": {
