@@ -24,6 +24,7 @@ import { BehaviorSubject, Observable, map, skipWhile } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IExamTitleReadOnlyModel } from '../api/models/examinations/exam-title-read-only.model';
 import { LegendComponent } from '../shared/components/legend/legend.component';
+import { AlertComponent } from '../shared/components/alert/alert.component';
 
 @UntilDestroy()
 @Component({
@@ -37,6 +38,7 @@ import { LegendComponent } from '../shared/components/legend/legend.component';
     InputTextModule,
     ButtonModule,
     LegendComponent,
+    AlertComponent
   ],
   templateUrl: './oral-examinations.component.html',
   styleUrls: ['./oral-examinations.component.scss'],
