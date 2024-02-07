@@ -39,9 +39,7 @@
                 >
                   {{ case.caseNumber }}:
                   <span *ngIf="case.description">{{ case.description }}</span>
-                  <span *ngIf="!case.description">
-                    {{ case.title }}
-                  </span>
+                  <span *ngIf="case.title"> - {{ case.title }}</span>
                 </span>
               </p-button>
             </ng-container>
