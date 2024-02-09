@@ -177,6 +177,20 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
     });
   }
 
+  goToExamCase(index: number) {
+    const currentCase = this.activeCase;
+    this.activeCase = index;
+    this.currentIncrement = index + 1;
+
+    if (currentCase !== index) {
+      if (this.currentIncrement === this.casesLength) {
+        this.setReviewExpand();
+      } else {
+        this.scrollToElementById('expandableHeader' + index);
+      }
+    }
+  }
+
   getExaminationData() {
     this.examinee$
       ?.pipe(untilDestroyed(this), distinctUntilChanged())

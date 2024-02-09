@@ -38,7 +38,7 @@ import { AlertComponent } from '../shared/components/alert/alert.component';
     InputTextModule,
     ButtonModule,
     LegendComponent,
-    AlertComponent
+    AlertComponent,
   ],
   templateUrl: './oral-examinations.component.html',
   styleUrls: ['./oral-examinations.component.scss'],

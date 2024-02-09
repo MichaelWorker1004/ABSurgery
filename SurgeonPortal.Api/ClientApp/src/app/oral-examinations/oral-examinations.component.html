@@ -6,52 +6,56 @@
   </h1>
 </header>
 <div class="mb-5 gap-1">
-  <abs-alert alertType="info"
+  <abs-alert alertType="info">
+    Please download the following files:&nbsp;&nbsp;&nbsp;
+    <a
+      class="p-button"
+      style="text-decoration: none"
+      target="_blank"
+      href="https://program.absurgery.org/xfer/8f4915887d10b809bd0f458428dd5393c10faff3/CE_examiner_zoom_bkgrd.png"
+      >Zoom Background</a
     >
-        Please download the following files:&nbsp;&nbsp;&nbsp;
-        <a class="p-button"
-          style="text-decoration: none;"
-          target="_blank"
-          href="https://program.absurgery.org/xfer/8f4915887d10b809bd0f458428dd5393c10faff3/CE_examiner_zoom_bkgrd.png"
-        >Zoom Background</a>
-        &nbsp;
-        <a class="p-button"
-          style="text-decoration: none;"
-          target="_blank"
-          href="https://program.absurgery.org/xfer/8f4915887d10b809bd0f458428dd5393c10faff3/CE_examiner_guide.pdf"
-        >Examiner Guide</a>
-        &nbsp;
-        <a class="p-button"
-          style="text-decoration: none;"
-          target="_blank"
-          href="https://program.absurgery.org/xfer/8f4915887d10b809bd0f458428dd5393c10faff3/CE_examiner_scoring_wksht.pdf"
-        >Scoring Worksheet</a>
-  </abs-alert
->
+    &nbsp;
+    <a
+      class="p-button"
+      style="text-decoration: none"
+      target="_blank"
+      href="https://program.absurgery.org/xfer/8f4915887d10b809bd0f458428dd5393c10faff3/CE_examiner_guide.pdf"
+      >Examiner Guide</a
+    >
+    &nbsp;
+    <a
+      class="p-button"
+      style="text-decoration: none"
+      target="_blank"
+      href="https://program.absurgery.org/xfer/8f4915887d10b809bd0f458428dd5393c10faff3/CE_examiner_scoring_wksht.pdf"
+      >Scoring Worksheet</a
+    >
+  </abs-alert>
 </div>
 <ng-container>
-<section>
-  <div class="grid">
-    <sl-card class="col-12">
-      <div slot="header">
-        {{ 'EXAMSCORING.EXAMINATION.LIST_TITLE' | translate }}
-      </div>
-      <div class="grid">
-        <div class="col-12 flex justify-content-between">
-          <p
-            [innerHTML]="
-              'EXAMSCORING.EXAMINATION.LIST_DATE'
-                | translate : { date: examDateDisplay | date : 'MM/dd/yyyy' }
-            "
-          ></p>
-          <div
-            class="flex align-items-center justify-content-end flex-grow-1"
-          >
-            <p-button
-              label="Zoom Link"
-              icon="fa fa-video-camera"
-              class="zoom-link"
-              styleClass="p-button-success p-button-text"
+  <section>
+    <div class="grid">
+      <sl-card class="col-12">
+        <div slot="header">
+          {{ 'EXAMSCORING.EXAMINATION.LIST_TITLE' | translate }}
+        </div>
+        <div class="grid">
+          <div class="col-12 flex justify-content-between">
+            <p
+              [innerHTML]="
+                'EXAMSCORING.EXAMINATION.LIST_DATE'
+                  | translate : { date: examDateDisplay | date : 'MM/dd/yyyy' }
+              "
+            ></p>
+            <div
+              class="flex align-items-center justify-content-end flex-grow-1"
+            >
+              <p-button
+                label="Zoom Link"
+                icon="fa fa-video-camera"
+                class="zoom-link"
+                styleClass="p-button-success p-button-text"
                 (onClick)="openZoomLink()"
               ></p-button>
               <div class="p-inputgroup" style="max-width: 450px">
