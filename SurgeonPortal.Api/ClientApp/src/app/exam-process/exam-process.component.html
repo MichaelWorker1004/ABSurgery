@@ -95,7 +95,8 @@
                   *ngIf="
                     application.applicationIsOpen &&
                     application.applicationApproved !== 1 &&
-                    application.admissionCardReport !== 'ce_adm_card'
+                    application.admissionCardReport !== 'ce_adm_card' &&
+                    application.examCode.indexOf('GW') != -1
                   "
                 >
                   {{
