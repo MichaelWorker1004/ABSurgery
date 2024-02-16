@@ -85,7 +85,7 @@
                       application.examStartDate | date : 'longDate'
                     }}</span>
                   </p>
-                  <p class="font-bold m-0" *ngIf="application.examStartDate">
+                  <p class="font-bold m-0" *ngIf="application.examCode.indexOf('GB') != -1">
                     <span class="font-normal">{{
                       application.userApplicationExists == 1
                       ? 'Application status will be available on 2/21'
