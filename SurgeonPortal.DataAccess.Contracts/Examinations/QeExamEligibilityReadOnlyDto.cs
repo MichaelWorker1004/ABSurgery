@@ -17,5 +17,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Examinations
         public int ExamRegistrationAvailable { get; set; }
         public int RegistrationOpen { get; set; }
         public string AdmissionCardReport { get; set; }
+        public int UserApplicationExists{ get; set; }
     }
 }

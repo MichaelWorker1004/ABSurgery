@@ -1,4 +1,5 @@
 using System;
+using System.Security.Principal;
 using Ytg.Framework.Csla;
 
 namespace SurgeonPortal.Library.Contracts.Examinations
@@ -18,5 +19,6 @@ namespace SurgeonPortal.Library.Contracts.Examinations
         int ExamRegistrationAvailable { get; }
         int RegistrationOpen { get; }
         string AdmissionCardReport { get; }
+        int UserApplicationExists { get; }
     }
 }
