@@ -169,6 +169,16 @@
                 "isNullable": true,
                 "isIdentityColumn": false,
                 "mapsTo": "model.AdmissionCardReport"
+              },
+              {
+                "name": "UserApplicationExists",
+                "dataType": "int",
+                "maxLength": 4,
+                "precision": 10,
+                "scale": 0,
+                "isNullable": false,
+                "isIdentityColumn": false,
+                "mapsTo": "model.UserApplicationExists"
               }
             ]
           }

@@ -87,6 +87,10 @@ namespace SurgeonPortal.Library.Examinations
         public string AdmissionCardReport => ReadProperty(AdmissionCardReportProperty);
 		public static readonly PropertyInfo<string> AdmissionCardReportProperty = RegisterProperty<string>(c => c.AdmissionCardReport);
 
+        [DataMember]
+		[DisplayName(nameof(UserApplicationExists))]
+        public int UserApplicationExists => ReadProperty(UserApplicationExistsProperty);
+		public static readonly PropertyInfo<int> UserApplicationExistsProperty = RegisterProperty<int>(c => c.UserApplicationExists);
 
         [FetchChild]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
@@ -112,6 +116,7 @@ namespace SurgeonPortal.Library.Examinations
             LoadProperty(ExamRegistrationAvailableProperty, dto.ExamRegistrationAvailable);
             LoadProperty(RegistrationOpenProperty, dto.RegistrationOpen);
             LoadProperty(AdmissionCardReportProperty, dto.AdmissionCardReport);
+            LoadProperty(UserApplicationExistsProperty, dto.UserApplicationExists);
 		} 
         
     }
