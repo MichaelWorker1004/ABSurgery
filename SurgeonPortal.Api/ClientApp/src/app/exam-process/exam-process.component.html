@@ -86,11 +86,14 @@
                     }}</span>
                   </p>
                   <p class="font-bold m-0" *ngIf="application.examCode.indexOf('GB') != -1">
-                    <span class="font-normal">{{
-                      application.userApplicationExists == 1
-                      ? 'Application status will be available on 2/21'
-                      : 'Application will be available on 2/21'
-                    }}</span>
+                    <span class="font-normal">
+                      <a 
+                        class="btn-link block"
+                        href="https://forms.office.com/r/hXFWdJD8hp" target="_blank"
+                      >
+                        Start your Exam Application
+                      </a>
+                    </span>
                   </p>
                 </div>
                 <a

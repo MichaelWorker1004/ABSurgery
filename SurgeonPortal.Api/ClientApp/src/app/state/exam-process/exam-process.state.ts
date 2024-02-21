@@ -39,7 +39,7 @@ export interface IExamProcess {
   examIntentions?: IExamIntentionsModel;
   siteSelection?: string;
   admissionCardAvailability?: IAdmissionCardAvailabilityReadOnlyModel;
-  errors?: IFormErrors | null;
+    errors?: IFormErrors | null;
 }
 
 export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
@@ -57,7 +57,7 @@ export const EXAM_PROCESS_STATE_TOKEN = new StateToken<IExamProcess>(
     siteSelection: '',
     examIntentions: undefined,
     admissionCardAvailability: undefined,
-    errors: null,
+        errors: null,
   },
 })
 @Injectable()
@@ -162,7 +162,7 @@ export class ExamProcessState {
       tap((examFees) => {
         // TODO - remove this and replace with a more future proof solution
         const filteredFees = examFees.filter((fee) => {
-          return fee.invoiceNumber.includes('2023MCA');
+          return fee.invoiceNumber.includes('2023MCA') || fee.invoiceNumber.includes('2023GB');
         });
 
         ctx.patchState({
