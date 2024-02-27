@@ -111,9 +111,13 @@
               [formControlName]="'examIntention'"
               [binary]="true"
             ></p-checkbox>
-            <label for="userConfirmed">
+            <label for="userConfirmed" *ngIf="examIntention.examDate">
               I will take the examination {{ examIntention.examName }} as
               offered, on {{ examIntention.examDate | date : 'longDate' }}
+            </label>
+            <label for="userConfirmed" *ngIf="!examIntention.examDate">
+              I will take the examination {{ examIntention.examName }} as
+              offered.
             </label>
           </div>
           <div class="col-12 align-right mt-3">
