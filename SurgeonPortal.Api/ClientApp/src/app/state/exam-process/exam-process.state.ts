@@ -162,7 +162,7 @@ export class ExamProcessState {
       tap((examFees) => {
         // TODO - remove this and replace with a more future proof solution
         const filteredFees = examFees.filter((fee) => {
-          return fee.invoiceNumber.includes('2023MCA') || fee.invoiceNumber.includes('2024GB');
+          return fee.invoiceNumber.includes('2023MCA') || /2024\D\D/.test(fee.invoiceNumber);
         });
 
         ctx.patchState({
