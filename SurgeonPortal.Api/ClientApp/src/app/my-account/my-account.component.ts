@@ -18,6 +18,7 @@ import {
   SaveMyAccountChanges,
   UserProfileSelectors,
   IUserProfile,
+  UpdateUserProfile,
 } from '../state';
 import { ClearErrors } from '../state';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
@@ -91,6 +92,15 @@ export class MyAccountComponent implements OnDestroy {
     public globalDialogService: GlobalDialogService
   ) {
     this.store.dispatch(new SetUnsavedChanges(false));
+    this.fetchUser();
+
+    this.myAccountForm.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
+      const isDirty = this.myAccountForm.dirty;
+      this.store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
+    });
+  }
+
+  fetchUser() {
     this.userSub = this.user$?.pipe(untilDestroyed(this)).subscribe((user) => {
       if (user) {
         this.user = user;
@@ -99,11 +109,6 @@ export class MyAccountComponent implements OnDestroy {
           confirmEmailAddress: this.user?.emailAddress,
         });
       }
-    });
-
-    this.myAccountForm.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
-      const isDirty = this.myAccountForm.dirty;
-      this.store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
     });
   }
 
@@ -141,6 +146,7 @@ export class MyAccountComponent implements OnDestroy {
       emailAddress,
       password,
     };
+
     this.store
       .dispatch(new SaveMyAccountChanges(userCreds))
       .pipe(take(1))
@@ -156,5 +162,15 @@ export class MyAccountComponent implements OnDestroy {
             });
         }
       });
+
+    this.updateUserState();
+  }
+
+  //this will update the email address if any changes occured
+  updateUserState() {
+    const copyUser = Object.assign({}, this.user);
+    copyUser.emailAddress = this.myAccountForm.value.emailAddress;
+
+    this.store.dispatch(new UpdateUserProfile(copyUser));
   }
 }
