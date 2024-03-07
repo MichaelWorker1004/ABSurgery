@@ -5,10 +5,8 @@
   <section>
     <div class="grid">
       <div class="col-12 flex">
-        <abs-profile-header
-          [profilePicture]="profilePicture"
-          [user]="user"
-        ></abs-profile-header>
+        <abs-profile-header [profilePicture]="profilePicture"
+                            [user]="user"></abs-profile-header>
       </div>
     </div>
   </section>
@@ -17,11 +15,9 @@
       <sl-card class="col-12">
         <p>{{ 'MYACCOUNT.SUBTITLE' | translate }}</p>
         <ng-container *ngIf="isEdit">
-          <abs-form-errors
-            *ngIf="errors$ | async as error"
-            [errors]="error"
-            [clearErrors]="clearErrors"
-          ></abs-form-errors>
+          <abs-form-errors *ngIf="errors$ | async as error"
+                           [errors]="error"
+                           [clearErrors]="clearErrors"></abs-form-errors>
         </ng-container>
         <div class="grid" *ngIf="!isEdit">
           <div class="col-12 md:col-6">
@@ -43,59 +39,35 @@
             <label for="mailingList">Receive ABS Emails / Newsletters?</label>
           </div> -->
           <div class="col-12 flex justify-content-end">
-            <p-button
-              variant="primary"
-              [style]="{ width: '200px' }"
-              (click)="isEdit = true"
-              >Edit</p-button
-            >
+            <p-button variant="primary"
+                      [style]="{ width: '200px' }"
+                      (click)="isEdit = true">Edit</p-button>
           </div>
         </div>
-        <form
-          name="myAccountForm"
-          [formGroup]="myAccountForm"
-          (ngSubmit)="onSubmit()"
-        >
+
+        <div class="col-12 flex justify-content-end" *ngIf="isEdit">
+          <p-button styleClass="p-button-link p-button-primary"
+                    (click)="resetForm($event)">Cancel</p-button>
+        </div>
+
+
+        <form name="myAccountFormEmail"
+              [formGroup]="myAccountFormEmail"
+              (ngSubmit)="onSubmit()">
           <div class="grid" *ngIf="isEdit">
             <div class="col-12 md:col-6">
               <label class="block" for="emailAddress">Email Address</label>
-              <input
-                id="emailAddress"
-                pInputText
-                type="email"
-                formControlName="emailAddress"
-              />
+              <input id="emailAddress"
+                     pInputText
+                     type="email"
+                     formControlName="emailAddress" />
             </div>
             <div class="col-12 md:col-6">
-              <label class="block" for="confirmEmailAddress"
-                >Confirm Email Address</label
-              >
-              <input
-                id="confirmEmailAddress"
-                pInputText
-                type="email"
-                formControlName="confirmEmailAddress"
-              />
-            </div>
-            <div class="col-12 md:col-6">
-              <label class="block" htmlFor="password">Password</label>
-              <p-password
-                inputId="password"
-                formControlName="password"
-                [feedback]="false"
-                [toggleMask]="true"
-              ></p-password>
-            </div>
-            <div class="col-12 md:col-6">
-              <label class="block" for="confirmPassword"
-                >Confirm Password</label
-              >
-              <p-password
-                inputId="confirmPassword"
-                formControlName="confirmPassword"
-                [feedback]="false"
-                [toggleMask]="true"
-              ></p-password>
+              <label class="block" for="confirmEmailAddress">Confirm Email Address</label>
+              <input id="confirmEmailAddress"
+                     pInputText
+                     type="email"
+                     formControlName="confirmEmailAddress" />
             </div>
             <!-- <div class="col-12 md:col-6 flex align-items-center gap-2">
               <p-checkbox
@@ -107,20 +79,49 @@
               <label for="mailingList">Receive ABS Emails / Newsletters?</label>
             </div> -->
             <div class="col-12 flex justify-content-end">
-              <p-button
-                styleClass="p-button-link p-button-primary"
-                (click)="resetForm($event)"
-                >Cancel</p-button
-              >
-              <p-button
-                type="submit"
-                [style]="{ width: '337px' }"
-                [disabled]="myAccountForm.invalid"
-                >Save</p-button
-              >
+              <p-button type="submit"
+                        [style]="{ width: '337px' }"
+                        [disabled]="myAccountFormEmail.invalid">Save</p-button>
             </div>
           </div>
         </form>
+
+
+        <sl-divider style="--spacing: 2rem;" *ngIf="isEdit"></sl-divider>
+
+
+        <form name="myAccountFormPassword"
+              [formGroup]="myAccountFormPassword"
+              (ngSubmit)="onSubmit()">
+          <div class="grid" *ngIf="isEdit">
+            <div class="col-12 md:col-6">
+              <label class="block" htmlFor="password">Password</label>
+              <p-password inputId="password"
+                          formControlName="password"
+                          [feedback]="false"
+                          [toggleMask]="true"></p-password>
+            </div>
+            <div class="col-12 md:col-6">
+              <label class="block" for="confirmPassword">Confirm Password</label>
+              <p-password inputId="confirmPassword"
+                          formControlName="confirmPassword"
+                          [feedback]="false"
+                          [toggleMask]="true"></p-password>
+            </div>
+            <div class="col-12 flex justify-content-end">
+              <p-button type="submit"
+                        [style]="{ width: '337px' }"
+                        [disabled]="myAccountFormPassword.invalid
+                        || !this.myAccountFormPassword.value.password
+                        || !this.myAccountFormPassword.value.confirmPassword">Save</p-button>
+            </div>
+          </div>
+        </form>
+
+
+
+
+
       </sl-card>
     </div>
   </section>
@@ -128,10 +129,8 @@
 
 <ng-template #loading>
   <div class="my-5 flex flex-column justify-content-center align-items-center">
-    <sl-spinner
-      class="block"
-      style="font-size: 3rem; --indicator-color: var(--global-primary)"
-    ></sl-spinner>
+    <sl-spinner class="block"
+                style="font-size: 3rem; --indicator-color: var(--global-primary)"></sl-spinner>
     <p>loading account details...</p>
   </div>
 </ng-template>

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
 import { Observable, Subscription, take } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
@@ -18,6 +19,7 @@ import {
   SaveMyAccountChanges,
   UserProfileSelectors,
   IUserProfile,
+  UpdateUserProfile,
 } from '../state';
 import { ClearErrors } from '../state';
 import { ProfileHeaderComponent } from '../shared/components/profile-header/profile-header.component';
@@ -71,39 +73,60 @@ export class MyAccountComponent implements OnDestroy {
 
   isSubmitted = false;
 
-  myAccountForm: FormGroup = new FormGroup(
+  myAccountFormEmail: FormGroup = new FormGroup(
     {
       emailAddress: new FormControl('', [Validators.email]),
       confirmEmailAddress: new FormControl('', [Validators.email]),
+      mailingList: new FormControl(true),
+    },
+    {
+      validators: [
+        matchFields('emailAddress', 'confirmEmailAddress'),
+      ],
+    }
+  );
+
+  myAccountFormPassword: FormGroup = new FormGroup(
+    {
       password: new FormControl('', [validatePassword()]),
       confirmPassword: new FormControl('', [validatePassword()]),
       mailingList: new FormControl(true),
     },
     {
       validators: [
-        matchFields('emailAddress', 'confirmEmailAddress'),
         matchFields('password', 'confirmPassword'),
       ],
     }
   );
+
+
   constructor(
     private store: Store,
     public globalDialogService: GlobalDialogService
   ) {
     this.store.dispatch(new SetUnsavedChanges(false));
+    this.fetchUser();
+
+    this.myAccountFormEmail.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
+      const isDirty = this.myAccountFormEmail.dirty;
+      this.store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
+    });
+
+    this.myAccountFormPassword.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
+      const isDirty = this.myAccountFormPassword.dirty;
+      this.store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
+    });
+  }
+
+  fetchUser() {
     this.userSub = this.user$?.pipe(untilDestroyed(this)).subscribe((user) => {
       if (user) {
         this.user = user;
-        this.myAccountForm.patchValue({
+        this.myAccountFormEmail.patchValue({
           emailAddress: this.user?.emailAddress,
           confirmEmailAddress: this.user?.emailAddress,
         });
       }
-    });
-
-    this.myAccountForm.valueChanges.pipe(untilDestroyed(this)).subscribe(() => {
-      const isDirty = this.myAccountForm.dirty;
-      this.store.dispatch(new SetUnsavedChanges(isDirty && !this.isSubmitted));
     });
   }
 
@@ -118,8 +141,8 @@ export class MyAccountComponent implements OnDestroy {
 
   resetForm($event: Event) {
     $event.preventDefault();
-    this.myAccountForm.reset();
-    this.myAccountForm.patchValue({
+    this.myAccountFormEmail.reset();
+    this.myAccountFormEmail.patchValue({
       emailAddress: this.user?.emailAddress,
       confirmEmailAddress: this.user?.emailAddress,
     });
@@ -130,17 +153,19 @@ export class MyAccountComponent implements OnDestroy {
     const target = $event.target as HTMLInputElement;
     target.select();
   }
+
   onSubmit() {
     // submit actions
-    const emailAddress = this.myAccountForm.value.emailAddress
-      ? this.myAccountForm.value.emailAddress
+    const emailAddress = this.myAccountFormEmail.value.emailAddress
+      ? this.myAccountFormEmail.value.emailAddress
       : null;
-    const password = this.myAccountForm.value.password;
+    const password = this.myAccountFormPassword.value.password;
     const userCreds: IUserCredential = {
       userId: this.user?.userId || null,
       emailAddress,
       password,
     };
+
     this.store
       .dispatch(new SaveMyAccountChanges(userCreds))
       .pipe(take(1))
@@ -156,5 +181,15 @@ export class MyAccountComponent implements OnDestroy {
             });
         }
       });
+
+    this.updateUserState();
   }
+
+  updateUserState() {
+    const copyUser = Object.assign({}, this.user);
+    copyUser.emailAddress = this.myAccountFormEmail.value.emailAddress;
+
+    this.store.dispatch(new UpdateUserProfile(copyUser));
+  }
+
 }
