@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -273,6 +274,7 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
   }
 
   onResidencyProgramChange(event: any) {
+    
     if (event.value) {
       this.medicalTrainingForm.get('residencyProgramOther')?.disable();
       this.medicalTrainingForm.get('residencyProgramOther')?.patchValue(null);
@@ -619,14 +621,7 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
 
   save() {
     const formValues = this.medicalTrainingForm.value;
-    const residencyProgramName = this.residencyPrograms.filter((program) => {
-      if (
-        formValues.residencyProgramName &&
-        +program.programId === +formValues.residencyProgramName
-      ) {
-        return program;
-      } else return [];
-    });
+    const residencyProgramName = this.residencyPrograms.filter(program => program.programId == formValues.residencyProgramName);
 
     const model = {
       graduateProfileId: parseInt(formValues.graduateProfileId ?? ''),
