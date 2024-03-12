@@ -74,7 +74,8 @@ namespace SurgeonPortal.Library.Scoring
             
             if (dto == null)
             {
-                throw new DataNotFoundException("CaseFeedbackReadOnly not found based on criteria.");
+                //throw new DataNotFoundException("CaseFeedbackReadOnly not found based on criteria.");
+                return;
             }
             
             FetchData(dto);
