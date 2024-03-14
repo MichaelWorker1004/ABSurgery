@@ -50,13 +50,26 @@ namespace SurgeonPortal.Library.Scoring
         [Execute]
         protected void ExecuteCommand()
         {
+            if (ExamCaseId != 0)
+            {
                 var dto = _isExamSessionLockedCommandDal.IsExamSessionLocked(ExamCaseId);
-            
-            			this.ExamCaseId = dto.ExamCaseId;
-        			this.IsLocked = dto.IsLocked;
+
+                if(dto == null)
+                {
+                    this.ExamCaseId = 0;
+                    this.IsLocked = true; //set it to true to be on the safe side. still testing and debugging
+                }
+                else
+                {
+                    this.IsLocked = dto.IsLocked;
+                }
+            }
+            else
+            {
+                this.ExamCaseId = 0;
+                this.IsLocked = true; //set it to true to be on the safe side. still testing and debugging
+            }
         }
-
-
         
     }
 }

@@ -14,15 +14,23 @@ namespace SurgeonPortal.Library.Scoring
             {
                 throw new System.Security.SecurityException("Not authorized to execute command");
             }
-        
-            var cmd = ApplicationContext.DataPortalActivator.CreateInstance(typeof(IIsExamSessionLockedCommand))
-        	    as IsExamSessionLockedCommand;
-        
+
+            if(examCaseId == 0)
+            {
+                return new object() as IsExamSessionLockedCommand;
+            }
+            else
+            {
+                var cmd = ApplicationContext.DataPortalActivator.CreateInstance(typeof(IIsExamSessionLockedCommand))
+                    as IsExamSessionLockedCommand;
+
                 cmd.ExamCaseId = examCaseId;
-        
-            return DataPortal.Execute(cmd);
+
+                return DataPortal.Execute(cmd);
+            }
+            
+
+            //return examCaseId == 0 ? cmd : DataPortal.Execute(cmd);
         }
-
-
     }
 }
