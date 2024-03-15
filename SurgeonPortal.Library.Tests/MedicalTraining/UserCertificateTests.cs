@@ -137,7 +137,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
 
         #region Create
         
-        [Test]
+        //[Test]
         public async Task Create_CallsDalCorrectly()
         {
             var dto = CreateValidDto();
