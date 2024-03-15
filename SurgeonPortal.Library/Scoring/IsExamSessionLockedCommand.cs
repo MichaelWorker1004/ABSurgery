@@ -57,7 +57,7 @@ namespace SurgeonPortal.Library.Scoring
                 if(dto == null)
                 {
                     this.ExamCaseId = 0;
-                    this.IsLocked = true; //set it to true to be on the safe side. still testing and debugging
+                    this.IsLocked = false; //set it to true to be on the safe side. still testing and debugging
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace SurgeonPortal.Library.Scoring
             else
             {
                 this.ExamCaseId = 0;
-                this.IsLocked = true; //set it to true to be on the safe side. still testing and debugging
+                this.IsLocked = false; //set it to true to be on the safe side. still testing and debugging
             }
         }
         
