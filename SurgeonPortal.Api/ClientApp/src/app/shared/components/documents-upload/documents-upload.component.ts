@@ -145,6 +145,10 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.initialize(); 
+  }
+
+  initialize() {
     this.localDocumentsData = this.documentsData || [];
     this.setFilterOptions();
     this.setRequired();
@@ -262,5 +266,7 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
     this.uploadForm.get('typeId')?.setValue('');
     this.uploadForm.get('file')?.setValue('');
     this.uploadedFile = null;
+
+    this.initialize();
   }
 }
