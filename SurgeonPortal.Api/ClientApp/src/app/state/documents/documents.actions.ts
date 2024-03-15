@@ -26,3 +26,8 @@ export class UploadDocument {
   static readonly type = '[Documents] Upload document';
   constructor(public payload: { model: FormData }) {}
 }
+
+export class UploadDocumentCertificate {
+  static readonly type = '[Documents] Upload document';
+  constructor(public payload: FormData) { }
+}

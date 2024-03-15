@@ -181,13 +181,13 @@ namespace SurgeonPortal.Library.MedicalTraining
                     var newDocument = await Document.SaveAsync();
                     LoadProperty(DocumentProperty, newDocument);
                     LoadProperty(DocumentIdProperty, Document.Id);
-                }
 
-                var dto = await _userCertificateDal.InsertAsync(ToDto());
-        
-                FetchData(dto);
-        
-                MarkIdle();
+                    var dto = await _userCertificateDal.InsertAsync(ToDto());
+
+                    FetchData(dto);
+
+                    MarkIdle();
+                }
             }
         }
 

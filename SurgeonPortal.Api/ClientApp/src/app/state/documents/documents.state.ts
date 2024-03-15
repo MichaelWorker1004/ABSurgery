@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -11,7 +12,7 @@ import {
   DownloadDocument,
   GetAllDocuments,
   GetCertificateByType,
-  UploadDocument,
+  UploadDocumentCertificate,
 } from './documents.actions';
 import { UserCertificateService } from 'src/app/api/services/medicaltraining/user-certificate.service';
 import { GetUserCertificates } from '../medical-training/medical-training.actions';
@@ -161,14 +162,14 @@ export class DocumentsState {
     );
   }
 
-  @Action(UploadDocument)
+  @Action(UploadDocumentCertificate)
   uploadDocument(
     ctx: StateContext<IDocuments>,
-    action: { payload: { model: FormData } }
+    action: { payload: FormData }
   ): Observable<void> {
     this.globalDialogService.showLoading();
     return this.userCertificateService
-      .createUserCertificate(action.payload.model)
+      .createUserCertificate(action.payload)
       .pipe(
         tap(() => {
           this._store.dispatch(new GetUserCertificates(true));
