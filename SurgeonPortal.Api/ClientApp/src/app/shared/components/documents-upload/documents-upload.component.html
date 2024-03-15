@@ -5,7 +5,7 @@
     }}"
     *ngIf="allowUpload"
   >
-    <form class="flex gap-3 mb-3" [formGroup]="uploadForm">
+    <form class="flex gap-3 mb-3" [formGroup]="uploadForm" enctype="multipart/form-data">
       <p-dropdown
         *ngIf="dropdownOptions?.length"
         [options]="dropdownOptions ?? []"
@@ -19,6 +19,8 @@
       <div class="input-file">
         <label>
           <input
+            id="docFile" 
+            name="docFile" 
             type="file"
             accept=".pdf"
             (change)="handleFileOnChange($event)"
@@ -29,14 +31,14 @@
           ></span>
         </label>
       </div>
-      <p-button
+      <!--<p-button
         (click)="onDocumentUpload()"
         [disabled]="!uploadForm.valid || !fileUploadedName"
         class="btn-add"
       >
         <i slot="prefix" class="fa-solid fa-plus"></i>
         <span>UPLOAD DOCUMENT</span>
-      </p-button>
+      </p-button>-->
     </form>
   </div>
   <abs-grid

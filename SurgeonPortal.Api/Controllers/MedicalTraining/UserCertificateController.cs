@@ -119,13 +119,20 @@ namespace SurgeonPortal.Api.Controllers.MedicalTraining
 
         private async void LoadDocument(IUserCertificate entity, UserCertificateModel model)
         {
-            using (var stream = new MemoryStream())
-            {
-                await model.File.CopyToAsync(stream);
-                var fileBytes = stream.ToArray();
+            if (model.File == null)
+                return;
 
-                entity.LoadDocument(new MemoryStream(fileBytes));
+            try
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await model.File.CopyToAsync(stream);
+                    var fileBytes = stream.ToArray();
+
+                    entity.LoadDocument(new MemoryStream(fileBytes));
+                }
             }
+            catch { }
         }
 
         private void AssignCreateProperties(IUserCertificate entity, UserCertificateModel model)

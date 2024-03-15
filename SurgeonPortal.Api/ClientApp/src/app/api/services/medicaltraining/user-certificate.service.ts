@@ -1,15 +1,17 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUserCertificateModel } from '../../models/medicaltraining/user-certificate.model';
 import { IUserCertificateReadOnlyModel } from '../../models/medicaltraining/user-certificate-read-only.model';
 import { ApiService } from 'ytg-angular';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserCertificateService {
 
-    constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private httpClient: HttpClient) {}
 
  
         public deleteUserCertificate(certificateId: number,
@@ -65,16 +67,16 @@ export class UserCertificateService {
         }
  
         public createUserCertificate(model: FormData, 
-            apiVersion = '1.0'): Observable<IUserCertificateModel> {
+          apiVersion = '1.0'): Observable<IUserCertificateModel> {
             /**
             * Claims
             */
-            
+
             /**
             * Business Rules
             * No business rules exist for this model
             */
-            
+
             /**
             * Required Parameters
             * documentId:Number
@@ -83,15 +85,14 @@ export class UserCertificateService {
             * certificateNumber:String
             * apiVersion
             */
-            
+
             /**
             * Calls Sp(s)
             * [insert_usercertificates]
             */
-            
-            
-            return this.apiService.post<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}`, 
-                model);
+
+          return this.apiService.post<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}`,
+            model);
         }
  
         public retrieveUserCertificateReadOnly_GetByUserAndType(certificateTypeId: number,

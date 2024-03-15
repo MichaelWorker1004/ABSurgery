@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
@@ -15,6 +16,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  UploadDocumentCertificate,
+} from '../../../state';
 import { Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -189,9 +193,27 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
     const model = {
       typeId: this.uploadForm.get('typeId')?.value,
       createdByUserId: this.userId,
-      file: this.uploadedFile,
+      file: this.uploadedFile?.stream,
       issueDate: new Date().toISOString(),
-    };
+    }
+    alert('this.uploadedFile?.name = ' + this.uploadedFile?.name);
+
+    alert('model = ' + JSON.stringify(model));
+    
+    const formData = new FormData();
+
+    formData.append("typeId", this.uploadForm.get('typeId')?.value as string);
+    formData.append("createdByUserId", this.userId?.toString() as string);
+    formData.append("file", this.uploadedFile as File);
+    formData.append("issueDate", new Date().toISOString());
+
+    alert('about to upload document');
+
+    alert('passing form data = ' + JSON.stringify(formData));
+
+    if (model.file) {
+      this._store.dispatch(new UploadDocumentCertificate(formData));
+    }
 
     this.uploadAction.emit({
       data: model,
@@ -202,9 +224,37 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
     this.resetData();
   }
 
+
   handleFileOnChange($event: any) {
     this.fileUploadedName = $event.target.files[0].name;
     this.uploadedFile = $event.target.files[0];
+    
+    const formData = new FormData();
+    
+    formData.set("certificateTypeId", this.uploadForm.get('typeId')?.value as string);
+    formData.set("createdByUserId", this.userId?.toString() as string);
+    formData.set("file", $event.target.files[0] as File);
+    formData.set("issueDate", new Date().toISOString());
+
+    if ($event.target.files[0]) {
+      this._store.dispatch(new UploadDocumentCertificate(formData));
+    }
+
+    const model = {
+      typeId: this.uploadForm.get('typeId')?.value,
+      createdByUserId: this.userId,
+      file: this.uploadedFile?.stream,
+      issueDate: new Date().toISOString(),
+    }
+
+    this.uploadAction.emit({
+      data: model,
+      gridData: this.documentsData,
+      file: this.uploadedFile,
+    });
+
+    this.resetData();
+
   }
 
   resetData() {
