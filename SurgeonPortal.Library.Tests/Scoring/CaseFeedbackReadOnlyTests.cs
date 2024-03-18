@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
@@ -25,12 +26,14 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedExaminerUserId,
                 expectedCaseHeaderId))
                 .ReturnsAsync(Create<CaseFeedbackReadOnlyDto>());
-        
-                
+
+            var mockLogger = new Mock<ILogger<CaseFeedbackReadOnly>>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockLogger)
                 .WithBusinessObject<ICaseFeedbackReadOnly, CaseFeedbackReadOnly>()
                 .Build();
         
@@ -52,12 +55,14 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedExaminerUserId,
                 expectedCaseHeaderId))
                 .ReturnsAsync(dto);
-        
-                
+
+            var mockLogger = new Mock<ILogger<CaseFeedbackReadOnly>>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockLogger)
                 .WithBusinessObject<ICaseFeedbackReadOnly, CaseFeedbackReadOnly>()
                 .Build();
         
