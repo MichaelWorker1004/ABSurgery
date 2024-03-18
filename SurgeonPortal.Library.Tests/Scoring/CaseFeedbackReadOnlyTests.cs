@@ -1,3 +1,4 @@
+using BenchmarkDotNet.Attributes;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -10,12 +11,14 @@ using Ytg.UnitTest;
 
 namespace SurgeonPortal.Library.Tests.Scoring
 {
-    [TestFixture] 
-	public class CaseFeedbackReadOnlyTests : TestBase<int>
+    [TestFixture]
+    [MemoryDiagnoser]
+    public class CaseFeedbackReadOnlyTests : TestBase<int>
     {
         #region GetByExaminerIdAsync
         
         [Test]
+        [Benchmark]
         public async Task GetByExaminerIdAsync_CallsDalCorrectly()
         {
             var expectedCaseHeaderId = Create<int>();
@@ -44,6 +47,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         }
         
         [Test]
+        [Benchmark]
         public async Task GetByExaminerIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<CaseFeedbackReadOnlyDto>();
