@@ -101,6 +101,7 @@
       [index]="casesLength"
       [checked]="casesLength === activeCase"
       class="w-full"
+      (click)="goToReviewScores()"
     >
       <div id="exam-score-errors">
         <abs-form-errors

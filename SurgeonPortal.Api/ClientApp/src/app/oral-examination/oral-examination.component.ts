@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
@@ -189,6 +190,11 @@ export class OralExaminationsComponent implements OnInit, OnDestroy {
         this.scrollToElementById('expandableHeader' + index);
       }
     }
+  }
+
+  goToReviewScores() {
+    this.activeCase = this.casesLength;
+    this.setReviewExpand();
   }
 
   getExaminationData() {
