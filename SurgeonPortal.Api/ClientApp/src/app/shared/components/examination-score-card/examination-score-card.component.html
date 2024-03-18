@@ -10,21 +10,19 @@
         </div>
 
         <div class="flex flex-column gap-1 radios">
-          <div
-            class="flex align-items-center"
-            *ngFor="let score of scoreOptions"
-          >
-            <p-radioButton
-              [value]="score.value"
-              [inputId]="score.value + '-' + localData?.examCaseId"
-              formControlName="score"
-              (onClick)="handleScoreSelect(score.value)"
-            ></p-radioButton>
-            <label
-              [for]="score.value + '-' + localData?.examCaseId"
-              class="ml-2"
-              >{{ score.label }}</label
-            >
+          <div class="flex align-items-center"
+               *ngFor="let score of scoreOptions">
+            <p-radioButton [value]="score.value"
+                           [inputId]="score.value + '-' + localData?.examCaseId"
+                           formControlName="score"
+                           (onClick)="handleScoreSelect(score.value)" ariaLabelledBy="score.value + '-' + localData?.examCaseId">
+              >
+            </p-radioButton>
+            <span class="ml-2" id="score.value + '-' + localData?.examCaseId">{{ score.label }}</span>
+            <!--<label
+    [for]="score.value + '-' + localData?.examCaseId"
+    class="ml-2"
+    >{{ score.label }}</label>-->
           </div>
 
           <div class="flex align-items-center gap-2">
