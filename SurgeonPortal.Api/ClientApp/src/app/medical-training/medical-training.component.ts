@@ -619,7 +619,7 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     this._store.dispatch(new SetUnsavedChanges(toggle));
   }
 
-  save() {
+  save() { 
     const formValues = this.medicalTrainingForm.value;
     const residencyProgramName = this.residencyPrograms.filter(program => program.programId == formValues.residencyProgramName);
 
