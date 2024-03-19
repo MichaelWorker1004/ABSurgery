@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -627,12 +628,14 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
         return program;
       } else return [];
     });
+    
+    const stateControlDisabled = formValues.medicalSchoolStateId == undefined ? true: false;
 
     const model = {
       graduateProfileId: parseInt(formValues.graduateProfileId ?? ''),
       medicalSchoolName: formValues.medicalSchoolName,
       medicalSchoolCity: formValues.medicalSchoolCity,
-      medicalSchoolStateId: formValues.medicalSchoolStateId,
+      medicalSchoolStateId: stateControlDisabled ? '' : formValues.medicalSchoolStateId,
       medicalSchoolCountryId: formValues.medicalSchoolCountryId,
       medicalSchoolCountryName: formValues.medicalSchoolCountryName,
       medicalSchoolCompletionYear: formValues.medicalSchoolCompletionYear,
