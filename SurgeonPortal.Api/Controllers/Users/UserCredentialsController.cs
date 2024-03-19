@@ -1,4 +1,5 @@
 using AutoMapper;
+using Csla.Rules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -45,7 +46,14 @@ namespace SurgeonPortal.Api.Controllers.Users
             var item = await userCredentialFactory.GetByUserIdAsync();
             AssignEditProperties(item, model);
             
-            return await UpdateAsync<UserCredentialModel>(_mapper, item);
+            IActionResult badRequestResult = await UpdateAsync<UserCredentialModel>(_mapper, item);
+
+            BrokenRulesCollection coll = item.GetBrokenRules();
+
+            if (coll.Count > 0)
+                return BadRequest(coll[0].Description);
+            else
+                return badRequestResult;
         } 
 
         private void AssignEditProperties(IUserCredential entity, UserCredentialModel model)
