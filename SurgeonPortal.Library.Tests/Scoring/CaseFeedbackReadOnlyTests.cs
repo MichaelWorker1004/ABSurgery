@@ -1,4 +1,6 @@
+using BenchmarkDotNet.Attributes;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
@@ -9,12 +11,14 @@ using Ytg.UnitTest;
 
 namespace SurgeonPortal.Library.Tests.Scoring
 {
-    [TestFixture] 
-	public class CaseFeedbackReadOnlyTests : TestBase<int>
+    [TestFixture]
+    [MemoryDiagnoser]
+    public class CaseFeedbackReadOnlyTests : TestBase<int>
     {
         #region GetByExaminerIdAsync
         
         [Test]
+        [Benchmark]
         public async Task GetByExaminerIdAsync_CallsDalCorrectly()
         {
             var expectedCaseHeaderId = Create<int>();
@@ -25,12 +29,14 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedExaminerUserId,
                 expectedCaseHeaderId))
                 .ReturnsAsync(Create<CaseFeedbackReadOnlyDto>());
-        
-                
+
+            var mockLogger = new Mock<ILogger<CaseFeedbackReadOnly>>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockLogger)
                 .WithBusinessObject<ICaseFeedbackReadOnly, CaseFeedbackReadOnly>()
                 .Build();
         
@@ -41,6 +47,7 @@ namespace SurgeonPortal.Library.Tests.Scoring
         }
         
         [Test]
+        [Benchmark]
         public async Task GetByExaminerIdAsync_LoadsSelfCorrectly()
         {
             var dto = Create<CaseFeedbackReadOnlyDto>();
@@ -52,12 +59,14 @@ namespace SurgeonPortal.Library.Tests.Scoring
                 expectedExaminerUserId,
                 expectedCaseHeaderId))
                 .ReturnsAsync(dto);
-        
-                
+
+            var mockLogger = new Mock<ILogger<CaseFeedbackReadOnly>>();
+
             UseMockServiceProvider()
                 .WithMockedIdentity(1234, "SomeUser")
                 .WithUserInRoles(SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.ExaminerClaim)
                 .WithRegisteredInstance(mockDal)
+                .WithRegisteredInstance(mockLogger)
                 .WithBusinessObject<ICaseFeedbackReadOnly, CaseFeedbackReadOnly>()
                 .Build();
         

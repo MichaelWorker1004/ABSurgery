@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -217,7 +218,7 @@ export class ExaminationRostersComponent implements OnInit {
           }
         });
     } else {
-      this.selectedCaseDetails = undefined;
+      this.selectedCaseDetails = this.selectedCaseDetails ? this.selectedCaseDetails : undefined;
       this.selectCase(caseData);
     }
   }

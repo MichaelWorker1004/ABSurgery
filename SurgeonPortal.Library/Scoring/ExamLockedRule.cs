@@ -23,9 +23,12 @@ namespace SurgeonPortal.Library.Scoring
 		{
 			var examCaseId = (int)context.InputPropertyValues[PrimaryProperty];
 
+			if (examCaseId == 0)
+				return;
+
 			var command = _isExamSessionLockedCommandFactory.IsExamSessionLocked(examCaseId);
 
-			if (command.IsLocked.HasValue && command.IsLocked.Value)
+            if (command.IsLocked.HasValue && command.IsLocked.Value)
 			{
 				context.AddErrorResult("Cannot add or update score when exam is locked.");
 			}

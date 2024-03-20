@@ -1,4 +1,5 @@
 using Csla;
+using Microsoft.Extensions.Logging;
 using SurgeonPortal.DataAccess.Contracts.Scoring;
 using SurgeonPortal.Library.Contracts.Scoring;
 using System;
@@ -19,14 +20,16 @@ namespace SurgeonPortal.Library.Scoring
     public class CaseFeedbackReadOnly : YtgReadOnlyBase<CaseFeedbackReadOnly, int>, ICaseFeedbackReadOnly
     {
         private readonly ICaseFeedbackReadOnlyDal _caseFeedbackReadOnlyDal;
-
+        private readonly ILogger<CaseFeedbackReadOnly> _logger;
 
         public CaseFeedbackReadOnly(
             IIdentityProvider identityProvider,
-            ICaseFeedbackReadOnlyDal caseFeedbackReadOnlyDal)
+            ICaseFeedbackReadOnlyDal caseFeedbackReadOnlyDal,
+            ILogger<CaseFeedbackReadOnly> logger)
             : base(identityProvider)
         {
             _caseFeedbackReadOnlyDal = caseFeedbackReadOnlyDal;
+            _logger = logger;
         }
         
         [DataMember]
@@ -74,7 +77,9 @@ namespace SurgeonPortal.Library.Scoring
             
             if (dto == null)
             {
-                throw new DataNotFoundException("CaseFeedbackReadOnly not found based on criteria.");
+                //throw new DataNotFoundException("CaseFeedbackReadOnly not found based on criteria.");
+                _logger.LogInformation($"CaseFeedbackReadOnly not found based on criteria. UserId = {_identity.GetUserId<int>()}, CaseHeaderId = {criteria.CaseHeaderId}");
+                return;
             }
             
             FetchData(dto);
