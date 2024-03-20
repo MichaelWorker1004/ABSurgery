@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
 using System.Threading.Tasks;
 using Ytg.Framework.ConnectionManager;
@@ -7,9 +8,13 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
 {
     public class UserCertificateDal : SqlServerDalBase, IUserCertificateDal
     {
-        public UserCertificateDal(ISqlConnectionManager sqlConnectionManager)
+        private readonly ILogger<UserCertificateDal> _logger;
+
+        public UserCertificateDal(ISqlConnectionManager sqlConnectionManager,
+                                  ILogger<UserCertificateDal> logger)
             : base(sqlConnectionManager)
         {
+            _logger = logger;
         }
 
 
@@ -67,10 +72,12 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
             {
                 if(ex.Message.Contains("Cannot insert duplicate key"))
                 {
+                    _logger.LogError($"UserCertificateDal InsertAsync FAILED when trying to call InsertAsync. 'Cannot insert duplicate key' Error Message = {ex.Message}");
                     throw new Ytg.Framework.Exceptions.ObjectExistsException("UserCertificate");
                 }
                 else
                 {
+                    _logger.LogError($"UserCertificateDal InsertAsync FAILED when trying to call InsertAsync. Error Message = {ex.Message}");
                     throw;
                 }
             }
