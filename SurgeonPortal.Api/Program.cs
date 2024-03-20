@@ -17,7 +17,12 @@ namespace SurgeonPortal.Api
     {
         public static void Main(string[] args)
         {
+
+            #if RELEASE
+            LogManager.Factory.GlobalThreshold = LogLevel.Off; 
+            #else
             LogManager.Setup().LoadConfigurationFromFile("nlog.config");
+            #endif
 
             try
             {
