@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
@@ -56,9 +57,10 @@ export class MyAccountState {
       catchError((httpError: HttpErrorResponse) => {
         const errors = httpError.error;
         ctx.patchState({ errors });
+
         this.globalDialogService.showSuccessError(
           'Error',
-          'Save failed',
+          JSON.stringify(errors),
           false
         );
         return of(errors);

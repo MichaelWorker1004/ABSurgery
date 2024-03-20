@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -273,6 +274,7 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
   }
 
   onResidencyProgramChange(event: any) {
+    
     if (event.value) {
       this.medicalTrainingForm.get('residencyProgramOther')?.disable();
       this.medicalTrainingForm.get('residencyProgramOther')?.patchValue(null);
@@ -617,22 +619,17 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     this._store.dispatch(new SetUnsavedChanges(toggle));
   }
 
-  save() {
+  save() { 
     const formValues = this.medicalTrainingForm.value;
-    const residencyProgramName = this.residencyPrograms.filter((program) => {
-      if (
-        formValues.residencyProgramName &&
-        +program.programId === +formValues.residencyProgramName
-      ) {
-        return program;
-      } else return [];
-    });
+    const residencyProgramName = this.residencyPrograms.filter(program => program.programId == formValues.residencyProgramName);
+
+    const stateControlDisabled = formValues.medicalSchoolStateId == undefined ? true: false;
 
     const model = {
       graduateProfileId: parseInt(formValues.graduateProfileId ?? ''),
       medicalSchoolName: formValues.medicalSchoolName,
       medicalSchoolCity: formValues.medicalSchoolCity,
-      medicalSchoolStateId: formValues.medicalSchoolStateId,
+      medicalSchoolStateId: stateControlDisabled ? '' : formValues.medicalSchoolStateId,
       medicalSchoolCountryId: formValues.medicalSchoolCountryId,
       medicalSchoolCountryName: formValues.medicalSchoolCountryName,
       medicalSchoolCompletionYear: formValues.medicalSchoolCompletionYear,
