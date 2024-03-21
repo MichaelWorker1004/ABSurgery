@@ -190,10 +190,8 @@ namespace SurgeonPortal.Library.MedicalTraining
 
                     _logger.LogInformation($"UserCertificate Insert LoadProperty Completed UserId = {_identity.GetUserId<int>()}");
 
-
                     try
                     {
-                        { }
                         var dto = await _userCertificateDal.InsertAsync(ToDto());
 
                         FetchData(dto);

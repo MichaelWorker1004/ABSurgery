@@ -52,9 +52,11 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
         {
             try
             {
+                _logger.LogInformation($"UserCertificateDal InsertAsync about to start SQL INsert. User Id = {dto.UserId} uUser Id = {dto.DocumentId}");
+
                 using (var connection = CreateConnection())
                 {
-                    return await connection.ExecFirstOrDefaultAsync<UserCertificateDto>(
+                    var certificate = await connection.ExecFirstOrDefaultAsync<UserCertificateDto>(
                         "[dbo].[upsert_usercertificates]",
                             new
                             {
@@ -65,14 +67,17 @@ namespace SurgeonPortal.DataAccess.MedicalTraining
                                 CertificateNumber = dto.CertificateNumber,
                                 CreatedByUserId = dto.UserId,
                             });
-                            
+
+                    _logger.LogInformation($"UserCertificateDal InsertAsync complete. Certirficate Created. User Id = {dto.UserId} CertificateId = {certificate.CertificateId}");
+
+                    return certificate;
                 }
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
                 if(ex.Message.Contains("Cannot insert duplicate key"))
                 {
-                    _logger.LogError($"UserCertificateDal InsertAsync FAILED when trying to call InsertAsync. 'Cannot insert duplicate key' Error Message = {ex.Message}");
+                    _logger.LogError($"UserCertificateDal InsertAsync FAILED when trying to call InsertAsync. '' Error Message = {ex.Message}");
                     throw new Ytg.Framework.Exceptions.ObjectExistsException("UserCertificate");
                 }
                 else
