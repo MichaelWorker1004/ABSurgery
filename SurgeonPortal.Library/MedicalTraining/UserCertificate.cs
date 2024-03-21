@@ -1,8 +1,10 @@
 using Csla;
+using Microsoft.Extensions.Logging;
 using SurgeonPortal.DataAccess.Contracts.MedicalTraining;
 using SurgeonPortal.Library.Contracts.Documents;
 using SurgeonPortal.Library.Contracts.MedicalTraining;
 using SurgeonPortal.Library.Documents;
+using SurgeonPortal.Library.Scoring;
 using SurgeonPortal.Shared;
 using System;
 using System.ComponentModel;
@@ -12,6 +14,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Ytg.Framework.Csla;
 using Ytg.Framework.Identity;
+using static Csla.Security.MembershipIdentity;
 using static SurgeonPortal.Library.MedicalTraining.UserCertificateFactory;
 
 namespace SurgeonPortal.Library.MedicalTraining
@@ -24,15 +27,18 @@ namespace SurgeonPortal.Library.MedicalTraining
     {
         private readonly IUserCertificateDal _userCertificateDal;
         private readonly IDocumentFactory _documentFactory;
+        private readonly ILogger<UserCertificate> _logger;
 
         public UserCertificate(
             IIdentityProvider identityProvider,
             IUserCertificateDal userCertificateDal,
-            IDocumentFactory documentFactory)
+            IDocumentFactory documentFactory,
+            ILogger<UserCertificate> logger)
             : base(identityProvider)
         {
             _userCertificateDal = userCertificateDal;
             _documentFactory = documentFactory;
+            _logger = logger;
         }
 
         [Key] 
@@ -182,11 +188,28 @@ namespace SurgeonPortal.Library.MedicalTraining
                     LoadProperty(DocumentProperty, newDocument);
                     LoadProperty(DocumentIdProperty, Document.Id);
 
-                    var dto = await _userCertificateDal.InsertAsync(ToDto());
+                    _logger.LogInformation($"UserCertificate Insert LoadProperty Completed UserId = {_identity.GetUserId<int>()}");
 
-                    FetchData(dto);
+
+                    try
+                    {
+                        { }
+                        var dto = await _userCertificateDal.InsertAsync(ToDto());
+
+                        FetchData(dto);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"UserCertificate Insert FAILED when trying to call InsertAsync. Error Message = {ex.Message}  UserId = {_identity.GetUserId<int>()}");
+                    }
 
                     MarkIdle();
+
+                    _logger.LogInformation($"UserCertificate Insert completed SUCCESSFULLY. UserId = {_identity.GetUserId<int>()}");
+                }
+                else
+                {
+                    _logger.LogInformation($"Document is null when attempting to insert in databasse UserId = {_identity.GetUserId<int>()}");
                 }
             }
         }

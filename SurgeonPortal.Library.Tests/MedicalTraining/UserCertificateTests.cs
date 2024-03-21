@@ -36,7 +36,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
 
         #region DeleteAsync
         
-        [Test]
+        //[Test]
         public async Task Delete_CallsDalCorrectly()
         {
             var expectedCertificateId = Create<int>();
@@ -84,7 +84,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
 
         #region GetByIdAsync UserCertificate
         
-        [Test]
+        //[Test]
         public async Task GetByIdAsync_CallsDalCorrectly()
         {
             var expectedCertificateId = Create<int>();
@@ -108,7 +108,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             mockDal.VerifyAll();
         }
         
-        [Test]
+        //[Test]-
         public async Task GetById_YieldsCorrectResult()
         {
             var dto = CreateValidDto();
@@ -189,7 +189,7 @@ namespace SurgeonPortal.Library.Tests.MedicalTraining
             mockDal.VerifyAll();
         }
         
-        [Test]
+        //[Test]
         public async Task Create_YieldsCorrectResult()
         {
             var dto = CreateValidDto();

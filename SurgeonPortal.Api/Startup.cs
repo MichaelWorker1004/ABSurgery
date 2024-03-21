@@ -45,6 +45,12 @@ using SurgeonPortal.Library.Contracts.EmailProvider;
 using SurgeonPortal.Library.EmailProvider.SendGrid;
 using SurgeonPortal.Shared.ReferenceLetters;
 using SurgeonPortal.Shared.Users;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using NLog.Web;
+using NLog;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
+using NLog.Extensions.Logging;
 
 namespace SurgeonPortal.Api
 {
@@ -67,6 +73,8 @@ namespace SurgeonPortal.Api
         {
 			services.AddHttpContextAccessor();
 
+            //services.AddSingleton<ILoggerProvider, NLogLoggerProvider>();
+
             services.Configure<SiteConfiguration>(Configuration.GetSection(ConfigurationSections.Site));
             services.Configure<TokensConfiguration>(Configuration.GetSection(ConfigurationSections.Tokens));
             services.Configure<AzureStorageConfiguration>(Configuration.GetSection(ConfigurationSections.AzureStorageConfiguration));
@@ -76,7 +84,7 @@ namespace SurgeonPortal.Api
             services.Configure<EmailConfiguration>(Configuration.GetSection(ConfigurationSections.Email));
             services.Configure<ReferenceLettersConfiguration>(Configuration.GetSection(ConfigurationSections.ReferenceLetters));
             services.Configure<UsersConfiguration>(Configuration.GetSection(ConfigurationSections.Users));
-
+            
             services.AddCsla();
 
             new CslaConfiguration()
@@ -169,7 +177,6 @@ namespace SurgeonPortal.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseObjectActivator(app.ApplicationServices);
-
             app.UseCors("cors");
 
             if (env.IsDevelopment())
