@@ -9,6 +9,7 @@ using SurgeonPortal.Shared;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -39,6 +40,8 @@ namespace SurgeonPortal.Library.MedicalTraining
             _userCertificateDal = userCertificateDal;
             _documentFactory = documentFactory;
             _logger = logger;
+
+
         }
 
         [Key] 
@@ -99,6 +102,7 @@ namespace SurgeonPortal.Library.MedicalTraining
 		public static readonly PropertyInfo<string> CertificateNumberProperty = RegisterProperty<string>(c => c.CertificateNumber);
 
         public static readonly PropertyInfo<Document> DocumentProperty = RegisterProperty<Document>(c => c.Document);
+        
         [DataMember]
         [DisplayName(nameof(Document))]
         public IDocument Document
@@ -249,13 +253,23 @@ namespace SurgeonPortal.Library.MedicalTraining
 
         public void LoadDocument(Stream file)
         {
-            var document = _documentFactory.Create();
-            document.DocumentTypeId = (int)DocumentTypes.Certificate;
-            document.DocumentName = $"Certificate-{Enum.GetName(typeof(CertificateTypes), CertificateTypeId)}-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}";
-            document.InternalViewOnly = false;
-            document.UploadedBy = _identity.GetUserName();
-            document.File = file;
-            LoadProperty(DocumentProperty, document);
+            try
+            {
+                var document = _documentFactory.Create();
+                document.DocumentTypeId = (int)DocumentTypes.Certificate;
+                document.DocumentName = $"Certificate-{Enum.GetName(typeof(CertificateTypes), CertificateTypeId)}-{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}";
+                document.InternalViewOnly = false;
+                document.UploadedBy = _identity.GetUserId<string>(); //_identity.GetUserName();
+                document.File = file;
+                LoadProperty(DocumentProperty, document);
+
+                _logger.LogInformation($"UserCertificate LoadDocument PASSED.");
+                //_logger.LogInformation($"UserCertificate LoadDocument PASSED.  UserId = {_identity.GetUserId<int>()}");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"UserCertificate LoadDocument FAILED. Error Message = {ex.Message}  UserId = {_identity.GetUserId<int>()}");
+            }
         }
     }
 }
