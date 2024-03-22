@@ -15,6 +15,10 @@ namespace SurgeonPortal.Library.MedicalTraining
         PALS,
         RPVI,
         ACGME,
-        ECFMG
+        ECFMG,
+        NCC_Fllwshp,
+        UCNS,
+        NCC_Practice_Pthwy,
+        NCC_Privileges
     }
 }
