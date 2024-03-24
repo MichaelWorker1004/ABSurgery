@@ -1,3 +1,4 @@
+/* eslint-disable no-octal */
 /* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import {
@@ -17,6 +18,7 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+    UploadDocument,
   UploadDocumentCertificate,
 } from '../../../state';
 import { Store } from '@ngxs/store';
@@ -32,6 +34,10 @@ import {
 } from 'src/app/state';
 import { GetDocumentTypes } from 'src/app/state/picklists';
 import { IGridColumns } from '../grid/abs-grid-col.interface';
+import { IUserCertificateModel } from '../../../api/models/medicaltraining/user-certificate.model';
+import { UserCertificateFileModel } from '../../../api/models/medicaltraining/user-certificateFilemodel';
+import { Disabled } from '../action-card/action-card.component.stories';
+import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
 
 @Component({
   selector: 'abs-documents-upload',
@@ -129,14 +135,16 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   };
   fileUploadedName: string | undefined;
   uploadedFile!: File | null;
+  certificateTypeId: number | undefined;
 
   uploadForm = new FormGroup({
     typeId: new FormControl(''),
     file: new FormControl(''),
   });
 
-  constructor(private _store: Store) {
+  constructor(private _store: Store, private globalDialogService: GlobalDialogService) {
     this._store.dispatch(new GetDocumentTypes());
+
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['documentsData']) {
@@ -149,6 +157,8 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   }
 
   initialize() {
+    this.uploadForm.get('file')?.disable();
+    this.certificateTypeId = 0;
     this.localDocumentsData = this.documentsData || [];
     this.setFilterOptions();
     this.setRequired();
@@ -215,9 +225,9 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
 
     alert('passing form data = ' + JSON.stringify(formData));
 
-    if (model.file) {
-      this._store.dispatch(new UploadDocumentCertificate(formData));
-    }
+    //if (model.file) {
+    //  this._store.dispatch(new UploadDocumentCertificate(formData));
+    //}
 
     this.uploadAction.emit({
       data: model,
@@ -232,33 +242,48 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   handleFileOnChange($event: any) {
     this.fileUploadedName = $event.target.files[0].name;
     this.uploadedFile = $event.target.files[0];
-    
-    const formData = new FormData();
-    
-    formData.set("certificateTypeId", this.uploadForm.get('typeId')?.value as string);
-    formData.set("createdByUserId", this.userId?.toString() as string);
-    formData.set("file", $event.target.files[0] as File);
-    formData.set("issueDate", new Date().toISOString());
 
-    if ($event.target.files[0]) {
-      this._store.dispatch(new UploadDocumentCertificate(formData));
+    //check file size
+    if (this.uploadedFile!.size > 20000000) {
+      this.globalDialogService.showSuccessError(
+        'Error',
+        'File size is too large. Maximum size is 20MB',
+        false
+      );
+
+      this.uploadedFile = null;
+      this.uploadForm.get('file')?.setValue('');
+      this.fileUploadedName = undefined;
+      return;
     }
 
-    const model = {
-      typeId: this.uploadForm.get('typeId')?.value,
-      createdByUserId: this.userId,
-      file: this.uploadedFile?.stream,
-      issueDate: new Date().toISOString(),
-    }
 
+    if (this.uploadedFile) {
+      this._store.dispatch(new UploadDocumentCertificate(
+        {
+          certificateTypeId: this.uploadForm.get('typeId')?.value as unknown as number,
+          file: $event.target.files[0] as File,
+        }));
+    }
+    
     this.uploadAction.emit({
-      data: model,
       gridData: this.documentsData,
       file: this.uploadedFile,
     });
 
     this.resetData();
 
+  }
+
+  handleDropDownOnChange($event: any) {
+    this.certificateTypeId = this.uploadForm.get('typeId')?.value as unknown as number;
+
+    if (this.certificateTypeId > 0) {
+      this.uploadForm.get('file')?.enable();
+    }
+    else {
+      this.uploadForm.get('file')?.disable();
+    }
   }
 
   resetData() {

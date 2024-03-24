@@ -1,3 +1,6 @@
+import { UserCertificateFileModel } from "../../api/models/medicaltraining/user-certificateFilemodel";
+
+/* eslint-disable prettier/prettier */
 export class GetAllDocuments {
   static readonly type = '[Documents] Get all documents';
 }
@@ -29,5 +32,5 @@ export class UploadDocument {
 
 export class UploadDocumentCertificate {
   static readonly type = '[Documents] Upload document';
-  constructor(public payload: FormData) { }
+  constructor(public payload: { certificateTypeId: number, file: any }) { }
 }
