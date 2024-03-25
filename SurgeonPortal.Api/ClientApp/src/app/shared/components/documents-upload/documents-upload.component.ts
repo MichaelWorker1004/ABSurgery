@@ -243,6 +243,20 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
     this.fileUploadedName = $event.target.files[0].name;
     this.uploadedFile = $event.target.files[0];
 
+    //check file type
+    if (this.uploadedFile?.type != 'application/pdf') {
+      this.globalDialogService.showSuccessError(
+        'Error',
+        'Incorrect file type. Please upload a Pdf file.',
+        false
+      );
+
+      this.uploadedFile = null;
+      this.uploadForm.get('file')?.setValue('');
+      this.fileUploadedName = undefined;
+      return;
+    }
+
     //check file size
     if (this.uploadedFile!.size > 20000000) {
       this.globalDialogService.showSuccessError(
