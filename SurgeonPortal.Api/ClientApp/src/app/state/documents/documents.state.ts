@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@angular/core';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, first, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
 import { IFormErrors } from 'src/app/shared/common';
@@ -165,31 +165,32 @@ export class DocumentsState {
   @Action(UploadDocumentCertificate)
   uploadDocument(
     ctx: StateContext<IDocuments>,
-    action: { payload: FormData }
+    action: { payload: { certificateTypeId: number,  file: any } }
   ): Observable<void> {
     this.globalDialogService.showLoading();
+
     return this.userCertificateService
-      .createUserCertificate(action.payload)
+      .createUserCertificate(action.payload.certificateTypeId, action.payload.file)
       .pipe(
-        tap(() => {
-          this._store.dispatch(new GetUserCertificates(true));
-          this._store.dispatch(new GetAllDocuments());
-          this.globalDialogService.showSuccessError(
-            'Success',
-            'Document uploaded successfully',
-            true
-          );
-        }),
+          tap(() => {
+            this._store.dispatch(new GetUserCertificates(true));
+            this._store.dispatch(new GetAllDocuments());
+            this.globalDialogService.showSuccessError(
+              'Success',
+              'Document uploaded successfully',
+              true
+            );
+          }),
         catchError((error) => {
-          console.error('------- In Documents Store', error);
-          console.error(error);
-          this.globalDialogService.showSuccessError(
-            'Error',
-            'Document uploaded failed',
-            false
-          );
-          return of(error);
-        })
-      );
+            console.error('------- In Documents Store', error);
+            console.error(error);
+            this.globalDialogService.showSuccessError(
+              'Error',
+              'Document uploaded failed',
+              false
+            );
+            return of(error);
+          })
+    );
   }
 }

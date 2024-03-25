@@ -13,10 +13,11 @@
         [optionLabel]="dropdownLabel"
         [optionValue]="dropdownValue"
         [showClear]="true"
+        (onChange)="handleDropDownOnChange($event)"
         formControlName="typeId"
         class="dropdown"
       ></p-dropdown>
-      <div class="input-file">
+      <div [ngClass]="certificateTypeId ? 'input-file' : 'input-file p-disabled'">
         <label>
           <input
             id="docFile" 
@@ -25,7 +26,7 @@
             type="file"
             accept=".pdf"
             (change)="handleFileOnChange($event)"
-          />
+                 />
           <span
             >{{ fileUploadedName ?? 'Upload a File' }}
             <i class="fa-solid fa-upload"></i

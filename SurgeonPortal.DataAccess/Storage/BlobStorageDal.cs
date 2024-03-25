@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SurgeonPortal.DataAccess.Contracts.Storage;
 using SurgeonPortal.Shared.Storage;
@@ -15,12 +16,16 @@ namespace SurgeonPortal.DataAccess.Storage
     {
         private readonly AzureStorageConfiguration _storageConfiguration;
         private readonly BlobContainerClient _containerClient;
+        private readonly ILogger<BlobStorageDal> _logger;
 
-        public BlobStorageDal(IOptions<AzureStorageConfiguration> options)
+        public BlobStorageDal(IOptions<AzureStorageConfiguration> options,
+            ILogger<BlobStorageDal> logger)
         {
             _storageConfiguration = options.Value;
             var blobServiceClient = new BlobServiceClient(_storageConfiguration.ConnectionString);
             _containerClient = blobServiceClient.GetBlobContainerClient(_storageConfiguration.ContainerName);
+
+            _logger = logger;
 
         }
 
@@ -35,14 +40,21 @@ namespace SurgeonPortal.DataAccess.Storage
             var blobClient = _containerClient.GetBlobClient(name);
             return blobClient.OpenReadAsync();
         }
-
         public Task SaveAsync(Stream fileStream, string name)
         {
             // Get the Blob Client used to interact with (including create) the blob
             BlobClient blobClient = _containerClient.GetBlobClient(name);
 
             // Upload the blob
-            return blobClient.UploadAsync(fileStream);
+            try
+            {
+                return blobClient.UploadAsync(fileStream);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"BlobStorageDal SaveAsync FAILED when trying to upload file to Azure Blob Storage. Error Message = {ex.Message}");
+                return null;
+            }
         }
 
     }

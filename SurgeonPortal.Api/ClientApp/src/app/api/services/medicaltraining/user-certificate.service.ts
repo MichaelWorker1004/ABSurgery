@@ -35,8 +35,7 @@ export class UserCertificateService {
             * Calls Sp(s)
             * [del_usercertificate]
             */
-            
-            
+                       
             return this.apiService.delete<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}&certificateId=${certificateId}`);
         }
  
@@ -65,8 +64,46 @@ export class UserCertificateService {
             
             return this.apiService.get<IUserCertificateModel>(`api/user-certificates/by-id?api-version=${apiVersion}&certificateId=${certificateId}`);
         }
- 
-        public createUserCertificate(model: FormData, 
+
+  public createUserCertificate(certificateTypeId: number, file: any,
+    apiVersion = '1.0'): Observable<IUserCertificateModel> {
+    /**
+    * Claims
+    */
+
+    /**
+    * Business Rules
+    * No business rules exist for this model
+    */
+
+    /**
+    * Required Parameters
+    * certificateTypeId:String
+    * file:Any
+    * apiVersion
+    */
+
+    /**
+    * Calls Sp(s)
+    * [insert_usercertificates]
+    */
+
+    const formData = new FormData();
+
+    formData.append("certificateTypeId", certificateTypeId as unknown as string);
+    formData.append("file", file);
+
+    return this.httpClient.post<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}`,
+      formData);
+
+    //return this.apiService.post<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}`,
+    //  {
+    //    certificateTypeId,
+    //    file
+    //  });
+  }
+
+        public createUserCertificate2(model: FormData, 
           apiVersion = '1.0'): Observable<IUserCertificateModel> {
             /**
             * Claims
@@ -91,8 +128,8 @@ export class UserCertificateService {
             * [insert_usercertificates]
             */
 
-          return this.apiService.post<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}`,
-            model);
+
+          return this.apiService.post<IUserCertificateModel>(`api/user-certificates?api-version=${apiVersion}`, model);
         }
  
         public retrieveUserCertificateReadOnly_GetByUserAndType(certificateTypeId: number,
