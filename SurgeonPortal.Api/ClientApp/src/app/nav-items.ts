@@ -60,7 +60,7 @@ export const ALL_NAV_ITEMS = [
     action: 'apply-and-register',
     icon: 'fa-solid fa-list-check',
     feature: 'applyRegisterPage',
-    allowedClaims: ['surgeon'],
+    allowedClaims: ['surgeon', 'trainee'],
     order: 7,
   },
   {
