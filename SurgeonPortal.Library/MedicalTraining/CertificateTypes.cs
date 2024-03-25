@@ -19,6 +19,7 @@ namespace SurgeonPortal.Library.MedicalTraining
         NCC_Fllwshp,
         UCNS,
         NCC_Practice_Pthwy,
-        NCC_Privileges
+        NCC_Privileges,
+        CME_Supporting_Document
     }
 }
