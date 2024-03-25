@@ -315,7 +315,7 @@ export class ReferenceFormModalComponent implements OnInit, OnChanges {
       .dispatch(new CreatePdReferenceLetter(model))
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this._store.dispatch(new GetPdReferenceLetter(496));
+        this._store.dispatch(new GetPdReferenceLetter(this.examHeaderId));
       });
 
     this.close();
