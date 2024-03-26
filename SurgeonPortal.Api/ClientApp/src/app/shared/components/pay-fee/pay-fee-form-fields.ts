@@ -106,4 +106,14 @@ export const PAY_FEE_FORM_FIELDS = [
     size: 'col-6',
     disabled: true,
   },
+  {
+    label: '',
+    subLabel: '',
+    value: '',
+    required: false,
+    name: 'country',
+    placeholder: '',
+    type: 'hidden',
+    size: 'col-1',
+  },
 ];
