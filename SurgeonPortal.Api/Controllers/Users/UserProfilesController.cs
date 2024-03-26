@@ -114,7 +114,7 @@ namespace SurgeonPortal.Api.Controllers.Users
             entity.Street2 = model.Street2;
             entity.City = model.City;
             entity.State = model.State;
-            entity.ZipCode = model.ZipCode;
+            entity.ZipCode = FormatZipCode(model.Country, model.ZipCode, model.State);
             entity.Country = model.Country;
         }
 
@@ -143,8 +143,33 @@ namespace SurgeonPortal.Api.Controllers.Users
             entity.Street2 = model.Street2;
             entity.City = model.City;
             entity.State = model.State;
-            entity.ZipCode = model.ZipCode;
+            entity.ZipCode = FormatZipCode(model.Country, model.ZipCode, model.State);
             entity.Country = model.Country;
+        }
+
+        private string FormatZipCode(string country, string zip, string state)
+        {
+            if (country.ToLower().Trim() == "500") //USA = 500
+            {
+                if (new[] { "ap", "ae", "aa", "apo", "fpo", "dpo" }.Contains(state.ToLower().Trim()) == false)
+                {
+                    //trim zip code
+                    if (zip.Contains('-'))
+                    {
+                        try
+                        {
+                            string[] zipCodes = zip.Split('-').ToArray();
+                            return zipCodes[0];
+                        }
+                        catch
+                        {
+                            return zip;
+                        }
+                    }
+                }
+            }
+
+            return zip;
         }
     }
 }
