@@ -176,6 +176,10 @@ namespace SurgeonPortal.Library.Examinations
         {
             base.DataPortal_Insert();
         
+            LoadProperty(IdCodeProperty, GenerateIdCode());
+
+            await SendReferenceLetter();
+
             using (BypassPropertyChecks)
             {
                 var dto = await _pdReferenceLetterDal.InsertAsync(ToDto());
