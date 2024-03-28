@@ -115,7 +115,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard, FeatureToggleGuard],
     data: {
-      requiredClaims: [UserClaims.surgeon],
+      requiredClaimsAtLeastOne: [UserClaims.surgeon, UserClaims.trainee],
       requiredFeatures: ['applyRegisterPage'],
     },
   },
@@ -127,7 +127,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard, FeatureToggleGuard],
     data: {
-      requiredClaims: [UserClaims.surgeon],
+      requiredClaimsAtLeastOne: [UserClaims.surgeon, UserClaims.trainee],
       requiredFeatures: ['examHistoryPage'],
     },
   },
@@ -151,7 +151,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard, FeatureToggleGuard],
     data: {
-      requiredClaims: [UserClaims.surgeon],
+      requiredClaimsAtLeastOne: [UserClaims.surgeon, UserClaims.trainee],
       requiredFeatures: ['paymentHistoryPage'],
     },
   },
@@ -163,7 +163,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard, FeatureToggleGuard],
     data: {
-      requiredClaims: [UserClaims.user],
+      requiredClaimsAtLeastOne: [UserClaims.surgeon, UserClaims.trainee],
       requiredFeatures: ['documentsPage'],
     },
   },
