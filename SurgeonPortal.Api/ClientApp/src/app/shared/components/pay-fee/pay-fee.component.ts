@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -172,11 +173,25 @@ export class PayFeeComponent implements OnInit {
 
   handleSubmitAction() {
     this.globalDialogService.showLoading();
+
     const formFields = this.paymentInformationForm.getRawValue();
+    let zipCode = formFields.zipCode.toString();
+    const country = formFields.country.toString();
+    const state = formFields.state.toString().toLowerCase();
+    const militaryStates = ['aa', 'ae', 'ap', 'apo', 'fpo', 'dpo'];
+
+    if (country == '500') {
+      if (militaryStates.some(e => e === state) == false) {
+        if (zipCode && zipCode.length > 5) {
+          zipCode = zipCode.toString().substring(0, 5);
+        }
+      }
+    }
+
     const model: IExamFeeTransactionModel = {
       ...formFields,
       invoiceNumber: formFields.invoiceNumber,
-      zipCode: formFields.zipCode.toString().replace(/\s/g, ''),
+      zipCode: zipCode,
       quantity: '1',
       phoneNumber: formFields.phoneNumber.replace(/\D/g, ''),
       description: `Payment for ${formFields.invoiceNumber}`,
