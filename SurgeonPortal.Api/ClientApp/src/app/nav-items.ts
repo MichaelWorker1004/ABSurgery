@@ -32,7 +32,7 @@ export const ALL_NAV_ITEMS = [
     action: 'professional-standing',
     icon: 'fa-solid fa-stethoscope',
     feature: 'professionalStandingPage',
-    allowedClaims: ['surgeon'],
+    allowedClaims: ['surgeon', 'trainee'],
     order: 4,
   },
   {
@@ -69,7 +69,7 @@ export const ALL_NAV_ITEMS = [
     action: 'examination-history',
     icon: 'fa-sharp fa-solid fa-file-waveform',
     feature: 'examHistoryPage',
-    allowedClaims: ['surgeon'],
+    allowedClaims: ['surgeon', 'trainee'],
     order: 8,
   },
   {
@@ -87,7 +87,7 @@ export const ALL_NAV_ITEMS = [
     action: 'payment-history',
     icon: 'fa-regular fa-credit-card',
     feature: 'paymentHistoryPage',
-    allowedClaims: ['surgeon'],
+    allowedClaims: ['surgeon', 'trainee'],
     order: 10,
   },
   {
