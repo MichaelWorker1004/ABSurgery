@@ -53,6 +53,8 @@ import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { IFormErrors } from '../shared/common';
 import { FormErrorsComponent } from '../shared/components/form-errors/form-errors.component';
 import { SetUnsavedChanges } from '../state/application/application.actions';
+import { NavigationService } from '../shared/services/navigation.service ';
+import { BackNavigationComponent } from '../shared/components/back-navigation/back-navigation.component';
 
 export interface IDisplayUserProfile extends IUserProfile {
   gender: string;
@@ -87,6 +89,7 @@ export interface IDisplayUserProfile extends IUserProfile {
     CalendarModule,
     CheckboxModule,
     FormErrorsComponent,
+    BackNavigationComponent,
   ],
   providers: [provideNgxMask()],
 })
@@ -166,11 +169,14 @@ export class PersonalProfileComponent implements OnInit, OnDestroy {
 
   isSubmitted = false;
   canEditProfile = true;
+  showBackButton = false;
 
   constructor(
     private _store: Store,
-    public globalDialogService: GlobalDialogService
+    public globalDialogService: GlobalDialogService,
+    public navigationService: NavigationService
   ) {
+    this.showBackButton = navigationService.getQEcomponent();
     this.featureFlags$?.pipe(untilDestroyed(this)).subscribe((featureFlags) => {
       if (featureFlags) {
         this.canEditProfile = <boolean>featureFlags.personalProfileEdit;

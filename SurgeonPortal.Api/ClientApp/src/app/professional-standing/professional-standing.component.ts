@@ -54,6 +54,8 @@ import { SanctionsFormComponent } from './sanctions-form/sanctions-form.componen
 import { AppointmentsFormComponent } from './appointments-form/appointments-form.component';
 import { GlobalDialogService } from '../shared/services/global-dialog.service';
 import { CurrentAppointmentFormComponent } from './current-appointment-form/current-appointment-form.component';
+import { NavigationService } from '../shared/services/navigation.service ';
+import { BackNavigationComponent } from '../shared/components/back-navigation/back-navigation.component';
 interface IMedicalLicensePickLists {
   licenseStateOptions: IStateReadOnlyModel[] | undefined;
   licenseTypeOptions: IPickListItemNumber[] | undefined;
@@ -99,6 +101,7 @@ interface IMedicalLicense extends IMedicalLicenseReadOnlyModel {
     SanctionsFormComponent,
     AppointmentsFormComponent,
     CurrentAppointmentFormComponent,
+    BackNavigationComponent,
   ],
 })
 export class ProfessionalStandingComponent implements OnInit {
@@ -169,12 +172,15 @@ export class ProfessionalStandingComponent implements OnInit {
 
   hasPrimaryAppointment = false;
   allAppointments: IUserAppointmentReadOnlyModel[] = [];
+  showBackButton = false;
 
   constructor(
     private _store: Store,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    public navigationService: NavigationService
   ) {
     this.initProfileData();
+    this.showBackButton = navigationService.getQEcomponent();
   }
 
   ngOnInit() {
