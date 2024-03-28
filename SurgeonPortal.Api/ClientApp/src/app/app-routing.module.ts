@@ -78,7 +78,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard, FeatureToggleGuard],
     data: {
-      requiredClaims: [UserClaims.surgeon],
+      requiredClaimsAtLeastOne: [UserClaims.surgeon, UserClaims.trainee],
       requiredFeatures: ['professionalStandingPage'],
     },
     canDeactivate: [WorkInProgressGuard],
@@ -91,7 +91,7 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard, FeatureToggleGuard],
     data: {
-      requiredClaims: [UserClaims.surgeon],
+      requiredClaimsAtLeastOne: [UserClaims.surgeon, UserClaims.trainee],
       requiredFeatures: ['applyRegisterPage'],
     },
   },
@@ -103,7 +103,7 @@ const routes: Routes = [
       ).then((m) => m.RegistrationRequirementsComponent),
     canActivate: [AuthGuard, FeatureToggleGuard],
     data: {
-      requiredClaims: [UserClaims.surgeon],
+      requiredClaimsAtLeastOne: [UserClaims.surgeon, UserClaims.trainee],
       requiredFeatures: ['applyRegisterPage'],
     },
   },

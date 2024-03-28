@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { AuthSelectors } from './auth.selectors';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { UserClaims } from 'src/app/side-navigation/user-status.enum';
 
 interface CanActivate {
   canActivate(
@@ -49,6 +50,9 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     const requiredClaims = route.data['requiredClaims'] as string[];
+    const requiredClaimsAtLeastOne = route.data[
+      'requiredClaimsAtLeastOne'
+    ] as string[];
     const isAuthenticated = this.store.selectSnapshot(
       AuthSelectors.slices.isAuthenticated
     );
@@ -58,7 +62,10 @@ export class AuthGuard implements CanActivate {
     if (isAuthenticated) {
       // if there are claims required for the route check them
       if (requiredClaims && requiredClaims.length > 0) {
-        if (this.checkClaims(userClaims, requiredClaims)) {
+        if (
+          this.checkClaims(userClaims, requiredClaims) &&
+          this.checkClaimsAtLeastOne(userClaims, requiredClaimsAtLeastOne)
+        ) {
           // if the user has the required claims, allow the route
           return true;
         } else {
@@ -81,5 +88,23 @@ export class AuthGuard implements CanActivate {
 
   private checkClaims(userClaims: string[], requiredClaims: string[]) {
     return requiredClaims.every((claim) => userClaims.includes(claim));
+  }
+
+  private checkClaimsAtLeastOne(
+    userClaims: string[],
+    requiredClaimsAtLeastOne: string[]
+  ) {
+    const claimsWithOutUserPermission = userClaims.filter(
+      (x) => x != UserClaims.user
+    );
+
+    // Check if there are any required claims to check against
+    if (requiredClaimsAtLeastOne?.length > 0) {
+      return requiredClaimsAtLeastOne.some((claim) =>
+        claimsWithOutUserPermission.includes(claim)
+      );
+    }
+
+    return true;
   }
 }
