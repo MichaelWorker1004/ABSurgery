@@ -56,6 +56,7 @@ import { REGISTRATION_REQUIRMENTS_CARDS } from './reqistration-requirements-card
 import { SpecialAccommodationsModalComponent } from './special-accommodations-modal/special-accommodations-modal.component';
 import { SurgeonProfileModalComponent } from './surgeon-profile-modal/surgeon-profile-modal.component';
 import { TrainingModalComponent } from './training-modal/training-modal.component';
+import { NavigationService } from '../shared/services/navigation.service ';
 
 interface ActionMap {
   [key: string]: () => void;
@@ -174,8 +175,10 @@ export class RegistrationRequirementsComponent implements OnInit {
     public viewContainerRef: ViewContainerRef,
     private _store: Store,
     private activatedRoute: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private navigationService: NavigationService
   ) {
+    this.navigationService.setQEcomponent(true);
     this.activatedRoute.params.pipe(take(1)).subscribe((params) => {
       this.examHeaderId = params['examId'];
       if (this.examHeaderId) {

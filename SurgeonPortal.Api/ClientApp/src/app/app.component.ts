@@ -30,6 +30,7 @@ import {
 import { LoadApplication } from './state/application/application.actions';
 import { ALL_NAV_ITEMS } from './nav-items';
 import { ButtonModule } from 'primeng/button';
+import { BackNavigationComponent } from './shared/components/back-navigation/back-navigation.component';
 
 @UntilDestroy()
 @Component({
@@ -48,6 +49,7 @@ import { ButtonModule } from 'primeng/button';
     MessagesModule,
     AlertComponent,
     ButtonModule,
+    BackNavigationComponent,
   ],
 })
 export class AppComponent implements OnInit {

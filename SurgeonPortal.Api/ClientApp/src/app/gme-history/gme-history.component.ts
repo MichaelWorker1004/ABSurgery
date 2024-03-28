@@ -52,6 +52,8 @@ import { ButtonModule } from 'primeng/button';
 import { GmeFormComponent } from './gme-form/gme-form.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { GetPicklists, PicklistsSelectors } from '../state/picklists';
+import { NavigationService } from '../shared/services/navigation.service ';
+import { BackNavigationComponent } from '../shared/components/back-navigation/back-navigation.component';
 
 export interface ICalendarFilterValue {
   value: string;
@@ -93,6 +95,7 @@ interface IGmePicklistOptions {
     DropdownModule,
     ButtonModule,
     GmeFormComponent,
+    BackNavigationComponent,
   ],
 })
 export class GmeHistoryComponent implements OnInit, OnDestroy {
@@ -133,6 +136,7 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
   conflicts!: any[];
 
   showConflictResolutionModal = false;
+  showBackButton = false;
 
   calendarOptions: CalendarOptions = {
     height: 'auto',
@@ -248,10 +252,12 @@ export class GmeHistoryComponent implements OnInit, OnDestroy {
 
   constructor(
     private _store: Store,
-    private globalDialogService: GlobalDialogService
+    private globalDialogService: GlobalDialogService,
+    public navigationService: NavigationService
   ) {
     this.initRotationsData();
     this.initPicklistOptions();
+    this.showBackButton = navigationService.getQEcomponent();
 
     this.selectedRotation$?.pipe(untilDestroyed(this)).subscribe((rotation) => {
       this.selectedGmeRotation = undefined;

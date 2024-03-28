@@ -84,6 +84,8 @@ import { FELLOWSHIP_COLS } from './fellowship-cols';
 import { MedicalTrainingActions } from './medical-training-models';
 import { OtherCertificatesAddEditModalComponent } from './other-certificates-add-edit-modal/other-certificates-add-edit-modal.component';
 import { OTHER_CERTIFICATIONS_COLS } from './other-certificates-add-edit-modal/other-certifications-cols';
+import { NavigationService } from '../shared/services/navigation.service ';
+import { BackNavigationComponent } from '../shared/components/back-navigation/back-navigation.component';
 
 @UntilDestroy()
 @Component({
@@ -109,6 +111,7 @@ import { OTHER_CERTIFICATIONS_COLS } from './other-certificates-add-edit-modal/o
     DocumentsUploadComponent,
     OtherCertificatesAddEditModalComponent,
     FormErrorsComponent,
+    BackNavigationComponent,
   ],
 })
 export class MedicalTrainingComponent implements OnInit, OnDestroy {
@@ -207,6 +210,7 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
   year = new Date().getFullYear();
   maxYear: Date = new Date();
   canAddRPVI = true;
+  showBackButton = false;
 
   medicalTrainingForm = new FormGroup({
     graduateProfileId: new FormControl(''),
@@ -234,8 +238,10 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
 
   constructor(
     private _store: Store,
-    public globalDialogService: GlobalDialogService
+    public globalDialogService: GlobalDialogService,
+    public navigationService: NavigationService
   ) {
+    this.showBackButton = navigationService.getQEcomponent();
     this._store.dispatch(new GetResidencyPrograms());
     this._store.dispatch(new GetUserCertificates());
     this._store.dispatch(new GetAdvancedTrainingData());
@@ -274,7 +280,6 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
   }
 
   onResidencyProgramChange(event: any) {
-    
     if (event.value) {
       this.medicalTrainingForm.get('residencyProgramOther')?.disable();
       this.medicalTrainingForm.get('residencyProgramOther')?.patchValue(null);
@@ -619,17 +624,22 @@ export class MedicalTrainingComponent implements OnInit, OnDestroy {
     this._store.dispatch(new SetUnsavedChanges(toggle));
   }
 
-  save() { 
+  save() {
     const formValues = this.medicalTrainingForm.value;
-    const residencyProgramName = this.residencyPrograms.filter(program => program.programId == formValues.residencyProgramName);
+    const residencyProgramName = this.residencyPrograms.filter(
+      (program) => program.programId == formValues.residencyProgramName
+    );
 
-    const stateControlDisabled = formValues.medicalSchoolStateId == undefined ? true: false;
+    const stateControlDisabled =
+      formValues.medicalSchoolStateId == undefined ? true : false;
 
     const model = {
       graduateProfileId: parseInt(formValues.graduateProfileId ?? ''),
       medicalSchoolName: formValues.medicalSchoolName,
       medicalSchoolCity: formValues.medicalSchoolCity,
-      medicalSchoolStateId: stateControlDisabled ? '' : formValues.medicalSchoolStateId,
+      medicalSchoolStateId: stateControlDisabled
+        ? ''
+        : formValues.medicalSchoolStateId,
       medicalSchoolCountryId: formValues.medicalSchoolCountryId,
       medicalSchoolCountryName: formValues.medicalSchoolCountryName,
       medicalSchoolCompletionYear: formValues.medicalSchoolCompletionYear,
