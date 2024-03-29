@@ -5,4 +5,5 @@ export interface IQualifyingExamReadOnlyModel {
     regEndDate: string;
     examStartDate: string;
     examEndDate: string;
+    examId: number;
 }

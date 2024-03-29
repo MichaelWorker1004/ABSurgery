@@ -9,5 +9,6 @@ namespace SurgeonPortal.Models.Examinations
         public DateTime? RegEndDate { get; set; }
         public DateTime? ExamStartDate { get; set; }
         public DateTime? ExamEndDate { get; set; }
+        public int ExamId { get; set; }
     }
 }

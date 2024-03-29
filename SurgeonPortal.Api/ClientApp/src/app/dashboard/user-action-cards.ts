@@ -21,7 +21,7 @@ export const TRAINEE_ACTION_CARDS = [
     descriptionKey: 'DASHBOARD.ACTION_CARDS.APPLY_SUBTITLE',
     action: {
       type: 'component',
-      action: '/exam-process/exam-registration',
+      action: '/apply-and-register',
     },
     actionDisplay: '',
     actionDisplayKey: 'DASHBOARD.ACTION_CARDS.APPLY_BTN',

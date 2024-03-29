@@ -207,6 +207,18 @@ export class DashboardComponent {
                     .subscribe((res) => {
                       applyForQECard.actionDisplay = res;
                     });
+
+                    this.alertsAndNotices$
+                    ?.pipe(untilDestroyed(this))
+                    .subscribe((alertsAndNotices) => {
+
+                      if (alertsAndNotices?.alertsAndNotices?.examId &&
+                        applyForQECard && applyForQECard.action) {
+                       console.log(alertsAndNotices?.alertsAndNotices?.examId);
+                       applyForQECard.action.action = `/apply-and-register/registration-requirements/${alertsAndNotices?.alertsAndNotices?.examId}`; 
+                      }
+                    });
+
                 } else {
                   applyForQECard.actionDisplay = 'Coming Soon';
                 }

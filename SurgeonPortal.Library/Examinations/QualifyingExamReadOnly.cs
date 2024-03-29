@@ -28,7 +28,7 @@ namespace SurgeonPortal.Library.Examinations
         {
             _qualifyingExamReadOnlyDal = qualifyingExamReadOnlyDal;
         }
-        
+
         [DataMember]
 		[DisplayName(nameof(ExamName))]
         public string ExamName => ReadProperty(ExamNameProperty);
@@ -53,6 +53,11 @@ namespace SurgeonPortal.Library.Examinations
 		[DisplayName(nameof(ExamEndDate))]
         public DateTime? ExamEndDate => ReadProperty(ExamEndDateProperty);
 		public static readonly PropertyInfo<DateTime?> ExamEndDateProperty = RegisterProperty<DateTime?>(c => c.ExamEndDate);
+
+        [DataMember]
+        [DisplayName(nameof(ExamId))]
+        public int ExamId => ReadProperty(ExamIdProperty);
+        public static readonly PropertyInfo<int> ExamIdProperty = RegisterProperty<int>(c => c.ExamId);
 
 
         /// <summary>
@@ -90,6 +95,7 @@ namespace SurgeonPortal.Library.Examinations
             LoadProperty(RegEndDateProperty, dto.RegEndDate);
             LoadProperty(ExamStartDateProperty, dto.ExamStartDate);
             LoadProperty(ExamEndDateProperty, dto.ExamEndDate);
+            LoadProperty(ExamIdProperty, dto.ExamId);
 		} 
         
     }
