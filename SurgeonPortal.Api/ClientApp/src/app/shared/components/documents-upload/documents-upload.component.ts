@@ -2,6 +2,7 @@
 /* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import {
+    AfterViewInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   EventEmitter,
@@ -38,6 +39,7 @@ import { IUserCertificateModel } from '../../../api/models/medicaltraining/user-
 import { UserCertificateFileModel } from '../../../api/models/medicaltraining/user-certificateFilemodel';
 import { Disabled } from '../action-card/action-card.component.stories';
 import { GlobalDialogService } from 'src/app/shared/services/global-dialog.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'abs-documents-upload',
@@ -53,9 +55,10 @@ import { GlobalDialogService } from 'src/app/shared/services/global-dialog.servi
   styleUrls: ['./documents-upload.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class DocumentsUploadComponent implements OnInit, OnChanges {
+export class DocumentsUploadComponent implements OnInit, OnChanges, AfterViewInit {
   /**
    * Whether or not to allow upload
+   * @type {boolean}
    * @type {boolean}
    */
   @Input() allowUpload = true;
@@ -135,20 +138,25 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   };
   fileUploadedName: string | undefined;
   uploadedFile!: File | null;
-  certificateTypeId: number | undefined;
+  certificateTypeId: number | undefined | null;
 
   uploadForm = new FormGroup({
     typeId: new FormControl(''),
     file: new FormControl(''),
   });
 
-  constructor(private _store: Store, private globalDialogService: GlobalDialogService) {
+  active: number | undefined;
+
+  constructor(private _store: Store, private globalDialogService: GlobalDialogService, private router: Router) {
     this._store.dispatch(new GetDocumentTypes());
 
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['documentsData']) {
       this.localDocumentsData = changes['documentsData'].currentValue;
+      if (this.router.url.indexOf('/test/sort') > -1) {
+        this.active = 0;
+      }
     }
   }
 
@@ -157,11 +165,20 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   }
 
   initialize() {
-    this.uploadForm.get('file')?.disable();
-    this.certificateTypeId = 0;
     this.localDocumentsData = this.documentsData || [];
     this.setFilterOptions();
     this.setRequired();
+  }
+
+  ngAfterViewInit() {
+    if (this.router.url.indexOf('/medical-training') === -1) {
+      this.uploadForm.get('file')?.enable();
+      this.certificateTypeId = 1;
+    }
+    else {
+      this.certificateTypeId = undefined;
+      this.uploadForm.get('file')?.disable();      
+    }
   }
 
   setRequired() {
@@ -290,13 +307,15 @@ export class DocumentsUploadComponent implements OnInit, OnChanges {
   }
 
   handleDropDownOnChange($event: any) {
-    this.certificateTypeId = this.uploadForm.get('typeId')?.value as unknown as number;
+    if (this.router.url.indexOf('/medical-training') === 0) {
+      this.certificateTypeId = this.uploadForm.get('typeId')?.value as unknown as number;
 
-    if (this.certificateTypeId > 0) {
-      this.uploadForm.get('file')?.enable();
-    }
-    else {
-      this.uploadForm.get('file')?.disable();
+      if (this.certificateTypeId > 0) {
+        this.uploadForm.get('file')?.enable();
+      }
+      else {
+        this.uploadForm.get('file')?.disable();
+      }
     }
   }
 
