@@ -17,13 +17,6 @@
     "Route": "by-exam-id"
   },
   "projectClaims": {
-    "SurgeonPortalClaims.SurgeonClaim": {
-      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
-      "namespace": "SurgeonPortal.Library.Contracts.Identity",
-      "name": "SurgeonPortalClaims.SurgeonClaim",
-      "key": "SurgeonPortalClaims.SurgeonClaim",
-      "claimSetName": "SugeonPortal"
-    }
   },
   "adapters": [
     {
@@ -186,7 +179,7 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Examinations\\Accommodation.GetByExamId Accommodation -t=ytg-framework/editable-get -p:Model=Examinations\\Accommodation -p:Adapter=sp:ABSSP-[dbo].[get_user_accommodations_byId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Accommodation -p:Route=by-exam-id -p:ControllerName=Examinations\\AccommodationController -p:ControllerRoute=api/exam/accommodations -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim -f ",
+    "command": "ytgim g i s Examinations\\Accommodation.GetByExamId Accommodation -t=ytg-framework/editable-get -p:Model=Examinations\\Accommodation -p:Adapter=sp:ABSSP-[dbo].[get_user_accommodations_byId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Accommodation -p:Route=by-exam-id -p:ControllerName=Examinations\\AccommodationController -p:ControllerRoute=api/exam/accommodations -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  Examinations\\Accommodation.GetByExamId Accommodation -t=ytg-framework/editable-get -p:Model=Examinations\\Accommodation -p:Adapter=sp:ABSSP-[dbo].[get_user_accommodations_byId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=Accommodation -p:Route=by-exam-id -p:ControllerName=Examinations\\AccommodationController -p:ControllerRoute=api/exam/accommodations -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-12-07T20:15:10.9125562Z"
   },

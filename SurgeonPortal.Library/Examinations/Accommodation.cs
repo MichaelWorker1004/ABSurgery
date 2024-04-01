@@ -105,22 +105,22 @@ namespace SurgeonPortal.Library.Examinations
         /// <summary>
         /// This method is used to apply authorization rules on the object
         /// </summary>
-        [ObjectAuthorizationRules]
-        public static void AddObjectAuthorizationRules()
-        {
-            Csla.Rules.BusinessRules.AddRule(typeof(Accommodation),
-                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
-                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-            Csla.Rules.BusinessRules.AddRule(typeof(Accommodation),
-                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
-                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-            Csla.Rules.BusinessRules.AddRule(typeof(Accommodation),
-                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
-                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-            Csla.Rules.BusinessRules.AddRule(typeof(Accommodation),
-                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
-                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-        }
+        // [ObjectAuthorizationRules]
+        // public static void AddObjectAuthorizationRules()
+        // {
+        //     Csla.Rules.BusinessRules.AddRule(typeof(Accommodation),
+        //         new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.DeleteObject, 
+        //             SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+        //     Csla.Rules.BusinessRules.AddRule(typeof(Accommodation),
+        //         new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+        //             SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+        //     Csla.Rules.BusinessRules.AddRule(typeof(Accommodation),
+        //         new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, 
+        //             SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+        //     Csla.Rules.BusinessRules.AddRule(typeof(Accommodation),
+        //         new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.EditObject, 
+        //             SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+        // }
 
 
         [RunLocal]
