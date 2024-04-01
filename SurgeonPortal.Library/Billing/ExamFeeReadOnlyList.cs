@@ -29,13 +29,13 @@ namespace SurgeonPortal.Library.Billing
         /// <summary>
         /// This method is used to apply authorization rules on the object
         /// </summary>
-        [ObjectAuthorizationRules]
-        public static void AddObjectAuthorizationRules()
-        {
-            Csla.Rules.BusinessRules.AddRule(typeof(ExamFeeReadOnlyList),
-                new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
-                    SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
-        }
+        // [ObjectAuthorizationRules]
+        // public static void AddObjectAuthorizationRules()
+        // {
+        //     Csla.Rules.BusinessRules.AddRule(typeof(ExamFeeReadOnlyList),
+        //         new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.GetObject, 
+        //             SurgeonPortal.Library.Contracts.Identity.SurgeonPortalClaims.SurgeonClaim));
+        // }
 
         [Fetch]
         [RunLocal]
