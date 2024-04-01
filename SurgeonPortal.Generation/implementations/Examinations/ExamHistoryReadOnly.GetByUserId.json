@@ -18,13 +18,6 @@
     "UsePaginatedList": "false"
   },
   "projectClaims": {
-    "SurgeonPortalClaims.SurgeonClaim": {
-      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
-      "namespace": "SurgeonPortal.Library.Contracts.Identity",
-      "name": "SurgeonPortalClaims.SurgeonClaim",
-      "key": "SurgeonPortalClaims.SurgeonClaim",
-      "claimSetName": "SugeonPortal"
-    }
   },
   "adapters": [
     {

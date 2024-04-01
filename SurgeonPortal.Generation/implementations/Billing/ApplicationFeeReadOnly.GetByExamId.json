@@ -17,13 +17,6 @@
     "Route": "by-examid"
   },
   "projectClaims": {
-    "SurgeonPortalClaims.SurgeonClaim": {
-      "claimId": "1bdacd5a-2f92-4fc3-81d6-9b292e27702c",
-      "namespace": "SurgeonPortal.Library.Contracts.Identity",
-      "name": "SurgeonPortalClaims.SurgeonClaim",
-      "key": "SurgeonPortalClaims.SurgeonClaim",
-      "claimSetName": "SugeonPortal"
-    }
   },
   "adapters": [
     {
@@ -136,7 +129,7 @@
     }
   ],
   "metadata": {
-    "command": "ytgim g i s Billing\\ApplicationFeeReadOnly.GetByExamId ApplicationFeeReadOnly -t=ytg-framework/readonly-get -p:Model=Billing\\ApplicationFeeReadOnly -p:Adapter=sp:abssp-[dbo].[get_application_fee_by_examId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ApplicationFeeReadOnly -p:Route=by-examid -p:ControllerName=Billing\\ApplicationFeeController -p:ControllerRoute=api/billing/application-fee -p:ControllerVersion=1 -cl:SurgeonPortalClaims.SurgeonClaim -f ",
+    "command": "ytgim g i s Billing\\ApplicationFeeReadOnly.GetByExamId ApplicationFeeReadOnly -t=ytg-framework/readonly-get -p:Model=Billing\\ApplicationFeeReadOnly -p:Adapter=sp:abssp-[dbo].[get_application_fee_by_examId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:UsePaginatedList=false -p:ModelGroup=ApplicationFeeReadOnly -p:Route=by-examid -p:ControllerName=Billing\\ApplicationFeeController -p:ControllerRoute=api/billing/application-fee -p:ControllerVersion=1 -f ",
     "inferredCommand": "ytgim generate i  Billing\\ApplicationFeeReadOnly.GetByExamId ApplicationFeeReadOnly -t=ytg-framework/readonly-get -p:Model=Billing\\ApplicationFeeReadOnly -p:Adapter=sp:abssp-[dbo].[get_application_fee_by_examId] -p:FetchMethodName=GetByExamId -p:RootNamespace=$project.RootNamespace -p:ModelGroup=ApplicationFeeReadOnly -p:Route=by-examid -p:ControllerName=Billing\\ApplicationFeeController -p:ControllerRoute=api/billing/application-fee -p:ControllerVersion=1 -p:IncludeControllerInGeneration=true -p:IsRoot=true -p:IsChild=false",
     "generatedDateUtc": "2023-12-21T21:28:35.5089547Z"
   },
