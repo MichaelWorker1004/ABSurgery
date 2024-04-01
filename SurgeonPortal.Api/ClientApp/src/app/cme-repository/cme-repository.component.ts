@@ -95,7 +95,7 @@ export class CmeRepositoryComponent implements OnInit {
     {
       const printContent = document.getElementById("pintHtml");
       const w = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-      w!.document.write('<html><head><title></title>');
+      w!.document.write('<html><head><title>CME Repository</title>');
       w!.document.write('<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/themes/light.css">');
       w!.document.write('<link rel="stylesheet" type="text/css" href="assets/styles.scss">');
       w!.document.write('<link rel="stylesheet" type="text/css" href="assets/grid.component.scss">');
