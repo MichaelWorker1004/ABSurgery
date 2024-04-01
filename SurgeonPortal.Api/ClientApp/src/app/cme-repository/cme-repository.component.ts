@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CollapsePanelComponent } from '../shared/components/collapse-panel/collapse-panel.component';
@@ -60,6 +61,9 @@ export class CmeRepositoryComponent implements OnInit {
   summaryCmeCols = SUMMARY_CME_COLS;
   requirementsAndAdjustmentsCols = REQIUREMENTS_AND_ADJUSTMENTS_COLS;
   itemizedCmeCols = ITEMIZED_CME_COLS;
+  CMEGridPaging = true;
+  ABSGridPaging = true;
+  iconDisplay = 'inline';
 
   constructor(private _store: Store) {
     this.initCmeData();
@@ -80,5 +84,33 @@ export class CmeRepositoryComponent implements OnInit {
           ContinuingMedicalEducationSelectors.slices.cmeDroppingCredits
         );
       });
+  }
+
+  Print() {
+    this.CMEGridPaging = false;
+    this.ABSGridPaging = false;
+    this.iconDisplay = 'none';
+
+    setTimeout(function ()
+    {
+      const printContent = document.getElementById("pintHtml");
+      const w = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+      w!.document.write('<html><head><title></title>');
+      w!.document.write('<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.2.0/dist/themes/light.css">');
+      w!.document.write('<link rel="stylesheet" type="text/css" href="assets/styles.scss">');
+      w!.document.write('<link rel="stylesheet" type="text/css" href="assets/grid.component.scss">');
+      w!.document.write('</head><body><main><div class="app-container-fluid: false; flex: false; flex-column: false">');
+      w!.document.write(printContent!.innerHTML);
+      w!.document.write('<script type="text/javascript">addEventListener("load", () => { print(); close(); })</script></div></main></body></html>');
+      w!.document.close();
+      w!.focus();
+    }, 2000);
+
+    setTimeout( () => {
+      this.CMEGridPaging = true;
+      this.ABSGridPaging = true;
+      this.iconDisplay = 'inline';
+    }, 3000);
+   
   }
 }

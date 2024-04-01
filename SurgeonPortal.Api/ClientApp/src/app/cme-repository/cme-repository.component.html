@@ -1,94 +1,93 @@
-<header>
-  <h1 class="mb-3">CME Repository</h1>
-  <sl-card class="mb-3">
-    <p class="my-0">
-      CME requirements for the <i>Continuous Certification (CC) Program</i> are
-      <b>150 category 1 CME credits</b> earned over the last five years,
-      <b>50 of which must be self-assessment credits</b>.
-    </p>
-  </sl-card>
-</header>
+<div id="pintHtml">
+  <header>
+    <h1 class="mb-3">CME Repository</h1>
+    <sl-card class="mb-3">
+      <p class="my-0">
+        CME requirements for the <i>Continuous Certification (CC) Program</i> are
+        <b>150 category 1 CME credits</b> earned over the last five years,
+        <b>50 of which must be self-assessment credits</b>.
+      </p>
+    </sl-card>
+  </header>
 
-<section>
-  <div class="grid">
-    <sl-card class="col-12">
-      <div class="grid flex flex-wrap">
-        <div class="col-12">
-          <h5 class="mt-0 mb-2" panel-header>
-            Summary of CME Received to Date
+  <section>
+    <div class="grid">
+      <sl-card class="col-12">
+        <div class="grid flex flex-wrap">
+          <div class="col-12">
 
-            <abs-tooltip
-              style="float: right"
-              position="top"
-              tooltipText="Stay on track with CME requirements by averaging 30 credits per year"
-            ></abs-tooltip>
-          </h5>
-          <hr />
-        </div>
-        <div class="col-12">
-          <abs-grid [columns]="summaryCmeCols" [data]="cmeSummary$"> </abs-grid>
-        </div>
-        <div class="col-12">
-          <p class="font-lg font-bold">
-            Credits and ABS Waivers Dropping Off* by
-            {{ cycleEndDate | date : 'longDate' }}
-          </p>
-          <p
-            class="ml-5 mb-1 flex justify-content-between"
-            style="width: 200px; display: inline-block"
-          >
-            Category 1:<span class="font-bold">{{
+            <h5 class="mt-0 mb-2" panel-header>
+              Summary of CME Received to Date
+              <span [style.display]="iconDisplay">
+                <abs-tooltip style="float: right;" position="top"
+                             tooltipText="Stay on track with CME requirements by averaging 30 credits per year"></abs-tooltip>
+                <i (click)="Print()" style="float: right; cursor: pointer; margin-right: 10px" position="top" class="fa-solid fa-print"></i>
+              </span>
+            </h5>
+            
+            <hr />
+          </div>
+          <div class="col-12">
+            <abs-grid [columns]="summaryCmeCols" [data]="cmeSummary$"> </abs-grid>
+          </div>
+          <div class="col-12">
+            <p class="font-lg font-bold">
+              Credits and ABS Waivers Dropping Off* by
+              {{ cycleEndDate | date : 'longDate' }}
+            </p>
+            <p class="ml-5 mb-1 flex justify-content-between"
+               style="width: 200px; display: inline-block">
+              Category 1:<span class="font-bold">
+                {{
               droppingCredits ? droppingCredits.credits : '0'
-            }}</span>
-          </p>
-          <p
-            class="ml-5 mb-1 flex justify-content-between"
-            style="width: 200px; display: inline-block"
-          >
-            Self-Assessment:<span class="font-bold">{{
+                }}
+              </span>
+            </p>
+            <p class="ml-5 mb-1 flex justify-content-between"
+               style="width: 200px; display: inline-block">
+              Self-Assessment:<span class="font-bold">
+                {{
               droppingCredits ? droppingCredits.saCredits : '0'
-            }}</span>
-          </p>
-          <p class="text-muted">
-            * Credits and ABS Waivers dropping off are those that were earned
-            more than five years ago from today. You may see a change in the
-            number of credits needed the next time you login depending upon the
-            expiration dates of individual credits earned.
-          </p>
+                }}
+              </span>
+            </p>
+            <p class="text-muted">
+              * Credits and ABS Waivers dropping off are those that were earned
+              more than five years ago from today. You may see a change in the
+              number of credits needed the next time you login depending upon the
+              expiration dates of individual credits earned.
+            </p>
+          </div>
         </div>
-      </div>
-    </sl-card>
+      </sl-card>
 
-    <sl-card class="col-12">
-      <abs-collapse-panel [panelId]="2" [startExpanded]="true">
-        <h5 class="mt-0 mb-2" panel-header>Itemized CME</h5>
-        <abs-grid
-          [columns]="itemizedCmeCols"
-          [data]="cmeCredits$"
-          [pagination]="true"
-          [itemsPerPage]="10"
-        >
-        </abs-grid>
-      </abs-collapse-panel>
-    </sl-card>
+      <sl-card class="col-12">
+        <abs-collapse-panel [panelId]="2" [startExpanded]="true">
+          <h5 class="mt-0 mb-2" panel-header>Itemized CME</h5>
+          <abs-grid [columns]="itemizedCmeCols"
+                    [data]="cmeCredits$"
+                    [pagination]="CMEGridPaging"
+                    [itemsPerPage]="10">
+          </abs-grid>
+        </abs-collapse-panel>
+      </sl-card>
 
-    <sl-card class="col-12">
-      <abs-collapse-panel [panelId]="3" [startExpanded]="true">
-        <h5 class="mt-0 mb-2" panel-header>
-          Itemized ABS Waivers that Reduce Your CME Requirements
-        </h5>
-        <p class="text-xl mt-0">
-          Listed below are activities you completed (e.g., a CCA module) within
-          the last five years that have reduced your overall CME requirements.
-        </p>
-        <abs-grid
-          [columns]="requirementsAndAdjustmentsCols"
-          [data]="cmeAdjustments$"
-          [pagination]="true"
-          [itemsPerPage]="10"
-        >
-        </abs-grid>
-      </abs-collapse-panel>
-    </sl-card>
-  </div>
-</section>
+      <sl-card class="col-12">
+        <abs-collapse-panel [panelId]="3" [startExpanded]="true">
+          <h5 class="mt-0 mb-2" panel-header>
+            Itemized ABS Waivers that Reduce Your CME Requirements
+          </h5>
+          <p class="text-xl mt-0">
+            Listed below are activities you completed (e.g., a CCA module) within
+            the last five years that have reduced your overall CME requirements.
+          </p>
+          <abs-grid [columns]="requirementsAndAdjustmentsCols"
+                    [data]="cmeAdjustments$"
+                    [pagination]="ABSGridPaging"
+                    [itemsPerPage]="10">
+          </abs-grid>
+        </abs-collapse-panel>
+      </sl-card>
+    </div>
+  </section>
+</div>

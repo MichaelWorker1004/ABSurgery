@@ -1,0 +1,140 @@
+.grid {
+  margin-top: 2rem;
+}
+.abs-grid-container {
+  overflow-x: auto;
+  padding: 0 0.5rem;
+  background-color: var(--global-table-background);
+
+  &::-webkit-scrollbar {
+    height: 0.65rem;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--global-warning-lighten-60);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--global-warning);
+    &:hover {
+      background: var(--global-warning-darken-20);
+    }
+  }
+}
+
+.bg-gray {
+  overflow-x: auto;
+}
+
+.pagination,
+.bg-gray,
+table {
+  background-color: var(--global-table-background);
+}
+
+.pagination {
+  padding: 1.5rem 0.5rem 0.75rem;
+  .active {
+    color: var(--global-warning);
+    font-weight: bold;
+    cursor: unset;
+  }
+  button:disabled {
+    color: var(--global-gray);
+    cursor: initial;
+  }
+}
+
+table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  border-radius: 6px;
+  margin-top: 1rem;
+  &.no-grid-lines {
+    border-spacing: 0px;
+  }
+  thead {
+    position: relative;
+    border-bottom: 1px solid black;
+  }
+  th,
+  td {
+    padding: 15px;
+    min-width: 50px;
+  }
+  tr {
+    //figure out how to use nth-of-type(even) to skip expanded rows
+    position: relative;
+    &.alternate-row {
+      background-color: #fff;
+    }
+    // &:nth-child(even) {
+    //   background-color: #fff;
+    // }
+  }
+  td {
+    .action,
+    .expand-toggle {
+      text-align: right;
+    }
+    .prime-button {
+      width: 100%;
+      display: flex;
+      justify-content: end;
+    }
+  }
+}
+
+button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--global-success);
+  transition: 250ms ease-in-out;
+  &:hover {
+    color: var(--global-warning);
+  }
+  &.file-link {
+    text-transform: none;
+  }
+}
+
+.search-container {
+  position: relative;
+  i {
+    position: absolute;
+    color: var(--global-warning);
+    font-size: 20px;
+    right: 10px;
+    top: 10px;
+  }
+}
+
+sl-input {
+  margin-bottom: 1rem;
+  &::part(input) {
+    padding-right: 40px;
+  }
+}
+
+.requested,
+.warning {
+  color: var(--global-warning);
+  font-weight: bold;
+}
+.approved,
+.completed,
+.passed,
+.success {
+  color: var(--global-success);
+  font-weight: bold;
+}
+
+.failed,
+.incomplete,
+.danger {
+  color: var(--global-danger);
+  font-weight: bold;
+}
