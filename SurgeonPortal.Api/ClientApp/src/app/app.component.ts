@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -23,6 +24,7 @@ import { SideNavigationComponent } from './side-navigation/side-navigation.compo
 import { UserClaims } from './side-navigation/user-status.enum';
 import {
   AuthSelectors,
+  GetResetForgotPasswordGuid,
   GetUserProfile,
   IUserProfile,
   UserProfileSelectors,
@@ -102,6 +104,7 @@ export class AppComponent implements OnInit {
 
   preventScreenshot = false;
   messages!: Message[];
+  forgotPasswordBoxMargin = '';
 
   constructor(
     private _store: Store,
@@ -113,6 +116,14 @@ export class AppComponent implements OnInit {
       this.isPasswordReset = this._store.selectSnapshot(
         AuthSelectors.slices.isPasswordReset
       );
+
+      if (this.isPasswordReset) {
+        this.forgotPasswordBoxMargin = '-7.2%';
+      }
+      else {
+        this.forgotPasswordBoxMargin = '';
+      }
+
       const routerStateSnapshot: RouterStateSnapshot =
         this.router.routerState.snapshot;
       const loginUser = this._store.selectSnapshot(AuthSelectors.loginUser);
@@ -158,6 +169,23 @@ export class AppComponent implements OnInit {
         this._store.dispatch(new GetUserProfile(loginUser, claims));
       }
 
+
+      //if password reset is true. then let's check for a reset guid and send user to forgot-password page
+      if (this.isPasswordReset) {
+        this._store.dispatch(new GetResetForgotPasswordGuid()).subscribe(() => {
+          const passwordResetGuid = this._store.selectSnapshot(
+            AuthSelectors.slices.passwordResetGuid
+          );
+
+          if (passwordResetGuid != null) {
+            this.router.navigate(['/forgot-password'], {
+              queryParams: { guid: passwordResetGuid },
+            });
+          }
+        });
+      }
+      
+
       if (!isAuthed) {
         const returnUrl = routerStateSnapshot.url
           ? routerStateSnapshot.url.includes('oral-examinations/exam/')
@@ -172,6 +200,21 @@ export class AppComponent implements OnInit {
         }
       }
     });
+  }
+
+  getIsPasswordReset() {
+    const isPasswordReset = this._store.selectSnapshot(
+      AuthSelectors.slices.isPasswordReset
+    );
+
+    if (isPasswordReset) {
+      this.forgotPasswordBoxMargin = '-7.2%';
+    }
+    else {
+      this.forgotPasswordBoxMargin = '';
+    }
+
+    return isPasswordReset;
   }
 
   ngOnInit(): void {

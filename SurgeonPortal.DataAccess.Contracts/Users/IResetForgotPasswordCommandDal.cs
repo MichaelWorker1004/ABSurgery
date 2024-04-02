@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 namespace SurgeonPortal.DataAccess.Contracts.Users
@@ -7,5 +8,6 @@ namespace SurgeonPortal.DataAccess.Contracts.Users
         Task<ResetForgotPasswordCommandDto> ResetForgotPasswordAsync(
             System.Guid resetGUID,
             string newPassword);
+
     }
 }

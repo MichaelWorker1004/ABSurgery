@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // TODO - Convert this to use the setup for YTGIM, currently this is hand codede
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -125,9 +126,20 @@ export class AuthService {
     * Calls Sp(s)
     * [UNKNOWN]
     */
-    
-    
     return this.apiService.post<IResetForgotPasswordReadOnlyModel>(`${this.baseUrl}/reset-forgot-password?api-version=${apiVersion}`, model);
+  }
+
+  public getResetForgotPasswordGuid(apiVersion = '1.0'): Observable<string> {
+    /**
+    * Business Rules
+    * No business rules exist for this model
+    */
+
+    /**
+    * Calls Sp(s)
+    * [UNKNOWN]
+    */
+    return this.apiService.get<string>(`${this.baseUrl}/get-reset-forgot-password-guid?api-version=${apiVersion}`);
   }
 
 }

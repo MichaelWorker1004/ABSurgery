@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs';
 import { Action, State, StateContext, StateToken, Store } from '@ngxs/store';
@@ -10,6 +11,7 @@ import {
   ForgotUsername,
   ForgotPassword,
   ResetForgotPassword,
+  GetResetForgotPasswordGuid,
 } from './auth.actions';
 import { AuthService, IAppUserReadOnlyModel } from '../../api';
 import {
@@ -42,6 +44,7 @@ export const AUTH_STATE_TOKEN = new StateToken<IAuthState>('auth');
     isBusy: false,
     isPasswordReset: false,
     passwordResetComplete: false,
+    passwordResetGuid: '',
     isAuthenticated: false,
   },
 })
@@ -243,11 +246,34 @@ export class AuthState {
           'Your password has been reset',
           true
         );
+        ctx.patchState({
+          isPasswordReset: false,
+          passwordResetGuid: '',
+        });
       }),
       catchError((err: any) => {
         this.globalDialogService.showSuccessError(
           'Error',
           'An error has occured resetting your password',
+          false
+        );
+        return err;
+      })
+    );
+  }
+
+  @Action(GetResetForgotPasswordGuid)
+  getResetForgotPasswordGuid(ctx: StateContext<IAuthState>) {
+    return this.authService.getResetForgotPasswordGuid().pipe(
+      tap((result) => {
+        ctx.patchState({
+          passwordResetGuid : result,
+        });
+      }),
+      catchError((err: any) => {
+        this.globalDialogService.showSuccessError(
+          'Error',
+          'An error has occured while trying to receive your password token',
           false
         );
         return err;
@@ -279,6 +305,7 @@ export class AuthState {
       isBusy: false,
       isPasswordReset: false,
       passwordResetComplete: false,
+      passwordResetGuid: '',
       isAuthenticated: false,
     });
   }
@@ -362,6 +389,7 @@ export class AuthState {
         isBusy: false,
         isPasswordReset: false,
         passwordResetComplete: false,
+        passwordResetGuid: '',
         isAuthenticated: false,
       });
     } else {
@@ -386,6 +414,7 @@ export class AuthState {
           isBusy: false,
           isPasswordReset: false,
           passwordResetComplete: false,
+          passwordResetGuid: '',
           isAuthenticated: false,
         });
       }

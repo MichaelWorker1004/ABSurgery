@@ -23,6 +23,7 @@ using Microsoft.Extensions.Options;
 using SurgeonPortal.Library.Users;
 using SurgeonPortal.Shared;
 using SurgeonPortal.Library.Contracts.Identity;
+using SurgeonPortal.DataAccess.Contracts.Storage;
 
 namespace SurgeonPortal.Api.Controllers.Users
 {
@@ -38,6 +39,8 @@ namespace SurgeonPortal.Api.Controllers.Users
         private readonly IUserTokenFactory _userTokenFactory;
         private readonly IIdentityProvider _identityProvider;
         private readonly IUserLoginAuditCommandFactory _userLoginAuditCommandFactory;
+        private readonly IResetForgotPasswordGuidCommandDal _resetForgotPasswordGuidCommandDal;
+        private readonly IResetForgotPasswordCommandDal _resetForgotPasswordCommandDal;
 
         public UsersController(IWebHostEnvironment webHostEnvironment,
             IMapper mapper,
@@ -45,7 +48,9 @@ namespace SurgeonPortal.Api.Controllers.Users
             IOptions<TokensConfiguration> tokensConfiguration,
             IUserTokenFactory userTokenFactory,
             IIdentityProvider identityProvider,
-            IUserLoginAuditCommandFactory userLoginAuditCommandFactory)
+            IUserLoginAuditCommandFactory userLoginAuditCommandFactory,
+            IResetForgotPasswordGuidCommandDal resetForgotPasswordGuidCommandDal,
+            IResetForgotPasswordCommandDal resetForgotPasswordCommandDal)
             : base(webHostEnvironment)
         {
             _mapper = mapper;
@@ -54,6 +59,8 @@ namespace SurgeonPortal.Api.Controllers.Users
             _identityProvider = identityProvider;
             _tokensConfiguration = tokensConfiguration.Value;
             _userLoginAuditCommandFactory = userLoginAuditCommandFactory;
+            _resetForgotPasswordGuidCommandDal = resetForgotPasswordGuidCommandDal;
+            _resetForgotPasswordCommandDal = resetForgotPasswordCommandDal;
         }
 
         [AllowAnonymous] 
@@ -262,11 +269,13 @@ namespace SurgeonPortal.Api.Controllers.Users
                 return BadRequest("Request payload could not be bound to model. Are you missing fields? Are you passing the correct datatypes?");
             }
         
-            var command = await resetForgotPasswordCommandFactory.ResetForgotPasswordAsync(
-                model.ResetGUID,
-                model.NewPassword);
+            //var command = await resetForgotPasswordCommandFactory.ResetForgotPasswordAsync(
+            //    model.ResetGUID,
+            //    model.NewPassword);
 
-            if (command.Result.HasValue && command.Result.Value)
+            var result = await _resetForgotPasswordCommandDal.ResetForgotPasswordAsync(model.ResetGUID, model.NewPassword);
+
+            if (result != null)
             {
                 return Ok();
             }
@@ -276,7 +285,33 @@ namespace SurgeonPortal.Api.Controllers.Users
             }
         }
 
-		private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
+        [MapToApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("get-reset-forgot-password-guid")]
+        public async Task<IActionResult> GetResetforgotpasswordGuidCommandAsync()
+        {
+            var userId = User?.Claims.Where(c => c.Type.Contains("UserId")).FirstOrDefault();
+
+            if (userId == null)
+                return Ok();
+
+            Guid resetGuid = await _resetForgotPasswordGuidCommandDal.GetResetForgotPasswordGUIDAsync(Convert.ToInt32(userId!.Value));
+
+            string newguid = resetGuid.ToString();
+
+            if (string.IsNullOrEmpty(newguid))
+            {
+                return Ok();
+            }
+            else
+            {
+                return Ok(resetGuid);
+            }
+        }
+
+        private async Task<ActionResult> GenerateTokenAsync(IAppUserReadOnly user, List<Claim> claims)
         {
             var allClaims =
                 new List<Claim>

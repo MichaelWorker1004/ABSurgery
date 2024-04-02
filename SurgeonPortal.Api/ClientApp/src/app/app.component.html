@@ -2,11 +2,11 @@
 <div
   [ngClass]="{
     'app-content': isAuthenticated,
-    'login-content': !isAuthenticated
+    'login-content': !isAuthenticated || getIsPasswordReset()
   }"
 >
   <aside
-    *ngIf="isAuthenticated"
+    *ngIf="isAuthenticated && getIsPasswordReset() == false"
     [ngClass]="isSideNavOpen ? 'toggled' : ''"
   >
     <abs-side-navigation
@@ -23,19 +23,19 @@
     >
       Screenshots prohibited. Press any key to continue...
     </div>
-    <div
-      [ngClass]="{
+    <div [ngClass]="{
         'app-container-fluid': isAuthenticated,
         flex: isAuthenticated,
-        'flex-column': isAuthenticated
-      }"
+        'flex-column': isAuthenticated && getIsPasswordReset() == false
+      }" [style.marginLeft]="forgotPasswordBoxMargin"
     >
       <abs-dashboard-header
         [headerLinks]="headerLinks"
         [showSearch]="true"
         (handleSideNavToggle)="handleSideNavToggle()"
-        *ngIf="isAuthenticated"
+        *ngIf="isAuthenticated && getIsPasswordReset() == false"
       ></abs-dashboard-header>
+
       <router-outlet></router-outlet>
       <div
         class="text-center mt-auto"

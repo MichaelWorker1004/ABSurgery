@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IForgotUsernameReadOnlyModel } from 'src/app/api/models/auth/forgot-username-read-only.model';
 import { IAuthCredentials } from './auth.interfaces';
 import { IForgotPasswordReadOnlyModel } from 'src/app/api/models/auth/forgot-password-read-only.model';
@@ -39,4 +40,8 @@ export class ForgotPassword {
 export class ResetForgotPassword {
   static readonly type = '[Auth] Reset Forgot Password';
   constructor(public model: IResetForgotPasswordReadOnlyModel) {}
+}
+
+export class GetResetForgotPasswordGuid {
+  static readonly type = '[Auth] Get Reset Forgot Password Guid';
 }

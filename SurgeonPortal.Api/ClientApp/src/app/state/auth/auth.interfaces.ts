@@ -26,7 +26,7 @@ export interface AuthStateModel {
   userName: string | null;
   expiration: string | null;
   expires_in_minutes: number | null;
-  user: IAppUserReadOnlyModel | null;
+  user: IAppUserReadOnlyModel | null;  
 }
 
 export interface IAuthState extends AuthStateModel {
@@ -37,4 +37,5 @@ export interface IAuthState extends AuthStateModel {
   isPasswordReset: boolean;
   passwordResetComplete: boolean;
   isAuthenticated: boolean;
+  passwordResetGuid: string;
 }
