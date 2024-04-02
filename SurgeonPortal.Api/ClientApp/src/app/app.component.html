@@ -1,12 +1,12 @@
 <div id="toast-container" class="toast-bottom-right"></div>
 <div
   [ngClass]="{
-    'app-content': isAuthenticated && !isPasswordReset,
-    'login-content': !isAuthenticated || isPasswordReset
+    'app-content': isAuthenticated,
+    'login-content': !isAuthenticated
   }"
 >
   <aside
-    *ngIf="isAuthenticated && !isPasswordReset"
+    *ngIf="isAuthenticated"
     [ngClass]="isSideNavOpen ? 'toggled' : ''"
   >
     <abs-side-navigation
@@ -19,27 +19,27 @@
   <main>
     <div
       class="screenshot-hider {{ preventScreenshot ? 'toggled' : '' }}"
-      *ngIf="isAuthenticated && !isPasswordReset"
+      *ngIf="isAuthenticated"
     >
       Screenshots prohibited. Press any key to continue...
     </div>
     <div
       [ngClass]="{
-        'app-container-fluid': isAuthenticated && !isPasswordReset,
-        flex: isAuthenticated && !isPasswordReset,
-        'flex-column': isAuthenticated && !isPasswordReset
+        'app-container-fluid': isAuthenticated,
+        flex: isAuthenticated,
+        'flex-column': isAuthenticated
       }"
     >
       <abs-dashboard-header
         [headerLinks]="headerLinks"
         [showSearch]="true"
         (handleSideNavToggle)="handleSideNavToggle()"
-        *ngIf="isAuthenticated && !isPasswordReset"
+        *ngIf="isAuthenticated"
       ></abs-dashboard-header>
       <router-outlet></router-outlet>
       <div
         class="text-center mt-auto"
-        *ngIf="isAuthenticated && !isPasswordReset"
+        *ngIf="isAuthenticated"
       >
         <p class="footer-text mb-1">
           @{{ currentYear }} All Rights Reserved. The American Board of Surgery
