@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[modified]
+    FROM SMALLDATETIME NOT NULL;
+

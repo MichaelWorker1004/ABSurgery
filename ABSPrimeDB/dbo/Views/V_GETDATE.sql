@@ -1,0 +1,3 @@
+﻿CREATE VIEW dbo.V_GETDATE
+AS
+SELECT     GETDATE() AS sysdate

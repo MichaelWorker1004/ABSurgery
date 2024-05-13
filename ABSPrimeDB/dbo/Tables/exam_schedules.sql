@@ -1,0 +1,26 @@
+CREATE TABLE [dbo].[exam_schedules]
+(
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, 
+    [ExamDate] datetime NULL,
+    [DayNumber] SMALLINT NULL,
+    [RowNumber] SMALLINT NULL,
+    [SessionNumber] SMALLINT NULL,
+    [StartTime] time NULL,
+    [EndTime] time NULL,
+    [ExaminerUserId] INT NULL,
+    [AssociateExaminerUserId] INT NULL,
+    [ExamineeUserId] INT NULL,
+    [MeetingLink] VARCHAR(250) NULL,
+    [Roster] VARCHAR(1) NULL,
+    [ExaminerIsCurrentSession] BIT DEFAULT 0,
+    [AssociateIsCurrentSession] BIT DEFAULT 0,
+    [isLocked] BIT DEFAULT 0,
+    [AdjustedScore] FLOAT NULL,
+    [CreatedByUserId] INT NOT NULL,
+    [CreatedAtUtc] DATETIME NOT NULL DEFAULT GetUtcDate(), 
+    [LastUpdatedAtUtc] DATETIME NOT NULL DEFAULT GetUtcDate(), 
+    [LastUpdatedByUserId] INT NOT NULL, 
+    CONSTRAINT [FK_exam_schedules_examineruserid] FOREIGN KEY ([ExaminerUserId]) REFERENCES [users]([UserId]), 
+    CONSTRAINT [FK_exam_schedules_associateexamineruserid] FOREIGN KEY ([AssociateExaminerUserId]) REFERENCES [users]([UserId]), 
+    CONSTRAINT [FK_exam_schedules_examineeuserid] FOREIGN KEY ([ExamineeUserId]) REFERENCES [users]([UserId])
+)

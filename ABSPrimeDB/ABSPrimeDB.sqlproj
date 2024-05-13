@@ -1,0 +1,974 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>ABSPrimeDB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{a9656236-4467-41bf-8fe5-bf9e2c4427e2}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>ABSPrimeDB</RootNamespace>
+    <AssemblyName>ABSPrimeDB</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+    <DefaultFileStreamFilegroup>
+    </DefaultFileStreamFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="dbo\Defaults\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Rules\" />
+    <Folder Include="dbo\User Defined Types\" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Versions" />
+    <Folder Include="Scripts\Picklists" />
+    <Folder Include="Scripts\Authentication" />
+    <Folder Include="Scripts\Migration" />
+    <Folder Include="Picklists\" />
+    <Folder Include="Scripts\Testing\" />
+    <Folder Include="Scripts\Jobs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\country.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Tables\inv_det.sql" />
+    <Build Include="dbo\Tables\invoice.sql" />
+    <Build Include="dbo\Tables\phone_hist.sql" />
+    <Build Include="dbo\Tables\degree.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Tables\program_link.sql" />
+    <Build Include="dbo\Tables\surgeon.sql" />
+    <Build Include="dbo\Tables\accmeactivity.sql" />
+    <Build Include="dbo\Tables\track.sql" />
+    <Build Include="dbo\Tables\mcodes.sql" />
+    <Build Include="dbo\Tables\exam_eligibility.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Tables\program.sql" />
+    <Build Include="dbo\Tables\dscpl_action_hist.sql" />
+    <Build Include="dbo\Tables\metadata.sql" />
+    <Build Include="dbo\Tables\ACGME_Codes.sql" />
+    <Build Include="dbo\Tables\exam.sql" />
+    <Build Include="dbo\Tables\Relations.sql" />
+    <Build Include="dbo\Tables\ACGME_Proc.sql" />
+    <Build Include="dbo\Tables\resident.sql" />
+    <Build Include="dbo\Tables\Report_OPT.sql" />
+    <Build Include="dbo\Tables\app_response.sql" />
+    <Build Include="dbo\Tables\exam_pass.sql" />
+    <Build Include="dbo\Tables\exam_teams_planned.sql" />
+    <Build Include="dbo\Tables\exam_exception.sql" />
+    <Build Include="dbo\Tables\applog.sql" />
+    <Build Include="dbo\Tables\weblog.sql" />
+    <Build Include="dbo\Tables\dscpl_action.sql" />
+    <Build Include="dbo\Tables\moc_eligibility.sql" />
+    <Build Include="dbo\Tables\surgeon_st.sql" />
+    <Build Include="dbo\Tables\viaklix.sql" />
+    <Build Include="dbo\Tables\cmp_education.sql" />
+    <Build Include="dbo\Tables\exam_eligibility_note.sql" />
+    <Build Include="dbo\Tables\moc_eligibility_hist.sql" />
+    <Build Include="dbo\Tables\biodata.sql" />
+    <Build Include="dbo\Tables\race.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Tables\exam_score_hist.sql" />
+    <Build Include="dbo\Tables\exam_score.sql" />
+    <Build Include="dbo\Tables\score_picklist.sql" />
+    <Build Include="dbo\Tables\AppReplyCardsTraining.sql" />
+    <Build Include="dbo\Tables\other_entities.sql" />
+    <Build Include="dbo\Tables\survey.sql" />
+    <Build Include="dbo\Tables\accmeactivity_specialty.sql" />
+    <Build Include="dbo\Tables\states_info.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Tables\user_professional_standing.sql" />
+    <Build Include="dbo\Tables\Organization_Type.sql" />
+    <Build Include="dbo\Tables\Primary_Practice.sql" />
+    <Build Include="dbo\Tables\licenses.sql" />
+    <Build Include="dbo\Tables\phone.sql" />
+    <Build Include="dbo\Tables\abslogs.sql" />
+    <Build Include="dbo\Tables\exam_timeslot.sql" />
+    <Build Include="dbo\Tables\abamedicalschool.sql" />
+    <Build Include="dbo\Tables\acs_opdata.sql" />
+    <Build Include="dbo\Tables\education.sql" />
+    <Build Include="dbo\Tables\passwords.sql" />
+    <Build Include="dbo\Tables\cme.sql" />
+    <Build Include="dbo\Tables\lastupdated.sql" />
+    <Build Include="dbo\Tables\exam_eligibility_hist.sql" />
+    <Build Include="dbo\Tables\roster.sql" />
+    <Build Include="dbo\Tables\cearea.sql" />
+    <Build Include="dbo\Tables\caselog.sql" />
+    <Build Include="dbo\Tables\PearsonPTC.sql" />
+    <Build Include="dbo\Tables\candidate_program.sql" />
+    <Build Include="dbo\Tables\ABMSCertificateInfo.sql" />
+    <Build Include="dbo\Tables\ABMSDisciplinaryInfo.sql" />
+    <Build Include="dbo\Tables\Report_ID.sql" />
+    <Build Include="dbo\Tables\exam_cases_planned.sql" />
+    <Build Include="dbo\Tables\case_ce.sql" />
+    <Build Include="dbo\Tables\fee_det.sql" />
+    <Build Include="dbo\Tables\AppRefLet_hist.sql" />
+    <Build Include="dbo\Tables\AppRefLet.sql" />
+    <Build Include="dbo\Tables\school.sql" />
+    <Build Include="dbo\Tables\ABMSdata.sql" />
+    <Build Include="dbo\Tables\pearson_centers.sql" />
+    <Build Include="dbo\Tables\jcaho.sql" />
+    <Build Include="dbo\Tables\AppReplyCardsPractice.sql" />
+    <Build Include="dbo\Tables\address_hist.sql" />
+    <Build Include="dbo\Tables\address.sql" />
+    <Build Include="dbo\Tables\fee_received.sql" />
+    <Build Include="dbo\Tables\ABMSDeceased.sql" />
+    <Build Include="dbo\Tables\program_addresses.sql" />
+    <Build Include="dbo\Tables\candidateNumUserNamePair.sql" />
+    <Build Include="dbo\Tables\trainingType.sql" />
+    <Build Include="dbo\Tables\AccommodationsId.sql" />
+    <Build Include="dbo\Tables\User_Accommodations.sql" />
+    <Build Include="dbo\Tables\fellowship_types_picklist.sql" />
+    <Build Include="dbo\Tables\FPD_Recog.sql" />
+    <Build Include="dbo\Tables\outcome_registries.sql" />
+    <Build Include="dbo\Tables\cases.sql" />
+    <Build Include="dbo\Tables\user_certificates_other.sql" />
+    <Build Include="dbo\Tables\user_sanctions.sql" />
+    <Build Include="dbo\Tables\certification_status.sql" />
+    <Build Include="dbo\Tables\user_case_feedback.sql" />
+    <Build Include="dbo\Tables\user_lapsed_pathway.sql" />
+    <Build Include="dbo\Tables\lapsed_pathway_types.sql" />
+    <Build Include="dbo\Tables\refLet_altRole_picklist.sql" />
+    <Build Include="dbo\Tables\refLet_explain_picklist.sql" />
+    <Build Include="dbo\Tables\refLet_let_type_picklist.sql" />
+    <Build Include="dbo\Tables\reset_guids.sql" />
+    <Build Include="dbo\Tables\Accommodation_Codes.sql" />
+    <Build Include="dbo\Tables\User_Accommodation_Codes.sql" />
+    <Build Include="dbo\Tables\attestations_text.sql" />
+    <Build Include="dbo\Views\V_SURGEON_ST_KEY_DIPS.sql" />
+    <Build Include="dbo\Views\temp_roster_letters.sql" />
+    <Build Include="dbo\Views\V_PEARSON_EAD_DEL.sql" />
+    <Build Include="dbo\Views\V_CA_AUDIT.sql" />
+    <Build Include="dbo\Views\V_EXAM_DEC.sql" />
+    <Build Include="dbo\Views\V_EXAM_TRACK.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_ABMS_CERT.sql" />
+    <Build Include="dbo\Views\V_CERT.sql" />
+    <Build Include="dbo\Views\V_EXAMDATES.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\syssegments.sql" />
+    <Build Include="dbo\Views\V_STAT_CONTAIN_OBJECT.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\sysconstraints.sql" />
+    <Build Include="dbo\Views\V_ABMS_CERTALL.sql" />
+    <Build Include="dbo\Views\V_ABMS_ADDRESS.sql" />
+    <Build Include="dbo\Views\V_789_V_NODIR.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_ABMS_DECEASED.sql" />
+    <Build Include="dbo\Views\V_789_P_NODIR.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\TODELETE_20181015_V_ABMS_REVOKED.sql" />
+    <Build Include="dbo\Views\V_789_C_DIRONLY.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_G_DIRONLY.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_GETDATE.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_SURGEON.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_PROGRAM_TRAINING_TYPES.sql" />
+    <Build Include="dbo\Views\V_FEE_RECEIVED.sql" />
+    <Build Include="dbo\Views\V_PEARSON_CDD_UPDT.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_PEARSON_EAD_UPDT.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_RESIDENT.sql" />
+    <Build Include="dbo\Views\V_EXAMINERS.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_CE_MAXDATETAKEN.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_FULL_ADDRESS.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_QECE_EXAMSTAKEN.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_FULL_PROGRAM_ADDRESS.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_SYSOBJ_TEXT.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_ABMS_SURGEON.sql" />
+    <Build Include="dbo\Views\V_ABMS_ADDRESS_TABLE.sql" />
+    <Build Include="dbo\Views\V_789_MAIN.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_ABMS_EXAM_PASS.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_10G.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_ABMS_UNIQ_ID.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_10V.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_10C.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_ABMS_NAME.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_10P.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_P_DIRONLY.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_V_DIRONLY.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_C_NODIR.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_789_G_NODIR.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Views\V_ABMS_CERTALL_NOZ.sql" />
+    <Build Include="dbo\Views\V_ABMS_CERT_NOZ.sql" />
+    <Build Include="dbo\Defaults\created.sql" />
+    <Build Include="dbo\Defaults\creator.sql" />
+    <Build Include="dbo\Defaults\modifications.sql" />
+    <Build Include="dbo\Functions\udf_get_namefirstlast.sql" />
+    <Build Include="dbo\Functions\udf_get_tblcmnts.sql" />
+    <Build Include="dbo\Functions\udf_getFormatNumber.sql" />
+    <Build Include="dbo\Functions\udf_isconflict.sql" />
+    <Build Include="dbo\Functions\udf_isconflictgroup.sql" />
+    <Build Include="dbo\Functions\udf_examiners_programs.sql" />
+    <Build Include="dbo\Functions\udf_get_lastarea.sql" />
+    <Build Include="dbo\Functions\udf_getexaminers.sql" />
+    <Build Include="dbo\Functions\udf_examinee_programs.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_type_te.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_type_et.sql" />
+    <Build Include="dbo\Functions\udf_get_maxlicense_part.sql" />
+    <Build Include="dbo\Functions\udf_get_programdesc.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_examcounts.sql" />
+    <Build Include="dbo\Functions\udf_get_program_id.sql" />
+    <Build Include="dbo\Functions\udf_get_mcodes_part.sql" />
+    <Build Include="dbo\Functions\udf_get_certificate_expiration.sql" />
+    <Build Include="dbo\Functions\udf_get_cme_exam_mc.sql" />
+    <Build Include="dbo\Functions\udf_get_nameprint_displname.sql" />
+    <Build Include="dbo\Functions\udf_get_cme_exam_mc_old.sql" />
+    <Build Include="dbo\Functions\udf_get_number_by_type.sql" />
+    <Build Include="dbo\Functions\udf_get_cme_abscredit.sql" />
+    <Build Include="dbo\Functions\udf_get_certificate_number.sql" />
+    <Build Include="dbo\Functions\udf_get_surgeon_mostrecent_passdate.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_history.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_acct_num.sql" />
+    <Build Include="dbo\Functions\udf_get_last_oper_receive.sql" />
+    <Build Include="dbo\Functions\udf_rtf2html.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_opproc.sql" />
+    <Build Include="dbo\Functions\udf_get_program_abbname.sql" />
+    <Build Include="dbo\Functions\udf_get_inv_tot.sql" />
+    <Build Include="dbo\Functions\udf_get_case_num.sql" />
+    <Build Include="dbo\Functions\udf_get_countfirstyearresidents.sql" />
+    <Build Include="dbo\Functions\udf_get_inv_num.sql" />
+    <Build Include="dbo\Functions\udf_get_fee_received_date.sql" />
+    <Build Include="dbo\Functions\udf_get_app_eligibility_by_type_id.sql" />
+    <Build Include="dbo\Functions\udf_get_lastlogon.sql" />
+    <Build Include="dbo\Functions\udf_convert_datetomidnight.sql" />
+    <Build Include="dbo\Functions\udf_get_maxrescurrentyear.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_conv_exam.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_conv_type.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_exam_eligibility.sql" />
+    <Build Include="dbo\Functions\udf_get_maxinactiveyear_assg.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_address_alt.sql" />
+    <Build Include="dbo\Functions\udf_program_check.sql" />
+    <Build Include="dbo\Functions\udf_get_examavail.sql" />
+    <Build Include="dbo\Functions\udf_get_certificates.sql" />
+    <Build Include="dbo\Functions\udf_get_current_year.sql" />
+    <Build Include="dbo\Functions\udf_get_addressblock.sql" />
+    <Build Include="dbo\Functions\udf_get_candidateinfo.sql" />
+    <Build Include="dbo\Functions\udf_propercase.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_lastlogon_.sql" />
+    <Build Include="dbo\Functions\udf_get_XYP.sql" />
+    <Build Include="dbo\Functions\udf_get_lastlogon__.sql" />
+    <Build Include="dbo\Functions\udf_get_app_eligibility_bin.sql" />
+    <Build Include="dbo\Functions\udf_backlog_pre.sql" />
+    <Build Include="dbo\Functions\udf_get_date_weekending.sql" />
+    <Build Include="dbo\Functions\udf_backlog_app.sql" />
+    <Build Include="dbo\Functions\udf_get_randompassword.sql" />
+    <Build Include="dbo\Functions\udf_next_friday.sql" />
+    <Build Include="dbo\Functions\udf_get_programaddressblock.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_lastupdated.sql" />
+    <Build Include="dbo\Functions\udf_get_prsninfo_lastupdt.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_namepart.sql" />
+    <Build Include="dbo\Functions\udf_get_abamedicalschool.sql" />
+    <Build Include="dbo\Functions\udf_get_namelast.sql" />
+    <Build Include="dbo\Functions\udf_get_nameprint.sql" />
+    <Build Include="dbo\Functions\udf_get_ncs_foreignschool.sql" />
+    <Build Include="dbo\Functions\udf_get_propercase.sql" />
+    <Build Include="dbo\Functions\udf_get_phone_bytype.sql" />
+    <Build Include="dbo\Functions\udf_get_schedXYP.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_surgeon_name.sql" />
+    <Build Include="dbo\Functions\udf_get_balance.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_lpad.sql" />
+    <Build Include="dbo\Functions\udf_get_lastlevel.sql" />
+    <Build Include="dbo\Functions\udf_get_email.sql" />
+    <Build Include="dbo\Functions\udf_get_namelastfirst.sql" />
+    <Build Include="dbo\Functions\udf_get_academic_year.sql" />
+    <Build Include="dbo\Functions\udf_bin2dec.sql" />
+    <Build Include="dbo\Functions\udf_get_examdescription.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_dec2bin.sql" />
+    <Build Include="dbo\Functions\udf_get_contact_validitydate.sql" />
+    <Build Include="dbo\Functions\udf_isrepeater.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Functions\udf_get_mobilephone.sql" />
+    <Build Include="dbo\Functions\udf_get_newcandidateid.sql" />
+    <Build Include="dbo\Functions\udf_get_statusvalue.sql" />
+    <Build Include="dbo\Functions\udf_get_moc_reporting_due.sql" />
+    <Build Include="dbo\Functions\test_udf_get_moc_reporting_due.sql" />
+    <Build Include="dbo\Functions\udf_get_address.sql" />
+    <Build Include="dbo\Functions\udf_get_fsmblicense.sql" />
+    <Build Include="dbo\Functions\udf_get_phone.sql" />
+    <Build Include="dbo\Functions\udf_get_fax.sql" />
+    <Build Include="dbo\Functions\udf_get_namelastfirst_alt.sql" />
+    <Build Include="dbo\Functions\udf_get_abs_cme.sql" />
+    <Build Include="dbo\Functions\udf_get_cme.sql" />
+    <Build Include="dbo\Functions\udf_get_opex.sql" />
+    <Build Include="dbo\Functions\udf_get_cc_req.sql" />
+    <Build Include="dbo\Functions\udf_get_cc_status.sql" />
+    <Build Include="dbo\Functions\udf_get_reflet.sql" />
+    <Build Include="dbo\Functions\udf_get_grades.sql" />
+    <Build Include="dbo\Functions\udf_get_oper.sql" />
+    <Build Include="dbo\Functions\udf_get_cc_req_test.sql" />
+    <Build Include="dbo\Functions\udf_get_age.sql" />
+    <Build Include="dbo\Functions\udf_get_moc_cycles_non_compliant.sql" />
+    <Build Include="dbo\Functions\udf_get_moc_reporting_due_v2.sql" />
+    <Build Include="dbo\Functions\udf_get_moc_reporting_due_v3.sql" />
+    <Build Include="dbo\Functions\udf_get_examiner_contact.sql" />
+    <Build Include="dbo\Functions\udf_get_CC_attestation_status.sql" />
+    <Build Include="dbo\Functions\udf_get_ref_let_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_address_XML.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_abslog.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_address_XML.sql" />
+    <Build Include="dbo\Stored Procedures\ins_candidate_program.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\callwebservice.sql" />
+    <Build Include="dbo\Stored Procedures\ins_exam_eligibility.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\cand_prg_qe.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_exam_fee_reg.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_exam_last.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_education_XML.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\delete_record.sql" />
+    <Build Include="dbo\Stored Procedures\get_address.sql" />
+    <Build Include="dbo\Stored Procedures\get_address2.sql" />
+    <Build Include="dbo\Stored Procedures\ins_exam_register.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\reindex_all.sql" />
+    <Build Include="dbo\Stored Procedures\ins_address.sql" />
+    <Build Include="dbo\Stored Procedures\ins_phone.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_program.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_cc_trans_jff_test.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_exam_score.sql" />
+    <Build Include="dbo\Stored Procedures\ins_track.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_relation.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_log.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_pearson_ead.sql" />
+    <Build Include="dbo\Stored Procedures\ins_app_approve.sql" />
+    <Build Include="dbo\Stored Procedures\exec_text.sql" />
+    <Build Include="dbo\Stored Procedures\ins_cme.sql" />
+    <Build Include="dbo\Stored Procedures\app_ref_let.sql" />
+    <Build Include="dbo\Stored Procedures\ins_app_response_XML_old.sql" />
+    <Build Include="dbo\Stored Procedures\get_app_response_XML.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_auth_XML.sql" />
+    <Build Include="dbo\Stored Procedures\del_exam_eligibility.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_exam.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Stored Procedures\app_program.sql" />
+    <Build Include="dbo\Stored Procedures\get_pearson_cdd.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_admissibility.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_admissible.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_all_programs.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_cand_exam.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_candidate_exams.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_login_XML.sql" />
+    <Build Include="dbo\Stored Procedures\get_candidate_program.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_country.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_country_nocode.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_cc_trans_epn.sql" />
+    <Build Include="dbo\Stored Procedures\get_degree.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_app_response_XML.sql" />
+    <Build Include="dbo\Stored Procedures\get_exec1.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Stored Procedures\app_gqe_app.sql" />
+    <Build Include="dbo\Stored Procedures\get_exam_eligibility.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\app_pers_info.sql" />
+    <Build Include="dbo\Stored Procedures\ins_surgeon_st.sql" />
+    <Build Include="dbo\Stored Procedures\get_phone.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_conf_override.sql" />
+    <Build Include="dbo\Stored Procedures\get_program_desc.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_mcodes.sql" />
+    <Build Include="dbo\Stored Procedures\get_race.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_school.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_soundex.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ins_reset_status.sql" />
+    <Build Include="dbo\Stored Procedures\ins_grades_XML.sql" />
+    <Build Include="dbo\Stored Procedures\get_surgeon_mod.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_track.sql">
+      <AnsiNulls>Off</AnsiNulls>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_track_all.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\get_track_bytrackno.sql" />
+    <Build Include="dbo\Rules\exam_code.sql" />
+    <Build Include="dbo\Rules\exam_type.sql" />
+    <Build Include="dbo\Rules\result.sql" />
+    <Build Include="dbo\Rules\sex.sql" />
+    <Build Include="dbo\Rules\ssn.sql" />
+    <Build Include="dbo\User Defined Types\created.sql" />
+    <Build Include="dbo\User Defined Types\creator.sql" />
+    <Build Include="dbo\User Defined Types\exam.sql" />
+    <Build Include="dbo\User Defined Types\modifications.sql" />
+    <Build Include="dbo\User Defined Types\modified.sql" />
+    <Build Include="dbo\User Defined Types\modifier.sql" />
+    <Build Include="dbo\User Defined Types\ssn.sql" />
+    <Build Include="dbo\Tables\documentstore.sql" />
+    <Build Include="dbo\Stored Procedures\get_all_surgeons_searchByKeys.sql" />
+    <Build Include="dbo\Stored Procedures\get_surgeon_searchByNpi.sql" />
+    <Build Include="dbo\Stored Procedures\get_surgeon_certificate_ByKey.sql" />
+    <Build Include="dbo\Tables\users.sql" />
+    <Build Include="dbo\Stored Procedures\get_userlogin.sql" />
+    <Build Include="dbo\Tables\user_claims.sql" />
+    <Build Include="dbo\Tables\applications.sql" />
+    <Build Include="dbo\Tables\application_claims.sql" />
+    <Build Include="dbo\Stored Procedures\insert_user.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_info.sql" />
+    <Build Include="dbo\Stored Procedures\update_user.sql" />
+    <Build Include="dbo\Tables\user_tokens.sql" />
+    <Build Include="dbo\Stored Procedures\insert_usertoken.sql" />
+    <Build Include="dbo\Stored Procedures\get_usertoken_getactive.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_claims.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_bytoken.sql" />
+    <Build Include="dbo\Stored Procedures\upd_user_account.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_account.sql" />
+    <Build Include="dbo\Tables\addresses.sql" />
+    <Build Include="dbo\Tables\user_profiles.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_passwordvalidate.sql" />
+    <Build Include="dbo\Stored Procedures\insert_user_login_audit.sql" />
+    <Build Include="dbo\Tables\user_login_audit.sql" />
+    <Build Include="dbo\Stored Procedures\insert_user_profile.sql" />
+    <Build Include="dbo\Stored Procedures\update_user_profile.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_profile_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_picklist_country_all.sql" />
+    <Build Include="dbo\Stored Procedures\get_picklist_states_bycountry.sql" />
+    <Build Include="dbo\Tables\genders.sql" />
+    <Build Include="dbo\Stored Procedures\get_picklist_genders_all.sql" />
+    <Build Include="dbo\Stored Procedures\get_picklist_races_all_all.sql" />
+    <Build Include="dbo\Stored Procedures\get_picklists_ethnicities_all.sql" />
+    <Build Include="dbo\Tables\languages.sql" />
+    <Build Include="dbo\Stored Procedures\get_picklist_languages_all.sql" />
+    <Build Include="dbo\Stored Procedures\get_loggedin_user_info.sql" />
+    <Build Include="dbo\Stored Procedures\upsert_user_mailing_address.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_certifications.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_programs.sql" />
+    <Build Include="dbo\Stored Procedures\ins_outcomeregistry_getbyuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_outcomeregistry_getbyuserid.sql" />
+    <Build Include="dbo\Stored Procedures\update_outcomeregistry_getbyuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_feereadonly_allbyuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_userlogin_v2.sql" />
+    <Build Include="dbo\Tables\advancedTraining.sql" />
+    <Build Include="dbo\Stored Procedures\ins_advanced_training.sql" />
+    <Build Include="dbo\Stored Procedures\update_advanced_training.sql" />
+    <Build Include="dbo\Stored Procedures\get_advanced_training_by_userid.sql" />
+    <Build Include="dbo\Stored Procedures\get_advanced_training_by_trainingid.sql" />
+    <Build Include="dbo\Stored Procedures\get_accredited_program_institutions.sql" />
+    <Build Include="dbo\Functions\udf_get_institutionname.sql" />
+    <Build Include="dbo\Tables\medical_training.sql" />
+    <Build Include="dbo\Stored Procedures\get_graduate_profile.sql" />
+    <Build Include="dbo\Stored Procedures\get_medical_school_degree.sql" />
+    <Build Include="dbo\Stored Procedures\get_residency_program.sql" />
+    <Build Include="dbo\Stored Procedures\get_fellowship_program.sql" />
+    <Build Include="dbo\Tables\graduate_profile.sql" />
+    <Build Include="dbo\Stored Procedures\get_training_type.sql" />
+    <Build Include="dbo\Stored Procedures\ins_medical_training.sql" />
+    <Build Include="dbo\Stored Procedures\update_medical_training.sql" />
+    <Build Include="dbo\Stored Procedures\get_medical_training_byuserid.sql" />
+    <Build Include="dbo\Tables\user_certificates.sql" />
+    <Build Include="dbo\Tables\certificate_types.sql" />
+    <Build Include="dbo\Tables\user_documents.sql" />
+    <Build Include="dbo\Tables\document_types.sql" />
+    <Build Include="dbo\Stored Procedures\get_certificate_types.sql" />
+    <Build Include="dbo\Stored Procedures\get_document_types.sql" />
+    <Build Include="dbo\Tables\gme_rotations.sql" />
+    <Build Include="dbo\Tables\clinical_level.sql" />
+    <Build Include="dbo\Tables\clinical_activity.sql" />
+    <Build Include="dbo\Stored Procedures\get_gmerotations_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_gmerotations_byid.sql" />
+    <Build Include="dbo\Stored Procedures\ins_gmerotations.sql" />
+    <Build Include="dbo\Stored Procedures\update_gmerotations.sql" />
+    <Build Include="dbo\Stored Procedures\delete_gmerotations_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_clinicalactivity.sql" />
+    <Build Include="dbo\Stored Procedures\get_clinicallevel.sql" />
+    <Build Include="dbo\Tables\user_fellowships.sql" />
+    <Build Include="dbo\Stored Procedures\get_userfellowships_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\ins_userfellowships.sql" />
+    <Build Include="dbo\Stored Procedures\get_userfellowships_byid.sql" />
+    <Build Include="dbo\Stored Procedures\update_userfellowships.sql" />
+    <Build Include="dbo\Stored Procedures\delete_userfellowships.sql" />
+    <Build Include="dbo\Stored Procedures\insert_user_accommodations.sql" />
+    <Build Include="dbo\Stored Procedures\update_user_accommodations.sql" />
+    <Build Include="dbo\Stored Procedures\delete_user_accommodations.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_accommodations.sql" />
+    <Build Include="dbo\Functions\Version_ShouldRunScript.sql" />
+    <Build Include="dbo\Tables\Version.sql" />
+    <Build Include="dbo\Stored Procedures\Version_SetPostDeploymentFlag.sql" />
+    <Build Include="dbo\Stored Procedures\Version_SetPreDeploymentFlag.sql" />
+    <Build Include="dbo\Stored Procedures\get_gmesummary_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_documents_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\delete_userdocument_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_document_byid.sql" />
+    <Build Include="dbo\Stored Procedures\ins_userdocument.sql" />
+    <Build Include="dbo\Stored Procedures\update_userdocument.sql" />
+    <Build Include="dbo\Stored Procedures\get_outcome_registries.sql" />
+    <Build Include="dbo\Stored Procedures\insert_outcome_registries.sql" />
+    <Build Include="dbo\Stored Procedures\update_outcome_registries.sql" />
+    <Build Include="dbo\Stored Procedures\delete_outcome_registries.sql" />
+    <Build Include="dbo\Stored Procedures\get_usercertificates_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\insert_usercertificates.sql" />
+    <Build Include="dbo\Stored Procedures\get_usercertificates_byid.sql" />
+    <Build Include="dbo\Stored Procedures\update_usercertificates.sql" />
+    <Build Include="dbo\Stored Procedures\del_usercertificate.sql" />
+    <Build Include="dbo\Tables\license_types.sql" />
+    <Build Include="dbo\Stored Procedures\get_license_types.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_professional_standing_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\del_userlicense.sql" />
+    <Build Include="dbo\Stored Procedures\get_userlicenses_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_userlicenses_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\insert_userlicenses.sql" />
+    <Build Include="dbo\Stored Procedures\update_userlicenses.sql" />
+    <Build Include="dbo\Tables\practice_types.sql" />
+    <Build Include="dbo\Stored Procedures\get_practice_types.sql" />
+    <Build Include="dbo\Tables\appointment_types.sql" />
+    <Build Include="dbo\Stored Procedures\get_appointment_types.sql" />
+    <Build Include="dbo\Stored Procedures\ins_user_professional_standing.sql" />
+    <Build Include="dbo\Stored Procedures\update_user_professional_standing_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_organization_type.sql" />
+    <Build Include="dbo\Stored Procedures\get_primary_practice.sql" />
+    <Build Include="dbo\Tables\user_hospital_appointments.sql" />
+    <Build Include="dbo\Stored Procedures\get_userhospappts_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_userhospappts_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\insert_userhospappt.sql" />
+    <Build Include="dbo\Stored Procedures\update_userhospappt.sql" />
+    <Build Include="dbo\Stored Procedures\del_userhospappt.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_certificates_other_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_certificates_other_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\update_user_certificates_other_byid.sql" />
+    <Build Include="dbo\Stored Procedures\del_user_certificates_other_byid.sql" />
+    <Build Include="dbo\Stored Procedures\ins_user_certificates_other.sql" />
+    <Build Include="dbo\Stored Procedures\get_usercme_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_usercme_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_usercme_waivers_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\ins_user_sanctions.sql" />
+    <Build Include="dbo\Stored Procedures\update_user_sanctions_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_sanctions_byuserid.sql" />
+    <Build Include="dbo\Tables\exam_statuses.sql" />
+    <Build Include="dbo\Tables\exam_specialties.sql" />
+    <Build Include="dbo\Tables\exam_types.sql" />
+    <Build Include="dbo\Stored Procedures\get_userexamhistory.sql" />
+    <Build Include="dbo\Stored Procedures\get_examtypes.sql" />
+    <Build Include="dbo\Stored Procedures\get_examspecialties.sql" />
+    <Build Include="dbo\Stored Procedures\get_examstatus.sql" />
+    <Build Include="dbo\Stored Procedures\get_Joint_Commission.sql" />
+    <Build Include="dbo\Tables\case_contents.sql" />
+    <Build Include="dbo\Tables\case_headers.sql" />
+    <Build Include="dbo\Tables\exam_cases.sql" />
+    <Build Include="dbo\Tables\Exam_Directory.sql" />
+    <Build Include="dbo\Tables\exam_schedule_links.sql" />
+    <Build Include="dbo\Tables\exam_schedule_scores.sql" />
+    <Build Include="dbo\Tables\exam_schedules.sql" />
+    <Build Include="dbo\Tables\exam_scoring.sql" />
+    <Build Include="dbo\Tables\user_case_comments.sql" />
+    <Build Include="dbo\Tables\Joint_Commission.sql" />
+    <Build Include="dbo\Stored Procedures\ins_case_comments.sql" />
+    <Build Include="dbo\Stored Procedures\get_toc_case_list.sql" />
+    <Build Include="dbo\Stored Procedures\get_day_session_picklist.sql" />
+    <Build Include="dbo\Stored Procedures\get_case_details_by_id.sql" />
+    <Build Include="dbo\Stored Procedures\get_examination_scores.sql" />
+    <Build Include="dbo\Stored Procedures\get_examinerscores_byexamscheduleid.sql" />
+    <Build Include="dbo\Stored Procedures\upsert_examinerscore.sql" />
+    <Build Include="dbo\Stored Procedures\delete_examinerscore_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_case_comments_byid.sql" />
+    <Build Include="dbo\Stored Procedures\update_case_comments.sql" />
+    <Build Include="dbo\Stored Procedures\get_examinee_sessions.sql" />
+    <Build Include="dbo\Stored Procedures\get_examinerschedule_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_examinee_case_titles.sql" />
+    <Build Include="dbo\Stored Procedures\get_userexamsactive_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_examcasescore_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_examinee_session_byid.sql" />
+    <Build Include="dbo\Stored Procedures\ins_exam_schedule_scores.sql" />
+    <Build Include="dbo\Stored Procedures\get_exam_schedule_scores.sql" />
+    <Build Include="dbo\Stored Procedures\update_exam_schedule_scores.sql" />
+    <Build Include="dbo\Tables\user_clinically_inactive.sql" />
+    <Build Include="dbo\Stored Procedures\delete_case_comments_byid.sql" />
+    <Build Include="dbo\Tables\retirement_statuses.sql" />
+    <Build Include="dbo\Stored Procedures\get_gme_overlap_conflict.sql" />
+    <Build Include="dbo\Stored Procedures\get_gme_conflicts.sql" />
+    <Build Include="dbo\Stored Procedures\get_registration_open.sql" />
+    <Build Include="dbo\Stored Procedures\update_skip_exam.sql" />
+    <Build Include="dbo\Stored Procedures\dev_reset_scoring_by_ExaminerId.sql" />
+    <Build Include="dbo\Stored Procedures\dev_reset_case_comments_by_ExaminerId.sql" />
+    <Build Include="dbo\Stored Procedures\get_exam_overview.sql" />
+    <Build Include="dbo\Stored Procedures\get_exam_title_byExamId.sql" />
+    <Build Include="dbo\Stored Procedures\get_current_qualifying_exam.sql" />
+    <Build Include="dbo\Stored Procedures\get_fellowship_types.sql" />
+    <Build Include="dbo\Stored Procedures\ins_case_feedback.sql" />
+    <Build Include="dbo\Stored Procedures\update_case_feedback.sql" />
+    <Build Include="dbo\Stored Procedures\get_case_feedback_byid.sql" />
+    <Build Include="dbo\Stored Procedures\lock_exam_scoring.sql" />
+    <Build Include="dbo\Stored Procedures\delete_case_feedback_byid.sql" />
+    <Build Include="dbo\Stored Procedures\get_isLocked_by_examId.sql" />
+    <Build Include="dbo\Stored Procedures\get_case_feedback_by_examinerId.sql" />
+    <Build Include="dbo\Stored Procedures\update_user_password.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_clinically_active_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\Get_Exam_Fees_byUserId.sql" />
+    <Build Include="dbo\Stored Procedures\get_examiner_conflicts.sql" />
+    <Build Include="dbo\Stored Procedures\get_examiner_agenda.sql" />
+    <Build Include="dbo\Stored Procedures\dev_ins_cescoring_test_users.sql" />
+    <Build Include="dbo\Stored Procedures\insert_exams.sql" />
+    <Build Include="dbo\Stored Procedures\get_cases_scored.sql" />
+    <Build Include="dbo\Functions\udf_get_pers_info_status.sql" />
+    <Build Include="dbo\Functions\udf_get_CME_status.sql" />
+    <Build Include="dbo\Functions\udf_get_outcomes_status.sql" />
+    <Build Include="dbo\Functions\udf_get_med_training_status.sql" />
+    <Build Include="dbo\Functions\udf_get_prof_standing_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_active_exam_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_cca_attestation_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_all_status.sql" />
+    <Build Include="dbo\Stored Procedures\ins_payment.sql" />
+    <Build Include="dbo\Stored Procedures\get_cca_attestation_items_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\update_cca_attestation_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_accommodation_picklist.sql" />
+    <Build Include="dbo\Stored Procedures\get_accommodation_docs.sql" />
+    <Build Include="dbo\Stored Procedures\get_lapsed_pathway_by_UserId.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_certification_current_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_refLet_let_type.sql" />
+    <Build Include="dbo\Stored Procedures\get_regLet_AltRole_picklist.sql" />
+    <Build Include="dbo\Stored Procedures\get_refLet_details_byId.sql" />
+    <Build Include="dbo\Stored Procedures\get_cc_refLetters.sql" />
+    <Build Include="dbo\Stored Procedures\ins_cc_refLetter.sql" />
+    <Build Include="dbo\Stored Procedures\get_refLet_explain_picklist.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_certs_by_certId.sql" />
+    <Build Include="dbo\Stored Procedures\get_cca_application_fee_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_forgotten_username.sql" />
+    <Build Include="dbo\Stored Procedures\reset_passwork_using_guid.sql" />
+    <Build Include="dbo\Stored Procedures\get_guid_status.sql" />
+    <Build Include="dbo\Stored Procedures\ins_reset_guid.sql" />
+    <Build Include="dbo\Functions\udf_get_cc_application_fee_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_pd_refLetter.sql" />
+    <Build Include="dbo\Stored Procedures\ins_pd_refLetter.sql" />
+    <Build Include="dbo\Functions\udf_get_personal_profile_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_personal_profile_status_byuserid.sql" />
+    <Build Include="dbo\Functions\udf_get_training_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_training_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_professional_standing_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_qe_eligibility_by_userId.sql" />
+    <Build Include="dbo\Functions\udf_get_medical_licenses_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_medical_licenses_status_byuserid.sql" />
+    <Build Include="dbo\Functions\udf_get_acgme_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_acgme_status_byuserid.sql" />
+    <Build Include="dbo\Functions\udf_get_gme_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_gme_status_byuserid.sql" />
+    <Build Include="dbo\Functions\udf_get_pd_attestation_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_pd_attestation_status_byuserid.sql" />
+    <Build Include="dbo\Functions\udf_get_qe_certificates_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_qe_certificates_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_exam_fee_by_examId.sql" />
+    <Build Include="dbo\Stored Procedures\get_application_fee_by_examId.sql" />
+    <Build Include="dbo\Functions\udf_get_qe_application_fee_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_qe_application_fee_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_qe_attestation_items_by_userId.sql" />
+    <Build Include="dbo\Stored Procedures\update_qe_attestation_by_userid.sql" />
+    <Build Include="dbo\Functions\udf_get_special_accommodations_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_special_accommodations_status_byuserid.sql" />
+    <Build Include="dbo\Functions\udf_get_qe_attestation_status.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_qe_attestation_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_qe_all_status_byuserid.sql" />
+    <Build Include="dbo\Stored Procedures\ins_user_exam.sql" />
+    <Build Include="dbo\Stored Procedures\get_exam_intentions.sql" />
+    <Build Include="dbo\Stored Procedures\ins_exam_intentions.sql" />
+    <Build Include="dbo\Stored Procedures\ins_gme_to_education.sql" />
+    <Build Include="dbo\Stored Procedures\update_gme_to_education.sql" />
+    <Build Include="dbo\Stored Procedures\delete_gme_from_education.sql" />
+    <Build Include="dbo\Stored Procedures\get_adm_card_availability.sql" />
+    <Build Include="dbo\Tables\exam_formats.sql" />
+    <Build Include="dbo\Stored Procedures\update_user_exam_registration_complete.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_meeting_cc_requirements_byuserid.sql" />
+    <Build Include="dbo\Functions\udf_get_meeting_cc_requirements.sql" />
+    <Build Include="dbo\Stored Procedures\upsert_usercertificates.sql" />
+    <Build Include="dbo\Tables\case_images.sql" />
+    <Build Include="dbo\Stored Procedures\dev_update_examiner_conflicts.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\130\SqlSchemas\master.dacpac">
+      <HintPath>$(DacPacRootPath)\Extensions\Microsoft\SQLDB\Extensions\SqlServer\130\SqlSchemas\master.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+      <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
+    </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ABSPrimeDB.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Postdeployment.sql" />
+    <PreDeploy Include="Scripts\Predeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Versions\0001-post.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Clinical Level.sql" />
+    <Build Include="Scripts\Authentication\REL 1.0 ApplicatinClaimsUserSeed.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Clinical Activity.sql" />
+    <None Include="Scripts\Migration\REL 1.0 GME Rotations.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Graduate Profile.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Medical Training.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Fellowship.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Program Address.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Accommodations.sql" />
+    <None Include="Picklists\REL 1.0 Accommodation Ids.sql" />
+    <None Include="Scripts\Migration\REL 1.0 FPD Recog.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Outcome Registries.sql" />
+    <None Include="Picklists\REL 1.0 Certificate Type.sql" />
+    <None Include="Picklists\REL 1.0 Document Types.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 License Types.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Licenses Type ID.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Professional Standing.sql" />
+    <None Include="Picklists\REL 1.0 Organization Type.sql" />
+    <None Include="Picklists\REL 1.0 Primary Practice.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Practice Types.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Appointment Types.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Hospital Appointments.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Certificates Other.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Exam Statuses.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Exam Specialties.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Exam Types.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Score Results.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Exam.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Exam Headers.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Claims.sql" />
+    <None Include="Scripts\Testing\REL 1.0 Exam Score Testing.sql" />
+    <None Include="Scripts\Migration\REL 1.0 CME EXP DATE.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Exam Header ID.sql" />
+    <None Include="Scripts\Jobs\REL 1.0 User Profiles Certification Status.sql" />
+    <None Include="Scripts\Jobs\REL 1.0 User Clinically Inactive.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Retirement Statuses.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles Retirement Statuses.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Fellowship Type Picklist.sql" />
+    <None Include="Scripts\Migration\REL 1.0 UserId in fee_received.sql" />
+    <None Include="Scripts\Migration\REL 1.0 UserId in inv_det.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Lapsed Pathway.sql" />
+    <None Include="Scripts\Migration\REL 1.0 Attestation Text.sql" />
+    <None Include="Scripts\Picklists\REL 1.0 Exam Formats.sql" />
+    <None Include="Scripts\PickLists\REL 1.0 Training Types.sql" />
+    <None Include="Scripts\PickLists\REL 1.0 Languages.sql" />
+    <None Include="Scripts\PickLists\REL 1.0 Gender.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Addresses.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles Ethnicity.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles First Language.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles Best Language.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles Receive Comms.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles Birth Country.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles Country Citizenship.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles Race.sql" />
+    <None Include="Scripts\Migration\REL 1.0 User Profiles Gender.sql" />
+    <None Include="dbo\Stored Procedures\get_reset_passwork_guid.sql" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,27 @@
+CREATE TABLE [dbo].[Exam_Directory]
+(
+	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    [ExamCode] VARCHAR(7) NULL,
+    [ExamName] VARCHAR(100) NULL,
+    [ExamYear] INT NULL,
+    [ExamSpecialtyId] INT NULL,
+    [ExamTypeId] INT NULL,
+    [ExamFormatId] INT NULL,
+    [ExamArea] VARCHAR(1) NULL,
+    RegOpenDate datetime NULL,
+    RegLateDate datetime NULL,
+    RegEndDate datetime NULL,
+    RegDelayDate datetime NULL,
+    BriefingDate datetime NULL,
+    ExaminerOpenDate datetime NULL,
+    [ExamStartDate] datetime NULL,
+    [ExamEndDate] datetime NULL,
+    [TimerBit] BIT DEFAULT 1,
+    [CreatedByUserId] INT NOT NULL, 
+    [CreatedAtUtc] DATETIME NOT NULL DEFAULT GetUtcDate(), 
+    [LastUpdatedAtUtc] DATETIME NOT NULL DEFAULT GetUtcDate(), 
+    [LastUpdatedByUserId] INT NOT NULL,
+    CONSTRAINT [FK_Exam_Directory_examspecialtyid] FOREIGN KEY ([ExamSpecialtyId]) REFERENCES [exam_specialties]([Id]),
+	CONSTRAINT [FK_Exam_Directory_examtypeid] FOREIGN KEY ([ExamTypeId]) REFERENCES [exam_types]([Id]),
+	CONSTRAINT [FK_Exam_Directory_examformatid] FOREIGN KEY ([ExamFormatId]) REFERENCES [exam_formats]([Id])
+)
